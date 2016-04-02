@@ -1,23 +1,27 @@
 Technic
 =======
 
-Credits for contributing to the project (in alphabetical order):
-  * kpoppel
-  * Nekogloop
-  * Nore/Ekdohibs
-  * ShadowNinja
-  * VanessaE
-  * And many others...
-
-FAQ
----
-
-1. My technic circuit doesn't work.  No power is distrubuted.
-  * A: Make sure you have a switching station connected.
-
 License
 -------
 
-Unless otherwise stated, all components of this modpack are licensed under the 
-LGPL, V2 or later.  See also the individual mod folders for their
-secondary/alternate licenses, if any.
+Copyright (C) 2012-2014 Maciej Kasatkin (RealBadAngel)
+
+Technic chests code is licensed under the GNU LGPLv2+.
+
+Texture licenses:
+
+BlockMen modified by Zefram (CC BY-SA 3.0):
+  * technic_chernobylite_block.png
+  * technic_corium_flowing_animated.png
+  * technic_corium_source_animated.png
+
+celeron55 (Perttu Ahola) modified by Zefram (CC BY-SA 3.0):
+  * technic_bucket_corium.png
+
+sdzen (Elise Staudter) (CC BY-SA 3.0):
+  * most of the older 16x16 textures
+
+RealBadAngel: (WTFPL)
+  * Everything else.
+
+CC BY-SA 3.0: <http://creativecommons.org/licenses/by-sa/3.0/>
