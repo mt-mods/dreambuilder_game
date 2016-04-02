@@ -270,6 +270,10 @@ minetest.register_node("computer:tetris_arcade", {
 	end,
 	on_place = function(itemstack, placer, pointed_thing)
 		local pos = pointed_thing.above
+		if minetest.is_protected(pos, placer:get_player_name()) or
+			minetest.is_protected({x=pos.x, y=pos.y+1, z=pos.z}, placer:get_player_name()) then
+			return itemstack
+		end
 		if minetest.get_node({x=pos.x, y=pos.y+1, z=pos.z}).name ~= "air" then
 			minetest.chat_send_player(placer:get_player_name(), "No room for place the Arcade!")
 		return end

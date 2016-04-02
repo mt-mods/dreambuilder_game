@@ -177,7 +177,7 @@ function caverealms:nodeupdate_single(p, delay)
 			if delay then
 				minetest.after(0.1, caverealms.nodeupdate_single, {x=p.x, y=p.y, z=p.z}, false)
 			else
-				n.level = minetest.env:get_node_level(p)
+				n.level = minetest.get_node_level(p)
 				minetest.remove_node(p)
 				caverealms:spawn_falling_node(p, n)
 				caverealms:nodeupdate(p)

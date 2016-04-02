@@ -1,0 +1,1 @@
+This mod provides a multitude of colors of wood, sticks, and fences to Minetest, as per the palette outlined by my Unified Dyes mod.

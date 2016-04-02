@@ -56,7 +56,7 @@ local function pickup(player, inv, object, pickupRadius)
 
 	-- itemstring is serialized item so includes metadata
 	local lua = object:get_luaentity()
-	item = ItemStack(lua.itemstring)
+	local item = ItemStack(lua.itemstring)
 	if inv and inv:room_for_item("main", item) then
 		inv:add_item("main", item)
 		if object:get_luaentity().itemstring ~= "" then
@@ -126,8 +126,8 @@ local function moveTowards(object, player, pickupRadius, attractRadius)
 	pos1.y = pos1.y+0.5 -- head towards player's belt
 	local direct = vector.subtract(pos1, pos2)
 	local R = vector.length(direct)
-	v = object:getvelocity()
-	stopped = v.x == 0 and v.y == 0 and v.z == 0
+	local v = object:getvelocity()
+	local stopped = v.x == 0 and v.y == 0 and v.z == 0
 	-- when direction(X) = direction(V) we passed the player
 	-- so project V onto X. If same, passed. If not, approaching.
 	-- projection = norm(X) * (length(V) * cos(theta))
@@ -209,7 +209,7 @@ if minetest.setting_get("enable_item_pickup") == "true" then
 								minetest.after(30, function(object)
 									-- only if it's still moving
 									-- but what if it started moving a second time?
-									pair = movers[object]
+									local pair = movers[object]
 									if pair and pair[2] == ticket then
 										stop(object)
 									end

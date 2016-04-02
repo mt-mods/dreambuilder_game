@@ -25,6 +25,8 @@ end
 
 local YMIN = caverealms.config.ymin -- Approximate realm limits.
 local YMAX = caverealms.config.ymax
+local DEEPCAVES_YMAX = caverealms.config.deepcaves_ymax
+local DEEP_DEEP_CAVES_YMAZ = caverealms.config.deepdeepcaves_ymax
 local TCAVE = caverealms.config.tcave --0.5 -- Cave threshold. 1 = small rare caves, 0.5 = 1/3rd ground volume, 0 = 1/2 ground volume
 local BLEND = 128 -- Cave blend distance near YMIN, YMAX
 
@@ -87,7 +89,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	end
 
 	--easy reference to commonly used values
-	local t1 = os.clock()
+	--local t1 = os.clock()
 	local x1 = maxp.x
 	local y1 = maxp.y
 	local z1 = maxp.z
@@ -95,7 +97,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	local y0 = minp.y
 	local z0 = minp.z
 
-	print ("[caverealms] chunk minp ("..x0.." "..y0.." "..z0..")") --tell people you are generating a chunk
+	--print ("[caverealms] chunk minp ("..x0.." "..y0.." "..z0..")") --tell people you are generating a chunk
 
 	local vm, emin, emax = minetest.get_mapgen_object("voxelmanip")
 	local area = VoxelArea:new{MinEdge=emin, MaxEdge=emax}
@@ -106,6 +108,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	local c_stone = minetest.get_content_id("default:stone")
 	local c_water = minetest.get_content_id("default:water_source")
 	local c_lava = minetest.get_content_id("default:lava_source")
+	local c_lava_flowing = minetest.get_content_id("default:lava_flowing")
 	local c_ice = minetest.get_content_id("default:ice")
 	local c_thinice = minetest.get_content_id("caverealms:thin_ice")
 	local c_crystal = minetest.get_content_id("caverealms:glow_crystal")
@@ -122,6 +125,37 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	local c_worm = minetest.get_content_id("caverealms:glow_worm")
 	local c_iciu = minetest.get_content_id("caverealms:icicle_up")
 	local c_icid = minetest.get_content_id("caverealms:icicle_down")
+	local c_coal_block = minetest.get_content_id("default:coalblock")
+	local c_diamond_block = minetest.get_content_id("default:diamondblock")
+
+
+	local c_obsidian = {
+		minetest.get_content_id("caverealms:obsidian"),
+		minetest.get_content_id("caverealms:obsidian_2"),
+		minetest.get_content_id("caverealms:obsidian_3"),
+		minetest.get_content_id("caverealms:obsidian_4"),
+	}
+
+	local allow_deep_cave_biomes = false
+	if minp.y <= DEEPCAVES_YMAX then
+		allow_deep_cave_biomes = true
+	end
+
+	local c_hard_rock
+	if minetest.get_modpath("morestones") then
+		if (minp.y <= DEEP_DEEP_CAVES_YMAZ) then
+			c_hard_rock = minetest.get_content_id("morestones:travertine")
+		else
+			c_hard_rock = minetest.get_content_id("morestones:comendite")
+		end
+	elseif minetest.get_modpath("gloopblocks") then
+		c_hard_rock = minetest.get_content_id("default:basalt")
+	else
+		c_hard_rock = minetest.get_content_id("default:stone_with_diamond")
+	end
+
+
+	local deep_cave_shell_type = math.random()
 
 	--mandatory values
 	local sidelen = x1 - x0 + 1 --length of a mapblock
@@ -136,6 +170,7 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	local nixyz = 1 --3D node index
 	local nixz = 1 --2D node index
 	local nixyz2 = 1 --second 3D index for second loop
+
 
 	for z = z0, z1 do -- for each xy plane progressing northwards
 		--structure loop
@@ -178,14 +213,18 @@ minetest.register_on_generated(function(minp, maxp, seed)
 				n_biome = nvals_biome[nixz] --make an easier reference to the noise
 				--compare noise values to determine a biome
 				if n_biome >= 0 and n_biome < 0.5 then
-					biome = 1 --moss
+					if allow_deep_cave_biomes then --and n_biome >= 0.25 then
+						biome = 6 -- obsidian
+					else
+						biome = 1 --moss
+					end
 				elseif n_biome <= -0.5 then
 					biome = 2 --fungal
 				elseif n_biome >= 0.5 then
 					if n_biome >= 0.7 then
-						biome = 5 --deep glaciated
+						biome = 5 -- deep glaciated
 					else
-						biome = 4 --glaciated
+						biome = 4 -- glaciated
 					end
 				else
 					biome = 3 --algae
@@ -195,6 +234,22 @@ minetest.register_on_generated(function(minp, maxp, seed)
 					--ceiling
 					local ai = area:index(x,y+1,z) --above index
 					if data[ai] == c_stone and data[vi] == c_air then --ceiling
+						if biome == 6 then
+							if deep_cave_shell_type > 0.65 then
+								data[ai] = c_obsidian[math.random(1, #c_obsidian)]
+								data[vi] = c_obsidian[math.random(1, #c_obsidian)]
+							elseif deep_cave_shell_type > 0.35 then
+								data[ai] = c_coal_block
+								data[vi] = c_coal_block
+							elseif deep_cave_shell_type > 0.15 then
+								data[ai] = c_hard_rock
+								data[vi] = c_hard_rock
+							else
+								data[ai] = c_diamond_block
+								data[vi] = c_diamond_block
+							end
+						end
+
 						if math.random() < ICICHA and (biome == 4 or biome == 5) then
 							data[vi] = c_icid
 						end
@@ -261,12 +316,26 @@ minetest.register_on_generated(function(minp, maxp, seed)
 							if math.random() < ICICHA then --if glaciated, place icicles
 								data[ai] = c_iciu
 							end
+						elseif biome == 6 then
+							local bi = area:index(x,y-1,z)
+							if deep_cave_shell_type > 0.65 then
+								data[bi] = c_obsidian[math.random(1, #c_obsidian)]
+								data[vi] = c_obsidian[math.random(1, #c_obsidian)]
+							elseif deep_cave_shell_type > 0.35 then
+								data[bi] = c_coal_block
+								data[vi] = c_coal_block
+							else
+								data[bi] = c_hard_rock
+								data[vi] = c_hard_rock
+							end
+						else
+							print("[caverealms] Unknown cave biome")
 						end
 
 						if math.random() < STAGCHA then
 							caverealms:stalagmite(x,y,z, area, data)
 						end
-						if math.random() < CRYSTAL then
+						if math.random() < CRYSTAL or (biome == 6 and math.random() < CRYSTAL*1.5) then
 							caverealms:crystal_stalagmite(x,y,z, area, data, biome)
 						end
 					end
@@ -287,10 +356,10 @@ minetest.register_on_generated(function(minp, maxp, seed)
 	vm:set_lighting({day=0, night=0})
 	vm:calc_lighting()
 	--write it to world
-	vm:write_to_map(data)
+	vm:write_to_map()
 
-	local chugent = math.ceil((os.clock() - t1) * 1000) --grab how long it took
-	print ("[caverealms] "..chugent.." ms") --tell people how long
+	--local chugent = math.ceil((os.clock() - t1) * 1000) --grab how long it took
+	--print ("[caverealms] "..chugent.." ms") --tell people how long
 end)
 
 

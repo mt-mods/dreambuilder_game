@@ -753,18 +753,18 @@ if minetest.setting_getbool("gloopblocks_lavacooling") ~= false then
 		return false
 	end
 
-	default.cool_lava_source = function(pos)
-		if gloopblocks_search_nearby_nodes(pos,"default:water_source")
-		or gloopblocks_search_nearby_nodes(pos,"default:water_flowing") then
-			minetest.set_node(pos, {name="gloopblocks:obsidian_cooled"})
-		end
-	end
-
-	default.cool_lava_flowing = function(pos)
-		if gloopblocks_search_nearby_nodes(pos,"default:water_source") then
-			minetest.set_node(pos, {name="gloopblocks:basalt_cooled"})
-		elseif gloopblocks_search_nearby_nodes(pos,"default:water_flowing") then
-			minetest.set_node(pos, {name="gloopblocks:pumice_cooled"})
+	default.cool_lava = function(pos, node)
+		if node.name == "default:lava_source" then
+			if gloopblocks_search_nearby_nodes(pos,"default:water_source")
+			or gloopblocks_search_nearby_nodes(pos,"default:water_flowing") then
+				minetest.set_node(pos, {name="gloopblocks:obsidian_cooled"})
+			end
+		else -- Lava flowing
+			if gloopblocks_search_nearby_nodes(pos,"default:water_source") then
+				minetest.set_node(pos, {name="gloopblocks:basalt_cooled"})
+			elseif gloopblocks_search_nearby_nodes(pos,"default:water_flowing") then
+				minetest.set_node(pos, {name="gloopblocks:pumice_cooled"})
+			end
 		end
 	end
 end

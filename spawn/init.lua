@@ -1,5 +1,9 @@
+--a Fusion of cheapies and Zeno's spawn mode with extra CWz flavored goodness
+--Originally written by VanessaE (I think), rewritten by cheapie
+--WTFPL
 
--- Some modified from: Minetest: builtin/static_spawn.lua
+
+-- Some modified from: Minetest: builtin/static_spawn.lua LGPL
 
 local function check_spawnpoint(config_setting)
 	if not minetest.setting_get(config_setting) then
@@ -48,6 +52,7 @@ end
 
 minetest.register_chatcommand("spawn", {
 	description = "Teleport to the spawn location",
+	privs = {},
 	func = function(name, _)
 		local ok = put_player_at_spawn(minetest.get_player_by_name(name))
 		if ok then
@@ -65,3 +70,48 @@ end)
 minetest.register_on_respawnplayer(function(obj)
 	return put_player_at_spawn(obj)
 end)
+
+
+minetest.register_chatcommand("setspawn", {
+	params = "",
+	description = "Sets the spawn point to your current position",
+	privs = { server=true },
+	func = function(name, param)
+		local player = minetest.get_player_by_name(name)
+		if not player then
+			return false, "Player not found"
+		end
+		local pos = player:getpos()
+		local x = pos.x
+		local y = pos.y
+		local z = pos.z
+		local pos_string = x..","..y..","..z
+		local pos_string_2 = "Setting spawn point to ("..x..", "..y..", "..z..")"
+		minetest.setting_set("static_spawnpoint",pos_string)
+		spawn_spawnpos = pos
+		minetest.setting_save()
+		return true, pos_string_2
+	end,
+})
+-- alt_spawnpoint
+minetest.register_chatcommand("setaltspawn", {
+	params = "",
+	description = "Sets the alt spawn point to your current position",
+	privs = { server=true },
+	func = function(name, param)
+		local player = minetest.get_player_by_name(name)
+		if not player then
+			return false, "Player not found"
+		end
+		local pos = player:getpos()
+		local x = pos.x
+		local y = pos.y
+		local z = pos.z
+		local pos_string = x..","..y..","..z
+		local pos_string_2 = "Setting alt spawn point to ("..x..", "..y..", "..z..")"
+		minetest.setting_set("alt_spawnpoint",pos_string)
+		spawn_spawnpos = pos
+		minetest.setting_save()
+		return true, pos_string_2
+	end,
+})

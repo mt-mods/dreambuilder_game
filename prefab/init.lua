@@ -7,6 +7,11 @@ dofile(minetest.get_modpath("prefab").."/other.lua")
 print("Prefab Other loaded!")
 print("Prefab Loaded!")
 
+local creative = minetest.setting_getbool("creative_mode")
+
+local damage = 30
+if creative then damage = 0 end
+
 minetest.register_node("prefab:concrete", {
         drawtype = "normal",
 	description = "Block of Prefab Concrete",
@@ -333,7 +338,7 @@ minetest.register_node("prefab:electric_fence", {
 	sunlight_propagates = true,
 	paramtype = "light",
 	paramtype2 = "facedir",
-	
+	damage_per_second = damage,
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -358,7 +363,7 @@ minetest.register_node("prefab:electric_fence_corner", {
 	sunlight_propagates = true,
 	paramtype = "light",
 	paramtype2 = "facedir",
-	
+	damage_per_second = damage,
 	node_box = {
 		type = "fixed",
 		fixed = {

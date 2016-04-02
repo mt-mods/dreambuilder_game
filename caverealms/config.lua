@@ -24,6 +24,8 @@ end
 setting("number", "ymin", -33000) --bottom realm limit
 setting("number", "ymax", -700) --top realm limit
 setting("number", "tcave", 0.5) --cave threshold
+setting("number", "deepcaves_ymax", -10000) -- depth when deepcave biomes start
+setting("number", "deepdeepcaves_ymax", -20000)
 
 --falling icicles
 setting("bool", "falling_icicles", true) --enable/disable falling icicles

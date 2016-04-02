@@ -226,7 +226,7 @@ minetest.register_node("infrastructure:automatic_warning_device_middle_center_on
 	drawtype = "nodebox",
 	paramtype = "light",
 	paramtype2 = "facedir",
-	light_source = LIGHT_SOURCE,
+	light_source = AUTOMATIC_WARNING_DEVICE_LIGHT_RANGE,
 	node_box = {
 		type = "fixed",
 		fixed = {

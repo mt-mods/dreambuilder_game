@@ -1,6 +1,8 @@
 
 ufos = {}
 
+local e
+
 local floor_pos = function(pos)
 	return {x=math.floor(pos.x),y=math.floor(pos.y),z=math.floor(pos.z)}
 end
@@ -46,7 +48,7 @@ ufos.ufo_from_item = function(itemstack,placer,pointed_thing)
 	local wear = itemstack:get_wear()
 	ufos.set_fuel(ufos.ufo,ufos.fuel_from_wear(wear))
 	-- add the entity
-	e = minetest.env:add_entity(pointed_thing.above, "ufos:ufo")
+	e = minetest.add_entity(pointed_thing.above, "ufos:ufo")
 	-- remove the item
 	itemstack:take_item()
 	-- reset owner for next ufo
@@ -162,8 +164,8 @@ function ufos.ufo:on_step (dtime)
 			local t = {{x=2,z=0},{x=-2,z=0},{x=0,z=2},{x=0,z=-2}}
 			for _, i in ipairs(t) do
 				pos.x = pos.x + i.x; pos.z = pos.z + i.z;
-				if minetest.env:get_node(pos).name == "ufos:furnace" then
-					meta = minetest.env:get_meta(pos)
+				if minetest.get_node(pos).name == "ufos:furnace" then
+					meta = minetest.get_meta(pos)
 					if fuel < 100 and meta:get_int("charge") > 0 then
 						fuel = fuel + 1
 						meta:set_int("charge",meta:get_int("charge")-1)
@@ -235,16 +237,16 @@ minetest.register_node("ufos:box", {
 	tiles = {"ufos_box.png"},
 	groups = {not_in_creative_inventory=1},
 	on_rightclick = function(pos, node, clicker, itemstack)
-		meta = minetest.env:get_meta(pos)
+		meta = minetest.get_meta(pos)
 		if meta:get_string("owner") == clicker:get_player_name() then
 			-- set owner
 			ufos.next_owner = meta:get_string("owner")
 			-- restore the fuel inside the node
 			ufos.set_fuel(ufos.ufo,meta:get_int("fuel"))
 			-- add the entity
-			e = minetest.env:add_entity(pos, "ufos:ufo")
+			e = minetest.add_entity(pos, "ufos:ufo")
 			-- remove the node
-			minetest.env:remove_node(pos)
+			minetest.remove_node(pos)
 			-- reset owner for next ufo
 			ufos.next_owner = ""
 		end

@@ -168,11 +168,6 @@ unified_inventory.register_page("craft", {
 
 -- stack_image_button(): generate a form button displaying a stack of items
 --
--- Normally a simple item_image_button[] is used.  If the stack contains
--- more than one item, item_image_button[] doesn't have an option to
--- display an item count in the way that an inventory slot does, so
--- we have to fake it using the label facility.
---
 -- The specified item may be a group.  In that case, the group will be
 -- represented by some item in the group, along with a flag indicating
 -- that it's a group.  If the group contains only one item, it will be
@@ -182,7 +177,7 @@ local function stack_image_button(x, y, w, h, buttonname_prefix, item)
 	local name = item:get_name()
 	local count = item:get_count()
 	local show_is_group = false
-	local displayitem = name
+	local displayitem = name.." "..count
 	local selectitem = name
 	if name:sub(1, 6) == "group:" then
 		local group_name = name:sub(7)
@@ -191,8 +186,7 @@ local function stack_image_button(x, y, w, h, buttonname_prefix, item)
 		displayitem = group_item.item or "unknown"
 		selectitem = group_item.sole and displayitem or name
 	end
-	local label = string.format("\n\n%s%7d", show_is_group and "  G\n" or "  ", count):gsub(" 1$", " .")
-	if label == "\n\n        ." then label = "" end
+	local label = show_is_group and "G" or ""
 	return string.format("item_image_button[%f,%f;%u,%u;%s;%s;%s]",
 			x, y, w, h,
 			minetest.formspec_escape(displayitem),
