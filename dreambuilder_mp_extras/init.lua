@@ -57,3 +57,9 @@ minetest.register_abm({
 		default.cool_lava(...)
 	end,
 })
+
+minetest.override_item("default:apple", {
+	drawtype = "mesh",
+	mesh = "default_apple.obj",
+	tiles = {"default_apple_3d.png"}
+})
