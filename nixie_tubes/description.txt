@@ -1,0 +1,1 @@
+This mod provides a set of classic Nixie tubes, and a set of alphanumeric 15-segment tubes similar to Burroughs B-7971, controlled by Mesecons' Digilines mod.

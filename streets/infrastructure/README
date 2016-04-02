@@ -1,0 +1,14 @@
+This is my fork of the infrastructure mod. It's essentially aimed at servers running webdesigner97's streetsmod that want stuff from infrastructure too (dreambuilder_game in particular), and is intended to add on to streetsmod instead of replacing it.
+
+Originally based on Streets by webdesigner97
+Modified by Ragnarok/Vibender
+Modified again by cheapie
+
+Depends: default, moreblocks, mesecons, technic, streetsmod
+
+Licenses:
+	Code: WTFPL
+	Line textures: WTFPL
+	Other Textures: CC BY-SA 3.0 Unported, http://creativecommons.org/licenses/by-sa/3.0/
+	Sounds: CC BY-SA 3.0 Unported, http://creativecommons.org/licenses/by-sa/3.0/
+
