@@ -27,7 +27,7 @@ end
 minetest.register_tool("castle:crossbow", {
 	description = "Crossbow",
 	inventory_image = "castle_crossbow.png",
-    stack_max = 1,
+	stack_max = 1,
 	on_use = function(itemstack, user, pointed_thing)
 		if castle_shoot_arrow(item, user, pointed_thing) then
 			if not minetest.setting_getbool("creative_mode") then

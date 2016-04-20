@@ -19,7 +19,7 @@ minetest.register_node("castle:shield",{
 		fixed = {
 			{-0.500000,-0.500000,0.375000,0.500000,0.500000,0.500000}, --NodeBox 1
 		},
-	},			
+	},
 })
 
 
@@ -53,7 +53,7 @@ minetest.register_node("castle:shield_2",{
 		fixed = {
 			{-0.500000,-0.500000,0.375000,0.500000,0.500000,0.500000}, --NodeBox 1
 		},
-	},			
+	},
 })
 
 minetest.register_craft({
@@ -86,7 +86,7 @@ minetest.register_node("castle:shield_3",{
 		fixed = {
 			{-0.500000,-0.500000,0.375000,0.500000,0.500000,0.500000}, --NodeBox 1
 		},
-	},			
+	},
 })
 
 minetest.register_craft({

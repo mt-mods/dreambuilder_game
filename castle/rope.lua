@@ -31,15 +31,15 @@ minetest.register_craft({
 })
 
 minetest.register_node("castle:box_rope", {
-    description = "Rope from Ropebox",
-    drawtype = "nodebox",
-    paramtype = "light",
-    sunlight_propagates = true,
-    tiles = {"castle_ropes.png"},
-    groups = {not_in_creative_inventory=1},
-    climbable = true,
-    walkable = false,
-    diggable = false,
+	description = "Rope from Ropebox",
+	drawtype = "nodebox",
+	paramtype = "light",
+	sunlight_propagates = true,
+	tiles = {"castle_ropes.png"},
+	groups = {not_in_creative_inventory=1},
+	climbable = true,
+	walkable = false,
+	diggable = false,
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -52,44 +52,44 @@ minetest.register_node("castle:box_rope", {
 			{-1/16, -8/16, -1/16, 1/16, 8/16, 1/16},
 		},
 	},
-    after_destruct = function(pos,oldnode)
-        local node = minetest.get_node({x=pos.x,y=pos.y-1,z=pos.z})
-        if node.name == "castle:box_rope" then 
-            minetest.remove_node({x=pos.x,y=pos.y-1,z=pos.z})
-        end
-    end,
+	after_destruct = function(pos,oldnode)
+		local node = minetest.get_node({x=pos.x,y=pos.y-1,z=pos.z})
+		if node.name == "castle:box_rope" then
+			minetest.remove_node({x=pos.x,y=pos.y-1,z=pos.z})
+		end
+	end,
 })
 
 minetest.register_node("castle:ropebox", {
-    description = "Ropebox",
-    drawtype = "nodebox",
-    sunlight_propagates = true,
-    tiles = {"castle_ropebox_top.png",
-             "castle_ropebox_top.png",
-             "castle_ropebox_side_1.png",
-             "castle_ropebox_side_1.png",
-             "castle_ropebox_side_2.png",
-             "castle_ropebox_side_2.png"},
-    paramtype = "light",
-    paramtype2 = "facedir",
-    groups = {choppy=3},
+	description = "Ropebox",
+	drawtype = "nodebox",
+	sunlight_propagates = true,
+	tiles = {"castle_ropebox_top.png",
+		"castle_ropebox_top.png",
+		"castle_ropebox_side_1.png",
+		"castle_ropebox_side_1.png",
+		"castle_ropebox_side_2.png",
+		"castle_ropebox_side_2.png"},
+	paramtype = "light",
+	paramtype2 = "facedir",
+	groups = {choppy=3},
 	node_box = {
 		type = "fixed",
 		fixed = {
-			{-2/16, -2/16, -4/16, 2/16, 2/16, 4/16}, 
-			{-2/16, -4/16, -2/16, 2/16, 4/16, 2/16}, 
-			{-2/16, -3/16, -3/16, 2/16, 3/16, 3/16}, 
+			{-2/16, -2/16, -4/16, 2/16, 2/16, 4/16},
+			{-2/16, -4/16, -2/16, 2/16, 4/16, 2/16},
+			{-2/16, -3/16, -3/16, 2/16, 3/16, 3/16},
 			{-3/16, -2/16, -2/16, -2/16, 8/16, 2/16},
 			{2/16, -2/16, -2/16, 3/16, 8/16, 2/16},
-			{-1/16, -8/16, -1/16, 1/16, -4/16, 1/16},    
+			{-1/16, -8/16, -1/16, 1/16, -4/16, 1/16},
 		},
 	},
-    after_destruct = function(pos,oldnode)
-        local node = minetest.get_node({x=pos.x,y=pos.y-1,z=pos.z})
-        if node.name == "castle:box_rope" then 
-            minetest.remove_node({x=pos.x,y=pos.y-1,z=pos.z})
-        end
-    end,
+	after_destruct = function(pos,oldnode)
+		local node = minetest.get_node({x=pos.x,y=pos.y-1,z=pos.z})
+		if node.name == "castle:box_rope" then
+			minetest.remove_node({x=pos.x,y=pos.y-1,z=pos.z})
+		end
+	end,
 })
 
 minetest.register_abm({
@@ -98,7 +98,7 @@ minetest.register_abm({
 	chance = 1,
 	action = function(pos, node)
 	if minetest.get_node({x=pos.x,y=pos.y-1,z=pos.z}).name ~= 'air'  then return end
-	        minetest.add_node({x=pos.x,y=pos.y-1,z=pos.z}, {name="castle:box_rope"})
+		minetest.add_node({x=pos.x,y=pos.y-1,z=pos.z}, {name="castle:box_rope"})
 	end
 })
 
@@ -108,7 +108,7 @@ minetest.register_abm({
 	chance = 1,
 	action = function(pos, node)
 	if minetest.get_node({x=pos.x,y=pos.y-1,z=pos.z}).name ~= 'air'  then return end
-	        minetest.add_node({x=pos.x,y=pos.y-1,z=pos.z}, {name="castle:box_rope"})
+		minetest.add_node({x=pos.x,y=pos.y-1,z=pos.z}, {name="castle:box_rope"})
 	end
 })
 
@@ -119,3 +119,4 @@ minetest.register_craft({
 		{"castle:ropes"},
 	}
 })
+

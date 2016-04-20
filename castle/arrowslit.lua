@@ -6,13 +6,13 @@ local arrowslit = {}
 
 arrowslit.types = {
 	{"stonewall", "Stonewall", "castle_stonewall", "castle:stonewall"},
-    {"cobble", "Cobble", "default_cobble", "default:cobble"},
-    {"stonebrick", "Stonebrick", "default_stone_brick", "default:stonebrick"},
-    {"sandstonebrick", "Sandstone Brick", "default_sandstone_brick", "default:sandstonebrick"},
-    {"desertstonebrick", "Desert Stone Brick", "default_desert_stone_brick", "default:desert_stonebrick"},
-    {"stone", "Stone", "default_stone", "default:stone"},
-    {"sandstone", "Sandstone", "default_sandstone", "default:sandstone"},
-    {"desertstone", "Desert Stone", "default_desert_stone", "default:desert_stone"},
+	{"cobble", "Cobble", "default_cobble", "default:cobble"},
+	{"stonebrick", "Stonebrick", "default_stone_brick", "default:stonebrick"},
+	{"sandstonebrick", "Sandstone Brick", "default_sandstone_brick", "default:sandstonebrick"},
+	{"desertstonebrick", "Desert Stone Brick", "default_desert_stone_brick", "default:desert_stonebrick"},
+	{"stone", "Stone", "default_stone", "default:stone"},
+	{"sandstone", "Sandstone", "default_sandstone", "default:sandstone"},
+	{"desertstone", "Desert Stone", "default_desert_stone", "default:desert_stone"},
 }
 
 for _, row in ipairs(arrowslit.types) do
@@ -22,13 +22,13 @@ for _, row in ipairs(arrowslit.types) do
 	local craft_material = row[4]
 	-- Node Definition
 	minetest.register_node("castle:arrowslit_"..name, {
-	    drawtype = "nodebox",
+		drawtype = "nodebox",
 		description = desc.." Arrowslit",
 		tiles = {tile..".png"},
 		groups = {cracky=3},
 		sounds = default.node_sound_defaults(),
-	    paramtype = "light",
-	    paramtype2 = "facedir",
+		paramtype = "light",
+		paramtype2 = "facedir",
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -46,13 +46,13 @@ for _, row in ipairs(arrowslit.types) do
 	},
 	})
 	minetest.register_node("castle:arrowslit_"..name.."_cross", {
-	    drawtype = "nodebox",
+		drawtype = "nodebox",
 		description = desc.." Arrowslit with Cross",
 		tiles = {tile..".png"},
 		groups = {cracky=3},
 		sounds = default.node_sound_defaults(),
-	    paramtype = "light",
-	    paramtype2 = "facedir",
+		paramtype = "light",
+		paramtype2 = "facedir",
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -74,13 +74,13 @@ for _, row in ipairs(arrowslit.types) do
 	},
 	})
 	minetest.register_node("castle:arrowslit_"..name.."_hole", {
-	    drawtype = "nodebox",
+		drawtype = "nodebox",
 		description = desc.." Arrowslit with Hole",
 		tiles = {tile..".png"},
 		groups = {cracky=3},
 		sounds = default.node_sound_defaults(),
-	    paramtype = "light",
-	    paramtype2 = "facedir",
+		paramtype = "light",
+		paramtype2 = "facedir",
 	node_box = {
 		type = "fixed",
 		fixed = {
