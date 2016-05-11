@@ -4,24 +4,58 @@
 dofile(streets.modpath .. "/../trafficlight/old2new.lua")
 
 streets.tlBox =	{
-	--[[ Thank you, rubenwardy, for your awesome NodeboxEditor! Not perfect, but still great! ]]
-	{-0.1875,-0.5,0.5,0.1875,0.5,0.75}, --nodebox1
-	{-0.0625,0.375,0.3125,0.0625,0.4375,0.5}, --nodebox2
-	{-0.0625,0.0625,0.3125,0.0625,0.125,0.5}, --nodebox3
-	{-0.0625,-0.25,0.3125,0.0625,-0.1875,0.5}, --nodebox4
-	{0.0625,0.3125,0.3125,0.125,0.38,0.5}, --nodebox5
-	{-0.125,0.3125,0.3125,-0.0625,0.375,0.5}, --nodebox6
-	{0.0625,0,0.3125,0.125,0.0625,0.5}, --nodebox7
-	{-0.125,0,0.3125,-0.0625,0.0625,0.5}, --nodebox8
-	{0.0625,-0.3125,0.3125,0.125,-0.25,0.5}, --nodebox9
-	{-0.125,-0.3125,0.3125,-0.0625,-0.25,0.5}, --nodebox10
-	{-0.125, -0.125, 0.85, 0.125, 0.125, 0.75}, -- NodeBox11
+	{-0.1875,-0.5,0.5,0.1875,0.5,0.75}, --Box
+
+	{-0.125, -0.125, 0.85, 0.125, 0.125, 0.75}, -- Pole Mounting Bracket
+
+	{-0.125,0.3125,0.3125,-0.0625,0.375,0.5}, --Top Visor, Left
+	{-0.0625,0.375,0.3125,0.0625,0.4375,0.5}, --Top Visor, Center
+	{0.0625,0.3125,0.3125,0.125,0.38,0.5}, --Top Visor, Right
+
+	{-0.125,0,0.3125,-0.0625,0.0625,0.5}, --Middle Visor, Left
+	{-0.0625,0.0625,0.3125,0.0625,0.125,0.5}, --Middle Visor, Center
+	{0.0625,0,0.3125,0.125,0.0625,0.5}, --Middle Visor, Right
+
+	{-0.125,-0.3125,0.3125,-0.0625,-0.25,0.5}, --Bottom Visor, Left
+	{-0.0625,-0.25,0.3125,0.0625,-0.1875,0.5}, --Bottom Visor, Center
+	{0.0625,-0.3125,0.3125,0.125,-0.25,0.5}, --Bottom Visor, Right
+}
+
+streets.plBox =	{
+	{-0.1875,-0.5,0.5,0.1875,0.5,0.75}, --Box
+
+	{-0.125, -0.125, 0.85, 0.125, 0.125, 0.75}, -- Pole Mounting Bracket
+
+	{-0.1875,0.0625,0.3125,-0.1375,0.4375,0.5}, --Top Visor, Left
+	{-0.1375,0.3875,0.3125,0.1375,0.4375,0.5}, --Top Visor, Center
+	{0.1875,0.0625,0.3125,0.1375,0.4375,0.5}, --Top Visor, Right
+
+	{-0.1875,-0.0625,0.3125,-0.1375,-0.4375,0.5}, --Bottom Visor, Left
+	{-0.1375,-0.0625,0.3125,0.1375,-0.1125,0.5}, --Bottom Visor, Center
+	{0.1875,-0.0625,0.3125,0.1375,-0.4375,0.5}, --Bottom Visor, Right
+}
+
+streets.plRhythm = {
+	toRed = {
+		{name = "streets:pedlight_top_dontwalk", pauseBefore = 0}
+	},
+	toFlashRed = {
+		{name = "streets:pedlight_top_flashingdontwalk", pauseBefore = 0}
+	},
+	toGreen = {
+		{name = "streets:pedlight_top_walk", pauseBefore = 0}
+	},
+	toOff = {
+		{name = "streets:pedlight_top_off", pauseBefore = 0}
+	},
 }
 
 streets.tlRhythm = {
 	toRed = {
-		{name = "streets:trafficlight_top_yellow", pauseBefore = 0},
-		{name = "streets:trafficlight_top_red", pauseBefore = 3}
+		{name = "streets:trafficlight_top_red", pauseBefore = 0}
+	},
+	toYellow = {
+		{name = "streets:trafficlight_top_yellow", pauseBefore = 0}
 	},
 	toGreen = {
 		{name = "streets:trafficlight_top_green", pauseBefore = 0}
@@ -39,8 +73,10 @@ streets.tlRhythm = {
 
 streets.tlRhythm_left = {
 	toRed = {
-		{name = "streets:trafficlight_top_left_yellow", pauseBefore = 0},
-		{name = "streets:trafficlight_top_left_red", pauseBefore = 3}
+		{name = "streets:trafficlight_top_left_red", pauseBefore = 0}
+	},
+	toYellow = {
+		{name = "streets:trafficlight_top_left_yellow", pauseBefore = 0}
 	},
 	toGreen = {
 		{name = "streets:trafficlight_top_left_green", pauseBefore = 0}
@@ -58,8 +94,10 @@ streets.tlRhythm_left = {
 
 streets.tlRhythm_right = {
 	toRed = {
-		{name = "streets:trafficlight_top_right_yellow", pauseBefore = 0},
-		{name = "streets:trafficlight_top_right_red", pauseBefore = 3}
+		{name = "streets:trafficlight_top_right_red", pauseBefore = 0}
+	},
+	toYellow = {
+		{name = "streets:trafficlight_top_right_yellow", pauseBefore = 0}
 	},
 	toGreen = {
 		{name = "streets:trafficlight_top_right_green", pauseBefore = 0}
@@ -81,7 +119,9 @@ streets.tlSwitch = function(def)
 	end
 	local rhythm = {}
 	local nodename = minetest.get_node(def.pos).name
-	if nodename:find("left") then
+	if nodename:find("pedlight") then
+		rhythm = streets.plRhythm
+	elseif nodename:find("left") then
 		rhythm = streets.tlRhythm_left
 	elseif nodename:find("right") then
 		rhythm = streets.tlRhythm_right
@@ -111,6 +151,7 @@ streets.on_digiline_receive = function(pos, node, channel, msg)
 		return
 	end
 	-- Tl states
+	local ped = minetest.get_node(pos).name:find("pedlight")
 	if msg == "OFF" then
 		streets.tlSwitch({
 			pos = pos,
@@ -129,7 +170,17 @@ streets.on_digiline_receive = function(pos, node, channel, msg)
 	elseif msg == "WARN" then
 		streets.tlSwitch({
 			pos = pos,
+			to = ped and "toFlashRed" or "toWarn"
+		})
+	elseif (not ped) and msg == "FLASHYELLOW" then
+		streets.tlSwitch({
+			pos = pos,
 			to = "toWarn"
+		})
+	elseif (not ped) and msg == "YELLOW" then
+		streets.tlSwitch({
+			pos = pos,
+			to = "toYellow"
 		})
 	elseif msg == "FLASHRED" then
 		streets.tlSwitch({
@@ -170,6 +221,113 @@ minetest.register_node(":streets:digiline_distributor",{
 		}
 	}
 })
+
+minetest.register_node(":streets:pedlight_top_off",{
+	description = streets.S("Pedestrian Light"),
+	drawtype="nodebox",
+	paramtype = "light",
+	paramtype2 = "facedir",
+	groups = {cracky = 1, level = 2},
+	inventory_image = "streets_trafficlight_inv.png",
+	light_source = 11,
+	sunlight_propagates = true,
+	node_box = {
+		type = "fixed",
+		fixed = streets.plBox
+	},
+	tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_pl_off.png"},
+	digiline = {
+		receptor = {},
+		effector = {
+			action = function(pos, node, channel, msg)
+				streets.on_digiline_receive(pos, node, channel, msg)
+			end
+		}
+	},
+	on_construct = function(pos)
+		local meta = minetest.get_meta(pos)
+		meta:set_string("formspec", "field[channel;Channel;${channel}]")
+	end,
+	on_receive_fields = function(pos, formname, fields, sender)
+		if (fields.channel) then
+			minetest.get_meta(pos):set_string("channel", fields.channel)
+			minetest.get_meta(pos):set_string("state", "Off")
+		end
+	end,
+})
+
+minetest.register_node(":streets:pedlight_top_dontwalk",{
+	drop = "streets:pedlight_top_off",
+	groups = {cracky = 1, not_in_creative_inventory = 1},
+	paramtype = "light",
+	paramtype2 = "facedir",
+	sunlight_propagates = true,
+	drawtype = "nodebox",
+	tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_pl_dontwalk.png"},
+	node_box = {
+		type = "fixed",
+		fixed = streets.plBox
+	},
+	light_source = 6,
+	digiline = {
+		receptor = {},
+		effector = {
+			action = function(pos, node, channel, msg)
+				streets.on_digiline_receive(pos, node, channel, msg)
+			end
+		}
+	},
+})
+
+minetest.register_node(":streets:pedlight_top_walk",{
+	drop = "streets:pedlight_top_off",
+	groups = {cracky = 1, not_in_creative_inventory = 1},
+	paramtype = "light",
+	paramtype2 = "facedir",
+	sunlight_propagates = true,
+	drawtype = "nodebox",
+	tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_pl_walk.png"},
+	node_box = {
+		type = "fixed",
+		fixed = streets.plBox
+	},
+	light_source = 6,
+	digiline = {
+		receptor = {},
+		effector = {
+			action = function(pos, node, channel, msg)
+				streets.on_digiline_receive(pos, node, channel, msg)
+			end
+		}
+	},
+})
+
+minetest.register_node(":streets:pedlight_top_flashingdontwalk",{
+	drop = "streets:pedlight_top_off",
+	groups = {cracky = 1, not_in_creative_inventory = 1},
+	paramtype = "light",
+	paramtype2 = "facedir",
+	sunlight_propagates = true,
+	drawtype = "nodebox",
+		tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png",{
+			name="streets_pl_flashingdontwalk.png",
+			animation={type="vertical_frames", aspect_w=64, aspect_h=64, length=1.2},
+		}},
+	node_box = {
+		type = "fixed",
+		fixed = streets.plBox
+	},
+	light_source = 6,
+	digiline = {
+		receptor = {},
+		effector = {
+			action = function(pos, node, channel, msg)
+				streets.on_digiline_receive(pos, node, channel, msg)
+			end
+		}
+	},
+})
+
 
 for _,i in pairs({"","_left","_right"}) do
 	minetest.register_node(":streets:trafficlight_top"..i.."_off",{
