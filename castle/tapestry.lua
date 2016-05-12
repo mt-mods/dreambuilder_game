@@ -2,23 +2,23 @@ local tapestry = {}
 
 minetest.register_node("castle:tapestry_top", {
 	drawtype = "nodebox",
-	description = "Tapestry Top",
+ description = "Tapestry Top",
 	tiles = {"default_wood.png"},
 	sunlight_propagates = true,
-	groups = {flammable=3,oddly_breakable_by_hand=1},
+	groups = {flammable=3,oddly_breakable_by_hand=3},
 	sounds = default.node_sound_defaults(),
 	paramtype = "light",
 	paramtype2 = "facedir",
 	node_box = {
 		type = "fixed",
 		fixed = {
-			{-0.600000,-0.500000,0.375000,0.600000,-0.375000,0.500000},
+			{-0.6,-0.5,0.375,0.6,-0.375,0.5},
 		},
 	},
 	selection_box = {
 		type = "fixed",
 		fixed = {
-			{-0.600000,-0.500000,0.375000,0.600000,-0.375000,0.500000},
+			{-0.6,-0.5,0.375,0.6,-0.375,0.5},
 		},
 	},
 })
@@ -30,56 +30,60 @@ minetest.register_craft({
 })
 
 tapestry.colours = {
-	{"white",      "White",      "white"},
-	{"grey",       "Grey",       "grey"},
-	{"black",      "Black",      "black"},
-	{"red",        "Red",        "red"},
-	{"yellow",     "Yellow",     "yellow"},
-	{"green",      "Green",      "green"},
-	{"cyan",       "Cyan",       "cyan"},
-	{"blue",       "Blue",       "blue"},
-	{"magenta",    "Magenta",    "magenta"},
-	{"orange",     "Orange",     "orange"},
-	{"violet",     "Violet",     "violet"},
-	{"dark_grey",  "Dark Grey",  "dark_grey"},
-	{"dark_green", "Dark Green", "dark_green"},
-	{"pink", "Pink", "pink"},
-	{"brown", "Brown", "brown"},
+	{"white",      "White",      "white",    "#FFFFFF"},
+	{"grey",       "Grey",       "grey",    "#4B4B4B"},
+	{"black",      "Black",      "black",    "#1F1F1F"},
+	{"red",        "Red",        "red",    "#B21414"},
+	{"yellow",     "Yellow",     "yellow",    "#FFD011"},
+ {"green",      "Green",      "green",    "#43A91C"},
+	{"cyan",       "Cyan",       "cyan",    "#00737B"},
+	{"blue",       "Blue",       "blue",    "#003A7E"},
+	{"magenta",    "Magenta",    "magenta",    "#DD0487"},
+	{"orange",     "Orange",     "orange",    "#D55014"},
+	{"violet",     "Violet",     "violet",    "#5D01AC"},
+	{"dark_grey",  "Dark Grey",  "dark_grey",    "#3A3A3A"},
+	{"dark_green", "Dark Green", "dark_green",    "#206400"},
+	{"pink", "Pink", "pink",    "#FF8383"},
+	{"brown", "Brown", "brown",    "#6D3800"},
 }
 
 for _, row in ipairs(tapestry.colours) do
 	local name = row[1]
 	local desc = row[2]
 	local craft_color_group = row[3]
+	local defcolor = row[4]
 	-- Node Definition
-	minetest.register_node("castle:tapestry_"..name, {
-		drawtype = "nodebox",
-		description = desc.." Tapestry",
-		tiles = {"wool_"..name..".png"},
-		groups = {oddly_breakable_by_hand=3,flammable=3,not_in_creative_inventory=1},
-		sounds = default.node_sound_defaults(),
-		paramtype = "light",
-		paramtype2 = "facedir",
-		node_box = {
-			type = "fixed",
-			fixed = {
-				{-0.312500,-0.500000,0.437500,-0.187500,-0.375000,0.500000}, 
-				{0.187500,-0.500000,0.437500,0.312500,-0.375000,0.500000}, 
-				{-0.375000,-0.375000,0.437500,-0.125000,-0.250000,0.500000}, 
-				{0.125000,-0.375000,0.437500,0.375000,-0.250000,0.500000}, 
-				{-0.437500,-0.250000,0.437500,-0.062500,-0.125000,0.500000}, 
-				{0.062500,-0.250000,0.437500,0.437500,-0.125000,0.500000}, 
-				{-0.500000,-0.125000,0.437500,0.000000,0.000000,0.500000}, 
-				{0.000000,-0.125000,0.437500,0.500000,0.000000,0.500000}, 
-				{-0.500000,0.000000,0.437500,0.500000,1.500000,0.500000},
-			},
-		},
-		selection_box = {
-			type = "fixed",
-			fixed = {
-				{-0.500000,-0.500000,0.437500,0.500000,1.500000,0.500000},
-			},
-		},
+  minetest.register_node("castle:tapestry_"..name, {
+  drawtype = "nodebox",
+  description = desc.." Tapestry",
+  --uses default wool textures for tapestry material
+  tiles = {"wool_"..name..".png^[transformR90"},
+  --uses custom texture for tapestry material
+  --tiles = {"castle_tapestry_overlay.png^[colorize:" .. defcolor ..":205"},
+  groups = {oddly_breakable_by_hand=3,flammable=3},
+  sounds = default.node_sound_defaults(),
+  paramtype = "light",
+  paramtype2 = "facedir",
+  node_box = {
+  type = "fixed",
+  fixed = {
+			    {-0.3125,-0.5,0.4375,-0.1875,-0.375,0.5},
+			    {0.1875,-0.5,0.4375,0.3125,-0.375,0.5},
+			    {-0.375,-0.375,0.4375,-0.125,-0.25,0.5},
+			    {0.125,-0.375,0.4375,0.375,-0.25,0.5},
+			    {-0.4375,-0.25,0.4375,-0.0625,-0.125,0.5},
+			    {0.0625,-0.25,0.4375,0.4375,-0.125,0.5},
+			    {-0.5,-0.125,0.4375,0.0,0.0,0.5},
+			    {0.0,-0.125,0.4375,0.5,0.0,0.5},
+			    {-0.5,0.0,0.4375,0.5,1.5,0.5},
+		    },
+	    },
+	    selection_box = {
+		    type = "fixed",
+		    fixed = {
+			    {-0.5,-0.5,0.4375,0.5,1.5,0.5},
+		    },
+	    },
 	})
 	if craft_color_group then
 		-- Crafting from wool and a stick
@@ -92,40 +96,43 @@ for _, row in ipairs(tapestry.colours) do
 end
 
 for _, row in ipairs(tapestry.colours) do
-	local name = row[1]
-	local desc = row[2]
-	local craft_color_group = row[3]
-	-- Node Definition
-	minetest.register_node("castle:long_tapestry_"..name, {
-		drawtype = "nodebox",
-		description = desc.." Tapestry (Long)",
-		tiles = {"wool_"..name..".png"},
-		groups = {oddly_breakable_by_hand=3,flammable=3,not_in_creative_inventory=1},
-		sounds = default.node_sound_defaults(),
-		paramtype = "light",
-		paramtype2 = "facedir",
-		node_box = {
-			type = "fixed",
-			fixed = {
-				{-0.312500,-0.500000,0.437500,-0.187500,-0.375000,0.500000},
-				{0.187500,-0.500000,0.437500,0.312500,-0.375000,0.500000},
-				{-0.375000,-0.375000,0.437500,-0.125000,-0.250000,0.500000},
-				{0.125000,-0.375000,0.437500,0.375000,-0.250000,0.500000},
-				{-0.437500,-0.250000,0.437500,-0.062500,-0.125000,0.500000},
-				{0.062500,-0.250000,0.437500,0.437500,-0.125000,0.500000},
-				{-0.500000,-0.125000,0.437500,0.000000,0.000000,0.500000},
-				{0.000000,-0.125000,0.437500,0.500000,0.000000,0.500000},
-				{-0.500000,0.000000,0.437500,0.500000,2.500000,0.500000},
-			},
-		},
-		selection_box = {
-			type = "fixed",
-			fixed = {
-				{-0.500000,-0.500000,0.437500,0.500000,2.500000,0.500000},
-			},
-		},
+  local name = row[1]
+  local desc = row[2]
+  local craft_color_group = row[3]
+  local defcolor = row[4]
+  -- Node Definition
+  minetest.register_node("castle:long_tapestry_"..name, {
+  drawtype = "nodebox",
+  description = desc.." Tapestry (Long)",
+  --uses default wool textures for tapestry material
+  tiles = {"wool_"..name..".png^[transformR90"},
+  --uses custom texture for tapestry material
+  --tiles = {"castle_tapestry_overlay.png^[colorize:" .. defcolor ..":205"},
+  groups = {oddly_breakable_by_hand=3,flammable=3},
+  sounds = default.node_sound_defaults(),
+  paramtype = "light",
+  paramtype2 = "facedir",
+  node_box = {
+		    type = "fixed",
+		    fixed = {
+			    {-0.3125,-0.5,0.4375,-0.1875,-0.375,0.5},
+			    {0.1875,-0.5,0.4375,0.3125,-0.375,0.5},
+			    {-0.375,-0.375,0.4375,-0.125,-0.25,0.5},
+			    {0.125,-0.375,0.4375,0.375,-0.25,0.5},
+			    {-0.4375,-0.25,0.4375,-0.0625,-0.125,0.5},
+			    {0.0625,-0.25,0.4375,0.4375,-0.125,0.5},
+			    {-0.5,-0.125,0.4375,0.0,0.0,0.5},
+			    {0.0,-0.125,0.4375,0.5,0.0,0.5},
+			    {-0.5,0.0,0.4375,0.5,2.5,0.5},
+		    },
+	    },
+	    selection_box = {
+		    type = "fixed",
+		    fixed = {
+			    {-0.5,-0.5,0.4375,0.5,2.5,0.5},
+		    },
+	    },
 	})
-
 	if craft_color_group then
 		-- Crafting from normal tapestry and wool
 		minetest.register_craft({
@@ -137,38 +144,42 @@ for _, row in ipairs(tapestry.colours) do
 end
 
 for _, row in ipairs(tapestry.colours) do
-	local name = row[1]
-	local desc = row[2]
-	local craft_color_group = row[3]
-	-- Node Definition
-	minetest.register_node("castle:very_long_tapestry_"..name, {
-		drawtype = "nodebox",
-		description = desc.." Tapestry (Very Long)",
-		tiles = {"wool_"..name..".png"},
-		groups = {oddly_breakable_by_hand=3,flammable=3,not_in_creative_inventory=1},
-		sounds = default.node_sound_defaults(),
-		paramtype = "light",
-		paramtype2 = "facedir",
-		node_box = {
-			type = "fixed",
-			fixed = {
-				{-0.312500,-0.500000,0.437500,-0.187500,-0.375000,0.500000},
-				{0.187500,-0.500000,0.437500,0.312500,-0.375000,0.500000},
-				{-0.375000,-0.375000,0.437500,-0.125000,-0.250000,0.500000},
-				{0.125000,-0.375000,0.437500,0.375000,-0.250000,0.500000},
-				{-0.437500,-0.250000,0.437500,-0.062500,-0.125000,0.500000},
-				{0.062500,-0.250000,0.437500,0.437500,-0.125000,0.500000},
-				{-0.500000,-0.125000,0.437500,0.000000,0.000000,0.500000},
-				{0.000000,-0.125000,0.437500,0.500000,0.000000,0.500000},
-				{-0.500000,0.000000,0.437500,0.500000,3.500000,0.500000},
-			},
-		},
-		selection_box = {
-			type = "fixed",
-			fixed = {
-				{-0.500000,-0.500000,0.437500,0.500000,3.500000,0.500000},
-			},
-		},
+  local name = row[1]
+  local desc = row[2]
+  local craft_color_group = row[3]
+ 	local defcolor = row[4]
+  -- Node Definition
+  minetest.register_node("castle:very_long_tapestry_"..name, {
+  drawtype = "nodebox",
+  description = desc.." Tapestry (Very Long)",
+  --uses default wool textures for tapestry material
+  tiles = {"wool_"..name..".png^[transformR90"},
+  --uses custom texture for tapestry material
+  --tiles = {"castle_tapestry_overlay.png^[colorize:" .. defcolor ..":205"},
+  groups = {oddly_breakable_by_hand=3,flammable=3},
+  sounds = default.node_sound_defaults(),
+  paramtype = "light",
+  paramtype2 = "facedir",
+  node_box = {
+  type = "fixed",
+  fixed = {
+			    {-0.3125,-0.5,0.4375,-0.1875,-0.375,0.5},
+			    {0.1875,-0.5,0.4375,0.3125,-0.375,0.5},
+			    {-0.375,-0.375,0.4375,-0.125,-0.25,0.5},
+			    {0.125,-0.375,0.4375,0.375,-0.25,0.5},
+			    {-0.4375,-0.25,0.4375,-0.0625,-0.125,0.5},
+			    {0.0625,-0.25,0.4375,0.4375,-0.125,0.5},
+			    {-0.5,-0.125,0.4375,0.0,0.0,0.5},
+			    {0.0,-0.125,0.4375,0.5,0.0,0.5},
+			    {-0.5,0.0,0.4375,0.5,3.5,0.5},
+		    },
+	    },
+	    selection_box = {
+		    type = "fixed",
+		    fixed = {
+			    {-0.5,-0.5,0.4375,0.5,3.5,0.5},
+		    },
+	    },
 	})
 	if craft_color_group then
 		-- Crafting from long tapestry and wool
@@ -179,4 +190,3 @@ for _, row in ipairs(tapestry.colours) do
 		})
 	end
 end
-

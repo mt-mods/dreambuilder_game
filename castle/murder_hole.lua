@@ -22,7 +22,7 @@ for _, row in ipairs(hole.types) do
 		description = desc.." Murder Hole",
 		tiles = {tile..".png"},
 		groups = {cracky=3},
-		sounds = default.node_sound_defaults(),
+		sounds = default.node_sound_stone_defaults(),
 		paramtype = "light",
 		paramtype2 = "facedir",
 	node_box = {

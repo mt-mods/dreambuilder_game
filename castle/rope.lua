@@ -4,6 +4,7 @@ minetest.register_node("castle:ropes",{
 	sunlight_propagates = true,
 	tiles = {"castle_ropes.png"},
 	groups = {choppy=3,snappy=3,oddly_breakable_by_hand=3,flammable=1},
+	sounds = default.node_sound_defaults(),
 	paramtype = "light",
 	climbable = true,
 	walkable = false,
@@ -73,6 +74,7 @@ minetest.register_node("castle:ropebox", {
 	paramtype = "light",
 	paramtype2 = "facedir",
 	groups = {choppy=3},
+	sounds = default.node_sound_defaults(),
 	node_box = {
 		type = "fixed",
 		fixed = {

@@ -7,6 +7,7 @@ dofile(minetest.get_modpath("castle").."/shields_decor.lua")
 dofile(minetest.get_modpath("castle").."/murder_hole.lua")
 dofile(minetest.get_modpath("castle").."/orbs.lua")
 dofile(minetest.get_modpath("castle").."/rope.lua")
+dofile(minetest.get_modpath("castle").."/crossbow.lua")
 
 minetest.register_node("castle:stonewall", {
 	description = "Castle Wall",
@@ -15,6 +16,7 @@ minetest.register_node("castle:stonewall", {
 	paramtype = "light",
 	drop = "castle:stonewall",
 	groups = {cracky=3},
+	sounds = default.node_sound_stone_defaults(),
 })
 
 minetest.register_node("castle:rubble", {
@@ -23,6 +25,7 @@ minetest.register_node("castle:rubble", {
 	tiles = {"castle_rubble.png"},
 	paramtype = "light",
 	groups = {crumbly=3,falling_node=1},
+	sounds = default.node_sound_gravel_defaults(),
 })
 
 minetest.register_craft({
@@ -60,6 +63,7 @@ minetest.register_node("castle:stonewall_corner", {
 			"castle_stonewall.png",
 			"castle_corner_stonewall2.png"},
 	groups = {cracky=3},
+	sounds = default.node_sound_stone_defaults(),
 })
 
 minetest.register_craft({
@@ -83,6 +87,7 @@ minetest.register_node("castle:roofslate", {
 		fixed = {-1/2, -1/2, -1/2, 1/2, -1/2+1/16, 1/2},
 	},
 	groups = {cracky=3,attached_node=1},
+	sounds = default.node_sound_glass_defaults(),
 })
 
 minetest.register_node("castle:hides", {
@@ -158,38 +163,6 @@ if not (mod_building_blocks or mod_streets) then
 
 end
 
-stairs.register_stair_and_slab("stonewall", "castle:stonewall",
-	{cracky=3},
-	{"castle_stonewall.png"},
-	"Castle Wall Stair",
-	"Castle Wall Slab",
-	default.node_sound_stone_defaults())
-
-minetest.register_craft({
-	output = "castle:stairs 4",
-	recipe = {
-		{"castle:stonewall","",""},
-		{"castle:stonewall","castle:stonewall",""},
-		{"castle:stonewall","castle:stonewall","castle:stonewall"},
-	}
-})
-
-minetest.register_craft({
-	output = "stairs:stair_stonewall 4",
-	recipe = {
-		{"","","castle:stonewall"},
-		{"","castle:stonewall","castle:stonewall"},
-		{"castle:stonewall","castle:stonewall","castle:stonewall"},
-	}
-})
-
-minetest.register_craft({
-	output = "stairs:slab_stonewall 6",
-	recipe = {
-		{"castle:stonewall","castle:stonewall","castle:stonewall"},
-	}
-})
-
 doors.register("castle:oak_door", {
 	tiles = {{ name = "castle_door_oak.png", backface_culling = true }},
 	description = "Oak Door",
@@ -232,7 +205,14 @@ function default.get_ironbound_chest_formspec(pos)
 end
 
 local function has_ironbound_chest_privilege(meta, player)
-	if player:get_player_name() ~= meta:get_string("owner") then
+	local name = ""
+	if player then
+		if minetest.check_player_privs(player, "protection_bypass") then
+			return true
+		end
+		name = player:get_player_name()
+	end
+	if name ~= meta:get_string("owner") then
 		return false
 	end
 	return true
@@ -374,26 +354,10 @@ minetest.register_craft({
 })
 
 if minetest.get_modpath("moreblocks") then
-	stairsplus:register_all("castle", "dungeon_stone", "castle:dungeon_stone", {
-		description = "Dungeon Stone",
-		tiles = {"castle_dungeon_stone.png"},
-		groups = {cracky=1, not_in_creative_inventory=1},
-		sounds = default.node_sound_stone_defaults(),
-		sunlight_propagates = true,
-	})
-
-	stairsplus:register_all("castle", "pavement_brick", "castle:pavement_brick", {
-		description = "Pavement Brick",
-		tiles = {"castle_pavement_brick.png"},
-		groups = {cracky=1, not_in_creative_inventory=1},
-		sounds = default.node_sound_stone_defaults(),
-		sunlight_propagates = true,
-	})
-
 	stairsplus:register_all("castle", "stonewall", "castle:stonewall", {
 		description = "Stone Wall",
 		tiles = {"castle_stonewall.png"},
-		groups = {cracky=1, not_in_creative_inventory=1},
+		groups = {cracky=3, not_in_creative_inventory=1},
 		sounds = default.node_sound_stone_defaults(),
 		sunlight_propagates = true,
 	})
@@ -401,54 +365,25 @@ if minetest.get_modpath("moreblocks") then
 	stairsplus:register_all("castle", "rubble", "castle:rubble", {
 		description = "Rubble",
 		tiles = {"castle_rubble.png"},
-		groups = {cracky=1, not_in_creative_inventory=1},
-		sounds = default.node_sound_stone_defaults(),
+		groups = {cracky=3, not_in_creative_inventory=1},
+		sounds = default.node_sound_gravel_defaults(),
 		sunlight_propagates = true,
 	})
+
+else
+	stairs.register_stair_and_slab("stonewall", "castle:stonewall",
+		{cracky=3},
+		{"castle_stonewall.png"},
+		"Castle Stonewall Stair",
+		"Castle Stonewall Slab",
+		default.node_sound_stone_defaults()
+	)
+
+	stairs.register_stair_and_slab("rubble", "castle:rubble",
+		{cracky=3},
+		{"castle_rubble.png"},
+		"Castle Rubble Stair",
+		"Castle Rubble Slab",
+		default.node_sound_stone_defaults()
+	)
 end
-
-stairs.register_stair_and_slab("dungeon_stone", "castle:dungeon_stone",
-	{cracky=3},
-	{"castle_dungeon_stone.png"},
-	"Dungeon Stone Stair",
-	"Dungeon Stone Slab",
-	default.node_sound_stone_defaults())
-
-stairs.register_stair_and_slab("castle_pavement_brick", "castle:pavement_brick",
-	{cracky=3},
-	{"castle_pavement_brick.png"},
-	"Castle Pavement Stair",
-	"Castle Pavement Slab",
-	default.node_sound_stone_defaults())
-
-minetest.register_craft({
-	output = "stairs:slab_dungeon_stone 6",
-	recipe = {
-		{"castle:dungeon_stone","castle:dungeon_stone","castle:dungeon_stone"},
-	}
-})
-
-minetest.register_craft({
-	output = "stairs:slab_pavement_brick 6",
-	recipe = {
-		{"castle:pavement_brick","castle:pavement_brick","castle:pavement_brick"},
-	}
-})
-
-minetest.register_craft({
-	output = "stairs:stair_dungeon_stone 4",
-	recipe = {
-		{"","","castle:dungeon_stone"},
-		{"","castle:dungeon_stone","castle:dungeon_stone"},
-		{"castle:dungeon_stone","castle:dungeon_stone","castle:dungeon_stone"},
-	}
-})
-
-minetest.register_craft({
-	output = "stairs:stair_pavement_brick 4",
-	recipe = {
-		{"","","castle:pavement_brick"},
-		{"","castle:pavement_brick","castle:pavement_brick"},
-		{"castle:pavement_brick","castle:pavement_brick","castle:pavement_brick"},
-	}
-})

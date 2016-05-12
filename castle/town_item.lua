@@ -13,6 +13,7 @@ minetest.register_node("castle:anvil",{
 	description = "Anvil",
 	tiles = {"castle_steel.png"},
 	groups = {cracky=2,falling_node=1},
+	sounds = default.node_sound_stone_defaults(),
 	paramtype = "light",
 	paramtype2 = "facedir",
 	node_box = {
@@ -42,6 +43,7 @@ minetest.register_node("castle:workbench",{
 	paramtype2 = "facedir",
 	paramtype = "light",
 	groups = {choppy=2,oddly_breakable_by_hand=2,flammable=2},
+	sounds = default.node_sound_wood_defaults(),
 	drawtype = "normal",
 	on_construct = function ( pos )
 		local meta = minetest.get_meta( pos )
@@ -139,7 +141,7 @@ minetest.register_abm( {
 	action = function ( pos, node )
 		local meta = minetest.get_meta( pos )
 		local inv = meta:get_inventory()
-		local cresult, newinput, needed
+		local result, newinput, needed
 		if not inv:is_empty( 'src' ) then
 			-- Check for a valid recipe and sufficient resources to craft it
 			needed, newinput, result = get_recipe( inv )
@@ -158,14 +160,12 @@ minetest.register_abm( {
 	end
 } )
 
-
 local function has_locked_chest_privilege(meta, player)
 	if player:get_player_name() ~= meta:get_string("owner") then
 		return false
 	end
 	return true
 end
-
 
 minetest.register_craft({
 	output = "castle:workbench",
@@ -182,6 +182,7 @@ minetest.register_node("castle:dungeon_stone", {
 	tiles = {"castle_dungeon_stone.png"},
 	groups = {cracky=2},
 	paramtype = "light",
+	sounds = default.node_sound_stone_defaults(),
 })
 
 minetest.register_craft({
@@ -204,6 +205,7 @@ minetest.register_node("castle:crate", {
 	drawtype = "normal",
 	tiles = {"castle_crate_top.png","castle_crate_top.png","castle_crate.png","castle_crate.png","castle_crate.png","castle_crate.png"},
 	groups = {choppy=3},
+	sounds = default.node_sound_wood_defaults(),
 	paramtype = "light",
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
@@ -237,13 +239,6 @@ minetest.register_node("castle:crate", {
 	end,
 })
 
-local function has_locked_chest_privilege(meta, player)
-	if player:get_player_name() ~= meta:get_string("owner") then
-		return false
-	end
-	return true
-end
-
 minetest.register_craft({
 	output = "castle:crate",
 	recipe = {
@@ -257,6 +252,7 @@ minetest.register_node("castle:bound_straw", {
 	drawtype = "normal",
 	tiles = {"castle_straw_bale.png"},
 	groups = {choppy=4, flammable=1, oddly_breakable_by_hand=3},
+	sounds = default.node_sound_leaves_defaults(),
 	paramtype = "light",
 })
 
@@ -273,6 +269,7 @@ minetest.register_node("castle:pavement_brick", {
 	tiles = {"castle_pavement_brick.png"},
 	groups = {cracky=2},
 	paramtype = "light",
+	sounds = default.node_sound_stone_defaults(),
 })
 
 minetest.register_craft({
@@ -290,6 +287,7 @@ minetest.register_node("castle:light",{
 	light_source = 14,
 	tiles = {"castle_street_light.png"},
 	groups = {cracky=2},
+	sounds = default.node_sound_glass_defaults(),
 	paramtype = "light",
 })
 
@@ -302,3 +300,37 @@ minetest.register_craft({
 	}
 })
 
+if minetest.get_modpath("moreblocks") then
+	stairsplus:register_all("castle", "dungeon_stone", "castle:dungeon_stone", {
+		description = "Dungeon Stone",
+		tiles = {"castle_dungeon_stone.png"},
+		groups = {cracky=2, not_in_creative_inventory=1},
+		sounds = default.node_sound_stone_defaults(),
+		sunlight_propagates = true,
+	})
+
+	stairsplus:register_all("castle", "pavement_brick", "castle:pavement_brick", {
+		description = "Pavement Brick",
+		tiles = {"castle_pavement_brick.png"},
+		groups = {cracky=2, not_in_creative_inventory=1},
+		sounds = default.node_sound_stone_defaults(),
+		sunlight_propagates = true,
+	})
+
+else
+	stairs.register_stair_and_slab("dungeon_stone", "castle:dungeon_stone",
+		{cracky=2},
+		{"castle_dungeon_stone.png"},
+		"Dungeon Stone Stair",
+		"Dungeon Stone Slab",
+		default.node_sound_stone_defaults()
+	)
+
+	stairs.register_stair_and_slab("pavement_brick", "castle:pavement_brick",
+		{cracky=2},
+		{"castle_pavement_brick.png"},
+		"Castle Pavement Stair",
+		"Castle Pavement Slab",
+		default.node_sound_stone_defaults()
+	)
+end

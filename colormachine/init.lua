@@ -23,7 +23,8 @@
 -- Version 0.6
 
 -- Changelog: 
--- 28.09.15 Added support for cblocks: https://forum.minetest.net/viewtopic.php?f=9&t=13303&view=unread#p192497
+-- 22.04.16 Added support for myfences: https://forum.minetest.net/viewtopic.php?f=9&t=14275
+-- 28.09.15 Added support for cblocks: https://forum.minetest.net/viewtopic.php?f=9&t=13303
 -- 23.05.15 As all dyes can be crafted into other dyes, only white dye is consumed - provided the
 --          other dyes needed for the crafting chain are stored.
 -- 22.05.15 Added support for new homedecor meshnodes.
@@ -392,6 +393,23 @@ colormachine.data[ 'mymulch_' ] = {
 		composed=1,
 		p=1};
 
+
+local myfences_names = {'corner_post', 'garden', 'garden_corner', 'picket', 'picket_corner',
+		'picketb', 'picketb_corner', 'privacy', 'privacy_corner'};
+for i,v in ipairs( myfences_names ) do
+	colormachine.data[ v..'_' ] = {
+		nr= 51.0 + 1/100*i,
+		modname='myfences',
+		shades={1,0,1,0,0,0,1,0},
+		grey_shades={1,1,1,1,1},
+		u=0,
+		descr="myfe"..tostring(i),
+		block="myfences:"..v,
+		add=v..'_',
+		composed=1,
+		p=1};
+end
+myfences_names = nil;
 
 
 colormachine.ordered = {}

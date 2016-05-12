@@ -5,6 +5,7 @@ minetest.register_node("castle:shield",{
 	paramtype2 = "facedir",
 	paramtype = "light",
 	groups={cracky=3},
+	sounds = default.node_sound_defaults(),
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -39,6 +40,7 @@ minetest.register_node("castle:shield_2",{
 	paramtype2 = "facedir",
 	paramtype = "light",
 	groups={cracky=3},
+	sounds = default.node_sound_defaults(),
 	node_box = {
 		type = "fixed",
 		fixed = {
@@ -72,6 +74,7 @@ minetest.register_node("castle:shield_3",{
 	paramtype2 = "facedir",
 	paramtype = "light",
 	groups={cracky=3},
+	sounds = default.node_sound_defaults(),
 	node_box = {
 		type = "fixed",
 		fixed = {

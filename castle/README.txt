@@ -21,15 +21,37 @@ Contains as of now:
 --Castlestone Stairs, Slabs, and Pillars
 --Jailbars
 --Hides
---Arrowslits
---Rubble (for between walls)
+--Arrows and Arrowslits
+--Rubble
 --Doors
+--Weapons
+--Chandeliers
+--Tapestries
 --and more!
 
 =-=-=-=-=-=-=-=-=-=
-"  Although crossbows have been removed, along with arrows, the code is still there.
-   To get the crossbows back, look in init.lua. You will see at the top some lines 
-   with dofile in them. Copy and paste two more of these lines, and change them to
-   crossbow.lua and arrow.lua to get them back. "
-   
-I, (philipbenr) will take a look at the arrows and crossbows, and see about this.
+
+Big release coming soon.  ;)  Stay tuned.
+
+Planned features (anything with question mark means that I am either unsure or don't know how to accomplish it ;)
+
+--More/Better weapons
+--More decorations
+--More nodes
+--Redone columns
+--More doors
+--Gatehouse mod
+--Armor
+--More magical items (mana, orbs, potions...)
+--Crowns/capes/player decor
+--Flags
+--Brewery/Liquor (liquor effects is another thing altogether)
+--Tannery?
+--Books? (that is an interesting one... I'll write a post on it later)
+--Guards?
+--Player status (King, queen, etc.)?
+--Foods?
+--Horses/Livestock?
+--Ruins?
+
+--Modpack Configurator 

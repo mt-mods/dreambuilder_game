@@ -14,3 +14,8 @@ if minetest.get_modpath("xpanes") then
 		{"default:steel_ingot","","default:steel_ingot"}}
 	})
 end
+
+for i = 1, 15 do
+	minetest.register_alias("castle:jailbars_"..i, "xpanes:jailbars_"..i)
+end
+minetest.register_alias("castle:jailbars", "xpanes:jailbars")

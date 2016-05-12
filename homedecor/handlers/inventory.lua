@@ -80,13 +80,13 @@ function homedecor.handle_inventory(name, def, original_def)
 		))
 	end
 	def.on_metadata_inventory_put = def.on_metadata_inventory_put or function(pos, listname, index, stack, player)
-		minetest.log("action", S("%s moves stuff to %s at %s"):format(
-			player:get_player_name(), name, minetest.pos_to_string(pos)
+		minetest.log("action", S("%s moves %s to %s at %s"):format(
+			player:get_player_name(), stack:get_name(), name, minetest.pos_to_string(pos)
 		))
 	end
 	def.on_metadata_inventory_take = def.on_metadata_inventory_take or function(pos, listname, index, stack, player)
-		minetest.log("action", S("%s takes stuff from %s at %s"):format(
-			player:get_player_name(), name, minetest.pos_to_string(pos)
+		minetest.log("action", S("%s takes %s from %s at %s"):format(
+			player:get_player_name(), stack:get_name(), name, minetest.pos_to_string(pos)
 		))
 	end
 

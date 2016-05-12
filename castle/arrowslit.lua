@@ -26,7 +26,7 @@ for _, row in ipairs(arrowslit.types) do
 		description = desc.." Arrowslit",
 		tiles = {tile..".png"},
 		groups = {cracky=3},
-		sounds = default.node_sound_defaults(),
+		sounds = default.node_sound_stone_defaults(),
 		paramtype = "light",
 		paramtype2 = "facedir",
 	node_box = {
@@ -50,7 +50,7 @@ for _, row in ipairs(arrowslit.types) do
 		description = desc.." Arrowslit with Cross",
 		tiles = {tile..".png"},
 		groups = {cracky=3},
-		sounds = default.node_sound_defaults(),
+		sounds = default.node_sound_stone_defaults(),
 		paramtype = "light",
 		paramtype2 = "facedir",
 	node_box = {
@@ -78,7 +78,7 @@ for _, row in ipairs(arrowslit.types) do
 		description = desc.." Arrowslit with Hole",
 		tiles = {tile..".png"},
 		groups = {cracky=3},
-		sounds = default.node_sound_defaults(),
+		sounds = default.node_sound_stone_defaults(),
 		paramtype = "light",
 		paramtype2 = "facedir",
 	node_box = {
