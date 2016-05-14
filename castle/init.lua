@@ -257,8 +257,16 @@ minetest.register_node("castle:ironbound_chest",{
 		local meta = minetest.get_meta(pos)
 		meta:set_string("infotext", "Ironbound Chest")
 		meta:set_string("owner", "")
+		meta:set_string("formspec",
+				"size[8,8]"..
+				 default.gui_bg ..
+				 default.gui_bg_img ..
+				 default.gui_slots ..
+				"list[current_name;main;0,0;8,5;]"..
+				"list[current_player;main;0,4;8,4;]"..
+				"infotext", "Ironbound Chest")
 		local inv = meta:get_inventory()
-		inv:set_size("main", 8*4)
+		inv:set_size("main", 8*3)
 	end,
 	can_dig = function(pos,player)
 		local meta = minetest.get_meta(pos);

@@ -4,7 +4,7 @@ License Sounds
 (From Simple Shooter mod by Stuart Jones)
 -castle_crossbow_click.ogg
 -castle_crossbow_shoot.ogg
--castle_reload.ogg
+-castle_crossbow_reload.ogg
 
 Author : freesound.org
 License : Attribution 3.0 Unported (CC BY 3.0)

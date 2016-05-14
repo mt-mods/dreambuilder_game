@@ -201,7 +201,7 @@ minetest.register_craft({
 })
 
 minetest.register_node("castle:crate", {
-	description = "Crate",
+	description = "Cratelol",
 	drawtype = "normal",
 	tiles = {"castle_crate_top.png","castle_crate_top.png","castle_crate.png","castle_crate.png","castle_crate.png","castle_crate.png"},
 	groups = {choppy=3},
@@ -214,11 +214,11 @@ minetest.register_node("castle:crate", {
 				 default.gui_bg ..
 				 default.gui_bg_img ..
 				 default.gui_slots ..
-				"list[current_name;main;0,1;8,4;]"..
+				"list[current_name;main;0,0;8,5;]"..
 				"list[current_player;main;0,5;8,4;]")
 		meta:set_string("infotext", "Crate")
 		local inv = meta:get_inventory()
-		inv:set_size("main", 8*3)
+		inv:set_size("main", 8*4)
 	end,
 	can_dig = function(pos,player)
 		local meta = minetest.get_meta(pos);
