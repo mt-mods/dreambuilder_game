@@ -5,7 +5,7 @@ by: Philipbenr And DanDuncombe
 
 =-=-=-=-=-=-=-=-=-=
 
-Licence: GPLv3
+Licence: MIT, LGPLv2.1
 
 see: LICENSE
 

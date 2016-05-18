@@ -334,3 +334,53 @@ else
 		default.node_sound_stone_defaults()
 	)
 end
+
+minetest.register_node( "castle:chandelier", {
+	drawtype = "plantlike",
+	description = "Chandelier",
+	paramtype = "light",
+	wield_image = "castle_chandelier_wield.png",
+	inventory_image = "castle_chandelier_wield.png", 
+	groups = {cracky=2},
+	sounds = default.node_sound_glass_defaults(),
+	sunlight_propagates = true,
+	light_source = 14,
+	tiles = {
+			{
+			name = "castle_chandelier.png",
+			animation = {
+				type = "vertical_frames",
+				aspect_w = 16,
+				aspect_h = 16,
+				length = 1.0
+			},
+		},
+	},
+	selection_box = {
+		type = "fixed",
+			fixed = {
+				{0.35,-0.375,0.35,-0.35,0.5,-0.35},
+
+		},
+	},
+})
+
+minetest.register_node( "castle:chandelier_chain", {
+	drawtype = "plantlike",
+	description = "Chandelier Chain",
+	paramtype = "light",
+	wield_image = "castle_chandelier_chain.png",
+	inventory_image = "castle_chandelier_chain.png", 
+	groups = {cracky=2},
+	sounds = default.node_sound_glass_defaults(),
+	sunlight_propagates = true,
+	tiles = {"castle_chandelier_chain.png"},
+	selection_box = {
+		type = "fixed",
+			fixed = {
+				{0.1,-0.5,0.1,-0.1,0.5,-0.1},
+
+		},
+	},
+})
+
