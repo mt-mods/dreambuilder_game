@@ -16,6 +16,7 @@ minetest.register_node("castle:stonewall", {
 	paramtype = "light",
 	drop = "castle:stonewall",
 	groups = {cracky=3},
+	sunlight_propagates = false,
 	sounds = default.node_sound_stone_defaults(),
 })
 

@@ -5,7 +5,7 @@ by: Philipbenr And DanDuncombe
 
 =-=-=-=-=-=-=-=-=-=
 
-Licence: MIT, LGPLv2.1
+Licence: MIT, LGPLv2.1 (Crossbow)
 
 see: LICENSE
 
@@ -47,6 +47,7 @@ Planned features (anything with question mark means that I am either unsure or d
 --Flags
 --Brewery/Liquor (liquor effects is another thing altogether)
 --Tannery?
+--Dye Vats?
 --Books? (that is an interesting one... I'll write a post on it later)
 --Guards?
 --Player status (King, queen, etc.)?

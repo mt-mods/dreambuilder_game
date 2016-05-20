@@ -39,7 +39,7 @@ minetest.register_craft({
 
 minetest.register_node("castle:workbench",{
 	description = "Workbench",
-	tiles = {"castle_workbench_top.png", "castle_workbench_bottom.png", "castle_workbench_1.png", "castle_workbench_1.png", "castle_workbench_2.png", "castle_workbench_2.png"},
+	tiles = {"castle_workbench_top.png", "castle_workbench_bottom.png", "castle_workbench_side.png", "castle_workbench_side.png", "castle_workbench_back.png", "castle_workbench_front.png"},
 	paramtype2 = "facedir",
 	paramtype = "light",
 	groups = {choppy=2,oddly_breakable_by_hand=2,flammable=2},
