@@ -1139,6 +1139,9 @@ colormachine.blocktype_menu = function( meta, new_color, page )
    local per_line = 13;
    local anz_lines = 3;
    local per_page = anz_lines * per_line;
+   if( not( page )) then
+      page = 1;
+   end
    local start_at_offset = per_page * page;
 
    new_color = colormachine.decode_color_name( meta, new_color );

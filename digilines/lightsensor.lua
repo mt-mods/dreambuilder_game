@@ -29,7 +29,8 @@ local on_digiline_receive = function (pos, node, channel, msg)
 	end
 end
 
-minetest.register_node("digilines_lightsensor:lightsensor", {
+minetest.register_alias("digilines_lightsensor:lightsensor", "digilines:lightsensor")
+minetest.register_node("digilines:lightsensor", {
 	description = "Digiline Lightsensor",
 	drawtype = "nodebox",
 	tiles = {"digilines_lightsensor.png"},
@@ -50,6 +51,11 @@ minetest.register_node("digilines_lightsensor:lightsensor", {
 		meta:set_string("formspec", "field[channel;Channel;${channel}]")
 	end,
 	on_receive_fields = function(pos, formname, fields, sender)
+		local name = sender:get_player_name()
+		if minetest.is_protected(pos, name) and not minetest.check_player_privs(name, {protection_bypass=true}) then
+			minetest.record_protection_violation(pos, name)
+			return
+		end
 		if (fields.channel) then
 			minetest.get_meta(pos):set_string("channel", fields.channel)
 		end

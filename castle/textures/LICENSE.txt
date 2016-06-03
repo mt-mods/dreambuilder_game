@@ -9,25 +9,42 @@ Licence Models: Stuart Jones - CC-BY-SA 3.0
 -castle_crossbow_bolt.b3d
 -castle_crossbow_bolt.blend
 
---------------------------------------------
-
-textures based on Castle mod
-original textures by Philipner           ???
-
-License Textures: CC-BY-SA 3.0     ???
 
 --------------------------------------------
 
-License Textures: Napiophelios - CC-BY-SA 3.0
+License Textures: Kilbith - WTFPL
 
--castle_battleaxe.png
+-castle_tapestry_overlay.png
+
+
+--------------------------------------------
+
+License Textures: Philipner -  CC-BY-SA 3.0
+
+-castle_chandelier.png
+-castle_chandelier_chain.png
+-castle_chandelier_wield.png
+-castle_corner_stonewall_tb.png
 -castle_corner_stonewall1.png
 -castle_corner_stonewall2.png
--castle_crate.png
--castle_crate_top.png
+-castle_orb_day.png
+-castle_orb_night.png
+-castle_workbench_back.png
+-castle_workbench_front.png
+-castle_workbench_side.png
+-castle_workbench_top.png
+
+
+--------------------------------------------
+
+16 px textures based on Castle mod
+original textures by Philipner
+
+License Textures: Napiophelios  - CC-BY-SA 3.0
+
+-castle_battleaxe.png
 -castle_crossbow_bolt_inv.png
 -castle_crossbow_hit.png
--castle_crossbow_inv.png
 -castle_crossbow_loaded.png
 -castle_door_jail.png
 -castle_door_oak.png
@@ -62,10 +79,6 @@ License Textures: Napiophelios - CC-BY-SA 3.0
 -castle_stonewall.png
 -castle_straw_bale.png
 -castle_street_light.png
--castle_workbench_1.png
--castle_workbench_2.png
 -castle_workbench_bottom.png
--castle_workbench_top.png
-
 
 --------------------------------------------

@@ -3,11 +3,11 @@
 -- Font: 04.jp.org
 
 -- load characters map
-local chars_file = io.open(minetest.get_modpath("digilines_lcd").."/characters", "r")
+local chars_file = io.open(minetest.get_modpath("digilines").."/characters", "r")
 local charmap = {}
 local max_chars = 12
 if not chars_file then
-	print("[digilines_lcd] E: character map file not found")
+	print("[digilines] E: LCD: character map file not found")
 else
 	while true do
 		local char = chars_file:read("*l")
@@ -76,7 +76,8 @@ local lcd_box = {
 	wall_top = {-8/16, 7/16, -8/16, 8/16, 8/16, 8/16}
 }
 
-minetest.register_node("digilines_lcd:lcd", {
+minetest.register_alias("digilines_lcd:lcd", "digilines:lcd")
+minetest.register_node("digilines:lcd", {
 	drawtype = "nodebox",
 	description = "Digiline LCD",
 	inventory_image = "lcd_lcd.png",
@@ -93,7 +94,7 @@ minetest.register_node("digilines_lcd:lcd", {
 	after_place_node = function (pos, placer, itemstack)
 		local param2 = minetest.get_node(pos).param2
 		if param2 == 0 or param2 == 1 then
-			minetest.add_node(pos, {name = "digilines_lcd:lcd", param2 = 3})
+			minetest.add_node(pos, {name = "digilines:lcd", param2 = 3})
 		end
 		prepare_writing (pos)
 	end,
@@ -107,6 +108,11 @@ minetest.register_node("digilines_lcd:lcd", {
 	end,
 
 	on_receive_fields = function(pos, formname, fields, sender)
+		local name = sender:get_player_name()
+		if minetest.is_protected(pos, name) and not minetest.check_player_privs(name, {protection_bypass=true}) then
+			minetest.record_protection_violation(pos, name)
+			return
+		end
 		if (fields.channel) then
 			minetest.get_meta(pos):set_string("channel", fields.channel)
 		end
@@ -123,7 +129,7 @@ minetest.register_node("digilines_lcd:lcd", {
 	light_source = 6,
 })
 
-minetest.register_entity("digilines_lcd:text", {
+minetest.register_entity(":digilines_lcd:text", {
 	collisionbox = { 0, 0, 0, 0, 0, 0 },
 	visual = "upright_sprite",
 	textures = {},
@@ -197,7 +203,7 @@ generate_line = function(s, ypos)
 			file = charmap[s:sub(i, i + 1)]
 			i = i + 2
 		else
-			print("[digilines_lcd] W: unknown symbol in '"..s.."' at "..i)
+			print("[digilines] W: LCD: unknown symbol in '"..s.."' at "..i)
 			i = i + 1
 		end
 		if file ~= nil then
@@ -218,7 +224,7 @@ generate_line = function(s, ypos)
 end
 
 minetest.register_craft({
-	output = "digilines_lcd:lcd 2",
+	output = "digilines:lcd 2",
 	recipe = {
 		{"default:steel_ingot", "digilines:wire_std_00000000", "default:steel_ingot"},
 		{"mesecons_lightstone:lightstone_green_off","mesecons_lightstone:lightstone_green_off","mesecons_lightstone:lightstone_green_off"},
