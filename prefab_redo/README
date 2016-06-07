@@ -1,0 +1,8 @@
+prefab_redo
+===========
+
+This is a rewrite of Dan Duncombe's prefab mod for Minetest. It includes many of the same nodes (and aliases for compatibility), but not the electric fence. All items have been retextured using technic concrete as a base.
+
+Dependencies: default, doors, concrete (from technic), moreblocks
+
+License: Unlicense, see LICENSE file for full text
