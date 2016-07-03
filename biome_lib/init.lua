@@ -289,7 +289,7 @@ function biome_lib:populate_surfaces(biome, nodes_or_function_or_model, snodes, 
 
 					if objtype == "table" then
 						if nodes_or_function_or_model.axiom then
-							biome_lib:generate_tree(pos, nodes_or_function_or_model)
+							biome_lib:generate_tree(p_top, nodes_or_function_or_model)
 							spawned = true
 						else
 							local fdir = nil
