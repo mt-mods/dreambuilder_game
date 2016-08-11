@@ -24,13 +24,14 @@ for i in ipairs(lrfurn.colors) do
 		groups = {snappy=3},
 		sounds = default.node_sound_wood_defaults(),
 		node_box = armchair_cbox,
-		on_rightclick = function(pos, node, clicker)
+		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 			if not clicker:is_player() then
-				return
+				return itemstack
 			end
 			pos.y = pos.y-0.5
 			clicker:setpos(pos)
 			clicker:set_hp(20)
+			return itemstack
 		end
 	})
 

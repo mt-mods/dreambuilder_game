@@ -9,9 +9,10 @@ if minetest.get_modpath("xpanes") then
 		wield_image = "castle_jailbars.png",
 		sounds = default.node_sound_stone_defaults(),
 		groups = {cracky=1, pane=1},
-		recipe = {{"default:steel_ingot","","default:steel_ingot"},
-		{"default:steel_ingot","default:steel_ingot","default:steel_ingot"},
-		{"default:steel_ingot","","default:steel_ingot"}}
+		recipe = {
+			{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
+			{"default:steel_ingot", "",                    "default:steel_ingot"},
+			{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"}},
 	})
 end
 

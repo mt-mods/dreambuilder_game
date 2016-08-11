@@ -187,3 +187,11 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 			unified_inventory.current_page[player_name])
 end)
 
+if minetest.delete_detached_inventory then
+	minetest.register_on_leaveplayer(function(player)
+		local player_name = player:get_player_name()
+		minetest.delete_detached_inventory(player_name.."_bags")
+		minetest.delete_detached_inventory(player_name.."craftrecipe")
+		minetest.delete_detached_inventory(player_name.."refill")
+	end)
+end

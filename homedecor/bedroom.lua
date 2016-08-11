@@ -79,10 +79,11 @@ for i in ipairs(bedcolors) do
 		after_dig_node = function(pos)
 			homedecor.unextend_bed(pos, color)
 		end,
-		on_rightclick = function(pos, node, clicker)
+		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 			if minetest.get_modpath("beds") then
 				beds.on_rightclick(pos, clicker)
-			else return end
+			end
+			return itemstack
 		end
 	})
 
@@ -104,10 +105,11 @@ for i in ipairs(bedcolors) do
 		after_dig_node = function(pos)
 			homedecor.unextend_bed(pos, color)
 		end,
-		on_rightclick = function(pos, node, clicker)
+		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 			if minetest.get_modpath("beds") then
 				beds.on_rightclick(pos, clicker)
-			else return end
+			end
+			return itemstack
 		end,
 		drop = "homedecor:bed_"..color.."_regular"
 	})
@@ -137,10 +139,11 @@ for i in ipairs(bedcolors) do
 				inv:add_item("main", "homedecor:bed_"..color.."_regular 2")
 			end
 		end,
-		on_rightclick = function(pos, node, clicker)
+		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 			if minetest.get_modpath("beds") then
 				beds.on_rightclick(pos, clicker)
-			else return end
+			end
+			return itemstack
 		end
 	})
 

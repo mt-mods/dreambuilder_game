@@ -84,8 +84,9 @@ for _, f in ipairs(flame_types) do
 			{name=f.."_fire_animated.png", animation={type="vertical_frames", 
 			aspect_w=16, aspect_h=16, length=1.5}},
 		},
-		on_rightclick = function (pos, node, clicker)
+		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 			start_smoke(pos, node, clicker)
+			return itemstack
 		end,
 		on_destruct = function (pos)
 			stop_smoke(pos)
@@ -113,8 +114,9 @@ minetest.register_node("fake_fire:fancy_fire", {
 		tiles = {
 		{name="fake_fire_animated.png", 
 		animation={type='vertical_frames', aspect_w=16, aspect_h=16, length=1}}, {name='fake_fire_logs.png'}},
-		on_rightclick = function (pos, node, clicker)
+		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 			start_smoke(pos, node, clicker)
+			return itemstack
 		end,
 		on_destruct = function (pos)
 			stop_smoke(pos)
@@ -161,9 +163,10 @@ for _, m in ipairs(materials) do
 			type = "fixed",
 			fixed = {-0.5, -0.5, -0.5, 0.5, 0, 0.5},
 		},
-		on_rightclick = function (pos, node, clicker)
+		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 			local chimney = 1
 			start_smoke(pos, node, clicker, chimney)
+			return itemstack
 		end,
 		on_destruct = function (pos)
 			stop_smoke(pos)

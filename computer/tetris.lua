@@ -276,7 +276,8 @@ minetest.register_node("computer:tetris_arcade", {
 		end
 		if minetest.get_node({x=pos.x, y=pos.y+1, z=pos.z}).name ~= "air" then
 			minetest.chat_send_player(placer:get_player_name(), "No room for place the Arcade!")
-		return end
+			return itemstack
+		end
 		local dir = placer:get_look_dir()
 		local node = {name="computer:tetris_arcade", param1=0, param2 = minetest.dir_to_facedir(dir)}
 		minetest.set_node(pos, node)

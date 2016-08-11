@@ -84,9 +84,10 @@ for i in ipairs(chaircolors) do
 		collision_box = kc_cbox,
 		groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2},
 		sounds = default.node_sound_wood_defaults(),
-		on_rightclick = function(pos, node, clicker)
+		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 			pos.y = pos.y+0 -- where do I put my ass ?
 			homedecor.sit(pos, node, clicker)
+			return itemstack
 		end
 	})
 

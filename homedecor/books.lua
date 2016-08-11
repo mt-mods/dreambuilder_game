@@ -112,7 +112,7 @@ for c in ipairs(bookcolors) do
 		drop = "homedecor:book_"..color,
 		walkable = false,
 		on_dig = book_dig,
-		on_rightclick = function(pos, node, clicker)
+		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 			local meta = minetest.get_meta(pos)
 			local player_name = clicker:get_player_name()
 			local title = meta:get_string("title") or ""
@@ -136,6 +136,7 @@ for c in ipairs(bookcolors) do
 			end
 			player_current_book[player_name] = pos
 			minetest.show_formspec(player_name, BOOK_FORMNAME, formspec)
+			return itemstack
 		end,
 		on_punch = function(pos, node, puncher, pointed_thing)
 			local fdir = node.param2

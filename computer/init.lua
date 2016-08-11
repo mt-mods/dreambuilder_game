@@ -27,11 +27,12 @@ computer.register = function (name, def)
 		node_box = def.node_box,
 		selection_box = def.node_box,
 		on_rightclick = function (pos, node, clicker, itemstack)
-			if (def.on_turn_off) then
-				if (def.on_turn_off(pos, node, clicker, itemstack)) then return end
+			if def.on_turn_off and def.on_turn_off(pos, node, clicker, itemstack) then
+				return itemstack
 			end
 			node.name = OFFSTATE
 			minetest.set_node(pos, node)
+			return itemstack
 		end
 	})
 	minetest.register_node(OFFSTATE, {
@@ -50,11 +51,12 @@ computer.register = function (name, def)
 		node_box = def.node_box_off or def.node_box,
 		selection_box = def.node_box_off or def.node_box,
 		on_rightclick = function (pos, node, clicker, itemstack)
-			if (def.on_turn_on) then
-				if (def.on_turn_on(pos, node, clicker, itemstack)) then return end
+			if def.on_turn_on and def.on_turn_on(pos, node, clicker, itemstack) then
+				return itemstack
 			end
 			node.name = ONSTATE
 			minetest.set_node(pos, node)
+			return itemstack
 		end,
 		drop = ONSTATE
 	})

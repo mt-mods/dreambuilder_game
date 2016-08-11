@@ -141,9 +141,9 @@ minetest.register_node("itemframes:frame",{
 		end
 	end,
 	can_dig = function(pos,player)
-
+		local name = player and player:get_player_name()
 		local meta = minetest.get_meta(pos)
-		return player:get_player_name() == meta:get_string("owner")
+		return name == meta:get_string("owner")
 	end,
 	on_destruct = function(pos)
 		local meta = minetest.get_meta(pos)
@@ -198,9 +198,9 @@ minetest.register_node("itemframes:pedestal",{
 		end
 	end,
 	can_dig = function(pos,player)
-
+		local name = player and player:get_player_name()
 		local meta = minetest.get_meta(pos)
-		return player:get_player_name() == meta:get_string("owner")
+		return name == meta:get_string("owner")
 	end,
 	on_destruct = function(pos)
 		local meta = minetest.get_meta(pos)

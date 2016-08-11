@@ -117,7 +117,7 @@ homedecor.register("kitchen_faucet", {
 	selection_box = kf_cbox,
 	walkable = false,
 	on_rotate = screwdriver.disallow,
-	on_rightclick = function(pos, node, clicker)
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		local below = minetest.get_node_or_nil({x=pos.x, y=pos.y-1, z=pos.z})
 		if below and
 		  below.name == "homedecor:sink" or
@@ -131,6 +131,7 @@ homedecor.register("kitchen_faucet", {
 			}
 			homedecor.start_particle_spawner(pos, node, particledef, "homedecor_faucet")
 		end
+		return itemstack
 	end,
 	on_destruct = homedecor.stop_particle_spawner
 })

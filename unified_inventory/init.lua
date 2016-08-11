@@ -2,6 +2,7 @@
 
 local modpath = minetest.get_modpath(minetest.get_current_modname())
 local worldpath = minetest.get_worldpath()
+local mygettext = rawget(_G, "intllib") and intllib.Getter() or function(s) return s end
 
 -- Data tables definitions
 unified_inventory = {
@@ -31,7 +32,8 @@ unified_inventory = {
 	default = "craft",
 
 	-- intllib
-	gettext = rawget(_G, "intllib") and intllib.Getter() or function(s) return s end,
+	gettext = mygettext,
+	fgettext = function(s) return minetest.formspec_escape(mygettext(s)) end,
 
 	-- "Lite" mode
 	lite_mode = minetest.setting_getbool("unified_inventory_lite"),

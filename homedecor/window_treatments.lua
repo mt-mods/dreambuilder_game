@@ -125,12 +125,13 @@ for c in ipairs(curtaincolors) do
 		paramtype2 = 'wallmounted',
 		selection_box = { type = "wallmounted" },
 	-- Open the curtains
-		on_rightclick = function(pos, node, clicker, itemstack)
+		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 			local topnode = minetest.get_node({x=pos.x, y=pos.y+1.0, z=pos.z})
 			if string.find(topnode.name, "homedecor:curtainrod") then
 				local fdir = node.param2
 				minetest.set_node(pos, { name = "homedecor:curtain_open_"..color, param2 = fdir })
 			end
+			return itemstack
 		end
 	})
 
@@ -147,12 +148,13 @@ for c in ipairs(curtaincolors) do
 		paramtype2 = 'wallmounted',
 		selection_box = { type = "wallmounted" },
 	-- Close the curtains
-		on_rightclick = function(pos, node, clicker, itemstack)
+		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 			local topnode = minetest.get_node({x=pos.x, y=pos.y+1.0, z=pos.z})
 			if string.find(topnode.name, "homedecor:curtainrod") then
 				local fdir = node.param2
 				minetest.set_node(pos, { name = "homedecor:curtain_"..color, param2 = fdir })
 			end
+			return itemstack
 		end
 	})
 

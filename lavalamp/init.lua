@@ -39,9 +39,10 @@ for i in ipairs(lavalamps_list) do
 	    },
 		groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3},
 		sounds = default.node_sound_glass_defaults(),
-		on_rightclick = function(pos, node, clicker)
+		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 	        node.name = "lavalamp:"..colour.."_off"
 	        minetest.set_node(pos, node)
+			return itemstack
 	    end,
 	})
 
@@ -64,9 +65,10 @@ for i in ipairs(lavalamps_list) do
 		groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, not_in_creative_inventory=1},
 		sounds = default.node_sound_glass_defaults(),
 		drop = "lavalamp:"..colour,
-		on_rightclick = function(pos, node, clicker)
+		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 	        node.name = "lavalamp:"..colour
 	        minetest.set_node(pos, node)
+			return itemstack
 	    end,
 	})
 

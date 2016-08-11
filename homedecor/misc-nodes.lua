@@ -179,8 +179,9 @@ homedecor.register("fishtank", {
 	collision_box = ft_cbox,
 	groups = {cracky=3,oddly_breakable_by_hand=3},
 	sounds = default.node_sound_glass_defaults(),
-	on_rightclick = function(pos, node, clicker)
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		minetest.set_node(pos, {name = "homedecor:fishtank_lighted", param2 = node.param2})
+		return itemstack
 	end
 })
 
@@ -195,14 +196,15 @@ homedecor.register("fishtank_lighted", {
 		"homedecor_fishtank_water_top_lighted.png",
 		"homedecor_fishtank_sides_lighted.png",
 	},
-	light_source = LIGHT_MAX-4,
+	light_source = default.LIGHT_MAX-4,
 	use_texture_alpha = true,
 	selection_box = ft_cbox,
 	collision_box = ft_cbox,
 	groups = {cracky=3,oddly_breakable_by_hand=3,not_in_creative_inventory=1},
 	sounds = default.node_sound_glass_defaults(),
-	on_rightclick = function(pos, node, clicker)
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		minetest.set_node(pos, {name = "homedecor:fishtank", param2 = node.param2})
+		return itemstack
 	end,
 	drop = "homedecor:fishtank",
 })

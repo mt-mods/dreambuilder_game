@@ -252,8 +252,9 @@ for i in ipairs(sides) do
 			on_construct = function(pos)
 				minetest.get_meta(pos):set_int("closed", 1)
 			end,
-			on_rightclick = function(pos, node, clicker)
+			on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 				homedecor.flip_door(pos, node, clicker, doorname, side)
+				return itemstack
 			end,
 		    -- both left and right doors may be used for open or closed doors
 		    -- so they have to have both action_on and action_off and just
@@ -385,8 +386,9 @@ for i in ipairs(gates_list) do
 			type = "fixed",
 			fixed = gate_models_closed[i]
 		},
-		on_rightclick = function(pos, node, clicker)
+		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 			homedecor.flip_gate(pos, node, clicker, gate, "closed")
+			return itemstack
 		end,
         mesecons = {
             effector = {
@@ -413,8 +415,9 @@ for i in ipairs(gates_list) do
 		tiles[3]
 	}
     def.drop = "homedecor:gate_"..gate.."_closed"
-	def.on_rightclick = function(pos, node, clicker)
+	def.on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
         homedecor.flip_gate(pos, node, clicker, gate, "open")
+        return itemstack
 	end
     def.mesecons.effector = {
         action_off = function(pos,node) homedecor.flip_gate(pos,node,player,gate, "open") end
@@ -605,8 +608,9 @@ homedecor.register("door_japanese_closed", {
 		fixed = {-0.5, -0.5, -0.0625, 0.5, 1.5, 0},
 	},
 	expand = { top = "placeholder" },
-	on_rightclick = function(pos, node, clicker)
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		minetest.set_node(pos, {name = "homedecor:door_japanese_open", param2 = node.param2})
+		return itemstack
 	end
 })
 
@@ -628,8 +632,9 @@ homedecor.register("door_japanese_open", {
 		fixed = {-1.5, -0.5, -0.0625, -0.5, 1.5, 0},
 	},
 	expand = { top = "placeholder" },
-	on_rightclick = function(pos, node, clicker)
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		minetest.set_node(pos, {name = "homedecor:door_japanese_closed", param2 = node.param2})
+		return itemstack
 	end,
 	drop = "homedecor:door_japanese_closed",
 })

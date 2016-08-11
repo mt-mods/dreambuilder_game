@@ -169,7 +169,7 @@ homedecor.register("toaster", {
 			{-0.0625, -0.5, -0.125, 0.125, -0.3125, 0.125}, -- NodeBox1
 		},
 	},
-	on_rightclick = function(pos, node, clicker)
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		local fdir = node.param2
 		minetest.set_node(pos, { name = "homedecor:toaster_loaf", param2 = fdir })
 		minetest.sound_play("toaster", {
@@ -177,6 +177,7 @@ homedecor.register("toaster", {
 			gain = 1.0,
 			max_hear_distance = 5
 		})
+		return itemstack
 	end
 })
 
@@ -199,9 +200,10 @@ homedecor.register("toaster_loaf", {
 			{0.0625, -0.3125, -0.0935, 0.0935, -0.25, 0.0935}, -- NodeBox3
 		},
 	},
-	on_rightclick = function(pos, node, clicker)
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		local fdir = node.param2
 		minetest.set_node(pos, { name = "homedecor:toaster", param2 = fdir })
+		return itemstack
 	end,
 	drop = "homedecor:toaster"
 })

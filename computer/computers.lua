@@ -29,6 +29,7 @@ minetest.register_node("computer:vanio", {
 	on_rightclick = function(pos, node, clicker, itemstack)
 		node.name = "computer:vanio_off"
 		minetest.set_node(pos, node)
+		return itemstack
 	end
 })
 
@@ -48,6 +49,7 @@ minetest.register_node("computer:vanio_off", {
 	on_rightclick = function(pos, node, clicker, itemstack)
 		node.name = "computer:vanio"
 		minetest.set_node(pos, node)
+		return itemstack
 	end
 })
 
@@ -168,6 +170,7 @@ minetest.register_node("computer:monitor", {
 	on_rightclick = function(pos, node, clicker, itemstack)
 		node.name = "computer:monitor_on"
 		minetest.set_node(pos, node)
+		return itemstack
 	end
 })
 
@@ -186,6 +189,7 @@ minetest.register_node("computer:monitor_on", {
 	on_rightclick = function(pos, node, clicker, itemstack)
 		node.name = "computer:monitor"
 		minetest.set_node(pos, node)
+		return itemstack
 	end
 })
 
@@ -294,12 +298,13 @@ minetest.register_node("computer:server", {
 	on_rightclick = function(pos, node, clicker, itemstack)
 		node.name = "computer:server_on"
 		minetest.set_node(pos, node)
+		return itemstack
 	end,
 	on_place = function(itemstack, placer, pointed_thing)
 		local pos = pointed_thing.above
 		if minetest.get_node({x=pos.x, y=pos.y+1, z=pos.z}).name ~= "air" then
 			minetest.chat_send_player( placer:get_player_name(), "Not enough vertical space to place a server!" )
-			return
+			return itemstack
 		end
 		return minetest.item_place(itemstack, placer, pointed_thing)
 	end
@@ -333,5 +338,6 @@ minetest.register_node("computer:server_on", {
 	on_rightclick = function(pos, node, clicker, itemstack)
 		node.name = "computer:server"
 		minetest.set_node(pos, node)
+		return itemstack
 	end
 })

@@ -114,7 +114,7 @@ homedecor.register("sink", {
 
 --Taps
 
-local function taps_on_rightclick(pos, node, clicker)
+local function taps_on_rightclick(pos, node, clicker, itemstack, pointed_thing)
 	local below = minetest.get_node_or_nil({x=pos.x, y=pos.y-1, z=pos.z})
 	if below and
 	  below.name == "homedecor:shower_tray" or
@@ -129,6 +129,7 @@ local function taps_on_rightclick(pos, node, clicker)
 		}
 		homedecor.start_particle_spawner(pos, node, particledef, "homedecor_faucet")
 	end
+	return itemstack
 end
 
 homedecor.register("taps", {
@@ -225,7 +226,7 @@ homedecor.register("shower_head", {
 	selection_box = sh_cbox,
 	walkable = false,
 	on_rotate = screwdriver.disallow,
-	on_rightclick = function (pos, node, clicker)
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		local below = minetest.get_node_or_nil({x=pos.x, y=pos.y-2.0, z=pos.z})
 		if below and below.name == "homedecor:shower_tray" then
 			local particledef = {
@@ -237,6 +238,7 @@ homedecor.register("shower_head", {
 			}
 			homedecor.start_particle_spawner(pos, node, particledef, "homedecor_shower")
 		end
+		return itemstack
 	end,
 	on_destruct = function(pos)
 		homedecor.stop_particle_spawner(pos)

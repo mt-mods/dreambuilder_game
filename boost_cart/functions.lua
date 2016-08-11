@@ -55,7 +55,7 @@ function boost_cart:is_rail(pos, railtype)
 	return minetest.get_item_group(node, "connect_to_raillike") == railtype
 end
 
-function boost_cart:check_front_up_down(pos, dir_, check_down, railtype)
+function boost_cart:check_front_up_down(pos, dir_, check_up, railtype)
 	local dir = vector.new(dir_)
 	local cur = nil
 
@@ -66,7 +66,7 @@ function boost_cart:check_front_up_down(pos, dir_, check_down, railtype)
 		return dir
 	end
 	-- Up
-	if check_down then
+	if check_up then
 		dir.y = 1
 		cur = vector.add(pos, dir)
 		if boost_cart:is_rail(cur, railtype) then
@@ -212,4 +212,15 @@ function boost_cart:register_rail(name, def)
 	end
 
 	minetest.register_node(name, def)
+end
+
+function boost_cart:get_rail_groups(additional_groups)
+	-- Get the default rail groups and add more when a table is given
+	local groups = {dig_immediate = 2, attached_node = 1, rail = 1, connect_to_raillike = 1}
+	if type(additional_groups) == "table" then
+		for k, v in pairs(additional_groups) do
+			groups[k] = v
+		end
+	end
+	return groups
 end
