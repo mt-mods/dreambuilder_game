@@ -26,6 +26,7 @@ Page =
 %s of %s = 
 Filter = 
 Search = 
+Reset search and display everything = 
 
 ### register.lua ###
 Can use the creative inventory = 
@@ -53,6 +54,16 @@ Copy to craft grid: =
 All = 
 Alternate = 
 Crafting Grid =  
+Show next recipe = 
+Show next usage = 
+Show previous recipe = 
+Show previous usage = 
+# Shown for huge crafting recipes; try to keep the line length short and use multiple line breaks as needed
+This recipe is too\nlarge to be displayed. = 
+# %s = group name (e.g. wool)
+Any item belonging to the %s group = 
+# %s = List of “and”-concatenated group names
+Any item belonging to the groups %s =
 Recipe %d of %d = 
 Usage %d of %d = 
 No recipes =
@@ -66,6 +77,10 @@ Go home =
 Clear inventory =
 Give me: =
 To craft grid: =
+
+### group.lua ###
+# Logical connective, example: “Any item belonging to the groups foo and bar”
+\sand\s = 
 
 ### waypoints.lua ###
 White = 

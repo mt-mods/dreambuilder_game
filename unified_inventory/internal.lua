@@ -179,13 +179,19 @@ function unified_inventory.get_formspec(player, page)
 			.. minetest.formspec_escape(unified_inventory.current_searchbox[player_name]) .. "]"
 		formspec[n+1] = "image_button[12.2,8.1;.8,.8;ui_search_icon.png;searchbutton;]"
 			.. "tooltip[searchbutton;" ..F("Search") .. "]"
+		formspec[n+2] = "image_button[12.9,8.1;.8,.8;ui_reset_icon.png;searchresetbutton;]"
+			.. "tooltip[searchbutton;" ..F("Search") .. "]"
+			.. "tooltip[searchresetbutton;" ..F("Reset search and display everything") .. "]"
 	else
 		formspec[n] = "field[8.5,5.225;2.2,1;searchbox;;"
 			.. minetest.formspec_escape(unified_inventory.current_searchbox[player_name]) .. "]"
 		formspec[n+1] = "image_button[10.3,5;.8,.8;ui_search_icon.png;searchbutton;]"
 			.. "tooltip[searchbutton;" ..F("Search") .. "]"
+		formspec[n+2] = "image_button[11,5;.8,.8;ui_reset_icon.png;searchresetbutton;]"
+			.. "tooltip[searchbutton;" ..F("Search") .. "]"
+			.. "tooltip[searchresetbutton;" ..F("Reset search and display everything") .. "]"
 	end
-	n = n+2
+	n = n+3
 
 	local no_matches = "No matching items"
 	if draw_lite_mode then

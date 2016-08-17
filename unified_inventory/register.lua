@@ -188,11 +188,24 @@ local function stack_image_button(x, y, w, h, buttonname_prefix, item)
 		selectitem = group_item.sole and displayitem or name
 	end
 	local label = show_is_group and "G" or ""
-	return string.format("item_image_button[%f,%f;%u,%u;%s;%s;%s]",
+	local buttonname = minetest.formspec_escape(buttonname_prefix..unified_inventory.mangle_for_formspec(selectitem))
+	local button = string.format("item_image_button[%f,%f;%f,%f;%s;%s;%s]",
 			x, y, w, h,
-			minetest.formspec_escape(displayitem),
-			minetest.formspec_escape(buttonname_prefix..unified_inventory.mangle_for_formspec(selectitem)),
-			label)
+			minetest.formspec_escape(displayitem), buttonname, label)
+	if show_is_group then
+		local groupstring, andcount = unified_inventory.extract_groupnames(name)
+		local grouptip
+		if andcount == 1 then
+			grouptip = string.format(S("Any item belonging to the %s group"), groupstring)
+		elseif andcount > 1 then
+			grouptip = string.format(S("Any item belonging to the groups %s"), groupstring)
+		end
+		grouptip = minetest.formspec_escape(grouptip)
+		if andcount >= 1 then
+			button = button  .. string.format("tooltip[%s;%s]", buttonname, grouptip)
+		end
+	end
+	return button
 end
 
 local recipe_text = {
@@ -206,6 +219,14 @@ local no_recipe_text = {
 local role_text = {
 	recipe = "Result",
 	usage = "Ingredient",
+}
+local next_alt_text = {
+	recipe = "Show next recipe",
+	usage = "Show next usage",
+}
+local prev_alt_text = {
+	recipe = "Show previous recipe",
+	usage = "Show previous usage",
 }
 local other_dir = {
 	recipe = "usage",
@@ -276,28 +297,57 @@ unified_inventory.register_page("craftguide", {
 
 		-- This keeps recipes aligned to the right,
 		-- so that they're close to the arrow.
-		local xoffset = 1.5 + (3 - display_size.width)
+		local xoffset = 5.5
+		-- Offset factor for crafting grids with side length > 4
+		local of = (3/math.max(3, math.max(display_size.width, display_size.height)))
+		local od = 0
+		-- Minimum grid size at which size optimazation measures kick in
+		local mini_craft_size = 6
+		if display_size.width >= mini_craft_size then
+			od = math.max(1, display_size.width - 2)
+			xoffset = xoffset - 0.1
+		end
+		-- Size modifier factor
+		local sf = math.min(1, of * (1.05 + 0.05*od))
+		-- Button size
+		local bsize_h = 1.1 * sf
+		local bsize_w = bsize_h
+		if display_size.width >= mini_craft_size then
+			bsize_w = 1.175 * sf
+		end
+		if (bsize_h > 0.35 and display_size.width) then
 		for y = 1, display_size.height do
 		for x = 1, display_size.width do
 			local item
 			if craft and x <= craft_width then
 				item = craft.items[(y-1) * craft_width + x]
 			end
+			-- Flipped x, used to build formspec buttons from right to left
+			local fx = display_size.width - (x-1)
+			-- x offset, y offset
+			local xof = (fx-1) * of + of
+			local yof = (y-1) * of + 1
 			if item then
 				formspec = formspec..stack_image_button(
-						xoffset + x, formspecy - 1 + y, 1.1, 1.1,
+						xoffset - xof, formspecy - 1 + yof, bsize_w, bsize_h,
 						"item_button_recipe_",
 						ItemStack(item))
 			else
 				-- Fake buttons just to make grid
 				formspec = formspec.."image_button["
-					..tostring(xoffset + x)..","..tostring(formspecy - 1 + y)
-					..";1,1;ui_blank_image.png;;]"
+					..tostring(xoffset - xof)..","..tostring(formspecy - 1 + yof)
+					..";"..bsize_w..","..bsize_h..";ui_blank_image.png;;]"
 			end
 		end
 		end
+		else
+			-- Error
+			formspec = formspec.."label["
+				..tostring(2)..","..tostring(formspecy)
+				..";"..minetest.formspec_escape(S("This recipe is too\nlarge to be displayed.")).."]"
+		end
 
-		if craft_type.uses_crafting_grid then
+		if craft_type.uses_crafting_grid and display_size.width <= 3 then
 			formspec = formspec.."label[0,"..(formspecy + 0.9)..";" .. F("To craft grid:") .. "]"
 					.."button[0,  "..(formspecy + 1.5)..";0.6,0.5;craftguide_craft_1;1]"
 					.."button[0.6,"..(formspecy + 1.5)..";0.7,0.5;craftguide_craft_10;10]"
@@ -313,7 +363,10 @@ unified_inventory.register_page("craftguide", {
 		if alternates and alternates > 1 then
 			formspec = formspec.."label[5.5,"..(formspecy + 1.6)..";"
 					..string.format(F(recipe_text[dir]), alternate, alternates).."]"
-					.."button[5.5,"..(formspecy + 2)..";2,1;alternate;" .. F("Alternate") .. "]"
+					.."image_button[5.5,"..(formspecy + 2)..";1,1;ui_left_icon.png;alternate_prev;]"
+					.."image_button[6.5,"..(formspecy + 2)..";1,1;ui_right_icon.png;alternate;]"
+					.."tooltip[alternate_prev;"..F(prev_alt_text[dir]).."]"
+					.."tooltip[alternate;"..F(next_alt_text[dir]).."]"
 		end
 		return {formspec = formspec}
 	end,
