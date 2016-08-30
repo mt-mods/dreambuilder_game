@@ -36,7 +36,8 @@ homedecor.register("trash_can_green_open", {
 		formspec = "size[8,9]" .. default.gui_bg .. default.gui_bg_img .. default.gui_slots ..
 		"button[2.5,3.8;3,1;empty;Empty Trash]"..
 		"list[context;main;2.5,0.5;3,3;]"..
-		"list[current_player;main;0,5;8,4;]",
+		"list[current_player;main;0,5;8,4;]" ..
+		"listring[]",
 	},
 	on_receive_fields = function(pos, formname, fields, sender)
 		if fields.empty then

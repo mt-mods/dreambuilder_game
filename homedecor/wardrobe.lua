@@ -39,7 +39,8 @@ homedecor.register("wardrobe", {
 			clothes_strings..
 			"vertlabel[0,5.2;STORAGE]"..
 			"list[current_name;main;0.5,4.5;5,2;]"..
-			"list[current_player;main;0.5,6.8;5,2;]")
+			"list[current_player;main;0.5,6.8;5,2;]" ..
+			"listring[]")
 	end,
 	on_receive_fields = function(pos, formname, fields, sender)
 		local meta = minetest.get_meta(pos)

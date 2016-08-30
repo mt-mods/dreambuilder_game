@@ -48,6 +48,7 @@ minetest.register_alias("homedecor:refrigerator_steel_top", "air")
 
 minetest.register_alias("homedecor:refrigerator_white_bottom_locked", "homedecor:refrigerator_white_locked")
 minetest.register_alias("homedecor:refrigerator_white_top_locked", "air")
+minetest.register_alias("homedecor:refrigerator_locked", "homedecor:refrigerator_white_locked")
 
 minetest.register_alias("homedecor:refrigerator_steel_bottom_locked", "homedecor:refrigerator_steel_locked")
 minetest.register_alias("homedecor:refrigerator_steel_top_locked", "air")
