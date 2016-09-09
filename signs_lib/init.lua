@@ -41,10 +41,10 @@ signs_lib.regular_wall_sign_model = {
 	textpos = {
 		nil,
 		nil,
-		{delta = {x =  0.43,  y = 0.07, z =  0     }, yaw = math.pi / -2},
-		{delta = {x = -0.43,  y = 0.07, z =  0     }, yaw = math.pi / 2},
-		{delta = {x =  0,     y = 0.07, z =  0.43  }, yaw = 0},
-		{delta = {x =  0,     y = 0.07, z = -0.43  }, yaw = math.pi},
+		{delta = { x =  0.41, y = 0.07, z =  0    }, yaw = math.pi / -2},
+		{delta = { x = -0.41, y = 0.07, z =  0    }, yaw = math.pi / 2},
+		{delta = { x =  0,    y = 0.07, z =  0.41 }, yaw = 0},
+		{delta = { x =  0,    y = 0.07, z = -0.41 }, yaw = math.pi},
 	}
 }
 
@@ -54,10 +54,10 @@ signs_lib.metal_wall_sign_model = {
 		fixed = {-0.4375, -0.25, 0.4375, 0.4375, 0.375, 0.5}
 	},
 	textpos = {
-		{delta = {x =  0,     y = 0.07, z =  0.43  }, yaw = 0},
-		{delta = {x =  0.43,  y = 0.07, z =  0     }, yaw = math.pi / -2},
-		{delta = {x =  0,     y = 0.07, z = -0.43  }, yaw = math.pi},
-		{delta = {x = -0.43,  y = 0.07, z =  0     }, yaw = math.pi / 2},
+		{delta = { x =  0,     y = 0.07, z =  0.41 }, yaw = 0},
+		{delta = { x =  0.41,  y = 0.07, z =  0    }, yaw = math.pi / -2},
+		{delta = { x =  0,     y = 0.07, z = -0.41 }, yaw = math.pi},
+		{delta = { x = -0.41,  y = 0.07, z =  0    }, yaw = math.pi / 2},
 	}
 }
 
@@ -70,10 +70,10 @@ signs_lib.yard_sign_model = {
 		}
 	},
 	textpos = {
-		{delta = {x =  0,      y = 0.07, z = -0.068}, yaw = 0},
-		{delta = {x = -0.068,  y = 0.07, z =  0    }, yaw = math.pi / -2},
-		{delta = {x =  0,      y = 0.07, z =  0.068}, yaw = math.pi},
-		{delta = {x =  0.068,  y = 0.07, z =  0    }, yaw = math.pi / 2},
+		{delta = { x =  0,    y = 0.07, z = -0.08 }, yaw = 0},
+		{delta = { x = -0.08, y = 0.07, z =  0    }, yaw = math.pi / -2},
+		{delta = { x =  0,    y = 0.07, z =  0.08 }, yaw = math.pi},
+		{delta = { x =  0.08, y = 0.07, z =  0    }, yaw = math.pi / 2},
 	}
 }
 
@@ -86,10 +86,10 @@ signs_lib.hanging_sign_model = {
 		}
 	},
 	textpos = {
-		{delta = {x =  0,      y = -0.02, z = -0.063}, yaw = 0},
-		{delta = {x = -0.063,  y = -0.02, z =  0    }, yaw = math.pi / -2},
-		{delta = {x =  0,      y = -0.02, z =  0.063}, yaw = math.pi},
-		{delta = {x =  0.063,  y = -0.02, z =  0    }, yaw = math.pi / 2},
+		{delta = { x =  0,    y = -0.02, z = -0.08 }, yaw = 0},
+		{delta = { x = -0.08, y = -0.02, z =  0    }, yaw = math.pi / -2},
+		{delta = { x =  0,    y = -0.02, z =  0.08 }, yaw = math.pi},
+		{delta = { x =  0.08, y = -0.02, z =  0    }, yaw = math.pi / 2},
 	}
 }
 
@@ -102,10 +102,10 @@ signs_lib.sign_post_model = {
 		}
 	},
 	textpos = {
-		{delta = {x = 0,      y = 0.07, z = -0.188}, yaw = 0},
-		{delta = {x = -0.188, y = 0.07, z = 0     }, yaw = math.pi / -2},
-		{delta = {x = 0,      y = 0.07, z = 0.188 }, yaw = math.pi},
-		{delta = {x = 0.188,  y = 0.07, z = 0     }, yaw = math.pi / 2},
+		{delta = { x = 0,    y = 0.07, z = -0.2 }, yaw = 0},
+		{delta = { x = -0.2, y = 0.07, z = 0    }, yaw = math.pi / -2},
+		{delta = { x = 0,    y = 0.07, z = 0.2  }, yaw = math.pi},
+		{delta = { x = 0.2,  y = 0.07, z = 0    }, yaw = math.pi / 2},
 	}
 }
 
@@ -140,6 +140,9 @@ else
 	default_sign = "default:sign_wall"
 	default_sign_image = "default_sign_wall.png"
 end
+
+default_sign_metal = "default:sign_wall_steel"
+default_sign_metal_image = "default_sign_steel.png"
 
 --table copy
 
@@ -301,14 +304,16 @@ local function fill_line(x, y, w, c)
 	return table.concat(tex)
 end
 
-local function make_line_texture(line, lineno)
+local function make_line_texture(line, lineno, pos)
 
 	local width = 0
 	local maxw = 0
 
 	local words = { }
+	local n = minetest.registered_nodes[minetest.get_node(pos).name]
+	local defaultcolor = n.defaultcolor or 0
 
-	local cur_color = 0
+	local cur_color = tonumber(defaultcolor, 16)
 
 	-- We check which chars are available here.
 	for word_i, word in ipairs(line) do
@@ -389,12 +394,12 @@ local function make_line_texture(line, lineno)
 	return table.concat(texture), lineno
 end
 
-local function make_sign_texture(lines)
+local function make_sign_texture(lines, pos)
 	local texture = { ("[combine:%dx%d"):format(SIGN_WIDTH, LINE_HEIGHT * NUMBER_OF_LINES) }
 	local lineno = 0
 	for i = 1, #lines do
 		if lineno >= NUMBER_OF_LINES then break end
-		local linetex, ln = make_line_texture(lines[i], lineno)
+		local linetex, ln = make_line_texture(lines[i], lineno, pos)
 		table.insert(texture, linetex)
 		lineno = ln + 1
 	end
@@ -402,10 +407,10 @@ local function make_sign_texture(lines)
 	return table.concat(texture, "")
 end
 
-local function set_obj_text(obj, text, new)
+local function set_obj_text(obj, text, new, pos)
 	local split = new and split_lines_and_words or split_lines_and_words_old
 	obj:set_properties({
-		textures={make_sign_texture(split(text))},
+		textures={make_sign_texture(split(text), pos)},
 		visual_size = TEXT_SCALE,
 	})
 end
@@ -495,7 +500,7 @@ signs_lib.update_sign = function(pos, fields, owner)
 			if found then
 				v:remove()
 			else
-				set_obj_text(v, text, new)
+				set_obj_text(v, text, new, pos)
 				found = true
 			end
 		end
@@ -507,12 +512,17 @@ signs_lib.update_sign = function(pos, fields, owner)
 	-- if there is no entity
 	local sign_info
 	local signnode = minetest.get_node(pos)
-	if signnode.name == "signs:sign_yard" then
+	local signname = signnode.name
+	local textpos = minetest.registered_nodes[signname].textpos
+	if textpos then
+		sign_info = textpos[minetest.get_node(pos).param2 + 1]
+	elseif signnode.name == "signs:sign_yard" then
 		sign_info = signs_lib.yard_sign_model.textpos[minetest.get_node(pos).param2 + 1]
 	elseif signnode.name == "signs:sign_hanging" then
 		sign_info = signs_lib.hanging_sign_model.textpos[minetest.get_node(pos).param2 + 1]
 	elseif string.find(signnode.name, "sign_wall") then
 		if signnode.name == default_sign
+		  or signnode.name == default_sign_metal
 		  or signnode.name == "locked_sign:sign_wall_locked" then
 			sign_info = signs_lib.regular_wall_sign_model.textpos[minetest.get_node(pos).param2 + 1]
 		else
@@ -577,7 +587,6 @@ function signs_lib.determine_sign_type(itemstack, placer, pointed_thing, locked)
 		end
 
 		local fdir = minetest.dir_to_facedir(dir)
-
 		local pt_name = minetest.get_node(under).name
 		local signname = itemstack:get_name()
 
@@ -587,8 +596,11 @@ function signs_lib.determine_sign_type(itemstack, placer, pointed_thing, locked)
 			minetest.add_node(above, {name = "signs:sign_hanging", param2 = fdir})
 		elseif wdir == 1 and signname == default_sign then
 			minetest.add_node(above, {name = "signs:sign_yard", param2 = fdir})
+		elseif signname == default_sign_metal then
+			minetest.add_node(above, {name = signname, param2 = wdir })
 		elseif signname ~= default_sign
-		  and signname ~= "locked_sign:sign_wall_locked" then -- it's a metal wall sign.
+		  and signname ~= default_sign_metal
+		  and signname ~= "locked_sign:sign_wall_locked" then -- it's a signs_lib colored metal wall sign.
 			minetest.add_node(above, {name = signname, param2 = fdir})
 		else -- it must be a default or locked wooden wall sign
 			minetest.add_node(above, {name = signname, param2 = wdir }) -- note it's wallmounted here!
@@ -793,11 +805,47 @@ minetest.register_node(":locked_sign:sign_wall_locked", {
 	on_rotate = signs_lib.wallmounted_rotate
 })
 
+-- default metal sign, if defined
+
+if minetest.registered_nodes["default:sign_wall_steel"] then
+	minetest.register_node(":"..default_sign_metal, {
+		description = S("Sign"),
+		inventory_image = default_sign_metal_image,
+		wield_image = default_sign_metal_image,
+		node_placement_prediction = "",
+		sunlight_propagates = true,
+		paramtype = "light",
+		paramtype2 = "wallmounted",
+		drawtype = "nodebox",
+		node_box = signs_lib.regular_wall_sign_model.nodebox,
+		tiles = {"signs_wall_sign_metal.png"},
+		groups = sign_groups,
+
+		on_place = function(itemstack, placer, pointed_thing)
+			return signs_lib.determine_sign_type(itemstack, placer, pointed_thing)
+		end,
+		on_construct = function(pos)
+			signs_lib.construct_sign(pos)
+		end,
+		on_destruct = function(pos)
+			signs_lib.destruct_sign(pos)
+		end,
+		on_receive_fields = function(pos, formname, fields, sender)
+			signs_lib.receive_fields(pos, formname, fields, sender)
+		end,
+		on_punch = function(pos, node, puncher)
+			signs_lib.update_sign(pos)
+		end,
+		on_rotate = signs_lib.wallmounted_rotate
+	})
+end
+
 -- metal, colored signs
 
 local sign_colors = { "green", "yellow", "red", "white_red", "white_black", "orange", "blue", "brown" }
+local sign_default_text_colors = { "f", "0", "f", "4", "0", "0", "f", "f" }
 
-for _, color in ipairs(sign_colors) do
+for i, color in ipairs(sign_colors) do
 	minetest.register_node(":signs:sign_wall_"..color, {
 		description = S("Sign ("..color..", metal)"),
 		inventory_image = "signs_"..color.."_inv.png",
@@ -816,6 +864,7 @@ for _, color in ipairs(sign_colors) do
 			"signs_metal_back.png",
 			"signs_"..color.."_front.png"
 		},
+		defaultcolor = sign_default_text_colors[i],
 		groups = sign_groups,
 		on_place = function(itemstack, placer, pointed_thing)
 			return signs_lib.determine_sign_type(itemstack, placer, pointed_thing)
@@ -838,12 +887,13 @@ end
 local signs_text_on_activate
 
 signs_text_on_activate = function(self)
-	local meta = minetest.get_meta(self.object:getpos())
+	local pos = self.object:getpos()
+	local meta = minetest.get_meta(pos)
 	local text = meta:get_string("text")
 	local new = (meta:get_int("__signslib_new_format") ~= 0)
 	if text then
 		text = trim_input(text)
-		set_obj_text(self.object, text, new)
+		set_obj_text(self.object, text, new, pos)
 	end
 end
 
@@ -934,13 +984,15 @@ minetest.register_alias("sign_wall_locked", "locked_sign:sign_wall_locked")
 
 signs_lib.register_fence_with_sign("default:fence_wood", "signs:sign_post")
 
--- restore signs' text after /clearobjects and the like
+-- restore signs' text after /clearobjects and the like, the next time
+-- a block is reloaded by the server.
 
-minetest.register_abm({
+minetest.register_lbm({
 	nodenames = signs_lib.sign_node_list,
-	interval = 15,
-	chance = 1,
-	action = function(pos, node, active_object_count, active_object_count_wider)
+	name = "signs_lib:restore_sign_text",
+	label = "Restore sign text",
+	run_at_every_load = true,
+	action = function(pos, node)
 		signs_lib.update_sign(pos)
 	end
 })
@@ -956,7 +1008,7 @@ minetest.register_craft({
 	}
 })
 
---Alternate recipe.
+--Alternate recipes.
 
 minetest.register_craft({
     	output = "locked_sign:sign_wall_locked",
@@ -966,13 +1018,21 @@ minetest.register_craft({
     },
 })
 
+minetest.register_craft({
+    	output = "locked_sign:sign_wall_locked",
+    	recipe = {
+        	{default_sign_metal},
+        	{"default:steel_ingot"},
+    },
+})
+
 -- craft recipes for the metal signs
 
 minetest.register_craft( {
-        output = "signs:sign_wall_green 4",
+        output = "signs:sign_wall_green",
         recipe = {
 			{ "dye:dark_green", "dye:white", "dye:dark_green" },
-			{ "default:steel_ingot", "default:steel_ingot", "default:steel_ingot" }
+			{ "", default_sign_metal, "" }
         },
 })
 
@@ -985,10 +1045,10 @@ minetest.register_craft( {
 })
 
 minetest.register_craft( {
-        output = "signs:sign_wall_yellow 4",
+        output = "signs:sign_wall_yellow",
         recipe = {
 			{ "dye:yellow", "dye:black", "dye:yellow" },
-			{ "default:steel_ingot", "default:steel_ingot", "default:steel_ingot" }
+			{ "", default_sign_metal, "" }
         },
 })
 
@@ -1001,10 +1061,10 @@ minetest.register_craft( {
 })
 
 minetest.register_craft( {
-        output = "signs:sign_wall_red 4",
+        output = "signs:sign_wall_red",
         recipe = {
 			{ "dye:red", "dye:white", "dye:red" },
-			{ "default:steel_ingot", "default:steel_ingot", "default:steel_ingot" }
+			{ "", default_sign_metal, "" }
         },
 })
 
@@ -1017,10 +1077,10 @@ minetest.register_craft( {
 })
 
 minetest.register_craft( {
-        output = "signs:sign_wall_white_red 4",
+        output = "signs:sign_wall_white_red",
         recipe = {
 			{ "dye:white", "dye:red", "dye:white" },
-			{ "default:steel_ingot", "default:steel_ingot", "default:steel_ingot" }
+			{ "", default_sign_metal, "" }
         },
 })
 
@@ -1033,10 +1093,10 @@ minetest.register_craft( {
 })
 
 minetest.register_craft( {
-        output = "signs:sign_wall_white_black 4",
+        output = "signs:sign_wall_white_black",
         recipe = {
 			{ "dye:white", "dye:black", "dye:white" },
-			{ "default:steel_ingot", "default:steel_ingot", "default:steel_ingot" }
+			{ "", default_sign_metal, "" }
         },
 })
 
@@ -1049,10 +1109,10 @@ minetest.register_craft( {
 })
 
 minetest.register_craft( {
-        output = "signs:sign_wall_orange 4",
+        output = "signs:sign_wall_orange",
         recipe = {
 			{ "dye:orange", "dye:black", "dye:orange" },
-			{ "default:steel_ingot", "default:steel_ingot", "default:steel_ingot" }
+			{ "", default_sign_metal, "" }
         },
 })
 
@@ -1065,10 +1125,10 @@ minetest.register_craft( {
 })
 
 minetest.register_craft( {
-        output = "signs:sign_wall_blue 4",
+        output = "signs:sign_wall_blue",
         recipe = {
 			{ "dye:blue", "dye:white", "dye:blue" },
-			{ "default:steel_ingot", "default:steel_ingot", "default:steel_ingot" }
+			{ "", default_sign_metal, "" }
         },
 })
 
@@ -1081,10 +1141,10 @@ minetest.register_craft( {
 })
 
 minetest.register_craft( {
-        output = "signs:sign_wall_brown 4",
+        output = "signs:sign_wall_brown",
         recipe = {
 			{ "dye:brown", "dye:white", "dye:brown" },
-			{ "default:steel_ingot", "default:steel_ingot", "default:steel_ingot" }
+			{ "", default_sign_metal, "" }
         },
 })
 

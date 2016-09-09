@@ -70,6 +70,8 @@ dofile(minetest.get_modpath("mesecons").."/internal.lua");
 -- these are the only functions you need to remember
 
 mesecon.queue:add_function("receptor_on", function (pos, rules)
+	mesecon.vm_begin()
+
 	rules = rules or mesecon.rules.default
 
 	-- if area (any of the rule targets) is not loaded, keep trying and call this again later
@@ -90,6 +92,8 @@ mesecon.queue:add_function("receptor_on", function (pos, rules)
 			mesecon.turnon(np, rulename)
 		end
 	end
+
+	mesecon.vm_commit()
 end)
 
 function mesecon.receptor_on(pos, rules)
@@ -112,10 +116,16 @@ mesecon.queue:add_function("receptor_off", function (pos, rules)
 		local np = vector.add(pos, rule)
 		local rulenames = mesecon.rules_link_rule_all(pos, rule)
 		for _, rulename in ipairs(rulenames) do
-			if not mesecon.connected_to_receptor(np, mesecon.invertRule(rule)) then
-				mesecon.turnoff(np, rulename)
+			mesecon.vm_begin()
+			mesecon.changesignal(np, minetest.get_node(np), rulename, mesecon.state.off, 2)
+
+			-- Turnoff returns true if turnoff process was successful, no onstate receptor
+			-- was found along the way. Commit changes that were made in voxelmanip. If turnoff
+			-- returns true, an onstate receptor was found, abort voxelmanip transaction.
+			if (mesecon.turnoff(np, rulename)) then
+				mesecon.vm_commit()
 			else
-				mesecon.changesignal(np, minetest.get_node(np), rulename, mesecon.state.off, 2)
+				mesecon.vm_abort()
 			end
 		end
 	end
