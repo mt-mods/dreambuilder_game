@@ -66,7 +66,7 @@ for _, row in ipairs(ilights.types) do
 		groups = {cracky=3},
 	    paramtype = "light",
 	    paramtype2 = "facedir",
-	    light_source = 15,
+	    light_source = 14,
 		selection_box = lamp_cbox,
 		collision_box = lamp_cbox,
 		on_place = minetest.rotate_node

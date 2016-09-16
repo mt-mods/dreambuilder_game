@@ -31,6 +31,8 @@ end
 
 signs_lib.modpath = minetest.get_modpath("signs_lib")
 
+local DEFAULT_TEXT_SCALE = {x=0.8, y=0.5}
+
 signs_lib.regular_wall_sign_model = {
 	nodebox = {
 		type = "wallmounted",
@@ -116,18 +118,19 @@ signs_lib.gettext = S
 -- the list of standard sign nodes
 
 signs_lib.sign_node_list = {
-		"default:sign_wall_wood",
-		"signs:sign_yard",
-		"signs:sign_hanging",
-		"signs:sign_wall_green",
-		"signs:sign_wall_yellow",
-		"signs:sign_wall_red",
-		"signs:sign_wall_white_red",
-		"signs:sign_wall_white_black",
-		"signs:sign_wall_orange",
-		"signs:sign_wall_blue",
-		"signs:sign_wall_brown",
-		"locked_sign:sign_wall_locked"
+	"default:sign_wall_wood",
+	"default:sign_wall_steel",
+	"signs:sign_yard",
+	"signs:sign_hanging",
+	"signs:sign_wall_green",
+	"signs:sign_wall_yellow",
+	"signs:sign_wall_red",
+	"signs:sign_wall_white_red",
+	"signs:sign_wall_white_black",
+	"signs:sign_wall_orange",
+	"signs:sign_wall_blue",
+	"signs:sign_wall_brown",
+	"locked_sign:sign_wall_locked"
 }
 
 local default_sign, default_sign_image
@@ -160,7 +163,7 @@ end
 
 -- infinite stacks
 
-if minetest.get_modpath("unified_inventory") or not minetest.setting_getbool("creative_mode") then
+if not minetest.setting_getbool("creative_mode") then
 	signs_lib.expect_infinite_stacks = false
 else
 	signs_lib.expect_infinite_stacks = true
@@ -178,8 +181,6 @@ local FONT_FMT_SIMPLE = "hdf_%02x.png"
 
 -- Path to the textures.
 local TP = MP.."/textures"
-
-local TEXT_SCALE = {x=0.8, y=0.5}
 
 -- Lots of overkill here. KISS advocates, go away, shoo! ;) -- kaeza
 
@@ -311,9 +312,9 @@ local function make_line_texture(line, lineno, pos)
 
 	local words = { }
 	local n = minetest.registered_nodes[minetest.get_node(pos).name]
-	local defaultcolor = n.defaultcolor or 0
+	local default_color = n.default_color or 0
 
-	local cur_color = tonumber(defaultcolor, 16)
+	local cur_color = tonumber(default_color, 16)
 
 	-- We check which chars are available here.
 	for word_i, word in ipairs(line) do
@@ -409,9 +410,11 @@ end
 
 local function set_obj_text(obj, text, new, pos)
 	local split = new and split_lines_and_words or split_lines_and_words_old
+	local n = minetest.registered_nodes[minetest.get_node(pos).name]
+	local text_scale = n.text_scale or DEFAULT_TEXT_SCALE
 	obj:set_properties({
 		textures={make_sign_texture(split(text), pos)},
-		visual_size = TEXT_SCALE,
+		visual_size = text_scale,
 	})
 end
 
@@ -864,7 +867,7 @@ for i, color in ipairs(sign_colors) do
 			"signs_metal_back.png",
 			"signs_"..color.."_front.png"
 		},
-		defaultcolor = sign_default_text_colors[i],
+		default_color = sign_default_text_colors[i],
 		groups = sign_groups,
 		on_place = function(itemstack, placer, pointed_thing)
 			return signs_lib.determine_sign_type(itemstack, placer, pointed_thing)
