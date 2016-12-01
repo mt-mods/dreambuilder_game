@@ -190,7 +190,7 @@ minetest.register_on_joinplayer(function(player)
 		on_put = invsaw.on_put,
 		on_take = invsaw.on_take,
 		allow_move = function() return 0 end
-	})
+	}, name)
 	inv:set_size("input",1)
 	inv:set_size("micro",1)
 	inv:set_size("recycle",1)

@@ -59,7 +59,11 @@ unified_inventory.register_button("home_gui_set", {
 		else
 			minetest.chat_send_player(player_name,
 				S("You don't have the \"home\" privilege!"))
+			unified_inventory.set_inventory_formspec(player, unified_inventory.current_page[player_name])
 		end
+	end,
+	condition = function(player)
+		return minetest.check_player_privs(player:get_player_name(), {home=true})
 	end,
 })
 
@@ -77,7 +81,11 @@ unified_inventory.register_button("home_gui_go", {
 		else
 			minetest.chat_send_player(player_name,
 				S("You don't have the \"home\" privilege!"))
+			unified_inventory.set_inventory_formspec(player, unified_inventory.current_page[player_name])
 		end
+	end,
+	condition = function(player)
+		return minetest.check_player_privs(player:get_player_name(), {home=true})
 	end,
 })
 
@@ -97,7 +105,11 @@ unified_inventory.register_button("misc_set_day", {
 		else
 			minetest.chat_send_player(player_name,
 				S("You don't have the settime privilege!"))
+			unified_inventory.set_inventory_formspec(player, unified_inventory.current_page[player_name])
 		end
+	end,
+	condition = function(player)
+		return minetest.check_player_privs(player:get_player_name(), {settime=true})
 	end,
 })
 
@@ -117,7 +129,11 @@ unified_inventory.register_button("misc_set_night", {
 		else
 			minetest.chat_send_player(player_name,
 					S("You don't have the settime privilege!"))
+			unified_inventory.set_inventory_formspec(player, unified_inventory.current_page[player_name])
 		end
+	end,
+	condition = function(player)
+		return minetest.check_player_privs(player:get_player_name(), {settime=true})
 	end,
 })
 
@@ -133,12 +149,16 @@ unified_inventory.register_button("clear_inv", {
 					.." of creative mode to prevent"
 					.." accidental inventory trashing."
 					.."\nUse the trash slot instead."))
+			unified_inventory.set_inventory_formspec(player, unified_inventory.current_page[player_name])
 			return
 		end
 		player:get_inventory():set_list("main", {})
 		minetest.chat_send_player(player_name, S('Inventory cleared!'))
 		minetest.sound_play("trash_all",
 				{to_player=player_name, gain = 1.0})
+	end,
+	condition = function(player)
+		return unified_inventory.is_creative(player:get_player_name())
 	end,
 })
 
@@ -249,6 +269,12 @@ unified_inventory.register_page("craftguide", {
 		formspec = formspec.."listcolors[#00000000;#00000000]"
 		local item_name = unified_inventory.current_item[player_name]
 		if not item_name then return {formspec=formspec} end
+		local item_name_shown
+		if minetest.registered_items[item_name] and minetest.registered_items[item_name].description then
+			item_name_shown = string.format(S("%s (%s)"), minetest.registered_items[item_name].description, item_name)
+		else
+			item_name_shown = item_name
+		end
 
 		local dir = unified_inventory.current_craft_direction[player_name]
 		local rdir
@@ -264,7 +290,7 @@ unified_inventory.register_page("craftguide", {
 
 		formspec = formspec.."background[0.5,"..(formspecy + 0.2)..";8,3;ui_craftguide_form.png]"
 		formspec = formspec.."textarea["..craftresultx..","..craftresulty
-                           ..";10,1;;"..minetest.formspec_escape(F(role_text[dir])..": "..item_name)..";]"
+                           ..";10,1;;"..minetest.formspec_escape(F(role_text[dir])..": "..item_name_shown)..";]"
 		formspec = formspec..stack_image_button(0, formspecy, 1.1, 1.1, "item_button_"
 		                   .. rdir .. "_", ItemStack(item_name))
 
@@ -276,7 +302,7 @@ unified_inventory.register_page("craftguide", {
 			formspec = formspec.."image["..no_pos..","..formspecy..";1.1,1.1;ui_no.png]"
 			formspec = formspec..stack_image_button(item_pos, formspecy, 1.1, 1.1, "item_button_"
 			                   ..other_dir[dir].."_", ItemStack(item_name))
-			if player_privs.give == true then
+			if player_privs.give == true or player_privs.creative == true or minetest.setting_getbool("creative_mode") == true then
 				formspec = formspec.."label[0,"..(formspecy + 2.10)..";" .. F("Give me:") .. "]"
 						.."button[0,  "..(formspecy + 2.7)..";0.6,0.5;craftguide_giveme_1;1]"
 						.."button[0.6,"..(formspecy + 2.7)..";0.7,0.5;craftguide_giveme_10;10]"
@@ -353,7 +379,7 @@ unified_inventory.register_page("craftguide", {
 					.."button[0.6,"..(formspecy + 1.5)..";0.7,0.5;craftguide_craft_10;10]"
 					.."button[1.3,"..(formspecy + 1.5)..";0.8,0.5;craftguide_craft_max;" .. F("All") .. "]"
 		end
-		if player_privs.give then
+		if player_privs.give == true or player_privs.creative == true or minetest.setting_getbool("creative_mode") == true then
 			formspec = formspec.."label[0,"..(formspecy + 2.1)..";" .. F("Give me:") .. "]"
 					.."button[0,  "..(formspecy + 2.7)..";0.6,0.5;craftguide_giveme_1;1]"
 					.."button[0.6,"..(formspecy + 2.7)..";0.7,0.5;craftguide_giveme_10;10]"

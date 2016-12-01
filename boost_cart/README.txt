@@ -1,6 +1,7 @@
  Minetest mod: boost_cart
 ==========================
 Based on (and fully compatible with) the mod "carts" by PilzAdam
+Also compatible with the carts mod in the subgame "minetest_game".
 Target: Run smoothly as possible even on laggy server
 
 
@@ -16,31 +17,22 @@ Target: Run smoothly as possible even on laggy server
 
  License for everything
 ------------------------
-CC-0
+CC-0, if not specified otherwise below
 
 
  Authors
 ---------
-Hawk777
-	carts_rail_ss.png
-	carts_rail_*_ss.png
-
-hexafraction
-	carts_rail_brk.png
-	carts_rail_*_brk.png
-	carts_rail_pwr.png
-	carts_rail_*_pwr.png
+Various authors
+	carts_rail_*.png
 
 kddekadenz
 	cart_bottom.png
 	cart_side.png
 	cart_top.png
 
-numberZero
-	carts_rail_dtc.png
-	carts_rail_dtc_on.png
-	carts_rail_*_dtc.png
-	carts_rail_*_dtc_on.png
+klankbeeld (CC-BY 3.0)
+	http://freesound.org/people/klankbeeld/sounds/174042/
+	cart_rail.*.ogg
 
 Zeg9
 	cart.x

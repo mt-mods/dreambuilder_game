@@ -84,7 +84,9 @@ glooptest.extragen_module.treasure[5] = {
 local treasure_chest_formspec = 
 	"size[8,9]"..
 	"list[current_name;main;0,0;8,4;]"..
-	"list[current_player;main;0,5;8,4;]"
+	"list[current_player;main;0,5;8,4;]"..
+	"listring[current_name;main]"..
+	"listring[current_player;main]"
 	
 local treasure_chest_nodebox = {
 	{-7/16, -8/16, -7/16, 7/16, 6/16, 7/16},

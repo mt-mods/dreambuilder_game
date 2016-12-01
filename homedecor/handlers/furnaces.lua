@@ -30,7 +30,11 @@ local function make_formspec(furnacedef, percent)
 		"list[current_name;fuel;2,3;1,1;]"..
 		"list[current_name;src;2,1;1,1;]"..
 		"list[current_name;dst;5,1;"..w..","..h..";]"..
-		"list[current_player;main;0,5;8,4;]"
+		"list[current_player;main;0,5;8,4;]"..
+		"listring[current_name;dst]"..
+		"listring[current_player;main]"..
+		"listring[current_name;src]"..
+		"listring[current_player;main]"
 end
 
 --[[

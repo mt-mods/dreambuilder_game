@@ -392,7 +392,7 @@ for i in ipairs(gates_list) do
 		end,
         mesecons = {
             effector = {
-                action_on = function(pos,node) homedecor.flip_gate(pos,node,player,gate, "closed") end
+                action_on = function(pos,node) homedecor.flip_gate(pos,node,nil,gate, "closed") end
             }
         }
 	}
@@ -420,7 +420,7 @@ for i in ipairs(gates_list) do
         return itemstack
 	end
     def.mesecons.effector = {
-        action_off = function(pos,node) homedecor.flip_gate(pos,node,player,gate, "open") end
+        action_off = function(pos,node) homedecor.flip_gate(pos,node,nil,gate, "open") end
     }
 
 	minetest.register_node("homedecor:gate_"..gate.."_open", def)

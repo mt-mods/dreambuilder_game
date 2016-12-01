@@ -201,7 +201,7 @@ minetest.register_craft({
 })
 
 minetest.register_node("castle:crate", {
-	description = "Cratelol",
+	description = "Crate",
 	drawtype = "normal",
 	tiles = {"castle_crate_top.png","castle_crate_top.png","castle_crate.png","castle_crate.png","castle_crate.png","castle_crate.png"},
 	groups = {choppy=3},

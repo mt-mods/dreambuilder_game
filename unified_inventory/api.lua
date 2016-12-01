@@ -82,9 +82,11 @@ minetest.after(0.01, function()
 			-- appears after a “maybe”
 			local max_start = true
 			-- Let's iterate through the items madness!
-			for i=1,#def.drop.items do
+			-- Handle invalid drop entries gracefully.
+			local drop_items = def.drop.items or { }
+			for i=1,#drop_items do
 				if max_items_left ~= nil and max_items_left <= 0 then break end
-				local itit = def.drop.items[i]
+				local itit = drop_items[i]
 				for j=1,#itit.items do
 					local dstack = ItemStack(itit.items[j])
 					if not dstack:is_empty() and dstack:get_name() ~= name then
@@ -133,7 +135,7 @@ minetest.after(0.01, function()
 	for _, recipes in pairs(unified_inventory.crafts_for.recipe) do
 		for _, recipe in ipairs(recipes) do
 			local ingredient_items = {}
-			for _, spec in ipairs(recipe.items) do
+			for _, spec in pairs(recipe.items) do
 				local matches_spec = unified_inventory.canonical_item_spec_matcher(spec)
 				for _, name in ipairs(unified_inventory.items_list) do
 					if matches_spec(name) then

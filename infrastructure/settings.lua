@@ -35,7 +35,7 @@
 	CURVE_CHEVRON_LIGHT_RANGE = 12			-- an integer		-> default = 12		| How much light do you want it to give?
 
 -- Crosswalk lighting
-	CROSSWALK_LIGHTING_LIGHT_RANGE = 15		-- an integer		-> default = 15		| How much light do you want it to give?
+	CROSSWALK_LIGHTING_LIGHT_RANGE = 14		-- an integer		-> default = 14		| How much light do you want it to give?
 
 -- Crosswalk safety sign
 	CROSSWALK_SAFETY_SIGN_LIGHT_RANGE = 8		-- an integer		-> default = 8		| How much light do you want it to give?
@@ -44,6 +44,6 @@
 	RETROREFLECTIVE_SURFACE_LIGHT_RANGE = 8		-- an integer		-> default = 8		| How much light do you want it to give?
 
 -- Aircraft warning light
-	AIRCRAFT_WARNING_LIGHT_LIGHT_RANGE = 15		-- an integer		-> default = 15		| How much light do you want it to give?
+	AIRCRAFT_WARNING_LIGHT_LIGHT_RANGE = 14		-- an integer		-> default = 14		| How much light do you want it to give?
 -- Warning light
-	WARNING_LIGHT_LIGHT_RANGE = 15			-- an integer		-> default = 15		| How much light do you want it to give?
+	WARNING_LIGHT_LIGHT_RANGE = 14			-- an integer		-> default = 14		| How much light do you want it to give?

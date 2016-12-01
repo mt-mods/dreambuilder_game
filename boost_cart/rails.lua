@@ -1,68 +1,53 @@
-minetest.register_node(":default:rail", {
+boost_cart:register_rail(":default:rail", {
 	description = "Rail",
-	drawtype = "raillike",
 	tiles = {
-		"default_rail.png", "default_rail_curved.png",
-		"default_rail_t_junction.png", "default_rail_crossing.png"
+		"carts_rail_straight.png", "carts_rail_curved.png",
+		"carts_rail_t_junction.png", "carts_rail_crossing.png"
 	},
-	inventory_image = "default_rail.png",
-	wield_image = "default_rail.png",
-	paramtype = "light",
-	sunlight_propagates = true,
-	is_ground_content = true,
-	walkable = false,
-	selection_box = {
-		type = "fixed",
-		fixed = {-1/2, -1/2, -1/2, 1/2, -1/2+1/16, 1/2},
-	},
-	groups = boost_cart:get_rail_groups(),
+	groups = boost_cart:get_rail_groups()
 })
 
+-- Moreores' copper rail
 if minetest.get_modpath("moreores") then
-	-- Moreores' copper rail
 	minetest.register_alias("carts:copperrail", "moreores:copper_rail")
 else
 	boost_cart:register_rail(":carts:copperrail", {
 		description = "Copper rail",
 		tiles = {
-			"carts_rail_cp.png", "carts_rail_curved_cp.png",
+			"carts_rail_straight_cp.png", "carts_rail_curved_cp.png",
 			"carts_rail_t_junction_cp.png", "carts_rail_crossing_cp.png"
 		},
-		groups = boost_cart:get_rail_groups(),
+		groups = boost_cart:get_rail_groups()
 	})
 
 	minetest.register_craft({
 		output = "carts:copperrail 12",
 		recipe = {
+			{"default:copper_ingot", "", "default:copper_ingot"},
 			{"default:copper_ingot", "group:stick", "default:copper_ingot"},
-			{"default:copper_ingot", "group:stick", "default:copper_ingot"},
-			{"default:copper_ingot", "group:stick", "default:copper_ingot"},
+			{"default:copper_ingot", "", "default:copper_ingot"},
 		}
 	})
 end
 
--- Speed up
-
+-- Power rail
 boost_cart:register_rail(":carts:powerrail", {
 	description = "Powered rail",
 	tiles = {
-		"carts_rail_pwr.png", "carts_rail_curved_pwr.png",
+		"carts_rail_straight_pwr.png", "carts_rail_curved_pwr.png",
 		"carts_rail_t_junction_pwr.png", "carts_rail_crossing_pwr.png"
 	},
 	groups = boost_cart:get_rail_groups(),
-
 	after_place_node = function(pos, placer, itemstack)
 		if not mesecon then
 			minetest.get_meta(pos):set_string("cart_acceleration", "0.5")
 		end
 	end,
-
 	mesecons = {
 		effector = {
 			action_on = function(pos, node)
 				boost_cart:boost_rail(pos, 0.5)
 			end,
-
 			action_off = function(pos, node)
 				minetest.get_meta(pos):set_string("cart_acceleration", "0")
 			end,
@@ -79,26 +64,24 @@ minetest.register_craft({
 	}
 })
 
+-- Brake rail
 boost_cart:register_rail(":carts:brakerail", {
 	description = "Brake rail",
 	tiles = {
-		"carts_rail_brk.png", "carts_rail_curved_brk.png",
+		"carts_rail_straight_brk.png", "carts_rail_curved_brk.png",
 		"carts_rail_t_junction_brk.png", "carts_rail_crossing_brk.png"
 	},
 	groups = boost_cart:get_rail_groups(),
-
 	after_place_node = function(pos, placer, itemstack)
 		if not mesecon then
 			minetest.get_meta(pos):set_string("cart_acceleration", "-0.3")
 		end
 	end,
-
 	mesecons = {
 		effector = {
 			action_on = function(pos, node)
 				minetest.get_meta(pos):set_string("cart_acceleration", "-0.3")
 			end,
-
 			action_off = function(pos, node)
 				minetest.get_meta(pos):set_string("cart_acceleration", "0")
 			end,
@@ -118,23 +101,20 @@ minetest.register_craft({
 boost_cart:register_rail("boost_cart:startstoprail", {
 	description = "Start-stop rail",
 	tiles = {
-		"carts_rail_ss.png", "carts_rail_curved_ss.png",
+		"carts_rail_straight_ss.png", "carts_rail_curved_ss.png",
 		"carts_rail_t_junction_ss.png", "carts_rail_crossing_ss.png"
 	},
 	groups = boost_cart:get_rail_groups(),
-
 	after_place_node = function(pos, placer, itemstack)
 		if not mesecon then
 			minetest.get_meta(pos):set_string("cart_acceleration", "halt")
 		end
 	end,
-
 	mesecons = {
 		effector = {
 			action_on = function(pos, node)
 				boost_cart:boost_rail(pos, 0.5)
 			end,
-
 			action_off = function(pos, node)
 				minetest.get_meta(pos):set_string("cart_acceleration", "halt")
 			end,

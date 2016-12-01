@@ -312,7 +312,7 @@ local on_digiline_receive_alnum = function(pos, node, channel, msg)
 	local meta = minetest.get_meta(pos)
 	local setchan = meta:get_string("channel")
 	if setchan ~= channel then return end
-	if msg and msg ~= "" then
+	if msg and msg ~= "" and type(msg) == "string" then
 		local asc = string.byte(msg)
 		if msg == "off" then
 			minetest.swap_node(pos, { name = "nixie_tubes:alnum_32", param2 = node.param2})
@@ -328,6 +328,16 @@ local on_digiline_receive_alnum = function(pos, node, channel, msg)
 			minetest.swap_node(pos, { name = "nixie_tubes:alnum_129", param2 = node.param2})
 		elseif asc > 31 and alnum_chars[asc - 31] then
 			minetest.swap_node(pos, { name = "nixie_tubes:alnum_"..asc, param2 = node.param2})
+		elseif msg == "get" then -- get value as ASCII numerical value
+			digiline:receptor_send(pos, digiline.rules.default, channel, tonumber(string.match(minetest.get_node(pos).name,"nixie_tubes:alnum_(.+)"))) -- wonderfully horrible string manipulaiton
+		elseif msg == "getstr" then -- get actual char
+			digiline:receptor_send(pos, digiline.rules.default, channel, string.char(tonumber(string.match(minetest.get_node(pos).name,"nixie_tubes:alnum_(.+)"))))
+		end
+	elseif msg and type(msg) == "number" then
+		if msg == 0 then
+			minetest.swap_node(pos, { name = "nixie_tubes:alnum_32", param2 = node.param2})
+		elseif msg > 31 and alnum_chars[msg - 31] ~= nil then
+			minetest.swap_node(pos, { name = "nixie_tubes:alnum_"..tostring(msg), param2 = node.param2})
 		end
 	end
 end

@@ -2,7 +2,15 @@
 
 local modpath = minetest.get_modpath(minetest.get_current_modname())
 local worldpath = minetest.get_worldpath()
-local mygettext = rawget(_G, "intllib") and intllib.Getter() or function(s) return s end
+local mygettext
+if rawget(_G, "intllib") then
+	mygettext = intllib.Getter()
+else
+	function mygettext(s, ...)
+		local t = { ... }
+		return (s:gsub("@(%d+)", function(n) return t[tonumber(n)] end))
+	end
+end
 
 -- Data tables definitions
 unified_inventory = {
@@ -33,7 +41,7 @@ unified_inventory = {
 
 	-- intllib
 	gettext = mygettext,
-	fgettext = function(s) return minetest.formspec_escape(mygettext(s)) end,
+	fgettext = function(...) return minetest.formspec_escape(mygettext(...)) end,
 
 	-- "Lite" mode
 	lite_mode = minetest.setting_getbool("unified_inventory_lite"),
@@ -57,16 +65,24 @@ if creative then
 	end
 end
 
+-- Disable sfinv inventory
+local sfinv = rawget(_G, "sfinv")
+if sfinv then
+	sfinv.enabled = false
+end
+
 dofile(modpath.."/group.lua")
 dofile(modpath.."/api.lua")
 dofile(modpath.."/internal.lua")
 dofile(modpath.."/callbacks.lua")
 dofile(modpath.."/register.lua")
-dofile(modpath.."/bags.lua")
+
+if minetest.setting_getbool("unified_inventory_bags") ~= false then
+	dofile(modpath.."/bags.lua")
+end
 
 dofile(modpath.."/item_names.lua")
 
 if minetest.get_modpath("datastorage") then
 	dofile(modpath.."/waypoints.lua")
 end
-

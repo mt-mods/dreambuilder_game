@@ -107,14 +107,23 @@ function unified_inventory.get_formspec(player, page)
 		end
 
 		if def.type == "image" then
-			formspec[n] = "image_button["
-			formspec[n+1] = ( ui_peruser.main_button_x + 0.65 * (i - 1) - button_col * 0.65 * 4)
-			formspec[n+2] = ","..(ui_peruser.main_button_y + button_row * 0.7)..";0.8,0.8;"
-			formspec[n+3] = minetest.formspec_escape(def.image)..";"
-			formspec[n+4] = minetest.formspec_escape(def.name)..";]"
-			formspec[n+5] = "tooltip["..minetest.formspec_escape(def.name)
-			formspec[n+6] = ";"..(def.tooltip or "").."]"
-			n = n+7
+			if (def.condition == nil or def.condition(player) == true) then
+				formspec[n] = "image_button["
+				formspec[n+1] = ( ui_peruser.main_button_x + 0.65 * (i - 1) - button_col * 0.65 * 4)
+				formspec[n+2] = ","..(ui_peruser.main_button_y + button_row * 0.7)..";0.8,0.8;"
+				formspec[n+3] = minetest.formspec_escape(def.image)..";"
+				formspec[n+4] = minetest.formspec_escape(def.name)..";]"
+				formspec[n+5] = "tooltip["..minetest.formspec_escape(def.name)
+				formspec[n+6] = ";"..(def.tooltip or "").."]"
+				n = n+7
+			else
+				formspec[n] = "image["
+				formspec[n+1] = ( ui_peruser.main_button_x + 0.65 * (i - 1) - button_col * 0.65 * 4)
+				formspec[n+2] = ","..(ui_peruser.main_button_y + button_row * 0.7)..";0.8,0.8;"
+				formspec[n+3] = minetest.formspec_escape(def.image).."^[colorize:#808080:alpha]"
+				n = n+4
+
+			end
 		end
 	end
 
@@ -173,6 +182,8 @@ function unified_inventory.get_formspec(player, page)
 	n = n+1
 
 	-- Search box
+	formspec[n] = "field_close_on_enter[searchbox;false]"
+	n = n+1
 
 	if not draw_lite_mode then
 		formspec[n] = "field[9.5,8.325;3,1;searchbox;;"

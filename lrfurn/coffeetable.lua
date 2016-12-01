@@ -29,6 +29,8 @@ minetest.register_node("lrfurn:coffeetable_back", {
 		local node = minetest.get_node(pos)
 		local param2 = node.param2
 
+		local fdir = minetest.dir_to_facedir(placer:get_look_dir(), false)
+
 		if lrfurn.check_forward(pos, fdir, false, placer) then
 
 			node.name = "lrfurn:coffeetable_front"

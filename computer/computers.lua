@@ -316,8 +316,8 @@ minetest.register_node("computer:server_on", {
 	tiles = {
 		'computer_server_t.png',
 		'computer_server_bt.png',
-		'computer_server_r.png',
 		'computer_server_l.png',
+		'computer_server_r.png',
 		'computer_server_bt.png',
 		'computer_server_f_on.png',
 	},

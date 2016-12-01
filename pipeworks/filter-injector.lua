@@ -52,14 +52,40 @@ local function set_filter_formspec(data, meta)
 end
 
 -- todo SOON: this function has *way too many* parameters
-local function grabAndFire(data,slotseq_mode,exmatch_mode,filtmeta,frominv,frominvname,frompos,fromnode,filterfor,fromtube,fromdef,dir,fakePlayer,all)
+local function grabAndFire(data,slotseq_mode,exmatch_mode,filtmeta,frominv,frominvname,frompos,fromnode,filterfor,fromtube,fromdef,dir,fakePlayer,all,digiline)
 	local sposes = {}
 	for spos,stack in ipairs(frominv:get_list(frominvname)) do
 		local matches
 		if filterfor == "" then
 			matches = stack:get_name() ~= ""
 		else
-			matches = stack:get_name() == filterfor.name
+			local fname = filterfor.name
+			local fgroup = filterfor.group
+			local fwear = filterfor.wear
+			local fmetadata = filterfor.metadata
+			matches = (not fname                                             -- If there's a name filter,
+			           or stack:get_name() == fname)                         --  it must match.
+
+			          and (not fgroup                                        -- If there's a group filter,
+			               or (type(fgroup) == "string"                      --  it must be a string
+			                   and minetest.get_item_group(                  --  and it must match.
+			                                stack:get_name(), fgroup) ~= 0))
+
+			          and (not fwear                                         -- If there's a wear filter:
+			               or (type(fwear) == "number"                       --  If it's a number,
+			                   and stack:get_wear() == fwear)                --   it must match.
+			               or (type(fwear) == "table"                        --  If it's a table:
+			                   and (not fwear[1]                             --   If there's a lower bound,
+			                        or (type(fwear[1]) == "number"           --    it must be a number
+			                            and fwear[1] <= stack:get_wear()))   --    and it must be <= the actual wear.
+			                   and (not fwear[2]                             --   If there's an upper bound
+			                        or (type(fwear[2]) == "number"           --    it must be a number
+			                            and stack:get_wear() < fwear[2]))))  --    and it must be > the actual wear.
+			                                                                 --  If the wear filter is of any other type, fail.
+			                                                                 --
+			          and (not fmetadata                                     -- If there's a matadata filter,
+			               or (type(fmetadata) == "string"                   --  it must be a string
+			                   and stack:get_metadata() == fmetadata))       --  and it must match.
 		end
 		if matches then table.insert(sposes, spos) end
 	end
@@ -104,10 +130,11 @@ local function grabAndFire(data,slotseq_mode,exmatch_mode,filtmeta,frominv,fromi
 				local count
 				if all then
 					count = math.min(stack:get_count(), doRemove)
-					if filterfor.count and filterfor.count > 1 then
+					if filterfor.count and (filterfor.count > 1 or digiline) then
 						if exmatch_mode ~= 0 and filterfor.count > count then
-							return false
+							return false -- not enough, fail
 						else
+							-- limit quantity to filter amount
 							count = math.min(filterfor.count, count)
 						end
 					end
@@ -155,6 +182,20 @@ local function punch_filter(data, filtpos, filtnode, msg)
 
 	local filters = {}
 	if data.digiline then
+		local function add_filter(name, group, count, wear, metadata)
+			table.insert(filters, {name = name, group = group, count = count, wear = wear, metadata = metadata})
+		end
+
+		local function add_itemstring_filter(filter)
+			local filterstack = ItemStack(filter)
+			local filtername = filterstack:get_name()
+			local filtercount = filterstack:get_count()
+			local filterwear = string.match(filter, "%S*:%S*%s%d%s(%d)") and filterstack:get_wear()
+			local filtermetadata = string.match(filter, "%S*:%S*%s%d%s%d(%s.*)") and filterstack:get_metadata()
+
+			add_filter(filtername, nil, filtercount, filterwear, filtermetadata)
+		end
+
 		local t_msg = type(msg)
 		if t_msg == "table" then
 			local slotseq = msg.slotseq
@@ -206,28 +247,22 @@ local function punch_filter(data, filtpos, filtnode, msg)
 				return
 			end
 
-			if type(msg.name) == "string" then
-				table.insert(filters, {name = msg.name, count = tonumber(msg.count) or 1})
+			if msg.name or msg.group or msg.count or msg.wear or msg.metadata then
+				add_filter(msg.name, msg.group, msg.count, msg.wear, msg.metadata)
 			else
 				for _, filter in ipairs(msg) do
 					local t_filter = type(filter)
 					if t_filter == "table" then
-						if type(filter.name) == "string" then
-							table.insert(filters, {name = filter.name, count = tonumber(filter.count) or 1})
+						if filter.name or filter.group or filter.count or filter.wear or filter.metadata then
+							add_filter(filter.name, filter.group, filter.count, filter.wear, filter.metadata)
 						end
 					elseif t_filter == "string" then
-						local filterstack = ItemStack(filter)
-						local filtername = filterstack:get_name()
-						local filtercount = filterstack:get_count()
-						if filtername ~= "" then table.insert(filters, {name = filtername, count = filtercount}) end
+						add_itemstring_filter(filter)
 					end
 				end
 			end
 		elseif t_msg == "string" then
-			local filterstack = ItemStack(msg)
-			local filtername = filterstack:get_name()
-			local filtercount = filterstack:get_count()
-			if filtername ~= "" then table.insert(filters, {name = filtername, count = filtercount}) end
+			add_itemstring_filter(msg)
 		end
 	else
 		for _, filterstack in ipairs(filtinv:get_list("main")) do
@@ -252,7 +287,7 @@ local function punch_filter(data, filtpos, filtnode, msg)
 	for _, frominvname in ipairs(type(fromtube.input_inventory) == "table" and fromtube.input_inventory or {fromtube.input_inventory}) do
 		local done = false
 		for _, filterfor in ipairs(filters) do
-			if grabAndFire(data, slotseq_mode, exact_match, filtmeta, frominv, frominvname, frompos, fromnode, filterfor, fromtube, fromdef, dir, fakePlayer, data.stackwise) then
+			if grabAndFire(data, slotseq_mode, exact_match, filtmeta, frominv, frominvname, frompos, fromnode, filterfor, fromtube, fromdef, dir, fakePlayer, data.stackwise, data.digiline) then
 				done = true
 				break
 			end
