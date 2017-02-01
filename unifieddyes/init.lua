@@ -29,12 +29,364 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 --=====================================================================
 
+unifieddyes = {}
+
+local creative_mode = minetest.setting_getbool("creative_mode")
+
 -- Boilerplate to support localized strings if intllib mod is installed.
 local S
 if minetest.get_modpath("intllib") then
 	S = intllib.Getter()
 else
 	S = function(s) return s end
+end
+
+-- helper functions for other mods that use this one
+
+local HUES = {
+	"red",
+	"orange",
+	"yellow",
+	"lime",
+	"green",
+	"aqua",
+	"cyan",
+	"skyblue",
+	"blue",
+	"violet",
+	"magenta",
+	"redviolet"
+}
+
+local HUES2 = {
+	"Red",
+	"Orange",
+	"Yellow",
+	"Lime",
+	"Green",
+	"Aqua",
+	"Cyan",
+	"Sky-blue",
+	"Blue",
+	"Violet",
+	"Magenta",
+	"Red-violet"
+}
+
+-- code borrowed from homedecor
+
+function unifieddyes.select_node(pointed_thing)
+	local pos = pointed_thing.under
+	local node = minetest.get_node_or_nil(pos)
+	local def = node and minetest.registered_nodes[node.name]
+
+	if not def or not def.buildable_to then
+		pos = pointed_thing.above
+		node = minetest.get_node_or_nil(pos)
+		def = node and minetest.registered_nodes[node.name]
+	end
+	return def and pos, def
+end
+
+function unifieddyes.is_buildable_to(placer_name, ...)
+	for _, pos in ipairs({...}) do
+		local node = minetest.get_node_or_nil(pos)
+		local def = node and minetest.registered_nodes[node.name]
+		if not (def and def.buildable_to) or minetest.is_protected(pos, placer_name) then
+			return false
+		end
+	end
+	return true
+end
+
+function unifieddyes.get_hsv(name) -- expects a node/item name
+	local hue = ""
+	local a,b
+	for _, i in ipairs(HUES) do
+		a,b = string.find(name, "_"..i)
+		if a and not ( string.find(name, "_redviolet") and i == "red" ) then
+			hue = i
+			break
+		end
+	end
+
+	if string.find(name, "_light_grey")     then hue = "light_grey"
+	elseif string.find(name, "_lightgrey")  then hue = "light_grey"
+	elseif string.find(name, "_dark_grey")  then hue = "dark_grey"
+	elseif string.find(name, "_darkgrey")   then hue = "dark_grey"
+	elseif string.find(name, "_grey")       then hue = "grey"
+	elseif string.find(name, "_white")      then hue = "white"
+	elseif string.find(name, "_black")      then hue = "black"
+	end
+
+	local sat = ""
+	if string.find(name, "_s50")    then sat = "_s50" end
+
+	local val = ""
+	if string.find(name, "dark_")   then val = "dark_"   end
+	if string.find(name, "medium_") then val = "medium_" end
+	if string.find(name, "light_")  then val = "light_"  end
+
+	return hue, sat, val
+end
+
+-- code borrowed from cheapie's plasticbox mod
+
+function unifieddyes.getpaletteidx(color, is_color_fdir)
+	local origcolor = color
+	local aliases = {
+		["pink"] = "light_red",
+		["brown"] = "dark_orange",
+	}
+
+	local grayscale = {
+		["white"] = 1,
+		["light_grey"] = 2,
+		["grey"] = 3,
+		["dark_grey"] = 4,
+		["black"] = 5,
+	}
+
+	local grayscale_wallmounted = {
+		["white"] = 0,
+		["light_grey"] = 1,
+		["grey"] = 2,
+		["dark_grey"] = 3,
+		["black"] = 4,
+	}
+
+	local hues = {
+		["red"] = 1,
+		["orange"] = 2,
+		["yellow"] = 3,
+		["lime"] = 4,
+		["green"] = 5,
+		["aqua"] = 6,
+		["cyan"] = 7,
+		["skyblue"] = 8,
+		["blue"] = 9,
+		["violet"] = 10,
+		["magenta"] = 11,
+		["redviolet"] = 12,
+	}
+
+	local hues_wallmounted = {
+		["red"] = 0,
+		["orange"] = 1,
+		["yellow"] = 2,
+		["green"] = 3,
+		["cyan"] = 4,
+		["blue"] = 5,
+		["violet"] = 6,
+		["magenta"] = 7
+	}
+
+	local shades = {
+		[""] = 1,
+		["s50"] = 2,
+		["light"] = 3,
+		["medium"] = 4,
+		["mediums50"] = 5,
+		["dark"] = 6,
+		["darks50"] = 7,
+	}
+
+	local shades_wallmounted = {
+		[""] = 1,
+		["medium"] = 2,
+		["dark"] = 3
+	}
+
+	if string.sub(color,1,4) == "dye:" then
+		color = string.sub(color,5,-1)
+	elseif string.sub(color,1,12) == "unifieddyes:" then
+		color = string.sub(color,13,-1)
+	else
+		return
+	end
+
+	color = aliases[color] or color
+	local idx
+
+	if is_color_fdir == "wallmounted" then
+		if grayscale_wallmounted[color] then
+			return (grayscale_wallmounted[color] * 8), 0
+		end
+	elseif is_color_fdir then
+		if grayscale[color] then
+			return (grayscale[color] * 32), 0
+		end
+	else
+		if grayscale[color] then
+			return grayscale[color], 0
+		end
+	end
+
+	local shade = ""
+	if string.sub(color,1,6) == "light_" then
+		shade = "light"
+		color = string.sub(color,7,-1)
+	elseif string.sub(color,1,7) == "medium_" then
+		shade = "medium"
+		color = string.sub(color,8,-1)
+	elseif string.sub(color,1,5) == "dark_" then
+		shade = "dark"
+		color = string.sub(color,6,-1)
+	end
+	if string.sub(color,-4,-1) == "_s50" then
+		shade = shade.."s50"
+		color = string.sub(color,1,-5)
+	end
+
+	if is_color_fdir == "wallmounted" then
+		if shade == "dark" and color == "orange" then return 48,1 -- brown
+		elseif shade == "light" and color == "red" then return 56,7 -- pink
+		elseif hues_wallmounted[color] and shades_wallmounted[shade] then
+			return (shades_wallmounted[shade] * 64 + hues_wallmounted[color] * 8), hues_wallmounted[color]
+		end
+	elseif hues[color] and shades[shade] then
+		if is_color_fdir then
+			return (shades[shade] * 32), hues[color]
+		else
+			return (hues[color] * 8 + shades[shade]), hues[color]
+		end
+	end
+end
+
+function unifieddyes.after_dig_node(pos, oldnode, oldmetadata, digger)
+	local prevdye
+
+	if oldmetadata and oldmetadata.fields then
+		prevdye = oldmetadata.fields.dye
+	end
+
+	local inv = digger:get_inventory()
+
+	if prevdye and not (inv:contains_item("main", prevdye) and creative_mode) and minetest.registered_items[prevdye] then
+		if inv:room_for_item("main", prevdye) then
+			inv:add_item("main", prevdye)
+		else
+			minetest.add_item(pos, prevdye)
+		end
+	end
+end
+
+function unifieddyes.on_rightclick(pos, node, player, stack, pointed_thing, newnode, is_color_fdir)
+	local name = player:get_player_name()
+	if minetest.is_protected(pos,name) and not minetest.check_player_privs(name,{protection_bypass=true}) then
+		minetest.record_protection_violation(pos,name)
+		return stack
+	end
+	local name = stack:get_name()
+	local pos2 = unifieddyes.select_node(pointed_thing)
+	local paletteidx, hue = unifieddyes.getpaletteidx(name, is_color_fdir)
+
+	print(dump(paletteidx))
+
+	if paletteidx then
+
+		local meta = minetest.get_meta(pos)
+		local prevdye = meta:get_string("dye")
+		local inv = player:get_inventory()
+
+		if not (inv:contains_item("main", prevdye) and creative_mode) and minetest.registered_items[prevdye] then
+			if inv:room_for_item("main", prevdye) then
+				inv:add_item("main", prevdye)
+			else
+				minetest.add_item(pos, prevdye)
+			end
+		end
+
+		meta:set_string("dye", name)
+		if not creative_mode and prevdye ~= name then
+			stack:take_item()
+		end
+		node.param2 = paletteidx
+
+		local oldpaletteidx, oldhuenum = unifieddyes.getpaletteidx(prevdye, is_color_fdir)
+
+		local oldnode = minetest.get_node(pos)
+
+		local oldhue = nil
+		for _, i in ipairs(HUES) do
+			if string.find(oldnode.name, "_"..i) and not
+				( string.find(oldnode.name, "_redviolet") and i == "red" ) then
+				oldhue = i
+				break
+			end
+		end
+
+		if newnode then -- this path is used when the calling mod want to supply a replacement node
+			if is_color_fdir == "wallmounted" then
+				node.param2 = paletteidx + (minetest.get_node(pos).param2 % 8)
+			elseif is_color_fdir then  -- we probably need to change the hue of the node too
+				if oldhue ~=0 then -- it's colored, not grey
+					if oldhue ~= nil then -- it's been painted before
+						if hue ~= 0 then -- the player's wielding a colored dye
+							newnode = string.gsub(newnode, "_"..oldhue, "_"..HUES[hue])
+						else -- it's a greyscale dye
+							newnode = string.gsub(newnode, "_"..oldhue, "_grey")
+						end
+					else -- it's never had a color at all
+						if hue ~= 0 then -- and if the wield is greyscale, don't change the node name
+							newnode = string.gsub(newnode, "_grey", "_"..HUES[hue])
+						end
+					end
+				else
+					if hue ~= 0 then  -- greyscale dye on greyscale node = no hue change
+						newnode = string.gsub(newnode, "_grey", "_"..HUES[hue])
+					end
+				end
+				node.param2 = paletteidx + (minetest.get_node(pos).param2 % 32)
+			else
+				node.param2 = paletteidx
+			end
+			node.name = newnode
+			minetest.swap_node(pos, node)
+		else -- this path is used when you're just painting an existing node, rather than replacing one.
+			newnode = oldnode  -- note that here, newnode/oldnode are a full node, not just the name.
+			if is_color_fdir == "wallmounted" then
+				newnode.param2 = paletteidx + (minetest.get_node(pos).param2 % 8)
+			elseif is_color_fdir then
+				if oldhue then
+					if hue ~= 0 then
+						newnode.name = string.gsub(newnode.name, "_"..oldhue, "_"..HUES[hue])
+					else
+						newnode.name = string.gsub(newnode.name, "_"..oldhue, "_grey")
+					end
+				elseif string.find(minetest.get_node(pos).name, "_grey") and hue ~= 0 then
+					newnode.name = string.gsub(newnode.name, "_grey", "_"..HUES[hue])
+				end
+				newnode.param2 = paletteidx + (minetest.get_node(pos).param2 % 32)
+			else
+				newnode.param2 = paletteidx
+			end
+			minetest.swap_node(pos, newnode)
+		end
+	else  -- here is where a node is just being placed, not something being colored
+		if unifieddyes.is_buildable_to(player:get_player_name(), pos2) and
+		  minetest.registered_nodes[name] then
+			local placeable_node = minetest.registered_nodes[stack:get_name()]
+
+			local fdir = 0
+
+			if is_color_fdir == "wallmounted" then
+				local yaw = player:get_look_yaw()
+				local dir = minetest.yaw_to_dir(yaw-1.5)
+				fdir = minetest.dir_to_wallmounted(dir)
+			elseif is_color_fdir then
+				local yaw = player:get_look_yaw()
+				local dir = minetest.yaw_to_dir(yaw-1.5)
+				fdir = minetest.dir_to_facedir(dir)
+			end
+
+			minetest.set_node(pos2, { name = placeable_node.name, param2 = fdir })
+			if not creative_mode then
+				stack:take_item()
+			end
+			return stack
+		end
+	end
 end
 
 -- Items/recipes needed to generate the few base colors that are not
@@ -178,36 +530,6 @@ minetest.register_craft( {
 -- "s50" in a file/item name means "saturation: 50%".
 -- Brightness levels in the textures are 33% ("dark"), 66% ("medium"),
 -- 100% ("full", but not so-named), and 150% ("light").
-
-local HUES = {
-	"red",
-	"orange",
-	"yellow",
-	"lime",
-	"green",
-	"aqua",
-	"cyan",
-	"skyblue",
-	"blue",
-	"violet",
-	"magenta",
-	"redviolet"
-}
-
-local HUES2 = {
-	"Red",
-	"Orange",
-	"Yellow",
-	"Lime",
-	"Green",
-	"Aqua",
-	"Cyan",
-	"Sky-blue",
-	"Blue",
-	"Violet",
-	"Magenta",
-	"Red-violet"
-}
 
 
 for i = 1, 12 do
@@ -361,8 +683,15 @@ for i = 1, 12 do
 	minetest.register_alias("unifieddyes:pigment_"..hue, "dye:"..hue)
 end
 
-minetest.register_alias("unifieddyes:light_red", "dye:pink")
+minetest.register_alias("unifieddyes:light_red",  "dye:pink")
 minetest.register_alias("unifieddyes:dark_green", "dye:dark_green")
+minetest.register_alias("unifieddyes:black",      "dye:black")
+minetest.register_alias("unifieddyes:darkgrey",   "dye:dark_grey")
+minetest.register_alias("unifieddyes:dark_grey",   "dye:dark_grey")
+minetest.register_alias("unifieddyes:grey",       "dye:grey")
+minetest.register_alias("unifieddyes:lightgrey",  "dye:light_grey")
+minetest.register_alias("unifieddyes:light_grey",  "dye:light_grey")
+minetest.register_alias("unifieddyes:white",      "dye:white")
 
 minetest.register_alias("unifieddyes:white_paint", "dye:white")
 minetest.register_alias("unifieddyes:titanium_dioxide", "dye:white")

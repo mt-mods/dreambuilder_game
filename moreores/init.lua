@@ -8,6 +8,8 @@ Licensed under the zlib license. See LICENSE.md for more information.
 =====================================================================
 --]]
 
+moreores = {}
+
 local S
 if minetest.get_modpath("intllib") then
 	S = intllib.Getter()
@@ -28,6 +30,7 @@ end
 -- =================
 
 local default_stone_sounds = default.node_sound_stone_defaults()
+local default_metal_sounds = default.node_sound_metal_defaults()
 
 local function hoe_on_use(itemstack, user, pointed_thing, uses)
 	local pt = pointed_thing
@@ -110,7 +113,7 @@ local function add_ore(modname, description, mineral_name, oredef)
 			description = S("%s Block"):format(S(description)),
 			tiles = { img_base .. "_block.png" },
 			groups = {snappy = 1, bendy = 2, cracky = 1, melty = 2, level= 2},
-			sounds = default_stone_sounds
+			sounds = default_metal_sounds,
 		})
 		minetest.register_alias(mineral_name.."_block", block_item)
 		if oredef.makes.ingot then
@@ -177,7 +180,8 @@ local function add_ore(modname, description, mineral_name, oredef)
 			tool_capabilities = {
 				max_drop_level = 3,
 				groupcaps = tooldef
-			}
+			},
+            sound = {breaks = "default_tool_breaks"},
 		}
 
 		if tool_name == "sword" then
@@ -202,6 +206,7 @@ local function add_ore(modname, description, mineral_name, oredef)
 			tdef.full_punch_interval = oredef.full_punch_interval
 			tdef.tool_capabilities.damage_groups = oredef.damage_groups
 			tdef.description = S("%s Shovel"):format(S(description))
+            tdef.wield_image = toolimg_base .. tool_name .. ".png^[transformR90"
 		end
 
 		if tool_name == "hoe" then
@@ -232,11 +237,11 @@ local oredefs = {
 	silver = {
 		description = "Silver",
 		makes = {ore = true, block = true, lump = true, ingot = true, chest = true},
-		oredef = {clust_scarcity = moreores_silver_chunk_size * moreores_silver_chunk_size * moreores_silver_chunk_size,
-			clust_num_ores = moreores_silver_ore_per_chunk,
-			clust_size     = moreores_silver_chunk_size,
-			y_min     = moreores_silver_min_depth,
-			y_max     = moreores_silver_max_depth
+		oredef = {clust_scarcity = moreores.silver_chunk_size * moreores.silver_chunk_size * moreores.silver_chunk_size,
+			clust_num_ores = moreores.silver_ore_per_chunk,
+			clust_size     = moreores.silver_chunk_size,
+			y_min     = moreores.silver_min_depth,
+			y_max     = moreores.silver_max_depth
 			},
 		tools = {
 			pick = {
@@ -264,22 +269,22 @@ local oredefs = {
 	tin = {
 		description = "Tin",
 		makes = {ore = true, block = true, lump = true, ingot = true, chest = false},
-		oredef = {clust_scarcity = moreores_tin_chunk_size * moreores_tin_chunk_size * moreores_tin_chunk_size,
-			clust_num_ores = moreores_tin_ore_per_chunk,
-			clust_size     = moreores_tin_chunk_size,
-			y_min     = moreores_tin_min_depth,
-			y_max     = moreores_tin_max_depth
+		oredef = {clust_scarcity = moreores.tin_chunk_size * moreores.tin_chunk_size * moreores.tin_chunk_size,
+			clust_num_ores = moreores.tin_ore_per_chunk,
+			clust_size     = moreores.tin_chunk_size,
+			y_min     = moreores.tin_min_depth,
+			y_max     = moreores.tin_max_depth
 			},
 		tools = {},
 	},
 	mithril = {
 		description = "Mithril",
 		makes = {ore = true, block = true, lump = true, ingot = true, chest = false},
-		oredef = {clust_scarcity = moreores_mithril_chunk_size * moreores_mithril_chunk_size * moreores_mithril_chunk_size,
-			clust_num_ores = moreores_mithril_ore_per_chunk,
-			clust_size     = moreores_mithril_chunk_size,
-			y_min     = moreores_mithril_min_depth,
-			y_max     = moreores_mithril_max_depth
+		oredef = {clust_scarcity = moreores.mithril_chunk_size * moreores.mithril_chunk_size * moreores.mithril_chunk_size,
+			clust_num_ores = moreores.mithril_ore_per_chunk,
+			clust_size     = moreores.mithril_chunk_size,
+			y_min     = moreores.mithril_min_depth,
+			y_max     = moreores.mithril_max_depth
 			},
 		tools = {
 			pick = {
@@ -345,6 +350,7 @@ minetest.register_node("moreores:copper_rail", {
 		type = "fixed",
 		fixed = {-1/2, -1/2, -1/2, 1/2, -1/2+1/16, 1/2},
 	},
+	sounds = default_metal_sounds,
 	groups = {bendy = 2,snappy = 1,dig_immediate = 2,rail= 1, connect_to_raillike = 1},
 	mesecons = {
 		effector = {

@@ -1,6 +1,9 @@
 dofile(minetest.get_modpath("carbone_mobs").."/api.lua")
 
+-- Minetest states since 2013 to use lua 5.1 (see http://dev.minetest.net/Lua , https://www.lua.org/manual/5.1/ )
+
 -- Ensure the correct active_block_range value is used (for performance and spawning):
+-- see http://dev.minetest.net/minetest.register_abm
 minetest.setting_set("active_block_range", 1)
 
 carbone_mobs:register_mob("carbone_mobs:dirt_monster", {

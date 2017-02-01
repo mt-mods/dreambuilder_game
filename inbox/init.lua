@@ -1,3 +1,6 @@
+
+local S = homedecor_i18n.gettext
+
 local inbox = {}
 screwdriver = screwdriver or {}
 
@@ -19,7 +22,7 @@ minetest.register_node("inbox:empty", {
 	paramtype = "light",
 	drawtype = "mesh",
 	mesh = "inbox_mailbox.obj",
-	description = "Mailbox",
+	description = S("Mailbox"),
 	tiles = {
 		"inbox_red_metal.png",
 		"inbox_white_metal.png",
@@ -36,7 +39,7 @@ minetest.register_node("inbox:empty", {
 		local meta = minetest.get_meta(pos)
 		local owner = placer:get_player_name()
 		meta:set_string("owner", owner)
-		meta:set_string("infotext", owner.."'s Mailbox")
+		meta:set_string("infotext", S("@1's Mailbox", owner))
 		local inv = meta:get_inventory()
 		inv:set_size("main", 8*4)
 		inv:set_size("drop", 1)
@@ -45,8 +48,9 @@ minetest.register_node("inbox:empty", {
 		local meta = minetest.get_meta(pos)
 		local player = clicker:get_player_name()
 		local owner  = meta:get_string("owner")
-		local meta = minetest.get_meta(pos)
-		if owner == player then
+		if owner == player or
+				minetest.check_player_privs(player, "protection_bypass") and
+				clicker:get_player_control().aux1 then
 			minetest.show_formspec(
 				clicker:get_player_name(),
 				"default:chest_locked",

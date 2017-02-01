@@ -4,7 +4,7 @@ local clock_sbox = {
 }
 
 local clock_materials = {
-	{ "plastic", "homedecor_generic_plastic_black.png^[colorize:#ffffff:220" },
+	{ "plastic", "homedecor_generic_plastic.png" },
 	{ "wood", "default_wood.png" }
 }
 
@@ -82,7 +82,7 @@ homedecor.register("grandfather_clock", {
 	tiles = {
 		"default_glass.png",
 		"homedecor_grandfather_clock_face.png",
-		"homedecor_generic_wood_luxury.png",
+		homedecor.lux_wood,
 		"homedecor_grandfather_clock_face_edge.png",
 		"homedecor_generic_metal_brass.png"
 	},

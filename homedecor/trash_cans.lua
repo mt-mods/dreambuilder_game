@@ -1,4 +1,3 @@
-local S = homedecor.gettext
 
 local tg_cbox = {
 	type = "fixed",
@@ -11,7 +10,7 @@ homedecor.register("trash_can_green", {
 	tiles = { "homedecor_pool_table_baize.png" },
 	inventory_image = "homedecor_trash_can_green_inv.png",
 	description = "Trash Can (green)",
-   	groups = {snappy=3},
+	groups = {snappy=3},
 	selection_box = tg_cbox,
 	collision_box = tg_cbox,
 	on_punch = function(pos, node, puncher, pointed_thing)

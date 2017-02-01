@@ -1,6 +1,9 @@
+
+local S = homedecor_i18n.gettext
+
 minetest.register_node("building_blocks:Adobe", {
 	tiles = {"building_blocks_Adobe.png"},
-	description = "Adobe",
+	description = S("Adobe"),
 	is_ground_content = true,
 	groups = {crumbly=3},
 	sounds = default.node_sound_stone_defaults(),
@@ -8,7 +11,7 @@ minetest.register_node("building_blocks:Adobe", {
 minetest.register_node("building_blocks:Roofing", {
 	tiles = {"building_blocks_Roofing.png"},
 	is_ground_content = true,
-	description = "Roof block",
+	description = S("Roof block"),
 	groups = {snappy=3},
 })
 minetest.register_craft({
@@ -150,7 +153,7 @@ minetest.register_craft({
 })
 minetest.register_node("building_blocks:smoothglass", {
 	drawtype = "glasslike",
-	description = "Streak Free Glass",
+	description = S("Streak Free Glass"),
 	tiles = {"building_blocks_sglass.png"},
 	inventory_image = minetest.inventorycube("building_blocks_sglass.png"),
 	paramtype = "light",
@@ -161,7 +164,7 @@ minetest.register_node("building_blocks:smoothglass", {
 })
 minetest.register_node("building_blocks:grate", {
 	drawtype = "glasslike",
-	description = "Grate",
+	description = S("Grate"),
 	tiles = {"building_blocks_grate.png"},
 	inventory_image = minetest.inventorycube("building_blocks_grate.png"),
 	paramtype = "light",
@@ -171,7 +174,7 @@ minetest.register_node("building_blocks:grate", {
 })
 
 minetest.register_node("building_blocks:Fireplace", {
-	description = "Fireplace",
+	description = S("Fireplace"),
 	tiles = {
 		"building_blocks_cast_iron.png",
 		"building_blocks_cast_iron.png",
@@ -188,7 +191,7 @@ minetest.register_node("building_blocks:Fireplace", {
 
 minetest.register_node("building_blocks:woodglass", {
 	drawtype = "glasslike",
-	description = "Wood Framed Glass",
+	description = S("Wood Framed Glass"),
 	tiles = {"building_blocks_wglass.png"},
 	inventory_image = minetest.inventorycube("building_blocks_wglass.png"),
 	paramtype = "light",
@@ -199,7 +202,7 @@ minetest.register_node("building_blocks:woodglass", {
 })
 minetest.register_node("building_blocks:terrycloth_towel", {
 	drawtype = "raillike",
-	description = "Terrycloth towel",
+	description = S("Terrycloth towel"),
 	tiles = {"building_blocks_towel.png"},
 	inventory_image = "building_blocks_towel_inv.png",
 	paramtype = "light",
@@ -215,7 +218,7 @@ minetest.register_node("building_blocks:terrycloth_towel", {
 })
 minetest.register_node("building_blocks:Tarmac_spread", {
 	drawtype = "raillike",
-	description = "Tarmac Spread",
+	description = S("Tarmac Spread"),
 	tiles = {"building_blocks_tar.png"},
 	inventory_image = "building_blocks_tar_spread_inv.png",
 	paramtype = "light",
@@ -232,7 +235,7 @@ minetest.register_node("building_blocks:Tarmac_spread", {
 })
 minetest.register_node("building_blocks:BWtile", {
 	drawtype = "raillike",
-	description = "Chess board tiling",
+	description = S("Chess board tiling"),
 	tiles = {"building_blocks_BWtile.png"},
 	inventory_image = "building_blocks_bwtile_inv.png",
 	paramtype = "light",
@@ -248,7 +251,9 @@ minetest.register_node("building_blocks:BWtile", {
 })
 minetest.register_node("building_blocks:brobble_spread", {
 	drawtype = "raillike",
-	description = "Brobble Spread",
+	-- Translators: "Brobble" is a portmanteau of "Brick" and "Cobble".
+	-- Translate however you see fit.
+	description = S("Brobble Spread"),
 	tiles = {"building_blocks_brobble.png"},
 	inventory_image = "building_blocks_brobble_spread_inv.png",
 	paramtype = "light",
@@ -264,7 +269,7 @@ minetest.register_node("building_blocks:brobble_spread", {
 })
 minetest.register_node("building_blocks:gravel_spread", {
 	drawtype = "raillike",
-	description = "Gravel Spread",
+	description = S("Gravel Spread"),
 	tiles = {"default_gravel.png"},
 	inventory_image = "building_blocks_gravel_spread_inv.png",
 	paramtype = "light",
@@ -285,7 +290,7 @@ minetest.register_node("building_blocks:gravel_spread", {
 minetest.register_node("building_blocks:hardwood", {
 	tiles = {"building_blocks_hardwood.png"},
 	is_ground_content = true,
-	description = "Hardwood",
+	description = S("Hardwood"),
 	groups = {choppy=1,flammable=1},
 	sounds = default.node_sound_wood_defaults(),
 })
@@ -448,44 +453,44 @@ else
 	bb_stairs.register_stair_and_slab("marble","building_blocks:Marble",
 		{cracky=3},
 		{"building_blocks_marble.png"},
-		"Marble stair",
-		"Marble slab"
+		S("Marble stair"),
+		S("Marble slab")
 	)
 	bb_stairs.register_stair_and_slab("hardwood","building_blocks:hardwood",
 		{choppy=1,flammable=1},
 		{"building_blocks_hardwood.png"},
-		"Hardwood stair",
-		"Hardwood slab"
+		S("Hardwood stair"),
+		S("Hardwood slab")
 	)
 	bb_stairs.register_stair_and_slab("fakegrass","building_blocks:fakegrass",
 		{crumbly=3},
 		{"default_grass.png"},
-		"Grass stair",
-		"Grass slab"
+		S("Grass stair"),
+		S("Grass slab")
 	)
 	bb_stairs.register_stair_and_slab("tar","building_blocks:Tar",
 		{crumbly=1},
 		{"building_blocks_tar.png"},
-		"Tar stair",
-		"Tar slab"
+		S("Tar stair"),
+		S("Tar slab")
 	)
 	bb_stairs.register_stair_and_slab("grate","building_blocks:grate",
 		{cracky=1},
 		{"building_blocks_grate.png"},
-		"Grate Stair",
-		"Grate Slab"
+		S("Grate Stair"),
+		S("Grate Slab")
 	)
 	bb_stairs.register_stair_and_slab("Adobe", "building_blocks:Adobe",
 		{crumbly=3},
 		{"building_blocks_Adobe.png"},
-		"Adobe stair",
-		"Adobe slab"
+		S("Adobe stair"),
+		S("Adobe slab")
 	)
 	bb_stairs.register_stair_and_slab("Roofing", "building_blocks:Roofing",
 		{snappy=3},
 		{"building_blocks_Roofing.png"},
-		"Roofing stair",
-		"Roofing slab"
+		S("Roofing stair"),
+		S("Roofing slab")
 	)
 end
 
@@ -498,7 +503,7 @@ minetest.register_craft({
 
 minetest.register_node("building_blocks:fakegrass", {
 	tiles = {"default_grass.png", "default_dirt.png", "default_dirt.png^default_grass_side.png"},
-	description = "Fake Grass",
+	description = S("Fake Grass"),
 	is_ground_content = true,
 	groups = {crumbly=3},
 		sounds = default.node_sound_dirt_defaults({
@@ -507,13 +512,13 @@ minetest.register_node("building_blocks:fakegrass", {
 })
 
 minetest.register_craftitem("building_blocks:sticks", {
-	description = "Small bundle of sticks",
+	description = S("Small bundle of sticks"),
 	image = "building_blocks_sticks.png",
 	on_place_on_ground = minetest.craftitem_place_item,
 })
 
 minetest.register_craftitem("building_blocks:tar_base", {
-	description = "Tar base",
+	description = S("Tar base"),
 	image = "building_blocks_tar_base.png",
 })
 
@@ -537,14 +542,14 @@ minetest.register_alias("building_blocks:faggot", "building_blocks:sticks")
 minetest.register_alias("marble", "building_blocks:Marble")
 
 minetest.register_node("building_blocks:Tar", {
-	description = "Tar",
+	description = S("Tar"),
 	tiles = {"building_blocks_tar.png"},
 	is_ground_content = true,
 	groups = {crumbly=1, tar_block = 1},
 	sounds = default.node_sound_stone_defaults(),
 })
 minetest.register_node("building_blocks:Marble", {
-	description = "Marble",
+	description = S("Marble"),
 	tiles = {"building_blocks_marble.png"},
 	is_ground_content = true,
 	groups = {cracky=3, marble = 1},
@@ -568,7 +573,7 @@ minetest.register_craft({
 })
 
 minetest.register_tool("building_blocks:knife", {
-	description = "Tar Knife",
+	description = S("Tar Knife"),
 	inventory_image = "building_blocks_knife.png",
 	tool_capabilities = {
 		max_drop_level=0,
@@ -588,14 +593,14 @@ minetest.register_craft({
 	}
 })
 
-if not minetest.get_modpath("technic") then 
+if not minetest.get_modpath("technic") then
 	minetest.register_node( ":technic:granite", {
-		    description = "Granite",
+		    description = S("Granite"),
 		    tiles = { "technic_granite.png" },
 		    is_ground_content = true,
 		    groups = {cracky=1},
 		    sounds = default.node_sound_stone_defaults(),
-	}) 
+	})
 
 	minetest.register_craft({
 		output = "technic:granite 9",
@@ -608,7 +613,7 @@ if not minetest.get_modpath("technic") then
 
 	if minetest.get_modpath("moreblocks") then
 		stairsplus:register_all("technic", "granite", "technic:granite", {
-				description="Granite",
+				description=S("Granite"),
 				groups={cracky=1, not_in_creative_inventory=1},
 				tiles={"technic_granite.png"},
 		})

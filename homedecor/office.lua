@@ -1,7 +1,8 @@
-local S = homedecor.gettext
+
+local S = homedecor_i18n.gettext
 
 homedecor.register("filing_cabinet", {
-	description = S("Filing Cabinet"),
+	description = S("Filing cabinet"),
 	mesh = "homedecor_filing_cabinet.obj",
 	tiles = {
 		homedecor.plain_wood,
@@ -27,7 +28,7 @@ homedecor.register("desk", {
 	tiles = {
 		homedecor.plain_wood,
 		"homedecor_desk_drawers.png",
-		"homedecor_generic_metal_black.png",
+		{ name = "homedecor_generic_metal.png", color = homedecor.color_black }
 	},
 	inventory_image = "homedecor_desk_inv.png",
 	selection_box = desk_cbox,
@@ -52,13 +53,13 @@ homedecor.register("desk_globe", {
 	mesh = "homedecor_desk_globe.obj",
 	tiles = {
 		"homedecor_generic_wood_red.png",
-		"homedecor_generic_metal_black.png^[brighten",
+		{ name = "homedecor_generic_metal.png", color = homedecor.color_med_grey },
 		"homedecor_earth.png"
 	},
 	inventory_image = "homedecor_desk_globe_inv.png",
 	selection_box = globe_cbox,
 	collision_box = globe_cbox,
-	groups = {choppy=2},
+	groups = {choppy=2, oddly_breakable_by_hand=2},
 	walkable = false,
 	sounds = default.node_sound_wood_defaults(),
 })

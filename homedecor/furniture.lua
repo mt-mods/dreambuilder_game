@@ -1,21 +1,18 @@
-local S = homedecor.gettext
+
+local S = homedecor_i18n.gettext
 
 local table_colors = {
-	{ "",          homedecor.plain_wood },
-	{ "_mahogany", homedecor.mahogany_wood },
-	{ "_white",    homedecor.white_wood }
+	{ "",           S("Table"),           homedecor.plain_wood },
+	{ "_mahogany",  S("Mahogany Table"),  homedecor.mahogany_wood },
+	{ "_white",     S("White Table"),     homedecor.white_wood }
 }
 
-for i in ipairs(table_colors) do
-	local desc = S("Table ("..i..")")
+for _, t in ipairs(table_colors) do
+	local suffix, desc, texture = unpack(t)
 
-	if i == 1 then
-		desc = S("Table")
-	end
-
-	homedecor.register("table"..table_colors[i][1], {
+	homedecor.register("table"..suffix, {
 		description = desc,
-		tiles = { table_colors[i][2] },
+		tiles = { texture },
 		node_box = {
 			type = "fixed",
 			fixed = {
@@ -36,13 +33,13 @@ for i in ipairs(table_colors) do
 end
 
 local chaircolors = {
-	{ "", "plain" },
-	{ "black", "Black" },
-	{ "red", "Red" },
-	{ "pink", "Pink" },
-	{ "violet", "Violet" },
-	{ "blue", "Blue" },
-	{ "dark_green", "Dark Green" },
+	{ "",           S("plain") },
+	{ "black",      S("black") },
+	{ "red",        S("red") },
+	{ "pink",       S("pink") },
+	{ "violet",     S("violet") },
+	{ "blue",       S("blue") },
+	{ "dark_green", S("dark green") },
 }
 
 local kc_cbox = {
@@ -52,69 +49,84 @@ local kc_cbox = {
 
 local ac_cbox = {
 	type = "fixed",
-	fixed = { 
+	fixed = {
 		{-0.5, -0.5, -0.5, 0.5, 0, 0.5 },
 		{-0.5, -0.5, 0.4, 0.5, 0.5, 0.5 }
 	}
 }
 
-for i in ipairs(chaircolors) do
-
-	local color = "_"..chaircolors[i][1]
-	local color2 = chaircolors[i][1]
-	local name = S(chaircolors[i][2])
-	local chairtiles = {
+homedecor.register("kitchen_chair_wood", {
+	description = S("Kitchen chair"),
+	mesh = "homedecor_kitchen_chair.obj",
+	tiles = {
 		homedecor.plain_wood,
-		"wool"..color..".png",
-	}
-
-	if chaircolors[i][1] == "" then
-		color = ""
-		chairtiles = {
-			homedecor.plain_wood,
-			homedecor.plain_wood
-		}
+		homedecor.plain_wood
+	},
+	inventory_image = "homedecor_chair_wood_inv.png",
+	paramtype2 = "wallmounted",
+	selection_box = kc_cbox,
+	collision_box = kc_cbox,
+	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2},
+	sounds = default.node_sound_wood_defaults(),
+	after_place_node = homedecor.fix_rotation_nsew,
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+		pos.y = pos.y+0 -- where do I put my ass ?
+		homedecor.sit(pos, node, clicker)
+		return itemstack
 	end
+})
 
-	homedecor.register("chair"..color, {
-		description = S("Kitchen chair (%s)"):format(name),
-		mesh = "homedecor_kitchen_chair.obj",
-		tiles = chairtiles,
-		selection_box = kc_cbox,
-		collision_box = kc_cbox,
-		groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2},
-		sounds = default.node_sound_wood_defaults(),
-		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+homedecor.register("kitchen_chair_padded", {
+	description = S("Kitchen chair"),
+	mesh = "homedecor_kitchen_chair.obj",
+	tiles = {
+		homedecor.plain_wood,
+		"wool_white.png",
+	},
+	inventory_image = "homedecor_chair_padded_inv.png",
+	paramtype2 = "colorwallmounted",
+	palette = "unifieddyes_palette_colorwallmounted.png",
+	selection_box = kc_cbox,
+	collision_box = kc_cbox,
+	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2},
+	sounds = default.node_sound_wood_defaults(),
+	after_place_node = homedecor.fix_rotation_nsew,
+	after_dig_node = unifieddyes.after_dig_node,
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+		local itemname = itemstack:get_name()
+		if string.find(itemname, "dye:") or string.find(itemname, "unifieddyes:") then
+			unifieddyes.on_rightclick(pos, node, clicker,
+			itemstack, pointed_thing, "homedecor:kitchen_chair_padded", "wallmounted")
+		else
 			pos.y = pos.y+0 -- where do I put my ass ?
 			homedecor.sit(pos, node, clicker)
 			return itemstack
 		end
-	})
-
-	if color ~= "" then
-		homedecor.register("armchair"..color, {
-			description = S("Armchair (%s)"):format(name),
-			mesh = "forniture_armchair.obj",
-			tiles = {
-				"wool"..color..".png",
-				"wool_dark_grey.png",
-				"default_wood.png"
-			},
-			groups = {snappy=3},
-			sounds = default.node_sound_wood_defaults(),
-			node_box = ac_cbox
-		})
-
-		minetest.register_craft({
-			output = "homedecor:armchair"..color.." 2",
-			recipe = {
-			{ "wool:"..color2,""},
-			{ "group:wood","group:wood" },
-			{ "wool:"..color2,"wool:"..color2 },
-			},
-		})
 	end
-end
+})
+
+homedecor.register("armchair", {
+	description = S("Armchair"),
+	mesh = "forniture_armchair.obj",
+	tiles = {
+		"wool_white.png",
+		{ name = "wool_dark_grey.png", color = 0xffffffff },
+		{ name = "default_wood.png", color = 0xffffffff }
+	},
+	inventory_image = "homedecor_armchair_inv.png",
+	paramtype2 = "colorwallmounted",
+	palette = "unifieddyes_palette_colorwallmounted.png",
+	groups = {snappy=3},
+	sounds = default.node_sound_wood_defaults(),
+	node_box = ac_cbox,
+	after_place_node = homedecor.fix_rotation_nsew,
+	after_dig_node = unifieddyes.after_dig_node,
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+		local itemname = itemstack:get_name()
+		unifieddyes.on_rightclick(pos, node, clicker,
+		itemstack, pointed_thing, "homedecor:armchair", "wallmounted")
+	end
+})
 
 local ob_cbox = {
 	type = "fixed",
@@ -122,7 +134,7 @@ local ob_cbox = {
 }
 
 minetest.register_node(":homedecor:openframe_bookshelf", {
-	description = "Bookshelf (open-frame)",
+	description = S("Bookshelf (open-frame)"),
 	drawtype = "mesh",
 	mesh = "homedecor_openframe_bookshelf.obj",
 	tiles = {
@@ -138,7 +150,7 @@ minetest.register_node(":homedecor:openframe_bookshelf", {
 })
 
 homedecor.register("wall_shelf", {
-	description = "Wall Shelf",
+	description = S("Wall Shelf"),
 	tiles = {
 		"homedecor_wood_table_large_edges.png",
 	},
@@ -163,3 +175,72 @@ minetest.register_alias("homedecor:armchair", "homedecor:armchair_black")
 minetest.register_alias('table', 'homedecor:table')
 minetest.register_alias('chair', 'homedecor:chair')
 minetest.register_alias('armchair', 'homedecor:armchair')
+
+-- conversion to param2 colorization
+
+homedecor.old_static_chairs = {}
+
+for _, color in ipairs(lrfurn.colors) do
+	table.insert(homedecor.old_static_chairs, "homedecor:chair_"..color)
+	table.insert(homedecor.old_static_chairs, "homedecor:armchair_"..color)
+end
+table.insert(homedecor.old_static_chairs, "homedecor:chair")
+
+minetest.register_lbm({
+	name = "homedecor:convert_chairs",
+	label = "Convert homedecor chairs to use param2 color",
+	run_at_every_load = true,
+	nodenames = homedecor.old_static_chairs,
+	action = function(pos, node)
+		local name = node.name
+		local paletteidx = 0
+		local color
+		local a,b = string.find(name, "_")
+
+		if a then
+			color = string.sub(name, a+1)
+
+			if color == "blue" then
+				color = "medium_blue"
+			elseif color == "violet" then
+				color = "medium_violet"
+			elseif color == "red" then
+				color = "medium_red"
+			elseif color == "black" then
+				color = "dark_grey"
+			end
+
+			paletteidx, _ = unifieddyes.getpaletteidx("unifieddyes:"..color, "wallmounted")
+		end
+
+		local old_fdir = math.floor(node.param2 % 32)
+		local new_fdir = 3
+
+		if old_fdir == 0 then
+			new_fdir = 3
+		elseif old_fdir == 1 then
+			new_fdir = 4
+		elseif old_fdir == 2 then
+			new_fdir = 2
+		elseif old_fdir == 3 then
+			new_fdir = 5
+		end
+
+		local param2 = paletteidx + new_fdir
+		local newname = "homedecor:armchair"
+
+		print(name, dump(a), dump(b), dump(color).."("..dump(paletteidx)..")", dump(param2))
+
+		if node.name == "homedecor:chair" then
+			newname = "homedecor:kitchen_chair_wood"
+		elseif string.find(node.name, "homedecor:chair_") then
+			newname = "homedecor:kitchen_chair_padded"
+		end
+
+		minetest.set_node(pos, { name = newname, param2 = param2 })
+		local meta = minetest.get_meta(pos)
+		if color then
+			meta:set_string("dye", "unifieddyes:"..color)
+		end
+	end
+})

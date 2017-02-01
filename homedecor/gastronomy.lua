@@ -1,4 +1,3 @@
-local S = homedecor.gettext
 
 local cutlery_cbox = {
 	type = "fixed",
@@ -119,7 +118,7 @@ homedecor.register("beer_tap", {
 	mesh = "homedecor_beer_taps.obj",
 	tiles = {
 		"homedecor_generic_metal_bright.png",
-		"homedecor_generic_metal_black.png",
+		{ name = "homedecor_generic_metal.png", color = homedecor.color_black }
 	},
 	inventory_image = "homedecor_beertap_inv.png",
 	groups = { snappy=3 },

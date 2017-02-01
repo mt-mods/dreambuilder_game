@@ -1,4 +1,3 @@
-local S = homedecor.gettext
 
 local wd_cbox = {
 	type = "fixed",
@@ -43,7 +42,6 @@ homedecor.register("wardrobe", {
 			"listring[]")
 	end,
 	on_receive_fields = function(pos, formname, fields, sender)
-		local meta = minetest.get_meta(pos)
 		local skins = {"male1", "male2", "male3", "male4", "male5"}
 		local playerName = sender:get_player_name()
 		local armor_mod = minetest.get_modpath("3d_armor")

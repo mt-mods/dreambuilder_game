@@ -1,21 +1,20 @@
-local S = homedecor.gettext
+
+local S = homedecor_i18n.gettext
 
 local bathroom_tile_colors = {
-	{ "1",      "white/grey",      "#c0c0c0:200" },
-	{ "2",      "white/dark grey", "#404040:150" },
-	{ "3",      "white/black",     "#000000:200" },
-	{ "4",      "black/dark grey", ""       },
-	{ "red",    "white/red",       "#d00000:150" },
-	{ "green",  "white/green",     "#00d000:150" },
-	{ "blue",   "white/blue",      "#0000d0:150" },
-	{ "yellow", "white/yellow",    "#ffff00:150" },
-	{ "tan",    "white/tan",       "#ceaf42:150" }
+	{ "1",       S("white/grey"),       "#c0c0c0:200" },
+	{ "2",       S("white/dark grey"),  "#404040:150" },
+	{ "3",       S("white/black"),      "#000000:200" },
+	{ "4",       S("black/dark grey"),  ""            },
+	{ "red",     S("white/red"),        "#d00000:150" },
+	{ "green",   S("white/green"),      "#00d000:150" },
+	{ "blue",    S("white/blue"),       "#0000d0:150" },
+	{ "yellow",  S("white/yellow"),     "#ffff00:150" },
+	{ "tan",     S("white/tan"),        "#ceaf42:150" }
 }
 
-for i in ipairs(bathroom_tile_colors) do
-	local color = bathroom_tile_colors[i][1]
-	local shade = bathroom_tile_colors[i][2]
-	local hue =   bathroom_tile_colors[i][3]
+for _, c in ipairs(bathroom_tile_colors) do
+	local color, shade, hue = unpack(c)
 
 	local coloredtile = "homedecor_bathroom_tiles_bg.png^(homedecor_bathroom_tiles_fg.png^[colorize:"..hue..")"
 
@@ -25,7 +24,7 @@ for i in ipairs(bathroom_tile_colors) do
 	end
 
 	minetest.register_node("homedecor:tiles_"..color, {
-		description = "Bathroom/kitchen tiles ("..shade..")",
+		description = S("Bathroom/kitchen tiles (@1)", shade),
 		tiles = {
 			coloredtile,
 			coloredtile,
@@ -46,7 +45,7 @@ local tr_cbox = {
 }
 
 homedecor.register("towel_rod", {
-	description = "Towel rod with towel",
+	description = S("Towel rod with towel"),
 	mesh = "homedecor_towel_rod.obj",
 	tiles = {
 		"homedecor_generic_terrycloth.png",
@@ -60,7 +59,7 @@ homedecor.register("towel_rod", {
 })
 
 homedecor.register("medicine_cabinet", {
-	description = S("Medicine Cabinet"),
+	description = S("Medicine cabinet"),
 	mesh = "homedecor_medicine_cabinet.obj",
 	tiles = {
 		'default_wood.png',
@@ -103,4 +102,3 @@ homedecor.register("medicine_cabinet_open", {
 		minetest.swap_node(pos, node)
 	end,
 })
-

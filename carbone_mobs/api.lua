@@ -3,6 +3,12 @@ local monster_damage = minetest.setting_get("monster_damage_factor") or 1.0
 carbone_mobs = {}
 
 function carbone_mobs:register_mob(name, def)
+
+        -- jump = true as default
+        local is_jumping = true
+        if def.jump ~= nil then is_jumping = def.jump end
+
+        -- see http://dev.minetest.net/register_entity
 	minetest.register_entity(name, {
 		hp_max = def.hp_max,
 		physical = true,
@@ -32,7 +38,7 @@ function carbone_mobs:register_mob(name, def)
 		sounds = def.sounds,
 		animation = def.animation,
 		follow = def.follow,
-		jump = def.jump or true,
+		jump = is_jumping, 
 		
 		timer = 0,
 		env_damage_timer = 0, -- only if state = "attack"
@@ -115,10 +121,10 @@ function carbone_mobs:register_mob(name, def)
 				end
 			end
 		end,
-		
-		on_step = function(self, dtime)
 
-			
+                -- see http://dev.minetest.net/LuaEntitySAO
+                -- Callback method called every server tick. 
+		on_step = function(self, dtime)
 			self.lifetimer = self.lifetimer - dtime
 			if self.lifetimer <= 0 and not self.tamed then
 				local player_count = 0
@@ -436,7 +442,7 @@ function carbone_mobs:register_mob(name, def)
 					obj:setvelocity(vec)
 				end
 			end
-		end,
+		end, -- on_step
 		
 		on_activate = function(self, staticdata, dtime_s)
 			self.object:set_armor_groups({fleshy = self.armor})
@@ -460,7 +466,7 @@ function carbone_mobs:register_mob(name, def)
 				minetest.log("action", "A mob with " .. tostring(hp) .. " HP despawned at " .. minetest.pos_to_string(pos) .. " on activation.")
 				self.object:remove()
 			end
-		end,
+		end, -- on_activate
 		
 		get_staticdata = function(self)
 			local tmp = {
@@ -468,34 +474,34 @@ function carbone_mobs:register_mob(name, def)
 				tamed = self.tamed,
 			}
 			return minetest.serialize(tmp)
-		end,
+		end, -- get_staticdata
 		
 		on_punch = function(self, hitter)
-		local hp = self.object:get_hp()
-		if hp >= 1 then
-			minetest.sound_play("player_damage", {object = self.object, gain = 0.25})
-			minetest.sound_play("hit", {pos = hitter:getpos(), gain = 0.4})
-		end
-		local y = self.object:getvelocity().y
-		if y <= 0 then
-			self.object:setvelocity({x = 0, y = y + 4.5, z = 0})
-		end
-			if hp <= 0 then
-				if hitter and hitter:is_player() and hitter:get_inventory() then
-					local pos = self.object:getpos()
-					minetest.sound_play("player_death", {object = self.object, gain = 0.4})
-					minetest.sound_play("hit_death", {pos = hitter:getpos(), gain = 0.4})
-					for _,drop in ipairs(self.drops) do
-						if math.random(1, drop.chance) == 1 then
-							hitter:get_inventory():add_item("main", ItemStack(drop.name .. " " .. math.random(drop.min, drop.max)))
-						end
-					end
-				end
-			end
-		end,
+                         local hp = self.object:get_hp()
+                         if hp >= 1 then
+                            minetest.sound_play("player_damage", {object = self.object, gain = 0.25})
+                            minetest.sound_play("hit", {pos = hitter:getpos(), gain = 0.4})
+                         end
+                         local y = self.object:getvelocity().y
+                         if y <= 0 then
+                            self.object:setvelocity({x = 0, y = y + 4.5, z = 0})
+                         end
+                         if hp <= 0 then
+                            if hitter and hitter:is_player() and hitter:get_inventory() then
+                               local pos = self.object:getpos()
+                               minetest.sound_play("player_death", {object = self.object, gain = 0.4})
+                               minetest.sound_play("hit_death", {pos = hitter:getpos(), gain = 0.4})
+                               for _,drop in ipairs(self.drops) do
+                                  if math.random(1, drop.chance) == 1 then
+                                     hitter:get_inventory():add_item("main", ItemStack(drop.name .. " " .. math.random(drop.min, drop.max)))
+                                  end
+                               end
+                            end
+                         end -- if hp <= 0
+                 end, -- on_punch
 		
 	})
-end
+end   --function carbone_mobs:register_mob(name, def)
 
 carbone_mobs.spawning_mobs = {}
 function carbone_mobs:register_spawn(name, description, nodes, max_light, min_light, chance, active_object_count, max_height, spawn_func)

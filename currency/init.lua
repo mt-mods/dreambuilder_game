@@ -1,20 +1,20 @@
-print(" Currency mod loading... ")
+minetest.log("info", " Currency mod loading... ")
 local modpath = minetest.get_modpath("currency")
 
 dofile(modpath.."/craftitems.lua")
-print("[Currency] Craft_items Loaded!")
+minetest.log("info", "[Currency] Craft_items Loaded!")
 dofile(modpath.."/shop.lua")
-print("[Currency] Shop Loaded!")
+minetest.log("info", "[Currency] Shop Loaded!")
 dofile(modpath.."/barter.lua")
-print("[Currency]  Barter Loaded!")
+minetest.log("info", "[Currency]  Barter Loaded!")
 dofile(modpath.."/safe.lua")
-print("[Currency] Safe Loaded!")
+minetest.log("info", "[Currency] Safe Loaded!")
 dofile(modpath.."/crafting.lua")
-print("[Currency] Crafting Loaded!")
+minetest.log("info", "[Currency] Crafting Loaded!")
 
 if minetest.setting_getbool("creative_mode") then
-	print("[Currency] Creative mode in use, skipping basic income.")
+	minetest.log("info", "[Currency] Creative mode in use, skipping basic income.")
 else
 	dofile(modpath.."/income.lua")
-	print("[Currency] Income Loaded!")
+	minetest.log("info", "[Currency] Income Loaded!")
 end

@@ -1,0 +1,233 @@
+
+#
+# Language: Malay
+# Author: muhdnurhidayat 
+#
+
+
+### Special strings ###
+
+### kitchen_cabinet.lua ###
+Kitchen Cabinet = Kabinet Dapur
+## 1: Player name, 2: position
+%s moves stuff in kitchen cabinet at %s = %s pindah barang dalam kabinet dapur dekat %s
+%s moves stuff to kitchen cabinet at %s = %s pindah barang masuk kabinet dapur dekat %s
+%s takes stuff from kitchen cabinet at %s = %s ambil barang dari kabinet dapur dekat %s
+Half-height Kitchen Cabinet (on ceiling) = Kabinet Dapur Separuh (atas siling)
+Under-sink cabinet = Kabinet Bawah Sinki
+Kitchen Cabinet with sink = Kabinet Dapur dengan Sinki
+
+### door_models.lua ###
+Mahogany Closet Door = Pintu Almari Mahogani
+Oak Closet Door = Pintu Almari Oak
+Fancy Wood/Glass Door = Pintu Hiasan Kayu/Kaca
+Glass Office Door = Pintu Pejabat Kaca
+Glass and Wood, Mahogany-colored = Kaca dan Kayu, warna Mahogani
+Glass and Wood, Oak-colored = Kaca dan Kayu, warna Oak
+Glass and Wood, White = Kaca dan Kayu, warna Putih
+Plain Wooden Door = Pintu Kayu Biasa
+left = kiri
+right = kanan
+## 1: Side the doors opens to
+(Top Half, %s-opening) = (Separuh Atas, bukaan %s)
+(%s-opening) = (Bukaan %s)
+
+
+### door_nodes.lua ###
+Not enough space above that spot to place a door! = Tidak cukup ruang di atas kawasan untuk letak pintu!
+
+### crafts.lua ###
+Brass Ingot = Jongkong Loyang
+Bucket of white paint = Baldi cat putih
+Legs for Small Utility table = Kaki untuk Meja Utiliti Kecil
+Plastic sheet = Kepingan Plastik
+Silicon lump = Ketulan Silikon
+Simple Integrated Circuit = Litar Bersepadu Ringkas
+Small Wooden Drawer = Laci Kayu Kecil
+Terracotta Roof Tile = Genting Bumbung Terracotta
+Titanium Dioxide = Titanium Dioksida
+Uncooked Terracotta Base = Bes Terracotta Belum Dimasak
+Unprocessed Plastic base = Bes Plastik Belum Diproses
+
+### door_models.lua ###
+
+### door_nodes.lua ###
+
+### fences.lua ###
+Barbed Wire Fence = Pagar Dawai Berduri
+Barbed Wire Fence Corner = Bucu Pagar Dawai Berduri
+Barbed Wire Fence Gate = Pintu Pagar Dawai Berduri
+Brass Fence/railing = Pagar/Kisi-kisi Loyang
+Brass Fence/railing with sign = Pagar/Kisi-kisi Loyang dengan Papan Tanda
+Chainlink Fence = Pagar Dawai Berangkai
+Chainlink Fence Corner = Bucu Pagar Dawai Berangkai
+Chainlink Fence Gate = Pintu Pagar Dawai Berangkai
+Unpainted Picket Fence = Pagar Pancang Tidak Bercat
+Unpainted Picket Fence Corner = Bucu Pagar Pancang Tidak Bercat
+Unpainted Picket Fence Gate = Pintu Pagar Pancang Tidak Bercat
+White Picket Fence = Pagar Pancang Putih
+White Picket Fence Corner = Bucu Pagar Pancang Putih
+White Picket Fence Gate = Pintu Pagar Pancang Putih
+Wooden Privacy Fence = Pagar Privasi Kayu
+Wooden Privacy Fence Corner = Bucu Pagar Privasi Kayu
+Wrought Iron Fence/railing = Pagar/Kisi-kisi Besi Tempaan
+Wrought Iron Fence/railing with sign = Pagar/Kisi-kisi Besi Tempaan dengan Papan Tanda
+want to simply place the wielded item like usual. = ingin letakkan barangan yang diacukan seperti biasa.
+
+### furniture.lua ###
+Table = Meja
+Chair = Kerusi
+Black = Hitam
+Red = Merah
+Pink = Merah Jambu
+Violet = Ungu
+Blue = Biru
+Dark Green = Hijau Gelap
+## 1: Color name
+Armchair (%s) = Kerusi Tangan (%s)
+Table Lamp = Lampu Meja
+
+### furniture_medieval.lua ###
+Bars = Palang
+Binding Bars = Palang Bersambung
+Chains = Rantai
+Wall Torch = Obor Dinding
+
+### furniture_bathroom.lua ###
+Toilet = Tandas
+Sink = Sinki
+Taps = Pili Air
+Shower Tray = Lubang Air Mandi
+Shower Head = Kepala Air Mandi
+
+### init.lua ###
+Loaded! = Telah Dimuatkan!
+Air Conditioner = Pendingin Hawa
+Asphalt Shingles = Genting Asfalt
+Asphalt Shingles (outer corner) = Genting Asfalt (bucu luar)
+Asphalt Shingles (inner corner) = Genting Asfalt (bucu dalam)
+Black Plastic Flower Pot = Pasu Bunga Plastik Hitam
+Brass Pole = Tiang Loyang
+Brass Table Legs = Kaki Meja Loyang
+Wrought Iron Table Legs = Kaki Meja Besi Tempaan
+red = merah
+green = hijau
+blue = biru
+white = putih
+pink = merah jambu
+violet = ungu
+## 1: Color name
+Curtains (%s) = Langsir (%s)
+Drop-Ceiling Tile = Kepingan Siling
+Glass Skylight = Bumbung Kaca
+Glass Skylight Frosted  = Bumbung Kaca Berkabut
+Glass Table (Small, Round) = Meja Kaca (Bulat, Kecil)
+Glass Table (Small, Square) = Meja Kaca (Segi Empat, Kecil)
+Glass Table Piece (large) = Kepingan Meja Kaca (besar)
+Green Plastic Flower Pot = Pasu Bunga Plastik Hijau
+Large Area Rug = Ambal Kawasan Besar
+Glass Table Piece (large) = Kepingan Meja Kaca (besar)
+Large Stereo Speaker = Pembesar Suara Stereo Besar
+Legs for Utility Table = Kaki untuk Meja Utiliti
+Projection Screen Material = Bahan Skrin Pemancaran
+Small Surround Speaker = Pembesar Suara Keliling Kecil
+Small Throw Rug = Ambal Kecil
+Stereo Receiver = Penerima Stereo
+Terracotta Flower Pot = Pasu Bunga Terracotta
+Terracotta Shingles = Genting Terracotta
+Terracotta Shingles (outer corner) = Genting Terracotta (bucu luar)
+Terracotta Shingles (inner corner) = Genting Terracotta (bucu dalam)
+Textured Ceiling Paint = Cat Siling Bertekstur
+Utility Table = Meja Utiliti
+Utility table mk2 = Meja utiliti mk2
+Wooden Shutter (Black) = Pengatup Kayu (Hitam)
+Wooden Shutter (Dark grey) = Pengatup Kayu (Kelabu Gelap)
+Wooden Shutter (Forest green) = Pengatup Kayu (Hijau Rimba)
+Wooden Shutter (Grey) = Pengatup Kayu (Kelabu)
+Wooden Shutter (Light blue) = Pengatup Kayu (Biru Cerah)
+Wooden Shutter (Violet) = Pengatup Kayu (Ungu)
+Wooden Shutter (Red) = Pengatup Kayu (Merah)
+Wooden Shutter (Mahogany) = Pengatup Kayu (Mahogani)
+Wooden Shutter (Unpainted oak) = Pengatup Kayu (Oak tak bercat)
+Wooden Shutter (White) = Pengatup Kayu (Putih)
+Wooden Shutter (Yellow) = Pengatup Kayu (Kuning)
+Wood Table Piece (large)= Kepingan Meja Kayu (besar)
+Wood Table (Small, Round) = Meja Kayu (Bulat, Kecil)
+Wood Table (Small, Square) = Meja Kayu (Segi Empat, Kecil)
+Wood Shingles = Genting Kayu
+Wood Shingles (outer corner) = Genting Kayu (bucu luar)
+Wood Shingles (inner corner) = Genting Kayu (bucu dalam)
+Wrought Iron Pole = Tiang Besi Tempaan
+someone = seseorang
+## 1: Player name
+Sorry, %s owns that spot. = Maaf, ini kawasan %s.
+
+### lighting.lua ###
+White Glowlight (small cube) = Lampu Bara Putih (kiub kecil)
+White Glowlight (small cube, on ceiling) = Lampu Bara Putih (kiub kecil, dekat siling)
+White Glowlight (thick) = Lampu Bara Putih (tebal)
+White Glowlight (thick, on wall) = Lampu Bara Putih (tebal, dekat dinding)
+White Glowlight (thin) = Lampu Bara (nipis)
+White Glowlight (thin, on wall) = Lampu Bara Putih (nipis, dekat dinding)
+Yellow Glowlight (small cube) = Lampu Bara Kuning (kiub kecil)
+Yellow Glowlight (small cube, on ceiling) = Lampu Bara Kuning (kiub kecil, dekat siling)
+Yellow Glowlight (thick) = Lampu Bara Kuning (tebal)
+Yellow Glowlight (thick, on wall) = Lampu Bara Kuning (tebal, dekat dinding)
+Yellow Glowlight (thin) = Lampu Bara Kuning (nipis)
+Yellow Glowlight (thin, on wall) = Lampu Bara Kuning (nipis, dekat dinding)
+
+### locked.lua ###
+## 1: Item description, 2: Owner name
+%s (owned by %s) = %s (hak milik %s)
+## 1: Player name, 2: Item description, 3: Owner name, 4: Position
+%s tried to access a %s belonging to %s at %s = %s cuba untuk pakai %s milik %s dekat %s
+## 1: Item description
+%s (Locked) = %s (Berkunci)
+Locked Fridge = Peti Sejuk Berkunci
+Locked Cabinet = Kabinet Berkunci
+Locked Nightstand = Kabinet Katil Berkunci
+Locked Oven = Ketuhar Berkunci
+Locked Oven (active) = Ketuhar Berkunci (aktif)
+Locked Microwave Oven = Ketuhar Gelombang Mikro Berkunci
+Locked Microwave Oven (active) = Ketuhar Gelombang Mikro Berkunci (aktif) 
+
+### nightstands.lua ###
+Mahogany Nightstand with One Drawer = Kabinet Katil Mahogani dengan Satu Laci
+Mahogany Nightstand with Two Drawers = Kabinet Katil Mahogani dengan Dua Laci
+Oak Nightstand with One Drawer = Kabinet Katil Oak dengan Satu Laci
+Oak Nightstand with Two Drawers = Kabinet Katil Oak dengan Dua Laci
+## 1: Player name, 2: position
+%s moves stuff in nightstand at %s = %s pindah barang dalam kabinet katil dekat %s
+%s moves stuff to nightstand at %s = %s pindah barang masuk kabinet katil dekat %s
+%s takes stuff from nightstand at %s = %s ambil barang dari kabinet katil dekat %s
+One-drawer Nightstand = Kabinet Katil Laci Satu
+Two-drawer Nightstand = Kabinet Katil Laci Dua
+
+### oven.lua ###
+Oven = Ketuhar
+Microwave Oven = Ketuhar Gelombang Mikro
+## 1: Item description, 2: Percentage
+%s active: %d%% = %s aktif: %d%%
+## 1: Item description
+%s is empty = %s tiada apa-apa
+: Out of fuel = : Kehabisan bahan api
+: output bins are full = : dulang keluar penuh
+
+### refrigerator.lua ###
+Refrigerator = Peti Sejuk
+## 1: Player name, 2: position
+%s moves stuff in refrigerator at %s = %s pindah barang dalam peti sejuk dekat %s
+%s moves stuff to refrigerator at %s = %s pindah barang masuk peti sejuk dekat %s
+%s takes stuff from refrigerator at %s = %s ambil barang dari peti sejuk dekat %s
+Not enough vertical space to place a refrigerator! = Tidak cukup ruangan menegak untuk meletak peti sejuk!
+
+### television.lua ###
+Small CRT Television = Televisyen CRT Kecil
+
+### signs_lib.lua ###
+%s wrote "%s" to sign at %s = %s menulis "%s" pada papan tanda dekat %s
+Reading cached character database. = Sedang membaca pangkalan data watak yang di-cache.
+Font seems to have changed. Rebuilding cache. = Nampaknya fon tulisan berubah. Membina semula cache.
+Could not find font line height in cached DB. Trying brute force. = Tak jumpa ketinggian baris fon dalam DB yang di-cache. Sedang cuba paksaan kasar.
+Registered %s and %s = Dah daftarkan %s dan %s
+signs loaded = papan tanda telah dimuatkan

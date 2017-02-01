@@ -1,22 +1,23 @@
-local S = homedecor.gettext
+
+local S = homedecor_i18n.gettext
+
+local function N_(x) return x end
 
 local bookcolors = {
-	{ "red",    "#c00000:150" },
-	{ "green",  "#008000:150" },
-	{ "blue",   "#4040c0:150" },
-	{ "violet", "#600070:150" },
-	{ "grey",   "#202020:150" },
-	{ "brown",  "#603010:175" }
+	{ N_("red"),    "#c00000:150" },
+	{ N_("green"),  "#008000:150" },
+	{ N_("blue"),   "#4040c0:150" },
+	{ N_("violet"), "#600070:150" },
+	{ N_("grey"),   "#202020:150" },
+	{ N_("brown"),  "#603010:175" }
 }
 
 local BOOK_FORMNAME = "homedecor:book_form"
 
 local player_current_book = { }
 
-for c in ipairs(bookcolors) do
-	local color   = bookcolors[c][1]
-	local color_d = S(bookcolors[c][1])
-	local hue     = bookcolors[c][2]
+for _, c in ipairs(bookcolors) do
+	local color, hue = unpack(c)
 
 	local function book_dig(pos, node, digger)
 		if minetest.is_protected(pos, digger:get_player_name()) then return end
@@ -41,7 +42,7 @@ for c in ipairs(bookcolors) do
 	local inv_img = "homedecor_book_inv.png^[colorize:"..hue.."^homedecor_book_trim_inv.png"
 
 	homedecor.register("book_"..color, {
-		description = S("Writable Book (%s)"):format(color_d),
+		description = S("Writable Book (@1)", S(color)),
 		mesh = "homedecor_book.obj",
 		tiles = {
 			"(homedecor_book_cover.png^[colorize:"..hue..")^homedecor_book_cover_trim.png",
@@ -169,6 +170,6 @@ minetest.register_on_player_receive_fields(function(player, form_name, fields)
 	if (fields.title or "") ~= "" then
 		meta:set_string("infotext", fields.title)
 	end
-	minetest.log("action", player:get_player_name().." has written in a book (title: \""..fields.title.."\"): \""..fields.text..
-		"\" at location: "..minetest.pos_to_string(player:getpos()))
+	minetest.log("action", S("@1 has written in a book (title: \"@2\"): \"@3\" at location @4",
+			player:get_player_name(), fields.title, fields.text, minetest.pos_to_string(player:getpos())))
 end)

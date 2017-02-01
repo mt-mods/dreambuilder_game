@@ -4,8 +4,7 @@
 
 -- This file defines some items in order to not have to depend on other mods.
 
--- Boilerplate to support localized strings if intllib mod is installed.
-local S = rawget(_G, "intllib") and intllib.Getter() or function(s) return s end
+local S = homedecor_i18n.gettext
 
 if (not minetest.get_modpath("homedecor")) then
 

@@ -10,6 +10,8 @@ by blert2112
 
 -- Remove Blox from creative inventory if colormachine mod is installed
 
+blox = {}
+
 local creative = 0
 
 if (minetest.get_modpath("colormachine")) then
@@ -22,11 +24,7 @@ end
 
 -- Uncomment the line above and change value to 0 to keep nodes in creative inventory when colormachine is installed.
 
-local version = "0.7.2112"
-
-local DyeSub = ""
-
-local Material = ""
+local version = "0.8"
 
 local BloxColours = {
 	"pink",
@@ -41,42 +39,6 @@ local BloxColours = {
 	"black",
 }
 
-local UNIFIED = {
-	"magenta",
-	"yellow",
-	"white",
-	"orange",
-	"violet",
-	"blue",
-	"cyan",
-	"red",
-	"green",
-	"black",
-}
-
-local BuiltInDyes = {
-	"pink",
-	"yellow",
-	"white",
-	"orange",
-	"violet",
-	"blue",
-	"cyan",
-	"red",
-	"green",
-	"black",
-}
-
-local FuelBlox = {
-	"wood",
-	"diamond_wood",
-	"corner_wood",
-	"checker_wood",
-	"cross_wood",
-	"quarter_wood",
-	"loop_wood",
-}
-
 local NodeClass = {
 	"diamond",
 	"quarter",
@@ -87,9 +49,9 @@ local NodeClass = {
 }
 
 local NodeMaterial = {
-	"",
-	"_wood",
-	"_cobble",
+	"stone",
+	"wood",
+	"cobble",
 }
 
 -- Nodes
@@ -145,393 +107,274 @@ minetest.register_node("blox:glowdust", {
 	groups = {cracky=3, snappy=3},
 	})
 
+-- param2-colored nodes: standard patterns
 
-for _, NClass in ipairs(NodeClass) do
+for _, nodeclass in ipairs(NodeClass) do
 
-	for _, colour in ipairs(BloxColours) do
-	local cname = colour .. NClass
-
-	minetest.register_node('blox:' .. cname, {
-		description = colour .. " " .. NClass .. " stone block",
-		tiles = { 'blox_' .. cname .. '.png' },
-		--inventory_image = 'blox_' .. cname .. '.png',
+	minetest.register_node("blox:stone_"..nodeclass, {
+		description = "Blox stone "..nodeclass,
+		drawtype = "mesh",
+		tiles = {
+			{ name = "default_stone.png", color = 0xffffffff },
+			"blox_stone_"..nodeclass..".png"
+		},
+		mesh = "blox_block_with_overlay.obj",
+		palette = "unifieddyes_palette.png",
+		paramtype = "light",
+		paramtype2 = "color",
 		is_ground_content = true,
 		groups = {cracky=3, not_in_creative_inventory=creative},
 		sounds = default.node_sound_stone_defaults(),
+		after_dig_node = unifieddyes.after_dig_node,
+		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+			unifieddyes.on_rightclick(pos, node, clicker,
+			  itemstack, pointed_thing, "blox:stone_"..nodeclass)
+		end,
 	})
 
-	local sname = colour .. NClass .. '_cobble'
-
-	minetest.register_node('blox:' .. sname, {
-		description = colour .. " " .. NClass .. " cobble block",
-		tiles = { 'blox_' .. sname .. '.png' },
-		--inventory_image = 'blox_' .. sname .. '.png',
+	minetest.register_node("blox:cobble_"..nodeclass, {
+		description = "Blox cobble "..nodeclass,
+		drawtype = "mesh",
+		tiles = {
+			{ name = "default_cobble.png", color = 0xffffffff },
+			"blox_cobble_"..nodeclass..".png"
+		},
+		mesh = "blox_block_with_overlay.obj",
+		palette = "unifieddyes_palette.png",
+		paramtype = "light",
+		paramtype2 = "color",
 		is_ground_content = true,
 		groups = {cracky=3, not_in_creative_inventory=creative},
 		sounds = default.node_sound_stone_defaults(),
+		after_dig_node = unifieddyes.after_dig_node,
+		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+			unifieddyes.on_rightclick(pos, node, clicker,
+			  itemstack, pointed_thing, "blox:cobble_"..nodeclass)
+		end,
 	})
 
-	local sname = colour .. NClass .. '_wood'
-
-	minetest.register_node('blox:' .. sname, {
-		description = colour .. " " .. NClass .. " wooden block",
-		tiles = { 'blox_' .. sname .. '.png' },
-		--inventory_image = 'blox_' .. sname .. '.png',
+	minetest.register_node("blox:wood_"..nodeclass, {
+		description = "Blox wood "..nodeclass,
+		drawtype = "mesh",
+		tiles = {
+			{ name = "default_wood.png", color = 0xffffffff },
+			"blox_wood_"..nodeclass..".png"
+		},
+		mesh = "blox_block_with_overlay.obj",
+		palette = "unifieddyes_palette.png",
+		paramtype = "light",
+		paramtype2 = "color",
 		is_ground_content = true,
 		groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory=creative},
 		sounds = default.node_sound_wood_defaults(),
+		after_dig_node = unifieddyes.after_dig_node,
+		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+			unifieddyes.on_rightclick(pos, node, clicker,
+			  itemstack, pointed_thing, "blox:wood_"..nodeclass)
+		end,
 	})
-
-	end
 end
 
-	for _, colour in ipairs(BloxColours) do
-	local sname = colour .. 'square'
+-- param2-colored nodes: tinted wood, cobble, stone, stone square
 
-	minetest.register_node('blox:' .. sname, {
-		description = colour .. " stone square",
-		tiles = { 'blox_' .. sname .. '.png' },
-		--inventory_image = 'blox_' .. sname .. '.png',
-		is_ground_content = true,
-		groups = {cracky=3, not_in_creative_inventory=creative},
-		sounds = default.node_sound_stone_defaults(),
-	})
-
-	local sname = colour .. 'stone'
-
-	minetest.register_node('blox:' .. sname, {
-		description = colour .. " stone",
-		tiles = { 'blox_' .. sname .. '.png' },
-		--inventory_image = 'blox_' .. sname .. '.png',
-		is_ground_content = true,
-		groups = {cracky=3, not_in_creative_inventory=creative},
-		sounds = default.node_sound_stone_defaults(),
-	})
-
-	local sname = colour .. 'wood'
-
-	minetest.register_node('blox:' .. sname, {
-		description = colour .. " wood",
-		tiles = { 'blox_' .. sname .. '.png' },
-		--inventory_image = 'blox_' .. sname .. '.png',
-		is_ground_content = true,
-		groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory=creative},
-		sounds = default.node_sound_wood_defaults(),
-	})
-
-	local sname = colour .. 'cobble'
-
-	minetest.register_node('blox:' .. sname, {
-		description = colour .. " cobble",
-		tiles = { 'blox_' .. sname .. '.png' },
-		--inventory_image = 'blox_' .. sname .. '.png',
-		is_ground_content = true,
-		groups = {cracky=3, not_in_creative_inventory=creative},
-		sounds = default.node_sound_stone_defaults(),
-	})
+minetest.register_node("blox:wood_tinted", {
+	description = "Blox tinted wood",
+	tiles = { "blox_wood_tinted.png" },
+	palette = "unifieddyes_palette.png",
+	paramtype = "light",
+	paramtype2 = "color",
+	is_ground_content = true,
+	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory=creative},
+	sounds = default.node_sound_wood_defaults(),
+	after_dig_node = unifieddyes.after_dig_node,
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+		unifieddyes.on_rightclick(pos, node, clicker,
+		  itemstack, pointed_thing, "blox:wood_tinted")
+	end,
+})
 
 
-end
+minetest.register_node("blox:cobble_tinted", {
+	description = "Blox tinted cobble",
+	tiles = { "blox_cobble_tinted.png" },
+	palette = "unifieddyes_palette.png",
+	paramtype = "light",
+	paramtype2 = "color",
+	is_ground_content = true,
+	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory=creative},
+	sounds = default.node_sound_wood_defaults(),
+	after_dig_node = unifieddyes.after_dig_node,
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+		unifieddyes.on_rightclick(pos, node, clicker,
+		  itemstack, pointed_thing, "blox:cobble_tinted")
+	end,
+})
+
+minetest.register_node("blox:stone_tinted", {
+	description = "Blox tinted stone",
+	tiles = { "blox_stone_tinted.png" },
+	palette = "unifieddyes_palette.png",
+	paramtype = "light",
+	paramtype2 = "color",
+	is_ground_content = true,
+	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory=creative},
+	sounds = default.node_sound_wood_defaults(),
+	after_dig_node = unifieddyes.after_dig_node,
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+		unifieddyes.on_rightclick(pos, node, clicker,
+		  itemstack, pointed_thing, "blox:stone_tinted")
+	end,
+})
+
+minetest.register_node("blox:stone_square", {
+	description = "Blox stone square",
+	tiles = { "blox_stone_square.png" },
+	palette = "unifieddyes_palette.png",
+	paramtype = "light",
+	paramtype2 = "color",
+	is_ground_content = true,
+	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory=creative},
+	sounds = default.node_sound_wood_defaults(),
+	after_dig_node = unifieddyes.after_dig_node,
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+		unifieddyes.on_rightclick(pos, node, clicker,
+		  itemstack, pointed_thing, "blox:stone_square")
+	end,
+})
 
 -- Crafting
 
 minetest.register_craft({
 	output = 'blox:glowstone 2',
 	recipe = {
-		{'', 'blox:glowdust', ''},
+		{"", 'blox:glowdust', ""},
 		{'blox:glowdust', 'default:stone', 'blox:glowdust'},
-		{'', 'blox:glowdust', ''},
+		{"", 'blox:glowdust', ""},
 	}
 })
 
+local dye_color = "unifieddyes:white"
 
-for _, colour in ipairs(UNIFIED) do
+for _, material in ipairs(NodeMaterial) do
 
-if colour == "magenta" then
-DyeSub = "pink" else if colour == "violet" then
-DyeSub = "purple" else
-DyeSub = colour
-end
-end
+	local def_mat = "default:"..material
 
-for _, NMaterial in ipairs(NodeMaterial) do
+	minetest.register_craft({
+		output = "blox:"..material.."_diamond 4",
+		recipe = {
+			{ def_mat,   dye_color, def_mat   },
+			{ dye_color, "",        dye_color },
+			{ def_mat,   dye_color, def_mat   },
+		}
+	})
 
-if NMaterial == "_cobble" then
-Material = "default:cobble" else if NMaterial == "_wood" then
-Material = "default:wood" else
-Material = "default:stone"
-end
-end
---print(Material, 'unifieddyes:' .. colour)
---print('unifieddyes:' .. colour, Material)
-minetest.register_craft({
-	output = 'blox:' .. DyeSub ..'quarter' .. NMaterial .. ' 4',
-	recipe = {
-		{Material, 'unifieddyes:' .. colour},
-		{'unifieddyes:' .. colour, Material},
-	}
-})
+	minetest.register_craft({
+		output = "blox:"..material.."_quarter 4",
+		recipe = {
+			{ dye_color, def_mat   },
+			{ def_mat,   dye_color },
+		}
+	})
 
-minetest.register_craft({
-	output = 'blox:' .. DyeSub ..'quarter' .. NMaterial .. ' 4',
-	recipe = {
-		{'unifieddyes:' .. colour, Material},
-		{Material, 'unifieddyes:' .. colour},
-	}
-})
+	minetest.register_craft({
+		output = "blox:"..material.."_cross 4",
+		recipe = {
+			{ def_mat, "",        def_mat },
+			{ "",      dye_color, ""      },
+			{ def_mat, "",        def_mat },
+		}
+	})
 
-minetest.register_craft({
-	output = 'blox:' .. DyeSub ..'cross' .. NMaterial .. ' 4',
-	recipe = {
-		{Material, '', Material},
-		{'', 'unifieddyes:' .. colour, ''},
-		{Material, '', Material},
-	}
-})
+	minetest.register_craft({
+		output = "blox:"..material.."_checker 6",
+		recipe = {
+			{ def_mat,   dye_color, def_mat   },
+			{ dye_color, def_mat,   dye_color },
+			{ def_mat,   dye_color, def_mat   },
+		}
+	})
 
-minetest.register_craft({
-	output = 'blox:' .. DyeSub ..'checker' .. NMaterial .. ' 6',
-	recipe = {
-		{Material, 'unifieddyes:' .. colour,Material},
-		{'unifieddyes:' .. colour, Material, 'unifieddyes:' .. colour},
-		{Material, 'unifieddyes:' .. colour,Material},
-	}
-})
+	minetest.register_craft({
+		output = "blox:"..material.."_checker 8",
+		recipe = {
+			{ dye_color, def_mat,   dye_color },
+			{ def_mat,   dye_color, def_mat   },
+			{ dye_color, def_mat,   dye_color },
+		}
+	})
 
-minetest.register_craft({
-	output = 'blox:' .. DyeSub ..'checker' .. NMaterial .. ' 8',
-	recipe = {
-		{'unifieddyes:' .. colour, Material, 'unifieddyes:' .. colour},
-		{Material, 'unifieddyes:' .. colour,Material},
-		{'unifieddyes:' .. colour, Material, 'unifieddyes:' .. colour},
-	}
-})
+	minetest.register_craft({
+		output = "blox:"..material.."_corner 4",
+		recipe = {
+			{ dye_color, "",      dye_color },
+			{ "",        def_mat, ""        },
+			{ dye_color, "",      dye_color },
+		}
+	})
 
-minetest.register_craft({
-	output = 'blox:' .. DyeSub ..'loop' .. NMaterial .. ' 6',
-	recipe = {
-		{Material, Material, Material},
-		{Material, 'unifieddyes:' .. colour, Material},
-		{Material, Material, Material},
-	}
-})
-
-minetest.register_craft({
-	output = 'blox:' .. DyeSub ..'corner' .. NMaterial .. ' 4',
-	recipe = {
-		{'unifieddyes:' .. colour, '', 'unifieddyes:' .. colour},
-		{'', Material, ''},
-		{'unifieddyes:' .. colour, '', 'unifieddyes:' .. colour},
-	}
-})
-
-minetest.register_craft({
-	output = 'blox:' .. DyeSub ..'diamond' .. NMaterial .. ' 6',
-	recipe = {
-		{Material, 'unifieddyes:' .. colour, Material},
-		{'unifieddyes:' .. colour, '', 'unifieddyes:' .. colour},
-		{Material, 'unifieddyes:' .. colour, Material},
-	}
-})
-
-end
-end
-
-for _, colour in ipairs(UNIFIED) do
-
-if colour == "magenta" then
-DyeSub = "pink" else if colour == "violet" then
-DyeSub = "purple" else
-DyeSub = colour
-end
+	minetest.register_craft({
+		output = "blox:"..material.."_loop 6",
+		recipe = {
+			{ def_mat, def_mat,   def_mat },
+			{ def_mat, dye_color, def_mat },
+			{ def_mat, def_mat,   def_mat },
+		}
+	})
 end
 
 minetest.register_craft({
-	output = 'blox:' .. DyeSub ..'square 6',
+	output = "blox:stone_square 6",
 	recipe = {
-		{'unifieddyes:' .. colour, 'default:stone', 'default:stone'},
-		{'default:stone', 'unifieddyes:' .. colour, 'default:stone'},
-		{'default:stone', 'default:stone', 'unifieddyes:' .. colour},
+		{ dye_color,       "default:stone", "default:stone" },
+		{ "default:stone", dye_color,       "default:stone" },
+		{ "default:stone", "default:stone", dye_color       },
 	}
 })
 
 minetest.register_craft({
-	output = 'blox:' .. DyeSub ..'stone 4',
+	output = "blox:stone_tinted 6",
 	recipe = {
-		{'', 'default:stone', ''},
-		{'default:stone', 'unifieddyes:' .. colour, 'default:stone'},
-		{'', 'default:stone', ''},
+		{ "",              "default:stone", ""              },
+		{ "default:stone", dye_color,       "default:stone" },
+		{ "",              "default:stone", ""              },
 	}
 })
 
 minetest.register_craft({
-	output = 'blox:' .. DyeSub ..'wood 4',
+	output = "blox:wood_tinted 6",
 	recipe = {
-		{'', 'default:wood', ''},
-		{'default:wood', 'unifieddyes:' .. colour, 'default:wood'},
-		{'', 'default:wood', ''},
+		{ "",             "default:wood", ""             },
+		{ "default:wood", dye_color,      "default:wood" },
+		{ "",             "default:wood", ""             },
 	}
 })
 
 minetest.register_craft({
-	output = 'blox:' .. DyeSub ..'cobble 4',
+	output = "blox:cobble_tinted 6",
 	recipe = {
-		{'', 'default:cobble', ''},
-		{'default:cobble', 'unifieddyes:' .. colour, 'default:cobble'},
-		{'', 'default:cobble', ''},
+		{ "",               "default:cobble", ""               },
+		{ "default:cobble", dye_color,        "default:cobble" },
+		{ "",               "default:cobble", ""               },
 	}
 })
-end
-
-
-for _, colour in ipairs(BuiltInDyes) do
-
-if colour == "violet" then
-DyeSub = "purple" else
-DyeSub = colour
-end
-
-for _, NMaterial in ipairs(NodeMaterial) do
-
-if NMaterial == "_cobble" then
-Material = "default:cobble" else if NMaterial == "_wood" then
-Material = "default:wood" else
-Material = "default:stone"
-end
-end
-
-minetest.register_craft({
-	output = 'blox:' .. DyeSub ..'quarter' .. NMaterial .. ' 4',
-	recipe = {
-		{Material, 'dye:' .. colour},
-		{'dye:' .. colour, Material},
-	}
-})
-
-minetest.register_craft({
-	output = 'blox:' .. DyeSub ..'quarter' .. NMaterial .. ' 4',
-	recipe = {
-		{'dye:' .. colour, Material},
-		{Material, 'dye:' .. colour},
-	}
-})
-
-minetest.register_craft({
-	output = 'blox:' .. DyeSub ..'cross' .. NMaterial .. ' 4',
-	recipe = {
-		{Material, '', Material},
-		{'', 'dye:' .. colour, ''},
-		{Material, '', Material},
-	}
-})
-
-minetest.register_craft({
-	output = 'blox:' .. DyeSub ..'checker' .. NMaterial .. ' 6',
-	recipe = {
-		{Material, 'dye:' .. colour,Material},
-		{'dye:' .. colour, Material, 'dye:' .. colour},
-		{Material, 'dye:' .. colour,Material},
-	}
-})
-
-minetest.register_craft({
-	output = 'blox:' .. DyeSub ..'checker' .. NMaterial .. ' 8',
-	recipe = {
-		{'dye:' .. colour, Material, 'dye:' .. colour},
-		{Material, 'dye:' .. colour,Material},
-		{'dye:' .. colour, Material, 'dye:' .. colour},
-	}
-})
-
-minetest.register_craft({
-	output = 'blox:' .. DyeSub ..'loop' .. NMaterial .. ' 6',
-	recipe = {
-		{Material, Material, Material},
-		{Material, 'dye:' .. colour, Material},
-		{Material, Material, Material},
-	}
-})
-
-minetest.register_craft({
-	output = 'blox:' .. DyeSub ..'corner' .. NMaterial .. ' 4',
-	recipe = {
-		{'dye:' .. colour, '', 'dye:' .. colour},
-		{'', Material, ''},
-		{'dye:' .. colour, '', 'dye:' .. colour},
-	}
-})
-
-minetest.register_craft({
-	output = 'blox:' .. DyeSub ..'diamond' .. NMaterial .. ' 6',
-	recipe = {
-		{Material, 'dye:' .. colour, Material},
-		{'dye:' .. colour, '', 'dye:' .. colour},
-		{Material, 'dye:' .. colour, Material},
-	}
-})
-
-end
-end
-
-for _, colour in ipairs(UNIFIED) do
-
-if colour == "magenta" then
-DyeSub = "pink" else if colour == "violet" then
-DyeSub = "purple" else
-DyeSub = colour
-end
-end
-
-minetest.register_craft({
-	output = 'blox:' .. DyeSub ..'square 6',
-	recipe = {
-		{'dye:' .. colour, 'default:stone', 'default:stone'},
-		{'default:stone', 'dye:' .. colour, 'default:stone'},
-		{'default:stone', 'default:stone', 'dye:' .. colour},
-	}
-})
-
-minetest.register_craft({
-	output = 'blox:' .. DyeSub ..'stone 4',
-	recipe = {
-		{'', 'default:stone', ''},
-		{'default:stone', 'dye:' .. colour, 'default:stone'},
-		{'', 'default:stone', ''},
-	}
-})
-
-minetest.register_craft({
-	output = 'blox:' .. DyeSub ..'wood 4',
-	recipe = {
-		{'', 'default:wood', ''},
-		{'default:wood', 'dye:' .. colour, 'default:wood'},
-		{'', 'default:wood', ''},
-	}
-})
-
-minetest.register_craft({
-	output = 'blox:' .. DyeSub ..'cobble 4',
-	recipe = {
-		{'', 'default:cobble', ''},
-		{'default:cobble', 'dye:' .. colour, 'default:cobble'},
-		{'', 'default:cobble', ''},
-	}
-})
-end
 
 --Fuel
-	for _, colour in ipairs(BloxColours) do
 
-	for _, blox in ipairs(FuelBlox) do
+for _, nodeclass in ipairs(NodeClass) do
+	minetest.register_craft({
+		type = "fuel",
+		recipe = "blox:wood_"..nodeclass,
+		burntime = 7,
+	})
+end
 
 minetest.register_craft({
 	type = "fuel",
-	recipe = "blox:" .. colour .. blox,
+	recipe = "blox:wood_tinted",
 	burntime = 7,
 })
 
-end
-end
+-- Tools
 
 minetest.register_tool("blox:bloodbane", {
     description = "Blood Bane",
@@ -549,6 +392,8 @@ minetest.register_tool("blox:bloodbane", {
 		damage_groups = {fleshy=200},
     }
 })
+
+-- Ores
 
 local sea_level = 1
 
@@ -587,6 +432,101 @@ minetest.register_ore({
 	clust_size     = 2,
 	y_min          = -31000,
 	y_max          = sea_level - 1,
+})
+
+-- Convert old static nodes to param2 color
+
+blox.old_static_list = {}
+
+for _, nodeclass in ipairs(NodeClass) do
+	if nodeclass ~= "colored" then
+		for _, color in ipairs(BloxColours) do
+			table.insert(blox.old_static_list, "blox:"..color..nodeclass)
+			table.insert(blox.old_static_list, "blox:"..color..nodeclass.."_cobble")
+			table.insert(blox.old_static_list, "blox:"..color..nodeclass.."_wood")
+		end
+	end
+end
+
+for _, color in ipairs(BloxColours) do
+	table.insert(blox.old_static_list, "blox:"..color.."square")
+	table.insert(blox.old_static_list, "blox:"..color.."stone")
+	table.insert(blox.old_static_list, "blox:"..color.."wood")
+	table.insert(blox.old_static_list, "blox:"..color.."cobble")
+end
+
+minetest.register_lbm({
+	name = "blox:convert",
+	label = "Convert blox blocks to use param2 color",
+	run_at_every_load = true,
+	nodenames = blox.old_static_list,
+	action = function(pos, node)
+		local basename = string.sub(node.name, 6)
+		local color = basename
+		local material = "stone"
+		local pattern = "tinted"
+
+		if string.find(basename, "_cobble") then
+			basename = string.sub(basename, 1, -8)
+			material = "cobble"
+		elseif string.find(basename, "cobble") then
+			basename = string.sub(basename, 1, -7)
+			material = "cobble"
+		elseif string.find(basename, "_wood") then
+			basename = string.sub(basename, 1, -6)
+			material = "wood"
+		elseif string.find(basename, "wood") then
+			basename = string.sub(basename, 1, -5)
+			material = "wood"
+		elseif string.find(basename, "square") then
+			basename = string.sub(basename, 1, -7)
+			pattern = "square"
+		elseif string.find(basename, "stone") then
+			basename = string.sub(basename, 1, -6)
+		end
+
+		-- at this point, the material type has been deleted from `basename`.
+
+		if string.find(basename, "quarter") then
+			basename = string.sub(basename, 1, -8)
+			pattern = "quarter"
+		elseif string.find(basename, "cross") then
+			basename = string.sub(basename, 1, -6)
+			pattern = "cross"
+		elseif string.find(basename, "corner") then
+			basename = string.sub(basename, 1, -7)
+			pattern = "corner"
+		elseif string.find(basename, "diamond") then
+			basename = string.sub(basename, 1, -8)
+			pattern = "diamond"
+		elseif string.find(basename, "loop") then
+			basename = string.sub(basename, 1, -5)
+			pattern = "loop"
+		elseif string.find(basename, "checker") then
+			basename = string.sub(basename, 1, -8)
+			pattern = "checker"
+		end
+
+		-- all that's left in `basename` now is the color.
+
+		color = basename
+		if color == "purple" then
+			color = "violet"
+		elseif color == "blue" then
+			color = "skyblue"
+		elseif color == "pink" then
+			color = "magenta"
+		elseif color == "black" and
+			( pattern == "square" or
+			  pattern == "tinted" ) then 
+			color = "dark_grey"
+		end
+
+		local paletteidx, _ = unifieddyes.getpaletteidx("unifieddyes:"..color)
+		minetest.set_node(pos, { name = "blox:"..material.."_"..pattern, param2 = paletteidx })
+		local meta = minetest.get_meta(pos)
+		meta:set_string("dye", "unifieddyes:"..color)
+	end
 })
 
 print("Blox Mod [" ..version.. "] Loaded!")

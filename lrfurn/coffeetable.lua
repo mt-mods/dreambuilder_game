@@ -1,5 +1,8 @@
+
+local S = homedecor_i18n.gettext
+
 minetest.register_node("lrfurn:coffeetable_back", {
-	description = "Coffee Table",
+	description = S("Coffee Table"),
 	drawtype = "nodebox",
 	tiles = {"lrfurn_coffeetable_back.png", "lrfurn_coffeetable_back.png",  "lrfurn_coffeetable_back.png",  "lrfurn_coffeetable_back.png",  "lrfurn_coffeetable_back.png",  "lrfurn_coffeetable_back.png"},
 	paramtype = "light",
@@ -45,7 +48,8 @@ minetest.register_node("lrfurn:coffeetable_back", {
 			end
 			minetest.set_node(pos, node)
 		else
-			minetest.chat_send_player(placer:get_player_name(), "No room to place the coffee table!")
+			minetest.chat_send_player(placer:get_player_name(),
+					S("No room to place the coffee table!"))
 			minetest.set_node(pos, {name = "air"})
 			return true
 		end
@@ -68,7 +72,7 @@ minetest.register_node("lrfurn:coffeetable_back", {
 
 		if minetest.is_protected(pos, digger:get_player_name()) then return true end
 
-		if (minetest.get_node({x=pos.x, y=pos.y, z=pos.z}).name == "lrfurn:coffeetable_front") 
+		if (minetest.get_node({x=pos.x, y=pos.y, z=pos.z}).name == "lrfurn:coffeetable_front")
 		  and (minetest.get_node({x=pos.x, y=pos.y, z=pos.z}).param2 == param2) then
 				minetest.remove_node(pos)
 		end
@@ -122,5 +126,5 @@ minetest.register_craft({
 })
 
 if minetest.setting_get("log_mods") then
-	minetest.log("action", "coffeetable loaded")
+	minetest.log("action", "[lrfurn/coffeetable] "..S("Loaded!"))
 end

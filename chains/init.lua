@@ -1,3 +1,6 @@
+
+local S = homedecor_i18n.gettext
+
 local chains_sbox = {
 	type = "fixed",
 	fixed = { -0.1, -0.625, -0.1, 0.1, 0.5, 0.1 }
@@ -12,7 +15,7 @@ local topchains_sbox = {
 }
 
 minetest.register_node("chains:chain", {
-	description = "Hanging chain (wrought iron)",
+	description = S("Hanging chain (wrought iron)"),
 	drawtype = "mesh",
 	mesh = "chains.obj",
 	tiles = {"chains_wrought_iron.png"},
@@ -26,7 +29,7 @@ minetest.register_node("chains:chain", {
 })
 
 minetest.register_node("chains:chain_brass", {
-	description = "Hanging chain (brass)",
+	description = S("Hanging chain (brass)"),
 	drawtype = "mesh",
 	mesh = "chains.obj",
 	tiles = {"chains_brass.png"},
@@ -40,7 +43,7 @@ minetest.register_node("chains:chain_brass", {
 })
 
 minetest.register_node("chains:chain_top", {
-	description = "Hanging chain (ceiling mount, wrought iron)",
+	description = S("Hanging chain (ceiling mount, wrought iron)"),
 	drawtype = "mesh",
 	mesh = "top_chains.obj",
 	tiles = {"chains_wrought_iron.png"},
@@ -54,7 +57,7 @@ minetest.register_node("chains:chain_top", {
 })
 
 minetest.register_node("chains:chain_top_brass", {
-	description = "Hanging chain (ceiling mount, brass)",
+	description = S("Hanging chain (ceiling mount, brass)"),
 	drawtype = "mesh",
 	mesh = "top_chains.obj",
 	tiles = {"chains_brass.png"},
@@ -68,7 +71,7 @@ minetest.register_node("chains:chain_top_brass", {
 })
 
 minetest.register_node("chains:chandelier", {
-	description = "Chandelier (wrought iron)",
+	description = S("Chandelier (wrought iron)"),
 	paramtype = "light",
 	light_source = default.LIGHT_MAX-2,
 	walkable = false,
@@ -95,7 +98,7 @@ minetest.register_node("chains:chandelier", {
 })
 
 minetest.register_node("chains:chandelier_brass", {
-	description = "Chandelier (brass)",
+	description = S("Chandelier (brass)"),
 	paramtype = "light",
 	light_source = default.LIGHT_MAX-2,
 	walkable = false,

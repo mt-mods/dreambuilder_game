@@ -32,7 +32,7 @@ vines.register_vine = function( name, defs, biome )
     sunlight_propagates = true,
     paramtype = "light",
     paramtype2 = "wallmounted",
-    buildable_to = true,
+    buildable_to = false,
     tiles = { vine_image_end },
     drawtype = drawtype,
     inventory_image = vine_image_end,
@@ -70,7 +70,7 @@ vines.register_vine = function( name, defs, biome )
     sunlight_propagates = true,
     paramtype = "light",
     paramtype2 = "wallmounted",
-    buildable_to = true,
+    buildable_to = false,
     tiles = { vine_image_middle },
     wield_image = vine_image_middle,
     drawtype = drawtype,
@@ -82,8 +82,10 @@ vines.register_vine = function( name, defs, biome )
       local node = minetest.get_node( pos )
       local bottom = {x=pos.x, y=pos.y-1, z=pos.z}
       local bottom_node = minetest.get_node( bottom )
-      if minetest.get_item_group( bottom_node.name, "vines") then
-        minetest.remove_node( bottom )
+      if minetest.get_item_group( bottom_node.name, "vines") > 0 then
+        -- Calling `remove_node` directly would cause
+        -- a stack overflow for really long vines.
+        minetest.after( 0, minetest.remove_node, bottom )
       end
     end,
     after_dig_node = function( pos, node, oldmetadata, user )

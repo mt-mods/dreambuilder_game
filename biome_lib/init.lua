@@ -448,20 +448,24 @@ end)
 -- to prevent unpopulated map areas
 
 minetest.register_on_shutdown(function()
-	print("[biome_lib] Stand by, playing out the rest of the aircheck mapblock log")
-	print("(there are "..#biome_lib.blocklist_aircheck.." entries)...")
-	while true do
-		biome_lib:generate_block_with_air_checking(0.1)
-		if #biome_lib.blocklist_aircheck == 0 then return end
+	if #biome_lib.blocklist_aircheck > 0 then
+		print("[biome_lib] Stand by, playing out the rest of the aircheck mapblock log")
+		print("(there are "..#biome_lib.blocklist_aircheck.." entries)...")
+		while true do
+			biome_lib:generate_block_with_air_checking(0.1)
+			if #biome_lib.blocklist_aircheck == 0 then return end
+		end
 	end
 end)
 
 minetest.register_on_shutdown(function()
-	print("[biome_lib] Stand by, playing out the rest of the no-aircheck mapblock log")
-	print("(there are "..#biome_lib.blocklist_no_aircheck.." entries)...")
-	while true do
-		biome_lib:generate_block_no_aircheck(0.1)
-		if #biome_lib.blocklist_no_aircheck == 0 then return end
+	if #biome_lib.blocklist_no_aircheck > 0 then
+		print("[biome_lib] Stand by, playing out the rest of the no-aircheck mapblock log")
+		print("(there are "..#biome_lib.blocklist_no_aircheck.." entries)...")
+		while true do
+			biome_lib:generate_block_no_aircheck(0.1)
+			if #biome_lib.blocklist_no_aircheck == 0 then return end
+		end
 	end
 end)
 

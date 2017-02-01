@@ -16,8 +16,27 @@ http://wiki.minetest.com/wiki/Installing_Mods
 How to use the mod:
 See https://github.com/PilzAdam/mobs/wiki
 
+This mod can be configured via following minetest.conf variables: 
+( reminder: minetest.conf lines starting with "#" are comments )
+
+* display_mob_spawn = true -> show you a message in the chat when a mob spawns. see https://github.com/PilzAdam/mobs/wiki
+* only_peaceful_mobs = true -> "When you add only_peaceful_mobs = true to minetest.conf then all hostile mobs will despawn."
+                               "They do spawn, but they immediately despawn." (see https://forum.minetest.net/viewtopic.php?id=551)
+
+So instead you can directly use this to avoid false-alarming spawn messages...
+* spawn_friendly_mobs = true -> spawn friendly mobs (sheep, rat)
+* spawn_hostile_mobs = true -> spawn hostile  mobs
+
+
 For developers:
 The API documentation is moved to https://github.com/PilzAdam/mobs/wiki/API
+
+Some internal details: 
+
+* armor: lower values means better armor, means you need a better weapon to hurt it.
+         see e.g. https://github.com/PilzAdam/mobs/wiki/Dungeon-Master:
+         stone sword is OK to attack against armor value of 60.
+
 
 License:
 Sourcecode: WTFPL (see below)
