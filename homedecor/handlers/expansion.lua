@@ -171,7 +171,7 @@ function homedecor.stack_sideways(itemstack, placer, pointed_thing, node1, node2
 	if not pos then return itemstack end
 
 	local fdir = minetest.dir_to_facedir(placer:get_look_dir())
-	local fdir_transform = dir and homedecor.fdir_to_right or homedecor.dir_to_fwd
+	local fdir_transform = dir and homedecor.fdir_to_right or homedecor.fdir_to_fwd
 
 	local pos2 = { x = pos.x + fdir_transform[fdir+1][1], y=pos.y, z = pos.z + fdir_transform[fdir+1][2] }
 

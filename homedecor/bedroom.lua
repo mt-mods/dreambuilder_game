@@ -256,6 +256,7 @@ minetest.register_lbm({
 		local paletteidx = unifieddyes.getpaletteidx("unifieddyes:"..color, "wallmounted")
 		local old_fdir = math.floor(node.param2 % 32)
 		local new_fdir = 3
+		local new_name
 
 		if old_fdir == 0 then
 			new_fdir = 3

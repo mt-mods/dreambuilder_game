@@ -644,7 +644,7 @@ minetest.register_lbm({
 		local old_node = node.name
 		local old_fdir
 		local new_node = newname
-		local new_fdir
+		local new_fdir = 1
 		local param2
 
 		if string.find(name, "glowlight") then
