@@ -104,11 +104,11 @@ local function ped_on_flash_end(pos,record)
 			obj:remove()
 		end
 	end
+	local timer = minetest.get_node_timer(pos)
 	if not record then
 		timer:stop()
 		return
 	end
-	local timer = minetest.get_node_timer(pos)
 	local meta = minetest.get_meta(pos)
 	local lastflashtime = meta:get_int("lastflashtime")
 	local twoflashesago = meta:get_int("twoflashesago")

@@ -13,7 +13,7 @@ end
 dofile(minetest.get_modpath("worldedit_commands") .. "/cuboid.lua")
 dofile(minetest.get_modpath("worldedit_commands") .. "/mark.lua")
 dofile(minetest.get_modpath("worldedit_commands") .. "/wand.lua")
-local safe_region, check_region = dofile(minetest.get_modpath("worldedit_commands") .. "/safe.lua")
+local safe_region, check_region, reset_pending = dofile(minetest.get_modpath("worldedit_commands") .. "/safe.lua")
 
 local function get_position(name) --position 1 retrieval function for when not using `safe_region`
 	local pos1 = worldedit.pos1[name]
@@ -162,12 +162,28 @@ minetest.register_chatcommand("/inspect", {
 	end,
 })
 
+local function get_node_rlight(pos)
+	local vecs = { -- neighboring nodes
+		{x= 1, y= 0, z= 0},
+		{x=-1, y= 0, z= 0},
+		{x= 0, y= 1, z= 0},
+		{x= 0, y=-1, z= 0},
+		{x= 0, y= 0, z= 1},
+		{x= 0, y= 0, z=-1},
+	}
+	local ret = 0
+	for _, v in ipairs(vecs) do
+		ret = math.max(ret, minetest.get_node_light(vector.add(pos, v)))
+	end
+	return ret
+end
+
 minetest.register_on_punchnode(function(pos, node, puncher)
 	local name = puncher:get_player_name()
 	if worldedit.inspect[name] then
 		local axis, sign = worldedit.player_axis(name)
-		message = string.format("inspector: %s at %s (param1=%d, param2=%d, light=%d) punched facing the %s axis",
-			node.name, minetest.pos_to_string(pos), node.param1, node.param2, minetest.get_node_light(pos), axis .. (sign > 0 and "+" or "-"))
+		message = string.format("inspector: %s at %s (param1=%d, param2=%d, received light=%d) punched facing the %s axis",
+			node.name, minetest.pos_to_string(pos), node.param1, node.param2, get_node_rlight(pos), axis .. (sign > 0 and "+" or "-"))
 		worldedit.player_notify(name, message)
 	end
 end)
@@ -182,6 +198,8 @@ minetest.register_chatcommand("/reset", {
 		worldedit.mark_pos1(name)
 		worldedit.mark_pos2(name)
 		worldedit.set_pos[name] = nil
+		--make sure the user does not try to confirm an operation after resetting pos:
+		reset_pending(name)
 		worldedit.player_notify(name, "region reset")
 	end,
 })
