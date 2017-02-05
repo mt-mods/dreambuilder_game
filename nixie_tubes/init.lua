@@ -43,7 +43,11 @@ local on_digiline_receive_std = function(pos, node, channel, msg)
 	if setchan ~= channel then return end
 	local num = tonumber(msg)
 	if msg == "colon" or msg == "period" or msg == "off" or (num and (num >= 0 and num <= 9)) then
-		minetest.swap_node(pos, { name = "nixie_tubes:tube_"..msg, param2 = node.param2})
+		if string.sub(node.name,1,21) == "nixie_tubes:numitron_" then
+			minetest.swap_node(pos, { name = "nixie_tubes:numitron_"..msg, param2 = node.param2})
+		else
+			minetest.swap_node(pos, { name = "nixie_tubes:tube_"..msg, param2 = node.param2})
+		end
 	end
 end
 
@@ -90,6 +94,7 @@ for _,tube in ipairs(nixie_types) do
 	local description2 = S("Decatron ("..tube..")")
 	local cathode = "nixie_tube_cathode_off.png^nixie_tube_cathode_"..tube..".png"
 	local cathode2 = "decatron_cathode_"..tube..".png"
+	local cathode3 = "numitron_filaments.png^numitron_"..tube..".png"
 
 	if tube == "off" then
 		groups = {cracky = 2}
@@ -97,8 +102,10 @@ for _,tube in ipairs(nixie_types) do
 		light2 = nil
 		description = S("Nixie Tube")
 		description2 = S("Decatron")
+		description3 = S("Numitron Tube")
 		cathode = "nixie_tube_cathode_off.png"
 		cathode2 = "nixie_tube_blank.png"
+		cathode3 = "numitron_filaments.png"
 	end
 
 	minetest.register_node("nixie_tubes:tube_"..tube, {
@@ -134,6 +141,41 @@ for _,tube in ipairs(nixie_types) do
 			},
 		},
 		drop = "nixie_tubes:tube_off"
+	})
+
+	minetest.register_node("nixie_tubes:numitron_"..tube, {
+		description = description3,
+		drawtype = "mesh",
+		mesh = "nixie_tube.obj",
+		tiles = {
+			"nixie_tube_base.png",
+			"nixie_tube_backing.png",
+			cathode3,
+			"nixie_tube_anode.png",
+			"nixie_tube_glass.png",
+		},
+		use_texture_alpha = true,
+		groups = groups,
+		paramtype = "light",
+		paramtype2 = "facedir",
+		light_source = light,
+		selection_box = tube_cbox,
+		collision_box = tube_cbox,
+		on_construct = function(pos)
+			reset_meta(pos)
+		end,
+		on_receive_fields = function(pos, formname, fields, sender)
+			if (fields.channel) then
+				minetest.get_meta(pos):set_string("channel", fields.channel)
+			end
+		end,
+		digiline = {
+			receptor = {},
+			effector = {
+				action = on_digiline_receive_std
+			},
+		},
+		drop = "nixie_tubes:numitron_off"
 	})
 
 	if tube ~= "colon" and tube ~= "period" then
@@ -407,6 +449,15 @@ minetest.register_craft({
 	recipe = {
 		{ "", "default:glass", "" },
 		{ "default:glass", "default:sign_wall", "default:glass" },
+		{ "default:glass", "default:mese_crystal_fragment", "default:glass" }
+	},
+})
+
+minetest.register_craft({
+	output = "nixie_tubes:numitron_off 4",
+	recipe = {
+		{ "", "default:glass", "" },
+		{ "default:glass", "default:copper_ingot", "default:glass" },
 		{ "default:glass", "default:mese_crystal_fragment", "default:glass" }
 	},
 })
