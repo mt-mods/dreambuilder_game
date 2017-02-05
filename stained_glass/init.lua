@@ -118,10 +118,8 @@ minetest.register_node("stained_glass:faint_stained_glass", {
 -- trap glass
 
 minetest.override_item("moreblocks:trap_super_glow_glass", {
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		unifieddyes.on_rightclick(pos, node, clicker,
-		  itemstack, pointed_thing, "stained_glass:stained_trap_glass")
-	end
+	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, not_in_creative_inventory=1, ud_param2_colorable = 1},
+	ud_replacement_node = "stained_glass:stained_trap_glass"
 })
 
 minetest.register_node("stained_glass:stained_trap_glass", {
