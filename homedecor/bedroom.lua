@@ -45,7 +45,7 @@ homedecor.register("bed_regular", {
 	paramtype2 = "colorwallmounted",
 	palette = "unifieddyes_palette_colorwallmounted.png",
 	description = S("Bed"),
-	groups = {snappy=3},
+	groups = {snappy=3, ud_param2_colorable = 1},
 	selection_box = bed_sbox,
 	node_box = bed_cbox,
 	sounds = default.node_sound_wood_defaults(),
@@ -61,10 +61,7 @@ homedecor.register("bed_regular", {
 	end,
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		local itemname = itemstack:get_name()
-		if string.find(itemname, "dye:") or string.find(itemname, "unifieddyes:") then
-			unifieddyes.on_rightclick(pos, node, clicker,
-			itemstack, pointed_thing, "homedecor:bed_regular", "wallmounted")
-		elseif itemname == "homedecor:bed_regular" then
+		if itemname == "homedecor:bed_regular" then
 			homedecor.bed_expansion(pos, clicker, itemstack, pointed_thing, true)
 			return itemstack
 		else
@@ -90,25 +87,20 @@ homedecor.register("bed_extended", {
 	palette = "unifieddyes_palette_colorwallmounted.png",
 	selection_box = bed_sbox,
 	node_box = bed_cbox,
-	groups = {snappy=3},
+	groups = {snappy=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
 	expand = { forward = "air" },
 	on_rotate = screwdriver.disallow,
 	after_dig_node = function(pos)
 		homedecor.unextend_bed(pos)
 	end,
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		local itemname = itemstack:get_name()
-		if string.find(itemname, "dye:") or string.find(itemname, "unifieddyes:") then
-			unifieddyes.on_rightclick(pos, node, clicker,
-			itemstack, pointed_thing, "homedecor:bed_extended", "wallmounted")
-		else
---			if minetest.get_modpath("beds") then
---				beds.on_rightclick(pos, clicker)
---			end
-			return itemstack
-		end
-	end,
+--	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+--		local itemname = itemstack:get_name()
+--		if minetest.get_modpath("beds") then
+--			beds.on_rightclick(pos, clicker)
+--		end
+--		return itemstack
+--	end,
 	drop = "homedecor:bed_regular"
 })
 
@@ -125,9 +117,8 @@ homedecor.register("bed_kingsize", {
 	paramtype2 = "colorwallmounted",
 	palette = "unifieddyes_palette_colorwallmounted.png",
 	inventory_image = "homedecor_bed_kingsize_inv.png",
-	groups = {snappy=3, not_in_creative_inventory=1},
 	description = S("Bed (king sized)"),
-	groups = {snappy=3, not_in_creative_inventory=1},
+	groups = {snappy=3, ud_param2_colorable = 1},
 	selection_box = kbed_sbox,
 	node_box = kbed_cbox,
 	sounds = default.node_sound_wood_defaults(),
@@ -140,18 +131,13 @@ homedecor.register("bed_kingsize", {
 			inv:add_item("main", "homedecor:bed_regular 2")
 		end
 	end,
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		local itemname = itemstack:get_name()
-		if string.find(itemname, "dye:") or string.find(itemname, "unifieddyes:") then
-			unifieddyes.on_rightclick(pos, node, clicker,
-			itemstack, pointed_thing, "homedecor:bed_kingsize", "wallmounted")
-		else
---			if minetest.get_modpath("beds") then
---				beds.on_rightclick(pos, clicker)
---			end
-			return itemstack
-		end
-	end
+--	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+--		local itemname = itemstack:get_name()
+--		if minetest.get_modpath("beds") then
+--			beds.on_rightclick(pos, clicker)
+--		end
+--		return itemstack
+--	end
 })
 
 for _, w in pairs({ N_("mahogany"), N_("oak") }) do

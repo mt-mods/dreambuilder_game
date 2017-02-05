@@ -123,13 +123,9 @@ for _, nodeclass in ipairs(NodeClass) do
 		paramtype = "light",
 		paramtype2 = "color",
 		is_ground_content = true,
-		groups = {cracky=3, not_in_creative_inventory=creative},
+		groups = {cracky=3, not_in_creative_inventory=creative, ud_param2_colorable = 1},
 		sounds = default.node_sound_stone_defaults(),
-		after_dig_node = unifieddyes.after_dig_node,
-		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-			unifieddyes.on_rightclick(pos, node, clicker,
-			  itemstack, pointed_thing, "blox:stone_"..nodeclass)
-		end,
+		after_dig_node = unifieddyes.after_dig_node
 	})
 
 	minetest.register_node("blox:cobble_"..nodeclass, {
@@ -144,13 +140,9 @@ for _, nodeclass in ipairs(NodeClass) do
 		paramtype = "light",
 		paramtype2 = "color",
 		is_ground_content = true,
-		groups = {cracky=3, not_in_creative_inventory=creative},
+		groups = {cracky=3, not_in_creative_inventory=creative, ud_param2_colorable = 1},
 		sounds = default.node_sound_stone_defaults(),
-		after_dig_node = unifieddyes.after_dig_node,
-		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-			unifieddyes.on_rightclick(pos, node, clicker,
-			  itemstack, pointed_thing, "blox:cobble_"..nodeclass)
-		end,
+		after_dig_node = unifieddyes.after_dig_node
 	})
 
 	minetest.register_node("blox:wood_"..nodeclass, {
@@ -165,13 +157,9 @@ for _, nodeclass in ipairs(NodeClass) do
 		paramtype = "light",
 		paramtype2 = "color",
 		is_ground_content = true,
-		groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory=creative},
+		groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory=creative, ud_param2_colorable = 1},
 		sounds = default.node_sound_wood_defaults(),
-		after_dig_node = unifieddyes.after_dig_node,
-		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-			unifieddyes.on_rightclick(pos, node, clicker,
-			  itemstack, pointed_thing, "blox:wood_"..nodeclass)
-		end,
+		after_dig_node = unifieddyes.after_dig_node
 	})
 end
 
@@ -184,13 +172,9 @@ minetest.register_node("blox:wood_tinted", {
 	paramtype = "light",
 	paramtype2 = "color",
 	is_ground_content = true,
-	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory=creative},
+	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory=creative, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
-	after_dig_node = unifieddyes.after_dig_node,
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		unifieddyes.on_rightclick(pos, node, clicker,
-		  itemstack, pointed_thing, "blox:wood_tinted")
-	end,
+	after_dig_node = unifieddyes.after_dig_node
 })
 
 
@@ -201,13 +185,9 @@ minetest.register_node("blox:cobble_tinted", {
 	paramtype = "light",
 	paramtype2 = "color",
 	is_ground_content = true,
-	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory=creative},
+	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory=creative, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
-	after_dig_node = unifieddyes.after_dig_node,
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		unifieddyes.on_rightclick(pos, node, clicker,
-		  itemstack, pointed_thing, "blox:cobble_tinted")
-	end,
+	after_dig_node = unifieddyes.after_dig_node
 })
 
 minetest.register_node("blox:stone_tinted", {
@@ -217,13 +197,9 @@ minetest.register_node("blox:stone_tinted", {
 	paramtype = "light",
 	paramtype2 = "color",
 	is_ground_content = true,
-	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory=creative},
+	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory=creative, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
-	after_dig_node = unifieddyes.after_dig_node,
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		unifieddyes.on_rightclick(pos, node, clicker,
-		  itemstack, pointed_thing, "blox:stone_tinted")
-	end,
+	after_dig_node = unifieddyes.after_dig_node
 })
 
 minetest.register_node("blox:stone_square", {
@@ -233,13 +209,9 @@ minetest.register_node("blox:stone_square", {
 	paramtype = "light",
 	paramtype2 = "color",
 	is_ground_content = true,
-	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory=creative},
+	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory=creative, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
-	after_dig_node = unifieddyes.after_dig_node,
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		unifieddyes.on_rightclick(pos, node, clicker,
-		  itemstack, pointed_thing, "blox:stone_square")
-	end,
+	after_dig_node = unifieddyes.after_dig_node
 })
 
 -- Crafting

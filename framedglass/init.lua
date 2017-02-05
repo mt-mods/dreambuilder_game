@@ -1,5 +1,7 @@
 -- Minetest 0.4.7 mod: framedglass
 
+framedglass = {}
+
 minetest.register_craft({
 	output = 'framedglass:wooden_framed_glass 4',
 	recipe = {
@@ -94,13 +96,14 @@ local function is_buildable_to(placer_name, ...)
 	return true
 end
 
-local color_on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+function framedglass.color_on_punch(pos, node, puncher, pointed_thing)
+	local itemstack = puncher:get_wielded_item()
 	local itemname = itemstack:get_name()
 
 	if not string.find(itemname, "dye:") then
 		if minetest.registered_nodes[node.name] then
 			local pos2 = select_node(pointed_thing)
-			if pos2 and is_buildable_to(clicker, pos2) then
+			if pos2 and is_buildable_to(puncher, pos2) then
 				minetest.set_node(pos2, { name = itemname })
 				if not creative_mode then
 					itemstack:take_item()
@@ -121,18 +124,18 @@ local color_on_rightclick = function(pos, node, clicker, itemstack, pointed_thin
 	local newcolor2 = string.gsub(newcolor2, "dark_grey", "darkgrey")
 
 	if oldcolor == newcolor2 then
-		minetest.chat_send_player(clicker:get_player_name(), "That node is already "..newcolor.."." )
+		minetest.chat_send_player(puncher:get_player_name(), "That node is already "..newcolor.."." )
 		return itemstack
 	end
 
 	if not (newcolor == "dark_grey"
 			or newcolor == "dark_green"
 			or minetest.registered_nodes["framedglass:steel_framed_obsidian_glass"..newcolor]) then
-		minetest.chat_send_player(clicker:get_player_name(), "Framed glass doesn't support "..newcolor.."." )
+		minetest.chat_send_player(puncher:get_player_name(), "Framed glass doesn't support "..newcolor.."." )
 		return itemstack
 	end
 
-	local inv = clicker:get_inventory()
+	local inv = puncher:get_inventory()
 	local prevdye = "dye:"..oldcolor2
 
 	print(oldcolor, oldcolor2, newcolor, newcolor2, prevdye)
@@ -178,7 +181,7 @@ minetest.register_node("framedglass:steel_framed_obsidian_glass", {
 	sunlight_propagates = true,
 	groups = {cracky=3,oddly_breakable_by_hand=3},
 	sounds = default.node_sound_glass_defaults(),
-	on_rightclick = color_on_rightclick,
+	on_punch = framedglass.color_on_punch,
 	after_dig_node = return_dye_after_dig
 })
 
@@ -196,7 +199,7 @@ function add_coloured_framedglass(name, desc, color)
 		use_texture_alpha = true,
 		groups = {cracky=3, not_in_creative_inventory=1},
 		sounds = default.node_sound_glass_defaults(),
-		on_rightclick = color_on_rightclick,
+		on_punch = framedglass.color_on_punch,
 		after_dig_node = return_dye_after_dig,
 		drop = "framedglass:steel_framed_obsidian_glass"
 	}) 

@@ -73,6 +73,24 @@ local HUES2 = {
 	"Red-violet"
 }
 
+local default_dyes = {
+	"black",
+	"blue",
+	"brown",
+	"cyan",
+	"dark_green",
+	"dark_grey",
+	"green",
+	"grey",
+	"magenta",
+	"orange",
+	"pink",
+	"red",
+	"violet",
+	"white",
+	"yellow"
+}
+
 -- code borrowed from homedecor
 
 function unifieddyes.select_node(pointed_thing)
@@ -271,17 +289,49 @@ function unifieddyes.after_dig_node(pos, oldnode, oldmetadata, digger)
 	end
 end
 
-function unifieddyes.on_rightclick(pos, node, player, stack, pointed_thing, newnode, is_color_fdir)
-	local name = player:get_player_name()
-	if minetest.is_protected(pos,name) and not minetest.check_player_privs(name,{protection_bypass=true}) then
-		minetest.record_protection_violation(pos,name)
-		return stack
-	end
-	local name = stack:get_name()
-	local pos2 = unifieddyes.select_node(pointed_thing)
-	local paletteidx, hue = unifieddyes.getpaletteidx(name, is_color_fdir)
+function unifieddyes.on_use(itemstack, player, pointed_thing)
 
-	print(dump(paletteidx))
+	if not pointed_thing or pointed_thing.type == "nothing" then return end  -- if "using" the dye on air
+
+	local pos = minetest.get_pointed_thing_position(pointed_thing)
+	local node = minetest.get_node(pos)
+	local nodedef = minetest.registered_nodes[node.name]
+
+	-- if the node has an on_punch defined, bail out and call that instead.
+	local onpunch = nodedef.on_punch(pos, node, player, pointed_thing)
+	if onpunch then
+		return onpunch
+	end
+
+	-- if the target is unknown, has no groups defined, or isn't UD-colorable, just bail out
+	if not (nodedef and nodedef.groups and nodedef.groups.ud_param2_colorable) then return end
+
+	local newnode = nodedef.ud_replacement_node
+	local is_color_fdir
+
+	if nodedef.paramtype2 == "color" then
+		is_color_fdir = false
+	elseif nodedef.paramtype2 == "colorfacedir"
+		then is_color_fdir = true
+	elseif nodedef.paramtype2 == "colorwallmounted"
+		then is_color_fdir = "wallmounted"
+	end
+
+	local playername = player:get_player_name()
+
+	if is_color_fdir == nil then  -- target node doesn't support coloring at all.
+		minetest.chat_send_player(playername, "That node can't be colored.")
+		return
+	end
+
+	if minetest.is_protected(pos, playername) and not minetest.check_player_privs(playername, {protection_bypass=true}) then
+		minetest.record_protection_violation(pos, playername)
+		return
+	end
+
+	local stackname = itemstack:get_name()
+	local pos2 = unifieddyes.select_node(pointed_thing)
+	local paletteidx, hue = unifieddyes.getpaletteidx(stackname, is_color_fdir)
 
 	if paletteidx then
 
@@ -297,14 +347,19 @@ function unifieddyes.on_rightclick(pos, node, player, stack, pointed_thing, newn
 			end
 		end
 
-		meta:set_string("dye", name)
-		if not creative_mode and prevdye ~= name then
-			stack:take_item()
+		meta:set_string("dye", stackname)
+
+		if prevdye == stackname then
+			local a,b = string.find(stackname, ":")
+			minetest.chat_send_player(playername, "That node is already "..string.sub(stackname, a + 1).."." )
+			return
+		elseif not creative_mode then
+			itemstack:take_item()
 		end
+
 		node.param2 = paletteidx
 
 		local oldpaletteidx, oldhuenum = unifieddyes.getpaletteidx(prevdye, is_color_fdir)
-
 		local oldnode = minetest.get_node(pos)
 
 		local oldhue = nil
@@ -343,6 +398,9 @@ function unifieddyes.on_rightclick(pos, node, player, stack, pointed_thing, newn
 			end
 			node.name = newnode
 			minetest.swap_node(pos, node)
+			if not creative_mode then
+				return itemstack
+			end
 		else -- this path is used when you're just painting an existing node, rather than replacing one.
 			newnode = oldnode  -- note that here, newnode/oldnode are a full node, not just the name.
 			if is_color_fdir == "wallmounted" then
@@ -362,31 +420,24 @@ function unifieddyes.on_rightclick(pos, node, player, stack, pointed_thing, newn
 				newnode.param2 = paletteidx
 			end
 			minetest.swap_node(pos, newnode)
-		end
-	else  -- here is where a node is just being placed, not something being colored
-		if unifieddyes.is_buildable_to(player:get_player_name(), pos2) and
-		  minetest.registered_nodes[name] then
-			local placeable_node = minetest.registered_nodes[stack:get_name()]
-
-			local fdir = 0
-
-			if is_color_fdir == "wallmounted" then
-				local yaw = player:get_look_yaw()
-				local dir = minetest.yaw_to_dir(yaw-1.5)
-				fdir = minetest.dir_to_wallmounted(dir)
-			elseif is_color_fdir then
-				local yaw = player:get_look_yaw()
-				local dir = minetest.yaw_to_dir(yaw-1.5)
-				fdir = minetest.dir_to_facedir(dir)
-			end
-
-			minetest.set_node(pos2, { name = placeable_node.name, param2 = fdir })
 			if not creative_mode then
-				stack:take_item()
+				return itemstack
 			end
-			return stack
+		end
+	else
+		local a,b = string.find(stackname, ":")
+		if a then
+			minetest.chat_send_player(playername, "That node can't be colored "..string.sub(stackname, a + 1).."." )
 		end
 	end
+end
+
+-- re-define default dyes slightly, to add on_use
+
+for _, color in ipairs(default_dyes) do
+	minetest.override_item("dye:"..color, {
+		on_use = unifieddyes.on_use
+	})
 end
 
 -- Items/recipes needed to generate the few base colors that are not
@@ -395,9 +446,10 @@ end
 -- Lime
 
 minetest.register_craftitem(":dye:lime", {
-        description = S("Lime Dye"),
-        inventory_image = "unifieddyes_lime.png",
-	groups = { dye=1, excolor_lime=1, unicolor_lime=1, not_in_creative_inventory=1 }
+	description = S("Lime Dye"),
+	inventory_image = "unifieddyes_lime.png",
+	groups = { dye=1, excolor_lime=1, unicolor_lime=1, not_in_creative_inventory=1 },
+	on_use = unifieddyes.on_use
 })
 
 minetest.register_craft( {
@@ -412,9 +464,10 @@ minetest.register_craft( {
 -- Aqua
 
 minetest.register_craftitem(":dye:aqua", {
-        description = S("Aqua Dye"),
-        inventory_image = "unifieddyes_aqua.png",
-	groups = { dye=1, excolor_aqua=1, unicolor_aqua=1, not_in_creative_inventory=1 }
+	description = S("Aqua Dye"),
+	inventory_image = "unifieddyes_aqua.png",
+	groups = { dye=1, excolor_aqua=1, unicolor_aqua=1, not_in_creative_inventory=1 },
+	on_use = unifieddyes.on_use
 })
 
 minetest.register_craft( {
@@ -429,9 +482,10 @@ minetest.register_craft( {
 -- Sky blue
 
 minetest.register_craftitem(":dye:skyblue", {
-        description = S("Sky-blue Dye"),
-        inventory_image = "unifieddyes_skyblue.png",
-	groups = { dye=1, excolor_sky_blue=1, unicolor_sky_blue=1, not_in_creative_inventory=1 }
+	description = S("Sky-blue Dye"),
+	inventory_image = "unifieddyes_skyblue.png",
+	groups = { dye=1, excolor_sky_blue=1, unicolor_sky_blue=1, not_in_creative_inventory=1 },
+	on_use = unifieddyes.on_use
 })
 
 minetest.register_craft( {
@@ -446,9 +500,10 @@ minetest.register_craft( {
 -- Red-violet
 
 minetest.register_craftitem(":dye:redviolet", {
-        description = S("Red-violet Dye"),
-        inventory_image = "unifieddyes_redviolet.png",
-	groups = { dye=1, excolor_red_violet=1, unicolor_red_violet=1, not_in_creative_inventory=1 }
+	description = S("Red-violet Dye"),
+	inventory_image = "unifieddyes_redviolet.png",
+	groups = { dye=1, excolor_red_violet=1, unicolor_red_violet=1, not_in_creative_inventory=1 },
+	on_use = unifieddyes.on_use
 })
 
 minetest.register_craft( {
@@ -464,9 +519,10 @@ minetest.register_craft( {
 -- Light grey
 
 minetest.register_craftitem(":dye:light_grey", {
-        description = S("Light Grey Dye"),
-        inventory_image = "unifieddyes_lightgrey.png",
-	groups = { dye=1, excolor_lightgrey=1, unicolor_light_grey=1, not_in_creative_inventory=1 }
+	description = S("Light Grey Dye"),
+	inventory_image = "unifieddyes_lightgrey.png",
+	groups = { dye=1, excolor_lightgrey=1, unicolor_light_grey=1, not_in_creative_inventory=1 },
+	on_use = unifieddyes.on_use
 })
 
 minetest.register_craft( {
@@ -643,40 +699,46 @@ for i = 1, 12 do
 	minetest.register_craftitem("unifieddyes:dark_" .. hue .. "_s50", {
 		description = S("Dark " .. hue2 .. " Dye (low saturation)"),
 		inventory_image = "unifieddyes_dark_" .. hue .. "_s50.png",
-		groups = { dye=1, ["unicolor_dark_"..hue.."_s50"]=1, not_in_creative_inventory=1 }
+		groups = { dye=1, ["unicolor_dark_"..hue.."_s50"]=1, not_in_creative_inventory=1 },
+		on_use = unifieddyes.on_use
 	})
 
 	if hue ~= "green" then
 		minetest.register_craftitem("unifieddyes:dark_" .. hue, {
 			description = S("Dark " .. hue2 .. " Dye"),
 			inventory_image = "unifieddyes_dark_" .. hue .. ".png",
-			groups = { dye=1, ["unicolor_dark_"..hue]=1, not_in_creative_inventory=1 }
+			groups = { dye=1, ["unicolor_dark_"..hue]=1, not_in_creative_inventory=1 },
+			on_use = unifieddyes.on_use
 		})
 	end
 
 	minetest.register_craftitem("unifieddyes:medium_" .. hue .. "_s50", {
 		description = S("Medium " .. hue2 .. " Dye (low saturation)"),
 		inventory_image = "unifieddyes_medium_" .. hue .. "_s50.png",
-		groups = { dye=1, ["unicolor_medium_"..hue.."_s50"]=1, not_in_creative_inventory=1 }
+		groups = { dye=1, ["unicolor_medium_"..hue.."_s50"]=1, not_in_creative_inventory=1 },
+		on_use = unifieddyes.on_use
 	})
 
 	minetest.register_craftitem("unifieddyes:medium_" .. hue, {
 		description = S("Medium " .. hue2 .. " Dye"),
 		inventory_image = "unifieddyes_medium_" .. hue .. ".png",
-		groups = { dye=1, ["unicolor_medium_"..hue]=1, not_in_creative_inventory=1 }
+		groups = { dye=1, ["unicolor_medium_"..hue]=1, not_in_creative_inventory=1 },
+		on_use = unifieddyes.on_use
 	})
 
 	minetest.register_craftitem("unifieddyes:" .. hue .. "_s50", {
 		description = S(hue2 .. " Dye (low saturation)"),
 		inventory_image = "unifieddyes_" .. hue .. "_s50.png",
-		groups = { dye=1, ["unicolor_"..hue.."_s50"]=1, not_in_creative_inventory=1 }
+		groups = { dye=1, ["unicolor_"..hue.."_s50"]=1, not_in_creative_inventory=1 },
+		on_use = unifieddyes.on_use
 	})
 
 	if hue ~= "red" then
 		minetest.register_craftitem("unifieddyes:light_" .. hue, {
 			description = S("Light " .. hue2 .. " Dye"),
 			inventory_image = "unifieddyes_light_" .. hue .. ".png",
-			groups = { dye=1, ["unicolor_light_"..hue]=1, not_in_creative_inventory=1 }
+			groups = { dye=1, ["unicolor_light_"..hue]=1, not_in_creative_inventory=1 },
+			on_use = unifieddyes.on_use
 		})
 	end
 	minetest.register_alias("unifieddyes:"..hue, "dye:"..hue)

@@ -33,16 +33,13 @@ homedecor.register("shutter", {
 	inventory_image = inv,
 	wield_image = inv,
 	paramtype2 = "wallmounted",
-	groups = { snappy = 3 },
+	ud_replacement_node = "homedecor:shutter_colored",
+	groups = { snappy = 3, ud_param2_colorable = 1 },
 	sounds = default.node_sound_wood_defaults(),
 	selection_box = shutter_cbox,
 	node_box = shutter_cbox,
 	after_place_node = homedecor.fix_rotation,
-	after_dig_node = unifieddyes.after_dig_node,
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		unifieddyes.on_rightclick(pos, node, clicker,
-		  itemstack, pointed_thing, "homedecor:shutter_colored", "wallmounted")
-	end
+	after_dig_node = unifieddyes.after_dig_node
 })
 
 homedecor.register("shutter_colored", {
@@ -53,16 +50,12 @@ homedecor.register("shutter_colored", {
 	wield_image = "homedecor_window_shutter_inv.png",
 	paramtype2 = "colorwallmounted",
 	palette = "unifieddyes_palette_colorwallmounted.png",
-	groups = { snappy = 3 , not_in_creative_inventory = 1},
+	groups = { snappy = 3 , not_in_creative_inventory = 1, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
 	selection_box = shutter_cbox,
 	node_box = shutter_cbox,
 	after_place_node = homedecor.fix_rotation,
 	after_dig_node = unifieddyes.after_dig_node,
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		unifieddyes.on_rightclick(pos, node, clicker,
-		  itemstack, pointed_thing, "homedecor:shutter_colored", "wallmounted")
-	end,
 	drop = "homedecor:shutter"
 })
 

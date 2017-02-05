@@ -30,19 +30,14 @@ minetest.register_node("lavalamp:lavalamp", {
 		type = "fixed",
 		fixed = { -0.25, -0.5, -0.25, 0.25,0.5, 0.25 },
 	},
-	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3},
+	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_glass_defaults(),
 	after_dig_node = unifieddyes.after_dig_node,
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		local itemname = itemstack:get_name()
-		if string.find(itemname, "dye:") or string.find(itemname, "unifieddyes:") then
-			unifieddyes.on_rightclick(pos, node, clicker,
-			  itemstack, pointed_thing, "lavalamp:lavalamp", false)
-		else
-			node.name = "lavalamp:lavalamp_off"
-			minetest.swap_node(pos, node)
-			return itemstack
-		end
+		node.name = "lavalamp:lavalamp_off"
+		minetest.swap_node(pos, node)
+		return itemstack
 	end
 })
 

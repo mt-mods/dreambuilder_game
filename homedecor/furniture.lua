@@ -66,7 +66,7 @@ homedecor.register("kitchen_chair_wood", {
 	paramtype2 = "wallmounted",
 	selection_box = kc_cbox,
 	collision_box = kc_cbox,
-	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2},
+	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
 	after_place_node = homedecor.fix_rotation_nsew,
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
@@ -88,20 +88,15 @@ homedecor.register("kitchen_chair_padded", {
 	palette = "unifieddyes_palette_colorwallmounted.png",
 	selection_box = kc_cbox,
 	collision_box = kc_cbox,
-	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2},
+	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
 	after_place_node = homedecor.fix_rotation_nsew,
 	after_dig_node = unifieddyes.after_dig_node,
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		local itemname = itemstack:get_name()
-		if string.find(itemname, "dye:") or string.find(itemname, "unifieddyes:") then
-			unifieddyes.on_rightclick(pos, node, clicker,
-			itemstack, pointed_thing, "homedecor:kitchen_chair_padded", "wallmounted")
-		else
-			pos.y = pos.y+0 -- where do I put my ass ?
-			homedecor.sit(pos, node, clicker)
-			return itemstack
-		end
+		pos.y = pos.y+0 -- where do I put my ass ?
+		homedecor.sit(pos, node, clicker)
+		return itemstack
 	end
 })
 
@@ -116,16 +111,11 @@ homedecor.register("armchair", {
 	inventory_image = "homedecor_armchair_inv.png",
 	paramtype2 = "colorwallmounted",
 	palette = "unifieddyes_palette_colorwallmounted.png",
-	groups = {snappy=3},
+	groups = {snappy=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
 	node_box = ac_cbox,
 	after_place_node = homedecor.fix_rotation_nsew,
 	after_dig_node = unifieddyes.after_dig_node,
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		local itemname = itemstack:get_name()
-		unifieddyes.on_rightclick(pos, node, clicker,
-		itemstack, pointed_thing, "homedecor:armchair", "wallmounted")
-	end
 })
 
 local ob_cbox = {

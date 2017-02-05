@@ -2,7 +2,7 @@
 local S = homedecor_i18n.gettext
 
 local inbox = {}
-screwdriver = screwdriver or {}
+local screwdriver = rawget(_G, "screwdriver") or {}
 
 minetest.register_craft({
 	output ="inbox:empty",
@@ -53,12 +53,12 @@ minetest.register_node("inbox:empty", {
 				clicker:get_player_control().aux1 then
 			minetest.show_formspec(
 				clicker:get_player_name(),
-				"default:chest_locked",
+				"inbox:mailbox",
 				inbox.get_inbox_formspec(pos))
 		else
 			minetest.show_formspec(
 				clicker:get_player_name(),
-				"default:chest_locked",
+				"inbox:mailbox",
 				inbox.get_inbox_insert_formspec(pos))
 		end
 		return itemstack

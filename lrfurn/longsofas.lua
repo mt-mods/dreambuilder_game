@@ -18,7 +18,7 @@ minetest.register_node("lrfurn:longsofa", {
 	paramtype2 = "colorwallmounted",
 	palette = "unifieddyes_palette_colorwallmounted.png",
 	inventory_image = "lrfurn_longsofa_inv.png",
-	groups = {snappy=3},
+	groups = {snappy=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
 	selection_box = longsofa_cbox,
 	node_box = longsofa_cbox,
@@ -40,19 +40,13 @@ minetest.register_node("lrfurn:longsofa", {
 	after_dig_node = unifieddyes.after_dig_node,
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		local itemname = itemstack:get_name()
-		if string.find(itemname, "dye:") or string.find(itemname, "unifieddyes:") then
-			unifieddyes.on_rightclick(pos, node, clicker,
-			itemstack, pointed_thing, "lrfurn:longsofa", "wallmounted")
-		else
-			if not clicker:is_player() then
-				return itemstack
-			end
-
-			pos.y = pos.y-0.5
-			clicker:setpos(pos)
-			clicker:set_hp(20)
+		if not clicker:is_player() then
 			return itemstack
 		end
+		pos.y = pos.y-0.5
+		clicker:setpos(pos)
+		clicker:set_hp(20)
+		return itemstack
 	end
 })
 

@@ -152,13 +152,10 @@ for _, color in ipairs(coloredwood.hues_plus_greys) do
 		palette = "unifieddyes_palette_"..color.."s.png",
 		walkable = true,
 		sunlight_propagates = false,
-		groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=2, not_in_creative_inventory=1},
+		ud_replacement_node = "coloredwood:wood_"..color,
+		groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=2, not_in_creative_inventory=1, ud_param2_colorable = 1},
 		sounds = default.node_sound_wood_defaults(),
 		after_dig_node = unifieddyes.after_dig_node,
-		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-			unifieddyes.on_rightclick(pos, node, clicker,
-			  itemstack, pointed_thing, "coloredwood:wood_"..color, true)
-		end,
 		drop = "default:wood"
 	})
 
@@ -178,12 +175,8 @@ for _, color in ipairs(coloredwood.hues_plus_greys) do
 				paramtype = "light",
 				paramtype2 = "colorfacedir",
 				palette = "unifieddyes_palette_"..color.."s.png",
-				groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=2, not_in_creative_inventory=1},
-				after_dig_node = unifieddyes.after_dig_node,
-				on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-					unifieddyes.on_rightclick(pos, node, clicker,
-					itemstack, pointed_thing, nil, true)
-				end
+				groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=2, not_in_creative_inventory=1, ud_param2_colorable = 1},
+				after_dig_node = unifieddyes.after_dig_node
 			}
 		)
 	end
@@ -198,25 +191,12 @@ end
 			  or string.find(i.name, "moreblocks:slab_wood")
 			  or string.find(i.name, "moreblocks:panel_wood")
 			  or string.find(i.name, "moreblocks:micro_wood")
-			  or string.find(i.name, "moreblocks:slope_wood")
-				then
-
+			  or string.find(i.name, "moreblocks:slope_wood") then
+			local s1, s2 = is_stairsplus(i.name)
 			minetest.override_item(i.name, {
-				on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-					local wield = itemstack:get_name()
-					local newnode = nil
-					if string.find(wield, "dye:") or string.find(wield, "unifieddyes:") then
-						local s1, s2 = is_stairsplus(i.name)
-						local paletteidx, hue = unifieddyes.getpaletteidx(wield, true)
-						if hue ~= 0 then
-							newnode = "coloredwood:"..s1.."_wood_"..coloredwood.hues[hue]..s2
-						else
-							newnode = "coloredwood:"..s1.."_wood_grey"..s2
-						end
-					end
-					unifieddyes.on_rightclick(pos, node, clicker,
-					itemstack, pointed_thing, newnode, true)
-				end,
+				ud_replacement_node = "coloredwood:"..s1.."_wood_grey",
+				paramtype2 = "colorfacedir",
+				groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, wood = 1, ud_param2_colorable = 1},
 			})
 		end
 	end
@@ -243,10 +223,8 @@ end
 
 minetest.override_item("default:wood", {
 	paramtype2 = "colorfacedir",
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		unifieddyes.on_rightclick(pos, node, clicker,
-		  itemstack, pointed_thing, "coloredwood:wood_grey", true)
-	end
+	ud_replacement_node = "coloredwood:wood_grey",
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, wood = 1, ud_param2_colorable = 1},
 })
 
 minetest.register_node("coloredwood:fence", {
@@ -257,25 +235,19 @@ minetest.register_node("coloredwood:fence", {
 	paramtype2 = "color",
 	palette = "unifieddyes_palette.png",
 	walkable = true,
-	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
 	selection_box = {
 		type = "fixed",
 		fixed = {-1/7, -1/2, -1/7, 1/7, 1/2, 1/7},
 	},
 	after_dig_node = unifieddyes.after_dig_node,
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		unifieddyes.on_rightclick(pos, node, clicker,
-		  itemstack, pointed_thing, "coloredwood:fence")
-	end,
 	drop = "default:fence_wood"
 })
 
 minetest.override_item("default:fence_wood", {
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		unifieddyes.on_rightclick(pos, node, clicker,
-		  itemstack, pointed_thing, "coloredwood:fence")
-	end
+	ud_replacement_node = "coloredwood:fence",
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, ud_param2_colorable = 1}
 })
 
 -- ============================

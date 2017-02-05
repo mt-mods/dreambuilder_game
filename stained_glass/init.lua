@@ -51,7 +51,7 @@ minetest.register_node("stained_glass:stained_glass", {
 	light_source = myglow,
 	is_ground_content = true,
 	walkable = true,
-	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, not_in_creative_inventory=1},
+	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, not_in_creative_inventory=1, ud_param2_colorable = 1},
 	sounds = default.node_sound_glass_defaults(),
 	drop = "moreblocks:super_glow_glass",
 	after_dig_node = unifieddyes.after_dig_node,
@@ -61,17 +61,13 @@ minetest.register_node("stained_glass:stained_glass", {
 			minetest.swap_node(pos, { name = "stained_glass:pastel_stained_glass", param2 = node.param2 })
 			return
 		end
-		unifieddyes.on_rightclick(pos, node, clicker,
-		  itemstack, pointed_thing, "stained_glass:stained_glass")
 	end,
 	drop = "moreblocks:super_glow_glass"
 })
 
 minetest.override_item("moreblocks:super_glow_glass", {
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		unifieddyes.on_rightclick(pos, node, clicker,
-		  itemstack, pointed_thing, "stained_glass:stained_glass")
-	end
+	groups = {snappy = 2, cracky = 3, oddly_breakable_by_hand = 3, ud_param2_colorable = 1},
+	ud_replacement_node = "stained_glass:stained_glass"
 })
 
 -- pastel and faint
@@ -88,7 +84,7 @@ minetest.register_node("stained_glass:pastel_stained_glass", {
 	light_source = myglow,
 	is_ground_content = true,
 	walkable = true,
-	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, not_in_creative_inventory=1},
+	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, not_in_creative_inventory=1, ud_param2_colorable = 1},
 	sounds = default.node_sound_glass_defaults(),
 	after_dig_node = unifieddyes.after_dig_node,
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
@@ -97,8 +93,6 @@ minetest.register_node("stained_glass:pastel_stained_glass", {
 			minetest.swap_node(pos, { name = "stained_glass:faint_stained_glass", param2 = node.param2 })
 			return
 		end
-		unifieddyes.on_rightclick(pos, node, clicker,
-		  itemstack, pointed_thing, "stained_glass:pastel_stained_glass")
 	end,
 	drop = "moreblocks:super_glow_glass"
 })
@@ -115,13 +109,9 @@ minetest.register_node("stained_glass:faint_stained_glass", {
 	light_source = myglow,
 	is_ground_content = true,
 	walkable = true,
-	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, not_in_creative_inventory=1},
+	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, not_in_creative_inventory=1, ud_param2_colorable = 1},
 	sounds = default.node_sound_glass_defaults(),
 	after_dig_node = unifieddyes.after_dig_node,
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		unifieddyes.on_rightclick(pos, node, clicker,
-		  itemstack, pointed_thing, "stained_glass:faint_stained_glass")
-	end,
 	drop = "moreblocks:super_glow_glass"
 })
 
@@ -146,7 +136,7 @@ minetest.register_node("stained_glass:stained_trap_glass", {
 	light_source = myglow,
 	is_ground_content = true,
 	walkable = false,
-	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, not_in_creative_inventory=1},
+	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, not_in_creative_inventory=1, ud_param2_colorable = 1},
 	sounds = default.node_sound_glass_defaults(),
 	drop = "moreblocks:trap_super_glow_glass",
 	after_dig_node = unifieddyes.after_dig_node,
@@ -156,8 +146,6 @@ minetest.register_node("stained_glass:stained_trap_glass", {
 			minetest.swap_node(pos, { name = "stained_glass:pastel_stained_trap_glass", param2 = node.param2 })
 			return
 		end
-		unifieddyes.on_rightclick(pos, node, clicker,
-		  itemstack, pointed_thing, "stained_glass:stained_trap_glass")
 	end,
 	drop = "moreblocks:trap_super_glow_glass"
 })
@@ -176,7 +164,7 @@ minetest.register_node("stained_glass:pastel_stained_trap_glass", {
 	light_source = myglow,
 	is_ground_content = true,
 	walkable = true,
-	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, not_in_creative_inventory=1},
+	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, not_in_creative_inventory=1, ud_param2_colorable = 1},
 	sounds = default.node_sound_glass_defaults(),
 	after_dig_node = unifieddyes.after_dig_node,
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
@@ -185,8 +173,6 @@ minetest.register_node("stained_glass:pastel_stained_trap_glass", {
 			minetest.swap_node(pos, { name = "stained_glass:faint_stained_trap_glass", param2 = node.param2 })
 			return
 		end
-		unifieddyes.on_rightclick(pos, node, clicker,
-		  itemstack, pointed_thing, "stained_glass:pastel_stained_glass")
 	end,
 	drop = "moreblocks:trap_super_glow_glass"
 })
@@ -203,13 +189,8 @@ minetest.register_node("stained_glass:faint_stained_trap_glass", {
 	light_source = myglow,
 	is_ground_content = true,
 	walkable = true,
-	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, not_in_creative_inventory=1},
+	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, not_in_creative_inventory=1, ud_param2_colorable = 1},
 	sounds = default.node_sound_glass_defaults(),
-	after_dig_node = unifieddyes.after_dig_node,
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		unifieddyes.on_rightclick(pos, node, clicker,
-		  itemstack, pointed_thing, "stained_glass:faint_stained_glass")
-	end,
 	drop = "moreblocks:trap_super_glow_glass"
 })
 

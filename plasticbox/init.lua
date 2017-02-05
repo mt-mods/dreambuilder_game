@@ -2,12 +2,11 @@ minetest.register_node("plasticbox:plasticbox", {
 	description = "Plastic Box",
 	tiles = {"plasticbox_white.png"},
 	is_ground_content = false,
-	groups = {choppy=1, snappy=1, oddly_breakable_by_hand=1},
+	groups = {choppy=1, snappy=1, oddly_breakable_by_hand=1, ud_param2_colorable = 1},
 	sounds = default.node_sound_stone_defaults(),
 	paramtype2 = "color",
 	palette = "unifieddyes_palette.png",
 	after_dig_node = unifieddyes.after_dig_node,
-	on_rightclick = unifieddyes.on_rightclick,
 })
 
 stairsplus:register_all("plasticbox", "plasticbox", "plasticbox:plasticbox", {

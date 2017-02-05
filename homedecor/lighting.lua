@@ -38,15 +38,11 @@ minetest.register_node("homedecor:glowlight_half", {
 		wall_side =   { -0.5, -0.5, -0.5,   0, 0.5, 0.5 }
 	},
 	node_box = glowlight_nodebox.half,
-	groups = { snappy = 3 },
+	groups = { snappy = 3, ud_param2_colorable = 1 },
 	light_source = default.LIGHT_MAX,
 	sounds = default.node_sound_glass_defaults(),
 	after_place_node = homedecor.fix_rotation,
-	after_dig_node = unifieddyes.after_dig_node,
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		unifieddyes.on_rightclick(pos, node, clicker,
-		  itemstack, pointed_thing, "homedecor:glowlight_half", "wallmounted")
-	end,
+	after_dig_node = unifieddyes.after_dig_node
 })
 
 minetest.register_node("homedecor:glowlight_quarter", {
@@ -70,15 +66,11 @@ minetest.register_node("homedecor:glowlight_quarter", {
 		wall_side =   { -0.5, -0.5, -0.5, -0.25,   0.5, 0.5 }
 	},
 	node_box = glowlight_nodebox.quarter,
-	groups = { snappy = 3 },
+	groups = { snappy = 3, ud_param2_colorable = 1 },
 	light_source = default.LIGHT_MAX-1,
 	sounds = default.node_sound_glass_defaults(),
 	after_place_node = homedecor.fix_rotation,
-	after_dig_node = unifieddyes.after_dig_node,
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		unifieddyes.on_rightclick(pos, node, clicker,
-		  itemstack, pointed_thing, "homedecor:glowlight_quarter", "wallmounted")
-	end,
+	after_dig_node = unifieddyes.after_dig_node
 })
 
 minetest.register_node("homedecor:glowlight_small_cube", {
@@ -102,15 +94,11 @@ minetest.register_node("homedecor:glowlight_small_cube", {
 		wall_side =   {  -0.5, -0.25, -0.25,    0, 0.25, 0.25 }
 	},
 	node_box = glowlight_nodebox.small_cube,
-	groups = { snappy = 3 },
+	groups = { snappy = 3, ud_param2_colorable = 1 },
 	light_source = default.LIGHT_MAX-1,
 	sounds = default.node_sound_glass_defaults(),
 	after_place_node = homedecor.fix_rotation,
-	after_dig_node = unifieddyes.after_dig_node,
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		unifieddyes.on_rightclick(pos, node, clicker,
-		  itemstack, pointed_thing, "homedecor:glowlight_small_cube", "wallmounted")
-	end,
+	after_dig_node = unifieddyes.after_dig_node
 })
 
 homedecor.register("plasma_lamp", {
@@ -437,19 +425,15 @@ local function reg_lamp(suffix, nxt, light, brightness)
 		light_source = light,
 		selection_box = tlamp_cbox,
 		sounds = default.node_sound_wood_defaults(),
-		groups = {cracky=2,oddly_breakable_by_hand=1,
+		groups = {cracky=2,oddly_breakable_by_hand=1, ud_param2_colorable = 1,
 			not_in_creative_inventory=((light ~= nil) and 1) or nil,
 		},
 		drop = "homedecor:table_lamp_off",
-		on_punch = function(pos, node, puncher)
+		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 			node.name = "homedecor:table_lamp_"..repl[suffix]
 			minetest.set_node(pos, node)
 		end,
-		after_dig_node = unifieddyes.after_dig_node,
-		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-			unifieddyes.on_rightclick(pos, node, clicker,
-			  itemstack, pointed_thing, "homedecor:table_lamp_"..suffix, false)
-		end,
+		after_dig_node = unifieddyes.after_dig_node
 	})
 
 	homedecor.register("standing_lamp_"..suffix, {
@@ -467,21 +451,17 @@ local function reg_lamp(suffix, nxt, light, brightness)
 		palette = "unifieddyes_palette.png",
 		walkable = false,
 		light_source = light,
-		groups = {cracky=2,oddly_breakable_by_hand=1,
+		groups = {cracky=2,oddly_breakable_by_hand=1, ud_param2_colorable = 1,
 			not_in_creative_inventory=((light ~= nil) and 1) or nil,
 		},
 		selection_box = slamp_cbox,
 		sounds = default.node_sound_wood_defaults(),
 		on_rotate = screwdriver.rotate_simple,
-		on_punch = function(pos, node, puncher)
+		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 			node.name = "homedecor:standing_lamp_"..repl[suffix]
 			minetest.set_node(pos, node)
 		end,
 		after_dig_node = unifieddyes.after_dig_node,
-		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-			unifieddyes.on_rightclick(pos, node, clicker,
-			  itemstack, pointed_thing, "homedecor:standing_lamp_"..suffix, false)
-		end,
 		expand = { top="placeholder" },
 	})
 
@@ -518,13 +498,9 @@ homedecor.register("desk_lamp", {
 	selection_box = dlamp_cbox,
 	node_box = dlamp_cbox,
 	walkable = false,
-	groups = {snappy=3},
+	groups = {snappy=3, ud_param2_colorable = 1},
 	after_place_node = homedecor.fix_rotation_nsew,
-	after_dig_node = unifieddyes.after_dig_node,
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		unifieddyes.on_rightclick(pos, node, clicker,
-		  itemstack, pointed_thing, "homedecor:desk_lamp", "wallmounted")
-	end,
+	after_dig_node = unifieddyes.after_dig_node
 })
 
 -- "kitchen"/"dining room" ceiling lamp

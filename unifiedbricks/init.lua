@@ -104,21 +104,15 @@ minetest.register_node("unifiedbricks:brickblock", {
 	paramtype2 = "color",
 	palette = "unifieddyes_palette.png",
 	is_ground_content = true,
-	groups = {cracky=3, not_in_creative_inventory=1},
+	groups = {cracky=3, not_in_creative_inventory=1, ud_param2_colorable = 1},
 	sounds = default.node_sound_stone_defaults(),
 	after_dig_node = unifieddyes.after_dig_node,
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		unifieddyes.on_rightclick(pos, node, clicker,
-		  itemstack, pointed_thing, "unifiedbricks:brickblock")
-	end,
 	drop = "default:brick"
 })
 
 minetest.override_item("default:brick", {
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		unifieddyes.on_rightclick(pos, node, clicker,
-		  itemstack, pointed_thing, "unifiedbricks:brickblock")
-	end
+	ud_replacement_node = "unifiedbricks:brickblock",
+	groups = {cracky = 3, ud_param2_colorable = 1}
 })
 
 minetest.register_node("unifiedbricks:clayblock", {
@@ -130,23 +124,17 @@ minetest.register_node("unifiedbricks:clayblock", {
 	paramtype2 = "color",
 	palette = "unifieddyes_palette.png",
 	is_ground_content = true,
-	groups = {crumbly=3, not_in_creative_inventory=1},
+	groups = {crumbly=3, not_in_creative_inventory=1, ud_param2_colorable = 1},
 		sounds = default.node_sound_dirt_defaults({
 			footstep = "",
 		}),
 	after_dig_node = unifieddyes.after_dig_node,
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		unifieddyes.on_rightclick(pos, node, clicker,
-		  itemstack, pointed_thing, "unifiedbricks:clayblock")
-	end,
 	drop = "default:clay"
 })
 
 minetest.override_item("default:clay", {
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		unifieddyes.on_rightclick(pos, node, clicker,
-		  itemstack, pointed_thing, "unifiedbricks:clayblock")
-	end
+	ud_replacement_node = "unifiedbricks:clayblock",
+	groups = {crumbly = 3, ud_param2_colorable = 1}
 })
 
 

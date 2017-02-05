@@ -108,7 +108,7 @@ minetest.register_node("homedecor:curtain_closed", {
 	drawtype = 'signlike',
 	use_texture_alpha = true,
 	walkable = false,
-	groups = { snappy = 3 },
+	groups = { snappy = 3, ud_param2_colorable = 1 },
 	sounds = default.node_sound_leaves_defaults(),
 	paramtype = "light",
 	paramtype2 = "colorwallmounted",
@@ -118,18 +118,13 @@ minetest.register_node("homedecor:curtain_closed", {
 	after_place_node = homedecor.fix_rotation,
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		local itemname = itemstack:get_name()
-		if string.find(itemname, "dye:") or string.find(itemname, "unifieddyes:") then
-			unifieddyes.on_rightclick(pos, node, clicker,
-			  itemstack, pointed_thing, "homedecor:curtain_closed", "wallmounted")
-		else
-			local topnode = minetest.get_node({x=pos.x, y=pos.y+1.0, z=pos.z})
-			if string.find(topnode.name, "homedecor:curtainrod") then
-				-- Open the curtains
-				local fdir = node.param2
-				minetest.set_node(pos, { name = "homedecor:curtain_open", param2 = fdir })
-			end
-			return itemstack
+		local topnode = minetest.get_node({x=pos.x, y=pos.y+1.0, z=pos.z})
+		if string.find(topnode.name, "homedecor:curtainrod") then
+			-- Open the curtains
+			local fdir = node.param2
+			minetest.set_node(pos, { name = "homedecor:curtain_open", param2 = fdir })
 		end
+		return itemstack
 	end
 })
 
@@ -140,7 +135,7 @@ minetest.register_node("homedecor:curtain_open", {
 	drawtype = 'signlike',
 	use_texture_alpha = true,
 	walkable = false,
-	groups = { snappy = 3 },
+	groups = { snappy = 3, ud_param2_colorable = 1 },
 	sounds = default.node_sound_leaves_defaults(),
 	paramtype = "light",
 	paramtype2 = "colorwallmounted",
@@ -150,18 +145,13 @@ minetest.register_node("homedecor:curtain_open", {
 	after_place_node = homedecor.fix_rotation,
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		local itemname = itemstack:get_name()
-		if string.find(itemname, "dye:") or string.find(itemname, "unifieddyes:") then
-			unifieddyes.on_rightclick(pos, node, clicker,
-			  itemstack, pointed_thing, "homedecor:curtain_open", "wallmounted")
-		else
-			local topnode = minetest.get_node({x=pos.x, y=pos.y+1.0, z=pos.z})
-			if string.find(topnode.name, "homedecor:curtainrod") then
-				-- Close the curtains
-				local fdir = node.param2
-				minetest.set_node(pos, { name = "homedecor:curtain_closed", param2 = fdir })
-			end
-			return itemstack
+		local topnode = minetest.get_node({x=pos.x, y=pos.y+1.0, z=pos.z})
+		if string.find(topnode.name, "homedecor:curtainrod") then
+			-- Close the curtains
+			local fdir = node.param2
+			minetest.set_node(pos, { name = "homedecor:curtain_closed", param2 = fdir })
 		end
+		return itemstack
 	end
 })
 

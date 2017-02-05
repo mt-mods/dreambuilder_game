@@ -2488,27 +2488,21 @@ local bedcolors = {
 	{ "brown", "brown" },
 }
 
-for c in ipairs(bedcolors) do
-	local color = bedcolors[c][1]
-	local woolcolor = bedcolors[c][2]
+minetest.register_craft( {
+	output = "homedecor:bed_regular",
+	recipe = {
+		{ "group:stick", "", "group:stick" },
+		{ "wool:white", "wool:white", "wool:white" },
+		{ "group:wood", "", "group:wood" },
+	},
+})
 
-	minetest.register_craft( {
-		output = "homedecor:bed_"..color.."_regular",
-		recipe = {
-			{ "group:stick", "", "group:stick" },
-			{ "wool:white", "wool:"..woolcolor, "wool:"..woolcolor },
-			{ "group:wood", "", "group:wood" },
-		},
-	})
-
-	minetest.register_craft( {
-		output = "homedecor:bed_"..color.."_kingsize",
-		recipe = {
-			{ "homedecor:bed_"..color.."_regular", "homedecor:bed_"..color.."_regular" }
-		},
-	})
-
-end
+minetest.register_craft( {
+	output = "homedecor:bed_kingsize",
+	recipe = {
+		{ "homedecor:bed_regular", "homedecor:bed_regular" }
+	},
+})
 
 minetest.register_craft( {
         output = "homedecor:bottle_green",

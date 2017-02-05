@@ -60,7 +60,7 @@ minetest.register_node("ilights:light", {
 		"ilights_lamp_lens.png"
 	},
 	use_texture_alpha = true,
-	groups = {cracky=3},
+	groups = {cracky=3, ud_param2_colorable = 1},
 	paramtype = "light",
 	paramtype2 = "colorwallmounted",
 	palette = "unifieddyes_palette_colorwallmounted.png",
@@ -68,11 +68,7 @@ minetest.register_node("ilights:light", {
 	selection_box = lamp_cbox,
 	node_box = lamp_cbox,
 	after_place_node = ilights.fix_rotation,
-	after_dig_node = unifieddyes.after_dig_node,
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		unifieddyes.on_rightclick(pos, node, clicker,
-		  itemstack, pointed_thing, "ilights:light", "wallmounted")
-	end,
+	after_dig_node = unifieddyes.after_dig_node
 })
 
 minetest.register_craft({
