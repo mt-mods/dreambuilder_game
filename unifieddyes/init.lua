@@ -296,6 +296,7 @@ function unifieddyes.on_use(itemstack, player, pointed_thing)
 	local pos = minetest.get_pointed_thing_position(pointed_thing)
 	local node = minetest.get_node(pos)
 	local nodedef = minetest.registered_nodes[node.name]
+	local playername = player:get_player_name()
 
 	-- if the node has an on_punch defined, bail out and call that instead.
 	local onpunch = nodedef.on_punch(pos, node, player, pointed_thing)
@@ -304,7 +305,10 @@ function unifieddyes.on_use(itemstack, player, pointed_thing)
 	end
 
 	-- if the target is unknown, has no groups defined, or isn't UD-colorable, just bail out
-	if not (nodedef and nodedef.groups and nodedef.groups.ud_param2_colorable) then return end
+	if not (nodedef and nodedef.groups and nodedef.groups.ud_param2_colorable) then
+		minetest.chat_send_player(playername, "That node can't be colored.")
+		return
+	end
 
 	local newnode = nodedef.ud_replacement_node
 	local is_color_fdir
@@ -315,13 +319,6 @@ function unifieddyes.on_use(itemstack, player, pointed_thing)
 		then is_color_fdir = true
 	elseif nodedef.paramtype2 == "colorwallmounted"
 		then is_color_fdir = "wallmounted"
-	end
-
-	local playername = player:get_player_name()
-
-	if is_color_fdir == nil then  -- target node doesn't support coloring at all.
-		minetest.chat_send_player(playername, "That node can't be colored.")
-		return
 	end
 
 	if minetest.is_protected(pos, playername) and not minetest.check_player_privs(playername, {protection_bypass=true}) then

@@ -2,7 +2,7 @@ local tapestry = {}
 
 minetest.register_node("castle:tapestry_top", {
 	drawtype = "nodebox",
- description = "Tapestry Top",
+	description = "Tapestry Top",
 	tiles = {"default_wood.png"},
 	sunlight_propagates = true,
 	groups = {flammable=3,oddly_breakable_by_hand=3},
@@ -30,163 +30,164 @@ minetest.register_craft({
 })
 
 tapestry.colours = {
-	{"white",      "White",      "white",    "#FFFFFF"},
-	{"grey",       "Grey",       "grey",    "#4B4B4B"},
-	{"black",      "Black",      "black",    "#1F1F1F"},
-	{"red",        "Red",        "red",    "#B21414"},
-	{"yellow",     "Yellow",     "yellow",    "#FFD011"},
- {"green",      "Green",      "green",    "#43A91C"},
-	{"cyan",       "Cyan",       "cyan",    "#00737B"},
-	{"blue",       "Blue",       "blue",    "#003A7E"},
-	{"magenta",    "Magenta",    "magenta",    "#DD0487"},
-	{"orange",     "Orange",     "orange",    "#D55014"},
-	{"violet",     "Violet",     "violet",    "#5D01AC"},
-	{"dark_grey",  "Dark Grey",  "dark_grey",    "#3A3A3A"},
-	{"dark_green", "Dark Green", "dark_green",    "#206400"},
-	{"pink", "Pink", "pink",    "#FF8383"},
-	{"brown", "Brown", "brown",    "#6D3800"},
+	"white",
+	"grey",
+	"black",
+	"red",
+	"yellow",
+	"green",
+	"cyan",
+	"blue",
+	"magenta",
+	"orange",
+	"violet",
+	"dark_grey",
+	"dark_green",
+	"pink",
+	"brown",
 }
 
-for _, row in ipairs(tapestry.colours) do
-	local name = row[1]
-	local desc = row[2]
-	local craft_color_group = row[3]
-	local defcolor = row[4]
-	-- Node Definition
-  minetest.register_node("castle:tapestry_"..name, {
-  drawtype = "nodebox",
-  description = desc.." Tapestry",
-  --uses default wool textures for tapestry material
-  tiles = {"wool_"..name..".png^[transformR90"},
-  --uses custom texture for tapestry material
-  --tiles = {"castle_tapestry_overlay.png^[colorize:" .. defcolor ..":205"},
-  groups = {oddly_breakable_by_hand=3,flammable=3},
-  sounds = default.node_sound_defaults(),
-  paramtype = "light",
-  paramtype2 = "facedir",
-  node_box = {
-  type = "fixed",
-  fixed = {
-			    {-0.3125,-0.5,0.4375,-0.1875,-0.375,0.5},
-			    {0.1875,-0.5,0.4375,0.3125,-0.375,0.5},
-			    {-0.375,-0.375,0.4375,-0.125,-0.25,0.5},
-			    {0.125,-0.375,0.4375,0.375,-0.25,0.5},
-			    {-0.4375,-0.25,0.4375,-0.0625,-0.125,0.5},
-			    {0.0625,-0.25,0.4375,0.4375,-0.125,0.5},
-			    {-0.5,-0.125,0.4375,0.0,0.0,0.5},
-			    {0.0,-0.125,0.4375,0.5,0.0,0.5},
-			    {-0.5,0.0,0.4375,0.5,1.5,0.5},
-		    },
-	    },
-	    selection_box = {
-		    type = "fixed",
-		    fixed = {
-			    {-0.5,-0.5,0.4375,0.5,1.5,0.5},
-		    },
-	    },
-	})
-	if craft_color_group then
-		-- Crafting from wool and a stick
-		minetest.register_craft({
-			type = "shapeless",
-			output = 'castle:tapestry_'..name,
-			recipe = {'wool:'..craft_color_group, 'default:stick'},
-		})
-	end
+-- Regular-length tapestry
+
+minetest.register_node("castle:tapestry", {
+	drawtype = "mesh",
+	mesh = "castle_tapestry.obj",
+	description = "Tapestry",
+	tiles = {"castle_tapestry.png"},
+	inventory_image = "castle_tapestry_inv.png",
+	groups = {oddly_breakable_by_hand=3,flammable=3, ud_param2_colorable = 1},
+	sounds = default.node_sound_defaults(),
+	paramtype = "light",
+	paramtype2 = "colorwallmounted",
+	palette = "unifieddyes_palette_colorwallmounted.png",
+	selection_box = {
+		type = "wallmounted",
+		wall_side = {-0.5,-0.5,0.4375,0.5,1.5,0.5},
+	},
+	after_place_node = castle.fix_rotation_nsew,
+	after_dig_node = unifieddyes.after_dig_node
+})
+
+-- Crafting from wool and a stick
+
+minetest.register_craft({
+	type = "shapeless",
+	output = 'castle:tapestry',
+	recipe = {'wool:white', 'default:stick'},
+})
+
+-- Long tapestry
+
+minetest.register_node("castle:tapestry_long", {
+	drawtype = "mesh",
+	mesh = "castle_tapestry_long.obj",
+	description = "Tapestry (Long)",
+	tiles = {"castle_tapestry.png"},
+	inventory_image = "castle_tapestry_long_inv.png",
+	groups = {oddly_breakable_by_hand=3,flammable=3, ud_param2_colorable = 1},
+	sounds = default.node_sound_defaults(),
+	paramtype = "light",
+	paramtype2 = "colorwallmounted",
+	palette = "unifieddyes_palette_colorwallmounted.png",
+	selection_box = {
+		type = "wallmounted",
+		wall_side = {-0.5,-0.5,0.4375,0.5,2.5,0.5},
+	},
+	after_place_node = castle.fix_rotation_nsew,
+	after_dig_node = unifieddyes.after_dig_node
+})
+
+-- Crafting from normal tapestry and wool
+
+minetest.register_craft({
+	type = "shapeless",
+	output = 'castle:tapestry_long',
+	recipe = {'wool:white', 'castle:tapestry'},
+})
+
+-- Very long tapestry
+
+minetest.register_node("castle:tapestry_very_long", {
+	drawtype = "mesh",
+	mesh = "castle_tapestry_very_long.obj",
+	description = "Tapestry (Very Long)",
+	tiles = {"castle_tapestry.png"},
+	inventory_image = "castle_tapestry_very_long_inv.png",
+	groups = {oddly_breakable_by_hand=3,flammable=3, ud_param2_colorable = 1},
+	sounds = default.node_sound_defaults(),
+	paramtype = "light",
+	paramtype2 = "colorwallmounted",
+	palette = "unifieddyes_palette_colorwallmounted.png",
+	selection_box = {
+		type = "wallmounted",
+		wall_side = {-0.5,-0.5,0.4375,0.5,3.5,0.5},
+	},
+	after_place_node = castle.fix_rotation_nsew,
+	after_dig_node = unifieddyes.after_dig_node
+})
+
+-- Crafting from long tapestry and wool
+
+minetest.register_craft({
+	type = "shapeless",
+	output = 'castle:tapestry_very_long',
+	recipe = {'wool:white', 'castle:tapestry_long'},
+})
+
+-- Convert static tapestries to param2 color
+
+castle.old_static_tapestries = {}
+
+for _, color in ipairs(tapestry.colours) do
+	table.insert(castle.old_static_tapestries, "castle:tapestry_"..color)
+	table.insert(castle.old_static_tapestries, "castle:long_tapestry_"..color)
+	table.insert(castle.old_static_tapestries, "castle:very_long_tapestry_"..color)
 end
 
-for _, row in ipairs(tapestry.colours) do
-  local name = row[1]
-  local desc = row[2]
-  local craft_color_group = row[3]
-  local defcolor = row[4]
-  -- Node Definition
-  minetest.register_node("castle:long_tapestry_"..name, {
-  drawtype = "nodebox",
-  description = desc.." Tapestry (Long)",
-  --uses default wool textures for tapestry material
-  tiles = {"wool_"..name..".png^[transformR90"},
-  --uses custom texture for tapestry material
-  --tiles = {"castle_tapestry_overlay.png^[colorize:" .. defcolor ..":205"},
-  groups = {oddly_breakable_by_hand=3,flammable=3},
-  sounds = default.node_sound_defaults(),
-  paramtype = "light",
-  paramtype2 = "facedir",
-  node_box = {
-		    type = "fixed",
-		    fixed = {
-			    {-0.3125,-0.5,0.4375,-0.1875,-0.375,0.5},
-			    {0.1875,-0.5,0.4375,0.3125,-0.375,0.5},
-			    {-0.375,-0.375,0.4375,-0.125,-0.25,0.5},
-			    {0.125,-0.375,0.4375,0.375,-0.25,0.5},
-			    {-0.4375,-0.25,0.4375,-0.0625,-0.125,0.5},
-			    {0.0625,-0.25,0.4375,0.4375,-0.125,0.5},
-			    {-0.5,-0.125,0.4375,0.0,0.0,0.5},
-			    {0.0,-0.125,0.4375,0.5,0.0,0.5},
-			    {-0.5,0.0,0.4375,0.5,2.5,0.5},
-		    },
-	    },
-	    selection_box = {
-		    type = "fixed",
-		    fixed = {
-			    {-0.5,-0.5,0.4375,0.5,2.5,0.5},
-		    },
-	    },
-	})
-	if craft_color_group then
-		-- Crafting from normal tapestry and wool
-		minetest.register_craft({
-			type = "shapeless",
-			output = 'castle:long_tapestry_'..name,
-			recipe = {'wool:'..craft_color_group, 'castle:tapestry_'..name},
-		})
-	end
-end
+minetest.register_lbm({
+	name = "castle:convert_tapestries",
+	label = "Convert tapestries to use param2 color",
+	run_at_every_load = true,
+	nodenames = castle.old_static_tapestries,
+	action = function(pos, node)
+		local oldname = node.name
+		local color = string.sub(oldname, string.find(oldname, "_", -12) + 1)
 
-for _, row in ipairs(tapestry.colours) do
-  local name = row[1]
-  local desc = row[2]
-  local craft_color_group = row[3]
- 	local defcolor = row[4]
-  -- Node Definition
-  minetest.register_node("castle:very_long_tapestry_"..name, {
-  drawtype = "nodebox",
-  description = desc.." Tapestry (Very Long)",
-  --uses default wool textures for tapestry material
-  tiles = {"wool_"..name..".png^[transformR90"},
-  --uses custom texture for tapestry material
-  --tiles = {"castle_tapestry_overlay.png^[colorize:" .. defcolor ..":205"},
-  groups = {oddly_breakable_by_hand=3,flammable=3},
-  sounds = default.node_sound_defaults(),
-  paramtype = "light",
-  paramtype2 = "facedir",
-  node_box = {
-  type = "fixed",
-  fixed = {
-			    {-0.3125,-0.5,0.4375,-0.1875,-0.375,0.5},
-			    {0.1875,-0.5,0.4375,0.3125,-0.375,0.5},
-			    {-0.375,-0.375,0.4375,-0.125,-0.25,0.5},
-			    {0.125,-0.375,0.4375,0.375,-0.25,0.5},
-			    {-0.4375,-0.25,0.4375,-0.0625,-0.125,0.5},
-			    {0.0625,-0.25,0.4375,0.4375,-0.125,0.5},
-			    {-0.5,-0.125,0.4375,0.0,0.0,0.5},
-			    {0.0,-0.125,0.4375,0.5,0.0,0.5},
-			    {-0.5,0.0,0.4375,0.5,3.5,0.5},
-		    },
-	    },
-	    selection_box = {
-		    type = "fixed",
-		    fixed = {
-			    {-0.5,-0.5,0.4375,0.5,3.5,0.5},
-		    },
-	    },
-	})
-	if craft_color_group then
-		-- Crafting from long tapestry and wool
-		minetest.register_craft({
-			type = "shapeless",
-			output = 'castle:very_long_tapestry_'..name,
-			recipe = {'wool:'..craft_color_group, 'castle:long_tapestry_'..name},
-		})
+		if color == "red" then
+			color = "medium_red"
+		elseif color == "cyan" then
+			color = "medium_cyan"
+		elseif color == "blue" then
+			color = "medium_blue"
+		elseif color == "magenta" then
+			color = "medium_magenta"
+		end
+
+		local paletteidx, _ = unifieddyes.getpaletteidx("unifieddyes:"..color, "wallmounted")
+
+		local old_fdir = math.floor(node.param2 % 32)
+		local new_fdir = 3
+
+		if old_fdir == 0 then
+			new_fdir = 3
+		elseif old_fdir == 1 then
+			new_fdir = 4
+		elseif old_fdir == 2 then
+			new_fdir = 2
+		elseif old_fdir == 3 then
+			new_fdir = 5
+		end
+
+		local param2 = paletteidx + new_fdir
+		local newname = "castle:tapestry"
+		if string.find(oldname, ":long") then
+			newname = "castle:tapestry_long"
+		elseif string.find(oldname, ":very_long") then
+			newname = "castle:tapestry_very_long"
+		end
+
+		minetest.set_node(pos, { name = newname, param2 = param2 })
+		local meta = minetest.get_meta(pos)
+		meta:set_string("dye", "unifieddyes:"..color)
 	end
-end
+})

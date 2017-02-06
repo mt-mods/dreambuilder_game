@@ -1,3 +1,16 @@
+castle = {}
+
+-- use this when you have a "wallmounted" node that should never be oriented
+-- to floor or ceiling (e.g. a tapestry)
+
+function castle.fix_rotation_nsew(pos, placer, itemstack, pointed_thing)
+	local node = minetest.get_node(pos)
+	local yaw = placer:get_look_yaw()
+	local dir = minetest.yaw_to_dir(yaw)
+	local fdir = minetest.dir_to_wallmounted(dir)
+	minetest.swap_node(pos, { name = node.name, param2 = fdir })
+end
+
 dofile(minetest.get_modpath("castle").."/pillars.lua")
 dofile(minetest.get_modpath("castle").."/arrowslit.lua")
 dofile(minetest.get_modpath("castle").."/tapestry.lua")
@@ -8,6 +21,8 @@ dofile(minetest.get_modpath("castle").."/murder_hole.lua")
 dofile(minetest.get_modpath("castle").."/orbs.lua")
 dofile(minetest.get_modpath("castle").."/rope.lua")
 dofile(minetest.get_modpath("castle").."/crossbow.lua")
+
+-- nodes
 
 minetest.register_node("castle:stonewall", {
 	description = "Castle Wall",
