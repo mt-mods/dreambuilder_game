@@ -196,7 +196,7 @@ end
 			minetest.override_item(i.name, {
 				ud_replacement_node = "coloredwood:"..s1.."_wood_grey",
 				paramtype2 = "colorfacedir",
-				groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, wood = 1, ud_param2_colorable = 1},
+				groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, wood = 1, not_in_creative_inventory=1, ud_param2_colorable = 1},
 			})
 		end
 	end

@@ -137,6 +137,89 @@ minetest.override_item("default:clay", {
 	groups = {crumbly = 3, ud_param2_colorable = 1}
 })
 
+minetest.register_node("unifiedbricks:brickblock_multicolor_dark", {
+	description = "Brick block (dark multicolor)",
+	tiles = {
+		"unifiedbricks_brickblock_multicolor_dark.png",
+		{ name = "unifiedbricks_mortar.png", color = 0xffffffff },
+	},
+	drawtype = "mesh",
+	mesh = "unifiedbricks_brick_block.obj",
+	paramtype = "light",
+	paramtype2 = "color",
+	palette = "unifieddyes_palette.png",
+	is_ground_content = true,
+	groups = {cracky=3, ud_param2_colorable = 1},
+	sounds = default.node_sound_stone_defaults(),
+	after_dig_node = unifieddyes.after_dig_node,
+})
+
+minetest.register_node("unifiedbricks:brickblock_multicolor_medium", {
+	description = "Brick block (medium multicolor)",
+	tiles = {
+		"unifiedbricks_brickblock_multicolor_medium.png",
+		{ name = "unifiedbricks_mortar.png", color = 0xffffffff },
+	},
+	drawtype = "mesh",
+	mesh = "unifiedbricks_brick_block.obj",
+	paramtype = "light",
+	paramtype2 = "color",
+	palette = "unifieddyes_palette.png",
+	is_ground_content = true,
+	groups = {cracky=3, ud_param2_colorable = 1},
+	sounds = default.node_sound_stone_defaults(),
+	after_dig_node = unifieddyes.after_dig_node,
+})
+
+minetest.register_node("unifiedbricks:brickblock_multicolor_light", {
+	description = "Brick block (light multicolor)",
+	tiles = {
+		"unifiedbricks_brickblock_multicolor_light.png",
+		{ name = "unifiedbricks_mortar.png", color = 0xffffffff },
+	},
+	drawtype = "mesh",
+	mesh = "unifiedbricks_brick_block.obj",
+	paramtype = "light",
+	paramtype2 = "color",
+	palette = "unifieddyes_palette.png",
+	is_ground_content = true,
+	groups = {cracky=3, ud_param2_colorable = 1},
+	sounds = default.node_sound_stone_defaults(),
+	after_dig_node = unifieddyes.after_dig_node,
+})
+
+minetest.register_craft( {
+   type = "shapeless",
+   output = "unifiedbricks:brickblock_multicolor_dark",
+   recipe = {
+		"default:brick",
+		"unifieddyes:grey",
+		"unifieddyes:dark_grey",
+		"unifieddyes:dark_grey"
+	},
+})
+
+minetest.register_craft( {
+   type = "shapeless",
+   output = "unifiedbricks:brickblock_multicolor_medium",
+   recipe = {
+		"default:brick",
+		"unifieddyes:white",
+		"unifieddyes:grey",
+		"unifieddyes:dark_grey"
+	},
+})
+
+minetest.register_craft( {
+   type = "shapeless",
+   output = "unifiedbricks:brickblock_multicolor_light",
+   recipe = {
+		"default:brick",
+		"unifieddyes:white",
+		"unifieddyes:white",
+		"unifieddyes:grey"
+	},
+})
 
 -- static nodes
 
@@ -145,40 +228,15 @@ unifiedbricks.register_old_static_block = function(name, formalname, blocktype)
 	table.insert(unifiedbricks.old_static_list_formals, formalname)
 end
 
-unifiedbricks.register_multicolor = function(name, formalname, drop_one, drop_two, drop_three)
-	minetest.register_node("unifiedbricks:" .. TYPES[5] .. name, {
-		description = formalname .. FORMALTYPES[5],
-		tiles = {"unifiedbricks_" .. TYPES[5] .. name .. ".png"},
-		is_ground_content = true,
-		groups = {cracky=3},
-		drop = {
-			max_items = 4,
-			items = {
-				items = {
-					{ "default:brick",
-					"unifieddyes:"..drop_one,
-					"unifieddyes:"..drop_two,
-					"unifieddyes:"..drop_three,
-					rarity = 1 }
-				}
-			}
-		},
-		sounds = default.node_sound_stone_defaults(),
-	})
+for _, color in ipairs(HUES) do
+	table.insert(unifiedbricks.old_static_list, "unifiedbricks:multicolor_dark_"..color)
+	table.insert(unifiedbricks.old_static_list, "unifiedbricks:multicolor_medium_"..color)
+	table.insert(unifiedbricks.old_static_list, "unifiedbricks:multicolor_light_"..color)
 end
 
-unifiedbricks.register_multicolor_craft = function(name, dye_one, dye_two, dye_three)
-	minetest.register_craft( {
-	   type = "shapeless",
-	   output = "unifiedbricks:multicolor_" .. name,
-	   recipe = {
-			"default:brick",
-			"unifieddyes:"..dye_one,
-			"unifieddyes:"..dye_two,
-			"unifieddyes:"..dye_three
-		},
-	})
-end
+table.insert(unifiedbricks.old_static_list, "unifiedbricks:multicolor_darkgrey")
+table.insert(unifiedbricks.old_static_list, "unifiedbricks:multicolor_grey")
+table.insert(unifiedbricks.old_static_list, "unifiedbricks:multicolor_lightgrey")
 
 --REGISTERS ALL STATIC NODES EXCEPT MULTICOLOR BRICK BLOCKS
 for i = 1,17 do
@@ -217,59 +275,6 @@ for i = 1,17 do
 	end
 end
 
---REGISTERS ALL MULTICOLOR EVERYTHING
-for i = 1,13 do
-	if i == 13 then
-		name = HUES[14]
-		formalname = FORMALHUES[14]
-		brick_one = HUES[14]
-		brick_two = HUES[15]
-		brick_three = HUES[16]
-		unifiedbricks.register_multicolor(name, formalname, brick_one, brick_two, brick_three)
-		unifiedbricks.register_multicolor_craft(name, brick_one, brick_two, brick_three)
-
-		name = HUES[15]
-		formalname = FORMALHUES[15]
-		brick_one = HUES[15]
-		brick_two = HUES[14]
-		brick_three = HUES[16]
-		unifiedbricks.register_multicolor(name, formalname, brick_one, brick_two, brick_three)
-		unifiedbricks.register_multicolor_craft(name, brick_one, brick_two, brick_three)
-
-		name = HUES[16]
-		formalname = FORMALHUES[16]
-		brick_one = HUES[16]
-		brick_two = HUES[14]
-		brick_three = HUES[15]
-		unifiedbricks.register_multicolor(name, formalname, brick_one, brick_two, brick_three)
-		unifiedbricks.register_multicolor_craft(name, brick_one, brick_two, brick_three)
-	else
-		name = DARKNESS[1] .. HUES[i]
-		formalname = FORMALDARKNESS[1] .. FORMALHUES[i]
-		brick_one = DARKNESS[1] .. HUES[i]
-		brick_two = DARKNESS[2] .. HUES[i]
-		brick_three = DARKNESS[2] .. HUES[i] .. SATURATION[1]
-		unifiedbricks.register_multicolor(name, formalname, brick_one, brick_two, brick_three)
-		unifiedbricks.register_multicolor_craft(name, brick_one, brick_two, brick_three)
-
-		name = DARKNESS[2] .. HUES[i]
-		formalname = FORMALDARKNESS[2] .. FORMALHUES[i]
-		brick_one = DARKNESS[2] .. HUES[i]
-		brick_two = DARKNESS[1] .. HUES[i]
-		brick_three = DARKNESS[3] .. HUES[i] .. SATURATION[1]
-		unifiedbricks.register_multicolor(name, formalname, brick_one, brick_two, brick_three)
-		unifiedbricks.register_multicolor_craft(name, brick_one, brick_two, brick_three)
-
-		name = DARKNESS[4] .. HUES[i]
-		formalname = FORMALDARKNESS[4] .. FORMALHUES[i]
-		brick_one = DARKNESS[3] .. HUES[i]
-		brick_two = DARKNESS[4] .. HUES[i]
-		brick_three = DARKNESS[2] .. HUES[i] .. SATURATION[1]
-		unifiedbricks.register_multicolor(name, formalname, brick_one, brick_two, brick_three)
-		unifiedbricks.register_multicolor_craft(name, brick_one, brick_two, brick_three)
-	end
-end
-
 -- convert in-map static nodes to use param2 coloring
 
 minetest.register_lbm({
@@ -287,9 +292,29 @@ minetest.register_lbm({
 		local color2 = string.gsub(color1, "grey", "_grey")
 		if color2 == "_grey" then color2 = "grey" end
 
-		local paletteidx = unifieddyes.getpaletteidx("unifieddyes:"..color2)
+		local paletteidx, hue = unifieddyes.getpaletteidx("unifieddyes:"..color2)
 
-		if string.find(type, "brickblock") then
+		if string.find(type, "multicolor") then
+
+			local newpalette = (hue*8)+1
+			local shade
+
+			if string.find(name, "dark") then
+				shade = "dark"
+			elseif string.find(name, "medium")
+					or name == "unifiedbricks:multicolor_grey" then
+				shade = "medium"
+			else
+				shade = "light"
+			end
+			if string.find(name, "grey") then
+				newpalette = 2
+			end
+
+			minetest.set_node(pos, { name = "unifiedbricks:brickblock_multicolor_"..shade, param2 = newpalette })
+			local meta = minetest.get_meta(pos)
+			meta:set_string("dye", "unifieddyes:"..color1)
+		elseif string.find(type, "brickblock") then
 			minetest.set_node(pos, { name = "unifiedbricks:brickblock", param2 = paletteidx })
 			local meta = minetest.get_meta(pos)
 			meta:set_string("dye", "unifieddyes:"..color1)

@@ -223,9 +223,6 @@ function unifieddyes.getpaletteidx(color, is_color_fdir)
 		return
 	end
 
-	color = aliases[color] or color
-	local idx
-
 	if is_color_fdir == "wallmounted" then
 		if grayscale_wallmounted[color] then
 			return (grayscale_wallmounted[color] * 8), 0
@@ -257,16 +254,26 @@ function unifieddyes.getpaletteidx(color, is_color_fdir)
 	end
 
 	if is_color_fdir == "wallmounted" then
-		if shade == "dark" and color == "orange" then return 48,1 -- brown
-		elseif shade == "light" and color == "red" then return 56,7 -- pink
+		if color == "brown" then return 48,1
+		elseif color == "pink" then return 56,7
+		elseif color == "blue" and shade == "light" then return 40,5
 		elseif hues_wallmounted[color] and shades_wallmounted[shade] then
 			return (shades_wallmounted[shade] * 64 + hues_wallmounted[color] * 8), hues_wallmounted[color]
 		end
-	elseif hues[color] and shades[shade] then
-		if is_color_fdir then
-			return (shades[shade] * 32), hues[color]
-		else
-			return (hues[color] * 8 + shades[shade]), hues[color]
+	else
+		if color == "brown" then
+			color = "orange"
+			shade = "dark"
+		elseif color == "pink" then
+			color = "red"
+			shade = "light"
+		end
+		if hues[color] and shades[shade] then
+			if is_color_fdir then
+				return (shades[shade] * 32), hues[color]
+			else
+				return (hues[color] * 8 + shades[shade]), hues[color]
+			end
 		end
 	end
 end
@@ -298,10 +305,12 @@ function unifieddyes.on_use(itemstack, player, pointed_thing)
 	local nodedef = minetest.registered_nodes[node.name]
 	local playername = player:get_player_name()
 
-	-- if the node has an on_punch defined, bail out and call that instead.
-	local onpunch = nodedef.on_punch(pos, node, player, pointed_thing)
-	if onpunch then
-		return onpunch
+	-- if the node has an on_punch defined, bail out and call that instead, unless "sneak" is pressed.
+	if not player:get_player_control().sneak then
+		local onpunch = nodedef.on_punch(pos, node, player, pointed_thing)
+		if onpunch then
+			return onpunch
+		end
 	end
 
 	-- if the target is unknown, has no groups defined, or isn't UD-colorable, just bail out
