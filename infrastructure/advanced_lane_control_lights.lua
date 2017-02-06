@@ -63,10 +63,10 @@ for i = 1, 6 do
 			effector = {
 				action = function(pos, node, channel, msg)
 					local setchan = minetest.get_meta(pos):get_string("channel")
-					if setchan ~= channel then
+					if setchan ~= channel or type(msg) ~= "string" then
 						return
 					end
-					msg = msg:lower()
+					msg = string.lower(msg)
 					if (msg=="off") then
 						node.name = "infrastructure:lane_control_lights_1"
 					elseif (msg=="green") then
