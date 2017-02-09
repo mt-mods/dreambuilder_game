@@ -248,9 +248,6 @@ minetest.register_lbm({
 		end
 
 		local metadye = "medium_"..color
-		if color == "pink" then
-			metadye = "light_red"
-		end
 		if color == "white" then
 			metadye = "white"
 		end
