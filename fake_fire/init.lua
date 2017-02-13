@@ -155,12 +155,16 @@ minetest.register_node("fake_fire:embers", {
 })
 
 -- CHIMNEYS
-local materials = {"stone", "sandstone"}
+local materials = {
+	{ "stone",     S("Stone chimney top") },
+	{ "sandstone", S("Sandstone chimney top") },
+}
 
-for _, m in ipairs(materials) do
-	minetest.register_node("fake_fire:chimney_top_"..m, {
-		description = "Chimney Top - "..m,
-		tiles = {"default_"..m..".png^chimney_top.png", "default_"..m..".png"},
+for _, mat in ipairs(materials) do
+	local name, desc = unpack(mat)
+	minetest.register_node("fake_fire:chimney_top_"..name, {
+		description = desc,
+		tiles = {"default_"..name..".png^chimney_top.png", "default_"..name..".png"},
 		groups = {snappy=3},
 		paramtype = "light",
 		sounds = default.node_sound_stone_defaults(),
@@ -181,8 +185,8 @@ for _, m in ipairs(materials) do
 
 	minetest.register_craft({
 		type = "shapeless",
-		output = 'fake_fire:chimney_top_'..m,
-		recipe = {"default:torch", "stairs:slab_"..m}
+		output = 'fake_fire:chimney_top_'..name,
+		recipe = {"default:torch", "stairs:slab_"..name}
 	})
 end
 
@@ -206,7 +210,7 @@ minetest.register_tool("fake_fire:flint_and_steel", {
 					minetest.set_node(pointed_thing.above, {name="fake_fire:fake_fire"})
 				end
 			else
-				minetest.chat_send_player(user:get_player_name(), "This area is protected!")
+				minetest.chat_send_player(user:get_player_name(), S("This area is protected!"))
 			end
 		else
 			return

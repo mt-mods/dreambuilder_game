@@ -23,6 +23,9 @@
 -- Version 0.6
 
 -- Changelog: 
+-- 08.02.17 Removed support for homedecor, blox, plasticbox, stainedglass, coloredwood and unifiedbricks
+--          as those now use a new feature of newer versions of MT that makes the colormachine
+--          obsolete for them.
 -- 22.04.16 Added support for myfences: https://forum.minetest.net/viewtopic.php?f=9&t=14275
 -- 28.09.15 Added support for cblocks: https://forum.minetest.net/viewtopic.php?f=9&t=13303
 -- 23.05.15 As all dyes can be crafted into other dyes, only white dye is consumed - provided the
@@ -156,6 +159,7 @@ colormachine.data = {
 -- the dyes as such
    unifieddyes_              = { nr=1,  modname='unifieddyes',   shades={1,0,1,1,1,1,1,1}, grey_shades={1,1,1,1,1}, u=1, descr="ufdye",  block="dye:white", add="", p=1 },
 
+--[[
 -- coloredwood: sticks not supported (they are only craftitems)
    coloredwood_wood_         = { nr=2,  modname='coloredwood',   shades={1,0,1,1,1,1,1,1}, grey_shades={1,1,1,1,1}, u=1, descr="planks", block="default:wood", add="wood_", p=2  },
    coloredwood_fence_        = { nr=3,  modname='coloredwood',   shades={1,0,1,1,1,1,1,1}, grey_shades={1,1,1,1,1}, u=1, descr="fence",  block="default:fence_wood", add="fence_", p=2},
@@ -165,6 +169,7 @@ colormachine.data = {
    unifiedbricks_brickblock_ = { nr=5,  modname='unifiedbricks', shades={1,0,1,1,1,1,1,1}, grey_shades={1,1,1,1,1}, u=1, descr="brick",  block="default:brick", add="brickblock_",p=1},
    -- the multicolored bricks come in fewer intensities (only 3 shades) and support only 3 insted of 5 shades of grey
    unifiedbricks_multicolor_ = { nr=6,  modname='unifiedbricks', shades={1,0,0,0,1,0,1,0}, grey_shades={0,1,1,1,0}, u=1, descr="mbrick", block="default:brick", add="multicolor_",p=1},
+--]]
 
    hardenedclay_             = { nr=3.5, modname='hardenedclay', shades={1,0,1,0,0,0,1,0}, grey_shades={1,0,1,1,1}, u=0, descr="hclay",  block="hardenedclay:hardened_clay_white", add="hardened_clay_", p=16},
    colouredstonebricks_      = { nr=3.6, modname='colouredstonebricks', shades={1,0,1,0,0,0,1,0}, grey_shades={1,0,1,1,1}, u=0, descr="cbrick",  block="default:stonebrick", add="", p=1},
@@ -177,12 +182,14 @@ colormachine.data = {
    colorcubes_window_        = { nr=3.93,modname='colorcubes',    shades={1,0,1,0,0,0,1,0}, grey_shades={1,0,1,1,1}, u=0, descr="ccubew",block="default:stone", add="", p=1, obj_postfix='_window' },
 
 
+--[[
 -- stained_glass: has a "faint" and "pastel" version as well (which are kind of additional shades used only by this mod)
 
    -- no shades of grey for the glass
    stained_glass_            = { nr=7,  modname='stained_glass', shades={1,0,1,1,1,1,1,1}, grey_shades={0,0,0,0,0}, u=1, descr="glass",  block="moreblocks:super_glow_glass", add="",p=2},
    stained_glass_faint_      = { nr=8,  modname='stained_glass', shades={0,0,1,0,0,0,0,0}, grey_shades={0,0,0,0,0}, u=1, descr="fglass", block="moreblocks:super_glow_glass", add="",p=2},
    stained_glass_pastel_     = { nr=9,  modname='stained_glass', shades={0,0,1,0,0,0,0,0}, grey_shades={0,0,0,0,0}, u=1, descr="pglass", block="moreblocks:super_glow_glass", add="",p=2},
+--]]
 
    -- use 9.5 to insert it between stained glass and cotton
    framedglass_              = { nr=9.5, modname='framedglass',  shades={1,0,1,0,0,0,1,0}, grey_shades={1,0,1,1,1}, u=0, descr="fglass", block="framedglass:steel_framed_obsidian_glass", add="steel_framed_obsidian_glass",p=1},
@@ -215,6 +222,7 @@ colormachine.data = {
    -- grey variants do not seem to exist, even though the textures arethere (perhaps nobody wants a grey flag!)
    flags_                    = { nr=17, modname='flags',         shades={0,0,1,0,0,0,0,0}, grey_shades={1,0,0,0,1}, u=1, descr="flags",   block="flags:white", add="", p=3 },
 
+--[[
    blox_stone_               = { nr=18, modname='blox',          shades={1,0,1,0,0,0,0,0}, grey_shades={1,0,0,0,1}, u=0, descr="SnBlox",  block="default:stone", add="stone", p=2 },
    blox_quarter_             = { nr=19, modname='blox',          shades={1,0,1,0,0,0,0,0}, grey_shades={1,0,0,0,1}, u=0, descr="S4Blox",  block="default:stone", add="quarter", p=4 },
    blox_checker_             = { nr=20, modname='blox',          shades={1,0,1,0,0,0,0,0}, grey_shades={1,0,0,0,1}, u=0, descr="S8Blox",  block="default:stone", add="checker", p=4 },
@@ -261,8 +269,8 @@ colormachine.data = {
    homedecor_bottle_         = { nr=16.66, modname='homedecor',    shades={1,0,1,0,0,0,1,0}, grey_shades={1,0,0,0,0}, u=0, descr="hbottle",  block="vessels:glass_bottle", add="bottle_", composed=1},
    homedecor_welcome_mat_    = { nr=16.67, modname='homedecor',    shades={1,0,1,0,0,0,1,0}, grey_shades={1,0,1,0,0}, u=0, descr="hwmat",    block="homedecor:welcome_mat_grey", add="welcome_mat_", composed=1},
 
-
    plasticbox_               = { nr=16.7, modname='plasticbox',  shades={1,0,1,0,0,0,1,0}, grey_shades={1,0,1,1,1}, u=0, descr="plastic", block="plasticbox:plasticbox", add="plasticbox_",p=16},
+--]]
 
 
    kerova_chest_front_       = { nr=16.8, modname='kerova',      shades={1,0,1,0,0,0,1,0}, grey_shades={1,0,1,1,1}, u=0, descr="kerova", block="default:chest",  add="chest_",p=16},

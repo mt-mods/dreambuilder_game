@@ -1,5 +1,8 @@
+
+local S = homedecor_i18n.gettext
+
 homedecor.register("power_outlet", {
-	description = "Power Outlet",
+	description = S("Power Outlet"),
 	tiles = {
 		"homedecor_outlet_edges.png",
 		"homedecor_outlet_edges.png",
@@ -26,7 +29,7 @@ homedecor.register("power_outlet", {
 })
 
 homedecor.register("light_switch", {
-	description = "Light switch",
+	description = S("Light switch"),
 	tiles = {
 		"homedecor_light_switch_edges.png",
 		"homedecor_light_switch_edges.png",
@@ -58,7 +61,7 @@ homedecor.register("light_switch", {
 homedecor.register("doorbell", {
 	tiles = { "homedecor_doorbell.png" },
 	inventory_image = "homedecor_doorbell_inv.png",
-	description = "Doorbell",
+	description = S("Doorbell"),
     groups = {snappy=3},
     walkable = false,
 	node_box = {

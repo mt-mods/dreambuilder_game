@@ -1,4 +1,6 @@
 
+local S = homedecor_i18n.gettext
+
 local cutlery_cbox = {
 	type = "fixed",
 	fixed = {
@@ -12,7 +14,7 @@ homedecor.register("cutlery_set", {
 	mesh = "homedecor_cutlery_set.obj",
 	tiles = { "homedecor_cutlery_set.png"	},
 	inventory_image = "homedecor_cutlery_set_inv.png",
-	description = "Cutlery set",
+	description = S("Cutlery set"),
 	groups = {snappy=3},
 	selection_box = cutlery_cbox,
 	walkable = false,
@@ -33,14 +35,19 @@ local fbottle_cbox = {
 	}
 }
 
-local bottle_colors = {"brown", "green"}
+local bottle_colors = {
+	{ "brown", S("Brown bottle"), S("Four brown bottles") },
+	{ "green", S("Green bottle"), S("Four green bottles") },
+}
 
 for _, b in ipairs(bottle_colors) do
 
-	homedecor.register("bottle_"..b, {
-		tiles = { "homedecor_bottle_"..b..".png" },
-		inventory_image = "homedecor_bottle_"..b.."_inv.png",
-		description = "Bottle ("..b..")",
+	local name, desc, desc4 = unpack(b)
+
+	homedecor.register("bottle_"..name, {
+		tiles = { "homedecor_bottle_"..name..".png" },
+		inventory_image = "homedecor_bottle_"..name.."_inv.png",
+		description = desc,
 		mesh = "homedecor_bottle.obj",
 		walkable = false,
 		groups = {snappy=3},
@@ -50,13 +57,13 @@ for _, b in ipairs(bottle_colors) do
 
 	-- 4-bottle sets
 
-	homedecor.register("4_bottles_"..b, {
+	homedecor.register("4_bottles_"..name, {
 		tiles = {
-			"homedecor_bottle_"..b..".png",
-			"homedecor_bottle_"..b..".png"
+			"homedecor_bottle_"..name..".png",
+			"homedecor_bottle_"..name..".png"
 		},
-		inventory_image = "homedecor_4_bottles_"..b.."_inv.png",
-		description = "Four "..b.." bottles",
+		inventory_image = "homedecor_4_bottles_"..name.."_inv.png",
+		description = desc4,
 		mesh = "homedecor_4_bottles.obj",
 		walkable = false,
 		groups = {snappy=3},
@@ -71,7 +78,7 @@ homedecor.register("4_bottles_multi", {
 		"homedecor_bottle_green.png"
 	},
 	inventory_image = "homedecor_4_bottles_multi_inv.png",
-	description = "Four misc brown/green bottles",
+	description = S("Four misc brown/green bottles"),
 	mesh = "homedecor_4_bottles.obj",
 	groups = {snappy=3},
 	walkable = false,
@@ -81,7 +88,7 @@ homedecor.register("4_bottles_multi", {
 
 local wine_cbox = homedecor.nodebox.slab_z(-0.75)
 homedecor.register("wine_rack", {
-	description = "Wine Rack",
+	description = S("Wine rack"),
 	mesh = "homedecor_wine_rack.obj",
 	tiles = {
 		"homedecor_generic_wood_red.png",
@@ -98,7 +105,7 @@ homedecor.register("wine_rack", {
 })
 
 homedecor.register("dartboard", {
-	description = "Dartboard",
+	description = S("Dartboard"),
 	mesh = "homedecor_dartboard.obj",
 	tiles = { "homedecor_dartboard.png" },
 	inventory_image = "homedecor_dartboard_inv.png",
@@ -114,7 +121,7 @@ homedecor.register("dartboard", {
 })
 
 homedecor.register("beer_tap", {
-	description = "Beer tap",
+	description = S("Beer tap"),
 	mesh = "homedecor_beer_taps.obj",
 	tiles = {
 		"homedecor_generic_metal_bright.png",
@@ -137,9 +144,11 @@ homedecor.register("beer_tap", {
 				wielditem:take_item()
 				puncher:set_wielded_item(wielditem)
 				inv:add_item("main", "homedecor:beer_mug 1")
-				minetest.chat_send_player(puncher:get_player_name(), "Ahh, a frosty cold beer - look in your inventory for it!")
+				minetest.chat_send_player(puncher:get_player_name(),
+						S("Ahh, a frosty cold beer - look in your inventory for it!"))
 			else
-				minetest.chat_send_player(puncher:get_player_name(), "No room in your inventory to add a beer mug!")
+				minetest.chat_send_player(puncher:get_player_name(),
+						S("No room in your inventory to add a beer mug!"))
 			end
 		end
 	end
@@ -160,7 +169,7 @@ local beer_cbox = {
 }
 
 homedecor.register("beer_mug", {
-	description = "Beer mug",
+	description = S("Beer mug"),
 	drawtype = "mesh",
 	mesh = "homedecor_beer_mug.obj",
 	tiles = { "homedecor_beer_mug.png" },
@@ -178,7 +187,7 @@ local svm_cbox = {
 }
 
 homedecor.register("soda_machine", {
-	description = "Soda Vending Machine",
+	description = S("Soda vending machine"),
 	mesh = "homedecor_soda_machine.obj",
 	tiles = {"homedecor_soda_machine.png"},
 	groups = {snappy=3},
@@ -201,7 +210,7 @@ homedecor.register("soda_machine", {
 				pos=pos, max_hear_distance = 5
 			})
 		else
-			minetest.chat_send_player(puncher:get_player_name(), "Please insert a coin in the machine.")
+			minetest.chat_send_player(puncher:get_player_name(), S("Please insert a coin in the machine."))
 		end
 	end
 })

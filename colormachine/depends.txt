@@ -1,15 +1,9 @@
 dye
 default?
 unifieddyes?
-coloredwood?
-unifiedbricks?
-stained_glass?
 cotton?
 wool?
 flags?
-blox?
-homedecor?
-plasticbox?
 kerova?
 hardenedclay?
 clstone?

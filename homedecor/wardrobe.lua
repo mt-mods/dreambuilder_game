@@ -1,4 +1,6 @@
 
+local S = homedecor_i18n.gettext
+
 local wd_cbox = {
 	type = "fixed",
 	fixed = { -0.5, -0.5, -0.5, 0.5, 1.5, 0.5 }
@@ -12,14 +14,14 @@ homedecor.register("wardrobe", {
 		"homedecor_wardrobe_doors.png"
 	},
 	inventory_image = "homedecor_wardrobe_inv.png",
-	description = "Wardrobe",
+	description = S("Wardrobe"),
 	groups = {snappy=3},
 	selection_box = wd_cbox,
 	collision_box = wd_cbox,
 	sounds = default.node_sound_wood_defaults(),
 	expand = { top="placeholder" },
 	on_rotate = screwdriver.rotate_simple,
-	infotext = "Wardrobe",
+	infotext = S("Wardrobe"),
 	inventory = {
 		size = 10
 	},
@@ -34,9 +36,9 @@ homedecor.register("wardrobe", {
 			  "image_button_exit["..(i-1)..".5,2;1.1,2;homedecor_clothes_fe"..skins[i].."_preview.png;fe"..skins[i]..";]"
 		end
 		meta:set_string("formspec", "size[5.5,8.5]"..default.gui_bg..default.gui_bg_img..default.gui_slots..
-			"vertlabel[0,0.5;CLOTHES]"..
+			"vertlabel[0,0.5;"..minetest.formspec_escape(S("Clothes")).."]"..
 			clothes_strings..
-			"vertlabel[0,5.2;STORAGE]"..
+			"vertlabel[0,5.2;"..minetest.formspec_escape(S("Storage")).."]"..
 			"list[current_name;main;0.5,4.5;5,2;]"..
 			"list[current_player;main;0.5,6.8;5,2;]" ..
 			"listring[]")

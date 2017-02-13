@@ -1,4 +1,6 @@
 
+local S = homedecor_i18n.gettext
+
 -- vectors to place one node next to or behind another
 
 homedecor.fdir_to_right = {
@@ -53,7 +55,7 @@ homedecor.wall_fdir_to_fwd = {
 
 local placeholder_node = "homedecor:expansion_placeholder"
 minetest.register_node(placeholder_node, {
-	description = "Expansion placeholder (you hacker you!)",
+	description = S("Expansion placeholder (you hacker you!)"),
 	groups = { not_in_creative_inventory=1 },
 	drawtype = "airlike",
 	paramtype = "light",
@@ -193,13 +195,15 @@ function homedecor.bed_expansion(pos, placer, itemstack, pointed_thing, trybunks
 	local placer_name = placer:get_player_name()
 
 	if not (def and def.buildable_to) then
-		minetest.chat_send_player( placer:get_player_name(), "Not enough room - the space for the headboard is occupied!" )
+		minetest.chat_send_player( placer:get_player_name(),
+				S("Not enough room - the space for the headboard is occupied!"))
 		minetest.set_node(pos, {name = "air"})
 		return true
 	end
 
 	if minetest.is_protected(forwardpos, placer_name) then
-		minetest.chat_send_player( placer:get_player_name(), "Someone already owns the spot where the headboard goes." )
+		minetest.chat_send_player( placer:get_player_name(),
+				S("Someone already owns the spot where the headboard goes."))
 		return true
 	end
 
@@ -270,12 +274,12 @@ function homedecor.place_banister(itemstack, placer, pointed_thing)
 	local placer_name = placer:get_player_name()
 
 	if not (adef and adef.buildable_to) then
-		minetest.chat_send_player(placer_name, "Not enough room - the upper space is occupied!" )
+		minetest.chat_send_player(placer_name, S("Not enough room - the upper space is occupied!" ))
 		return itemstack
 	end
 
 	if minetest.is_protected(abovepos, placer_name) then
-		minetest.chat_send_player(placer_name, "Someone already owns that spot." )
+		minetest.chat_send_player(placer_name, S("Someone already owns that spot."))
 		return itemstack
 	end
 

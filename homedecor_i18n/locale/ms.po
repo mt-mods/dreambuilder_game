@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-30 21:31-0300\n"
+"POT-Creation-Date: 2017-02-10 05:34-0300\n"
 "PO-Revision-Date: 2017-01-25 00:03-0300\n"
 "Last-Translator: muhdnurhidayat <MuhdNurHidayat@users.noreply.github.com>\n"
 "Language-Team: Malay\n"
@@ -285,7 +285,7 @@ msgstr ""
 msgid "Loaded!"
 msgstr "Telah Dimuatkan!"
 
-#: ../lrfurn/armchairs.lua
+#: ../lrfurn/armchairs.lua ../homedecor/furniture.lua
 #, fuzzy
 msgid "Armchair"
 msgstr "Kerusi Tangan (%s)"
@@ -325,98 +325,31 @@ msgid "Glowing Embers"
 msgstr ""
 
 #: ../fake_fire/init.lua
+msgid "Stone chimney top"
+msgstr ""
+
+#: ../fake_fire/init.lua
+msgid "Sandstone chimney top"
+msgstr ""
+
+#: ../fake_fire/init.lua
 msgid "Flint and steel"
 msgstr ""
 
-#: ../homedecor/bedroom.lua ../homedecor/shutters.lua
-#: ../homedecor/misc-nodes.lua ../homedecor/furniture.lua
-#, fuzzy
-msgid "black"
-msgstr "Hitam"
-
-#: ../homedecor/bedroom.lua ../homedecor/books.lua
-msgid "brown"
-msgstr ""
-
-#: ../homedecor/bedroom.lua ../homedecor/window_treatments.lua
-#: ../homedecor/lighting.lua ../homedecor/books.lua ../homedecor/furniture.lua
-#, fuzzy
-msgid "blue"
-msgstr "biru"
-
-#: ../homedecor/bedroom.lua
-msgid "cyan"
-msgstr ""
-
-#: ../homedecor/bedroom.lua ../homedecor/shutters.lua
-#, fuzzy
-msgid "dark grey"
-msgstr "Hijau Gelap"
-
-#: ../homedecor/bedroom.lua ../homedecor/furniture.lua
-#, fuzzy
-msgid "dark green"
-msgstr "Hijau Gelap"
-
-#: ../homedecor/bedroom.lua ../homedecor/window_treatments.lua
-#: ../homedecor/lighting.lua ../homedecor/exterior.lua
-#: ../homedecor/misc-nodes.lua ../homedecor/books.lua
-#, fuzzy
-msgid "green"
-msgstr "hijau"
-
-#: ../homedecor/bedroom.lua ../homedecor/shutters.lua ../homedecor/books.lua
-msgid "grey"
+#: ../fake_fire/init.lua
+msgid "This area is protected!"
 msgstr ""
 
 #: ../homedecor/bedroom.lua
-msgid "magenta"
-msgstr ""
-
-#: ../homedecor/bedroom.lua
-msgid "orange"
-msgstr ""
-
-#: ../homedecor/bedroom.lua ../homedecor/window_treatments.lua
-#: ../homedecor/furniture.lua
 #, fuzzy
-msgid "pink"
-msgstr "merah jambu"
-
-#: ../homedecor/bedroom.lua ../homedecor/window_treatments.lua
-#: ../homedecor/lighting.lua ../homedecor/shutters.lua
-#: ../homedecor/exterior.lua ../homedecor/books.lua ../homedecor/furniture.lua
-#, fuzzy
-msgid "red"
+msgid "Bed"
 msgstr "merah"
 
-#: ../homedecor/bedroom.lua ../homedecor/window_treatments.lua
-#: ../homedecor/lighting.lua ../homedecor/shutters.lua ../homedecor/books.lua
-#: ../homedecor/furniture.lua
-#, fuzzy
-msgid "violet"
-msgstr "ungu"
-
-#: ../homedecor/bedroom.lua ../homedecor/window_treatments.lua
-#: ../homedecor/lighting.lua ../homedecor/shutters.lua
-#, fuzzy
-msgid "white"
-msgstr "putih"
-
-#: ../homedecor/bedroom.lua ../homedecor/lighting.lua ../homedecor/shutters.lua
-#: ../homedecor/exterior.lua
-msgid "yellow"
+#: ../homedecor/bedroom.lua
+msgid "Bed (king sized)"
 msgstr ""
 
 #: ../homedecor/bedroom.lua
-msgid "Bed (@1)"
-msgstr ""
-
-#: ../homedecor/bedroom.lua
-msgid "Bed (@1, king sized)"
-msgstr ""
-
-#: ../homedecor/bedroom.lua ../homedecor/shutters.lua
 msgid "mahogany"
 msgstr ""
 
@@ -480,6 +413,15 @@ msgstr "Kabinet Dapur dengan Sinki"
 #, fuzzy
 msgid "Under-sink cabinet"
 msgstr "Kabinet Bawah Sinki"
+
+#: ../homedecor/kitchen_furniture.lua
+msgid "Copper pans"
+msgstr ""
+
+#: ../homedecor/kitchen_furniture.lua
+#, fuzzy
+msgid "Kitchen Faucet"
+msgstr "Kabinet Dapur"
 
 #: ../homedecor/kitchen_furniture.lua
 msgid "Paper towels"
@@ -614,6 +556,18 @@ msgstr "Genting Asfalt"
 msgid "Chimney"
 msgstr ""
 
+#: ../homedecor/electrics.lua
+msgid "Power Outlet"
+msgstr ""
+
+#: ../homedecor/electrics.lua
+msgid "Light switch"
+msgstr ""
+
+#: ../homedecor/electrics.lua
+msgid "Doorbell"
+msgstr ""
+
 #: ../homedecor/window_treatments.lua
 msgid "Window (quartered)"
 msgstr ""
@@ -660,6 +614,38 @@ msgstr ""
 #: ../homedecor/window_treatments.lua
 msgid "Stained Glass"
 msgstr ""
+
+#: ../homedecor/window_treatments.lua ../homedecor/exterior.lua
+#: ../homedecor/furniture.lua
+#, fuzzy
+msgid "red"
+msgstr "merah"
+
+#: ../homedecor/window_treatments.lua ../homedecor/exterior.lua
+#: ../homedecor/misc-nodes.lua
+#, fuzzy
+msgid "green"
+msgstr "hijau"
+
+#: ../homedecor/window_treatments.lua ../homedecor/furniture.lua
+#, fuzzy
+msgid "blue"
+msgstr "biru"
+
+#: ../homedecor/window_treatments.lua ../homedecor/lighting.lua
+#, fuzzy
+msgid "white"
+msgstr "putih"
+
+#: ../homedecor/window_treatments.lua ../homedecor/furniture.lua
+#, fuzzy
+msgid "pink"
+msgstr "merah jambu"
+
+#: ../homedecor/window_treatments.lua ../homedecor/furniture.lua
+#, fuzzy
+msgid "violet"
+msgstr "ungu"
 
 #: ../homedecor/crafts.lua
 #, fuzzy
@@ -813,6 +799,34 @@ msgstr ""
 msgid "Telephone"
 msgstr ""
 
+#: ../homedecor/cobweb.lua
+msgid "Cobweb"
+msgstr ""
+
+#: ../homedecor/clocks.lua
+msgid "Plastic analog clock"
+msgstr ""
+
+#: ../homedecor/clocks.lua
+msgid "Wooden analog clock"
+msgstr ""
+
+#: ../homedecor/clocks.lua
+msgid "Digital clock"
+msgstr ""
+
+#: ../homedecor/clocks.lua
+msgid "Alarm clock"
+msgstr ""
+
+#: ../homedecor/clocks.lua
+msgid "Grandfather Clock"
+msgstr ""
+
+#: ../homedecor/lighting.lua ../homedecor/exterior.lua
+msgid "yellow"
+msgstr ""
+
 #: ../homedecor/lighting.lua
 #, fuzzy
 msgid "Thick Glowlight"
@@ -874,6 +888,11 @@ msgid "Hanging Lantern"
 msgstr ""
 
 #: ../homedecor/lighting.lua
+#, fuzzy
+msgid "Ceiling Lantern"
+msgstr "Kabinet Bawah Sinki"
+
+#: ../homedecor/lighting.lua
 msgid "Lattice lantern (large)"
 msgstr ""
 
@@ -891,8 +910,9 @@ msgid "Standing Lamp"
 msgstr ""
 
 #: ../homedecor/lighting.lua
-msgid "Desk Lamp (@1)"
-msgstr ""
+#, fuzzy
+msgid "Desk Lamp"
+msgstr "Lampu Meja"
 
 #: ../homedecor/lighting.lua
 msgid "Ceiling Lamp"
@@ -973,21 +993,8 @@ msgid "Wrought Iron fence (type 2) Corner"
 msgstr "Pagar/Kisi-kisi Besi Tempaan"
 
 #: ../homedecor/shutters.lua
-msgid "unpainted oak"
-msgstr ""
-
-#: ../homedecor/shutters.lua
-msgid "forest green"
-msgstr ""
-
-#: ../homedecor/shutters.lua
 #, fuzzy
-msgid "light blue"
-msgstr "kanan"
-
-#: ../homedecor/shutters.lua
-#, fuzzy
-msgid "Wooden Shutter (@1)"
+msgid "Wooden Shutter"
 msgstr "Pengatup Kayu (Merah)"
 
 #: ../homedecor/exterior.lua
@@ -1105,6 +1112,86 @@ msgstr ""
 msgid "Radiator heater"
 msgstr ""
 
+#: ../homedecor/wardrobe.lua
+msgid "Wardrobe"
+msgstr ""
+
+#: ../homedecor/wardrobe.lua
+msgid "Clothes"
+msgstr ""
+
+#: ../homedecor/wardrobe.lua
+msgid "Storage"
+msgstr ""
+
+#: ../homedecor/trash_cans.lua
+msgid "Green Trash Can"
+msgstr ""
+
+#: ../homedecor/trash_cans.lua
+msgid "Trash Can"
+msgstr ""
+
+#: ../homedecor/trash_cans.lua
+msgid "Small Trash Can"
+msgstr ""
+
+#: ../homedecor/gastronomy.lua
+msgid "Cutlery set"
+msgstr ""
+
+#: ../homedecor/gastronomy.lua
+msgid "Brown bottle"
+msgstr ""
+
+#: ../homedecor/gastronomy.lua
+msgid "Four brown bottles"
+msgstr ""
+
+#: ../homedecor/gastronomy.lua
+msgid "Green bottle"
+msgstr ""
+
+#: ../homedecor/gastronomy.lua
+msgid "Four green bottles"
+msgstr ""
+
+#: ../homedecor/gastronomy.lua
+msgid "Four misc brown/green bottles"
+msgstr ""
+
+#: ../homedecor/gastronomy.lua
+msgid "Wine rack"
+msgstr ""
+
+#: ../homedecor/gastronomy.lua
+msgid "Dartboard"
+msgstr ""
+
+#: ../homedecor/gastronomy.lua
+msgid "Beer tap"
+msgstr ""
+
+#: ../homedecor/gastronomy.lua
+msgid "Ahh, a frosty cold beer - look in your inventory for it!"
+msgstr ""
+
+#: ../homedecor/gastronomy.lua
+msgid "No room in your inventory to add a beer mug!"
+msgstr ""
+
+#: ../homedecor/gastronomy.lua
+msgid "Beer mug"
+msgstr ""
+
+#: ../homedecor/gastronomy.lua
+msgid "Soda vending machine"
+msgstr ""
+
+#: ../homedecor/gastronomy.lua
+msgid "Please insert a coin in the machine."
+msgstr ""
+
 #: ../homedecor/doors_and_gates.lua
 #, fuzzy
 msgid "Mahogany Closet Door (@1 opening)"
@@ -1212,6 +1299,26 @@ msgstr ""
 msgid "Japanese-style door"
 msgstr ""
 
+#: ../homedecor/foyer.lua
+msgid "Wall-mounted coat rack"
+msgstr ""
+
+#: ../homedecor/foyer.lua
+msgid "Coat tree"
+msgstr ""
+
+#: ../homedecor/foyer.lua
+msgid "Green welcome mat"
+msgstr ""
+
+#: ../homedecor/foyer.lua
+msgid "Brown welcome mat"
+msgstr ""
+
+#: ../homedecor/foyer.lua
+msgid "Grey welcome mat"
+msgstr ""
+
 #: ../homedecor/misc-nodes.lua
 #, fuzzy
 msgid "Textured Ceiling Paint"
@@ -1237,6 +1344,11 @@ msgstr ""
 #: ../homedecor/misc-nodes.lua
 msgid "Rug (@1)"
 msgstr ""
+
+#: ../homedecor/misc-nodes.lua ../homedecor/furniture.lua
+#, fuzzy
+msgid "black"
+msgstr "Hitam"
 
 #: ../homedecor/misc-nodes.lua
 msgid "Flower Pot (@1)"
@@ -1405,7 +1517,7 @@ msgid "Legs for Utility Table"
 msgstr "Kaki untuk Meja Utiliti"
 
 #: ../homedecor/books.lua
-msgid "Writable Book (@1)"
+msgid "Writable Book"
 msgstr ""
 
 #: ../homedecor/books.lua
@@ -1433,13 +1545,13 @@ msgstr ""
 
 #: ../homedecor/furniture.lua
 #, fuzzy
-msgid "Kitchen chair (@1)"
-msgstr "Kabinet Dapur"
+msgid "dark green"
+msgstr "Hijau Gelap"
 
 #: ../homedecor/furniture.lua
 #, fuzzy
-msgid "Armchair (@1)"
-msgstr "Kerusi Tangan (%s)"
+msgid "Kitchen chair"
+msgstr "Kabinet Dapur"
 
 #: ../homedecor/furniture.lua
 msgid "Bookshelf (open-frame)"
@@ -1477,6 +1589,27 @@ msgstr "%s cuba untuk pakai %s milik %s dekat %s"
 msgid "@1 (Locked)"
 msgstr "%s (Berkunci)"
 
+#: ../homedecor/handlers/expansion.lua
+msgid "Expansion placeholder (you hacker you!)"
+msgstr ""
+
+#: ../homedecor/handlers/expansion.lua
+msgid "Not enough room - the space for the headboard is occupied!"
+msgstr ""
+
+#: ../homedecor/handlers/expansion.lua
+msgid "Someone already owns the spot where the headboard goes."
+msgstr ""
+
+#: ../homedecor/handlers/expansion.lua
+msgid "Not enough room - the upper space is occupied!"
+msgstr ""
+
+#: ../homedecor/handlers/expansion.lua
+#, fuzzy
+msgid "Someone already owns that spot."
+msgstr "Maaf, ini kawasan %s."
+
 #: ../homedecor/handlers/furnaces.lua
 msgid "Furnace"
 msgstr ""
@@ -1509,48 +1642,43 @@ msgstr ": dulang keluar penuh"
 msgid "Filing cabinet"
 msgstr "Kabinet Bawah Sinki"
 
-#: ../homedecor/bathroom_furniture.lua
+#: ../homedecor/office.lua
 #, fuzzy
-msgid "white/grey"
-msgstr "putih"
+msgid "Desk"
+msgstr "Lampu Meja"
 
-#: ../homedecor/bathroom_furniture.lua
-msgid "white/dark grey"
+#: ../homedecor/office.lua
+msgid "Desk globe"
+msgstr ""
+
+#: ../homedecor/office.lua
+msgid "Calendar"
+msgstr ""
+
+#: ../homedecor/office.lua
+msgid ""
+"Date (right-click to update):\n"
+"@1"
+msgstr ""
+
+#: ../homedecor/office.lua
+msgid "Basic office chair"
+msgstr ""
+
+#: ../homedecor/office.lua
+msgid "Upscale office chair"
 msgstr ""
 
 #: ../homedecor/bathroom_furniture.lua
-msgid "white/black"
+msgid "Bathroom/kitchen tiles (dark)"
 msgstr ""
 
 #: ../homedecor/bathroom_furniture.lua
-msgid "black/dark grey"
+msgid "Bathroom/kitchen tiles (medium)"
 msgstr ""
 
 #: ../homedecor/bathroom_furniture.lua
-#, fuzzy
-msgid "white/red"
-msgstr "putih"
-
-#: ../homedecor/bathroom_furniture.lua
-msgid "white/green"
-msgstr ""
-
-#: ../homedecor/bathroom_furniture.lua
-#, fuzzy
-msgid "white/blue"
-msgstr "putih"
-
-#: ../homedecor/bathroom_furniture.lua
-msgid "white/yellow"
-msgstr ""
-
-#: ../homedecor/bathroom_furniture.lua
-#, fuzzy
-msgid "white/tan"
-msgstr "putih"
-
-#: ../homedecor/bathroom_furniture.lua
-msgid "Bathroom/kitchen tiles (@1)"
+msgid "Bathroom/kitchen tiles (light)"
 msgstr ""
 
 #: ../homedecor/bathroom_furniture.lua
@@ -1561,6 +1689,34 @@ msgstr ""
 #, fuzzy
 msgid "Medicine cabinet"
 msgstr "Kabinet Bawah Sinki"
+
+#, fuzzy
+#~ msgid "white/grey"
+#~ msgstr "putih"
+
+#, fuzzy
+#~ msgid "white/red"
+#~ msgstr "putih"
+
+#, fuzzy
+#~ msgid "white/blue"
+#~ msgstr "putih"
+
+#, fuzzy
+#~ msgid "white/tan"
+#~ msgstr "putih"
+
+#, fuzzy
+#~ msgid "dark grey"
+#~ msgstr "Hijau Gelap"
+
+#, fuzzy
+#~ msgid "light blue"
+#~ msgstr "kanan"
+
+#, fuzzy
+#~ msgid "Armchair (@1)"
+#~ msgstr "Kerusi Tangan (%s)"
 
 #, fuzzy
 #~ msgid "dark_grey"
@@ -1698,9 +1854,6 @@ msgstr "Kabinet Bawah Sinki"
 
 #~ msgid "someone "
 #~ msgstr "seseorang"
-
-#~ msgid "Sorry, %s owns that spot. "
-#~ msgstr "Maaf, ini kawasan %s."
 
 #~ msgid "White Glowlight (small cube) "
 #~ msgstr "Lampu Bara Putih (kiub kecil)"

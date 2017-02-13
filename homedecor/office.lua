@@ -23,7 +23,7 @@ local desk_cbox = {
 	fixed = { -0.5, -0.5, -0.5, 1.5, 0.5, 0.5 }
 }
 homedecor.register("desk", {
-	description = "Desk",
+	description = S("Desk"),
 	mesh = "homedecor_desk.obj",
 	tiles = {
 		homedecor.plain_wood,
@@ -49,7 +49,7 @@ local globe_cbox = {
 }
 
 homedecor.register("desk_globe", {
-	description = "Desk globe",
+	description = S("Desk globe"),
 	mesh = "homedecor_desk_globe.obj",
 	tiles = {
 		"homedecor_generic_wood_red.png",
@@ -65,7 +65,7 @@ homedecor.register("desk_globe", {
 })
 
 homedecor.register("calendar", {
-	description = "Calendar",
+	description = S("Calendar"),
 	mesh = "homedecor_calendar.obj",
 	tiles = {"homedecor_calendar.png"},
 	inventory_image = "homedecor_calendar_inv.png",
@@ -81,11 +81,11 @@ homedecor.register("calendar", {
 	groups = {choppy=2,attached_node=1},
 	legacy_wallmounted = true,
 	sounds = default.node_sound_defaults(),
-	infotext = "Date (right-click to update):\n" .. os.date("%Y-%m-%d"), -- ISO 8601 format
+	infotext = S("Date (right-click to update):\n@1", os.date("%Y-%m-%d")), -- ISO 8601 format
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		local meta = minetest.get_meta(pos)
 		local date = os.date("%Y-%m-%d")
-		meta:set_string("infotext", "Date (right-click to update):\n"..date)
+		meta:set_string("infotext", S("Date (right-click to update):\n@1", date))
 		return itemstack
 	end
 })
@@ -104,12 +104,18 @@ local ofchairs_cbox = {
 	}
 }
 
-for _, c in pairs({"basic", "upscale"}) do
-	homedecor.register("office_chair_"..c, {
-		description = "Office chair ("..c..")",
+local chairs = {
+	{ "basic",   S("Basic office chair") },
+	{ "upscale", S("Upscale office chair") },
+}
+
+for _, c in pairs(chairs) do
+	local name, desc = unpack(c)
+	homedecor.register("office_chair_"..name, {
+		description = desc,
 		drawtype = "mesh",
-		tiles = { "homedecor_office_chair_"..c..".png" },
-		mesh = "homedecor_office_chair_"..c..".obj",
+		tiles = { "homedecor_office_chair_"..name..".png" },
+		mesh = "homedecor_office_chair_"..name..".obj",
 		groups = { snappy = 3 },
 		sounds = default.node_sound_wood_defaults(),
 		selection_box = ofchairs_sbox,

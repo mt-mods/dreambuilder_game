@@ -331,7 +331,7 @@ homedecor.register("ceiling_lantern", {
 	tiles = { "homedecor_light.png", "homedecor_generic_metal_wrought_iron.png" },
 	use_texture_alpha = true,
 	inventory_image = "homedecor_ceiling_lantern_inv.png",
-	description = "Ceiling Lantern",
+	description = S("Ceiling Lantern"),
 	groups = {snappy=3},
 	light_source = 11,
 	selection_box = cl_cbox,
