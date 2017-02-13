@@ -1,0 +1,1 @@
+Works pretty much the same as every other version of this mod. Put skins in the textures directory, with the name following the pattern "player_%s.png", where %s is the player name.

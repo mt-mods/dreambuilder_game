@@ -1,27 +1,25 @@
-local mod_path = minetest.get_modpath(minetest.get_current_modname())
-local got_tex = {}
-local got_gdl = minetest.get_dir_list
-
-if got_gdl then
-	for _, name in pairs(minetest.get_dir_list(mod_path.."/textures")) do
-		if name:sub(1, 7) == "player_" then
-			local player_name = name:sub(8):match("(.+)%.")
-			got_tex[player_name] = true
-		end
+local function pivot(table)
+	local ret = {}
+	for k,v in pairs(table) do
+		ret[v] = k
 	end
+	return ret
+end
+
+local textures = pivot(minetest.get_dir_list(minetest.get_modpath("player_textures")..DIR_DELIM.."textures"))
+
+local function applyskin(player)
+	local name = player:get_player_name()
+	if textures[string.format("player_%s.png",name)] then
+		if minetest.get_modpath("default") then
+			default.player_set_textures(player,string.format("[combine:64x32:0,0=player_%s.png",name))
+		end
+		player:set_properties({textures={string.format("[combine:64x32:0,0=player_%s.png",name)}})
+	end
+	player:set_properties({visual="mesh",visual_size={x=1,y=1},mesh="character.b3d"})
 end
 
 minetest.register_on_joinplayer(function(player)
-	local player_name = player:get_player_name()
-	local tex = "player_"..player_name..".png"
-	if got_gdl then
-		if not got_tex[player_name] then return end
-	else
-		if not io.open(mod_path.."/textures/"..tex) then
-			return
-		end
-	end
-	player:set_properties({textures = {tex}})
+	applyskin(player)
+	minetest.after(10,applyskin,player)
 end)
-
-
