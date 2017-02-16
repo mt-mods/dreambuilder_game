@@ -430,7 +430,7 @@ end
 minetest.register_lbm({
 	name = "blox:convert",
 	label = "Convert blox blocks to use param2 color",
-	run_at_every_load = true,
+	run_at_every_load = false,
 	nodenames = blox.old_static_list,
 	action = function(pos, node)
 		local basename = string.sub(node.name, 6)

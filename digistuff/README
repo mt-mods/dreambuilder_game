@@ -1,0 +1,41 @@
+Digilines Stuff
+===============
+
+
+License:
+Code - LGPL v3 or later (contains some code from mesecons and digilines)
+Textures WITHOUT "adwaita" in the file name - CC BY-SA 3.0 Generic (contains modified versions of textures from mesecons and digilines)
+Textures WITH "adwaita" in the file name - These are icons by the GNOME Project, licensed under GNU LGPL v3 or CC BY-SA 3.0.
+
+
+Depends:
+Required: digilines (base only) and mesecons (base only)
+Only needed for craft recipes: default, mesecons_luacontroller, homedecor
+
+
+How to use digilines buttons:
+Connect to a digiline (or digimese), right-click, and set a channel and message.
+When the button is pressed (right-click), it will send that message on that channel, over digilines.
+Note that the settings cannot be changed after setting - you must dig and re-place the button to do so.
+
+
+How to use digimese:
+It conducts digilines signals (like digilines) in all directions (like mese). That's about it, really.
+
+
+How to use the digilines player detector:
+Set a channel and radius (radius must be a number >0 and <10 - anything invalid will be ignored and "6" used instead).
+Every second while a player is within the radius, a table listing the players in range will be sent via digilines on the chosen channel.
+
+
+How to use the digilines control panel:
+Once a channel is set, any messages sent on that channel will be shown on the "LCD". The buttons, when pressed, send the messages "up", "down", "left", "right", "back", and "enter" on the same channel. If the panel is placed in a protected area (all standard protection mods are supported), only the owner of the area (and players with the protection_bypass privilege) can set the channel. There is also a "lock" function in the bottom-right of the "LCD" area. Click the padlock icon to lock/unlock it. If locked, only the owner of the area is allowed to use the buttons. If unlocked, anyone can use the buttons, although channel setting and (for reasons that shuld be obvious) locking/unlocking is still limited to the area owner and players with protection_bypass.
+
+
+How to use the NIC:
+Send a digilines signal with the URL you want to download. The HTTPRequestResult table will be sent back on the same channel.
+
+
+How to use the camera:
+Set the channel, distance, and radius. The camera will search for a node "distance" meters away and up to 10m down.
+Every second while a player is within "radius" meters of that point, a table listing the players in range will be sent via digilines on the chosen channel.

@@ -77,7 +77,6 @@ minetest.register_node("chains:chandelier", {
 	walkable = false,
 	climbable = true,
 	sunlight_propagates = true,
-	paramtype = "light",
 	tiles = {
 		"chains_wrought_iron.png",
 		"chains_candle.png",
@@ -104,7 +103,6 @@ minetest.register_node("chains:chandelier_brass", {
 	walkable = false,
 	climbable = true,
 	sunlight_propagates = true,
-	paramtype = "light",
 	tiles = {
 		"chains_brass.png",
 		"chains_candle.png",

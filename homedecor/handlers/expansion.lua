@@ -230,18 +230,9 @@ function homedecor.bed_expansion(pos, placer, itemstack, pointed_thing, trybunks
 	end
 
 	local toppos = {x=pos.x, y=pos.y+1.0, z=pos.z}
-	local botpos = {x=pos.x, y=pos.y-1.0, z=pos.z}
-
 	local topposfwd = {x=toppos.x+fxd, y=toppos.y, z=toppos.z+fzd}
-	local topnodefwd = minetest.get_node(topposfwd)
-
-	local topnode = minetest.get_node(toppos)
-	local bottomnode = minetest.get_node(botpos)
-
-	print(topnode.name, thisnode.name, bottomnode.name, itemstack:get_name(), dump(trybunks))
 
 	if trybunks and is_buildable_to(placer_name, toppos, topposfwd) then
-		print("want to stack beds, top seems to be clear")
 		local newname = string.gsub(thisnode.name, "_regular", "_extended")
 		minetest.set_node(toppos, { name = thisnode.name, param2 = fdir})
 		minetest.set_node(pos, { name = newname, param2 = fdir})

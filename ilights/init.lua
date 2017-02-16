@@ -109,7 +109,7 @@ end
 minetest.register_lbm({
 	name = "ilights:convert",
 	label = "Convert ilights static nodes to use param2 color",
-	run_at_every_load = true,
+	run_at_every_load = false,
 	nodenames = ilights.old_static_nodes,
 	action = function(pos, node)
 		local name = node.name

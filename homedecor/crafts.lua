@@ -2476,18 +2476,6 @@ minetest.register_craft( {
         },
 })
 
-local bedcolors = {
-	{ "red", "red"},
-	{ "orange", "orange" },
-	{ "yellow", "yellow"},
-	{ "green", "dark_green"},
-	{ "blue", "blue"},
-	{ "violet", "violet"},
-	{ "pink", "pink"},
-	{ "darkgrey", "dark_grey"},
-	{ "brown", "brown" },
-}
-
 minetest.register_craft( {
 	output = "homedecor:bed_regular",
 	recipe = {

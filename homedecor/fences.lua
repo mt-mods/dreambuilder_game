@@ -16,8 +16,6 @@ end
 
 local S = homedecor_i18n.gettext
 
-local function N_(x) return x end
-
 local materials = {
 	{ S("brass"), "brass" },
 	{ S("wrought iron"), "wrought_iron" },

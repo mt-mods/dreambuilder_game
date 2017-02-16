@@ -39,7 +39,6 @@ minetest.register_node("lrfurn:sofa", {
 	end,
 	after_dig_node = unifieddyes.after_dig_node,
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		local itemname = itemstack:get_name()
 		if not clicker:is_player() then
 			return itemstack
 		end
@@ -79,7 +78,7 @@ end
 minetest.register_lbm({
 	name = "lrfurn:convert_sofas",
 	label = "Convert lrfurn short sofas to use param2 color",
-	run_at_every_load = true,
+	run_at_every_load = false,
 	nodenames = lrfurn.old_static_sofas,
 	action = function(pos, node)
 		local name = node.name

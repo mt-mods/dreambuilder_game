@@ -296,7 +296,7 @@ end
 minetest.register_lbm({
 	name = "coloredwood:convert",
 	label = "Convert wood blocks, fences, stairsplus stuff, etc to use param2 color",
-	run_at_every_load = true,
+	run_at_every_load = false,
 	nodenames = coloredwood.old_static_nodes,
 	action = function(pos, node)
 		local meta = minetest.get_meta(pos)

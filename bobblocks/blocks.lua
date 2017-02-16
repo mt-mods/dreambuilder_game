@@ -239,7 +239,7 @@ end
 minetest.register_lbm({
 	name = "bobblocks:convert",
 	label = "Convert bobblocks nodes to use param2 color",
-	run_at_every_load = true,
+	run_at_every_load = false,
 	nodenames = bobblocks.old_static_nodes,
 	action = function(pos, node)
 		local basename = node.name

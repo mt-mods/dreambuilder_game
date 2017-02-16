@@ -32,16 +32,6 @@ for _, t in ipairs(table_colors) do
 	})
 end
 
-local chaircolors = {
-	{ "",           S("plain") },
-	{ "black",      S("black") },
-	{ "red",        S("red") },
-	{ "pink",       S("pink") },
-	{ "violet",     S("violet") },
-	{ "blue",       S("blue") },
-	{ "dark_green", S("dark green") },
-}
-
 local kc_cbox = {
 	type = "fixed",
 	fixed = { -0.3125, -0.5, -0.3125, 0.3125, 0.5, 0.3125 },
@@ -93,7 +83,6 @@ homedecor.register("kitchen_chair_padded", {
 	after_place_node = homedecor.fix_rotation_nsew,
 	after_dig_node = unifieddyes.after_dig_node,
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		local itemname = itemstack:get_name()
 		pos.y = pos.y+0 -- where do I put my ass ?
 		homedecor.sit(pos, node, clicker)
 		return itemstack
@@ -179,7 +168,7 @@ table.insert(homedecor.old_static_chairs, "homedecor:chair")
 minetest.register_lbm({
 	name = "homedecor:convert_chairs",
 	label = "Convert homedecor chairs to use param2 color",
-	run_at_every_load = true,
+	run_at_every_load = false,
 	nodenames = homedecor.old_static_chairs,
 	action = function(pos, node)
 		local name = node.name
@@ -200,7 +189,7 @@ minetest.register_lbm({
 				color = "dark_grey"
 			end
 
-			paletteidx, _ = unifieddyes.getpaletteidx("unifieddyes:"..color, "wallmounted")
+			paletteidx = unifieddyes.getpaletteidx("unifieddyes:"..color, "wallmounted")
 		end
 
 		local old_fdir = math.floor(node.param2 % 32)

@@ -1,0 +1,43 @@
+RGB Lightstones for Minetest
+
+License:
+---Code: WTFPL
+---Textures: "white" image by VanessaE (WTFPL), "palette" image is from here: https://commons.wikimedia.org/wiki/File:256colour.png
+
+Depends: mesecons_lightstone, digilines
+(neither is in depends.txt since the order doesn't matter)
+
+Instructions:
+
+* Grab one from the creative inventory, or craft one:
+	nothing		green lightstone	nothing
+	red lightstone	luacontroller		blue lightstone
+	nothing		digiline		nothing
+
+* Place the thing
+* Right-click and set a channel
+* Send a digilines message to it on that channel with the color you want (choices listed below)
+
+Colors available: Any 6-digit hex color, such as "FF0000", "#c0ffee", "123456"... (will be set to the nearest color available)
+
+Group addressing mode:
+
+If you are building something with large numbers of these things, set them all to the same channel, set X and Y addresses on each, and send nested tables (Y on the outside) with colors for all of them.
+For example, given this display:
+
+X=1 Y=1     X=2 Y=1
+
+X=1 Y=2     X=2 Y=2
+
+to make it show:
+
+red     green
+blue    yellow
+
+send this:
+
+{{"red","green"},
+{"blue","yellow"}}
+
+Note that if you are using group addressing mode, if there is an already-configured RGB lightstone node directly above the one you are setting up,
+punching the one you are setting up (or right-clicking and selecting the Auto-Fill option) will attempt to auto-fill it (incrementing the Y address) from the one above.

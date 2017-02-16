@@ -1,8 +1,6 @@
 
 local S = homedecor_i18n.gettext
 
-local function N_(x) return x end
-
 local BOOK_FORMNAME = "homedecor:book_form"
 
 local player_current_book = { }
@@ -189,7 +187,7 @@ end
 minetest.register_lbm({
 	name = "homedecor:convert_books",
 	label = "Convert homedecor books to use param2 color",
-	run_at_every_load = true,
+	run_at_every_load = false,
 	nodenames = homedecor.old_static_books,
 	action = function(pos, node)
 		local name = node.name

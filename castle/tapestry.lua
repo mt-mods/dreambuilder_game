@@ -147,7 +147,7 @@ end
 minetest.register_lbm({
 	name = "castle:convert_tapestries",
 	label = "Convert tapestries to use param2 color",
-	run_at_every_load = true,
+	run_at_every_load = false,
 	nodenames = castle.old_static_tapestries,
 	action = function(pos, node)
 		local oldname = node.name

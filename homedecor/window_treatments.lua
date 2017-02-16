@@ -1,8 +1,6 @@
 
 local S = homedecor_i18n.gettext
 
-local function N_(x) return x end
-
 homedecor.register("window_quartered", {
 	description = S("Window (quartered)"),
 	tiles = {
@@ -117,7 +115,6 @@ minetest.register_node("homedecor:curtain_closed", {
 	after_dig_node = unifieddyes.after_dig_node,
 	after_place_node = homedecor.fix_rotation,
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		local itemname = itemstack:get_name()
 		local topnode = minetest.get_node({x=pos.x, y=pos.y+1.0, z=pos.z})
 		if string.find(topnode.name, "homedecor:curtainrod") then
 			-- Open the curtains
@@ -144,7 +141,6 @@ minetest.register_node("homedecor:curtain_open", {
 	after_dig_node = unifieddyes.after_dig_node,
 	after_place_node = homedecor.fix_rotation,
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		local itemname = itemstack:get_name()
 		local topnode = minetest.get_node({x=pos.x, y=pos.y+1.0, z=pos.z})
 		if string.find(topnode.name, "homedecor:curtainrod") then
 			-- Close the curtains
@@ -216,18 +212,17 @@ homedecor.register("stained_glass", {
 -- Convert old curtain nodes to param2-colorization
 
 local curtaincolors = {
-	{ N_("red"),    "ad2323" },
-	{ N_("green"),  "27a927" },
-	{ N_("blue"),   "2626c6" },
-	{ N_("white"),  "ffffff" },
-	{ N_("pink"),   "ff8fb7" },
-	{ N_("violet"), "7f29d7" },
+	"red",
+	"green",
+	"blue",
+	"white",
+	"pink",
+	"violet",
 }
 
 homedecor.old_static_curtain_nodes = {}
 
-for _, i in ipairs(curtaincolors) do
-	local color,hue = unpack(i)
+for _, color in ipairs(curtaincolors) do
 	table.insert(homedecor.old_static_curtain_nodes, "homedecor:curtain_"..color)
 	table.insert(homedecor.old_static_curtain_nodes, "homedecor:curtain_open_"..color)
 end
@@ -235,7 +230,7 @@ end
 minetest.register_lbm({
 	name = "homedecor:convert_curtains",
 	label = "Convert static curtain nodes to use param2 color",
-	run_at_every_load = true,
+	run_at_every_load = false,
 	nodenames = homedecor.old_static_curtain_nodes,
 	action = function(pos, node)
 		local name = node.name

@@ -73,7 +73,7 @@ end
 minetest.register_lbm({
 	name = "homedecor:convert_shutters",
 	label = "Convert shutter static nodes to use param2 color",
-	run_at_every_load = true,
+	run_at_every_load = false,
 	nodenames = homedecor.old_shutter_nodes,
 	action = function(pos, node)
 		local name = node.name

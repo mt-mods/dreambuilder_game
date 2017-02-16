@@ -228,12 +228,14 @@ end
 minetest.register_lbm({
 	name = "homedecor:convert_beds",
 	label = "Convert homedecor static bed nodes to use param2 color",
-	run_at_every_load = true,
+	run_at_every_load = false,
 	nodenames = homedecor.old_bed_nodes,
 	action = function(pos, node)
 		local name = node.name
 		local color = string.sub(name, string.find(name, "_") + 1)
-		local color = string.sub(color, 1, string.find(color, "_", -10) - 1) -- -10 puts us near the end of the color field
+
+		-- -10 puts us near the end of the color field
+		color = string.sub(color, 1, string.find(color, "_", -10) - 1)
 
 		if color == "darkgrey" then
 			color = "dark_grey"

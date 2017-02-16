@@ -451,7 +451,7 @@ end
 minetest.register_lbm({
 	name = "stained_glass:convert_brickblocks",
 	label = "Convert static glass blocks to use param2 color",
-	run_at_every_load = true,
+	run_at_every_load = false,
 	nodenames = stainedglass.old_static_nodes,
 	action = function(pos, node)
 		local name = node.name

@@ -280,7 +280,7 @@ end
 minetest.register_lbm({
 	name = "unifiedbricks:convert_brickblocks",
 	label = "Convert clay blocks and single-color brick blocks to use param2 color",
-	run_at_every_load = true,
+	run_at_every_load = false,
 	nodenames = unifiedbricks.old_static_list,
 	action = function(pos, node)
 

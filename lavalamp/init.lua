@@ -34,7 +34,6 @@ minetest.register_node("lavalamp:lavalamp", {
 	sounds = default.node_sound_glass_defaults(),
 	after_dig_node = unifieddyes.after_dig_node,
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		local itemname = itemstack:get_name()
 		node.name = "lavalamp:lavalamp_off"
 		minetest.swap_node(pos, node)
 		return itemstack
@@ -98,11 +97,10 @@ end
 minetest.register_lbm({
 	name = "lavalamp:convert",
 	label = "Convert lava lamps to use param2 color",
-	run_at_every_load = true,
+	run_at_every_load = false,
 	nodenames = lavalamp.old_static_nodes,
 	action = function(pos, node)
 		local name = node.name
-		local newname
 		local color
 
 		if string.find(name, "red") then
