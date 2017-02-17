@@ -269,26 +269,27 @@ for _, shade in ipairs(coloredwood.greys) do
 	table.insert(coloredwood.old_static_nodes, "coloredwood:fence_"..shade)
 end
 
--- add all of the stairsplus nodes
-
-for _, shape in ipairs(circular_saw.names) do
-	local a = shape[1]
-	local b = shape[2]
-	for _, hue in ipairs(coloredwood.hues) do
-		for _, shade in ipairs(coloredwood.shades) do
-			table.insert(coloredwood.old_static_nodes, "coloredwood:"..a.."_wood_"..shade..hue..b)
-			table.insert(coloredwood.old_static_nodes, "coloredwood:"..a.."_wood_"..shade..hue.."_s50"..b)
+-- add all of the stairsplus nodes, if moreblocks is installed.
+if coloredwood.enable_stairsplus then
+	for _, shape in ipairs(circular_saw.names) do
+		local a = shape[1]
+		local b = shape[2]
+		for _, hue in ipairs(coloredwood.hues) do
+			for _, shade in ipairs(coloredwood.shades) do
+				table.insert(coloredwood.old_static_nodes, "coloredwood:"..a.."_wood_"..shade..hue..b)
+				table.insert(coloredwood.old_static_nodes, "coloredwood:"..a.."_wood_"..shade..hue.."_s50"..b)
+			end
+			table.insert(coloredwood.old_static_nodes, "coloredwood:"..a.."_wood_light_"..hue..b) -- light doesn't have extra shades or s50
 		end
-		table.insert(coloredwood.old_static_nodes, "coloredwood:"..a.."_wood_light_"..hue..b) -- light doesn't have extra shades or s50
 	end
-end
 
-for _, shape in ipairs(circular_saw.names) do
-	local a = shape[1]
-	local b = shape[2]
-	for _, hue in ipairs(coloredwood.greys) do
-		for _, shade in ipairs(coloredwood.shades) do
-			table.insert(coloredwood.old_static_nodes, "coloredwood:"..a.."_wood_"..hue..b)
+	for _, shape in ipairs(circular_saw.names) do
+		local a = shape[1]
+		local b = shape[2]
+		for _, hue in ipairs(coloredwood.greys) do
+			for _, shade in ipairs(coloredwood.shades) do
+				table.insert(coloredwood.old_static_nodes, "coloredwood:"..a.."_wood_"..hue..b)
+			end
 		end
 	end
 end

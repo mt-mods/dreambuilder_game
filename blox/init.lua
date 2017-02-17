@@ -8,21 +8,7 @@ by blert2112
 ***********
 --]]
 
--- Remove Blox from creative inventory if colormachine mod is installed
-
 blox = {}
-
-local creative = 0
-
-if (minetest.get_modpath("colormachine")) then
-	creative = 1
-end
-
--- Uncomment the line below to remove most nodes from creative inventory regardless of colormachine mod.
-
--- local creative = 1
-
--- Uncomment the line above and change value to 0 to keep nodes in creative inventory when colormachine is installed.
 
 local version = "0.8"
 
@@ -53,6 +39,8 @@ local NodeMaterial = {
 	"wood",
 	"cobble",
 }
+
+local moreblocks = minetest.get_modpath("moreblocks")
 
 -- Nodes
 
@@ -123,7 +111,7 @@ for _, nodeclass in ipairs(NodeClass) do
 		paramtype = "light",
 		paramtype2 = "color",
 		is_ground_content = true,
-		groups = {cracky=3, not_in_creative_inventory=creative, ud_param2_colorable = 1},
+		groups = {cracky=3, ud_param2_colorable = 1},
 		sounds = default.node_sound_stone_defaults(),
 		after_dig_node = unifieddyes.after_dig_node
 	})
@@ -140,7 +128,7 @@ for _, nodeclass in ipairs(NodeClass) do
 		paramtype = "light",
 		paramtype2 = "color",
 		is_ground_content = true,
-		groups = {cracky=3, not_in_creative_inventory=creative, ud_param2_colorable = 1},
+		groups = {cracky=3, ud_param2_colorable = 1},
 		sounds = default.node_sound_stone_defaults(),
 		after_dig_node = unifieddyes.after_dig_node
 	})
@@ -157,7 +145,7 @@ for _, nodeclass in ipairs(NodeClass) do
 		paramtype = "light",
 		paramtype2 = "color",
 		is_ground_content = true,
-		groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory=creative, ud_param2_colorable = 1},
+		groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, ud_param2_colorable = 1},
 		sounds = default.node_sound_wood_defaults(),
 		after_dig_node = unifieddyes.after_dig_node
 	})
@@ -172,32 +160,7 @@ minetest.register_node("blox:wood_tinted", {
 	paramtype = "light",
 	paramtype2 = "color",
 	is_ground_content = true,
-	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory=creative, ud_param2_colorable = 1},
-	sounds = default.node_sound_wood_defaults(),
-	after_dig_node = unifieddyes.after_dig_node
-})
-
-
-minetest.register_node("blox:cobble_tinted", {
-	description = "Blox tinted cobble",
-	tiles = { "blox_cobble_tinted.png" },
-	palette = "unifieddyes_palette.png",
-	paramtype = "light",
-	paramtype2 = "color",
-	is_ground_content = true,
-	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory=creative, ud_param2_colorable = 1},
-	sounds = default.node_sound_wood_defaults(),
-	after_dig_node = unifieddyes.after_dig_node
-})
-
-minetest.register_node("blox:stone_tinted", {
-	description = "Blox tinted stone",
-	tiles = { "blox_stone_tinted.png" },
-	palette = "unifieddyes_palette.png",
-	paramtype = "light",
-	paramtype2 = "color",
-	is_ground_content = true,
-	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory=creative, ud_param2_colorable = 1},
+	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
 	after_dig_node = unifieddyes.after_dig_node
 })
@@ -209,10 +172,137 @@ minetest.register_node("blox:stone_square", {
 	paramtype = "light",
 	paramtype2 = "color",
 	is_ground_content = true,
-	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory=creative, ud_param2_colorable = 1},
+	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
 	after_dig_node = unifieddyes.after_dig_node
 })
+
+minetest.register_node("blox:cobble_tinted", {
+	description = "Blox tinted cobble",
+	tiles = { "blox_cobble_tinted.png" },
+	palette = "unifieddyes_palette.png",
+	paramtype = "light",
+	paramtype2 = "color",
+	is_ground_content = true,
+	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory = 1, ud_param2_colorable = 1},
+	sounds = default.node_sound_wood_defaults(),
+	after_dig_node = unifieddyes.after_dig_node,
+	drop = "default:cobble"
+})
+
+minetest.register_node("blox:stone_tinted", {
+	description = "Blox tinted stone",
+	tiles = { "blox_stone_tinted.png" },
+	palette = "unifieddyes_palette.png",
+	paramtype = "light",
+	paramtype2 = "color",
+	is_ground_content = true,
+	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory = 1, ud_param2_colorable = 1},
+	sounds = default.node_sound_wood_defaults(),
+	after_dig_node = unifieddyes.after_dig_node,
+	drop = "default:cobble"
+})
+
+-- Override default stone and default cobble
+
+minetest.override_item("default:stone", {
+	paramtype2 = "color",
+	palette = "unifieddyes_palette.png",
+	ud_replacement_node = "blox:stone_tinted",
+	groups = {cracky = 3, stone = 1, ud_param2_colorable = 1},
+})
+
+minetest.override_item("default:cobble", {
+	paramtype2 = "color",
+	palette = "unifieddyes_palette.png",
+	ud_replacement_node = "blox:cobble_tinted",
+	groups = {cracky = 3, stone = 2, ud_param2_colorable = 1},
+})
+
+local dye_color = "unifieddyes:white"
+
+if moreblocks then
+	minetest.override_item("moreblocks:stone_tile", {
+		paramtype2 = "color",
+		palette = "unifieddyes_palette.png",
+		ud_replacement_node = "blox:stone_square",
+		groups = {cracky = 3, ud_param2_colorable = 1},
+	})
+	minetest.override_item("blox:stone_square", {
+		drop = "moreblocks:stone_tile",
+		groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory = 1, ud_param2_colorable = 1},
+	})
+
+	minetest.override_item("moreblocks:circle_stone_bricks", {
+		paramtype2 = "color",
+		palette = "unifieddyes_palette.png",
+		ud_replacement_node = "blox:stone_loop",
+		groups = {cracky = 3, ud_param2_colorable = 1},
+	})
+	minetest.override_item("blox:stone_loop", {
+		drop = "moreblocks:circle_stone_bricks",
+		groups = {cracky = 3, not_in_creative_inventory = 1, ud_param2_colorable = 1},
+	})
+
+	minetest.override_item("moreblocks:iron_checker", {
+		paramtype2 = "color",
+		palette = "unifieddyes_palette.png",
+		ud_replacement_node = "blox:stone_checker",
+		groups = {cracky = 3, ud_param2_colorable = 1},
+	})
+	minetest.override_item("blox:stone_checker", {
+		drop = "moreblocks:iron_checker",
+		groups = {cracky = 3, not_in_creative_inventory = 1, ud_param2_colorable = 1},
+	})
+
+	minetest.override_item("moreblocks:wood_tile", {
+		paramtype2 = "color",
+		palette = "unifieddyes_palette.png",
+		ud_replacement_node = "blox:wood_quarter",
+		groups = {wood = 1, snappy = 1, choppy = 2, oddly_breakable_by_hand = 2, flammable = 3, ud_param2_colorable = 1},
+	})
+	minetest.override_item("blox:wood_quarter", {
+		drop = "moreblocks:wood_tile",
+		groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory = 1, ud_param2_colorable = 1},
+	})
+
+	minetest.override_item("moreblocks:wood_tile_flipped", {
+		paramtype2 = "color",
+		palette = "unifieddyes_palette.png",
+		ud_replacement_node = "blox:wood_quarter",
+		groups = {wood = 1, snappy = 1, choppy = 2, oddly_breakable_by_hand = 2, flammable = 3, ud_param2_colorable = 1},
+	})
+else
+	minetest.register_craft({
+		output = "blox:stone_square 6",
+		recipe = {
+			{ dye_color,       "default:stone", "default:stone" },
+			{ "default:stone", dye_color,       "default:stone" },
+			{ "default:stone", "default:stone", dye_color       },
+		}
+	})
+end
+
+if minetest.get_modpath("coloredwood") then
+	minetest.register_craft({
+		output = "blox:wood_tinted 6",
+		recipe = {
+			{ "",             "default:wood", ""             },
+			{ "default:wood", dye_color,      "default:wood" },
+			{ "",             "default:wood", ""             },
+		}
+	})
+else
+	minetest.override_item("default:wood", {
+		paramtype2 = "color",
+		ud_replacement_node = "blox:wood_tinted",
+		groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, wood = 1, ud_param2_colorable = 1},
+	})
+	minetest.override_item("blox:wood_tinted", {
+		drop = "default:wood",
+		groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory = 1, ud_param2_colorable = 1},
+	})
+end
 
 -- Crafting
 
@@ -224,8 +314,6 @@ minetest.register_craft({
 		{"", 'blox:glowdust', ""},
 	}
 })
-
-local dye_color = "unifieddyes:white"
 
 for _, material in ipairs(NodeMaterial) do
 
@@ -240,13 +328,15 @@ for _, material in ipairs(NodeMaterial) do
 		}
 	})
 
-	minetest.register_craft({
-		output = "blox:"..material.."_quarter 4",
-		recipe = {
-			{ dye_color, def_mat   },
-			{ def_mat,   dye_color },
-		}
-	})
+	if not (moreblocks and material == "wood") then
+		minetest.register_craft({
+			output = "blox:"..material.."_quarter 4",
+			recipe = {
+				{ dye_color, def_mat   },
+				{ def_mat,   dye_color },
+			}
+		})
+	end
 
 	minetest.register_craft({
 		output = "blox:"..material.."_cross 4",
@@ -254,24 +344,6 @@ for _, material in ipairs(NodeMaterial) do
 			{ def_mat, "",        def_mat },
 			{ "",      dye_color, ""      },
 			{ def_mat, "",        def_mat },
-		}
-	})
-
-	minetest.register_craft({
-		output = "blox:"..material.."_checker 6",
-		recipe = {
-			{ def_mat,   dye_color, def_mat   },
-			{ dye_color, def_mat,   dye_color },
-			{ def_mat,   dye_color, def_mat   },
-		}
-	})
-
-	minetest.register_craft({
-		output = "blox:"..material.."_checker 8",
-		recipe = {
-			{ dye_color, def_mat,   dye_color },
-			{ def_mat,   dye_color, def_mat   },
-			{ dye_color, def_mat,   dye_color },
 		}
 	})
 
@@ -284,51 +356,36 @@ for _, material in ipairs(NodeMaterial) do
 		}
 	})
 
-	minetest.register_craft({
-		output = "blox:"..material.."_loop 6",
-		recipe = {
-			{ def_mat, def_mat,   def_mat },
-			{ def_mat, dye_color, def_mat },
-			{ def_mat, def_mat,   def_mat },
-		}
-	})
+	if not (moreblocks and material == "stone") then
+
+		minetest.register_craft({
+			output = "blox:"..material.."_checker 6",
+			recipe = {
+				{ def_mat,   dye_color, def_mat   },
+				{ dye_color, def_mat,   dye_color },
+				{ def_mat,   dye_color, def_mat   },
+			}
+		})
+
+		minetest.register_craft({
+			output = "blox:"..material.."_checker 8",
+			recipe = {
+				{ dye_color, def_mat,   dye_color },
+				{ def_mat,   dye_color, def_mat   },
+				{ dye_color, def_mat,   dye_color },
+			}
+		})
+
+		minetest.register_craft({
+			output = "blox:"..material.."_loop 6",
+			recipe = {
+				{ def_mat, def_mat,   def_mat },
+				{ def_mat, dye_color, def_mat },
+				{ def_mat, def_mat,   def_mat },
+			}
+		})
+	end
 end
-
-minetest.register_craft({
-	output = "blox:stone_square 6",
-	recipe = {
-		{ dye_color,       "default:stone", "default:stone" },
-		{ "default:stone", dye_color,       "default:stone" },
-		{ "default:stone", "default:stone", dye_color       },
-	}
-})
-
-minetest.register_craft({
-	output = "blox:stone_tinted 6",
-	recipe = {
-		{ "",              "default:stone", ""              },
-		{ "default:stone", dye_color,       "default:stone" },
-		{ "",              "default:stone", ""              },
-	}
-})
-
-minetest.register_craft({
-	output = "blox:wood_tinted 6",
-	recipe = {
-		{ "",             "default:wood", ""             },
-		{ "default:wood", dye_color,      "default:wood" },
-		{ "",             "default:wood", ""             },
-	}
-})
-
-minetest.register_craft({
-	output = "blox:cobble_tinted 6",
-	recipe = {
-		{ "",               "default:cobble", ""               },
-		{ "default:cobble", dye_color,        "default:cobble" },
-		{ "",               "default:cobble", ""               },
-	}
-})
 
 --Fuel
 
