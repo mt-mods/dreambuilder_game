@@ -112,7 +112,7 @@ function unifieddyes.fix_rotation(pos, placer, itemstack, pointed_thing)
 end
 
 -- use this when you have a "wallmounted" node that should never be oriented
--- to floor or ceiling
+-- to floor or ceiling...
 
 function unifieddyes.fix_rotation_nsew(pos, placer, itemstack, pointed_thing)
 	local node = minetest.get_node(pos)
@@ -120,6 +120,21 @@ function unifieddyes.fix_rotation_nsew(pos, placer, itemstack, pointed_thing)
 	local dir = minetest.yaw_to_dir(yaw)
 	local fdir = minetest.dir_to_wallmounted(dir)
 	minetest.swap_node(pos, { name = node.name, param2 = fdir })
+end
+
+-- ... and use this one to force that kind of node off of floor/ceiling
+-- orientation after the screwdriver rotates it.
+
+function unifieddyes.fix_after_screwdriver_nsew(pos, node, user, mode, new_param2)
+	local new_fdir = new_param2 % 8
+	local color = new_param2 - new_fdir
+	print(new_fdir)
+
+	if new_fdir < 2 then
+		new_fdir = 2
+		minetest.swap_node(pos, { name = node.name, param2 = new_fdir + color })
+		return true
+	end
 end
 
 function unifieddyes.select_node(pointed_thing)

@@ -494,7 +494,8 @@ homedecor.register("desk_lamp", {
 	walkable = false,
 	groups = {snappy=3, ud_param2_colorable = 1},
 	after_place_node = unifieddyes.fix_rotation_nsew,
-	after_dig_node = unifieddyes.after_dig_node
+	after_dig_node = unifieddyes.after_dig_node,
+	on_rotate = unifieddyes.fix_after_screwdriver_nsew
 })
 
 -- "kitchen"/"dining room" ceiling lamp

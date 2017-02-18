@@ -59,6 +59,7 @@ homedecor.register("kitchen_chair_wood", {
 	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
 	after_place_node = unifieddyes.fix_rotation_nsew,
+	on_rotate = unifieddyes.fix_after_screwdriver_nsew,
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		pos.y = pos.y+0 -- where do I put my ass ?
 		homedecor.sit(pos, node, clicker)
@@ -82,6 +83,7 @@ homedecor.register("kitchen_chair_padded", {
 	sounds = default.node_sound_wood_defaults(),
 	after_place_node = unifieddyes.fix_rotation_nsew,
 	after_dig_node = unifieddyes.after_dig_node,
+	on_rotate = unifieddyes.fix_after_screwdriver_nsew,
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		pos.y = pos.y+0 -- where do I put my ass ?
 		homedecor.sit(pos, node, clicker)
@@ -105,6 +107,7 @@ homedecor.register("armchair", {
 	node_box = ac_cbox,
 	after_place_node = unifieddyes.fix_rotation_nsew,
 	after_dig_node = unifieddyes.after_dig_node,
+	on_rotate = unifieddyes.fix_after_screwdriver_nsew,
 })
 
 local ob_cbox = {

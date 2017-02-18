@@ -86,6 +86,7 @@ homedecor.register("book", {
 		unifieddyes.fix_rotation_nsew(pos, placer, itemstack, pointed_thing)
 		return itemstack
 	end,
+	on_rotate = unifieddyes.fix_after_screwdriver_nsew,
 	on_dig = book_dig,
 	selection_box = {
 			type = "fixed",
@@ -107,6 +108,7 @@ homedecor.register("book_open", {
 	palette = "unifieddyes_palette_colorwallmounted.png",
 	after_place_node = unifieddyes.fix_rotation_nsew,
 	after_dig_node = unifieddyes.after_dig_node,
+	on_rotate = unifieddyes.fix_after_screwdriver_nsew,
 	on_dig = book_dig,
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		local meta = minetest.get_meta(pos)

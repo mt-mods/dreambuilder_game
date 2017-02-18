@@ -23,8 +23,9 @@ minetest.register_node("lrfurn:armchair", {
 	groups = {snappy=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
 	node_box = armchair_cbox,
-	after_place_node = unifieddyes.fix_rotation,
+	after_place_node = unifieddyes.fix_rotation_nsew,
 	after_dig_node = unifieddyes.after_dig_node,
+	on_rotate = unifieddyes.fix_after_screwdriver_nsew,
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		if not clicker:is_player() then
 			return itemstack
