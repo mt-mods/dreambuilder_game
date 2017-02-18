@@ -20,25 +20,6 @@ end
 
 ilights.modpath = minetest.get_modpath("ilights")
 
--- Helper function to work around an engine bug
-
-function ilights.fix_rotation(pos, placer, itemstack, pointed_thing)
-	local node = minetest.get_node(pos)
-	local yaw = placer:get_look_yaw()
-	local dir = minetest.yaw_to_dir(yaw-1.5)
-	local pitch = placer:get_look_vertical()
-
-	local fdir = minetest.dir_to_wallmounted(dir)
-
-	if pitch < -(math.pi/4) then
-		fdir = 0
-	elseif pitch > math.pi/4 then
-		fdir = 1
-	end
-	minetest.swap_node(pos, { name = node.name, param2 = fdir })
-end
-
-
 -- The important stuff!
 
 local lamp_cbox = {
@@ -67,7 +48,7 @@ minetest.register_node("ilights:light", {
 	light_source = 14,
 	selection_box = lamp_cbox,
 	node_box = lamp_cbox,
-	after_place_node = ilights.fix_rotation,
+	after_place_node = unifieddyes.fix_rotation,
 	after_dig_node = unifieddyes.after_dig_node
 })
 

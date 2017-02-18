@@ -35,7 +35,7 @@ minetest.register_node("homedecor:glowlight_half", {
 	groups = { snappy = 3, ud_param2_colorable = 1 },
 	light_source = default.LIGHT_MAX,
 	sounds = default.node_sound_glass_defaults(),
-	after_place_node = homedecor.fix_rotation,
+	after_place_node = unifieddyes.fix_rotation,
 	after_dig_node = unifieddyes.after_dig_node
 })
 
@@ -63,7 +63,7 @@ minetest.register_node("homedecor:glowlight_quarter", {
 	groups = { snappy = 3, ud_param2_colorable = 1 },
 	light_source = default.LIGHT_MAX-1,
 	sounds = default.node_sound_glass_defaults(),
-	after_place_node = homedecor.fix_rotation,
+	after_place_node = unifieddyes.fix_rotation,
 	after_dig_node = unifieddyes.after_dig_node
 })
 
@@ -91,7 +91,7 @@ minetest.register_node("homedecor:glowlight_small_cube", {
 	groups = { snappy = 3, ud_param2_colorable = 1 },
 	light_source = default.LIGHT_MAX-1,
 	sounds = default.node_sound_glass_defaults(),
-	after_place_node = homedecor.fix_rotation,
+	after_place_node = unifieddyes.fix_rotation,
 	after_dig_node = unifieddyes.after_dig_node
 })
 
@@ -493,7 +493,7 @@ homedecor.register("desk_lamp", {
 	node_box = dlamp_cbox,
 	walkable = false,
 	groups = {snappy=3, ud_param2_colorable = 1},
-	after_place_node = homedecor.fix_rotation_nsew,
+	after_place_node = unifieddyes.fix_rotation_nsew,
 	after_dig_node = unifieddyes.after_dig_node
 })
 

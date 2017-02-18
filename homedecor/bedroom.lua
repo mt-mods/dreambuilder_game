@@ -51,7 +51,7 @@ homedecor.register("bed_regular", {
 	sounds = default.node_sound_wood_defaults(),
 	on_rotate = screwdriver.disallow,
 	after_place_node = function(pos, placer, itemstack, pointed_thing)
-		homedecor.fix_rotation_nsew(pos, placer, itemstack, pointed_thing)
+		unifieddyes.fix_rotation_nsew(pos, placer, itemstack, pointed_thing)
 		if not placer:get_player_control().sneak then
 			return homedecor.bed_expansion(pos, placer, itemstack, pointed_thing)
 		end
@@ -123,7 +123,7 @@ homedecor.register("bed_kingsize", {
 	node_box = kbed_cbox,
 	sounds = default.node_sound_wood_defaults(),
 	on_rotate = screwdriver.disallow,
-	after_place_node = homedecor.fix_rotation_nsew,
+	after_place_node = unifieddyes.fix_rotation_nsew,
 	after_dig_node = function(pos, oldnode, oldmetadata, digger)
 		local inv = digger:get_inventory()
 		if digger:get_player_control().sneak and inv:room_for_item("main", "bed_regular 1") then

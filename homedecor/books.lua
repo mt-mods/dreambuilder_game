@@ -83,7 +83,7 @@ homedecor.register("book", {
 		if not homedecor.expect_infinite_stacks then
 			itemstack:take_item()
 		end
-		homedecor.fix_rotation_nsew(pos, placer, itemstack, pointed_thing)
+		unifieddyes.fix_rotation_nsew(pos, placer, itemstack, pointed_thing)
 		return itemstack
 	end,
 	on_dig = book_dig,
@@ -105,7 +105,7 @@ homedecor.register("book_open", {
 	walkable = false,
 	paramtype2 = "colorwallmounted",
 	palette = "unifieddyes_palette_colorwallmounted.png",
-	after_place_node = homedecor.fix_rotation_nsew,
+	after_place_node = unifieddyes.fix_rotation_nsew,
 	after_dig_node = unifieddyes.after_dig_node,
 	on_dig = book_dig,
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)

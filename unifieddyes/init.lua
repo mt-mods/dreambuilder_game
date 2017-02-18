@@ -93,6 +93,35 @@ local default_dyes = {
 
 -- code borrowed from homedecor
 
+-- call this function to reset the rotation of a "wallmounted" object on place
+
+function unifieddyes.fix_rotation(pos, placer, itemstack, pointed_thing)
+	local node = minetest.get_node(pos)
+	local yaw = placer:get_look_yaw()
+	local dir = minetest.yaw_to_dir(yaw-1.5)
+	local pitch = placer:get_look_vertical()
+
+	local fdir = minetest.dir_to_wallmounted(dir)
+
+	if pitch < -(math.pi/8) then
+		fdir = 0
+	elseif pitch > math.pi/8 then
+		fdir = 1
+	end
+	minetest.swap_node(pos, { name = node.name, param2 = fdir })
+end
+
+-- use this when you have a "wallmounted" node that should never be oriented
+-- to floor or ceiling
+
+function unifieddyes.fix_rotation_nsew(pos, placer, itemstack, pointed_thing)
+	local node = minetest.get_node(pos)
+	local yaw = placer:get_look_yaw()
+	local dir = minetest.yaw_to_dir(yaw)
+	local fdir = minetest.dir_to_wallmounted(dir)
+	minetest.swap_node(pos, { name = node.name, param2 = fdir })
+end
+
 function unifieddyes.select_node(pointed_thing)
 	local pos = pointed_thing.under
 	local node = minetest.get_node_or_nil(pos)

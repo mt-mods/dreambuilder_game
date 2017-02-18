@@ -38,7 +38,7 @@ homedecor.register("shutter", {
 	sounds = default.node_sound_wood_defaults(),
 	selection_box = shutter_cbox,
 	node_box = shutter_cbox,
-	after_place_node = homedecor.fix_rotation,
+	after_place_node = unifieddyes.fix_rotation,
 	after_dig_node = unifieddyes.after_dig_node
 })
 
@@ -54,7 +54,7 @@ homedecor.register("shutter_colored", {
 	sounds = default.node_sound_wood_defaults(),
 	selection_box = shutter_cbox,
 	node_box = shutter_cbox,
-	after_place_node = homedecor.fix_rotation,
+	after_place_node = unifieddyes.fix_rotation,
 	after_dig_node = unifieddyes.after_dig_node,
 	drop = "homedecor:shutter"
 })

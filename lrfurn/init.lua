@@ -58,15 +58,6 @@ function lrfurn.check_forward(pos, fdir, long, placer)
 	return true
 end
 
-function lrfurn.fix_rotation(pos, placer, itemstack, pointed_thing)
-	local node = minetest.get_node(pos)
-	local yaw = placer:get_look_yaw()
-	local dir = minetest.yaw_to_dir(yaw)
-	local fdir = minetest.dir_to_wallmounted(dir)
-
-	minetest.swap_node(pos, { name = node.name, param2 = fdir })
-end
-
 dofile(minetest.get_modpath("lrfurn").."/longsofas.lua")
 dofile(minetest.get_modpath("lrfurn").."/sofas.lua")
 dofile(minetest.get_modpath("lrfurn").."/armchairs.lua")
