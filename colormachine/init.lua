@@ -23,6 +23,7 @@
 -- Version 0.6
 
 -- Changelog: 
+-- 16.02.17 Removed support for lrfurn (that mod uses the new coloring mechanism as well)
 -- 08.02.17 Removed support for homedecor, blox, plasticbox, stainedglass, coloredwood and unifiedbricks
 --          as those now use a new feature of newer versions of MT that makes the colormachine
 --          obsolete for them.
@@ -214,10 +215,12 @@ colormachine.data = {
 
 --   beds_bed_top_top_         = { nr=13, modname='beds',          shades={0,0,1,0,0,0,0,0}, grey_shades={1,0,1,0,1}, u=0, descr="beds",   block="beds:bed_white", add="bed_bottom_",p=1},
 
+--[[
    lrfurn_armchair_front_    = { nr=14, modname='lrfurn',        shades={0,0,1,0,0,0,0,0}, grey_shades={1,0,1,0,1}, u=0, descr="armchair",block="lrfurn:armchair_white", add="armchair_",p=1, composed=1 },
    lrfurn_sofa_right_front_  = { nr=15, modname='lrfurn',        shades={0,0,1,0,0,0,0,0}, grey_shades={1,0,1,0,1}, u=0, descr="sofa",    block="lrfurn:longsofa_white", add="sofa_right_",p=1, composed=1 },
    lrfurn_longsofa_middle_front_= { nr=16, modname='lrfurn',     shades={0,0,1,0,0,0,0,0}, grey_shades={1,0,1,0,1}, u=0, descr="longsofa",block="lrfurn:sofa_white", add="longsofa_right_",p=1, composed=1 },
 
+--]]
 
    -- grey variants do not seem to exist, even though the textures arethere (perhaps nobody wants a grey flag!)
    flags_                    = { nr=17, modname='flags',         shades={0,0,1,0,0,0,0,0}, grey_shades={1,0,0,0,1}, u=1, descr="flags",   block="flags:white", add="", p=3 },

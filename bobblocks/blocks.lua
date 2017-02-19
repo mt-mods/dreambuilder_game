@@ -16,6 +16,8 @@ bobblocks.colorlist = {
 	"grey"
 }
 
+bobblocks.opacity = 150 -- Opacity: 0-255; 0 Full transparent, 255 Full opaque
+
 bobblocks.update_bobblock = function (pos, node)
 	local newnode = node
 	if string.find(newnode.name, "_off") then
@@ -39,7 +41,7 @@ minetest.register_node("bobblocks:block", {
 	paramtype2 = "color",
 	palette = "unifieddyes_palette.png",
 	sunlight_propagates = true,
-	is_ground_content = true,
+	is_ground_content = false,
 	sounds = default.node_sound_glass_defaults(),
 	light_source = LIGHT_MAX-0,
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, ud_param2_colorable = 1},
@@ -48,19 +50,20 @@ minetest.register_node("bobblocks:block", {
 			offstate = "bobblocks:block_off"
 		}
 	},
-	on_punch = bobblocks.update_bobblock,
+	on_rightclick = bobblocks.update_bobblock,
 	after_dig_node = unifieddyes.after_dig_node
 })
 
 minetest.register_node("bobblocks:block_off", {
 	description = "Bobblocks Plain Block (off)",
-    tiles = {"bobblocks_block.png"},
+	drawtype = "glasslike",
+	tiles = {"bobblocks_block.png^[opacity:"..bobblocks.opacity},
 	paramtype2 = "color",
 	palette = "unifieddyes_palette.png",
-	is_ground_content = true,
-	alpha = WATER_ALPHA,
+	is_ground_content = false,
+	use_texture_alpha = true,
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3,not_in_creative_inventory=1, ud_param2_colorable = 1},
-	drop = 'bobblocks:redblock',
+	drop = "bobblocks:block",
 	foo = {conductor={
 			state = mesecon.state.off,
 			onstate = "bobblocks:block"
@@ -80,7 +83,7 @@ minetest.register_node("bobblocks:pole", {
 	paramtype2 = "color",
 	palette = "unifieddyes_palette.png",
 	sunlight_propagates = true,
-	is_ground_content = true,
+	is_ground_content = false,
 	sounds = default.node_sound_glass_defaults(),
 	light_source = LIGHT_MAX-0,
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, ud_param2_colorable = 1},
@@ -96,16 +99,17 @@ minetest.register_node("bobblocks:pole", {
 minetest.register_node("bobblocks:pole_off", {
 	description = "Bobblocks Pole (off)",
 	drawtype = "fencelike",
-	tiles = {"bobblocks_block.png"},
+	tiles = {"bobblocks_block.png^[opacity:"..bobblocks.opacity},
 	paramtype = "light",
 	paramtype2 = "color",
 	palette = "unifieddyes_palette.png",
 	sunlight_propagates = true,
-	is_ground_content = true,
+	is_ground_content = false,
+	use_texture_alpha = true,
 	sounds = default.node_sound_glass_defaults(),
 	light_source = LIGHT_MAX-10,
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3,not_in_creative_inventory=1, ud_param2_colorable = 1},
-	drop = 'bobblocks:redpole',
+	drop = 'bobblocks:pole',
 	foo = {conductor={
 			state = mesecon.state.off,
 			onstate = "bobblocks:pole"
@@ -123,7 +127,6 @@ minetest.register_node("bobblocks:btm", {
 		"bobblocks_btm_sides.png", "bobblocks_btm_sides.png", "bobblocks_btm.png"},
 	inventory_image = "bobblocks_btm.png",
 	paramtype2 = "facedir",
-	material = minetest.digprop_dirtlike(1.0),
 	legacy_facedir_simple = true,
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3,not_in_creative_inventory=1}, 
 })
@@ -136,7 +139,7 @@ minetest.register_node("bobblocks:wavyblock", {
 	paramtype2 = "color",
 	palette = "unifieddyes_palette.png",
 	sunlight_propagates = true,
-	is_ground_content = true,
+	is_ground_content = false,
 	sounds = default.node_sound_glass_defaults(),
 	light_source = LIGHT_MAX-0,
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, ud_param2_colorable = 1},
@@ -146,24 +149,27 @@ minetest.register_node("bobblocks:wavyblock", {
 			offstate = "bobblocks:wavyblock_off"
 		}
 	},
+	on_rightclick = bobblocks.update_bobblock,
 	after_dig_node = unifieddyes.after_dig_node
 })
 
 minetest.register_node("bobblocks:wavyblock_off", {
 	description = "Bobblocks Wavy-textured Block (off)",
-	tiles = {"bobblocks_wavyblock.png"},
+	drawtype = "glasslike",
+	tiles = {"bobblocks_wavyblock.png^[opacity:"..bobblocks.opacity},
 	paramtype2 = "color",
 	palette = "unifieddyes_palette.png",
-	is_ground_content = true,
-	alpha = WATER_ALPHA,
+	is_ground_content = false,
+	use_texture_alpha = true,
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3,not_in_creative_inventory=1, ud_param2_colorable = 1},
-	drop = 'bobblocks:wavyblock',
+	drop = "bobblocks:wavyblock",
 	foo = {conductor=
 		{
 			state = mesecon.state.off,
 			onstate = "bobblocks:wavyblock"
 		}
 	},
+	on_rightclick = bobblocks.update_bobblock,
 	after_dig_node = unifieddyes.after_dig_node
 })
 
@@ -176,7 +182,7 @@ minetest.register_node("bobblocks:wavypole", {
 	paramtype2 = "color",
 	palette = "unifieddyes_palette.png",
 	sunlight_propagates = true,
-	is_ground_content = true,
+	is_ground_content = false,
 	sounds = default.node_sound_glass_defaults(),
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, ud_param2_colorable = 1},
 	after_dig_node = unifieddyes.after_dig_node,

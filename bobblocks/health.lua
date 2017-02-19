@@ -37,7 +37,7 @@ minetest.register_node("bobblocks:health_off", {
 	paramtype2 = "facedir",
 	legacy_facedir_simple = true,
     groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3},
-    is_ground_content = true,
+    is_ground_content = false,
     walkable = false,
     climbable = false,
     mesecons = {conductor={
@@ -53,7 +53,7 @@ minetest.register_node("bobblocks:health_on", {
 	legacy_facedir_simple = true,
     light_source = LIGHT_MAX-0,
     groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3},
-    is_ground_content = true,
+    is_ground_content = false,
         walkable = false,
     climbable = false,
     drop = "bobblocks:health_off",
