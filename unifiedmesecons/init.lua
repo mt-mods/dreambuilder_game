@@ -322,3 +322,14 @@ minetest.register_craft({
 		"mesecons_extrawires:crossover_off",
 	},
 })
+
+if minetest.get_modpath("digilines") then
+	minetest.register_craft({
+		output = 'digilines:wire_std_00000000 2',
+		recipe = {
+			{'mesecons_materials:fiber', 'mesecons_materials:fiber', 'mesecons_materials:fiber'},
+			{'mesecons_insulated:insulated_grey_off', 'mesecons_insulated:insulated_grey_off', 'default:gold_ingot'},
+			{'mesecons_materials:fiber', 'mesecons_materials:fiber', 'mesecons_materials:fiber'},
+		}
+	})
+end
