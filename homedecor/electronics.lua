@@ -11,7 +11,7 @@ homedecor.register("speaker", {
 	},
 	groups = { snappy = 3 },
 	sounds = default.node_sound_wood_defaults(),
-	on_punch = function(pos, node, puncher, pointed_thing)
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		minetest.set_node(pos, {name = "homedecor:speaker_open", param2 = node.param2})
 	end
 })
@@ -27,7 +27,7 @@ homedecor.register("speaker_open", {
 	},
 	groups = { snappy = 3, not_in_creative_inventory=1 },
 	sounds = default.node_sound_wood_defaults(),
-	on_punch = function(pos, node, puncher, pointed_thing)
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		minetest.set_node(pos, {name = "homedecor:speaker", param2 = node.param2})
 	end
 })

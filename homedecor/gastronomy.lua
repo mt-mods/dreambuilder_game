@@ -134,20 +134,19 @@ homedecor.register("beer_tap", {
 		type = "fixed",
 		fixed = { -0.25, -0.5, -0.4375, 0.25, 0.235, 0 }
 	},
-	on_punch = function(pos, node, puncher, pointed_thing)
-		local wielditem = puncher:get_wielded_item()
-		local inv = puncher:get_inventory()
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+		local inv = clicker:get_inventory()
 
-		local wieldname = wielditem:get_name()
+		local wieldname = itemstack:get_name()
 		if wieldname == "vessels:drinking_glass" then
 			if inv:room_for_item("main", "homedecor:beer_mug 1") then
-				wielditem:take_item()
-				puncher:set_wielded_item(wielditem)
+				itemstack:take_item()
+				clicker:set_wielded_item(itemstack)
 				inv:add_item("main", "homedecor:beer_mug 1")
-				minetest.chat_send_player(puncher:get_player_name(),
+				minetest.chat_send_player(clicker:get_player_name(),
 						S("Ahh, a frosty cold beer - look in your inventory for it!"))
 			else
-				minetest.chat_send_player(puncher:get_player_name(),
+				minetest.chat_send_player(clicker:get_player_name(),
 						S("No room in your inventory to add a beer mug!"))
 			end
 		end
@@ -196,21 +195,21 @@ homedecor.register("soda_machine", {
 	expand = { top="placeholder" },
 	sounds = default.node_sound_wood_defaults(),
 	on_rotate = screwdriver.rotate_simple,
-	on_punch = function(pos, node, puncher, pointed_thing)
-		local wielditem = puncher:get_wielded_item()
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+		local wielditem = clicker:get_wielded_item()
 		local wieldname = wielditem:get_name()
 		local fdir_to_fwd = { {0, -1}, {-1, 0}, {0, 1}, {1, 0} }
 		local fdir = node.param2
 		local pos_drop = { x=pos.x+fdir_to_fwd[fdir+1][1], y=pos.y, z=pos.z+fdir_to_fwd[fdir+1][2] }
 		if wieldname == "homedecor:coin" then
 			wielditem:take_item()
-			puncher:set_wielded_item(wielditem)
+			clicker:set_wielded_item(wielditem)
 			minetest.spawn_item(pos_drop, "homedecor:soda_can")
 			minetest.sound_play("insert_coin", {
 				pos=pos, max_hear_distance = 5
 			})
 		else
-			minetest.chat_send_player(puncher:get_player_name(), S("Please insert a coin in the machine."))
+			minetest.chat_send_player(clicker:get_player_name(), S("Please insert a coin in the machine."))
 		end
 	end
 })

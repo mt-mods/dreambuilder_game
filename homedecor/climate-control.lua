@@ -59,7 +59,7 @@ homedecor.register("desk_fan", {
 		meta:set_string("active", "no")
 		add_mesh_desk_fan_entity(pos)
 	end,
-	on_punch = function(pos)
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		local meta = minetest.get_meta(pos)
 		local entities = minetest.get_objects_inside_radius(pos, 0.1)
 		local entity = entities[1] or add_mesh_desk_fan_entity(pos)

@@ -71,7 +71,7 @@ homedecor.register("doorbell", {
 			{-0.03125, 0.0625, 0.45, 0.03125, 0.125, 0.4675}, -- NodeBox2
 		}
 	},
-	on_punch = function(pos, node, puncher, pointed_thing)
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		minetest.sound_play("homedecor_doorbell", {
 			pos = pos,
 			gain = 1.0,

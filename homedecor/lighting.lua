@@ -513,7 +513,7 @@ homedecor.register("ceiling_lamp", {
 	light_source = default.LIGHT_MAX,
 	groups = {snappy=3},
 	walkable = false,
-	on_punch = function(pos, node, puncher)
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		minetest.set_node(pos, {name = "homedecor:ceiling_lamp_off"})
 	end,
 })
@@ -529,7 +529,7 @@ homedecor.register("ceiling_lamp_off", {
 	},
 	groups = {snappy=3, not_in_creative_inventory=1},
 	walkable = false,
-	on_punch = function(pos, node, puncher)
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		minetest.set_node(pos, {name = "homedecor:ceiling_lamp"})
 	end,
 	drop = "homedecor:ceiling_lamp"

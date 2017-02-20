@@ -27,7 +27,7 @@ homedecor.register("toilet", {
 	node_box = toilet_cbox,
 	groups = {cracky=3},
 	sounds = default.node_sound_stone_defaults(),
-	on_punch = function (pos, node, puncher)
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		node.name = "homedecor:toilet_open"
 		minetest.set_node(pos, node)
 	end
@@ -47,7 +47,7 @@ homedecor.register("toilet_open", {
 	drop = "homedecor:toilet",
 	groups = {cracky=3},
 	sounds = default.node_sound_stone_defaults(),
-	on_punch = function (pos, node, puncher)
+	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		node.name = "homedecor:toilet"
 		minetest.set_node(pos, node)
 		minetest.sound_play("homedecor_toilet_flush", {
