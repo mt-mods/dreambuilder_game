@@ -24,7 +24,7 @@ minetest.register_node("lrfurn:sofa", {
 	node_box = sofa_cbox,
 	on_rotate = screwdriver.disallow,
 	after_place_node = function(pos, placer, itemstack, pointed_thing)
-		unifieddyes.fix_rotation(pos, placer, itemstack, pointed_thing)
+		unifieddyes.fix_rotation_nsew(pos, placer, itemstack, pointed_thing)
 		if minetest.is_protected(pos, placer:get_player_name()) then return true end
 
 		local fdir = minetest.dir_to_facedir(placer:get_look_dir(), false)
