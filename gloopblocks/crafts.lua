@@ -301,7 +301,7 @@ minetest.register_craft({
 minetest.register_craft({
 	type = "cooking",
 	output = "gloopblocks:stonebrick",
-	recipe = "default:stone_brick_mossy"
+	recipe = "default:stone_brick_mossy",
 	cooktime = 6
 })
 
