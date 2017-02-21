@@ -56,7 +56,7 @@ homedecor.register("kitchen_chair_wood", {
 	paramtype2 = "wallmounted",
 	selection_box = kc_cbox,
 	collision_box = kc_cbox,
-	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2, ud_param2_colorable = 1},
+	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2},
 	sounds = default.node_sound_wood_defaults(),
 	after_place_node = unifieddyes.fix_rotation_nsew,
 	on_rotate = unifieddyes.fix_after_screwdriver_nsew,
