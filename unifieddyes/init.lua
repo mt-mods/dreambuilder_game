@@ -342,7 +342,12 @@ end
 
 function unifieddyes.on_use(itemstack, player, pointed_thing)
 
-	if not pointed_thing or pointed_thing.type == "nothing" then return end  -- if "using" the dye on air
+	if pointed_thing and pointed_thing.type == "object" then
+		pointed_thing.ref:punch(player, 0, itemstack:get_tool_capabilities())
+		return player:get_wielded_item() -- punch may modified the wielded item, load the new and return it
+	end
+
+	if not (pointed_thing and pointed_thing.type == "node") then return end  -- if "using" the dye not on a node
 
 	local pos = minetest.get_pointed_thing_position(pointed_thing)
 	local node = minetest.get_node(pos)
