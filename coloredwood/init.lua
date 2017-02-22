@@ -134,11 +134,15 @@ local function is_stairsplus(name)
 
 	local h, s, v = unifieddyes.get_hsv(name)
 
-	a,b = string.find(name, "_"..h..s)
-	if a then s2 = string.sub(name, b+1)
-		if string.find(s2, "wood") then s2 = string.sub(s2, 5) end
+	a,b = string.find(name, "wood")
+	if b then
+		s2 = string.sub(name, b+1)
+		local a,b = string.find(name, "grey")
+		if not a then
+			a,b = string.find(name, "_"..h..s)
+		end
+		return s1, string.sub(s2, 5)
 	end
-	return s1, s2
 end
 
 -- the actual nodes!
@@ -312,6 +316,8 @@ minetest.register_lbm({
 		local s1, s2 = is_stairsplus(name)
 
 		if s1 then
+
+			if not s2 then print("impossible conversion request!  name = "..node.name.." --> ".."coloredwood:"..s1.."_wood_"..hue.."*nil*") return end
 
 			local paletteidx, _ = unifieddyes.getpaletteidx("unifieddyes:"..color, true)
 			local cfdir = paletteidx + (node.param2 % 32)
