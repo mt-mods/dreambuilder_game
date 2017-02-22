@@ -2,11 +2,11 @@
 lrfurn = {}
 screwdriver = screwdriver or {}
 
-lrfurn.fdir_to_fwd = {
-	{  0,  1 },
+lrfurn.fdir_to_right = {
 	{  1,  0 },
 	{  0, -1 },
 	{ -1,  0 },
+	{  0,  1 },
 }
 
 lrfurn.colors = {
@@ -27,11 +27,11 @@ lrfurn.colors = {
 	"yellow",
 }
 
-function lrfurn.check_forward(pos, fdir, long, placer)
+function lrfurn.check_right(pos, fdir, long, placer)
 	if not fdir or fdir > 3 then fdir = 0 end
 
-	local pos2 = { x = pos.x + lrfurn.fdir_to_fwd[fdir+1][1],     y=pos.y, z = pos.z + lrfurn.fdir_to_fwd[fdir+1][2]     }
-	local pos3 = { x = pos.x + lrfurn.fdir_to_fwd[fdir+1][1] * 2, y=pos.y, z = pos.z + lrfurn.fdir_to_fwd[fdir+1][2] * 2 }
+	local pos2 = { x = pos.x + lrfurn.fdir_to_right[fdir+1][1],     y=pos.y, z = pos.z + lrfurn.fdir_to_right[fdir+1][2]     }
+	local pos3 = { x = pos.x + lrfurn.fdir_to_right[fdir+1][1] * 2, y=pos.y, z = pos.z + lrfurn.fdir_to_right[fdir+1][2] * 2 }
 
 	local node2 = minetest.get_node(pos2)
 	if node2 and node2.name ~= "air" then
@@ -56,6 +56,14 @@ function lrfurn.check_forward(pos, fdir, long, placer)
 	end
 
 	return true
+end
+
+function lrfurn.fix_sofa_rotation_nsew(pos, placer, itemstack, pointed_thing)
+	local node = minetest.get_node(pos)
+	local yaw = placer:get_look_yaw()
+	local dir = minetest.yaw_to_dir(yaw-1.5)
+	local fdir = minetest.dir_to_wallmounted(dir)
+	minetest.swap_node(pos, { name = node.name, param2 = fdir })
 end
 
 dofile(minetest.get_modpath("lrfurn").."/longsofas.lua")

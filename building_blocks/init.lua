@@ -131,7 +131,7 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = 'building_blocks:tar_base 2',
+	output = 'building_blocks:tar_base 4',
 	recipe = {
 		{"default:coal_lump", "default:gravel"},
 		{"default:gravel", "default:coal_lump"}
@@ -139,7 +139,7 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	output = 'building_blocks:tar_base 2',
+	output = 'building_blocks:tar_base 4',
 	recipe = {
 		{"default:gravel", "default:coal_lump"},
 		{"default:coal_lump", "default:gravel"}

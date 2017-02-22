@@ -177,7 +177,25 @@ homedecor.register("beer_mug", {
 	walkable = false,
 	sounds = default.node_sound_glass_defaults(),
 	selection_box = beer_cbox,
-	on_use = minetest.item_eat(2)
+	on_use = function(itemstack, user, pointed_thing)
+		local inv = user:get_inventory()
+		if not creative.is_enabled_for(user:get_player_name()) then
+			if inv:room_for_item("main", "vessels:drinking_glass 1") then
+				inv:add_item("main", "vessels:drinking_glass 1")
+			else
+				local pos = user:get_pos()
+				local dir = user:get_look_dir()
+				local fdir = minetest.dir_to_facedir(dir)
+				local pos_fwd = {	x = pos.x + homedecor.fdir_to_fwd[fdir+1][1],
+									y = pos.y + 1,
+									z = pos.z + homedecor.fdir_to_fwd[fdir+1][2] }
+				minetest.add_item(pos_fwd, "vessels:drinking_glass 1")
+			end
+			minetest.item_eat(2)
+			itemstack:take_item()
+			return itemstack
+		end
+	end
 })
 
 local svm_cbox = {

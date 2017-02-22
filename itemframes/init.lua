@@ -206,6 +206,7 @@ minetest.register_node("itemframes:pedestal",{
 		end
 	end,
 	can_dig = function(pos,player)
+		if not player then return end
 		local name = player and player:get_player_name()
 		local meta = minetest.get_meta(pos)
 		return name == meta:get_string("owner") or
