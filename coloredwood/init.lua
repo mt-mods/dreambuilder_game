@@ -227,35 +227,25 @@ end
 end
 
 minetest.override_item("default:wood", {
-	paramtype2 = "color",
 	palette = "unifieddyes_palette_extended.png",
-	place_param2 = 240,
 	ud_replacement_node = "coloredwood:wood_block",
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, wood = 1, ud_param2_colorable = 1},
 })
 
-minetest.register_node("coloredwood:fence", {
-	drawtype = "fencelike",
+default.register_fence("coloredwood:fence", {
 	description = "Colored wooden fence",
-	tiles = { "coloredwood_fence_base.png" },
-	paramtype = "light",
+	texture = "coloredwood_fence_base.png",
 	paramtype2 = "color",
 	palette = "unifieddyes_palette_extended.png",
-	place_param2 = 240,
-	walkable = true,
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
-	selection_box = {
-		type = "fixed",
-		fixed = {-1/7, -1/2, -1/7, 1/7, 1/2, 1/7},
-	},
 	after_dig_node = unifieddyes.after_dig_node,
-	drop = "default:fence_wood"
+	drop = "default:fence_wood",
+	material = "default:wood"
 })
 
 minetest.override_item("default:fence_wood", {
 	palette = "unifieddyes_palette_extended.png",
-	place_param2 = 240,
 	ud_replacement_node = "coloredwood:fence",
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, ud_param2_colorable = 1}
 })
