@@ -414,7 +414,8 @@ local function reg_lamp(suffix, nxt, light, brightness)
 		inventory_image = "homedecor_table_lamp_foot_inv.png^homedecor_table_lamp_top_inv.png",
 		paramtype = "light",
 		paramtype2 = "color",
-		palette = "unifieddyes_palette.png",
+		palette = "unifieddyes_palette_extended.png",
+		place_param2 = 240,
 		walkable = false,
 		light_source = light,
 		selection_box = tlamp_cbox,
@@ -442,7 +443,8 @@ local function reg_lamp(suffix, nxt, light, brightness)
 		inventory_image = "homedecor_standing_lamp_foot_inv.png^homedecor_standing_lamp_top_inv.png",
 		paramtype = "light",
 		paramtype2 = "color",
-		palette = "unifieddyes_palette.png",
+		palette = "unifieddyes_palette_extended.png",
+		place_param2 = 240,
 		walkable = false,
 		light_source = light,
 		groups = {cracky=2,oddly_breakable_by_hand=1, ud_param2_colorable = 1,
@@ -610,7 +612,7 @@ minetest.register_lbm({
 			color = "white"
 		end
 
-		local paletteidx, _ = unifieddyes.getpaletteidx("unifieddyes:"..color, false)
+		local paletteidx, _ = unifieddyes.getpaletteidx("unifieddyes:"..color, "extended")
 
 		local old_fdir
 		local new_node = newname
@@ -638,6 +640,10 @@ minetest.register_lbm({
 			param2 = paletteidx + new_fdir
 		else
 			param2 = paletteidx
+		end
+
+		if string.find(name, "table_lamp") or string.find(name, "standing_lamp") then
+			meta:set_string("palette", "ext")
 		end
 
 		minetest.set_node(pos, { name = new_node, param2 = param2 })
@@ -689,5 +695,30 @@ minetest.register_lbm({
 		minetest.set_node(pos, { name = "homedecor:desk_lamp", param2 = param2 })
 		local meta = minetest.get_meta(pos)
 		meta:set_string("dye", "unifieddyes:"..color)
+	end
+})
+
+minetest.register_lbm({
+	name = "homedecor:recolor_lighting",
+	label = "Convert some kinds of lights to use UD extended palette",
+	run_at_every_load = false,
+	nodenames = {
+		"homedecor:table_lamp_off",
+		"homedecor:table_lamp_low",
+		"homedecor:table_lamp_med",
+		"homedecor:table_lamp_hi",
+		"homedecor:table_lamp_max",
+		"homedecor:standing_lamp_off",
+		"homedecor:standing_lamp_low",
+		"homedecor:standing_lamp_med",
+		"homedecor:standing_lamp_hi",
+		"homedecor:standing_lamp_max",
+	},
+	action = function(pos, node)
+		local meta = minetest.get_meta(pos)
+		if meta:get_string("palette") ~= "ext" then
+			minetest.swap_node(pos, { name = node.name, param2 = unifieddyes.convert_classic_palette[node.param2] })
+			meta:set_string("palette", "ext")
+		end
 	end
 })

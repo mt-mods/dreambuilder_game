@@ -153,6 +153,19 @@ computer.register("computer:admiral128", {
 	})
 })
 
+-- XBox lookalike
+computer.register("computer:hueg_box", {
+	description = "HUEG Box",
+	tiles_off = { },
+	node_box = computer.pixelnodebox(16, {
+		-- X   Y   Z   W   H   L
+		{  0,  0,  7, 16,  6, 9 },   -- Console
+		{  2,  0,  1, 11,  3, 6 },   -- Controller
+		{  2,  0,  0,  2,  3, 1 },
+		{ 11,  0,  0,  2,  3, 1 },
+	})
+})
+
 -- Generic Flat Screen LCD (16x9) with keyboard
 local mo_sbox = {
 	type = "fixed",

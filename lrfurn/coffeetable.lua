@@ -1,32 +1,6 @@
 
 local S = homedecor_i18n.gettext
 
---[[
-		local node = minetest.get_node(pos)
-		local yaw = placer:get_look_yaw()
-		local dir = minetest.yaw_to_dir(yaw-1.5)
-		local fdir = minetest.dir_to_facedir(dir)
-
-		print(placer:get_look_yaw(), yaw)
-		print(node.param2, fdir)
-
-		if lrfurn.check_right(pos, fdir, false, placer) then
-			local pos2 = find_coffee_table_second_node(pos, fdir)
-]]--
-
-local function find_second_node(pos, param2)
-	if param2 == 0 then
-		pos.z = pos.z+1
-	elseif param2 == 1 then
-		pos.x = pos.x+1
-	elseif param2 == 2 then
-		pos.z = pos.z-1
-	elseif param2 == 3 then
-		pos.x = pos.x-1
-	end
-	return pos
-end
-
 minetest.register_alias("lrfurn:coffeetable_back", "lrfurn:coffeetable")
 minetest.register_alias("lrfurn:coffeetable_front", "air")
 

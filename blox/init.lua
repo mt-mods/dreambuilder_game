@@ -97,6 +97,8 @@ minetest.register_node("blox:glowdust", {
 
 -- param2-colored nodes: standard patterns
 
+blox.old_89_color_nodes = {}
+
 for _, nodeclass in ipairs(NodeClass) do
 
 	minetest.register_node("blox:stone_"..nodeclass, {
@@ -107,7 +109,8 @@ for _, nodeclass in ipairs(NodeClass) do
 			"blox_stone_"..nodeclass..".png"
 		},
 		mesh = "blox_block_with_overlay.obj",
-		palette = "unifieddyes_palette.png",
+		palette = "unifieddyes_palette_extended.png",
+		place_param2 = 240,
 		paramtype = "light",
 		paramtype2 = "color",
 		is_ground_content = true,
@@ -124,7 +127,8 @@ for _, nodeclass in ipairs(NodeClass) do
 			"blox_cobble_"..nodeclass..".png"
 		},
 		mesh = "blox_block_with_overlay.obj",
-		palette = "unifieddyes_palette.png",
+		palette = "unifieddyes_palette_extended.png",
+		place_param2 = 240,
 		paramtype = "light",
 		paramtype2 = "color",
 		is_ground_content = true,
@@ -141,7 +145,8 @@ for _, nodeclass in ipairs(NodeClass) do
 			"blox_wood_"..nodeclass..".png"
 		},
 		mesh = "blox_block_with_overlay.obj",
-		palette = "unifieddyes_palette.png",
+		palette = "unifieddyes_palette_extended.png",
+		place_param2 = 240,
 		paramtype = "light",
 		paramtype2 = "color",
 		is_ground_content = true,
@@ -149,6 +154,10 @@ for _, nodeclass in ipairs(NodeClass) do
 		sounds = default.node_sound_wood_defaults(),
 		after_dig_node = unifieddyes.after_dig_node
 	})
+
+	table.insert(blox.old_89_color_nodes, "blox:stone_"..nodeclass)
+	table.insert(blox.old_89_color_nodes, "blox:cobble_"..nodeclass)
+	table.insert(blox.old_89_color_nodes, "blox:wood_"..nodeclass)
 end
 
 -- param2-colored nodes: tinted wood, cobble, stone, stone square
@@ -156,7 +165,8 @@ end
 minetest.register_node("blox:wood_tinted", {
 	description = "Blox tinted wood",
 	tiles = { "blox_wood_tinted.png" },
-	palette = "unifieddyes_palette.png",
+	palette = "unifieddyes_palette_extended.png",
+	place_param2 = 240,
 	paramtype = "light",
 	paramtype2 = "color",
 	is_ground_content = true,
@@ -168,7 +178,8 @@ minetest.register_node("blox:wood_tinted", {
 minetest.register_node("blox:stone_square", {
 	description = "Blox stone square",
 	tiles = { "blox_stone_square.png" },
-	palette = "unifieddyes_palette.png",
+	palette = "unifieddyes_palette_extended.png",
+	place_param2 = 240,
 	paramtype = "light",
 	paramtype2 = "color",
 	is_ground_content = true,
@@ -180,7 +191,8 @@ minetest.register_node("blox:stone_square", {
 minetest.register_node("blox:cobble_tinted", {
 	description = "Blox tinted cobble",
 	tiles = { "blox_cobble_tinted.png" },
-	palette = "unifieddyes_palette.png",
+	palette = "unifieddyes_palette_extended.png",
+	place_param2 = 240,
 	paramtype = "light",
 	paramtype2 = "color",
 	is_ground_content = true,
@@ -193,7 +205,8 @@ minetest.register_node("blox:cobble_tinted", {
 minetest.register_node("blox:stone_tinted", {
 	description = "Blox tinted stone",
 	tiles = { "blox_stone_tinted.png" },
-	palette = "unifieddyes_palette.png",
+	palette = "unifieddyes_palette_extended.png",
+	place_param2 = 240,
 	paramtype = "light",
 	paramtype2 = "color",
 	is_ground_content = true,
@@ -203,18 +216,21 @@ minetest.register_node("blox:stone_tinted", {
 	drop = "default:cobble"
 })
 
+table.insert(blox.old_89_color_nodes, "blox:wood_tinted")
+table.insert(blox.old_89_color_nodes, "blox:stone_square")
+table.insert(blox.old_89_color_nodes, "blox:cobble_tinted")
+table.insert(blox.old_89_color_nodes, "blox:stone_tinted")
+
 -- Override default stone and default cobble
 
 minetest.override_item("default:stone", {
-	paramtype2 = "color",
-	palette = "unifieddyes_palette.png",
+	palette = "unifieddyes_palette_extended.png",
 	ud_replacement_node = "blox:stone_tinted",
 	groups = {cracky = 3, stone = 1, ud_param2_colorable = 1},
 })
 
 minetest.override_item("default:cobble", {
-	paramtype2 = "color",
-	palette = "unifieddyes_palette.png",
+	palette = "unifieddyes_palette_extended.png",
 	ud_replacement_node = "blox:cobble_tinted",
 	groups = {cracky = 3, stone = 2, ud_param2_colorable = 1},
 })
@@ -223,8 +239,7 @@ local dye_color = "unifieddyes:white"
 
 if moreblocks then
 	minetest.override_item("moreblocks:stone_tile", {
-		paramtype2 = "color",
-		palette = "unifieddyes_palette.png",
+		palette = "unifieddyes_palette_extended.png",
 		ud_replacement_node = "blox:stone_square",
 		groups = {cracky = 3, ud_param2_colorable = 1},
 	})
@@ -234,8 +249,7 @@ if moreblocks then
 	})
 
 	minetest.override_item("moreblocks:circle_stone_bricks", {
-		paramtype2 = "color",
-		palette = "unifieddyes_palette.png",
+		palette = "unifieddyes_palette_extended.png",
 		ud_replacement_node = "blox:stone_loop",
 		groups = {cracky = 3, ud_param2_colorable = 1},
 	})
@@ -245,8 +259,7 @@ if moreblocks then
 	})
 
 	minetest.override_item("moreblocks:iron_checker", {
-		paramtype2 = "color",
-		palette = "unifieddyes_palette.png",
+		palette = "unifieddyes_palette_extended.png",
 		ud_replacement_node = "blox:stone_checker",
 		groups = {cracky = 3, ud_param2_colorable = 1},
 	})
@@ -256,8 +269,7 @@ if moreblocks then
 	})
 
 	minetest.override_item("moreblocks:wood_tile", {
-		paramtype2 = "color",
-		palette = "unifieddyes_palette.png",
+		palette = "unifieddyes_palette_extended.png",
 		ud_replacement_node = "blox:wood_quarter",
 		groups = {wood = 1, snappy = 1, choppy = 2, oddly_breakable_by_hand = 2, flammable = 3, ud_param2_colorable = 1},
 	})
@@ -267,8 +279,7 @@ if moreblocks then
 	})
 
 	minetest.override_item("moreblocks:wood_tile_flipped", {
-		paramtype2 = "color",
-		palette = "unifieddyes_palette.png",
+		palette = "unifieddyes_palette_extended.png",
 		ud_replacement_node = "blox:wood_quarter",
 		groups = {wood = 1, snappy = 1, choppy = 2, oddly_breakable_by_hand = 2, flammable = 3, ud_param2_colorable = 1},
 	})
@@ -294,7 +305,6 @@ if minetest.get_modpath("coloredwood") then
 	})
 else
 	minetest.override_item("default:wood", {
-		paramtype2 = "color",
 		ud_replacement_node = "blox:wood_tinted",
 		groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, wood = 1, ud_param2_colorable = 1},
 	})
@@ -551,10 +561,25 @@ minetest.register_lbm({
 			color = "dark_grey"
 		end
 
-		local paletteidx, _ = unifieddyes.getpaletteidx("unifieddyes:"..color)
+		local paletteidx, _ = unifieddyes.getpaletteidx("unifieddyes:"..color, "extended")
 		minetest.set_node(pos, { name = "blox:"..material.."_"..pattern, param2 = paletteidx })
 		local meta = minetest.get_meta(pos)
 		meta:set_string("dye", "unifieddyes:"..color)
+		meta:set_string("palette", "ext")
+	end
+})
+
+minetest.register_lbm({
+	name = "blox:recolor_stuff",
+	label = "Convert 89-color blocks to use UD extended palette",
+	run_at_every_load = false,
+	nodenames = blox.old_89_color_nodes,
+	action = function(pos, node)
+		local meta = minetest.get_meta(pos)
+		if meta:get_string("palette") ~= "ext" then
+			minetest.swap_node(pos, { name = node.name, param2 = unifieddyes.convert_classic_palette[node.param2] })
+			meta:set_string("palette", "ext")
+		end
 	end
 })
 

@@ -332,6 +332,16 @@ if minetest.get_modpath("moreblocks") then
 			}),
 		}
 	)
+
+	for _, i in ipairs(stairsplus.shapes_list) do
+		local class = i[1]
+		local cut = i[2]
+		minetest.unregister_item("moreblocks:"..class.."tar"..cut)
+		minetest.register_alias("moreblocks:"..class.."tar"..cut, "building_blocks:"..class.."tar"..cut)
+
+	end
+	minetest.unregister_item("moreblocks:tar")
+
 	stairsplus:register_all(
 		"building_blocks",
 		"tar",
@@ -343,6 +353,7 @@ if minetest.get_modpath("moreblocks") then
 			sounds = default.node_sound_stone_defaults(),
 		}
 	)
+
 	stairsplus:register_all(
 		"building_blocks",
 		"grate",

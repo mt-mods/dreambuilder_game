@@ -22,7 +22,8 @@ minetest.register_node("lavalamp:lavalamp", {
 	inventory_image = "lavalamp_lamp_inv.png",
 	paramtype = "light",
 	paramtype2 = "color",
-	palette = "unifieddyes_palette.png",
+	palette = "unifieddyes_palette_extended.png",
+	place_param2 = 240,
 	sunlight_propagates = true,
 	walkable = false,
 	light_source = 14,
@@ -50,7 +51,8 @@ minetest.register_node("lavalamp:lavalamp_off", {
 	},
 	paramtype = "light",
 	paramtype2 = "color",
-	palette = "unifieddyes_palette.png",
+	palette = "unifieddyes_palette_extended.png",
+	place_param2 = 240,
 	sunlight_propagates = true,
 	walkable = false,
 	selection_box = {
@@ -117,11 +119,28 @@ minetest.register_lbm({
 			color = "violet"
 		end
 
-		local paletteidx, _ = unifieddyes.getpaletteidx("unifieddyes:"..color, false)
+		local paletteidx, _ = unifieddyes.getpaletteidx("unifieddyes:"..color, "extended")
 
 		minetest.set_node(pos, { name = "lavalamp:lavalamp", param2 = paletteidx })
 		local meta = minetest.get_meta(pos)
 		meta:set_string("dye", "unifieddyes:"..color)
 
+	end
+})
+
+minetest.register_lbm({
+	name = "lavalamp:recolor",
+	label = "Convert 89-color lamps to use UD extended palette",
+	run_at_every_load = false,
+	nodenames = {
+		"lavalamp:lavalamp",
+		"lavalamp:lavalamp_off"
+	},
+	action = function(pos, node)
+		local meta = minetest.get_meta(pos)
+		if meta:get_string("palette") ~= "ext" then
+			minetest.swap_node(pos, { name = node.name, param2 = unifieddyes.convert_classic_palette[node.param2] })
+			meta:set_string("palette", "ext")
+		end
 	end
 })

@@ -5,8 +5,9 @@ minetest.register_node("plasticbox:plasticbox", {
 	groups = {choppy=1, snappy=1, oddly_breakable_by_hand=1, ud_param2_colorable = 1},
 	sounds = default.node_sound_stone_defaults(),
 	paramtype2 = "color",
-	palette = "unifieddyes_palette.png",
+	palette = "unifieddyes_palette_extended.png",
 	after_dig_node = unifieddyes.after_dig_node,
+	place_param2 = 240,
 })
 
 stairsplus:register_all("plasticbox", "plasticbox", "plasticbox:plasticbox", {
@@ -69,4 +70,22 @@ minetest.register_lbm({
 		if conv[oldcolor] then node.param2 = conv[oldcolor] end
 		minetest.set_node(pos,node)
 	end,
+})
+
+minetest.register_lbm({
+	name = "plasticbox:recolor",
+	label = "Convert to new palette",
+	nodenames = {"plasticbox:plasticbox"},
+	action = function(pos, node)
+		local meta = minetest.get_meta(pos)
+		if meta:get_string("palette") ~= "ext" then
+			if node.param2 == 0 then
+				node.param2 = 240
+			else
+				node.param2 = unifieddyes.convert_classic_palette[node.param2]
+			end
+			minetest.swap_node(pos,node)
+			meta:set_string("palette", "ext")
+		end
+	end
 })

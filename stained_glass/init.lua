@@ -45,7 +45,8 @@ minetest.register_node("stained_glass:stained_glass", {
 	tiles = { "stained_glass.png" },
 	paramtype = "light",
 	paramtype2 = "color",
-	palette = "unifieddyes_palette.png",
+	palette = "unifieddyes_palette_extended.png",
+	place_param2 = 240,
 	sunlight_propagates = true,
 	use_texture_alpha = true,
 	light_source = myglow,
@@ -55,72 +56,17 @@ minetest.register_node("stained_glass:stained_glass", {
 	sounds = default.node_sound_glass_defaults(),
 	drop = "moreblocks:super_glow_glass",
 	after_dig_node = unifieddyes.after_dig_node,
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		local name = itemstack:get_name()
-		if name == "moreblocks:sweeper" then
-			minetest.swap_node(pos, { name = "stained_glass:pastel_stained_glass", param2 = node.param2 })
-			return
-		end
-	end,
 	drop = "moreblocks:super_glow_glass"
 })
 
 minetest.override_item("moreblocks:super_glow_glass", {
+	palette = "unifieddyes_palette_extended.png",
+	place_param2 = 240,
 	groups = {snappy = 2, cracky = 3, oddly_breakable_by_hand = 3, ud_param2_colorable = 1},
 	ud_replacement_node = "stained_glass:stained_glass"
 })
 
--- pastel and faint
-
-minetest.register_node("stained_glass:pastel_stained_glass", {
-	description = "Stained Glass",
-	drawtype = "glasslike",
-	tiles = { "stained_glass.png" },
-	paramtype = "light",
-	paramtype2 = "color",
-	palette = "stained_glass_pastels_palette.png",
-	sunlight_propagates = true,
-	use_texture_alpha = true,
-	light_source = myglow,
-	is_ground_content = true,
-	walkable = true,
-	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, not_in_creative_inventory=1, ud_param2_colorable = 1},
-	sounds = default.node_sound_glass_defaults(),
-	after_dig_node = unifieddyes.after_dig_node,
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		local name = itemstack:get_name()
-		if name == "moreblocks:sweeper" then
-			minetest.swap_node(pos, { name = "stained_glass:faint_stained_glass", param2 = node.param2 })
-			return
-		end
-	end,
-	drop = "moreblocks:super_glow_glass"
-})
-
-minetest.register_node("stained_glass:faint_stained_glass", {
-	description = "Stained Glass",
-	drawtype = "glasslike",
-	tiles = { "stained_glass.png" },
-	paramtype = "light",
-	paramtype2 = "color",
-	palette = "stained_glass_faint_palette.png",
-	sunlight_propagates = true,
-	use_texture_alpha = true,
-	light_source = myglow,
-	is_ground_content = true,
-	walkable = true,
-	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, not_in_creative_inventory=1, ud_param2_colorable = 1},
-	sounds = default.node_sound_glass_defaults(),
-	after_dig_node = unifieddyes.after_dig_node,
-	drop = "moreblocks:super_glow_glass"
-})
-
 -- trap glass
-
-minetest.override_item("moreblocks:trap_super_glow_glass", {
-	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, ud_param2_colorable = 1},
-	ud_replacement_node = "stained_glass:stained_trap_glass"
-})
 
 minetest.register_node("stained_glass:stained_trap_glass", {
 	description = "Stained Trap-glass",
@@ -128,7 +74,8 @@ minetest.register_node("stained_glass:stained_trap_glass", {
 	tiles = { "stained_glass.png" },
 	paramtype = "light",
 	paramtype2 = "color",
-	palette = "unifieddyes_palette.png",
+	palette = "unifieddyes_palette_extended.png",
+	place_param2 = 240,
 	sunlight_propagates = true,
 	use_texture_alpha = true,
 	light_source = myglow,
@@ -138,58 +85,14 @@ minetest.register_node("stained_glass:stained_trap_glass", {
 	sounds = default.node_sound_glass_defaults(),
 	drop = "moreblocks:trap_super_glow_glass",
 	after_dig_node = unifieddyes.after_dig_node,
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		local name = itemstack:get_name()
-		if name == "moreblocks:sweeper" then
-			minetest.swap_node(pos, { name = "stained_glass:pastel_stained_trap_glass", param2 = node.param2 })
-			return
-		end
-	end,
 	drop = "moreblocks:trap_super_glow_glass"
 })
 
--- pastel and faint trap
-
-minetest.register_node("stained_glass:pastel_stained_trap_glass", {
-	description = "Stained Glass",
-	drawtype = "glasslike",
-	tiles = { "stained_glass.png" },
-	paramtype = "light",
-	paramtype2 = "color",
-	palette = "stained_glass_pastels_palette.png",
-	sunlight_propagates = true,
-	use_texture_alpha = true,
-	light_source = myglow,
-	is_ground_content = true,
-	walkable = false,
-	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, not_in_creative_inventory=1, ud_param2_colorable = 1},
-	sounds = default.node_sound_glass_defaults(),
-	after_dig_node = unifieddyes.after_dig_node,
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
-		local name = itemstack:get_name()
-		if name == "moreblocks:sweeper" then
-			minetest.swap_node(pos, { name = "stained_glass:faint_stained_trap_glass", param2 = node.param2 })
-			return
-		end
-	end,
-	drop = "moreblocks:trap_super_glow_glass"
-})
-
-minetest.register_node("stained_glass:faint_stained_trap_glass", {
-	description = "Stained Glass",
-	drawtype = "glasslike",
-	tiles = { "stained_glass.png" },
-	paramtype = "light",
-	paramtype2 = "color",
-	palette = "stained_glass_faint_palette.png",
-	sunlight_propagates = true,
-	use_texture_alpha = true,
-	light_source = myglow,
-	is_ground_content = true,
-	walkable = false,
-	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, not_in_creative_inventory=1, ud_param2_colorable = 1},
-	sounds = default.node_sound_glass_defaults(),
-	drop = "moreblocks:trap_super_glow_glass"
+minetest.override_item("moreblocks:trap_super_glow_glass", {
+	palette = "unifieddyes_palette_extended.png",
+	place_param2 = 240,
+	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, ud_param2_colorable = 1},
+	ud_replacement_node = "stained_glass:stained_trap_glass"
 })
 
 function stainedglass.makenode(arg)
@@ -382,7 +285,6 @@ for i in ipairs(stained_glass_hues) do
 
  		recipevalue = "group:dye,unicolor_"..shadename..huename
 		if (shadename == "" and stained_glass_hues[i][2]) then
-			-- print(huename .. " is set to true -- substituting dye:huename ")
 			recipevalue = "dye:"..huename
 		elseif (shadename=="pastel_" or shadename=="faint_") then 
 			-- force light_dye for pastel and faint colors
@@ -449,12 +351,17 @@ end
 -- convert in-map static nodes to use param2 coloring
 
 minetest.register_lbm({
-	name = "stained_glass:convert_brickblocks",
+	name = "stained_glass:convert_glass",
 	label = "Convert static glass blocks to use param2 color",
 	run_at_every_load = false,
 	nodenames = stainedglass.old_static_nodes,
 	action = function(pos, node)
 		local name = node.name
+
+		name = string.gsub(name, "aqua", "spring")
+		name = string.gsub(name, "skyblue", "azure")
+		name = string.gsub(name, "redviolet", "rose")
+
 		local n = string.find(name, ":")
 		local color = string.sub(name, n + 1)
 		local h,s,v = unifieddyes.get_hsv(name)
@@ -462,52 +369,44 @@ minetest.register_lbm({
 		if string.find(name, "trap") then
 			n = string.find(color, "_")
 			color = string.sub(color, n + 1)
-
-			if string.find(color, "pastel") then
-				n = string.find(color, "_")
-				color = string.sub(color, n + 1)
-				local paletteidx = unifieddyes.getpaletteidx("unifieddyes:"..color)
-				minetest.set_node(pos, { name = "stained_glass:pastel_stained_trap_glass", param2 = paletteidx })
-				local meta = minetest.get_meta(pos)
-				meta:set_string("dye", "unifieddyes:"..v..h..s)
-			elseif string.find(color, "faint") then
-				n = string.find(color, "_")
-				color = string.sub(color, n + 1)
-				local paletteidx = unifieddyes.getpaletteidx("unifieddyes:"..color)
-				minetest.set_node(pos, { name = "stained_glass:faint_stained_trap_glass", param2 = paletteidx })
-				local meta = minetest.get_meta(pos)
-				meta:set_string("dye", "unifieddyes:"..v..h..s)
-			else
-				local paletteidx = unifieddyes.getpaletteidx("unifieddyes:"..color)
-				minetest.set_node(pos, { name = "stained_glass:stained_trap_glass", param2 = paletteidx })
-				local meta = minetest.get_meta(pos)
-				meta:set_string("dye", "unifieddyes:"..v..h..s)
-			end
+			local paletteidx = unifieddyes.getpaletteidx("unifieddyes:"..color, "extended")
+			minetest.set_node(pos, { name = "stained_glass:stained_trap_glass", param2 = paletteidx })
 		else
-			if string.find(color, "pastel") then
-				n = string.find(color, "_")
-				color = string.sub(color, n + 1)
-				local paletteidx = unifieddyes.getpaletteidx("unifieddyes:"..color)
-				minetest.set_node(pos, { name = "stained_glass:pastel_stained_glass", param2 = paletteidx })
-				local meta = minetest.get_meta(pos)
-				meta:set_string("dye", "unifieddyes:"..v..h..s)
-			elseif string.find(color, "faint") then
-				n = string.find(color, "_")
-				color = string.sub(color, n + 1)
-				local paletteidx = unifieddyes.getpaletteidx("unifieddyes:"..color)
-				minetest.set_node(pos, { name = "stained_glass:faint_stained_glass", param2 = paletteidx })
-				local meta = minetest.get_meta(pos)
-				meta:set_string("dye", "unifieddyes:"..v..h..s)
-			else
-				local paletteidx = unifieddyes.getpaletteidx("unifieddyes:"..color)
-				minetest.set_node(pos, { name = "stained_glass:stained_glass", param2 = paletteidx })
-				local meta = minetest.get_meta(pos)
-				meta:set_string("dye", "unifieddyes:"..v..h..s)
+			local paletteidx = unifieddyes.getpaletteidx("unifieddyes:"..color, "extended")
+			minetest.set_node(pos, { name = "stained_glass:stained_glass", param2 = paletteidx })
+		end
+		local meta = minetest.get_meta(pos)
+		meta:set_string("dye", "unifieddyes:"..v..h..s)
+		meta:set_string("palette", "ext")
+	end
+})
+
+minetest.register_lbm({
+	name = "stained_glass:recolor_glass",
+	label = "Convert glass to use UD extended palette",
+	run_at_every_load = false,
+	nodenames = {
+		"stained_glass:stained_glass",
+		"stained_glass:stained_trap_glass",
+		"stained_glass:faint_stained_glass",
+		"stained_glass:faint_stained_trap_glass",
+		"stained_glass:pastel_stained_glass",
+		"stained_glass:pastel_stained_trap_glass"
+	},
+	action = function(pos, node)
+		local meta = minetest.get_meta(pos)
+		if meta:get_string("palette") ~= "ext" then
+
+			local newcolor = unifieddyes.convert_classic_palette[node.param2]
+			if string.find(node.name, "faint") then
+				newcolor = newcolor - 4*24
+			elseif string.find(node.name, "pastel") then
+				newcolor = newcolor - 3*24
 			end
+			minetest.swap_node(pos, { name = "stained_glass:stained_glass", param2 = newcolor })
+			meta:set_string("palette", "ext")
 		end
 	end
 })
 
 print("[stained_glass] Loaded!")
-
-

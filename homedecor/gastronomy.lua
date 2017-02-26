@@ -191,8 +191,7 @@ homedecor.register("beer_mug", {
 									z = pos.z + homedecor.fdir_to_fwd[fdir+1][2] }
 				minetest.add_item(pos_fwd, "vessels:drinking_glass 1")
 			end
-			minetest.item_eat(2)
-			itemstack:take_item()
+			minetest.do_item_eat(2, nil, itemstack, user, pointed_thing)
 			return itemstack
 		end
 	end

@@ -372,3 +372,8 @@ minetest.register_craft({
 		{"xpanes:bar", "xpanes:bar", "xpanes:bar"},
 	},
 })
+
+if minetest.get_modpath("technic") then
+	technic.register_grinder_recipe({input={"gloopblocks:pumice"},output="default:sand"})
+	technic.register_grinder_recipe({input={"gloopblocks:basalt"},output="default:cobble"})
+end

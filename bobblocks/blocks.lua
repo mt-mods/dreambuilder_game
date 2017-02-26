@@ -39,7 +39,8 @@ minetest.register_node("bobblocks:block", {
 	tiles = {"bobblocks_block.png"},
 	paramtype = "light",
 	paramtype2 = "color",
-	palette = "unifieddyes_palette.png",
+	palette = "unifieddyes_palette_extended.png",
+	place_param2 = 240,
 	sunlight_propagates = true,
 	is_ground_content = false,
 	sounds = default.node_sound_glass_defaults(),
@@ -59,7 +60,8 @@ minetest.register_node("bobblocks:block_off", {
 	drawtype = "glasslike",
 	tiles = {"bobblocks_block.png^[opacity:"..bobblocks.opacity},
 	paramtype2 = "color",
-	palette = "unifieddyes_palette.png",
+	palette = "unifieddyes_palette_extended.png",
+	place_param2 = 240,
 	is_ground_content = false,
 	use_texture_alpha = true,
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3,not_in_creative_inventory=1, ud_param2_colorable = 1},
@@ -81,7 +83,8 @@ minetest.register_node("bobblocks:pole", {
 	inventory_image = ("bobblocks_pole_inv.png"),
 	paramtype = "light",
 	paramtype2 = "color",
-	palette = "unifieddyes_palette.png",
+	palette = "unifieddyes_palette_extended.png",
+	place_param2 = 240,
 	sunlight_propagates = true,
 	is_ground_content = false,
 	sounds = default.node_sound_glass_defaults(),
@@ -102,7 +105,8 @@ minetest.register_node("bobblocks:pole_off", {
 	tiles = {"bobblocks_block.png^[opacity:"..bobblocks.opacity},
 	paramtype = "light",
 	paramtype2 = "color",
-	palette = "unifieddyes_palette.png",
+	palette = "unifieddyes_palette_extended.png",
+	place_param2 = 240,
 	sunlight_propagates = true,
 	is_ground_content = false,
 	use_texture_alpha = true,
@@ -137,7 +141,8 @@ minetest.register_node("bobblocks:wavyblock", {
 	tiles = {"bobblocks_wavyblock.png"},
 	paramtype = "light",
 	paramtype2 = "color",
-	palette = "unifieddyes_palette.png",
+	palette = "unifieddyes_palette_extended.png",
+	place_param2 = 240,
 	sunlight_propagates = true,
 	is_ground_content = false,
 	sounds = default.node_sound_glass_defaults(),
@@ -158,7 +163,8 @@ minetest.register_node("bobblocks:wavyblock_off", {
 	drawtype = "glasslike",
 	tiles = {"bobblocks_wavyblock.png^[opacity:"..bobblocks.opacity},
 	paramtype2 = "color",
-	palette = "unifieddyes_palette.png",
+	palette = "unifieddyes_palette_extended.png",
+	place_param2 = 240,
 	is_ground_content = false,
 	use_texture_alpha = true,
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3,not_in_creative_inventory=1, ud_param2_colorable = 1},
@@ -180,7 +186,8 @@ minetest.register_node("bobblocks:wavypole", {
 	inventory_image = ("bobblocks_wavypole_inv.png"),
 	paramtype = "light",
 	paramtype2 = "color",
-	palette = "unifieddyes_palette.png",
+	palette = "unifieddyes_palette_extended.png",
+	place_param2 = 240,
 	sunlight_propagates = true,
 	is_ground_content = false,
 	sounds = default.node_sound_glass_defaults(),
@@ -276,11 +283,11 @@ minetest.register_lbm({
 			newcolor = "light_grey"
 		end
 
-		local paletteidx, _ = unifieddyes.getpaletteidx("unifieddyes:"..newcolor, false)
+		local paletteidx, _ = unifieddyes.getpaletteidx("unifieddyes:"..newcolor, "extended")
 		local newnode = "bobblocks:block"
 
 		if string.find(basename, "grey") then
-			paletteidx, _ = unifieddyes.getpaletteidx("unifieddyes:grey", false)
+			paletteidx, _ = unifieddyes.getpaletteidx("unifieddyes:grey", "extended")
 			if string.find(basename, "pole") then
 				newnode = "bobblocks:wavypole"
 			else
@@ -295,5 +302,28 @@ minetest.register_lbm({
 		local meta = minetest.get_meta(pos)
 		minetest.set_node(pos, { name = newnode, param2 = paletteidx })
 		meta:set_string("dye", "unifieddyes:"..newcolor)
+		meta:set_string("palette", "ext")
+	end
+})
+
+minetest.register_lbm({
+	name = "bobblocks:recolor_stuff",
+	label = "Convert 89-color fences to use UD extended palette",
+	run_at_every_load = false,
+	nodenames = {
+		"bobblocks:block",
+		"bobblocks:block_off",
+		"bobblocks:pole",
+		"bobblocks:pole_off",
+		"bobblocks:wavyblock",
+		"bobblocks:wavyblock_off",
+		"bobblocks:wavypole"
+	},
+	action = function(pos, node)
+		local meta = minetest.get_meta(pos)
+		if meta:get_string("palette") ~= "ext" then
+			minetest.swap_node(pos, { name = node.name, param2 = unifieddyes.convert_classic_palette[node.param2] })
+			meta:set_string("palette", "ext")
+		end
 	end
 })
