@@ -52,12 +52,12 @@ minetest.register_node("inbox:empty", {
 				minetest.check_player_privs(player, "protection_bypass") and
 				clicker:get_player_control().aux1 then
 			minetest.show_formspec(
-				clicker:get_player_name(),
+				player,
 				"inbox:mailbox",
 				inbox.get_inbox_formspec(pos))
 		else
 			minetest.show_formspec(
-				clicker:get_player_name(),
+				player,
 				"inbox:mailbox",
 				inbox.get_inbox_insert_formspec(pos))
 		end

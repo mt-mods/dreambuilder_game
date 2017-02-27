@@ -642,12 +642,13 @@ minetest.register_lbm({
 			param2 = paletteidx
 		end
 
+		local meta = minetest.get_meta(pos)
+
 		if string.find(name, "table_lamp") or string.find(name, "standing_lamp") then
 			meta:set_string("palette", "ext")
 		end
 
 		minetest.set_node(pos, { name = new_node, param2 = param2 })
-		local meta = minetest.get_meta(pos)
 		meta:set_string("dye", "unifieddyes:"..color)
 	end
 })
