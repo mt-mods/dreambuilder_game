@@ -2227,30 +2227,29 @@ minetest.register_craft( {
 
 -- bathroom/kitchen tiles
 
-local color_pairings = {
-	{ "grey",		"white",		"1" },
-	{ "dark_grey",	"white",		"2" },
-	{ "black",		"white",		"3" },
-	{ "black",		"dark_grey",	"4" },
-	{ "red",		"white",		"red" },
-	{ "green",		"white",		"green" },
-	{ "blue",		"white",		"blue" },
-	{ "yellow",		"white",		"yellow" },
-	{ "brown",		"white",		"tan" }
-}
+minetest.register_craft( {
+		output = "homedecor:bathroom_tiles_light 4",
+		recipe = {
+			{ "group:marble", "group:marble" },
+			{ "group:marble", "group:marble" }
+		},
+})
 
-for i in ipairs(color_pairings) do
-	local dye1 = color_pairings[i][1]
-	local dye2 = color_pairings[i][2]
-	local result = color_pairings[i][3]
-	minetest.register_craft( {
-		    output = "homedecor:tiles_"..result.." 2",
-		    recipe = {
-				{ "group:marble", "dye:"..dye1 },
-				{ "group:marble", "dye:"..dye2 }
-		    },
-	})
-end
+minetest.register_craft( {
+		output = "homedecor:bathroom_tiles_medium 4",
+		recipe = {
+			{ "group:marble", "group:marble", "" },
+			{ "group:marble", "group:marble", "dye:grey" }
+		},
+})
+
+minetest.register_craft( {
+		output = "homedecor:bathroom_tiles_dark 4",
+		recipe = {
+			{ "group:marble", "group:marble", "" },
+			{ "group:marble", "group:marble", "dye:dark_grey" }
+		},
+})
 
 -- misc electrical
 
