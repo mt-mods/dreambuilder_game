@@ -750,7 +750,7 @@ end
 
 for y = 1, 14 do -- colors 0 and 15 are black and white, default dyes
 
-	if y ~= 4 and y ~= 8 and Y~= 11 then -- don't register the three greys, they're done separately.
+	if y ~= 4 and y ~= 8 and y~= 11 then -- don't register the three greys, they're done separately.
 
 		local rgb = string.format("%02x", y*17)..string.format("%02x", y*17)..string.format("%02x", y*17)
 		local name = "grey_"..y
@@ -784,46 +784,54 @@ minetest.register_craftitem(":dye:light_grey", {
 })
 
 local base_color_crafts = {
-	{ "red",		"flowers:rose",				nil,				nil,			nil,			4 },
-	{ "vermilion",	"dye:red",					"dye:orange",		nil,			nil,			3 },
-	{ "orange",		"flowers:tulip",			nil,				nil,			nil,			4 },
-	{ "orange",		"dye:red",					"dye:yellow",		nil,			nil,			2 },
-	{ "amber",		"dye:orange",				"dye:yellow",		nil,			nil,			2 },
-	{ "yellow",		"flowers:dandelion_yellow",	nil,				nil,			nil,			4 },
-	{ "lime",		"dye:yellow",				"dye:chartreuse",	nil,			nil,			2 },
-	{ "lime",		"dye:yellow",				"dye:yellow",		"dye:green",	nil,			3 },
-	{ "chartreuse",	"dye:yellow",				"dye:green",		nil,			nil,			2 },
-	{ "harlequin",	"dye:chartreuse",			"dye:green",		nil,			nil,			2 },
-	{ "harlequin",	"dye:yellow",				"dye:green",		"dye:green",	nil,			3 },
-	{ "green", 		"default:cactus",			nil,				nil,			nil,			4 },
-	{ "green", 		"dye:yellow",				"dye:blue",			nil,			nil,			2 },
-	{ "malachite",	"dye:green",				"dye:spring",		nil,			nil,			2 },
-	{ "malachite",	"dye:green",				"dye:green",		"dye:cyan",		nil,			3 },
-	{ "spring",		"dye:green",				"dye:cyan",			nil,			nil,			2 },
-	{ "turquoise",	"dye:spring",				"dye:cyan",			nil,			nil,			2 },
-	{ "turquoise",	"dye:green",				"dye:cyan",			"dye:cyan",		nil,			3 },
-	{ "cyan",		"dye:green",				"dye:blue",			nil,			nil,			2 },
-	{ "cerulean",	"dye:cyan",					"dye:azure",		nil,			nil,			2 },
-	{ "cerulean",	"dye:cyan",					"dye:cyan",			"dye:blue",		nil,			3 },
-	{ "azure",		"dye:cyan",					"dye:blue",			nil,			nil,			2 },
-	{ "sapphire",	"dye:azure",				"dye:blue",			nil,			nil,			2 },
-	{ "sapphire",	"dye:cyan",					"dye:blue",			"dye:blue",		nil,			3 },
-	{ "blue",		"flowers:geranium",			nil,				nil,			nil,			4 },
-	{ "indigo",		"dye:blue",					"dye:violet",		nil,			nil,			2 },
-	{ "violet",		"flowers:viola",			nil,				nil,			nil,			4 },
-	{ "violet",		"dye:blue",					"dye:magenta",		nil,			nil,			2 },
-	{ "mulberry",	"dye:violet",				"dye:magenta",		nil,			nil,			2 },
-	{ "magenta",	"dye:blue",					"dye:red",			nil,			nil,			2 },
-	{ "fuchsia",	"dye:magenta",				"dye:rose",			nil,			nil,			2 },
-	{ "fuchsia",	"dye:blue",					"dye:red",			"dye:rose",		nil,			3 },
-	{ "fuchsia",	"dye:red",					"dye:violet",		nil,			nil,			2 },
-	{ "rose",		"dye:magenta",				"dye:red",			nil,			nil,			2 },
-	{ "crimson",	"dye:rose",					"dye:red",			nil,			nil,			2 },
-	{ "crimson",	"dye:magenta",				"dye:red",			"dye:red",		nil,			3 },
-	{ "crimson",	"dye:red",					"dye:red",			"dye:red",		"dye:blue",		4 },
+	{ "red",		"flowers:rose",				nil,				nil,			nil,			nil,		4 },
+	{ "vermilion",	"dye:red",					"dye:orange",		nil,			nil,			nil,		3 },
+	{ "orange",		"flowers:tulip",			nil,				nil,			nil,			nil,		4 },
+	{ "orange",		"dye:red",					"dye:yellow",		nil,			nil,			nil,		2 },
+	{ "amber",		"dye:orange",				"dye:yellow",		nil,			nil,			nil,		2 },
+	{ "yellow",		"flowers:dandelion_yellow",	nil,				nil,			nil,			nil,		4 },
+	{ "lime",		"dye:yellow",				"dye:chartreuse",	nil,			nil,			nil,		2 },
+	{ "lime",		"dye:yellow",				"dye:yellow",		"dye:green",	nil,			nil,		3 },
+	{ "chartreuse",	"dye:yellow",				"dye:green",		nil,			nil,			nil,		2 },
+	{ "harlequin",	"dye:chartreuse",			"dye:green",		nil,			nil,			nil,		2 },
+	{ "harlequin",	"dye:yellow",				"dye:green",		"dye:green",	nil,			nil,		3 },
+	{ "green", 		"default:cactus",			nil,				nil,			nil,			nil,		4 },
+	{ "green", 		"dye:yellow",				"dye:blue",			nil,			nil,			nil,		2 },
+	{ "malachite",	"dye:green",				"dye:spring",		nil,			nil,			nil,		2 },
+	{ "malachite",	"dye:green",				"dye:green",		"dye:cyan",		nil,			nil,		3 },
+	{ "malachite",	"dye:green",				"dye:green",		"dye:green",	"dye:blue",		nil,		4 },
+	{ "spring",		"dye:green",				"dye:cyan",			nil,			nil,			nil,		2 },
+	{ "spring",		"dye:green",				"dye:green",		"dye:blue",		nil,			nil,		3 },
+	{ "turquoise",	"dye:spring",				"dye:cyan",			nil,			nil,			nil,		2 },
+	{ "turquoise",	"dye:green",				"dye:cyan",			"dye:cyan",		nil,			nil,		3 },
+	{ "turquoise",	"dye:green",				"dye:green",		"dye:green",	"dye:blue",		"dye:blue",	5 },
+	{ "cyan",		"dye:green",				"dye:blue",			nil,			nil,			nil,		2 },
+	{ "cerulean",	"dye:cyan",					"dye:azure",		nil,			nil,			nil,		2 },
+	{ "cerulean",	"dye:cyan",					"dye:cyan",			"dye:blue",		nil,			nil,		3 },
+	{ "cerulean",	"dye:green",				"dye:green",		"dye:blue",		"dye:blue",		"dye:blue",	5 },
+	{ "azure",		"dye:cyan",					"dye:blue",			nil,			nil,			nil,		2 },
+	{ "azure",		"dye:green",				"dye:blue",			"dye:blue",		nil,			nil,		3 },
+	{ "sapphire",	"dye:azure",				"dye:blue",			nil,			nil,			nil,		2 },
+	{ "sapphire",	"dye:cyan",					"dye:blue",			"dye:blue",		nil,			nil,		3 },
+	{ "sapphire",	"dye:green",				"dye:blue",			"dye:blue",		"dye:blue",		nil,		4 },
+	{ "blue",		"flowers:geranium",			nil,				nil,			nil,			nil,		4 },
+	{ "indigo",		"dye:blue",					"dye:violet",		nil,			nil,			nil,		2 },
+	{ "violet",		"flowers:viola",			nil,				nil,			nil,			nil,		4 },
+	{ "violet",		"dye:blue",					"dye:magenta",		nil,			nil,			nil,		2 },
+	{ "mulberry",	"dye:violet",				"dye:magenta",		nil,			nil,			nil,		2 },
+	{ "mulberry",	"dye:violet",				"dye:blue",			"dye:red",		nil,			nil,		3 },
+	{ "magenta",	"dye:blue",					"dye:red",			nil,			nil,			nil,		2 },
+	{ "fuchsia",	"dye:magenta",				"dye:rose",			nil,			nil,			nil,		2 },
+	{ "fuchsia",	"dye:blue",					"dye:red",			"dye:rose",		nil,			nil,		3 },
+	{ "fuchsia",	"dye:red",					"dye:violet",		nil,			nil,			nil,		2 },
+	{ "rose",		"dye:magenta",				"dye:red",			nil,			nil,			nil,		2 },
+	{ "rose",		"dye:red",					"dye:red",			"dye:blue",		nil,			nil,		3 },
+	{ "crimson",	"dye:rose",					"dye:red",			nil,			nil,			nil,		2 },
+	{ "crimson",	"dye:magenta",				"dye:red",			"dye:red",		nil,			nil,		3 },
+	{ "crimson",	"dye:red",					"dye:red",			"dye:red",		"dye:blue",		nil,		4 },
 
-	{ "black",		"default:coal_lump",		nil,				nil,			nil,			4 },
-	{ "white",		"flowers:dandelion_white",	nil,				nil,			nil,			4 },
+	{ "black",		"default:coal_lump",		nil,				nil,			nil,			nil,		4 },
+	{ "white",		"flowers:dandelion_white",	nil,				nil,			nil,			nil,		4 },
 }
 
 local shade_crafts = {
@@ -843,42 +851,34 @@ local shade_crafts = {
 
 for _,i in ipairs(base_color_crafts) do
 	local color = i[1]
-	local dye1 = i[2]
-	local dye2 = i[3]
-	local dye3 = i[4]
-	local dye4 = i[5]
-	local yield = i[6]
+	local yield = i[7]
 
 	minetest.register_craft( {
 		type = "shapeless",
 		output = "dye:"..color.." "..yield,
 		recipe = {
-			dye1,
-			dye2,
-			dye3,
-			dye4,
+			i[2],
+			i[3],
+			i[4],
+			i[5],
+			i[6],
 		},
 	})
 
 	for _,j in ipairs(shade_crafts) do
-		local shade = j[1]
-		local sat = j[2]
-		local dye4 = j[3]
-		local dye5 = j[4]
-		local dye6 = j[5]
-
-		if dye4 == "color" then dye4 = "dye:"..color end
+		local firstdye = j[3]
+		if firstdye == "color" then firstdye = "dye:"..color end
 
 		if color ~= "black" and color ~= "white" and not string.find(color, "grey") then
 
 			minetest.register_craft( {
 				type = "shapeless",
-				output = "dye:"..shade..color..sat.." "..yield,
+				output = "dye:"..j[1]..color..j[2].." "..yield,
 				recipe = {
 					"dye:"..color,
-					dye4,
-					dye5,
-					dye6
+					firstdye,
+					j[4],
+					j[5]
 				},
 			})
 		end
