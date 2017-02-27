@@ -783,7 +783,7 @@ minetest.register_craftitem(":dye:light_grey", {
 	on_use = unifieddyes.on_use
 })
 
-local base_color_crafts = {
+unifieddyes.base_color_crafts = {
 	{ "red",		"flowers:rose",				nil,				nil,			nil,			nil,		4 },
 	{ "vermilion",	"dye:red",					"dye:orange",		nil,			nil,			nil,		3 },
 	{ "orange",		"flowers:tulip",			nil,				nil,			nil,			nil,		4 },
@@ -834,7 +834,7 @@ local base_color_crafts = {
 	{ "white",		"flowers:dandelion_white",	nil,				nil,			nil,			nil,		4 },
 }
 
-local shade_crafts = {
+unifieddyes.shade_crafts = {
 	{ "faint_",		"",			"dye:white",		"dye:white",	"dye:white",	4 },
 	{ "pastel_",	"",			"dye:white",		"dye:white",	nil,			3 },
 	{ "light_",		"",			"dye:white",		nil,			nil,			2 },
@@ -849,7 +849,7 @@ local shade_crafts = {
 	{ "dark_",		"_s50",		"dye:black",		"dye:black",	"dye:white",	4 },
 }
 
-for _,i in ipairs(base_color_crafts) do
+for _,i in ipairs(unifieddyes.base_color_crafts) do
 	local color = i[1]
 	local yield = i[7]
 
@@ -865,7 +865,7 @@ for _,i in ipairs(base_color_crafts) do
 		},
 	})
 
-	for _,j in ipairs(shade_crafts) do
+	for _,j in ipairs(unifieddyes.shade_crafts) do
 		local firstdye = j[3]
 		if firstdye == "color" then firstdye = "dye:"..color end
 
@@ -885,7 +885,7 @@ for _,i in ipairs(base_color_crafts) do
 	end
 end
 
-local greymixes = {
+unifieddyes.greymixes = {
 	{ 1,	"dye:black",			"dye:black",		"dye:black",		"dye:dark_grey",	4 },
 	{ 2,	"dye:black",			"dye:black",		"dye:dark_grey",	nil,				3 },
 	{ 3,	"dye:black",			"dye:dark_grey",	nil,				nil,				2 },
@@ -902,7 +902,7 @@ local greymixes = {
 	{ 14,	"dye:white", 			"dye:white",		"dye:light_grey",	nil,				3 },
 }
 
-for _, i in ipairs(greymixes) do
+for _, i in ipairs(unifieddyes.greymixes) do
 	local shade = i[1]
 	local dye1 = i[2]
 	local dye2 = i[3]
