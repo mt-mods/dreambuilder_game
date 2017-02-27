@@ -2230,8 +2230,8 @@ minetest.register_craft( {
 minetest.register_craft( {
 		output = "homedecor:bathroom_tiles_light 4",
 		recipe = {
-			{ "group:marble", "group:marble" },
-			{ "group:marble", "group:marble" }
+			{ "group:marble", "group:marble", "" },
+			{ "group:marble", "group:marble", "dye:white" }
 		},
 })
 
