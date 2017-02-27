@@ -341,6 +341,7 @@ if minetest.get_modpath("moreblocks") then
 
 	end
 	minetest.unregister_item("moreblocks:tar")
+	minetest.register_alias("moreblocks:tar", "building_blocks:Tar")
 
 	stairsplus:register_all(
 		"building_blocks",
