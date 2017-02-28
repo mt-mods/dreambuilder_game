@@ -184,6 +184,24 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
+	output = "homedecor:bathtub_clawfoot_brass_taps",
+	recipe = {
+		{ "homedecor:taps_brass", "", "" },
+		{ "group:marble", "", "group:marble" },
+		{"default:steel_ingot", "group:marble", "default:steel_ingot"},
+	},
+})
+
+minetest.register_craft({
+	output = "homedecor:bathtub_clawfoot_chrome_taps",
+	recipe = {
+		{ "homedecor:taps", "", "" },
+		{ "group:marble", "", "group:marble" },
+		{"default:steel_ingot", "group:marble", "default:steel_ingot"},
+	},
+})
+
+minetest.register_craft({
 	output = "homedecor:bars 6",
 	recipe = {
 		{ "default:steel_ingot","default:steel_ingot","default:steel_ingot" },

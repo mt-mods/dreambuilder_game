@@ -247,6 +247,46 @@ homedecor.register("shower_head", {
 	end
 })
 
+homedecor.register("bathtub_clawfoot_brass_taps", {
+	drawtype = "mesh",
+	mesh = "homedecor_bathtub_clawfoot.obj",
+	tiles = {
+		{ name = "homedecor_generic_metal.png", color = homedecor.color_med_grey },
+		"homedecor_generic_metal_bright.png",
+		"homedecor_generic_metal_bright.png",
+		"homedecor_generic_metal_brass.png",
+		"homedecor_marble.png",
+		"homedecor_bathtub_clawfoot_bottom_inside.png",
+	},
+	description = S("Bathtub, clawfoot, with brass taps"),
+	groups = {cracky=3},
+	selection_box = {
+		type = "fixed",
+		fixed = { -0.5, -0.5, -0.5, 1.5, 0.3125, 0.5 },
+	},
+	sounds = default.node_sound_stone_defaults(),
+})
+
+homedecor.register("bathtub_clawfoot_chrome_taps", {
+	drawtype = "mesh",
+	mesh = "homedecor_bathtub_clawfoot.obj",
+	tiles = {
+		{ name = "homedecor_generic_metal.png", color = homedecor.color_med_grey },
+		"homedecor_generic_metal_bright.png",
+		"homedecor_generic_metal_bright.png",
+		"homedecor_generic_metal_bright.png",
+		"homedecor_marble.png",
+		"homedecor_bathtub_clawfoot_bottom_inside.png",
+	},
+	description = S("Bathtub, clawfoot, with chrome taps"),
+	groups = {cracky=3},
+	selection_box = {
+		type = "fixed",
+		fixed = { -0.5, -0.5, -0.5, 1.5, 0.3125, 0.5 },
+	},
+	sounds = default.node_sound_stone_defaults(),
+})
+
 local bs_cbox = {
 	type = "fixed",
 	fixed = { -8/16, -8/16, 1/16, 8/16, 8/16, 8/16 }
