@@ -51,8 +51,11 @@ for i = 1, 4 do
 			elseif slots == 24 then
 				formspec = formspec.."background[0.06,0.99;7.92,7.52;ui_bags_lg_form.png]"
 			end
-			formspec = (formspec.."background[6.06,0;0.92,0.92;ui_bags_trash.png]"
-					.."list[detached:trash;main;6,0.1;1,1;]")
+			local player_name = player:get_player_name() -- For if statement.
+			if unified_inventory.trash_enabled or unified_inventory.is_creative(player_name) or minetest.get_player_privs(player_name).give then
+				formspec = (formspec.."background[6.06,0;0.92,0.92;ui_bags_trash.png]"
+						.."list[detached:trash;main;6,0.1;1,1;]")
+			end
 			return {formspec=formspec}
 		end,
 	})

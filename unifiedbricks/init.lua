@@ -113,6 +113,7 @@ minetest.register_node("unifiedbricks:brickblock", {
 
 minetest.override_item("default:brick", {
 	ud_replacement_node = "unifiedbricks:brickblock",
+	palette = "unifieddyes_palette_extended.png",
 	groups = {cracky = 3, ud_param2_colorable = 1}
 })
 
@@ -136,6 +137,7 @@ minetest.register_node("unifiedbricks:clayblock", {
 
 minetest.override_item("default:clay", {
 	ud_replacement_node = "unifiedbricks:clayblock",
+	palette = "unifieddyes_palette_extended.png",
 	groups = {crumbly = 3, ud_param2_colorable = 1}
 })
 

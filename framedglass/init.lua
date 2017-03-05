@@ -100,16 +100,8 @@ function framedglass.color_on_punch(pos, node, puncher, pointed_thing)
 	local itemstack = puncher:get_wielded_item()
 	local itemname = itemstack:get_name()
 
-	if not string.find(itemname, "dye:") then
-		if minetest.registered_nodes[node.name] then
-			local pos2 = select_node(pointed_thing)
-			if pos2 and is_buildable_to(puncher, pos2) then
-				minetest.set_node(pos2, { name = itemname })
-				if not creative_mode then
-					itemstack:take_item()
-				end
-			end
-		end
+	if not string.find(itemname, "dye:")
+	  and not string.find(itemname, "unifieddyes:") then
 		return itemstack
 	end
 
@@ -137,8 +129,6 @@ function framedglass.color_on_punch(pos, node, puncher, pointed_thing)
 
 	local inv = puncher:get_inventory()
 	local prevdye = "dye:"..oldcolor2
-
-	print(oldcolor, oldcolor2, newcolor, newcolor2, prevdye)
 
 	if not (inv:contains_item("main", prevdye) and creative_mode) and minetest.registered_items[prevdye] then
 		if inv:room_for_item("main", prevdye) then
