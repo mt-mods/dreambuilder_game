@@ -8,6 +8,7 @@ minetest.register_node("solidcolor:block", {
 	palette = "unifieddyes_palette_extended.png",
 	after_dig_node = unifieddyes.after_dig_node,
 	place_param2 = 240,
+	on_construct = unifieddyes.on_construct,
 })
 
 minetest.register_craft( {

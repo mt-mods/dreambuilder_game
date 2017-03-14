@@ -8,6 +8,7 @@ minetest.register_node("plasticbox:plasticbox", {
 	palette = "unifieddyes_palette_extended.png",
 	after_dig_node = unifieddyes.after_dig_node,
 	place_param2 = 240,
+	on_construct = unifieddyes.on_construct,
 })
 
 stairsplus:register_all("plasticbox", "plasticbox", "plasticbox:plasticbox", {

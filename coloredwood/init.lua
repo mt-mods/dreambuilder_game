@@ -142,7 +142,6 @@ local function is_stairsplus(name, colorized)
 			shape = string.sub(name, b+5) -- everything after "_wood_" is the shape
 		end
 	end
-	print(name, class, shape)
 	return class, shape
 end
 

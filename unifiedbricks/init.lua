@@ -107,6 +107,7 @@ minetest.register_node("unifiedbricks:brickblock", {
 	is_ground_content = true,
 	groups = {cracky=3, not_in_creative_inventory=1, ud_param2_colorable = 1},
 	sounds = default.node_sound_stone_defaults(),
+	on_construct = unifieddyes.on_construct,
 	after_dig_node = unifieddyes.after_dig_node,
 	drop = "default:brick"
 })
@@ -131,6 +132,7 @@ minetest.register_node("unifiedbricks:clayblock", {
 		sounds = default.node_sound_dirt_defaults({
 			footstep = "",
 		}),
+	on_construct = unifieddyes.on_construct,
 	after_dig_node = unifieddyes.after_dig_node,
 	drop = "default:clay"
 })
@@ -156,6 +158,7 @@ minetest.register_node("unifiedbricks:brickblock_multicolor_dark", {
 	is_ground_content = true,
 	groups = {cracky=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_stone_defaults(),
+	on_construct = unifieddyes.on_construct,
 	after_dig_node = unifieddyes.after_dig_node,
 })
 
@@ -174,6 +177,7 @@ minetest.register_node("unifiedbricks:brickblock_multicolor_medium", {
 	is_ground_content = true,
 	groups = {cracky=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_stone_defaults(),
+	on_construct = unifieddyes.on_construct,
 	after_dig_node = unifieddyes.after_dig_node,
 })
 
@@ -192,6 +196,7 @@ minetest.register_node("unifiedbricks:brickblock_multicolor_light", {
 	is_ground_content = true,
 	groups = {cracky=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_stone_defaults(),
+	on_construct = unifieddyes.on_construct,
 	after_dig_node = unifieddyes.after_dig_node,
 })
 

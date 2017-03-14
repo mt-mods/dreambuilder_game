@@ -473,6 +473,16 @@ function unifieddyes.getpaletteidx(color, palette_type)
 	end
 end
 
+-- if your node was once 89-color and uses an LBM to convert to the 256-color palette,
+-- call this in that node def's on_construct:
+
+function unifieddyes.on_construct(pos)
+	local meta = minetest.get_meta(pos)
+	meta:set_string("palette", "ext")
+end
+
+-- call this in your node's after_dig_node to get the last-used dye back.
+
 function unifieddyes.after_dig_node(pos, oldnode, oldmetadata, digger)
 	local prevdye
 

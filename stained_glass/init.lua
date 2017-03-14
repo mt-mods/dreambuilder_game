@@ -55,6 +55,7 @@ minetest.register_node("stained_glass:stained_glass", {
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, not_in_creative_inventory=1, ud_param2_colorable = 1},
 	sounds = default.node_sound_glass_defaults(),
 	drop = "moreblocks:super_glow_glass",
+	on_construct = unifieddyes.on_construct,
 	after_dig_node = unifieddyes.after_dig_node,
 	drop = "moreblocks:super_glow_glass"
 })
@@ -84,6 +85,7 @@ minetest.register_node("stained_glass:stained_trap_glass", {
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, not_in_creative_inventory=1, ud_param2_colorable = 1},
 	sounds = default.node_sound_glass_defaults(),
 	drop = "moreblocks:trap_super_glow_glass",
+	on_construct = unifieddyes.on_construct,
 	after_dig_node = unifieddyes.after_dig_node,
 	drop = "moreblocks:trap_super_glow_glass"
 })

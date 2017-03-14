@@ -428,6 +428,7 @@ local function reg_lamp(suffix, nxt, light, brightness)
 			node.name = "homedecor:table_lamp_"..repl[suffix]
 			minetest.set_node(pos, node)
 		end,
+		on_construct = unifieddyes.on_construct,
 		after_dig_node = unifieddyes.after_dig_node
 	})
 
@@ -457,6 +458,7 @@ local function reg_lamp(suffix, nxt, light, brightness)
 			node.name = "homedecor:standing_lamp_"..repl[suffix]
 			minetest.set_node(pos, node)
 		end,
+		on_construct = unifieddyes.on_construct,
 		after_dig_node = unifieddyes.after_dig_node,
 		expand = { top="placeholder" },
 	})

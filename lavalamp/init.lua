@@ -33,6 +33,7 @@ minetest.register_node("lavalamp:lavalamp", {
 	},
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_glass_defaults(),
+	on_construct = unifieddyes.on_construct,
 	after_dig_node = unifieddyes.after_dig_node,
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		node.name = "lavalamp:lavalamp_off"
@@ -62,6 +63,7 @@ minetest.register_node("lavalamp:lavalamp_off", {
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, not_in_creative_inventory=1},
 	sounds = default.node_sound_glass_defaults(),
 	drop = "lavalamp:lavalamp",
+	on_construct = unifieddyes.on_construct,
 	after_dig_node = unifieddyes.after_dig_node,
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 		node.name = "lavalamp:lavalamp"
