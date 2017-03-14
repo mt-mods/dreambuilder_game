@@ -114,35 +114,36 @@ table.insert(coloredwood.hues_plus_greys, "grey")
 
 -- helper functions
 
-local function is_stairsplus(name)
-	local s1, s2
+local function is_stairsplus(name, colorized)
 
-	local a,b = string.find(name, ":stair")
-	if a then s1 = string.sub(name, a+1, b) end
+	-- the format of a coloredwood stairsplus node is:
+	-- moreblocks:class_wood_color_shape
+	-- where class is "slab", "stair", etc. and shape is "three quarter", "alt", etc.
 
-	a,b = string.find(name, ":slab")
-	if a then s1 = string.sub(name, a+1, b) end
+	local a = string.find(name, ":")
+	local b = string.find(name, "_")
 
-	a,b = string.find(name, ":panel")
-	if a then s1 = string.sub(name, a+1, b) end
+	local class = string.sub(name, a+1, b-1) -- from colon to underscore is the class
+	local shape = ""
+	local rest
 
-	a,b = string.find(name, ":micro")
-	if a then s1 = string.sub(name, a+1, b) end
+	if class == "stair"
+	  or class == "slab"
+	  or class == "panel"
+	  or class == "micro"
+	  or class == "slope" then
 
-	a,b = string.find(name, ":slope")
-	if a then s1 = string.sub(name, a+1, b) end
-
-	local h, s, v = unifieddyes.get_hsv(name)
-
-	a,b = string.find(name, "wood")
-	if b then
-		s2 = string.sub(name, b+1)
-		local a,b = string.find(name, "grey")
-		if not a then
-			a,b = string.find(name, "_"..h..s)
+		if colorized then
+			colorshape = string.sub(name, b+6)
+			local c = string.find(colorshape, "_") or 0  -- first word after "_wood_" is color
+			shape = string.sub(colorshape, c) -- everything after the color is the shape
+			if colorshape == shape then shape = "" end -- if there was no shape
+		else
+			shape = string.sub(name, b+5) -- everything after "_wood_" is the shape
 		end
-		return s1, string.sub(s2, 5)
 	end
+	print(name, class, shape)
+	return class, shape
 end
 
 -- the actual nodes!
@@ -187,22 +188,25 @@ for _, color in ipairs(coloredwood.hues_plus_greys) do
 	end
 end
 
--- force on_rightclick for stairsplus default wood stair/slab/etc nodes
+-- force replacement node type for stairsplus default wood stair/slab/etc nodes
 
 	if coloredwood.enable_stairsplus then
 
 	for _, i in pairs(minetest.registered_nodes) do
 		if string.find(i.name, "moreblocks:stair_wood")
-			  or string.find(i.name, "moreblocks:slab_wood")
-			  or string.find(i.name, "moreblocks:panel_wood")
-			  or string.find(i.name, "moreblocks:micro_wood")
-			  or string.find(i.name, "moreblocks:slope_wood") then
-			local s1, s2 = is_stairsplus(i.name)
-			minetest.override_item(i.name, {
-				ud_replacement_node = "coloredwood:"..s1.."_wood_grey",
-				paramtype2 = "colorfacedir",
-				groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, wood = 1, not_in_creative_inventory=1, ud_param2_colorable = 1},
-			})
+		  or string.find(i.name, "moreblocks:slab_wood")
+		  or string.find(i.name, "moreblocks:panel_wood")
+		  or string.find(i.name, "moreblocks:micro_wood")
+		  or string.find(i.name, "moreblocks:slope_wood") then
+			local a,b = string.find(i.name, "wood_tile")
+			if not a then
+				local s1, s2 = is_stairsplus(i.name, false)
+				minetest.override_item(i.name, {
+					ud_replacement_node = "coloredwood:"..s1.."_wood_grey"..s2,
+					paramtype2 = "colorfacedir",
+					groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, wood = 1, not_in_creative_inventory=1, ud_param2_colorable = 1},
+				})
+			end
 		end
 	end
 
@@ -217,8 +221,7 @@ end
 			then
 
 			mname = string.gsub(i.name, "coloredwood:", "moreblocks:")
-			local s1, s2 = is_stairsplus(mname)
-
+			local s1, s2 = is_stairsplus(mname, true)
 			minetest.override_item(i.name, {
 				drop = "moreblocks:"..s1.."_wood"..s2
 			})
@@ -332,7 +335,7 @@ minetest.register_lbm({
 		local name = node.name
 		local hue, sat, val = unifieddyes.get_hsv(name)
 		local color = val..hue..sat
-		local s1, s2 = is_stairsplus(name)
+		local s1, s2 = is_stairsplus(name, true)
 
 		if meta and (meta:get_string("dye") ~= "") then return end -- node has already been converted before.
 

@@ -1298,15 +1298,7 @@ minetest.register_craft( {
 -- other types of fences
 
 minetest.register_craft( {
-	output = "homedecor:fence_wrought_iron_2 2",
-	recipe = {
-		{ "homedecor:pole_wrought_iron", "default:iron_lump" },
-		{ "homedecor:pole_wrought_iron", "default:iron_lump" },
-	},
-})
-
-minetest.register_craft( {
-	output = "homedecor:fence_wrought_iron_2 2",
+	output = "homedecor:fence_wrought_iron_2 4",
 	recipe = {
 		{ "homedecor:pole_wrought_iron", "default:iron_lump" },
 		{ "homedecor:pole_wrought_iron", "default:iron_lump" },

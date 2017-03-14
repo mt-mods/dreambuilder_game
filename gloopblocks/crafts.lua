@@ -376,4 +376,13 @@ minetest.register_craft({
 if minetest.get_modpath("technic") then
 	technic.register_grinder_recipe({input={"gloopblocks:pumice"},output="default:sand"})
 	technic.register_grinder_recipe({input={"gloopblocks:basalt"},output="default:cobble"})
+	minetest.register_craft({
+		type = "shapeless",
+		output = "technic:concrete 3",
+		recipe = {
+			"gloopblocks:wet_cement",
+			"group:sand",
+			"default:gravel",
+		}
+	})
 end

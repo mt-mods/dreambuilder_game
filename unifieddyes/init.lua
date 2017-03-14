@@ -505,6 +505,8 @@ function unifieddyes.on_use(itemstack, player, pointed_thing)
 	local nodedef = minetest.registered_nodes[node.name]
 	local playername = player:get_player_name()
 
+	if not nodedef then return end -- target was an unknown node, just bail out
+
 	-- if the node has an on_punch defined, bail out and call that instead, unless "sneak" is pressed.
 	if not player:get_player_control().sneak then
 		local onpunch = nodedef.on_punch(pos, node, player, pointed_thing)

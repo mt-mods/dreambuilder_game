@@ -162,7 +162,25 @@ minetest.register_alias('armchair', 'homedecor:armchair')
 
 homedecor.old_static_chairs = {}
 
-for _, color in ipairs(lrfurn.colors) do
+local chair_colors = {
+	"black",
+	"brown",
+	"blue",
+	"cyan",
+	"dark_grey",
+	"dark_green",
+	"green",
+	"grey",
+	"magenta",
+	"orange",
+	"pink",
+	"red",
+	"violet",
+	"white",
+	"yellow",
+}
+
+for _, color in ipairs(chair_colors) do
 	table.insert(homedecor.old_static_chairs, "homedecor:chair_"..color)
 	table.insert(homedecor.old_static_chairs, "homedecor:armchair_"..color)
 end
