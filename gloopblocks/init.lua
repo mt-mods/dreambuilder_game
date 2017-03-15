@@ -15,26 +15,6 @@ else
 	S = function(s) return s end
 end
 
--- misc stuff
-
-local colorlist = {
-	{"white",      "White"},
-	{"grey",       "Grey"},
-	{"black",      "Black"},
-	{"red",        "Red"},
-	{"yellow",     "Yellow"},
-	{"green",      "Green"},
-	{"cyan",       "Cyan"},
-	{"blue",       "Blue"},
-	{"magenta",    "Magenta"},
-	{"orange",     "Orange"},
-	{"violet",     "Violet"},
-	{"brown",      "Brown"},
-	{"pink",       "Pink"},
-	{"dark_grey",  "Dark Grey"},
-	{"dark_green", "Dark Green"},
-}
-
 -- Nodes
 
 minetest.register_node("gloopblocks:rainbow_block", {
@@ -335,19 +315,6 @@ if minetest.get_modpath("moreblocks") then
 		sunlight_propagates = true,
 	})
 
-	for i in ipairs(colorlist) do
-		local color = colorlist[i][1]
-		local colordesc = colorlist[i][2]
-		
-		stairsplus:register_all("wool", color, "wool:"..color, {
-			description = colordesc.." Wool",
-			tiles = {"wool_"..color..".png"},
-			groups = {snappy=2,choppy=2,oddly_breakable_by_hand=3,flammable=3,wool=1,not_in_creative_inventory=1},
-			sounds = default.node_sound_defaults(),
-			sunlight_propagates = true,
-		})
-	end
-
 	if minetest.get_modpath("caverealms") then
 		stairsplus:register_all("caverealms", "glow_crystal", "caverealms:glow_crystal", {
 			description = "Glow Crystal",
@@ -527,18 +494,6 @@ elseif minetest.get_modpath("stairs") then
 		"Rainbow Block Stair",
 		"Rainbow Block Slab",
 		default.node_sound_defaults())
-
-	for i in ipairs(colorlist) do
-		local color = colorlist[i][1]
-		local colordesc = colorlist[i][2]
-
-		stairs.register_stair_and_slab("wool_"..color, "wool:"..color,
-			{snappy=2,choppy=2,oddly_breakable_by_hand=3,flammable=3,wool=1},
-			{"wool_"..color..".png"},
-			"Wool Stair ("..colordesc..")",
-			"Wool Slab ("..colordesc..")",
-			default.node_sound_defaults())
-	end
 
 	if minetest.setting_getbool("gloopblocks_mossy_conversion") ~= false then
 
