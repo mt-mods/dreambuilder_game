@@ -1,0 +1,189 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-02-21 23:41-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: arrow_slits.lua:12
+msgid "@1 Arrowslit"
+msgstr ""
+
+#: arrow_slits.lua:33
+msgid "@1 Arrowslit with Cross"
+msgstr ""
+
+#: arrow_slits.lua:58
+msgid "@1 Arrowslit with Hole"
+msgstr ""
+
+#: arrow_slits.lua:81
+msgid "@1 Embrasure"
+msgstr ""
+
+#: init.lua:29
+msgid "Stonewall"
+msgstr ""
+
+#: init.lua:32
+msgid "Cobble"
+msgstr ""
+
+#: init.lua:35
+msgid "Stonebrick"
+msgstr ""
+
+#: init.lua:38
+msgid "Sandstone Brick"
+msgstr ""
+
+#: init.lua:41
+msgid "Desert Stone Brick"
+msgstr ""
+
+#: init.lua:44
+msgid "Stone"
+msgstr ""
+
+#: init.lua:47
+msgid "Sandstone"
+msgstr ""
+
+#: init.lua:50
+msgid "Desert Stone"
+msgstr ""
+
+#: init.lua:53
+msgid "Wood"
+msgstr ""
+
+#: init.lua:56
+msgid "Ice"
+msgstr ""
+
+#: init.lua:59
+msgid "Snow"
+msgstr ""
+
+#: init.lua:62
+msgid "Obsidian Brick"
+msgstr ""
+
+#: murder_holes.lua:14
+msgid "@1 Murder Hole"
+msgstr ""
+
+#: murder_holes.lua:33
+msgid "@1 Machicolation"
+msgstr ""
+
+#: paving.lua:11
+msgid "Paving Stone"
+msgstr ""
+
+#: paving.lua:30
+msgid "Pavement Brick"
+msgstr ""
+
+#: paving.lua:40
+msgid "Castle Pavement Stair"
+msgstr ""
+
+#: paving.lua:41
+msgid "Castle Pavement Slab"
+msgstr ""
+
+#: paving.lua:49
+msgid "Roof Slates"
+msgstr ""
+
+#: pillars.lua:18
+msgid "@1 Pillar Base"
+msgstr ""
+
+#: pillars.lua:36
+msgid "@1 Half Pillar Base"
+msgstr ""
+
+#: pillars.lua:54
+msgid "@1 Pillar Top"
+msgstr ""
+
+#: pillars.lua:72
+msgid "@1 Half Pillar Top"
+msgstr ""
+
+#: pillars.lua:90
+msgid "@1 Pillar Middle"
+msgstr ""
+
+#: pillars.lua:106
+msgid "@1 Half Pillar Middle"
+msgstr ""
+
+#: pillars.lua:123
+msgid "@1 Crossbrace"
+msgstr ""
+
+#: pillars.lua:147
+msgid "@1 Extended Crossbrace"
+msgstr ""
+
+#: stone_wall.lua:11
+msgid "Castle Wall"
+msgstr ""
+
+#: stone_wall.lua:22
+msgid "Castle Rubble"
+msgstr ""
+
+#: stone_wall.lua:57
+msgid "Castle Corner"
+msgstr ""
+
+#: stone_wall.lua:78
+msgid "Stone Wall"
+msgstr ""
+
+#: stone_wall.lua:86
+msgid "Rubble"
+msgstr ""
+
+#: stone_wall.lua:100
+msgid "Castle Stonewall Stair"
+msgstr ""
+
+#: stone_wall.lua:101
+msgid "Castle Stonewall Slab"
+msgstr ""
+
+#: stone_wall.lua:108
+msgid "Castle Rubble Stair"
+msgstr ""
+
+#: stone_wall.lua:109
+msgid "Castle Rubble Slab"
+msgstr ""
+
+#: stone_wall.lua:117 stone_wall.lua:143
+msgid "Dungeon Stone"
+msgstr ""
+
+#: stone_wall.lua:156
+msgid "Dungeon Stone Stair"
+msgstr ""
+
+#: stone_wall.lua:157
+msgid "Dungeon Stone Slab"
+msgstr ""

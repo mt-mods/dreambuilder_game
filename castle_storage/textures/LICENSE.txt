@@ -1,0 +1,13 @@
+--------------------------------------------
+
+16 px textures based on Castle mod
+original textures by Philipner
+
+License Textures: Napiophelios  - CC-BY-SA 3.0
+
+-castle_ironbound_chest_back.png
+-castle_ironbound_chest_front.png
+-castle_ironbound_chest_side.png
+-castle_ironbound_chest_top.png
+
+--------------------------------------------

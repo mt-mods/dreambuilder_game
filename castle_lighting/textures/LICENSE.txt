@@ -1,0 +1,17 @@
+License Textures: Philipner -  CC-BY-SA 3.0
+
+-castle_chandelier.png
+-castle_chandelier_chain.png
+-castle_chandelier_wield.png
+
+
+--------------------------------------------
+
+16 px textures based on Castle mod
+original textures by Philipner
+
+License Textures: Napiophelios  - CC-BY-SA 3.0
+
+-castle_street_light.png
+
+--------------------------------------------

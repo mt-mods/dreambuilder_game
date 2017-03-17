@@ -1,0 +1,21 @@
+--------------------------------------------
+
+License Textures: Philipner -  CC-BY-SA 3.0
+
+-castle_corner_stonewall_tb.png
+-castle_corner_stonewall1.png
+-castle_corner_stonewall2.png
+
+--------------------------------------------
+
+16 px textures based on Castle mod
+original textures by Philipner
+
+License Textures: Napiophelios  - CC-BY-SA 3.0
+
+-castle_pavement_brick.png
+-castle_rubble.png
+-castle_slate.png
+-castle_stonewall.png
+
+--------------------------------------------

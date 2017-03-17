@@ -1,0 +1,20 @@
+[Materials]
+
+castle_masonry_stonewall (Stonewall) bool true
+castle_masonry_cobble (Cobble) bool true
+castle_masonry_stonebrick (Stone Brick) bool true
+castle_masonry_sandstonebrick (Sandstone Brick) bool true
+castle_masonry_desertstonebrick (Desert Stone Brick) bool true
+castle_masonry_stone (Stone) bool true
+castle_masonry_sandstone (Sandstone) bool true
+castle_masonry_desertstone (Desert Stone) bool true
+castle_masonry_wood (Wood) bool false
+castle_masonry_ice (Ice) bool false
+castle_masonry_snow (Snow) bool false
+castle_masonry_obsidianbrick (Obsidian Brick) bool false
+
+[Forms]
+
+castle_masonry_pillar (Pillars) bool true
+castle_masonry_arrowslit (Arrow slits) bool true
+castle_masonry_murderhole (Murder holes and machicolations) bool true

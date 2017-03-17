@@ -1,0 +1,5 @@
+License Textures: Stuart Jones - WTFPL
+
+-castle_crossbow_bolt_inv.png
+-castle_crossbow_bolt_uv.png
+-castle_crossbow_hit.png

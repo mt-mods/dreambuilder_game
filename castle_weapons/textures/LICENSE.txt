@@ -1,0 +1,25 @@
+--------------------------------------------
+
+License Textures: Stuart Jones - WTFPL
+-castle_crossbow_bolt_inv.png
+-castle_crossbow_bolt_uv.png
+-castle_crossbow_hit.png
+
+Licence Models: Stuart Jones - CC-BY-SA 3.0
+-castle_crossbow_bolt.b3d
+-castle_crossbow_bolt.blend
+
+
+--------------------------------------------
+
+16 px textures based on Castle mod
+original textures by Philipner
+
+License Textures: Napiophelios  - CC-BY-SA 3.0
+
+-castle_battleaxe.png
+-castle_crossbow_bolt_inv.png
+-castle_crossbow_hit.png
+-castle_crossbow_loaded.png
+
+--------------------------------------------

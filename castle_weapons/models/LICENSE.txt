@@ -1,0 +1,10 @@
+License Textures: Stuart Jones - WTFPL
+
+-castle_crossbow_bolt_inv.png
+-castle_crossbow_bolt_uv.png
+-castle_crossbow_hit.png
+
+Licence Models: Stuart Jones - CC-BY-SA 3.0
+
+-castle_crossbow_bolt.b3d
+-castle_crossbow_bolt.blend

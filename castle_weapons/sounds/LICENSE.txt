@@ -1,0 +1,19 @@
+License Sounds
+------------------
+
+(From Simple Shooter mod by Stuart Jones)
+-castle_crossbow_click.ogg
+-castle_crossbow_shoot.ogg
+-castle_crossbow_reload.ogg
+
+Author : freesound.org
+License : Attribution 3.0 Unported (CC BY 3.0)
+CC0 1.0 Universal (CC0 1.0)
+
+------------------
+
+(From Minetest Game:default mod)
+-default_wood_footstep.1.ogg
+(renamed to : castle_crossbow_bolt.ogg)
+Author : Mito551
+License : (CC BY-SA)
