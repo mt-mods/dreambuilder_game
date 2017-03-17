@@ -503,6 +503,14 @@ end
 
 function unifieddyes.on_use(itemstack, player, pointed_thing)
 
+	local playername = player:get_player_name()
+
+	if minetest.is_protected(unifieddyes.select_node(pointed_thing), playername)
+	  and not minetest.check_player_privs(playername, "protection_bypass") then
+		minetest.chat_send_player(playername, "Sorry, someone else owns that spot.")
+		return
+	end
+
 	if pointed_thing and pointed_thing.type == "object" then
 		pointed_thing.ref:punch(player, 0, itemstack:get_tool_capabilities())
 		return player:get_wielded_item() -- punch may modified the wielded item, load the new and return it
@@ -513,7 +521,6 @@ function unifieddyes.on_use(itemstack, player, pointed_thing)
 	local pos = minetest.get_pointed_thing_position(pointed_thing)
 	local node = minetest.get_node(pos)
 	local nodedef = minetest.registered_nodes[node.name]
-	local playername = player:get_player_name()
 
 	if not nodedef then return end -- target was an unknown node, just bail out
 
