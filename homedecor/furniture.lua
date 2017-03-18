@@ -81,7 +81,10 @@ homedecor.register("kitchen_chair_padded", {
 	collision_box = kc_cbox,
 	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
-	after_place_node = unifieddyes.fix_rotation_nsew,
+	after_place_node = function(pos, placer, itemstack, pointed_thing)
+		unifieddyes.fix_rotation_nsew(pos, placer, itemstack, pointed_thing)
+		unifieddyes.recolor_on_place(pos, placer, itemstack, pointed_thing)
+	end,
 	after_dig_node = unifieddyes.after_dig_node,
 	on_rotate = unifieddyes.fix_after_screwdriver_nsew,
 	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
@@ -105,7 +108,10 @@ homedecor.register("armchair", {
 	groups = {snappy=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
 	node_box = ac_cbox,
-	after_place_node = unifieddyes.fix_rotation_nsew,
+	after_place_node = function(pos, placer, itemstack, pointed_thing)
+		unifieddyes.fix_rotation_nsew(pos, placer, itemstack, pointed_thing)
+		unifieddyes.recolor_on_place(pos, placer, itemstack, pointed_thing)
+	end,
 	after_dig_node = unifieddyes.after_dig_node,
 	on_rotate = unifieddyes.fix_after_screwdriver_nsew,
 })

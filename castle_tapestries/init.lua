@@ -73,7 +73,10 @@ minetest.register_node("castle_tapestries:tapestry", {
 		type = "wallmounted",
 		wall_side = {-0.5,-0.5,0.4375,0.5,1.5,0.5},
 	},
-	after_place_node = unifieddyes.fix_rotation_nsew,
+	after_place_node = function(pos, placer, itemstack, pointed_thing)
+		unifieddyes.fix_rotation_nsew(pos, placer, itemstack, pointed_thing)
+		unifieddyes.recolor_on_place(pos, placer, itemstack, pointed_thing)
+	end,
 	after_dig_node = unifieddyes.after_dig_node,
 	on_rotate = unifieddyes.fix_after_screwdriver_nsew
 })
@@ -103,7 +106,10 @@ minetest.register_node("castle_tapestries:tapestry_long", {
 		type = "wallmounted",
 		wall_side = {-0.5,-0.5,0.4375,0.5,2.5,0.5},
 	},
-	after_place_node = unifieddyes.fix_rotation_nsew,
+	after_place_node = function(pos, placer, itemstack, pointed_thing)
+		unifieddyes.fix_rotation_nsew(pos, placer, itemstack, pointed_thing)
+		unifieddyes.recolor_on_place(pos, placer, itemstack, pointed_thing)
+	end,
 	after_dig_node = unifieddyes.after_dig_node,
 	on_rotate = unifieddyes.fix_after_screwdriver_nsew
 })
@@ -133,7 +139,10 @@ minetest.register_node("castle_tapestries:tapestry_very_long", {
 		type = "wallmounted",
 		wall_side = {-0.5,-0.5,0.4375,0.5,3.5,0.5},
 	},
-	after_place_node = unifieddyes.fix_rotation_nsew,
+	after_place_node = function(pos, placer, itemstack, pointed_thing)
+		unifieddyes.fix_rotation_nsew(pos, placer, itemstack, pointed_thing)
+		unifieddyes.recolor_on_place(pos, placer, itemstack, pointed_thing)
+	end,
 	after_dig_node = unifieddyes.after_dig_node,
 	on_rotate = unifieddyes.fix_after_screwdriver_nsew
 })

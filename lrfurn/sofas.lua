@@ -26,6 +26,7 @@ minetest.register_node("lrfurn:sofa", {
 	on_rotate = screwdriver.disallow,
 	after_place_node = function(pos, placer, itemstack, pointed_thing)
 		lrfurn.fix_sofa_rotation_nsew(pos, placer, itemstack, pointed_thing)
+		unifieddyes.recolor_on_place(pos, placer, itemstack, pointed_thing)
 		local playername = placer:get_player_name()
 		if minetest.is_protected(pos, placer:get_player_name()) then return true end
 

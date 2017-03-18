@@ -32,13 +32,17 @@ homedecor.register("shutter", {
 	description = S("Wooden Shutter"),
 	inventory_image = inv,
 	wield_image = inv,
-	paramtype2 = "wallmounted",
+	paramtype2 = "colorwallmounted",
+	palette = "unifieddyes_palette_colorwallmounted.png",
 	ud_replacement_node = "homedecor:shutter_colored",
 	groups = { snappy = 3, ud_param2_colorable = 1 },
 	sounds = default.node_sound_wood_defaults(),
 	selection_box = shutter_cbox,
 	node_box = shutter_cbox,
-	after_place_node = unifieddyes.fix_rotation,
+	after_place_node = function(pos, placer, itemstack, pointed_thing)
+		unifieddyes.fix_rotation(pos, placer, itemstack, pointed_thing)
+		unifieddyes.recolor_on_place(pos, placer, itemstack, pointed_thing)
+	end,
 	after_dig_node = unifieddyes.after_dig_node
 })
 
@@ -54,7 +58,10 @@ homedecor.register("shutter_colored", {
 	sounds = default.node_sound_wood_defaults(),
 	selection_box = shutter_cbox,
 	node_box = shutter_cbox,
-	after_place_node = unifieddyes.fix_rotation,
+	after_place_node = function(pos, placer, itemstack, pointed_thing)
+		unifieddyes.fix_rotation(pos, placer, itemstack, pointed_thing)
+		unifieddyes.recolor_on_place(pos, placer, itemstack, pointed_thing)
+	end,
 	after_dig_node = unifieddyes.after_dig_node,
 	drop = "homedecor:shutter"
 })

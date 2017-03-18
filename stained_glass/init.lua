@@ -39,6 +39,8 @@ January 2017 -- rewritten a bit more by Vanessa E. to use engine param2 coloriza
 stainedglass = {}
 stainedglass.old_static_nodes = {}
 
+local myglow = LIGHT_MAX-3
+
 minetest.register_node("stained_glass:stained_glass", {
 	description = "Stained Glass",
 	drawtype = "glasslike",
@@ -56,6 +58,7 @@ minetest.register_node("stained_glass:stained_glass", {
 	sounds = default.node_sound_glass_defaults(),
 	drop = "moreblocks:super_glow_glass",
 	on_construct = unifieddyes.on_construct,
+	after_place_node = unifieddyes.recolor_on_place,
 	after_dig_node = unifieddyes.after_dig_node,
 	drop = "moreblocks:super_glow_glass"
 })
@@ -64,7 +67,8 @@ minetest.override_item("moreblocks:super_glow_glass", {
 	palette = "unifieddyes_palette_extended.png",
 	place_param2 = 240,
 	groups = {snappy = 2, cracky = 3, oddly_breakable_by_hand = 3, ud_param2_colorable = 1},
-	ud_replacement_node = "stained_glass:stained_glass"
+	ud_replacement_node = "stained_glass:stained_glass",
+	after_place_node = unifieddyes.recolor_on_place
 })
 
 -- trap glass
@@ -86,6 +90,7 @@ minetest.register_node("stained_glass:stained_trap_glass", {
 	sounds = default.node_sound_glass_defaults(),
 	drop = "moreblocks:trap_super_glow_glass",
 	on_construct = unifieddyes.on_construct,
+	after_place_node = unifieddyes.recolor_on_place,
 	after_dig_node = unifieddyes.after_dig_node,
 	drop = "moreblocks:trap_super_glow_glass"
 })
@@ -94,7 +99,8 @@ minetest.override_item("moreblocks:trap_super_glow_glass", {
 	palette = "unifieddyes_palette_extended.png",
 	place_param2 = 240,
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, ud_param2_colorable = 1},
-	ud_replacement_node = "stained_glass:stained_trap_glass"
+	ud_replacement_node = "stained_glass:stained_trap_glass",
+	after_place_node = unifieddyes.recolor_on_place
 })
 
 function stainedglass.makenode(arg)

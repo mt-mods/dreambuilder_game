@@ -16,6 +16,7 @@ minetest.register_node("homedecor:bathroom_tiles_dark", {
 	groups = {cracky=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = unifieddyes.on_construct,
+	after_place_node = unifieddyes.recolor_on_place,
 	after_dig_node = unifieddyes.after_dig_node
 })
 
@@ -34,6 +35,7 @@ minetest.register_node("homedecor:bathroom_tiles_medium", {
 	groups = {cracky=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = unifieddyes.on_construct,
+	after_place_node = unifieddyes.recolor_on_place,
 	after_dig_node = unifieddyes.after_dig_node
 })
 
@@ -52,6 +54,7 @@ minetest.register_node("homedecor:bathroom_tiles_light", {
 	groups = {cracky=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = unifieddyes.on_construct,
+	after_place_node = unifieddyes.recolor_on_place,
 	after_dig_node = unifieddyes.after_dig_node
 })
 

@@ -53,6 +53,7 @@ minetest.register_node("bobblocks:block", {
 	},
 	on_rightclick = bobblocks.update_bobblock,
 	on_construct = unifieddyes.on_construct,
+	after_place_node = unifieddyes.recolor_on_place,
 	after_dig_node = unifieddyes.after_dig_node
 })
 
@@ -74,6 +75,7 @@ minetest.register_node("bobblocks:block_off", {
 	},
 	on_rightclick = bobblocks.update_bobblock,
 	on_construct = unifieddyes.on_construct,
+	after_place_node = unifieddyes.recolor_on_place,
 	after_dig_node = unifieddyes.after_dig_node
 })
 
@@ -99,6 +101,7 @@ minetest.register_node("bobblocks:pole", {
 	},
 	on_rightclick = bobblocks.update_bobblock,
 	on_construct = unifieddyes.on_construct,
+	after_place_node = unifieddyes.recolor_on_place,
 	after_dig_node = unifieddyes.after_dig_node
 })
 
@@ -124,10 +127,11 @@ minetest.register_node("bobblocks:pole_off", {
 	},
 	on_rightclick = bobblocks.update_bobblock,
 	on_construct = unifieddyes.on_construct,
+	after_place_node = unifieddyes.recolor_on_place,
 	after_dig_node = unifieddyes.after_dig_node
 })
 
--- old static nodes grandfathered-in because they have a different texture or usage than the colored ones.
+-- old nodes grandfathered-in because they have a different texture or usage than the colored ones.
 
 minetest.register_node("bobblocks:btm", {
 	description = "Bobs TransMorgifier v5",
@@ -160,6 +164,7 @@ minetest.register_node("bobblocks:wavyblock", {
 	},
 	on_rightclick = bobblocks.update_bobblock,
 	on_construct = unifieddyes.on_construct,
+	after_place_node = unifieddyes.recolor_on_place,
 	after_dig_node = unifieddyes.after_dig_node
 })
 
@@ -182,6 +187,7 @@ minetest.register_node("bobblocks:wavyblock_off", {
 	},
 	on_rightclick = bobblocks.update_bobblock,
 	on_construct = unifieddyes.on_construct,
+	after_place_node = unifieddyes.recolor_on_place,
 	after_dig_node = unifieddyes.after_dig_node
 })
 
@@ -199,6 +205,7 @@ minetest.register_node("bobblocks:wavypole", {
 	sounds = default.node_sound_glass_defaults(),
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, ud_param2_colorable = 1},
 	on_construct = unifieddyes.on_construct,
+	after_place_node = unifieddyes.recolor_on_place,
 	after_dig_node = unifieddyes.after_dig_node,
 	--light_source = LIGHT_MAX-0,
 })

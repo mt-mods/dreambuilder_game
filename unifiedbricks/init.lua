@@ -108,6 +108,7 @@ minetest.register_node("unifiedbricks:brickblock", {
 	groups = {cracky=3, not_in_creative_inventory=1, ud_param2_colorable = 1},
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = unifieddyes.on_construct,
+	after_place_node = unifieddyes.recolor_on_place,
 	after_dig_node = unifieddyes.after_dig_node,
 	drop = "default:brick"
 })
@@ -115,7 +116,8 @@ minetest.register_node("unifiedbricks:brickblock", {
 minetest.override_item("default:brick", {
 	ud_replacement_node = "unifiedbricks:brickblock",
 	palette = "unifieddyes_palette_extended.png",
-	groups = {cracky = 3, ud_param2_colorable = 1}
+	groups = {cracky = 3, ud_param2_colorable = 1},
+	after_place_node = unifieddyes.recolor_on_place
 })
 
 minetest.register_node("unifiedbricks:clayblock", {
@@ -133,6 +135,7 @@ minetest.register_node("unifiedbricks:clayblock", {
 			footstep = "",
 		}),
 	on_construct = unifieddyes.on_construct,
+	after_place_node = unifieddyes.recolor_on_place,
 	after_dig_node = unifieddyes.after_dig_node,
 	drop = "default:clay"
 })
@@ -140,7 +143,8 @@ minetest.register_node("unifiedbricks:clayblock", {
 minetest.override_item("default:clay", {
 	ud_replacement_node = "unifiedbricks:clayblock",
 	palette = "unifieddyes_palette_extended.png",
-	groups = {crumbly = 3, ud_param2_colorable = 1}
+	groups = {crumbly = 3, ud_param2_colorable = 1},
+	after_place_node = unifieddyes.recolor_on_place,
 })
 
 minetest.register_node("unifiedbricks:brickblock_multicolor_dark", {
@@ -159,6 +163,7 @@ minetest.register_node("unifiedbricks:brickblock_multicolor_dark", {
 	groups = {cracky=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = unifieddyes.on_construct,
+	after_place_node = unifieddyes.recolor_on_place,
 	after_dig_node = unifieddyes.after_dig_node,
 })
 
@@ -178,6 +183,7 @@ minetest.register_node("unifiedbricks:brickblock_multicolor_medium", {
 	groups = {cracky=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = unifieddyes.on_construct,
+	after_place_node = unifieddyes.recolor_on_place,
 	after_dig_node = unifieddyes.after_dig_node,
 })
 
@@ -197,6 +203,7 @@ minetest.register_node("unifiedbricks:brickblock_multicolor_light", {
 	groups = {cracky=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = unifieddyes.on_construct,
+	after_place_node = unifieddyes.recolor_on_place,
 	after_dig_node = unifieddyes.after_dig_node,
 })
 

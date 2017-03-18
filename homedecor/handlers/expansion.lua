@@ -53,18 +53,8 @@ homedecor.wall_fdir_to_fwd = {
 	{ -1,  0 },
 }
 
-local placeholder_node = "homedecor:expansion_placeholder"
-minetest.register_node(placeholder_node, {
-	description = S("Expansion placeholder (you hacker you!)"),
-	groups = { not_in_creative_inventory=1 },
-	drawtype = "airlike",
-	paramtype = "light",
-	walkable = false,
-	selection_box = { type = "fixed", fixed = { 0, 0, 0, 0, 0, 0 } },
-	is_ground_content = false,
-	sunlight_propagates = true,
-	buildable_to = false,
-})
+local placeholder_node = "air"
+minetest.register_alias("homedecor:expansion_placeholder", "air")
 
 --- select which node was pointed at based on it being known, not ignored, buildable_to
 -- returns nil if no node could be selected
@@ -94,7 +84,7 @@ local function is_buildable_to(placer_name, ...)
 end
 
 -- place one or two nodes if and only if both can be placed
-local function stack(itemstack, placer, fdir, pos, def, pos2, node1, node2)
+local function stack(itemstack, placer, fdir, pos, def, pos2, node1, node2, pointed_thing)
 	local placer_name = placer:get_player_name() or ""
 	if is_buildable_to(placer_name, pos, pos2) then
 		local lfdir = fdir or minetest.dir_to_facedir(placer:get_look_dir())
@@ -111,7 +101,7 @@ local function stack(itemstack, placer, fdir, pos, def, pos2, node1, node2)
 		-- call after_place_node of the placed node if available
 		local ctrl_node_def = minetest.registered_nodes[node1]
 		if ctrl_node_def and ctrl_node_def.after_place_node then
-			ctrl_node_def.after_place_node(pos, placer)
+			ctrl_node_def.after_place_node(pos, placer, itemstack, pointed_thing)
 		end
 
 		if not homedecor.expect_infinite_stacks then
@@ -140,7 +130,7 @@ function homedecor.stack_vertically(itemstack, placer, pointed_thing, node1, nod
 
 	local top_pos = { x=pos.x, y=pos.y+1, z=pos.z }
 
-	return stack(itemstack, placer, nil, pos, def, top_pos, node1, node2)
+	return stack(itemstack, placer, nil, pos, def, top_pos, node1, node2, pointed_thing)
 end
 
 -- Stack one door node above another
@@ -162,7 +152,7 @@ function homedecor.stack_wing(itemstack, placer, pointed_thing, node1, node2, no
 	end
 
 	local top_pos = { x=pos.x, y=pos.y+1, z=pos.z }
-	return stack(itemstack, placer, fdir, pos, def, top_pos, node1, node2)
+	return stack(itemstack, placer, fdir, pos, def, top_pos, node1, node2, pointed_thing)
 end
 
 function homedecor.stack_sideways(itemstack, placer, pointed_thing, node1, node2, dir)
@@ -177,13 +167,14 @@ function homedecor.stack_sideways(itemstack, placer, pointed_thing, node1, node2
 
 	local pos2 = { x = pos.x + fdir_transform[fdir+1][1], y=pos.y, z = pos.z + fdir_transform[fdir+1][2] }
 
-	return stack(itemstack, placer, fdir, pos, def, pos2, node1, node2)
+	return stack(itemstack, placer, fdir, pos, def, pos2, node1, node2, pointed_thing)
 end
 
 function homedecor.bed_expansion(pos, placer, itemstack, pointed_thing, trybunks)
 
 	local thisnode = minetest.get_node(pos)
-	local fdir = thisnode.param2
+	local param2 = thisnode.param2
+	local fdir = param2 % 8
 
 	local fxd = homedecor.wall_fdir_to_fwd[fdir+1][1]
 	local fzd = homedecor.wall_fdir_to_fwd[fdir+1][2]
@@ -219,14 +210,23 @@ function homedecor.bed_expansion(pos, placer, itemstack, pointed_thing, trybunks
 	local rightpos = {x=pos.x+rxd, y=pos.y, z=pos.z+rzd}
 	local rightnode = minetest.get_node(rightpos)
 
+	local inv = placer:get_inventory()
+	local lastdye = unifieddyes.last_used_dye[placer_name]
+
 	if leftnode.name == "homedecor:bed_regular" then
 		local newname = string.gsub(thisnode.name, "_regular", "_kingsize")
+		local meta = minetest.get_meta(leftpos)
 		minetest.set_node(pos, {name = "air"})
-		minetest.set_node(leftpos, { name = newname, param2 = fdir})
+		minetest.set_node(leftpos, { name = newname, param2 = param2})
+		meta:set_string("dye", lastdye)
+		inv:add_item("main", lastdye)
 	elseif rightnode.name == "homedecor:bed_regular" then
 		local newname = string.gsub(thisnode.name, "_regular", "_kingsize")
+		local meta = minetest.get_meta(rightpos)
 		minetest.set_node(rightpos, {name = "air"})
-		minetest.set_node(pos, { name = newname, param2 = fdir})
+		minetest.set_node(pos, { name = newname, param2 = param2})
+		meta:set_string("dye", lastdye)
+		inv:add_item("main", lastdye)
 	end
 
 	local toppos = {x=pos.x, y=pos.y+1.0, z=pos.z}
@@ -234,18 +234,26 @@ function homedecor.bed_expansion(pos, placer, itemstack, pointed_thing, trybunks
 
 	if trybunks and is_buildable_to(placer_name, toppos, topposfwd) then
 		local newname = string.gsub(thisnode.name, "_regular", "_extended")
-		minetest.set_node(toppos, { name = thisnode.name, param2 = fdir})
-		minetest.set_node(pos, { name = newname, param2 = fdir})
+		local newparam2 = param2 % 8
+		if inv:contains_item("main", lastdye) then
+			minetest.set_node(toppos, { name = thisnode.name, param2 = param2})
+			inv:remove_item("main", lastdye.." 1")
+		else
+			minetest.set_node(toppos, { name = thisnode.name, param2 = newparam2})
+			minetest.chat_send_player(placer_name, "Ran out of "..lastdye..", using neutral color.")
+			unifieddyes.last_used_dye[placer_name] = nil
+		end
+		minetest.swap_node(pos, { name = newname, param2 = param2})
 		itemstack:take_item()
 	end
 end
 
 function homedecor.unextend_bed(pos)
 	local bottomnode = minetest.get_node({x=pos.x, y=pos.y-1.0, z=pos.z})
-	local fdir = bottomnode.param2
+	local param2 = bottomnode.param2
 	if bottomnode.name == "homedecor:bed_extended" then
 		local newname = string.gsub(bottomnode.name, "_extended", "_regular")
-		minetest.set_node({x=pos.x, y=pos.y-1.0, z=pos.z}, { name = newname, param2 = fdir})
+		minetest.swap_node({x=pos.x, y=pos.y-1.0, z=pos.z}, { name = newname, param2 = param2})
 	end
 end
 

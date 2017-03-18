@@ -35,7 +35,10 @@ minetest.register_node("homedecor:glowlight_half", {
 	groups = { snappy = 3, ud_param2_colorable = 1 },
 	light_source = default.LIGHT_MAX,
 	sounds = default.node_sound_glass_defaults(),
-	after_place_node = unifieddyes.fix_rotation,
+	after_place_node = function(pos, placer, itemstack, pointed_thing)
+		unifieddyes.fix_rotation(pos, placer, itemstack, pointed_thing)
+		unifieddyes.recolor_on_place(pos, placer, itemstack, pointed_thing)
+	end,
 	after_dig_node = unifieddyes.after_dig_node
 })
 
@@ -63,7 +66,10 @@ minetest.register_node("homedecor:glowlight_quarter", {
 	groups = { snappy = 3, ud_param2_colorable = 1 },
 	light_source = default.LIGHT_MAX-1,
 	sounds = default.node_sound_glass_defaults(),
-	after_place_node = unifieddyes.fix_rotation,
+	after_place_node = function(pos, placer, itemstack, pointed_thing)
+		unifieddyes.fix_rotation(pos, placer, itemstack, pointed_thing)
+		unifieddyes.recolor_on_place(pos, placer, itemstack, pointed_thing)
+	end,
 	after_dig_node = unifieddyes.after_dig_node
 })
 
@@ -91,7 +97,10 @@ minetest.register_node("homedecor:glowlight_small_cube", {
 	groups = { snappy = 3, ud_param2_colorable = 1 },
 	light_source = default.LIGHT_MAX-1,
 	sounds = default.node_sound_glass_defaults(),
-	after_place_node = unifieddyes.fix_rotation,
+	after_place_node = function(pos, placer, itemstack, pointed_thing)
+		unifieddyes.fix_rotation(pos, placer, itemstack, pointed_thing)
+		unifieddyes.recolor_on_place(pos, placer, itemstack, pointed_thing)
+	end,
 	after_dig_node = unifieddyes.after_dig_node
 })
 
@@ -429,6 +438,7 @@ local function reg_lamp(suffix, nxt, light, brightness)
 			minetest.set_node(pos, node)
 		end,
 		on_construct = unifieddyes.on_construct,
+		after_place_node = unifieddyes.recolor_on_place,
 		after_dig_node = unifieddyes.after_dig_node
 	})
 
@@ -459,8 +469,9 @@ local function reg_lamp(suffix, nxt, light, brightness)
 			minetest.set_node(pos, node)
 		end,
 		on_construct = unifieddyes.on_construct,
+		after_place_node = unifieddyes.recolor_on_place,
 		after_dig_node = unifieddyes.after_dig_node,
-		expand = { top="placeholder" },
+		expand = { top="air" },
 	})
 
 	-- for old maps that had the original 3dforniture mod
@@ -497,7 +508,10 @@ homedecor.register("desk_lamp", {
 	node_box = dlamp_cbox,
 	walkable = false,
 	groups = {snappy=3, ud_param2_colorable = 1},
-	after_place_node = unifieddyes.fix_rotation_nsew,
+	after_place_node = function(pos, placer, itemstack, pointed_thing)
+		unifieddyes.fix_rotation_nsew(pos, placer, itemstack, pointed_thing)
+		unifieddyes.recolor_on_place(pos, placer, itemstack, pointed_thing)
+	end,
 	after_dig_node = unifieddyes.after_dig_node,
 	on_rotate = unifieddyes.fix_after_screwdriver_nsew
 })

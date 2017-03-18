@@ -48,7 +48,10 @@ minetest.register_node("ilights:light", {
 	light_source = 14,
 	selection_box = lamp_cbox,
 	node_box = lamp_cbox,
-	after_place_node = unifieddyes.fix_rotation,
+	after_place_node = function(pos, placer, itemstack, pointed_thing)
+		unifieddyes.fix_rotation(pos, placer, itemstack, pointed_thing)
+		unifieddyes.recolor_on_place(pos, placer, itemstack, pointed_thing)
+	end,
 	after_dig_node = unifieddyes.after_dig_node
 })
 

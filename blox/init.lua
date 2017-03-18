@@ -117,6 +117,7 @@ for _, nodeclass in ipairs(NodeClass) do
 		groups = {cracky=3, ud_param2_colorable = 1},
 		sounds = default.node_sound_stone_defaults(),
 		on_construct = unifieddyes.on_construct,
+		after_place_node = unifieddyes.recolor_on_place,
 		after_dig_node = unifieddyes.after_dig_node
 	})
 
@@ -136,6 +137,7 @@ for _, nodeclass in ipairs(NodeClass) do
 		groups = {cracky=3, ud_param2_colorable = 1},
 		sounds = default.node_sound_stone_defaults(),
 		on_construct = unifieddyes.on_construct,
+		after_place_node = unifieddyes.recolor_on_place,
 		after_dig_node = unifieddyes.after_dig_node
 	})
 
@@ -155,6 +157,7 @@ for _, nodeclass in ipairs(NodeClass) do
 		groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, ud_param2_colorable = 1},
 		sounds = default.node_sound_wood_defaults(),
 		on_construct = unifieddyes.on_construct,
+		after_place_node = unifieddyes.recolor_on_place,
 		after_dig_node = unifieddyes.after_dig_node
 	})
 
@@ -176,6 +179,7 @@ minetest.register_node("blox:wood_tinted", {
 	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
 	on_construct = unifieddyes.on_construct,
+	after_place_node = unifieddyes.recolor_on_place,
 	after_dig_node = unifieddyes.after_dig_node
 })
 
@@ -190,6 +194,7 @@ minetest.register_node("blox:stone_square", {
 	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
 	on_construct = unifieddyes.on_construct,
+	after_place_node = unifieddyes.recolor_on_place,
 	after_dig_node = unifieddyes.after_dig_node
 })
 
@@ -204,6 +209,7 @@ minetest.register_node("blox:cobble_tinted", {
 	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory = 1, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
 	on_construct = unifieddyes.on_construct,
+	after_place_node = unifieddyes.recolor_on_place,
 	after_dig_node = unifieddyes.after_dig_node,
 	drop = "default:cobble"
 })
@@ -219,6 +225,7 @@ minetest.register_node("blox:stone_tinted", {
 	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory = 1, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
 	on_construct = unifieddyes.on_construct,
+	after_place_node = unifieddyes.recolor_on_place,
 	after_dig_node = unifieddyes.after_dig_node,
 	drop = "default:cobble"
 })
@@ -233,12 +240,14 @@ table.insert(blox.old_89_color_nodes, "blox:stone_tinted")
 minetest.override_item("default:stone", {
 	palette = "unifieddyes_palette_extended.png",
 	ud_replacement_node = "blox:stone_tinted",
+	after_place_node = unifieddyes.recolor_on_place,
 	groups = {cracky = 3, stone = 1, ud_param2_colorable = 1},
 })
 
 minetest.override_item("default:cobble", {
 	palette = "unifieddyes_palette_extended.png",
 	ud_replacement_node = "blox:cobble_tinted",
+	after_place_node = unifieddyes.recolor_on_place,
 	groups = {cracky = 3, stone = 2, ud_param2_colorable = 1},
 })
 
@@ -248,8 +257,10 @@ if moreblocks then
 	minetest.override_item("moreblocks:stone_tile", {
 		palette = "unifieddyes_palette_extended.png",
 		ud_replacement_node = "blox:stone_square",
+		after_place_node = unifieddyes.recolor_on_place,
 		groups = {cracky = 3, ud_param2_colorable = 1},
 	})
+
 	minetest.override_item("blox:stone_square", {
 		drop = "moreblocks:stone_tile",
 		groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory = 1, ud_param2_colorable = 1},
@@ -258,6 +269,7 @@ if moreblocks then
 	minetest.override_item("moreblocks:circle_stone_bricks", {
 		palette = "unifieddyes_palette_extended.png",
 		ud_replacement_node = "blox:stone_loop",
+		after_place_node = unifieddyes.recolor_on_place,
 		groups = {cracky = 3, ud_param2_colorable = 1},
 	})
 	minetest.override_item("blox:stone_loop", {
@@ -268,6 +280,7 @@ if moreblocks then
 	minetest.override_item("moreblocks:iron_checker", {
 		palette = "unifieddyes_palette_extended.png",
 		ud_replacement_node = "blox:stone_checker",
+		after_place_node = unifieddyes.recolor_on_place,
 		groups = {cracky = 3, ud_param2_colorable = 1},
 	})
 	minetest.override_item("blox:stone_checker", {
@@ -278,6 +291,7 @@ if moreblocks then
 	minetest.override_item("moreblocks:wood_tile", {
 		palette = "unifieddyes_palette_extended.png",
 		ud_replacement_node = "blox:wood_quarter",
+		after_place_node = unifieddyes.recolor_on_place,
 		groups = {wood = 1, snappy = 1, choppy = 2, oddly_breakable_by_hand = 2, flammable = 3, ud_param2_colorable = 1},
 	})
 	minetest.override_item("blox:wood_quarter", {
@@ -288,6 +302,7 @@ if moreblocks then
 	minetest.override_item("moreblocks:wood_tile_flipped", {
 		palette = "unifieddyes_palette_extended.png",
 		ud_replacement_node = "blox:wood_quarter",
+		after_place_node = unifieddyes.recolor_on_place,
 		groups = {wood = 1, snappy = 1, choppy = 2, oddly_breakable_by_hand = 2, flammable = 3, ud_param2_colorable = 1},
 	})
 else

@@ -30,6 +30,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 --=====================================================================
 
 unifieddyes = {}
+unifieddyes.last_used_dye = {}
+unifieddyes.last_dyed_node = {}
 
 local creative_mode = minetest.setting_getbool("creative_mode")
 
@@ -134,16 +136,73 @@ local default_dyes = {
 	"yellow"
 }
 
--- this tiles the "extended" palette sideways and then crops it to 256x1
--- to convert it from human readable to something the engine can use as a palette.
---
--- in machine-readable form, the selected color is:
--- [hue] - [shade]*24 for the light colors, or
--- [hue] + [saturation]*24 + [shade]*48 for the dark colors, or
--- 240 + [shade] for the greys, 0 = white.
+-- automatically recolor a placed node to match the last-used dye
+-- should be called in the node's `after_place_node` callback.
+
+function unifieddyes.recolor_on_place(pos, placer, itemstack, pointed_thing)
+
+	local playername = placer:get_player_name()
+	local stackname = itemstack:get_name()
+
+	if unifieddyes.last_dyed_node[playername] ~= stackname then
+		if unifieddyes.last_used_dye[playername] then
+			minetest.chat_send_player(playername, "Switched to \""..stackname.."\" while auto-coloring, color reset to neutral.")
+		end
+		unifieddyes.last_used_dye[playername] = nil
+		unifieddyes.last_dyed_node[playername] = nil
+	end
+
+	unifieddyes.last_dyed_node[playername] = stackname
+
+	if unifieddyes.last_used_dye[playername] then
+		local lastdye = unifieddyes.last_used_dye[playername]
+
+		local inv = placer:get_inventory()
+		if (lastdye and lastdye ~= "" and inv:contains_item("main", lastdye.." 1")) or creative_mode then
+
+			local nodedef = minetest.registered_nodes[stackname]
+			local newname = nodedef.ud_replacement_node or stackname
+			local node = minetest.get_node(pos)
+
+			local palette_type = true -- default to 89-color split, because the others are easier to check for.
+			local oldfdir = node.param2 % 32
+
+			if nodedef.palette == "unifieddyes_palette.png" then
+				palette_type = false
+				oldfdir = 0
+			elseif nodedef.palette == "unifieddyes_palette_colorwallmounted.png" then
+				palette_type = "wallmounted"
+				oldfdir = node.param2 % 8
+			elseif nodedef.palette == "unifieddyes_palette_extended.png" then
+				palette_type = "extended"
+				oldfdir = 0
+			end
+
+			local paletteidx, hue = unifieddyes.getpaletteidx(lastdye, palette_type)
+			if palette_type == true then newname = string.gsub(newname, "_grey", "_"..unifieddyes.HUES[hue]) end
+
+			minetest.set_node(pos, { name = newname, param2 = oldfdir + paletteidx })
+
+			local meta = minetest.get_meta(pos)
+			meta:set_string("dye", lastdye)
+
+			if not creative_mode then
+				inv:remove_item("main", lastdye.." 1")
+			end
+		else
+			minetest.chat_send_player(playername, "Ran out of "..unifieddyes.last_used_dye[playername]..", resetting to neutral.")
+			unifieddyes.last_used_dye[playername] = nil
+		end
+	end
+end
+
+minetest.register_on_leaveplayer(function(player)
+	local playername = player:get_player_name()
+	unifieddyes.last_used_dye[playername] = nil
+	unifieddyes.last_dyed_node[playername] = nil
+end)
 
 -- code borrowed from homedecor
-
 -- call this function to reset the rotation of a "wallmounted" object on place
 
 function unifieddyes.fix_rotation(pos, placer, itemstack, pointed_thing)
@@ -520,6 +579,7 @@ function unifieddyes.on_use(itemstack, player, pointed_thing)
 
 	local pos = minetest.get_pointed_thing_position(pointed_thing)
 	local node = minetest.get_node(pos)
+
 	local nodedef = minetest.registered_nodes[node.name]
 
 	if not nodedef then return end -- target was an unknown node, just bail out
@@ -551,8 +611,6 @@ function unifieddyes.on_use(itemstack, player, pointed_thing)
 		palette_type = "wallmounted"
 	end
 
-	print(palette_type)
-
 	if minetest.is_protected(pos, playername) and not minetest.check_player_privs(playername, {protection_bypass=true}) then
 		minetest.record_protection_violation(pos, playername)
 		return
@@ -563,6 +621,8 @@ function unifieddyes.on_use(itemstack, player, pointed_thing)
 	local paletteidx, hue = unifieddyes.getpaletteidx(stackname, palette_type)
 
 	if paletteidx then
+
+		unifieddyes.last_used_dye[playername] = stackname
 
 		local meta = minetest.get_meta(pos)
 		local prevdye = meta:get_string("dye")

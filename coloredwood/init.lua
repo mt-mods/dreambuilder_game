@@ -158,6 +158,7 @@ minetest.register_node("coloredwood:wood_block", {
 	sunlight_propagates = false,
 	groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=2, not_in_creative_inventory=1, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
+	after_place_node = unifieddyes.recolor_on_place,
 	after_dig_node = unifieddyes.after_dig_node,
 	drop = "default:wood"
 })
@@ -180,6 +181,11 @@ for _, color in ipairs(coloredwood.hues_plus_greys) do
 				paramtype = "light",
 				paramtype2 = "colorfacedir",
 				palette = "unifieddyes_palette_"..color.."s.png",
+				after_place_node = function(pos, placer, itemstack, pointed_thing)
+					print("after_place_node on "..minetest.get_node(pos).name)
+					minetest.rotate_node(itemstack, placer, pointed_thing)
+					unifieddyes.recolor_on_place(pos, placer, itemstack, pointed_thing)
+				end,
 				groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=2, not_in_creative_inventory=1, ud_param2_colorable = 1},
 				after_dig_node = unifieddyes.after_dig_node
 			}
@@ -203,13 +209,19 @@ end
 				minetest.override_item(i.name, {
 					ud_replacement_node = "coloredwood:"..s1.."_wood_grey"..s2,
 					paramtype2 = "colorfacedir",
+					after_place_node = function(pos, placer, itemstack, pointed_thing)
+						print("overridden after_place_node on "..i.name)
+						minetest.rotate_node(itemstack, placer, pointed_thing)
+						unifieddyes.recolor_on_place(pos, placer, itemstack, pointed_thing)
+					end,
+					on_place = minetest.item_place,
 					groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, wood = 1, not_in_creative_inventory=1, ud_param2_colorable = 1},
 				})
 			end
 		end
 	end
 
-	-- fix drops for colored versions of stairsplus nodes
+	-- fix drops and other stuff for colored versions of stairsplus nodes
 
 	for _, i in pairs(minetest.registered_nodes) do
 		if string.find(i.name, "coloredwood:stair_")
@@ -222,6 +234,12 @@ end
 			mname = string.gsub(i.name, "coloredwood:", "moreblocks:")
 			local s1, s2 = is_stairsplus(mname, true)
 			minetest.override_item(i.name, {
+				after_place_node = function(pos, placer, itemstack, pointed_thing)
+					print("overridden after_place_node on "..i.name)
+					minetest.rotate_node(itemstack, placer, pointed_thing)
+					unifieddyes.recolor_on_place(pos, placer, itemstack, pointed_thing)
+				end,
+				on_place = minetest.item_place,
 				drop = "moreblocks:"..s1.."_wood"..s2
 			})
 		end
@@ -231,6 +249,7 @@ end
 minetest.override_item("default:wood", {
 	palette = "unifieddyes_palette_extended.png",
 	ud_replacement_node = "coloredwood:wood_block",
+	after_place_node = unifieddyes.recolor_on_place,
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, wood = 1, ud_param2_colorable = 1},
 })
 
@@ -241,6 +260,7 @@ default.register_fence("coloredwood:fence", {
 	palette = "unifieddyes_palette_extended.png",
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
+	after_place_node = unifieddyes.recolor_on_place,
 	after_dig_node = unifieddyes.after_dig_node,
 	drop = "default:fence_wood",
 	material = "default:wood"
@@ -249,6 +269,7 @@ default.register_fence("coloredwood:fence", {
 minetest.override_item("default:fence_wood", {
 	palette = "unifieddyes_palette_extended.png",
 	ud_replacement_node = "coloredwood:fence",
+	after_place_node = unifieddyes.recolor_on_place,
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, ud_param2_colorable = 1}
 })
 
