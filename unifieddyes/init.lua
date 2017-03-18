@@ -561,13 +561,14 @@ function unifieddyes.after_dig_node(pos, oldnode, oldmetadata, digger)
 end
 
 function unifieddyes.on_use(itemstack, player, pointed_thing)
-
 	local playername = player:get_player_name()
 
-	if minetest.is_protected(unifieddyes.select_node(pointed_thing), playername)
-	  and not minetest.check_player_privs(playername, "protection_bypass") then
-		minetest.chat_send_player(playername, "Sorry, someone else owns that spot.")
-		return
+	if pointed_thing and pointed_thing.type == "node" then
+		if minetest.is_protected(unifieddyes.select_node(pointed_thing), playername)
+		  and not minetest.check_player_privs(playername, "protection_bypass") then
+			minetest.chat_send_player(playername, "Sorry, someone else owns that spot.")
+			return
+		end
 	end
 
 	if pointed_thing and pointed_thing.type == "object" then
@@ -575,7 +576,7 @@ function unifieddyes.on_use(itemstack, player, pointed_thing)
 		return player:get_wielded_item() -- punch may modified the wielded item, load the new and return it
 	end
 
-	if not (pointed_thing and pointed_thing.type == "node") then return end  -- if "using" the dye not on a node
+	if not (pointed_thing and pointed_thing.type == "node") then return end  -- if "using" the dye on nothing at all (e.g. air)
 
 	local pos = minetest.get_pointed_thing_position(pointed_thing)
 	local node = minetest.get_node(pos)
