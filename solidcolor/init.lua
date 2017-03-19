@@ -9,6 +9,7 @@ minetest.register_node("solidcolor:block", {
 	after_dig_node = unifieddyes.after_dig_node,
 	place_param2 = 240,
 	on_construct = unifieddyes.on_construct,
+	after_place_node = unifieddyes.recolor_on_place,
 })
 
 minetest.register_craft( {
