@@ -561,6 +561,7 @@ function unifieddyes.after_dig_node(pos, oldnode, oldmetadata, digger)
 end
 
 function unifieddyes.on_use(itemstack, player, pointed_thing)
+	local stackname = itemstack:get_name()
 	local playername = player:get_player_name()
 
 	if pointed_thing and pointed_thing.type == "node" then
@@ -593,6 +594,14 @@ function unifieddyes.on_use(itemstack, player, pointed_thing)
 		end
 	end
 
+	if player:get_player_control().sneak then
+		if unifieddyes.last_used_dye[playername] then
+			minetest.chat_send_player(playername, "Shift-punched a node, switching back to neutral color." )
+		end
+		unifieddyes.last_used_dye[playername] = nil
+		return
+	end
+
 	-- if the target is unknown, has no groups defined, or isn't UD-colorable, just bail out
 	if not (nodedef and nodedef.groups and nodedef.groups.ud_param2_colorable) then
 		minetest.chat_send_player(playername, "That node can't be colored.")
@@ -617,13 +626,15 @@ function unifieddyes.on_use(itemstack, player, pointed_thing)
 		return
 	end
 
-	local stackname = itemstack:get_name()
 	local pos2 = unifieddyes.select_node(pointed_thing)
 	local paletteidx, hue = unifieddyes.getpaletteidx(stackname, palette_type)
 
 	if paletteidx then
 
-		unifieddyes.last_used_dye[playername] = stackname
+		if unifieddyes.last_used_dye[playername] ~= stackname then
+			minetest.chat_send_player(playername, "Color "..stackname.." selected, auto-coloring activated." )
+			unifieddyes.last_used_dye[playername] = stackname
+		end
 
 		local meta = minetest.get_meta(pos)
 		local prevdye = meta:get_string("dye")
