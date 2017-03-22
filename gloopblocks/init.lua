@@ -134,35 +134,7 @@ minetest.register_node("gloopblocks:scaffolding", {
 	tiles = {"gloopblocks_scaffold.png"},
 	groups = {choppy=3, oddly_breakable_by_hand=3},
 	sounds = default.node_sound_wood_defaults(),
-	on_rightclick = function(pos, node, clicker, itemstack)
-		if itemstack and itemstack:get_name() == node.name then
-			for i = 1,19 do
-				if minetest.get_node({x=pos.x,y=pos.y-i,z=pos.z}).name == "gloopblocks:scaffolding" and scafffound ~= 0 and scafffound ~= 1 then
-					local scafffound = 1
-					return itemstack
-				else
-					break
-				end
-			end
-			for i = 1,19 do
-				if minetest.get_node({x=pos.x,y=pos.y+i,z=pos.z}).name == "air" and scaffworked ~= 1 and scaffworked ~= 0 then
-					minetest.set_node({x=pos.x,y=pos.y+i,z=pos.z}, {name="gloopblocks:scaffolding"})
-					local scaffworked = 1
-					return ItemStack(tostring(itemstack:get_name().." "..tostring(itemstack:get_count()-1)))
-				elseif minetest.get_node({x=pos.x,y=pos.y+i,z=pos.z}).name == "gloopblocks:scaffolding" then	
-				else
-					local scaffworked = 0
-				end
-			end
-			if scaffworked == 1 then
-				return ItemStack(tostring(itemstack:get_name().." "..tostring(itemstack:get_count()-1)))
-			else
-				return itemstack
-			end
-		else return itemstack end
-	end,
 })
-
 
 minetest.register_alias("moreblocks:oerkkiblock", "gloopblocks:oerkki_block")
 minetest.register_alias("gloopblocks:obsidian", "default:obsidian")
