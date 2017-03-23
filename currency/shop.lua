@@ -90,7 +90,7 @@ minetest.register_node("currency:shop", {
 			"shop_side.png",
 			"shop_front.png"},
 	inventory_image = "shop_front.png",
-	groups = {choppy=2,oddly_breakable_by_hand=2},
+	groups = {choppy=2,oddly_breakable_by_hand=2,tubedevice=1,tubedevice_receiver=1},
 	sounds = default.node_sound_wood_defaults(),
 	after_place_node = function(pos, placer, itemstack)
 		local owner = placer:get_player_name()
@@ -104,7 +104,23 @@ minetest.register_node("currency:shop", {
 		inv:set_size("stock", 3*2)
 		inv:set_size("owner_wants", 3*2)
 		inv:set_size("owner_gives", 3*2)
+		if minetest.get_modpath("pipeworks") then pipeworks.after_place(pos) end
 	end,
+	after_dig_node = (pipeworks and pipeworks.after_dig),
+	tube = {
+		insert_object = function(pos, node, stack, direction)
+			local meta = minetest.get_meta(pos)
+			local inv = meta:get_inventory()
+			return inv:add_item("stock",stack)
+		end,
+		can_insert = function(pos,node,stack,direction)
+			local meta = minetest.get_meta(pos)
+			local inv = meta:get_inventory()
+			return inv:room_for_item("stock", stack)
+		end,
+		input_inventory = "customers_gave",
+		connect_sides = {left = 1, right = 1, back = 1, front = 1, bottom = 1, top = 1}
+	},
 	on_rightclick = function(pos, node, clicker, itemstack)
 		clicker:get_inventory():set_size("customer_gives", 3*2)
 		clicker:get_inventory():set_size("customer_gets", 3*2)
