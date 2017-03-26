@@ -125,7 +125,6 @@ minetest.register_node("unifiedbricks:clayblock", {
 	tiles = {
 		"unifiedbricks_clayblock.png",
 	},
-	paramtype = "light",
 	paramtype2 = "color",
 	palette = "unifieddyes_palette_extended.png",
 	place_param2 = 240,
