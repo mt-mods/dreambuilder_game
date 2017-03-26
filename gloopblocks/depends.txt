@@ -9,3 +9,4 @@ wool?
 xdecor?
 caverealms?
 technic?
+nyancat?

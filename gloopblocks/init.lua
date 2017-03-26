@@ -17,13 +17,37 @@ end
 
 -- Nodes
 
-minetest.register_node("gloopblocks:rainbow_block", {
-	description = S("Rainbow Block"),
+minetest.register_node("gloopblocks:rainbow_block_diagonal", {
+	description = S("Diagonal Rainbow Block"),
 	tiles = {"gloopblocks_rainbow_block.png"},
 	is_ground_content = true,
 	groups = {cracky=3},
 	sounds = default.node_sound_defaults(),
 })
+minetest.register_alias("gloopblocks:rainbow_block", "gloopblocks:rainbow_block_diagonal")
+
+minetest.register_node("gloopblocks:rainbow_block_horizontal", {
+	description = "Horizontal Rainbow Block",
+	tiles = {
+		"gloopblocks_rainbow_horizontal.png^[transformR90",
+		"gloopblocks_rainbow_horizontal.png^[transformR90",
+		"gloopblocks_rainbow_horizontal.png"
+	},
+	paramtype = "light",
+	light_source = default.LIGHT_MAX,
+	paramtype2 = "facedir",
+	groups = {cracky = 2},
+	is_ground_content = false,
+	sounds = default.node_sound_defaults(),
+})
+
+if not minetest.setting_getbool("pbj_pup_alias_nyancat") then
+	if not minetest.registered_nodes["nyancat:nyancat_rainbow"] then
+		minetest.register_alias("nyancat:nyancat_rainbow", "gloopblocks:rainbow_block_horizontal")
+	elseif not minetest.registered_nodes["default:nyancat_rainbow"] then
+		minetest.register_alias("default:nyancat_rainbow", "gloopblocks:rainbow_block_horizontal")
+	end
+end
 
 minetest.register_node("gloopblocks:cement", {
 	description = S("Cement"),
