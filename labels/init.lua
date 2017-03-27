@@ -226,14 +226,16 @@ minetest.register_node(":streets:printer", {
 	},
 })
 
-streets.register_label = function(friendlyname,name,tex,color,ink_needed)
+streets.register_label = function(friendlyname,name,tex,color,ink_needed,hide)
+	local groups = {snappy = 3,attached_node = 1,oddly_breakable_by_hand = 1}
+	if hide then groups.not_in_creative_inventory = 1 end
 	minetest.register_node(":streets:mark_"..name,{
 		description = streets.S("Marking Overlay: "..friendlyname),
 		tiles = {tex,"streets_rw_transparent.png"},
 		drawtype = "nodebox",
 		paramtype = "light",
 		paramtype2 = "facedir",
-		groups = {snappy = 3,attached_node = 1,oddly_breakable_by_hand = 1},
+		groups = groups,
 		sunlight_propagates = true,
 		walkable = false,
 		inventory_image = tex,
@@ -292,7 +294,7 @@ streets.register_label("Solid White Side Line","solid_white_side_line","streets_
 minetest.register_alias("streets:asphalt_side","streets:mark_solid_white_side_line_on_asphalt")
 minetest.register_alias("streets:asphalt_sideline","streets:mark_solid_white_side_line_on_asphalt")
 
-streets.register_label("Solid White Side Line (rotated)","solid_white_side_line_rotated","streets_asphalt_side.png^[transformR180","white",3)
+streets.register_label("Solid White Side Line (rotated)","solid_white_side_line_rotated","streets_asphalt_side.png^[transformR180","white",3,true)
 
 minetest.register_alias("streets:asphalt_sideline_r","streets:mark_solid_white_side_line_rotated_on_asphalt")
 
@@ -314,7 +316,7 @@ streets.register_label("Solid White Side Line (corner)","solid_white_side_line_c
 minetest.register_alias("streets:asphalt_outer_edge","streets:mark_solid_white_side_line_corner_on_asphalt")
 
 
-streets.register_label("Solid White Side Line (corner, rotated)","solid_white_side_line_corner_rotated","streets_asphalt_outer_edge.png^[transformR270","white",4)
+streets.register_label("Solid White Side Line (corner, rotated)","solid_white_side_line_corner_rotated","streets_asphalt_outer_edge.png^[transformR270","white",4,true)
 
 minetest.register_alias("streets:asphalt_outer_edge_r","streets:mark_solid_white_side_line_corner_rotated_on_asphalt")
 
@@ -376,7 +378,7 @@ streets.register_label("Solid Yellow Side Line (corner)","solid_yellow_side_line
 minetest.register_alias("streets:rw_outer_edge","streets:solid_yellow_side_line_corner")
 
 
-streets.register_label("Solid Yellow Side Line (corner,rotated)","solid_yellow_side_line_corner_rotated","streets_rw_outer_edge.png^[transformR270","yellow",5)
+streets.register_label("Solid Yellow Side Line (corner,rotated)","solid_yellow_side_line_corner_rotated","streets_rw_outer_edge.png^[transformR270","yellow",5,true)
 
 minetest.register_alias("streets:rw_outer_edge","streets:solid_yellow_side_line_corner")
 
@@ -419,7 +421,7 @@ streets.register_label("Solid Yellow Side Line","solid_yellow_side_line","street
 
 minetest.register_alias("streets:rw_sideline","streets:mark_solid_yellow_side_line")
 
-streets.register_label("Solid Yellow Side Line (rotated)","solid_yellow_side_line_rotated","streets_rw_asphalt_side.png^[transformR180","yellow",3)
+streets.register_label("Solid Yellow Side Line (rotated)","solid_yellow_side_line_rotated","streets_rw_asphalt_side.png^[transformR180","yellow",3,true)
 
 streets.register_label("Yellow Diagonal Lines","yellow_diagonal","streets_yellow_diagonal_lines.png","yellow",5)
 
