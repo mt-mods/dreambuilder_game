@@ -237,7 +237,7 @@ function homedecor.bed_expansion(pos, placer, itemstack, pointed_thing, trybunks
 		local newparam2 = param2 % 8
 		if inv:contains_item("main", lastdye) then
 			minetest.set_node(toppos, { name = thisnode.name, param2 = param2})
-			inv:remove_item("main", lastdye.." 1")
+			if lastdye then inv:remove_item("main", lastdye.." 1") end
 		else
 			minetest.set_node(toppos, { name = thisnode.name, param2 = newparam2})
 			minetest.chat_send_player(placer_name, "Ran out of "..lastdye..", using neutral color.")
