@@ -567,6 +567,15 @@
     }
   })
 
+  if minetest.get_modpath('bushes_classic') then
+    minetest.register_craft({
+      type = 'cooking',
+      cooktime = 5,
+      recipe = 'bees:bottle_honey',
+      output = 'bushes:sugar',
+    })
+  end
+
 --TOOLS
   minetest.register_tool('bees:smoker', {
     description = 'smoker',
