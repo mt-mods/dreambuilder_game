@@ -348,9 +348,13 @@ end
 
 local handle_active_blocks_step = 0.2
 local handle_active_blocks_timer = 0.1
+pipeworks.items_per_second_timer = 0
 
 minetest.register_globalstep(function(dtime)
 	handle_active_blocks_timer = handle_active_blocks_timer + dtime
+	pipeworks.items_per_second_timer = pipeworks.items_per_second_timer + 0.1
+	-- don't care about overflow in this timer unless you plan to let the game run for 30 years straight :)
+
 	if handle_active_blocks_timer >= handle_active_blocks_step then
 		handle_active_blocks_timer = handle_active_blocks_timer - handle_active_blocks_step
 		move_entities_globalstep_part1(dtime)

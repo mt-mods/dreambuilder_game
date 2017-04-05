@@ -1,5 +1,9 @@
 local luaentity = pipeworks.luaentity
-local max_tube_limit = minetest.setting_get("pipeworks_max_tube_limit") or 30
+local enable_max_limit = true minetest.setting_get("pipeworks_enable_items_per_second_limit")
+local max_tube_limit = minetest.setting_get("pipeworks_items_per_second") or 30
+
+pipeworks.tube_last_times = {}
+pipeworks.tube_item_count = {}
 
 function pipeworks.tube_item(pos, item)
 	error("obsolete pipeworks.tube_item() called; change caller to use pipeworks.tube_inject_item() instead")
@@ -31,9 +35,6 @@ function pipeworks.notvel(tbl, vel)
 	end
 	return tbl2
 end
-
-local tube_last_times = {}
-local tube_item_count = {}
 
 local function go_next(pos, velocity, stack)
 	local next_positions = {}
@@ -81,19 +82,21 @@ local function go_next(pos, velocity, stack)
 		end
 	end
 
-	local gt = minetest.get_gametime()
+	local ips_timer = math.floor(pipeworks.items_per_second_timer)
 	local h = minetest.hash_node_position(pos)
-	if tube_last_times[h] == gt then
-		local k = tube_item_count[h] or 0
-		if k > max_tube_limit then
+	if pipeworks.tube_last_times[h] == ips_timer then
+		local k = pipeworks.tube_item_count[h] or 0
+		if enable_max_limit and (k > max_tube_limit) then
 			-- Kill tube
+			cmeta:set_string("the_tube_was", minetest.serialize(cnode))
+			print("[Pipeworks] Warning - a tube at "..minetest.pos_to_string(pos).." broke due to overpressure ("..k.." items/sec)")
 			minetest.swap_node(pos, {name = "pipeworks:broken_tube_1"})
 			pipeworks.scan_for_tube_objects(pos)
 		end
-		tube_item_count[h] = k + 1
+		pipeworks.tube_item_count[h] = k + 1
 	else
-		tube_last_times[h] = gt
-		tube_item_count[h] = 1
+		pipeworks.tube_last_times[h] = ips_timer
+		pipeworks.tube_item_count[h] = 1
 	end
 
 	if not next_positions[1] then
