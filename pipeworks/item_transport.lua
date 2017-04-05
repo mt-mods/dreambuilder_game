@@ -1,5 +1,5 @@
 local luaentity = pipeworks.luaentity
-local enable_max_limit = true minetest.setting_get("pipeworks_enable_items_per_second_limit")
+local enable_max_limit = minetest.setting_get("pipeworks_enable_items_per_second_limit")
 local max_tube_limit = minetest.setting_get("pipeworks_items_per_second") or 30
 
 pipeworks.tube_last_times = {}
