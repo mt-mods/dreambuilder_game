@@ -1,3 +1,6 @@
+
+local creative_mode = minetest.setting_getbool("creative_mode")
+
 local function cyan(str)
 	return minetest.colorize("#00FFFF",str)
 end
@@ -54,13 +57,31 @@ minetest.register_node("areasprotector:protector",{
 		end
 		return itemstack
 	end,
-	on_destruct = function(pos)
-		local meta = minetest.get_meta(pos)
-		local owner = meta:get_string("owner")
-		local id = meta:get_int("area_id")
-		if areas.areas[id] and areas:isAreaOwner(id,owner) then
-			areas:remove(id)
-			areas:save()
+	after_dig_node = function(pos, oldnode, oldmetadata, digger)
+		if oldmetadata and oldmetadata.fields then
+			local owner = oldmetadata.fields.owner
+			local id = tonumber(oldmetadata.fields.area_id)
+			local playername = digger:get_player_name()
+			if areas.areas[id] and areas:isAreaOwner(id,owner) then
+				if digger:get_player_control().sneak then
+					local inv = digger:get_inventory()
+					if not creative_mode then
+						if inv:room_for_item("main", "default:steel_ingot 6") then
+							inv:remove_item("main", "areasprotector:protector 1")
+							inv:add_item("main", "default:steel_ingot 6")
+						else
+							minetest.chat_send_player(playername, "No room for the replacement ingots, just digging the protector and deleting the area normally.")
+							areas:remove(id)
+							areas:save()
+						end
+					else
+						inv:remove_item("main", "areasprotector:protector 1")
+					end
+				else
+					areas:remove(id)
+					areas:save()
+				end
+			end
 		end
 	end,
 	on_punch = function(pos, node, puncher)

@@ -9,6 +9,29 @@ minetest.register_craft( {
 	},
 })
 
+pipeworks.register_tube("pipeworks:broken_tube", {
+	description = "Broken Tube (you hacker you)",
+	inventory_image = "pipeworks_tube_broken_inv.png",
+	plain = { { name = "pipeworks_tube_broken_plain.png", color = nodecolor, backface_culling = false } },
+	noctr = { { name = "pipeworks_tube_broken_plain.png", color = nodecolor, backface_culling = false } },
+	ends  = { { name = "pipeworks_tube_broken_end.png",   color = nodecolor } },
+	short =   { name = "pipeworks_tube_broken_short.png", color = nodecolor },
+	node_def = {
+		drop = "pipeworks:tube_1",
+		groups = {not_in_creative_inventory = 1, tubedevice_receiver = 1},
+		tube = {
+			insert_object = function(pos, node, stack, direction)
+				minetest.item_drop(stack, nil, pos)
+				return ItemStack("")
+			end,
+			can_insert = function(pos,node,stack,direction)
+				return true
+			end,
+			priority = 50,
+		}
+	}
+})
+
 -- the high priority tube is a low-cpu replacement for sorting tubes in situations
 -- where players would use them for simple routing (turning off paths)
 -- without doing actual sorting, like at outputs of tubedevices that might both accept and eject items
@@ -101,7 +124,7 @@ if pipeworks.enable_one_way_tube then
 				return {velocity}
 			end,
 			can_insert = function(pos, node, stack, direction)
-				local dir = minetest.facedir_to_right_dir(node.param2)
+				local dir = pipeworks.facedir_to_right_dir(node.param2)
 				return vector.equals(dir, direction)
 			end,
 			priority = 75 -- Higher than normal tubes, but lower than receivers

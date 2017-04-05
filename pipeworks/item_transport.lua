@@ -1,3 +1,6 @@
+local luaentity = pipeworks.luaentity
+local max_tube_limit = minetest.setting_get("pipeworks_max_tube_limit") or 30
+
 function pipeworks.tube_item(pos, item)
 	error("obsolete pipeworks.tube_item() called; change caller to use pipeworks.tube_inject_item() instead")
 end
@@ -29,6 +32,9 @@ function pipeworks.notvel(tbl, vel)
 	return tbl2
 end
 
+local tube_last_times = {}
+local tube_item_count = {}
+
 local function go_next(pos, velocity, stack)
 	local next_positions = {}
 	local max_priority = 0
@@ -55,7 +61,7 @@ local function go_next(pos, velocity, stack)
 	end
 	for _, vect in ipairs(can_go) do
 		local npos = vector.add(pos, vect)
-		minetest.load_position(npos)
+		pipeworks.load_position(npos)
 		local node = minetest.get_node(npos)
 		local reg_node = minetest.registered_nodes[node.name]
 		if reg_node then
@@ -73,6 +79,21 @@ local function go_next(pos, velocity, stack)
 				end
 			end
 		end
+	end
+
+	local gt = minetest.get_gametime()
+	local h = minetest.hash_node_position(pos)
+	if tube_last_times[h] == gt then
+		local k = tube_item_count[h] or 0
+		if k > max_tube_limit then
+			-- Kill tube
+			minetest.swap_node(pos, {name = "pipeworks:broken_tube_1"})
+			pipeworks.scan_for_tube_objects(pos)
+		end
+		tube_item_count[h] = k + 1
+	else
+		tube_last_times[h] = gt
+		tube_item_count[h] = 1
 	end
 
 	if not next_positions[1] then
@@ -225,7 +246,7 @@ luaentity.register_entity("pipeworks:tubed_item", {
 			moved = true
 		end
 
-		minetest.load_position(self.start_pos)
+		pipeworks.load_position(self.start_pos)
 		local node = minetest.get_node(self.start_pos)
 		if moved and minetest.get_item_group(node.name, "tubedevice_receiver") == 1 then
 			local leftover
