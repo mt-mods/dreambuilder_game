@@ -1,8 +1,7 @@
 local luaentity = pipeworks.luaentity
 local enable_max_limit = minetest.setting_get("pipeworks_enable_items_per_tube_limit")
-local max_tube_limit = minetest.setting_get("pipeworks_max_items_per_tube") or 40
-
-pipeworks.tube_item_count = {}
+local max_tube_limit = tonumber(minetest.setting_get("pipeworks_max_items_per_tube")) or 30
+if enable_max_limit == nil then enable_max_limit = true end
 
 function pipeworks.tube_item(pos, item)
 	error("obsolete pipeworks.tube_item() called; change caller to use pipeworks.tube_inject_item() instead")
@@ -34,6 +33,21 @@ function pipeworks.notvel(tbl, vel)
 	end
 	return tbl2
 end
+
+local tube_item_count = {}
+
+minetest.register_globalstep(function(dtime)
+	if not luaentity.entities then
+		return
+	end
+	tube_item_count = {}
+	for id, entity in pairs(luaentity.entities) do
+		if entity.name == "pipeworks:tubed_item" then
+			local h = minetest.hash_node_position(vector.round(entity._pos))
+			tube_item_count[h] = (tube_item_count[h] or 0) + 1
+		end
+	end
+end)
 
 local function go_next(pos, velocity, stack)
 	local next_positions = {}
@@ -82,17 +96,13 @@ local function go_next(pos, velocity, stack)
 	end
 
 	if enable_max_limit then
-		local itemcount = #minetest.get_objects_inside_radius(pos, 0.5)
-
 		local h = minetest.hash_node_position(pos)
+		local itemcount = tube_item_count[h] or 0
 		if itemcount > max_tube_limit then
 			cmeta:set_string("the_tube_was", minetest.serialize(cnode))
 			print("[Pipeworks] Warning - a tube at "..minetest.pos_to_string(pos).." broke due to too many items ("..itemcount..")")
 			minetest.swap_node(pos, {name = "pipeworks:broken_tube_1"})
 			pipeworks.scan_for_tube_objects(pos)
-			pipeworks.tube_item_count[h] = 0
-		else
-			pipeworks.tube_item_count[h] = itemcount
 		end
 	end
 
@@ -221,15 +231,13 @@ luaentity.register_entity("pipeworks:tubed_item", {
 	end,
 
 	on_step = function(self, dtime)
+		local pos = self:getpos()
 		if self.start_pos == nil then
-			local pos = self:getpos()
 			self.start_pos = vector.round(pos)
 			self:setpos(pos)
 		end
 
-		local pos = self:getpos()
 		local stack = ItemStack(self.itemstring)
-		local drop_pos
 
 		local velocity = self:getvelocity()
 
@@ -240,8 +248,9 @@ luaentity.register_entity("pipeworks:tubed_item", {
 			moved = true
 		end
 		local vel = {x = velocity.x / speed, y = velocity.y / speed, z = velocity.z / speed, speed = speed}
+		local moved_by = vector.distance(pos, self.start_pos)
 
-		if vector.distance(pos, self.start_pos) >= 1 then
+		if moved_by >= 1 then
 			self.start_pos = vector.add(self.start_pos, vel)
 			moved = true
 		end
@@ -260,6 +269,7 @@ luaentity.register_entity("pipeworks:tubed_item", {
 				return
 			end
 			velocity = vector.multiply(velocity, -1)
+			self:setpos(vector.subtract(self.start_pos, vector.multiply(vel, moved_by - 1)))
 			self:setvelocity(velocity)
 			self:set_item(leftover:to_string())
 			return
@@ -272,34 +282,25 @@ luaentity.register_entity("pipeworks:tubed_item", {
 			local rev_node = minetest.get_node(vector.round(vector.add(self.start_pos,rev_dir)))
 			local tube_present = minetest.get_item_group(rev_node.name,"tubedevice") == 1
 			if not found_next then
-			local drop_pos = minetest.find_node_near(vector.add(self.start_pos, velocity), 1, "air")
-				if pipeworks.drop_on_routing_fail or not tube_present then
-					if drop_pos then
-						-- Using add_item instead of item_drop since this makes pipeworks backward
-						-- compatible with Minetest 0.4.13.
-						-- Using item_drop here makes Minetest 0.4.13 crash.
-						minetest.add_item(drop_pos, stack)
-						self:remove()
-						return
-					end
+				if pipeworks.drop_on_routing_fail or not tube_present or
+						minetest.get_item_group(rev_node.name,"tube") ~= 1 then
+					-- Using add_item instead of item_drop since this makes pipeworks backward
+					-- compatible with Minetest 0.4.13.
+					-- Using item_drop here makes Minetest 0.4.13 crash.
+					local dropped_item = minetest.add_item(self.start_pos, stack)
+					dropped_item:setvelocity(vector.multiply(velocity, 5))
+					self:remove()
+					return
 				else
-					if minetest.get_item_group(rev_node.name,"tube") == 1 then
-						print("[Pipeworks] Warning - tubed item had to reverse direction at "..minetest.pos_to_string(self.start_pos))
-						velocity = vector.multiply(velocity, -1)
-						self:setpos(self.start_pos)
-						self:setvelocity(velocity)
-					else
-						if drop_pos then
-							minetest.add_item(drop_pos, stack)
-							self:remove()
-							return
-						end
-					end
+					velocity = vector.multiply(velocity, -1)
+					self:setpos(vector.subtract(self.start_pos, vector.multiply(vel, moved_by - 1)))
+					self:setvelocity(velocity)
 				end
 			end
 
 			if new_velocity and not vector.equals(velocity, new_velocity) then
-				self:setpos(self.start_pos)
+				local nvelr = math.abs(new_velocity.x + new_velocity.y + new_velocity.z)
+				self:setpos(vector.add(self.start_pos, vector.multiply(new_velocity, (moved_by - 1) / nvelr)))
 				self:setvelocity(new_velocity)
 			end
 		end
