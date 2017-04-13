@@ -3,6 +3,7 @@ local digilines_path = minetest.get_modpath("digilines")
 
 local S = technic.getter
 local tube_entry = "^pipeworks_tube_connection_metallic.png"
+local cable_entry = "^technic_cable_connection_overlay.png"
 
 local fs_helpers = pipeworks.fs_helpers
 
@@ -132,7 +133,14 @@ function technic.register_battery_box(data)
 	end
 
 	local run = function(pos, node)
+		local below = minetest.get_node({x=pos.x, y=pos.y-1, z=pos.z})
 		local meta           = minetest.get_meta(pos)
+
+		if below.name ~= "technic:"..ltier.."_cable" then
+			meta:set_string("infotext", S("%s Battery Box Has No Network"):format(tier))
+			return
+		end
+
 		local eu_input       = meta:get_int(tier.."_EU_input")
 		local current_charge = meta:get_int("internal_EU_charge")
 
@@ -208,20 +216,27 @@ function technic.register_battery_box(data)
 			groups.tubedevice_receiver = 1
 		end
 
-		local tentry = tube_entry
+		local top_tex = "technic_"..ltier.."_battery_box_top.png"..tube_entry
+		local front_tex = "technic_"..ltier.."_battery_box_front.png^technic_power_meter"..i..".png"
+		local side_tex = "technic_"..ltier.."_battery_box_side.png"..tube_entry
+		local bottom_tex = "technic_"..ltier.."_battery_box_bottom.png"..tube_entry
+
 		if ltier == "lv" then
-			tentry = ""
+			top_tex = "technic_"..ltier.."_battery_box_top.png"
+			front_tex = "technic_"..ltier.."_battery_box_side.png^technic_power_meter"..i..".png"
+			side_tex = "technic_"..ltier.."_battery_box_side.png^technic_power_meter"..i..".png"
+			bottom_tex = "technic_"..ltier.."_battery_box_bottom.png"..cable_entry
 		end
 
 		minetest.register_node("technic:"..ltier.."_battery_box"..i, {
 			description = S("%s Battery Box"):format(tier),
 			tiles = {
-				"technic_"..ltier.."_battery_box_top.png"..tentry,
-				"technic_"..ltier.."_battery_box_bottom.png"..tentry,
-				"technic_"..ltier.."_battery_box_side.png^technic_power_meter"..i..".png",
-				"technic_"..ltier.."_battery_box_side.png^technic_power_meter"..i..".png",
-				"technic_"..ltier.."_battery_box_side.png^technic_power_meter"..i..".png",
-				"technic_"..ltier.."_battery_box_side.png^technic_power_meter"..i..".png"},
+				top_tex,
+				bottom_tex,
+				side_tex,
+				side_tex,
+				side_tex,
+				front_tex},
 			groups = groups,
 			connect_sides = {"bottom"},
 			tube = data.tube and tube or nil,
