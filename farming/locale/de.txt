@@ -74,7 +74,7 @@ Baked Potato = Ofenkartoffel
 #pumpkin.lua
 Pumpkin = Kürbis
 Pumpkin Slice = Kürbisscheibe
-Jack 'O Lantern = Kürbislaterne
+Jack 'O Lantern (punch to turn on and off) = Kürbislaterne (Punch zum Ein- und Ausschalten)
 Pumpkin Bread = Kürbisbrot
 Pumpkin Dough = Kürbisteig
 

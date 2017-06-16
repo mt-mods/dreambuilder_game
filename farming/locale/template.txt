@@ -72,7 +72,7 @@ Baked Potato =
 #pumpkin.lua
 Pumpkin = 
 Pumpkin Slice = 
-Jack 'O Lantern = 
+Jack 'O Lantern (punch to turn on and off) = 
 Pumpkin Bread = 
 Pumpkin Dough = 
 

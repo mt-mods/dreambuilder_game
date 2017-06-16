@@ -15,7 +15,7 @@ homedecor = {
 	modpath = modpath,
 
 	-- infinite stacks
-	expect_infinite_stacks = minetest.setting_getbool("creative_mode") and not minetest.get_modpath("unified_inventory")
+	expect_infinite_stacks = minetest.settings:get_bool("creative_mode") and not minetest.get_modpath("unified_inventory")
 }
 
 -- Determine if the item being pointed at is the underside of a node (e.g a ceiling)

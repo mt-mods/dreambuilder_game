@@ -1,5 +1,9 @@
 barter = {}
 
+-- internationalization boilerplate
+local MP = minetest.get_modpath(minetest.get_current_modname())
+local S, NS = dofile(MP.."/intllib.lua")
+
 barter.chest = {}
 barter.chest.formspec = {
 	main = "size[8,9]"..
@@ -7,20 +11,20 @@ barter.chest.formspec = {
 		"list[current_name;pl2;5,0;3,4;]"..
 		"list[current_player;main;0,5;8,4;]",
 	pl1 = {
-		start = "button[3,1;1,1;pl1_start;Start]",
+		start = "button[3,1;1,1;pl1_start;" .. S("Start") .. "]",
 		player = function(name) return "label[3,0;"..name.."]" end,
-		accept1 = "button[3,1;1,1;pl1_accept1;Confirm]"..
-				"button[3,2;1,1;pl1_cancel;Cancel]",
-		accept2 = "button[3,1;1,1;pl1_accept2;Exchange]"..
-				"button[3,2;1,1;pl1_cancel;Cancel]",
+		accept1 = "button[3,1;1,1;pl1_accept1;" .. S("Confirm") .. "]"..
+				"button[3,2;1,1;pl1_cancel;" .. S("Cancel") .. "]",
+		accept2 = "button[3,1;1,1;pl1_accept2;" .. S("Exchange") .. "]"..
+				"button[3,2;1,1;pl1_cancel;" .. S("Cancel") .. "]",
 	},
 	pl2 = {
-		start = "button[4,1;1,1;pl2_start;Start]",
+		start = "button[4,1;1,1;pl2_start;" .. S("Start") .. "]",
 		player = function(name) return "label[4,0;"..name.."]" end,
-		accept1 = "button[4,1;1,1;pl2_accept1;Confirm]"..
-				"button[4,2;1,1;pl2_cancel;Cancel]",
-		accept2 = "button[4,1;1,1;pl2_accept2;Exchange]"..
-				"button[4,2;1,1;pl2_cancel;Cancel]",
+		accept1 = "button[4,1;1,1;pl2_accept1;" .. S("Confirm") .. "]"..
+				"button[4,2;1,1;pl2_cancel;" .. S("Cancel") .. "]",
+		accept2 = "button[4,1;1,1;pl2_accept2;" .. S("Exchange") .. "]"..
+				"button[4,2;1,1;pl2_cancel;" .. S("Cancel") .. "]",
 	},
 }
 
@@ -90,7 +94,7 @@ end
 
 minetest.register_node("currency:barter", {
         drawtype = "nodebox",
-	description = "Barter Table",
+	description = S("Barter Table"),
 	paramtype = "light",
 	paramtype2 = "facedir",
 	tiles = {"barter_top.png",
@@ -111,7 +115,7 @@ minetest.register_node("currency:barter", {
 	sounds = default.node_sound_wood_defaults(),
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
-		meta:set_string("infotext", "Barter Table")
+		meta:set_string("infotext", S("Barter Table"))
 		meta:set_string("pl1","")
 		meta:set_string("pl2","")
 		barter.chest.update_formspec(meta)

@@ -95,11 +95,12 @@ FORMALDARKNESS = {
 minetest.register_node("unifiedbricks:brickblock", {
 	description = "Brick Block",
 	tiles = {
-		"unifiedbricks_brickblock.png",
-		{ name = "unifiedbricks_mortar.png", color = 0xffffffff },
+		"unifiedbricks_brickblock.png"
 	},
-	drawtype = "mesh",
-	mesh = "unifiedbricks_brick_block.obj",
+	overlay_tiles = {
+		{ name = "unifiedbricks_mortar.png", color = "white" }
+	},
+	use_texture_alpha = true,
 	paramtype = "light",
 	paramtype2 = "color",
 	palette = "unifieddyes_palette_extended.png",
@@ -150,10 +151,11 @@ minetest.register_node("unifiedbricks:brickblock_multicolor_dark", {
 	description = "Brick block (dark multicolor)",
 	tiles = {
 		"unifiedbricks_brickblock_multicolor_dark.png",
-		{ name = "unifiedbricks_mortar.png", color = 0xffffffff },
 	},
-	drawtype = "mesh",
-	mesh = "unifiedbricks_brick_block.obj",
+	overlay_tiles = {
+		{ name = "unifiedbricks_mortar2.png", color = "white" }
+	},
+	use_texture_alpha = true,
 	paramtype = "light",
 	paramtype2 = "color",
 	palette = "unifieddyes_palette_extended.png",
@@ -169,11 +171,12 @@ minetest.register_node("unifiedbricks:brickblock_multicolor_dark", {
 minetest.register_node("unifiedbricks:brickblock_multicolor_medium", {
 	description = "Brick block (medium multicolor)",
 	tiles = {
-		"unifiedbricks_brickblock_multicolor_medium.png",
-		{ name = "unifiedbricks_mortar.png", color = 0xffffffff },
+		"unifiedbricks_brickblock_multicolor_medium.png"
 	},
-	drawtype = "mesh",
-	mesh = "unifiedbricks_brick_block.obj",
+	overlay_tiles = {
+		{ name = "unifiedbricks_mortar3.png", color = "white" }
+	},
+	use_texture_alpha = true,
 	paramtype = "light",
 	paramtype2 = "color",
 	palette = "unifieddyes_palette_extended.png",
@@ -189,11 +192,12 @@ minetest.register_node("unifiedbricks:brickblock_multicolor_medium", {
 minetest.register_node("unifiedbricks:brickblock_multicolor_light", {
 	description = "Brick block (light multicolor)",
 	tiles = {
-		"unifiedbricks_brickblock_multicolor_light.png",
-		{ name = "unifiedbricks_mortar.png", color = 0xffffffff },
+		"unifiedbricks_brickblock_multicolor_light.png"
 	},
-	drawtype = "mesh",
-	mesh = "unifiedbricks_brick_block.obj",
+	overlay_tiles = {
+		{ name = "unifiedbricks_mortar4.png", color = "white" }
+	},
+	use_texture_alpha = true,
 	paramtype = "light",
 	paramtype2 = "color",
 	palette = "unifieddyes_palette_extended.png",

@@ -1,5 +1,9 @@
 players_income = {}
 
+-- internationalization boilerplate
+local MP = minetest.get_modpath(minetest.get_current_modname())
+local S, NS = dofile(MP.."/intllib.lua")
+
 local timer = 0
 minetest.register_globalstep(function(dtime)
     timer = timer + dtime;
@@ -11,7 +15,7 @@ minetest.register_globalstep(function(dtime)
                     players_income[name] = 0
                 end
                 players_income[name] = 1
-                minetest.log("info", "[Currency] basic income for "..name.."")
+                minetest.log("info", "[Currency] "..S("basic income for @1", name))
         end
     end
 end)
@@ -27,7 +31,7 @@ earn_income = function(player)
         local inv = player:get_inventory()
         inv:add_item("main", {name="currency:minegeld_5", count=count})
         players_income[name] = 0
-        minetest.log("info", "[Currency] added basic income for "..name.." to inventory")
+        minetest.log("info", "[Currency] "..S("added basic income for @1 to inventory", name))
     end
 end
 

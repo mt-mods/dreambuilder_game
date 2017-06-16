@@ -134,6 +134,17 @@ local function register_rope_block(multiple, max_multiple, name_prefix, node_pre
 		selection_box = {type="regular"},
 		collision_box = {type="regular"},
 		groups = {choppy=2, oddly_breakable_by_hand=1, rope_block = 1},
+		
+		on_place = function(itemstack, placer, pointed_thing)
+			if pointed_thing.type == "node" then
+				local target_node = minetest.get_node(pointed_thing.under)
+				local target_def = minetest.registered_nodes[target_node.name]
+				if target_def.walkable == false then
+					return itemstack
+				end
+			end
+			return minetest.item_place(itemstack, placer, pointed_thing)
+		end,
 	
 		after_place_node = function(pos, placer)
 			local pos_below = {x=pos.x, y=pos.y-1, z=pos.z}

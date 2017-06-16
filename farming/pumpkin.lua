@@ -53,7 +53,7 @@ minetest.register_craft({
 
 -- jack 'o lantern
 minetest.register_node("farming:jackolantern", {
-	description = S("Jack 'O Lantern"),
+	description = S("Jack 'O Lantern (punch to turn on and off)"),
 	tiles = {
 		"farming_pumpkin_top.png",
 		"farming_pumpkin_top.png",

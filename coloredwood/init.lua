@@ -18,7 +18,7 @@
 coloredwood = {}
 
 coloredwood.enable_stairsplus = true
-if minetest.setting_getbool("coloredwood_enable_stairsplus") == false or not minetest.get_modpath("moreblocks") then
+if minetest.settings:get_bool("coloredwood_enable_stairsplus") == false or not minetest.get_modpath("moreblocks") then
 	coloredwood.enable_stairsplus = false
 end
 

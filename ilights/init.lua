@@ -12,7 +12,7 @@ else
 	S = function(s) return s end
 end
 
-if minetest.get_modpath("unified_inventory") or not minetest.setting_getbool("creative_mode") then
+if minetest.get_modpath("unified_inventory") or not minetest.settings:get_bool("creative_mode") then
 	ilights.expect_infinite_stacks = false
 else
 	ilights.expect_infinite_stacks = true

@@ -6,6 +6,60 @@
 
 local S = farming.intllib
 
+-- place beans
+function place_beans(itemstack, placer, pointed_thing, plantname)
+
+	local pt = pointed_thing
+
+	-- check if pointing at a node
+	if not pt or pt.type ~= "node" then
+
+		return
+	end
+
+	local under = minetest.get_node(pt.under)
+
+	-- return if any of the nodes are not registered
+	if not minetest.registered_nodes[under.name] then
+		return
+	end
+
+	-- am I right-clicking on something that has a custom on_place set?
+	-- thanks to Krock for helping with this issue :)
+	local def = minetest.registered_nodes[under.name]
+	if def and def.on_rightclick then
+		return def.on_rightclick(pt.under, under, placer, itemstack)
+	end
+
+	-- check if pointing at bean pole
+	if under.name ~= "farming:beanpole" then
+		return
+	end
+
+	-- add the node and remove 1 item from the itemstack
+	minetest.set_node(pt.under, {name = plantname})
+
+	minetest.sound_play("default_place_node", {pos = pt.under, gain = 1.0})
+
+	if not minetest.setting_getbool("creative_mode") then
+
+		itemstack:take_item()
+
+		-- check for refill
+		if itemstack:get_count() == 0 then
+
+			minetest.after(0.20,
+				farming.refill_plant,
+				placer,
+				"farming:beans",
+				placer:get_wield_index()
+			)
+		end
+	end
+
+	return itemstack
+end
+
 -- beans
 minetest.register_craftitem("farming:beans", {
 	description = S("Green Beans"),
@@ -13,39 +67,8 @@ minetest.register_craftitem("farming:beans", {
 	on_use = minetest.item_eat(1),
 
 	on_place = function(itemstack, placer, pointed_thing)
-
-		if minetest.is_protected(pointed_thing.under, placer:get_player_name()) then
-			return
-		end
-
-		local nodename = minetest.get_node(pointed_thing.under).name
-
-		if nodename == "farming:beanpole" then
-			minetest.set_node(pointed_thing.under, {name = "farming:beanpole_1"})
-
-			minetest.sound_play("default_place_node", {pos = pointed_thing.above, gain = 1.0})
-		else
-			return
-		end
-
-		if not minetest.setting_getbool("creative_mode") then
-
-			itemstack:take_item()
-
-			-- check for refill
-			if itemstack:get_count() == 0 then
-
-				minetest.after(0.20,
-					farming.refill_plant,
-					placer,
-					"farming:beans",
-					placer:get_wield_index()
-				)
-			end
-		end
-
-		return itemstack
-	end
+		return place_beans(itemstack, placer, pointed_thing, "farming:beanpole_1")
+	end,
 })
 
 -- beans can be used for green dye

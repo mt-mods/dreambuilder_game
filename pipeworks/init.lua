@@ -13,7 +13,7 @@ local DEBUG = false
 pipeworks.worldpath = minetest.get_worldpath()
 pipeworks.modpath = minetest.get_modpath("pipeworks")
 
-dofile(pipeworks.modpath.."/default_settings.txt")
+dofile(pipeworks.modpath.."/default_settings.lua")
 
 -- Read the external config file if it exists.
 local worldsettingspath = pipeworks.worldpath.."/pipeworks_settings.txt"
@@ -26,7 +26,7 @@ end
 -- Random variables
 
 pipeworks.expect_infinite_stacks = true
-if minetest.get_modpath("unified_inventory") or not minetest.setting_getbool("creative_mode") then
+if minetest.get_modpath("unified_inventory") or not minetest.settings:get_bool("creative_mode") then
 	pipeworks.expect_infinite_stacks = false
 end
 

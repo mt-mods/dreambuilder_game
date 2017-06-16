@@ -1,0 +1,54 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-01 23:52-0700\n"
+"PO-Revision-Date: 2017-04-28 12:40-0400\n"
+"Last-Translator: Carlos Barraza\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: Español\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: brasier.lua:7
+msgid "A brasier for producing copious amounts of light and heat."
+msgstr "Un brasero para producir grandes cantidades de luz y calor."
+
+#: brasier.lua:8
+msgid ""
+"To ignite the brasier place a flammable fuel in its inventory slot. A lump "
+"of coal will burn for about half an hour."
+msgstr ""
+"Para encender el brasero coloque un combustible inflamable en su ranura de "
+"inventario. Un trozo de carbón arderá durante media hora."
+
+#: brasier.lua:107
+msgid "Floor Brasier"
+msgstr "Brasero con Patas"
+
+#: brasier.lua:156
+msgid "Stonebrick"
+msgstr "Ladrillo de piedra"
+
+#: brasier.lua:228
+msgid "@1 Brasier"
+msgstr "Brasero de @1"
+
+#: init.lua:17
+msgid "Light Block"
+msgstr "Bloque de luz"
+
+#: init.lua:37
+msgid "Chandelier"
+msgstr "Candelero"
+
+#: init.lua:76
+msgid "Chandelier Chain"
+msgstr "Colgante de Candelero"

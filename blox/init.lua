@@ -103,12 +103,12 @@ for _, nodeclass in ipairs(NodeClass) do
 
 	minetest.register_node("blox:stone_"..nodeclass, {
 		description = "Blox stone "..nodeclass,
-		drawtype = "mesh",
 		tiles = {
 			{ name = "default_stone.png", color = 0xffffffff },
+		},
+		overlay_tiles = {
 			"blox_stone_"..nodeclass..".png"
 		},
-		mesh = "blox_block_with_overlay.obj",
 		palette = "unifieddyes_palette_extended.png",
 		place_param2 = 240,
 		paramtype = "light",
@@ -123,12 +123,12 @@ for _, nodeclass in ipairs(NodeClass) do
 
 	minetest.register_node("blox:cobble_"..nodeclass, {
 		description = "Blox cobble "..nodeclass,
-		drawtype = "mesh",
 		tiles = {
 			{ name = "default_cobble.png", color = 0xffffffff },
+		},
+		overlay_tiles = {
 			"blox_cobble_"..nodeclass..".png"
 		},
-		mesh = "blox_block_with_overlay.obj",
 		palette = "unifieddyes_palette_extended.png",
 		place_param2 = 240,
 		paramtype = "light",
@@ -143,12 +143,12 @@ for _, nodeclass in ipairs(NodeClass) do
 
 	minetest.register_node("blox:wood_"..nodeclass, {
 		description = "Blox wood "..nodeclass,
-		drawtype = "mesh",
 		tiles = {
 			{ name = "default_wood.png", color = 0xffffffff },
+		},
+		overlay_tiles = {
 			"blox_wood_"..nodeclass..".png"
 		},
-		mesh = "blox_block_with_overlay.obj",
 		palette = "unifieddyes_palette_extended.png",
 		place_param2 = 240,
 		paramtype = "light",

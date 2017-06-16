@@ -13,6 +13,8 @@ This mod works by adding your new plant to the {growing=1} group and numbering t
 
 Changelog:
 
+1.25 - Added check for farming.conf setting file to disable specific crops globally (inside mod folder) or world specific (inside world folder)
+1.24 - Added Hemp which can be crafted into fibre, paper, string, rope and oil.
 1.23 - Huge code tweak and tidy done and added barley seeds to be found in dry grass, barley can make flour for bread also.
 1.22 - Added grape bushes at high climates which can be cultivated into grape vines using trellis (9 sticks).
 1.21 - Added auto-refill code for planting crops (thanks crabman77), also fixed a few bugs
@@ -45,7 +47,7 @@ Changelog:
 0.1 - Fixed growing bug
 0.0 - Initial release
 
-Lucky Blocks: 10 (plus 3 for default farming items)
+Lucky Blocks: 11 (plus 3 for default farming items)
 
 
 License of media (textures):
@@ -151,3 +153,4 @@ Created by TenPlus1
   farming_rhubarb_3.png
   farming_rhubarb.png
   farming_rhubarb_pie.png
+  farming_hemp*.png

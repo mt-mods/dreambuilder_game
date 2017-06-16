@@ -33,7 +33,7 @@ unifieddyes = {}
 unifieddyes.last_used_dye = {}
 unifieddyes.last_dyed_node = {}
 
-local creative_mode = minetest.setting_getbool("creative_mode")
+local creative_mode = minetest.settings:get_bool("creative_mode")
 
 -- Boilerplate to support localized strings if intllib mod is installed.
 local S
@@ -207,8 +207,8 @@ end)
 
 function unifieddyes.fix_rotation(pos, placer, itemstack, pointed_thing)
 	local node = minetest.get_node(pos)
-	local yaw = placer:get_look_yaw()
-	local dir = minetest.yaw_to_dir(yaw-1.5)
+	local yaw = placer:get_look_horizontal()
+	local dir = minetest.yaw_to_dir(yaw) -- -1.5)
 	local pitch = placer:get_look_vertical()
 
 	local fdir = minetest.dir_to_wallmounted(dir)
@@ -226,8 +226,8 @@ end
 
 function unifieddyes.fix_rotation_nsew(pos, placer, itemstack, pointed_thing)
 	local node = minetest.get_node(pos)
-	local yaw = placer:get_look_yaw()
-	local dir = minetest.yaw_to_dir(yaw)
+	local yaw = placer:get_look_horizontal()
+	local dir = minetest.yaw_to_dir(yaw+1.5)
 	local fdir = minetest.dir_to_wallmounted(dir)
 	minetest.swap_node(pos, { name = node.name, param2 = fdir })
 end
