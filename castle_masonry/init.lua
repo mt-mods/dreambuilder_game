@@ -10,7 +10,7 @@ dofile(MP.."/paving.lua")
 local S, NS = dofile(MP.."/intllib.lua")
 
 local read_setting = function(name, default)
-	local setting = minetest.setting_getbool(name)
+	local setting = minetest.settings:get_bool(name)
 	if setting == nil then return default end
 	return setting
 end

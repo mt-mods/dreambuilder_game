@@ -51,7 +51,7 @@ minetest.register_node("blox:glowstone", {
 	light_propagates = true,
 	paramtype = "light",
 	sunlight_propagates = true,
-	light_source = 30	,
+	light_source = 14,
 	is_ground_content = true,
 	groups = {cracky=2},
 	sounds = default.node_sound_stone_defaults(),
@@ -64,7 +64,7 @@ minetest.register_node("blox:glowore", {
 	light_propagates = true,
 	paramtype = "light",
 	sunlight_propagates = false,
-	light_source = 12	,
+	light_source = 8,
 		drop = {
 		max_items = 1,
 		items = {
@@ -90,7 +90,7 @@ minetest.register_node("blox:glowdust", {
 	light_propagates = true,
 	paramtype = "light",
 	sunlight_propagates = true,
-	light_source = 8	,
+	light_source = 9,
 	walkable = false,
 	groups = {cracky=3, snappy=3},
 	})
