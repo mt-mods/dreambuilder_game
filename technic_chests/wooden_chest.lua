@@ -1,3 +1,5 @@
+--[[
+
 local udef = technic.chests:definition("Wooden", {
 	width = 8,
 	height = 4,
@@ -49,3 +51,5 @@ if minetest.registered_nodes["default:chest_locked"].description == "Locked Ches
 	lldef.description = ldef.description
 end
 minetest.override_item("default:chest_locked", lldef)
+
+--]]
