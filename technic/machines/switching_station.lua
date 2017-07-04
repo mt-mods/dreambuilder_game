@@ -2,6 +2,7 @@
 
 technic.networks = {}
 technic.cables = {}
+technic.redundant_warn = {}
 
 local mesecons_path = minetest.get_modpath("mesecons")
 local digilines_path = minetest.get_modpath("digilines")
@@ -44,11 +45,15 @@ minetest.register_node("technic:switching_station",{
 		meta:set_string("active", 1)
 		meta:set_string("channel", "switching_station"..minetest.pos_to_string(pos))
 		meta:set_string("formspec", "field[channel;Channel;${channel}]")
+		local poshash = minetest.hash_node_position(pos)
+		technic.redundant_warn.poshash = nil
 	end,
 	after_dig_node = function(pos)
 		minetest.forceload_free_block(pos)
 		pos.y = pos.y - 1
 		minetest.forceload_free_block(pos)
+		local poshash = minetest.hash_node_position(pos)
+		technic.redundant_warn.poshash = nil
 	end,
 	on_receive_fields = function(pos, formname, fields, sender)
 		if not fields.channel then
@@ -189,12 +194,29 @@ end
 -----------------------------------------------
 -- The action code for the switching station --
 -----------------------------------------------
+
+technic.powerctrl_state = true
+
+minetest.register_chatcommand("powerctrl", {
+	params = "state",
+	description = "Enables or disables technic's switching station ABM",
+	privs = { basic_privs = true },
+	func = function(name, state)
+		if state == "on" then
+			technic.powerctrl_state = true
+		else
+			technic.powerctrl_state = false
+		end
+	end
+})
+
 minetest.register_abm({
 	nodenames = {"technic:switching_station"},
 	label = "Switching Station", -- allows the mtt profiler to profile this abm individually
 	interval   = 1,
 	chance     = 1,
 	action = function(pos, node, active_object_count, active_object_count_wider)
+		if not technic.powerctrl_state then return end
 		local meta             = minetest.get_meta(pos)
 		local meta1            = nil
 		local pos1             = {}
@@ -217,6 +239,13 @@ minetest.register_abm({
 			minetest.forceload_free_block(pos)
 			minetest.forceload_free_block(pos1)
 			meta:set_string("infotext",S("%s Already Present"):format(machine_name))
+
+			local poshash = minetest.hash_node_position(pos)
+
+			if not technic.redundant_warn.poshash then
+				technic.redundant_warn.poshash = true
+				print("[TECHNIC] Warning: redundant switching station found near "..minetest.pos_to_string(pos))
+			end
 			return
 		end
 
