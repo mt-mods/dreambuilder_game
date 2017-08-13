@@ -4,5 +4,4 @@ biome_lib
 youngtrees
 ferns
 dryplants
-farming_plus
 technic_chests

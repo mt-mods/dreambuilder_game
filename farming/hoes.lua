@@ -1,5 +1,6 @@
 
 local S = farming.intllib
+local tr = minetest.get_modpath("toolranks")
 
 -- Hoe registration function
 
@@ -101,8 +102,20 @@ function farming.hoe_on_use(itemstack, user, pointed_thing, uses)
 
 	minetest.sound_play("default_dig_crumbly", {pos = pt.under, gain = 0.5})
 
-	if not minetest.setting_getbool("creative_mode") then
-		itemstack:add_wear(65535/(uses-1))
+	local wear = 65535 / (uses -1)
+
+	if minetest.setting_getbool("creative_mode") then
+		if tr then
+			wear = 1
+		else
+			wear = 0
+		end
+	end
+
+	if tr then
+		itemstack = toolranks.new_afteruse(itemstack, user, under, {wear = wear})
+	else
+		itemstack:add_wear(wear)
 	end
 
 	return itemstack
@@ -151,3 +164,31 @@ farming.register_hoe(":farming:hoe_diamond", {
 	max_uses = 500,
 	material = "default:diamond"
 })
+
+-- Toolranks support
+if tr then
+
+minetest.override_item("farming:hoe_wood", {
+	original_description = "Wood Hoe",
+	description = toolranks.create_description("Wood Hoe")})
+
+minetest.override_item("farming:hoe_stone", {
+	original_description = "Stone Hoe",
+	description = toolranks.create_description("Stone Hoe")})
+
+minetest.override_item("farming:hoe_steel", {
+	original_description = "Steel Hoe",
+	description = toolranks.create_description("Steel Hoe")})
+
+minetest.override_item("farming:hoe_bronze", {
+	original_description = "Bronze Hoe",
+	description = toolranks.create_description("Bronze Hoe")})
+
+minetest.override_item("farming:hoe_mese", {
+	original_description = "Mese Hoe",
+	description = toolranks.create_description("Mese Hoe")})
+
+minetest.override_item("farming:hoe_diamond", {
+	original_description = "Diamond Hoe",
+	description = toolranks.create_description("Diamond Hoe")})
+end

@@ -1045,6 +1045,7 @@ minetest.register_alias("dye:medium_orange", "dye:brown")
 minetest.register_alias("unifieddyes:black",      "dye:black")
 minetest.register_alias("unifieddyes:dark_grey",  "dye:dark_grey")
 minetest.register_alias("unifieddyes:light_grey", "dye:light_grey")
+minetest.register_alias("unifieddyes:white",      "dye:white")
 
 minetest.register_alias("unifieddyes:grey_0",     "dye:black")
 minetest.register_alias("unifieddyes:grey_4",     "dye:dark_grey")

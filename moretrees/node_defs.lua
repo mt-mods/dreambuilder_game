@@ -3,23 +3,21 @@ local S = moretrees.intllib
 moretrees.avoidnodes = {}
 	
 moretrees.treelist = {
-	{"beech",		"Beech Tree"},
-	{"apple_tree",	"Apple Tree"},
-	{"oak",			"Oak Tree",			"acorn",		"Acorn",		{-0.2, -0.5, -0.2, 0.2, 0, 0.2},	0.8 },
-	{"sequoia",		"Giant Sequoia"},
-	{"birch",		"Birch Tree"},
-	{"palm",		"Palm Tree",		"palm_fruit_trunk_gen",		"Palm Tree",		{-0.2, -0.5, -0.2, 0.2, 0, 0.2},	1.0 },
-	{"date_palm",		"Date Palm Tree",	"date_palm_fruit_trunk",	"Date Palm Tree",		{0, 0, 0, 0, 0, 0},	0.0 },
-	{"spruce",		"Spruce Tree",		"spruce_cone",	"Spruce Cone",	{-0.2, -0.5, -0.2, 0.2, 0, 0.2},	0.8 },
-	{"cedar",		"Cedar Tree",		"cedar_cone",	"Cedar Cone",	{-0.2, -0.5, -0.2, 0.2, 0, 0.2}, 0.8 },
-	{"poplar",		"Poplar Tree"},
+	{"beech",			"Beech Tree"},
+	{"apple_tree",		"Apple Tree"},
+	{"oak",				"Oak Tree",			"acorn",					"Acorn",			{-0.2, -0.5, -0.2, 0.2, 0, 0.2},	0.8 },
+	{"sequoia",			"Giant Sequoia"},
+	{"birch",			"Birch Tree"},
+	{"palm",			"Palm Tree",		"palm_fruit_trunk_gen",		"Palm Tree",		{-0.2, -0.5, -0.2, 0.2, 0, 0.2},	1.0 },
+	{"date_palm",		"Date Palm Tree",	"date_palm_fruit_trunk",	"Date Palm Tree",	{0, 0, 0, 0, 0, 0},	0.0 },
+	{"spruce",			"Spruce Tree",		"spruce_cone",				"Spruce Cone",		{-0.2, -0.5, -0.2, 0.2, 0, 0.2},	0.8 },
+	{"cedar",			"Cedar Tree",		"cedar_cone",				"Cedar Cone",		{-0.2, -0.5, -0.2, 0.2, 0, 0.2},	0.8 },
+	{"poplar",			"Poplar Tree"},
 	{"poplar_small",	"Poplar Tree"},
-	{"willow",		"Willow Tree"},
-	{"rubber_tree",	"Rubber Tree"},
-	{"fir",			"Douglas Fir",		"fir_cone",		"Fir Cone",		{-0.2, -0.5, -0.2, 0.2, 0, 0.2},	0.8 },
-
-	{"jungletree",	"Jungle Tree",		nil,			nil,			nil,								nil, "default_junglesapling.png"  },
-	{"acacia",		"Acacia Tree",		nil,			nil,			nil,								nil, "default_acacia_sapling.png" },
+	{"willow",			"Willow Tree"},
+	{"rubber_tree",		"Rubber Tree"},
+	{"fir",				"Douglas Fir",		"fir_cone",					"Fir Cone",			{-0.2, -0.5, -0.2, 0.2, 0, 0.2},	0.8 },
+	{"jungletree",		"Jungle Tree",		nil,						nil,				nil,								nil, "default_junglesapling.png"  },
 }
 
 local dirs1 = { 21, 20, 23, 22, 21 }
@@ -42,10 +40,6 @@ if moretrees.plantlike_leaves then
 		drawtype = "plantlike",
 		visual_scale = math.sqrt(2)
 	})
-else
-	minetest.override_item("default:leaves", {
-		waving = 1
-	})
 end
 
 -- redefine default jungle leaves for same
@@ -55,10 +49,6 @@ if moretrees.plantlike_leaves then
 		inventory_image = minetest.inventorycube("default_jungleleaves.png"),
 		drawtype = "plantlike",
 		visual_scale = math.sqrt(2)
-	})
-else
-	minetest.override_item("default:jungleleaves", {
-		waving = 1
 	})
 end
 
@@ -86,8 +76,7 @@ for i in ipairs(moretrees.treelist) do
 		decay = moretrees.palm_leafdecay_radius
 	end
 
-	if treename ~= "jungletree"  -- the default game provides jungle tree, acacia, and pine trunk/planks nodes.
-		and treename ~= "acacia"
+	if treename ~= "jungletree"  -- the default game provides jungle tree and pine trunk/planks nodes.
 		and treename ~= "poplar_small"
 		and treename ~= "pine" then
 
@@ -223,7 +212,7 @@ for i in ipairs(moretrees.treelist) do
 	end
 
 	minetest.register_node("moretrees:"..treename.."_sapling_ongen", {
-		description = S(treedesc.." Sapling"),
+		description = S(treedesc.." Sapling (on-generated)"),
 		drawtype = "plantlike",
 		tiles = {saptex},
 		inventory_image = saptex,
@@ -264,14 +253,8 @@ for i in ipairs(moretrees.treelist) do
 	end
 
 	if treename ~= "jungletree"
-		and treename ~= "acacia"
 		and treename ~= "poplar_small"
 		and treename ~= "pine" then
-			print("called default.register_leafdecay for:")
-			print("moretrees:"..treename.."_trunk")
-			print("moretrees:"..treename.."_leaves")
-			if fruitname then print(fruitname) end
-			print("radius = "..decay)
 			default.register_leafdecay({
 				trunks = { "moretrees:"..treename.."_trunk" },
 				leaves = { "moretrees:"..treename.."_leaves", fruitname },
@@ -415,7 +398,7 @@ minetest.register_node("moretrees:fir_leaves_bright", {
 
 default.register_leafdecay({
 	trunks = { "moretrees:fir_trunk" },
-		leaves = { "moretrees:fir_leaves", "moretrees:fir_leaves_bright" },
+	leaves = { "moretrees:fir_leaves", "moretrees:fir_leaves_bright" },
 	radius = moretrees.leafdecay_radius,
 })
 
@@ -433,10 +416,9 @@ table.insert(moretrees.avoidnodes, "moretrees:fir_trunk")
 table.insert(moretrees.avoidnodes, "default:tree")
 
 if moretrees.spawn_saplings then
-		table.insert(moretrees.avoidnodes, "snow:sapling_pine")
-		table.insert(moretrees.avoidnodes, "default:junglesapling")
-		table.insert(moretrees.avoidnodes, "default:pine_sapling")
-		table.insert(moretrees.avoidnodes, "default:acacia_sapling")
+	table.insert(moretrees.avoidnodes, "snow:sapling_pine")
+	table.insert(moretrees.avoidnodes, "default:junglesapling")
+	table.insert(moretrees.avoidnodes, "default:pine_sapling")
 end
 
 -- "empty" (tapped) rubber tree nodes

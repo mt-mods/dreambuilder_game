@@ -1,3 +1,5 @@
+-- support for i18n
+local S = plantlife_i18n.gettext
 -- Blossoms and such
 
 local function spawn_apple_under(pos)
@@ -12,7 +14,7 @@ local function spawn_apple_under(pos)
 end
 
 minetest.register_node(":"..nature.blossom_node, {
-    description = "Apple blossoms",
+    description = S("Apple blossoms"),
     drawtype = "allfaces_optional",
     tiles = nature.blossom_textures,
     paramtype = "light",
@@ -23,7 +25,7 @@ minetest.register_node(":"..nature.blossom_node, {
 
 default.register_leafdecay({
 	trunks = { nature.blossom_trunk },
-	leaves = { nature.blossom_node },
+	leaves = { nature.blossom_node, nature.blossom_leaves },
 	radius = nature.blossom_decay,
 })
 

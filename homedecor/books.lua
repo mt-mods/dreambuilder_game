@@ -89,7 +89,7 @@ for _, c in ipairs(bookcolors) do
 			if data.title and data.title ~= "" then
 				meta:set_string("infotext", data.title)
 			end
-			if not homedecor.expect_infinite_stacks then
+			if not creative.is_enabled_for(plname) then
 				itemstack:take_item()
 			end
 			return itemstack

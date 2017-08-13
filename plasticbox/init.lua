@@ -12,12 +12,14 @@ minetest.register_node("plasticbox:plasticbox", {
 	after_place_node = unifieddyes.recolor_on_place,
 })
 
-stairsplus:register_all("plasticbox", "plasticbox", "plasticbox:plasticbox", {
-	description = "Plastic",
-	tiles = {"plasticbox_white.png"},
-	groups = {choppy=1, snappy=1, oddly_breakable_by_hand=1},
-	sounds = default.node_sound_stone_defaults(),
-})
+if minetest.global_exists("stairsplus") then
+	stairsplus:register_all("plasticbox", "plasticbox", "plasticbox:plasticbox", {
+		description = "Plastic",
+		tiles = {"plasticbox_white.png"},
+		groups = {choppy=1, snappy=1, oddly_breakable_by_hand=1},
+		sounds = default.node_sound_stone_defaults(),
+	})
+end
 
 minetest.register_craft( {
         output = "plasticbox:plasticbox 4",

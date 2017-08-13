@@ -1,0 +1,27 @@
+===Changelog===
+1.8.5.2 plants_lib was renamed to biome_lib
+1.8.5.1 fixed some bugs
+1.8.5 adds a bunch. i have been editing this so much i forgot
+1.8 idk
+1.7.4 almost a complete rewrite
+1.7.3 code reverted to 1.7.1 aka bug fix, singleplayer gets privs
+1.7.2 singleplayer gets peacefulnpc privs by default, added config stuff
+1.7.1 added textures, added aliases
+1.7 fixed bug, spawner max=10 range=50, changed spawn method, added to spawn command can't spawn if 30 npc are within a 50 node radius
+1.6.4 cant spawn > 20 with spawn command, index fix
+1.6.3 need priv to use summoner
+1.6.2 bug fix
+1.6.1 added npc fence, spawn command, npc priv, they spawn rarer naturally 
+1.6 Fixed bug in post 62, added 4 textures, changed hp to 50, changed kill drop from mese crystal to mese block (so it is compatable with older games), added a compatable recipe for summoner and spawner (mese instead of crystals), changed mobspawnegg to npc summoner and it has a new texture
+1.5.6 Added textures.
+1.5.5 Made Tron purple, die in lava and water after 10 seconds, set hp to 40
+1.5 Added spawning and they die in water after a set amount of time.
+1.4 Fixed bugs, added spawning, changed health to 25, made drop mese crystals, changed spawn limit to 10
+1.3 Added textures, Fixed a bug
+1.2 Set limit for how many can be spawned around a spawner.
+1.1 Added textures,changed recipes,made npcs drop a mese crystal fragment when killed, set npc health to 20
+1.0 The NPC Portal is now clear and does not look dark.
+0.4 I added npc skins, changed the name Box O' NPCs to NPC Portal, changed the picture for NPC Portal, and fixed the spawn egg recipe
+0.3 I don't know exactly but i did change something
+0.2 The npc's don't attack anymore at night and i added a different texture for the npc spawner.
+0.1 Initial release

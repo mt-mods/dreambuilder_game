@@ -59,7 +59,7 @@ minetest.register_craft( {
 minetest.register_craft({
 	type = "fuel",
 	recipe = "farming:bottle_ethanol",
-	burntime = 240,
+	burntime = 80, --240,
 	replacements = {{ "farming:bottle_ethanol", "vessels:glass_bottle"}}
 })
 
