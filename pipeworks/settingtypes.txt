@@ -34,6 +34,9 @@ pipeworks_enable_digiline_detector_tube (Enable Digiline Detector Tube) bool tru
 #Enable mesecon signal conducting tube.
 pipeworks_enable_conductor_tube (Enable Conductor Tube) bool true
 
+#Enable digiline signal conducting tube.
+pipeworks_enable_digiline_conductor_tube (Enable Digiline Conductor Tube) bool true
+
 #Enable accelerator tube.
 pipeworks_enable_accelerator_tube (Enable Accelerator Tube) bool true
 
@@ -59,6 +62,10 @@ pipeworks_enable_one_way_tube (Enable One Way Tube) bool true
 #It has a very high priority and so, on crossings, the items will
 #always go to it if there are multible ways.
 pipeworks_enable_priority_tube (Enable High Priority Tube) bool true
+
+#Enable lua controlled tube.
+#It is comparable with mesecons luacontroller.
+pipeworks_enable_lua_tube (Enable Lua controlled Tube) bool true
 
 #Enable cyclic mode.
 pipeworks_enable_cyclic_mode (Enable Cyclic Mode) bool true

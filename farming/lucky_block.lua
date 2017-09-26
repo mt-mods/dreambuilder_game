@@ -15,5 +15,7 @@ if minetest.get_modpath("lucky_block") then
 		{"nod", "farming:melon", 0},
 		{"dro", {"farming:donut", "farming:donut_chocolate", "farming:donut_apple"}, 5},
 		{"dro", {"farming:hemp_leaf", "farming:hemp_fibre", "farming:seed_hemp"}, 5},
+		{"nod", "fire:permanent_flame", 1},
+		{"dro", {"farming:chili_pepper", "farming:chili_bowl"}, 5},
 	})
 end

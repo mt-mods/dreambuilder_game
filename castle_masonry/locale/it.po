@@ -1,0 +1,191 @@
+# ITALIAN LOCALE FILE FOR THE CASTLE MASONRY MODULE
+# Copyright (C) 2017 Philipbenr And DanDuncombe
+# This file is distributed under the same license as the CASTLE MASONRY package.
+# Hamlet <h4mlet@riseup.net>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Castle Masonry\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-02-21 23:41-0700\n"
+"PO-Revision-Date: 2017-09-10 22:36+0100\n"
+"Last-Translator: H4mlet <h4mlet@riseup.net>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: it\n"
+"X-Generator: Poedit 1.6.10\n"
+
+#: arrow_slits.lua:12
+msgid "@1 Arrowslit"
+msgstr "Feritoia per frecce di @1"
+
+#: arrow_slits.lua:33
+msgid "@1 Arrowslit with Cross"
+msgstr "Feritoia a croce per frecce di @1"
+
+#: arrow_slits.lua:58
+msgid "@1 Arrowslit with Hole"
+msgstr "Feritoia a foro per frecce di @1"
+
+#: arrow_slits.lua:81
+msgid "@1 Embrasure"
+msgstr "Feritoia di @1"
+
+#: init.lua:29
+msgid "Stonewall"
+msgstr "muro di pietra"
+
+#: init.lua:32
+msgid "Cobble"
+msgstr "ciottoli"
+
+#: init.lua:35
+msgid "Stonebrick"
+msgstr "mattoni di pietra"
+
+#: init.lua:38
+msgid "Sandstone Brick"
+msgstr "mattoni di arenaria del deserto"
+
+#: init.lua:41
+msgid "Desert Stone Brick"
+msgstr "mattoni di pietra del deserto"
+
+#: init.lua:44
+msgid "Stone"
+msgstr "pietra"
+
+#: init.lua:47
+msgid "Sandstone"
+msgstr "arenaria"
+
+#: init.lua:50
+msgid "Desert Stone"
+msgstr "pietra del deserto"
+
+#: init.lua:53
+msgid "Wood"
+msgstr "legno"
+
+#: init.lua:56
+msgid "Ice"
+msgstr "ghiaccio"
+
+#: init.lua:59
+msgid "Snow"
+msgstr "neve"
+
+#: init.lua:62
+msgid "Obsidian Brick"
+msgstr "mattoni di ossidiana"
+
+#: murder_holes.lua:14
+msgid "@1 Murder Hole"
+msgstr "Buca assassina di @1"
+
+#: murder_holes.lua:33
+msgid "@1 Machicolation"
+msgstr "Caditoia di @1"
+
+#: paving.lua:11
+msgid "Paving Stone"
+msgstr "Pietra pavimentale"
+
+#: paving.lua:30
+msgid "Pavement Brick"
+msgstr "Mattoni pavimentali"
+
+#: paving.lua:40
+msgid "Castle Pavement Stair"
+msgstr "Scala pavimentale del castello"
+
+#: paving.lua:41
+msgid "Castle Pavement Slab"
+msgstr "Lastra pavimentale del castello"
+
+#: paving.lua:49
+msgid "Roof Slates"
+msgstr "Tegole di ardesia"
+
+#: pillars.lua:18
+msgid "@1 Pillar Base"
+msgstr "Base della colonna di @1"
+
+#: pillars.lua:36
+msgid "@1 Half Pillar Base"
+msgstr "Mezza base della colonna di @1"
+
+#: pillars.lua:54
+msgid "@1 Pillar Top"
+msgstr "Capitello di @1"
+
+#: pillars.lua:72
+msgid "@1 Half Pillar Top"
+msgstr "Mezzo capitello di @1"
+
+#: pillars.lua:90
+msgid "@1 Pillar Middle"
+msgstr "Fusto della colonna di @1"
+
+#: pillars.lua:106
+msgid "@1 Half Pillar Middle"
+msgstr "Mezzo fusto della colonna di @1"
+
+#: pillars.lua:123
+msgid "@1 Crossbrace"
+msgstr "Costolone di @1"
+
+#: pillars.lua:147
+msgid "@1 Extended Crossbrace"
+msgstr "Costolone esteso di @1"
+
+#: stone_wall.lua:11
+msgid "Castle Wall"
+msgstr "Muro del castello"
+
+#: stone_wall.lua:22
+msgid "Castle Rubble"
+msgstr "Detriti del castello"
+
+#: stone_wall.lua:57
+msgid "Castle Corner"
+msgstr "Angolo del castello"
+
+#: stone_wall.lua:78
+msgid "Stone Wall"
+msgstr "Muro di pietra"
+
+#: stone_wall.lua:86
+msgid "Rubble"
+msgstr "Detriti"
+
+#: stone_wall.lua:100
+msgid "Castle Stonewall Stair"
+msgstr "Scala del castello in muro di pietra"
+
+#: stone_wall.lua:101
+msgid "Castle Stonewall Slab"
+msgstr "Lastra del castello in muro di pietra"
+
+#: stone_wall.lua:108
+msgid "Castle Rubble Stair"
+msgstr "Scala del castello in detriti"
+
+#: stone_wall.lua:109
+msgid "Castle Rubble Slab"
+msgstr "Lastra del castello in detriti"
+
+#: stone_wall.lua:117 stone_wall.lua:143
+msgid "Dungeon Stone"
+msgstr "Pietra del sotterraneo"
+
+#: stone_wall.lua:156
+msgid "Dungeon Stone Stair"
+msgstr "Scala di pietra del sotterraneo"
+
+#: stone_wall.lua:157
+msgid "Dungeon Stone Slab"
+msgstr "Lastra di pietra del sotterraneo"

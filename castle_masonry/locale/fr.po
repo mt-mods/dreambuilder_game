@@ -1,0 +1,189 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-02-21 23:41-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: arrow_slits.lua:12
+msgid "@1 Arrowslit"
+msgstr "Meurtrière en @1"
+
+#: arrow_slits.lua:33
+msgid "@1 Arrowslit with Cross"
+msgstr "Meurtrière en croix en @1"
+
+#: arrow_slits.lua:58
+msgid "@1 Arrowslit with Hole"
+msgstr "Meurtrière avec trou en @1"
+
+#: arrow_slits.lua:81
+msgid "@1 Embrasure"
+msgstr "Embrasure en @1"
+
+#: init.lua:29
+msgid "Stonewall"
+msgstr "Pierre brune"
+
+#: init.lua:32
+msgid "Cobble"
+msgstr "Pavé"
+
+#: init.lua:35
+msgid "Stonebrick"
+msgstr "Brique de pierre"
+
+#: init.lua:38
+msgid "Sandstone Brick"
+msgstr "Brique de grès"
+
+#: init.lua:41
+msgid "Desert Stone Brick"
+msgstr "Brique de pierre du désert"
+
+#: init.lua:44
+msgid "Stone"
+msgstr "Pierre"
+
+#: init.lua:47
+msgid "Sandstone"
+msgstr "Grès"
+
+#: init.lua:50
+msgid "Desert Stone"
+msgstr "Pierre du désert"
+
+#: init.lua:53
+msgid "Wood"
+msgstr "Bois"
+
+#: init.lua:56
+msgid "Ice"
+msgstr "Glace"
+
+#: init.lua:59
+msgid "Snow"
+msgstr "Neige"
+
+#: init.lua:62
+msgid "Obsidian Brick"
+msgstr "Brique d'obsidienne"
+
+#: murder_holes.lua:14
+msgid "@1 Murder Hole"
+msgstr "Trou en @1"
+
+#: murder_holes.lua:33
+msgid "@1 Machicolation"
+msgstr "Machicoulis en @1"
+
+#: paving.lua:11
+msgid "Paving Stone"
+msgstr "Pierre de pavage"
+
+#: paving.lua:30
+msgid "Pavement Brick"
+msgstr "Brique de pavage"
+
+#: paving.lua:40
+msgid "Castle Pavement Stair"
+msgstr "Escaliers de chateau pavé"
+
+#: paving.lua:41
+msgid "Castle Pavement Slab"
+msgstr "Dalle de chateau pavé"
+
+#: paving.lua:49
+msgid "Roof Slates"
+msgstr "Toiture en ardoise"
+
+#: pillars.lua:18
+msgid "@1 Pillar Base"
+msgstr "Base de pilier en @1"
+
+#: pillars.lua:36
+msgid "@1 Half Pillar Base"
+msgstr "Base de demi pilier en @1"
+
+#: pillars.lua:54
+msgid "@1 Pillar Top"
+msgstr "Haut de pilier en @1"
+
+#: pillars.lua:72
+msgid "@1 Half Pillar Top"
+msgstr "Haut de demi pilier en @1"
+
+#: pillars.lua:90
+msgid "@1 Pillar Middle"
+msgstr "Milieu de pilier en @1"
+
+#: pillars.lua:106
+msgid "@1 Half Pillar Middle"
+msgstr "Milieu de demi pilier en @1"
+
+#: pillars.lua:123
+msgid "@1 Crossbrace"
+msgstr "Travers en @1"
+
+#: pillars.lua:147
+msgid "@1 Extended Crossbrace"
+msgstr "Travers entendu en @1"
+
+#: stone_wall.lua:11
+msgid "Castle Wall"
+msgstr "Pierre brune"
+
+#: stone_wall.lua:22
+msgid "Castle Rubble"
+msgstr "Gravats de chateau"
+
+#: stone_wall.lua:57
+msgid "Castle Corner"
+msgstr "Angle de chateau"
+
+#: stone_wall.lua:78
+msgid "Stone Wall"
+msgstr "Mur de pierre"
+
+#: stone_wall.lua:86
+msgid "Rubble"
+msgstr "Décombre"
+
+#: stone_wall.lua:100
+msgid "Castle Stonewall Stair"
+msgstr "Escalier en pierre brune"
+
+#: stone_wall.lua:101
+msgid "Castle Stonewall Slab"
+msgstr "Dalle en pierre brune"
+
+#: stone_wall.lua:108
+msgid "Castle Rubble Stair"
+msgstr "Escalier en gravats de chateau"
+
+#: stone_wall.lua:109
+msgid "Castle Rubble Slab"
+msgstr "Dalle en gravats de chateau"
+
+#: stone_wall.lua:117 stone_wall.lua:143
+msgid "Dungeon Stone"
+msgstr "Pierre de dongeon"
+
+#: stone_wall.lua:156
+msgid "Dungeon Stone Stair"
+msgstr "Escalier en pierre de dongeon"
+
+#: stone_wall.lua:157
+msgid "Dungeon Stone Slab"
+msgstr "Dalle en pierre de dongeon"

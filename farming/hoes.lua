@@ -130,6 +130,12 @@ farming.register_hoe(":farming:hoe_wood", {
 	material = "group:wood"
 })
 
+minetest.register_craft({
+	type = "fuel",
+	recipe = "farming:hoe_wood",
+	burntime = 5,
+})
+
 farming.register_hoe(":farming:hoe_stone", {
 	description = S("Stone Hoe"),
 	inventory_image = "farming_tool_stonehoe.png",

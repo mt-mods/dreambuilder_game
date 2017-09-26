@@ -39,7 +39,7 @@ minetest.register_craft({
 })
 
 minetest.register_node("framedglass:wooden_framed_glass", {
-	description = "Wooden-framed Glass",
+	description = "Деревянное окно",
 	drawtype = "glasslike_framed",
 	tiles = {"framedglass_wooden_frame.png","framedglass_glass_face_streaks.png"},
 	paramtype = "light",
@@ -49,7 +49,7 @@ minetest.register_node("framedglass:wooden_framed_glass", {
 })
 
 minetest.register_node("framedglass:steel_framed_glass", {
-	description = "Steel-framed Glass",
+	description = "Стальное окно",
 	drawtype = "glasslike_framed",
 	tiles = {"framedglass_steel_frame.png","framedglass_glass_face_streaks.png"},
 	paramtype = "light",
@@ -59,7 +59,7 @@ minetest.register_node("framedglass:steel_framed_glass", {
 })
 
 minetest.register_node("framedglass:wooden_framed_obsidian_glass", {
-	description = "Wooden-framed Obsidian Glass",
+	description = "Деревянное окно с обсидиановым стеклом",
 	drawtype = "glasslike_framed",
 	tiles = {"framedglass_wooden_frame.png","framedglass_glass_face_clean.png"},
 	paramtype = "light",
@@ -164,7 +164,7 @@ local return_dye_after_dig = function(pos, oldnode, oldmetadata, digger)
 end
 
 minetest.register_node("framedglass:steel_framed_obsidian_glass", {
-	description = "Steel-framed Obsidian Glass",
+	description = "Стальное окно с обсидиановым стеклом",
 	drawtype = "glasslike_framed",
 	tiles = {"framedglass_steel_frame.png","framedglass_glass_face_clean.png"},
 	paramtype = "light",
@@ -177,7 +177,7 @@ minetest.register_node("framedglass:steel_framed_obsidian_glass", {
 
 function add_coloured_framedglass(name, desc, color)
 	minetest.register_node( "framedglass:steel_framed_obsidian_glass"..name, {
-		description = "Steel-framed "..desc.." Obsidian Glass",
+		description = "Стальное окно с "..desc.." обсидиановым стеклом",
 		tiles = {
 			"framedglass_steel_frame.png",
 			{ name = "framedglass_whiteglass.png", color = color }
@@ -195,20 +195,20 @@ function add_coloured_framedglass(name, desc, color)
 	}) 
 end
 
-add_coloured_framedglass ("red",		"Red",			0xffff0000)
-add_coloured_framedglass ("orange",		"Orange",		0xfffe7f00)
-add_coloured_framedglass ("yellow",		"Yellow",		0xffffff01)
-add_coloured_framedglass ("green",		"Green",		0xff0cff00)
-add_coloured_framedglass ("cyan",		"Cyan",			0xff7affff)
-add_coloured_framedglass ("blue",		"Blue",			0xff1600ff)
-add_coloured_framedglass ("violet",		"Violet",		0xff7d00ff)
-add_coloured_framedglass ("magenta",	"Magenta",		0xfffd05ff)
+add_coloured_framedglass ("red",		"красным",			0xffff0000)
+add_coloured_framedglass ("orange",		"оранжевым",		0xfffe7f00)
+add_coloured_framedglass ("yellow",		"жёлтым",		0xffffff01)
+add_coloured_framedglass ("green",		"зелёным",		0xff0cff00)
+add_coloured_framedglass ("cyan",		"голубым",			0xff7affff)
+add_coloured_framedglass ("blue",		"синим",			0xff1600ff)
+add_coloured_framedglass ("violet",		"фиолетовым",		0xff7d00ff)
+add_coloured_framedglass ("magenta",	"пурпурным",		0xfffd05ff)
 
-add_coloured_framedglass ("darkgreen",	"Dark Green",	0xff144f00)
-add_coloured_framedglass ("pink",		"Pink",			0xffffa4a4)
-add_coloured_framedglass ("brown",		"Brown",		0xff542a00)
+add_coloured_framedglass ("darkgreen",	"тёмно-зелёным",	0xff144f00)
+add_coloured_framedglass ("pink",		"розовым",			0xffffa4a4)
+add_coloured_framedglass ("brown",		"коричневым",		0xff542a00)
 
-add_coloured_framedglass ("white",		"White",		0xffffffff)
-add_coloured_framedglass ("grey",		"Grey",			0xff7f817e)
-add_coloured_framedglass ("darkgrey",	"Dark Grey",	0xff3f403e)
-add_coloured_framedglass ("black",		"Black",		0xff000000)
+add_coloured_framedglass ("white",		"белым",		0xffffffff)
+add_coloured_framedglass ("grey",		"серым",			0xff7f817e)
+add_coloured_framedglass ("darkgrey",	"тёмно-серым",	0xff3f403e)
+add_coloured_framedglass ("black",		"чёрным",		0xff000000)

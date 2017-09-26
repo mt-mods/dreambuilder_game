@@ -173,11 +173,11 @@ castle_masonry.register_pillar = function(material)
 	})
 
 	minetest.register_craft({
-		output = mod_name..":pillar_"..material.name.."_middle 4",
+		output = mod_name..":pillar_"..material.name.."_middle 2",
 		recipe = {
-			{material.craft_material,material.craft_material},
-			{material.craft_material,material.craft_material},
-			{material.craft_material,material.craft_material} },
+			{material.craft_material},
+			{material.craft_material},
+			{material.craft_material} },
 	})
 	
 	minetest.register_craft({

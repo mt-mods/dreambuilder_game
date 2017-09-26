@@ -68,7 +68,7 @@ end
 
 minetest.register_node("fake_fire:ice_fire", {
 	inventory_image = "ice_fire_inv.png",
-	description = desc,
+	description = S("Ice fire"),
 	drawtype = "plantlike",
 	paramtype = "light",
 	paramtype2 = "facedir",

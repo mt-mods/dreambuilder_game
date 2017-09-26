@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-08-03 20:37+0200\n"
-"PO-Revision-Date: 2017-07-30 17:09+0200\n"
+"PO-Revision-Date: 2017-08-13 13:26+0200\n"
 "Last-Translator: Wuzzy <almikes@aol.com>\n"
 "Language-Team: German\n"
 "Language: de\n"
@@ -73,18 +73,16 @@ msgid "Marble"
 msgstr "Marmor"
 
 #: ../building_blocks/init.lua
-#, fuzzy
 msgid "Grass"
-msgstr "Messing"
+msgstr "Gras"
 
 #: ../building_blocks/init.lua
 msgid "Tar"
 msgstr "Teer"
 
 #: ../building_blocks/init.lua
-#, fuzzy
 msgid "Roofing"
-msgstr "Dachstufe"
+msgstr "Dachdeckung"
 
 #: ../building_blocks/init.lua
 msgid "Marble stair"
@@ -220,23 +218,23 @@ msgstr "Unverarbeiteter Kunststoff"
 
 #: ../computer/tetris.lua
 msgid "L"
-msgstr ""
+msgstr "L"
 
 #: ../computer/tetris.lua
 msgid "R"
-msgstr ""
+msgstr "R"
 
 #: ../computer/tetris.lua
 msgid "New Game"
-msgstr "Neuese Spiel"
+msgstr "Neues Spiel"
 
 #: ../computer/tetris.lua
 msgid "Next..."
-msgstr ""
+msgstr "Nächster …"
 
 #: ../computer/tetris.lua
 msgid "Score: "
-msgstr ""
+msgstr "Punktzahl: "
 
 #: ../computer/tetris.lua
 msgid "Tetris Arcade"
@@ -328,11 +326,11 @@ msgstr "Duschbrause"
 
 #: ../homedecor/bathroom_sanitation.lua
 msgid "Bathtub, clawfoot, with brass taps"
-msgstr ""
+msgstr "Badewanne, Krallenfuß, mit Messingwasserhähnen"
 
 #: ../homedecor/bathroom_sanitation.lua
 msgid "Bathtub, clawfoot, with chrome taps"
-msgstr ""
+msgstr "Badewanne, Krallenfuß, mit Chromwasserhähnen"
 
 #: ../homedecor/bathroom_sanitation.lua
 msgid "Bathroom sundries set"
@@ -371,8 +369,8 @@ msgid "Two-drawer Nightstand"
 msgstr "Nachttisch mit zwei Schubladen"
 
 #: ../homedecor/books.lua
-msgid "Writable Book"
-msgstr "Schreibbares Buch"
+msgid "Writable Book (@1)"
+msgstr "Schreibbares Buch (@1)"
 
 #: ../homedecor/books.lua
 msgid "@1 has written in a book (title: \"@2\"): \"@3\" at location @4"
@@ -600,11 +598,11 @@ msgstr "Maschendrahtzauntor"
 
 #: ../homedecor/doors_and_gates.lua
 msgid "\"Half\" Door"
-msgstr ""
+msgstr "„Halbe“ Tür"
 
 #: ../homedecor/doors_and_gates.lua
 msgid "\"Half\" Door (white)"
-msgstr ""
+msgstr "„Halbe“ Tür (weiß)"
 
 #: ../homedecor/doors_and_gates.lua
 msgid "Japanese wall (top)"
@@ -1296,8 +1294,12 @@ msgid "Metal tool cabinet and work table"
 msgstr "Metallwerkzeugschrank und Arbeitstisch"
 
 #: ../homedecor/misc-nodes.lua
-msgid "Picture Frame"
-msgstr "Bilderrahmen"
+msgid "Picture Frame 1"
+msgstr "Bilderrahmen 1"
+
+#: ../homedecor/misc-nodes.lua
+msgid "Picture Frame 2"
+msgstr "Bilderrahmen 2"
 
 #: ../homedecor/misc-nodes.lua
 msgid "Decorative painting #@1"
@@ -1305,7 +1307,7 @@ msgstr "Dekoratives Gemälde Nr. @1"
 
 #: ../homedecor/misc-nodes.lua
 msgid "dark topped"
-msgstr "dunkle Oberseite"
+msgstr "dunkler Handlauf"
 
 #: ../homedecor/misc-nodes.lua
 msgid "diagonal"
@@ -1540,19 +1542,16 @@ msgid "End Table"
 msgstr "Beitisch"
 
 #: ../lrfurn/init.lua
-#, fuzzy
 msgid "Someone else owns the spot where other end goes!"
-msgstr "Jemanden gehört schon der Platz, wo das Kopfende hingehen würde."
+msgstr "Jemanden gehört schon die Stelle, wo das andere Ende hingehen würde."
 
 #: ../lrfurn/init.lua
-#, fuzzy
 msgid "Someone else owns the spot where the middle or far end goes!"
-msgstr "Jemanden gehört schon der Platz, wo das Kopfende hingehen würde."
+msgstr "Jemanden gehört schon die Stelle, wo das mittlere oder ferne Stück hingehen würde."
 
 #: ../lrfurn/init.lua
-#, fuzzy
 msgid "Someone else owns the spot where the other end goes!"
-msgstr "Jemanden gehört schon der Platz, wo das Kopfende hingehen würde."
+msgstr "Jemanden gehört schon die Stelle, wo das andere Ende hingehen würde."
 
 #: ../lrfurn/longsofas.lua
 msgid "Long Sofa"
@@ -1578,8 +1577,23 @@ msgstr "Plasmafernseher"
 msgid "Plasma TV (off)"
 msgstr "Plasmafernseher (aus)"
 
-#~ msgid "blue"
-#~ msgstr "blau"
+msgid "Tumble dryer"
+msgstr "Wäschetrockner"
+
+msgid "Ironing board"
+msgstr "Bügelbrett"
+
+msgid "Spiral Staircase"
+msgstr "Wendeltreppe"
+
+msgid "Washing Machine"
+msgstr "Waschmaschine"
+
+msgid "blue"
+msgstr "blau"
+
+msgid "brown"
+msgstr "braun"
 
 #~ msgid "white"
 #~ msgstr "weiß"
@@ -1587,8 +1601,11 @@ msgstr "Plasmafernseher (aus)"
 #~ msgid "pink"
 #~ msgstr "rosa"
 
-#~ msgid "violet"
-#~ msgstr "violett"
+msgid "violet"
+msgstr "violett"
+
+msgid "grey"
+msgstr "grau"
 
 #~ msgid "dark green"
 #~ msgstr "dunkelgrün"
@@ -1639,8 +1656,7 @@ msgstr "Plasmafernseher (aus)"
 #~ msgstr "%s nimmt etwas aus dem Kuechenschrank bei %s"
 
 #~ msgid "Not enough space above that spot to place a door! "
-#~ msgstr ""
-#~ "Es gibt nicht genug Raum ueber dieser Stelle um die Tuer zu platzieren!"
+#~ msgstr "Es gibt nicht genug Raum ueber dieser Stelle um die Tuer zu platzieren!"
 
 #~ msgid "Bucket of white paint "
 #~ msgstr "Eimer mit weisser Farbe"

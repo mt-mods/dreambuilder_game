@@ -55,6 +55,10 @@ minetest.unregister_item("mesecons_extrawires:corner_on")
 minetest.unregister_item("mesecons_extrawires:tjunction_off")
 minetest.unregister_item("mesecons_extrawires:tjunction_on")
 
+minetest.register_alias("mesecons_insulated:insulated_off", "mesecons_insulated:insulated_grey_off")
+minetest.register_alias("mesecons_extrawires:corner_off", "mesecons_extrawires:insulated_corner_grey_off")
+minetest.register_alias("mesecons_extrawires:tjunction_off", "mesecons_extrawires:insulated_tjunction_grey_off")
+
 for _,color in pairs(hues) do
 	mesecon.register_node(":mesecons_insulated:insulated_"..color, {
 		drawtype = "nodebox",

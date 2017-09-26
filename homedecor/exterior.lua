@@ -118,7 +118,7 @@ minetest.register_alias("homedecor:deckchair_head", "air")
 homedecor.register("deckchair_striped_blue", {
 	mesh = "homedecor_deckchair.obj",
 	tiles = {"homedecor_deckchair_striped_blue.png"},
-	description = S("Deck Chair"),
+	description = S("Deck Chair (blue striped)"),
 	groups = { snappy = 3 },
 	expand = { forward="placeholder" },
 	sounds = default.node_sound_wood_defaults(),
@@ -368,7 +368,7 @@ local shrub_cbox = { -0.5, -0.5, -0.5, 0.5, 0.5, 0.5 }
 
 for _, color in ipairs(homedecor.shrub_colors) do
 	minetest.register_node("homedecor:shrubbery_large_"..color, {
-		description = S("Shrubbery (@1)", S(color)),
+		description = S("Shrubbery (large, @1)", S(color)),
 		drawtype = "mesh",
 		mesh = "homedecor_cube.obj",
 		tiles = {"homedecor_shrubbery_"..color..".png"},

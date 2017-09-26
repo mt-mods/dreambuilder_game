@@ -8,7 +8,7 @@ minetest.register_node("farming:seed_wheat", {
 	inventory_image = "farming_wheat_seed.png",
 	wield_image = "farming_wheat_seed.png",
 	drawtype = "signlike",
-	groups = {seed = 1, snappy = 3, attached_node = 1},
+	groups = {seed = 1, snappy = 3, attached_node = 1, flammable = 4},
 	paramtype = "light",
 	paramtype2 = "wallmounted",
 	walkable = false,
@@ -23,6 +23,7 @@ minetest.register_node("farming:seed_wheat", {
 minetest.register_craftitem("farming:wheat", {
 	description = S("Wheat"),
 	inventory_image = "farming_wheat.png",
+	groups = {flammable = 4},
 })
 
 -- straw
@@ -30,7 +31,7 @@ minetest.register_node("farming:straw", {
 	description = S("Straw"),
 	tiles = {"farming_straw.png"},
 	is_ground_content = false,
-	groups = {snappy = 3, flammable = 4},
+	groups = {snappy = 3, flammable = 4, fall_damage_add_percent = -30},
 	sounds = default.node_sound_leaves_defaults(),
 })
 
@@ -54,6 +55,7 @@ minetest.register_craft({
 minetest.register_craftitem("farming:flour", {
 	description = S("Flour"),
 	inventory_image = "farming_flour.png",
+	groups = {flammable = 1},
 })
 
 minetest.register_craft({
@@ -67,6 +69,7 @@ minetest.register_craftitem("farming:bread", {
 	description = S("Bread"),
 	inventory_image = "farming_bread.png",
 	on_use = minetest.item_eat(5),
+	groups = {flammable = 2},
 })
 
 minetest.register_craft({
@@ -81,13 +84,15 @@ local crop_def = {
 	drawtype = "plantlike",
 	tiles = {"farming_wheat_1.png"},
 	paramtype = "light",
+	paramtype2 = "meshoptions",
+	place_param2 = 3,
 	sunlight_propagates = true,
 	walkable = false,
 	buildable_to = true,
 	drop = "",
 	selection_box = farming.select,
 	groups = {
-		snappy = 3, flammable = 2, plant = 1, attached_node = 1,
+		snappy = 3, flammable = 4, plant = 1, attached_node = 1,
 		not_in_creative_inventory = 1, growing = 1
 	},
 	sounds = default.node_sound_leaves_defaults()
@@ -152,3 +157,16 @@ crop_def.drop = {
 	}
 }
 minetest.register_node("farming:wheat_8", table.copy(crop_def))
+
+-- fuels
+minetest.register_craft({
+	type = "fuel",
+	recipe = "farming:straw",
+	burntime = 3,
+})
+
+minetest.register_craft({
+	type = "fuel",
+	recipe = "farming:wheat",
+	burntime = 1,
+})

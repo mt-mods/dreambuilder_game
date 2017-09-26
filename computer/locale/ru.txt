@@ -1,0 +1,6 @@
+
+# Language: Russian
+# Author: inpos <inpos@yandex.ru>
+
+Plastic sheet = Лист пластика
+Unprocessed Plastic base = Необработанная пластиковая основа

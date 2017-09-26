@@ -14,6 +14,7 @@ for i = 3, 5 do
 	})
 
 	-- Override default dry grass and have it drop Barley Seeds
+
 	if minetest.registered_nodes["default:dry_grass_1"] then
 
 		minetest.override_item("default:dry_grass_" .. i, {
