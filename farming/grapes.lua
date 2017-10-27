@@ -116,7 +116,7 @@ minetest.register_node("farming:trellis", {
 
 		minetest.set_node(pointed_thing.above, {name = "farming:trellis"})
 
-		if not minetest.setting_getbool("creative_mode") then
+		if not farming.is_creative(placer:get_player_name()) then
 			itemstack:take_item()
 		end
 

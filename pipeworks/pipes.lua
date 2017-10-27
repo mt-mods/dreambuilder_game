@@ -5,6 +5,11 @@ local REGISTER_COMPATIBILITY = true
 local pipes_empty_nodenames = {}
 local pipes_full_nodenames = {}
 
+local new_flow_logic_register = pipeworks.flowables.register
+
+local polys = ""
+if pipeworks.enable_lowpoly then polys = "_lowpoly" end
+
 local vti = {4, 3, 2, 1, 6, 5}
 local cconnects = {{}, {1}, {1, 2}, {1, 3}, {1, 3, 5}, {1, 2, 3}, {1, 2, 3, 5}, {1, 2, 3, 4}, {1, 2, 3, 4, 5}, {1, 2, 3, 4, 5, 6}}
 for index, connects in ipairs(cconnects) do
@@ -47,10 +52,10 @@ for index, connects in ipairs(cconnects) do
 		outimg_l = { "pipeworks_pipe_3_loaded.png" }
 	end
 
-	local mesh = "pipeworks_pipe_"..index..".obj"
+	local mesh = "pipeworks_pipe_"..index..polys..".obj"
 
 	if index == 1 then
-		mesh = "pipeworks_pipe_3.obj"
+		mesh = "pipeworks_pipe_3"..polys..".obj"
 	end
 
 	minetest.register_node("pipeworks:pipe_"..index.."_empty", {
@@ -116,8 +121,12 @@ for index, connects in ipairs(cconnects) do
 		on_rotate = false
 	})
 	
-	table.insert(pipes_empty_nodenames, "pipeworks:pipe_"..index.."_empty")
-	table.insert(pipes_full_nodenames,  "pipeworks:pipe_"..index.."_loaded")
+	local emptypipe = "pipeworks:pipe_"..index.."_empty"
+	local fullpipe = "pipeworks:pipe_"..index.."_loaded"
+	table.insert(pipes_empty_nodenames, emptypipe)
+	table.insert(pipes_full_nodenames, fullpipe)
+	new_flow_logic_register.simple(emptypipe)
+	new_flow_logic_register.simple(fullpipe)
 end
 
 
@@ -182,14 +191,34 @@ if REGISTER_COMPATIBILITY then
 	})
 end
 
-table.insert(pipes_empty_nodenames,"pipeworks:valve_on_empty")
-table.insert(pipes_empty_nodenames,"pipeworks:valve_off_empty")
-table.insert(pipes_empty_nodenames,"pipeworks:entry_panel_empty")
-table.insert(pipes_empty_nodenames,"pipeworks:flow_sensor_empty")
 
-table.insert(pipes_full_nodenames,"pipeworks:valve_on_loaded")
-table.insert(pipes_full_nodenames,"pipeworks:entry_panel_loaded")
-table.insert(pipes_full_nodenames,"pipeworks:flow_sensor_loaded")
+
+local valve_on = "pipeworks:valve_on_empty"
+local valve_off = "pipeworks:valve_off_empty"
+local entry_panel_empty = "pipeworks:entry_panel_empty"
+local flow_sensor_empty = "pipeworks:flow_sensor_empty"
+-- XXX: why aren't these in devices.lua!?
+table.insert(pipes_empty_nodenames, valve_on)
+table.insert(pipes_empty_nodenames, valve_off)
+table.insert(pipes_empty_nodenames, entry_panel_empty)
+table.insert(pipes_empty_nodenames, flow_sensor_empty)
+
+local valve_on_loaded = "pipeworks:valve_on_loaded"
+local entry_panel_loaded = "pipeworks:entry_panel_loaded"
+local flow_sensor_loaded = "pipeworks:flow_sensor_loaded"
+table.insert(pipes_full_nodenames, valve_on_loaded)
+table.insert(pipes_full_nodenames, entry_panel_loaded)
+table.insert(pipes_full_nodenames, flow_sensor_loaded)
+
+pipeworks.pipes_full_nodenames = pipes_full_nodenames
+pipeworks.pipes_empty_nodenames = pipes_empty_nodenames
+
+
+
+
+if pipeworks.toggles.pipe_mode == "classic" then
+
+
 
 minetest.register_abm({
 	nodenames = pipes_empty_nodenames,
@@ -227,3 +256,6 @@ minetest.register_abm({
 	end
 })
 
+
+
+end

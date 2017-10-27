@@ -21,6 +21,26 @@ if minetest.get_modpath("farming") then
 	})
 end
 
+if minetest.get_modpath("hemp") then
+	minetest.register_craft({
+		output = 'ropes:ropesegment',
+		recipe = {
+			{'hemp:hemp_rope'},
+			{'hemp:hemp_rope'},
+		}
+	})
+end
+
+if minetest.get_modpath("cottages") then
+	minetest.register_craft({
+		output = 'ropes:ropesegment',
+		recipe = {
+			{'cottages:rope'},
+			{'cottages:rope'},
+		}
+	})
+end
+
 minetest.register_craft({
 	output = 'ropes:ropesegment',
 	recipe = {

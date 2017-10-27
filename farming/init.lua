@@ -7,6 +7,7 @@
 
 farming = {}
 farming.mod = "redo"
+farming.version = "1.29"
 farming.path = minetest.get_modpath("farming")
 farming.select = {
 	type = "fixed",
@@ -29,7 +30,7 @@ farming.intllib = S
 
 
 -- Utility Function
-local time_speed = tonumber(minetest.setting_get("time_speed")) or 72
+local time_speed = tonumber(minetest.settings:get("time_speed")) or 72
 local SECS_PER_CYCLE = (time_speed > 0 and 24 * 60 * 60 / time_speed) or 0
 local function clamp(x, min, max)
 	return (x < min and min) or (x > max and max) or x
