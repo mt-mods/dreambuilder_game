@@ -31,6 +31,8 @@ biome_lib.modpath = minetest.get_modpath("biome_lib")
 
 biome_lib.total_no_aircheck_calls = 0
 
+biome_lib.queue_run_ratio = tonumber(minetest.settings:get("biome_lib_queue_run_ratio")) or 100
+
 -- Boilerplate to support localized strings if intllib mod is installed.
 local S
 if minetest.get_modpath("intllib") then
@@ -427,8 +429,9 @@ end)
 -- "Play" them back, populating them with new stuff in the process
 
 minetest.register_globalstep(function(dtime)
-	if dtime < 0.2 and    -- don't attempt to populate if lag is already too high
-	  (#biome_lib.blocklist_aircheck > 0 or #biome_lib.blocklist_no_aircheck > 0) then
+	if dtime < 0.2    -- don't attempt to populate if lag is already too high
+	  and math.random(100) <= biome_lib.queue_run_ratio
+	  and (#biome_lib.blocklist_aircheck > 0 or #biome_lib.blocklist_no_aircheck > 0) then
 		biome_lib.globalstep_start_time = minetest.get_us_time()
 		biome_lib.globalstep_runtime = 0
 		while (#biome_lib.blocklist_aircheck > 0 or #biome_lib.blocklist_no_aircheck > 0)
