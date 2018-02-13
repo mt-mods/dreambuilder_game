@@ -2,12 +2,12 @@
 # Copyright (C) 2017 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Automatically generated, 2017.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-03 20:37+0200\n"
+"POT-Creation-Date: 2017-11-14 03:47+0800\n"
 "PO-Revision-Date: 2017-08-06 07:59+0200\n"
 "Last-Translator: fat115 <fat115@framasoft.org>\n"
 "Language-Team: French\n"
@@ -18,147 +18,83 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.8.12\n"
 
-#: ../building_blocks/init.lua
-msgid "Adobe"
-msgstr "Pisé"
+#: ../building_blocks/alias.lua
+msgid "Granite"
+msgstr "Granit"
 
-#: ../building_blocks/init.lua
-msgid "Roof block"
-msgstr "Bloc de toit"
-
-#: ../building_blocks/init.lua
-msgid "Streak Free Glass"
-msgstr "Verre anti-rayures"
-
-#: ../building_blocks/init.lua
+#: ../building_blocks/node_stairs.lua
 msgid "Grate"
 msgstr "Grille"
 
-#: ../building_blocks/init.lua
-msgid "Fireplace"
-msgstr "Cheminée"
+#: ../building_blocks/node_stairs.lua
+msgid "Streak Free Glass"
+msgstr "Verre anti-rayures"
 
-#: ../building_blocks/init.lua
+#: ../building_blocks/node_stairs.lua
 msgid "Wood Framed Glass"
 msgstr "Verre encadré de bois"
 
-#: ../building_blocks/init.lua
-msgid "Terrycloth towel"
-msgstr "Serviette éponge"
+#: ../building_blocks/node_stairs.lua
+msgid "Adobe"
+msgstr "Pisé"
 
-#: ../building_blocks/init.lua
-msgid "Tarmac Spread"
-msgstr "Tapis de goudron"
-
-#: ../building_blocks/init.lua
-msgid "Chess board tiling"
-msgstr "Dalles en échiquier"
-
-#. Translators: "Brobble" is a portmanteau of "Brick" and "Cobble".
-#. Translate however you see fit.
-#: ../building_blocks/init.lua
-msgid "Brobble Spread"
-msgstr "Tapis rouge"
-
-#: ../building_blocks/init.lua
-msgid "Gravel Spread"
-msgstr "Tapis de gravier"
-
-#: ../building_blocks/init.lua
-msgid "Hardwood"
-msgstr "Bois dur (feuillu)"
-
-#: ../building_blocks/init.lua
-msgid "Marble"
-msgstr "Marbre"
-
-#: ../building_blocks/init.lua
-msgid "Grass"
-msgstr "Herbe"
-
-#: ../building_blocks/init.lua
-msgid "Tar"
-msgstr "Goudron"
-
-#: ../building_blocks/init.lua
-msgid "Roofing"
-msgstr "Toiture"
-
-#: ../building_blocks/init.lua
-msgid "Marble stair"
-msgstr "Marche en marbre"
-
-#: ../building_blocks/init.lua
-msgid "Marble slab"
-msgstr "Dalle en marbre"
-
-#: ../building_blocks/init.lua
-msgid "Hardwood stair"
-msgstr "Marche en bois dur (feuillu)"
-
-#: ../building_blocks/init.lua
-msgid "Hardwood slab"
-msgstr "Dalle en bois dur (feuillu)"
-
-#: ../building_blocks/init.lua
-msgid "Grass stair"
-msgstr "Marche en herbe"
-
-#: ../building_blocks/init.lua
-msgid "Grass slab"
-msgstr "Dalle en herbe"
-
-#: ../building_blocks/init.lua
-msgid "Tar stair"
-msgstr "Marche en goudron"
-
-#: ../building_blocks/init.lua
-msgid "Tar slab"
-msgstr "Dalle en goudron"
-
-#: ../building_blocks/init.lua
-msgid "Grate Stair"
-msgstr "Marche en métal déployé"
-
-#: ../building_blocks/init.lua
-msgid "Grate Slab"
-msgstr "Dalle en métal déployé"
-
-#: ../building_blocks/init.lua
-msgid "Adobe stair"
-msgstr "Marche en pisé"
-
-#: ../building_blocks/init.lua
-msgid "Adobe slab"
-msgstr "Dalle en pisé"
-
-#: ../building_blocks/init.lua
-msgid "Roofing stair"
-msgstr "Marche de toiture"
-
-#: ../building_blocks/init.lua
-msgid "Roofing slab"
-msgstr "Dalle de toiture"
-
-#: ../building_blocks/init.lua
+#: ../building_blocks/node_stairs.lua
 msgid "Fake Grass"
 msgstr "Herbe synthétique"
 
-#: ../building_blocks/init.lua
+#: ../building_blocks/node_stairs.lua
+msgid "Hardwood"
+msgstr "Bois dur (feuillu)"
+
+#: ../building_blocks/node_stairs.lua
+msgid "Roof block"
+msgstr "Bloc de toit"
+
+#: ../building_blocks/node_stairs.lua
+msgid "Tar"
+msgstr "Goudron"
+
+#: ../building_blocks/node_stairs.lua
+msgid "Marble"
+msgstr "Marbre"
+
+#. Translators: "Brobble" is a portmanteau of "Brick" and "Cobble".
+#. Translate however you see fit.
+#: ../building_blocks/node_stairs.lua
+msgid "Brobble Spread"
+msgstr "Tapis rouge"
+
+#: ../building_blocks/node_stairs.lua
+msgid "Gravel Spread"
+msgstr "Tapis de gravier"
+
+#: ../building_blocks/node_stairs.lua
+msgid "Tarmac Spread"
+msgstr "Tapis de goudron"
+
+#: ../building_blocks/node_stairs.lua
+msgid "Terrycloth towel"
+msgstr "Serviette éponge"
+
+#: ../building_blocks/node_stairs.lua
+msgid "Chess board tiling"
+msgstr "Dalles en échiquier"
+
+#: ../building_blocks/node_stairs.lua
+msgid "Fireplace"
+msgstr "Cheminée"
+
+#: ../building_blocks/others.lua
 msgid "Small bundle of sticks"
 msgstr "Petit fagot de brindilles"
 
-#: ../building_blocks/init.lua
+#: ../building_blocks/others.lua
 msgid "Tar base"
 msgstr "Pâte de goudron"
 
-#: ../building_blocks/init.lua
+#: ../building_blocks/others.lua
 msgid "Tar Knife"
 msgstr "Couteau à goudron"
-
-#: ../building_blocks/init.lua
-msgid "Granite"
-msgstr "Granit"
 
 #: ../chains/init.lua
 msgid "Hanging chain (wrought iron)"
@@ -245,10 +181,6 @@ msgid "No room for place the Arcade!"
 msgstr "Pas assez de place pour placer la borne d'arcade !"
 
 #: ../fake_fire/init.lua
-msgid "Fake fire"
-msgstr "Feu illusoire"
-
-#: ../fake_fire/init.lua
 msgid "Ice fire"
 msgstr "Feu glacé"
 
@@ -267,14 +199,6 @@ msgstr "Haut de cheminée en pierre"
 #: ../fake_fire/init.lua
 msgid "Sandstone chimney top"
 msgstr "Haut de cheminée en grès"
-
-#: ../fake_fire/init.lua
-msgid "Flint and steel"
-msgstr "Silex et acier"
-
-#: ../fake_fire/init.lua
-msgid "This area is protected!"
-msgstr "Cette zone est protégée !"
 
 #: ../homedecor/bathroom_furniture.lua
 msgid "Bathroom/kitchen tiles (dark)"
@@ -368,8 +292,36 @@ msgstr "Meuble de chevet avec deux tiroirs (@1)"
 msgid "Two-drawer Nightstand"
 msgstr "Meuble de chevet avec deux tiroirs"
 
+#: ../homedecor/books.lua ../homedecor/exterior.lua
+msgid "red"
+msgstr "rouge"
+
+#: ../homedecor/books.lua ../homedecor/exterior.lua ../homedecor/misc-nodes.lua
+msgid "green"
+msgstr "vert"
+
 #: ../homedecor/books.lua
-msgid "Writable Book"
+#, fuzzy
+msgid "blue"
+msgstr "bleues"
+
+#: ../homedecor/books.lua
+#, fuzzy
+msgid "violet"
+msgstr "violettes"
+
+#: ../homedecor/books.lua
+#, fuzzy
+msgid "grey"
+msgstr "vertes"
+
+#: ../homedecor/books.lua
+msgid "brown"
+msgstr ""
+
+#: ../homedecor/books.lua
+#, fuzzy
+msgid "Writable Book (@1)"
 msgstr "Livre inscriptible"
 
 #: ../homedecor/books.lua
@@ -685,6 +637,10 @@ msgid "Deck Chair"
 msgstr "Chaise longue"
 
 #: ../homedecor/exterior.lua
+msgid "Deck Chair (blue striped)"
+msgstr ""
+
+#: ../homedecor/exterior.lua
 msgid "Doghouse"
 msgstr "Niche"
 
@@ -726,17 +682,14 @@ msgstr "Balançoire"
 msgid "Water well"
 msgstr "Puits"
 
-#: ../homedecor/exterior.lua ../homedecor/misc-nodes.lua
-msgid "green"
-msgstr "vert"
-
-#: ../homedecor/exterior.lua
-msgid "red"
-msgstr "rouge"
-
 #: ../homedecor/exterior.lua
 msgid "yellow"
 msgstr "jaune"
+
+#: ../homedecor/exterior.lua
+#, fuzzy
+msgid "Shrubbery (large, @1)"
+msgstr "Arbustes (@1)"
 
 #: ../homedecor/exterior.lua
 msgid "Shrubbery (@1)"
@@ -1294,7 +1247,8 @@ msgid "Metal tool cabinet and work table"
 msgstr "Établi pour le travail du métal"
 
 #: ../homedecor/misc-nodes.lua
-msgid "Picture Frame"
+#, fuzzy
+msgid "Picture Frame "
 msgstr "Cadre photo"
 
 #: ../homedecor/misc-nodes.lua
@@ -1482,6 +1436,11 @@ msgid "Curtains"
 msgstr "Rideaux"
 
 #: ../homedecor/window_treatments.lua
+#, fuzzy
+msgid "Curtains (open)"
+msgstr "Rideaux"
+
+#: ../homedecor/window_treatments.lua
 msgid "Curtain Rod (@1)"
 msgstr "Tringle à rideaux (@1)"
 
@@ -1575,9 +1534,62 @@ msgstr "Écran TV géant"
 msgid "Plasma TV (off)"
 msgstr "Écran TV géant (éteint)"
 
-#, fuzzy
-#~ msgid "blue"
-#~ msgstr "bleues"
+#~ msgid "Grass"
+#~ msgstr "Herbe"
+
+#~ msgid "Roofing"
+#~ msgstr "Toiture"
+
+#~ msgid "Marble stair"
+#~ msgstr "Marche en marbre"
+
+#~ msgid "Marble slab"
+#~ msgstr "Dalle en marbre"
+
+#~ msgid "Hardwood stair"
+#~ msgstr "Marche en bois dur (feuillu)"
+
+#~ msgid "Hardwood slab"
+#~ msgstr "Dalle en bois dur (feuillu)"
+
+#~ msgid "Grass stair"
+#~ msgstr "Marche en herbe"
+
+#~ msgid "Grass slab"
+#~ msgstr "Dalle en herbe"
+
+#~ msgid "Tar stair"
+#~ msgstr "Marche en goudron"
+
+#~ msgid "Tar slab"
+#~ msgstr "Dalle en goudron"
+
+#~ msgid "Grate Stair"
+#~ msgstr "Marche en métal déployé"
+
+#~ msgid "Grate Slab"
+#~ msgstr "Dalle en métal déployé"
+
+#~ msgid "Adobe stair"
+#~ msgstr "Marche en pisé"
+
+#~ msgid "Adobe slab"
+#~ msgstr "Dalle en pisé"
+
+#~ msgid "Roofing stair"
+#~ msgstr "Marche de toiture"
+
+#~ msgid "Roofing slab"
+#~ msgstr "Dalle de toiture"
+
+#~ msgid "Fake fire"
+#~ msgstr "Feu illusoire"
+
+#~ msgid "Flint and steel"
+#~ msgstr "Silex et acier"
+
+#~ msgid "This area is protected!"
+#~ msgstr "Cette zone est protégée !"
 
 #, fuzzy
 #~ msgid "white"
@@ -1586,10 +1598,6 @@ msgstr "Écran TV géant (éteint)"
 #, fuzzy
 #~ msgid "pink"
 #~ msgstr "roses"
-
-#, fuzzy
-#~ msgid "violet"
-#~ msgstr "violettes"
 
 #, fuzzy
 #~ msgid "dark green"
@@ -1614,10 +1622,6 @@ msgstr "Écran TV géant (éteint)"
 #, fuzzy
 #~ msgid "light blue"
 #~ msgstr "droite"
-
-#, fuzzy
-#~ msgid "dark_grey"
-#~ msgstr "vertes"
 
 #, fuzzy
 #~ msgid "dark_green"

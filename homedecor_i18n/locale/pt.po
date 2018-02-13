@@ -1,16 +1,16 @@
 # Portuguese translations for homedecor package.
 # Translations distributed under CC-BY-SA license.
-#
+# 
 # Translators and reviewers (updates):
 # BrunoMine <borgesdossantosbruno@gmail.com> [2017]
 # Aracnus <frederico@teia.bio.br>, 2017.
 # Updated on 27/07/2017 by caiorrs <caiorrs@gmail.com>
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-03 20:37+0200\n"
+"POT-Creation-Date: 2017-11-14 03:47+0800\n"
 "PO-Revision-Date: 2017-01-29 00:21-0200\n"
 "Last-Translator: Caiorrs <caiorrs@gmail.com>\n"
 "Language-Team: Brazilian Portuguese\n"
@@ -21,157 +21,90 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Gtranslator 2.91.7\n"
 
-#: ../building_blocks/init.lua
-msgid "Adobe"
-msgstr "Argila"
+#: ../building_blocks/alias.lua
+#, fuzzy
+msgid "Granite"
+msgstr "Granito"
 
-#: ../building_blocks/init.lua
-msgid "Roof block"
-msgstr "Bloco de telhado"
+#: ../building_blocks/node_stairs.lua
+msgid "Grate"
+msgstr "Grelha"
 
-#: ../building_blocks/init.lua
+#: ../building_blocks/node_stairs.lua
 #, fuzzy
 msgid "Streak Free Glass"
 msgstr "Vidro Sem Riscos"
 
-#: ../building_blocks/init.lua
-msgid "Grate"
-msgstr "Grelha"
-
-#: ../building_blocks/init.lua
-msgid "Fireplace"
-msgstr "Lareira"
-
-#: ../building_blocks/init.lua
+#: ../building_blocks/node_stairs.lua
 #, fuzzy
 msgid "Wood Framed Glass"
 msgstr "Vidro com Bordas de Madeira"
 
-#: ../building_blocks/init.lua
-#, fuzzy
-msgid "Terrycloth towel"
-msgstr "Toalha de Roupinha"
+#: ../building_blocks/node_stairs.lua
+msgid "Adobe"
+msgstr "Argila"
 
-#: ../building_blocks/init.lua
-msgid "Tarmac Spread"
-msgstr "Espalhamento das Estradas"
+#: ../building_blocks/node_stairs.lua
+msgid "Fake Grass"
+msgstr "Grama Falsa"
 
-#: ../building_blocks/init.lua
-msgid "Chess board tiling"
-msgstr "Revestimento de xadrez"
-
-#. Translators: "Brobble" is a portmanteau of "Brick" and "Cobble".
-#. Translate however you see fit.
-#: ../building_blocks/init.lua
-msgid "Brobble Spread"
-msgstr "Calçado"
-
-#: ../building_blocks/init.lua
-msgid "Gravel Spread"
-msgstr "Espalhamento de Cascalho"
-
-#: ../building_blocks/init.lua
+#: ../building_blocks/node_stairs.lua
 #, fuzzy
 msgid "Hardwood"
 msgstr "Madeira"
 
-#: ../building_blocks/init.lua
-#, fuzzy
-msgid "Marble"
-msgstr "Mármore"
+#: ../building_blocks/node_stairs.lua
+msgid "Roof block"
+msgstr "Bloco de telhado"
 
-#: ../building_blocks/init.lua
-#, fuzzy
-msgid "Grass"
-msgstr "latão"
-
-#: ../building_blocks/init.lua
+#: ../building_blocks/node_stairs.lua
 #, fuzzy
 msgid "Tar"
 msgstr "Alcatrão"
 
-#: ../building_blocks/init.lua
+#: ../building_blocks/node_stairs.lua
 #, fuzzy
-msgid "Roofing"
-msgstr "Placa de telhado"
+msgid "Marble"
+msgstr "Mármore"
 
-#: ../building_blocks/init.lua
-msgid "Marble stair"
-msgstr "Escada de mármore"
+#. Translators: "Brobble" is a portmanteau of "Brick" and "Cobble".
+#. Translate however you see fit.
+#: ../building_blocks/node_stairs.lua
+msgid "Brobble Spread"
+msgstr "Calçado"
 
-#: ../building_blocks/init.lua
-msgid "Marble slab"
-msgstr "Placa de Mármore"
+#: ../building_blocks/node_stairs.lua
+msgid "Gravel Spread"
+msgstr "Espalhamento de Cascalho"
 
-#: ../building_blocks/init.lua
-msgid "Hardwood stair"
-msgstr "Escada de madeira"
+#: ../building_blocks/node_stairs.lua
+msgid "Tarmac Spread"
+msgstr "Espalhamento das Estradas"
 
-#: ../building_blocks/init.lua
-msgid "Hardwood slab"
-msgstr "Placa de madeira"
-
-#: ../building_blocks/init.lua
-msgid "Grass stair"
-msgstr "Escada de grama"
-
-#: ../building_blocks/init.lua
+#: ../building_blocks/node_stairs.lua
 #, fuzzy
-msgid "Grass slab"
-msgstr "Placa de grama"
+msgid "Terrycloth towel"
+msgstr "Toalha de Roupinha"
 
-#: ../building_blocks/init.lua
-msgid "Tar stair"
-msgstr "Escada de alcatrão"
+#: ../building_blocks/node_stairs.lua
+msgid "Chess board tiling"
+msgstr "Revestimento de xadrez"
 
-#: ../building_blocks/init.lua
-msgid "Tar slab"
-msgstr "Placa de alcatrão"
+#: ../building_blocks/node_stairs.lua
+msgid "Fireplace"
+msgstr "Lareira"
 
-#: ../building_blocks/init.lua
-msgid "Grate Stair"
-msgstr "Escade de Grelha"
-
-#: ../building_blocks/init.lua
-msgid "Grate Slab"
-msgstr "Placa de Grelha"
-
-#: ../building_blocks/init.lua
-msgid "Adobe stair"
-msgstr "Escada de Argila"
-
-#: ../building_blocks/init.lua
-msgid "Adobe slab"
-msgstr "Placa de argila"
-
-#: ../building_blocks/init.lua
-msgid "Roofing stair"
-msgstr "Escada de telhado"
-
-#: ../building_blocks/init.lua
-msgid "Roofing slab"
-msgstr "Placa de telhado"
-
-#: ../building_blocks/init.lua
-msgid "Fake Grass"
-msgstr "Grama Falsa"
-
-#: ../building_blocks/init.lua
+#: ../building_blocks/others.lua
 msgid "Small bundle of sticks"
 msgstr "Pequeno amontoado de gravetos"
 
-#: ../building_blocks/init.lua
+#: ../building_blocks/others.lua
 msgid "Tar base"
 msgstr "Base para alcatrão"
 
-#: ../building_blocks/init.lua
+#: ../building_blocks/others.lua
 msgid "Tar Knife"
 msgstr "Faca de Alcatrão"
-
-#: ../building_blocks/init.lua
-#, fuzzy
-msgid "Granite"
-msgstr "Granito"
 
 #: ../chains/init.lua
 #, fuzzy
@@ -263,10 +196,6 @@ msgid "No room for place the Arcade!"
 msgstr "Sem espaço para colocar o Fliperama!"
 
 #: ../fake_fire/init.lua
-msgid "Fake fire"
-msgstr "Fogo falso"
-
-#: ../fake_fire/init.lua
 msgid "Ice fire"
 msgstr "Fogo de gelo"
 
@@ -285,14 +214,6 @@ msgstr "Topo de chaminé de pedra"
 #: ../fake_fire/init.lua
 msgid "Sandstone chimney top"
 msgstr "Topo de chaminé de arenito"
-
-#: ../fake_fire/init.lua
-msgid "Flint and steel"
-msgstr "Pederneira e aço"
-
-#: ../fake_fire/init.lua
-msgid "This area is protected!"
-msgstr "Esta área é protegida"
 
 #: ../homedecor/bathroom_furniture.lua
 #, fuzzy
@@ -391,9 +312,33 @@ msgstr "Mesa de Cabeceira com Duas Gavetas (@1)"
 msgid "Two-drawer Nightstand"
 msgstr "Mesinha de Duas Gavetas"
 
+#: ../homedecor/books.lua ../homedecor/exterior.lua
+msgid "red"
+msgstr "vermelho"
+
+#: ../homedecor/books.lua ../homedecor/exterior.lua ../homedecor/misc-nodes.lua
+msgid "green"
+msgstr "verde"
+
+#: ../homedecor/books.lua
+msgid "blue"
+msgstr "azul"
+
+#: ../homedecor/books.lua
+msgid "violet"
+msgstr "violeta"
+
+#: ../homedecor/books.lua
+msgid "grey"
+msgstr "cinza"
+
+#: ../homedecor/books.lua
+msgid "brown"
+msgstr "marrom"
+
 #: ../homedecor/books.lua
 #, fuzzy
-msgid "Writable Book"
+msgid "Writable Book (@1)"
 msgstr "Livro que pode ser escrito (@1)"
 
 #: ../homedecor/books.lua
@@ -710,6 +655,10 @@ msgid "Deck Chair"
 msgstr "Cadeira de Praia"
 
 #: ../homedecor/exterior.lua
+msgid "Deck Chair (blue striped)"
+msgstr ""
+
+#: ../homedecor/exterior.lua
 msgid "Doghouse"
 msgstr "Casa de Cachorro"
 
@@ -751,17 +700,14 @@ msgstr "Balancinho de árvore"
 msgid "Water well"
 msgstr "Poço de agua"
 
-#: ../homedecor/exterior.lua ../homedecor/misc-nodes.lua
-msgid "green"
-msgstr "verde"
-
-#: ../homedecor/exterior.lua
-msgid "red"
-msgstr "vermelho"
-
 #: ../homedecor/exterior.lua
 msgid "yellow"
 msgstr "amarelo"
+
+#: ../homedecor/exterior.lua
+#, fuzzy
+msgid "Shrubbery (large, @1)"
+msgstr "Matagal (@1)"
 
 #: ../homedecor/exterior.lua
 msgid "Shrubbery (@1)"
@@ -1333,7 +1279,8 @@ msgid "Metal tool cabinet and work table"
 msgstr "Gabinete de ferramentas metálicas e mesa de trabalho"
 
 #: ../homedecor/misc-nodes.lua
-msgid "Picture Frame"
+#, fuzzy
+msgid "Picture Frame "
 msgstr "Quadro de Foto"
 
 #: ../homedecor/misc-nodes.lua
@@ -1525,6 +1472,11 @@ msgid "Curtains"
 msgstr "Cortinas"
 
 #: ../homedecor/window_treatments.lua
+#, fuzzy
+msgid "Curtains (open)"
+msgstr "Cortinas"
+
+#: ../homedecor/window_treatments.lua
 msgid "Curtain Rod (@1)"
 msgstr "Suporte de Cortina (@1)"
 
@@ -1627,8 +1579,65 @@ msgstr "TV de Plasma"
 msgid "Plasma TV (off)"
 msgstr "TV de Plasma (desligada)"
 
-#~ msgid "blue"
-#~ msgstr "azul"
+#, fuzzy
+#~ msgid "Grass"
+#~ msgstr "latão"
+
+#, fuzzy
+#~ msgid "Roofing"
+#~ msgstr "Placa de telhado"
+
+#~ msgid "Marble stair"
+#~ msgstr "Escada de mármore"
+
+#~ msgid "Marble slab"
+#~ msgstr "Placa de Mármore"
+
+#~ msgid "Hardwood stair"
+#~ msgstr "Escada de madeira"
+
+#~ msgid "Hardwood slab"
+#~ msgstr "Placa de madeira"
+
+#~ msgid "Grass stair"
+#~ msgstr "Escada de grama"
+
+#, fuzzy
+#~ msgid "Grass slab"
+#~ msgstr "Placa de grama"
+
+#~ msgid "Tar stair"
+#~ msgstr "Escada de alcatrão"
+
+#~ msgid "Tar slab"
+#~ msgstr "Placa de alcatrão"
+
+#~ msgid "Grate Stair"
+#~ msgstr "Escade de Grelha"
+
+#~ msgid "Grate Slab"
+#~ msgstr "Placa de Grelha"
+
+#~ msgid "Adobe stair"
+#~ msgstr "Escada de Argila"
+
+#~ msgid "Adobe slab"
+#~ msgstr "Placa de argila"
+
+#~ msgid "Roofing stair"
+#~ msgstr "Escada de telhado"
+
+#~ msgid "Roofing slab"
+#~ msgstr "Placa de telhado"
+
+#~ msgid "Fake fire"
+#~ msgstr "Fogo falso"
+
+#~ msgid "Flint and steel"
+#~ msgstr "Pederneira e aço"
+
+#~ msgid "This area is protected!"
+#~ msgstr "Esta área é protegida"
 
 #~ msgid "white"
 #~ msgstr "branco"
@@ -1636,20 +1645,11 @@ msgstr "TV de Plasma (desligada)"
 #~ msgid "pink"
 #~ msgstr "rosa"
 
-#~ msgid "violet"
-#~ msgstr "violeta"
-
 #~ msgid "plain"
 #~ msgstr "Sem Acabamento"
 
 #~ msgid "dark green"
 #~ msgstr "verde escuro"
-
-#~ msgid "grey"
-#~ msgstr "cinza"
-
-#~ msgid "brown"
-#~ msgstr "marrom"
 
 #~ msgid "white/grey"
 #~ msgstr "branco/cinza"

@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- Listring add for circular saw.
+
+### Fixed
+
+- Wool Stairs+ nodes can no longer be used in crafting.
+- The circular saw can no longer replace items from the player's inventory
+  when it is full.
+
 ## [1.1.0] - 2017-10-04
 
 ### Added

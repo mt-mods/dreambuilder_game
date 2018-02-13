@@ -66,6 +66,7 @@ local object_detector_digiline = {
 minetest.register_node("mesecons_detector:object_detector_off", {
 	tiles = {"default_steel_block.png", "default_steel_block.png", "jeija_object_detector_off.png", "jeija_object_detector_off.png", "jeija_object_detector_off.png", "jeija_object_detector_off.png"},
 	paramtype = "light",
+	is_ground_content = false,
 	walkable = true,
 	groups = {cracky=3},
 	description="Player Detector",
@@ -83,6 +84,7 @@ minetest.register_node("mesecons_detector:object_detector_off", {
 minetest.register_node("mesecons_detector:object_detector_on", {
 	tiles = {"default_steel_block.png", "default_steel_block.png", "jeija_object_detector_on.png", "jeija_object_detector_on.png", "jeija_object_detector_on.png", "jeija_object_detector_on.png"},
 	paramtype = "light",
+	is_ground_content = false,
 	walkable = true,
 	groups = {cracky=3,not_in_creative_inventory=1},
 	drop = 'mesecons_detector:object_detector_off',
@@ -102,6 +104,15 @@ minetest.register_craft({
 	recipe = {
 		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
 		{"default:steel_ingot", "mesecons_luacontroller:luacontroller0000", "default:steel_ingot"},
+		{"default:steel_ingot", "group:mesecon_conductor_craftable", "default:steel_ingot"},
+	}
+})
+
+minetest.register_craft({
+	output = 'mesecons_detector:object_detector_off',
+	recipe = {
+		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
+		{"default:steel_ingot", "mesecons_microcontroller:microcontroller0000", "default:steel_ingot"},
 		{"default:steel_ingot", "group:mesecon_conductor_craftable", "default:steel_ingot"},
 	}
 })
@@ -227,6 +238,7 @@ minetest.register_node("mesecons_detector:node_detector_off", {
 	tiles = {"default_steel_block.png", "default_steel_block.png", "default_steel_block.png", "default_steel_block.png", "default_steel_block.png", "jeija_node_detector_off.png"},
 	paramtype = "light",
 	paramtype2 = "facedir",
+	is_ground_content = false,
 	walkable = true,
 	groups = {cracky=3},
 	description="Node Detector",
@@ -244,6 +256,7 @@ minetest.register_node("mesecons_detector:node_detector_on", {
 	tiles = {"default_steel_block.png", "default_steel_block.png", "default_steel_block.png", "default_steel_block.png", "default_steel_block.png", "jeija_node_detector_on.png"},
 	paramtype = "light",
 	paramtype2 = "facedir",
+	is_ground_content = false,
 	walkable = true,
 	groups = {cracky=3,not_in_creative_inventory=1},
 	drop = 'mesecons_detector:node_detector_off',
@@ -262,6 +275,15 @@ minetest.register_craft({
 	recipe = {
 		{"default:steel_ingot", "group:mesecon_conductor_craftable", "default:steel_ingot"},
 		{"default:steel_ingot", "mesecons_luacontroller:luacontroller0000", "default:steel_ingot"},
+		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
+	}
+})
+
+minetest.register_craft({
+	output = 'mesecons_detector:node_detector_off',
+	recipe = {
+		{"default:steel_ingot", "group:mesecon_conductor_craftable", "default:steel_ingot"},
+		{"default:steel_ingot", "mesecons_microcontroller:microcontroller0000", "default:steel_ingot"},
 		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
 	}
 })

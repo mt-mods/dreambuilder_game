@@ -72,6 +72,7 @@ local function piston_remove_pusher(pos, node)
 		max_hear_distance = 20,
 		gain = 0.3,
 	})
+	minetest.check_for_falling(pusherpos)
 end
 
 local piston_on = function(pos, node)
@@ -264,6 +265,7 @@ minetest.register_node("mesecons_pistons:piston_normal_off", {
 	},
 	groups = {cracky = 3},
 	paramtype2 = "facedir",
+	is_ground_content = false,
 	after_place_node = piston_orientate,
 	sounds = default.node_sound_wood_defaults(),
 	mesecons = {effector={
@@ -289,6 +291,7 @@ minetest.register_node("mesecons_pistons:piston_normal_on", {
 	groups = {cracky = 3, not_in_creative_inventory = 1},
 	paramtype = "light",
 	paramtype2 = "facedir",
+	is_ground_content = false,
 	drop = "mesecons_pistons:piston_normal_off",
 	after_dig_node = piston_remove_pusher,
 	node_box = piston_on_box,
@@ -317,6 +320,7 @@ minetest.register_node("mesecons_pistons:piston_pusher_normal", {
 	groups = {not_in_creative_inventory = 1},
 	paramtype = "light",
 	paramtype2 = "facedir",
+	is_ground_content = false,
 	diggable = false,
 	selection_box = piston_pusher_box,
 	node_box = piston_pusher_box,
@@ -338,6 +342,7 @@ minetest.register_node("mesecons_pistons:piston_sticky_off", {
 	},
 	groups = {cracky = 3},
 	paramtype2 = "facedir",
+	is_ground_content = false,
 	after_place_node = piston_orientate,
 	sounds = default.node_sound_wood_defaults(),
 	mesecons = {effector={
@@ -363,6 +368,7 @@ minetest.register_node("mesecons_pistons:piston_sticky_on", {
 	groups = {cracky = 3, not_in_creative_inventory = 1},
 	paramtype = "light",
 	paramtype2 = "facedir",
+	is_ground_content = false,
 	drop = "mesecons_pistons:piston_sticky_off",
 	after_dig_node = piston_remove_pusher,
 	node_box = piston_on_box,
@@ -391,6 +397,7 @@ minetest.register_node("mesecons_pistons:piston_pusher_sticky", {
 	groups = {not_in_creative_inventory = 1},
 	paramtype = "light",
 	paramtype2 = "facedir",
+	is_ground_content = false,
 	diggable = false,
 	selection_box = piston_pusher_box,
 	node_box = piston_pusher_box,

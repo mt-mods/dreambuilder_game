@@ -2,163 +2,100 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-03 20:37+0200\n"
+"POT-Creation-Date: 2017-11-14 03:47+0800\n"
 "PO-Revision-Date: 2017-08-21 16:17+0300\n"
+"Last-Translator: inpos <inpos@yandex.ru>\n"
 "Language-Team: \n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 2.0.3\n"
-"Last-Translator: inpos <inpos@yandex.ru>\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
-#: ../building_blocks/init.lua
-msgid "Adobe"
-msgstr "Саман"
+#: ../building_blocks/alias.lua
+msgid "Granite"
+msgstr "Гранит"
 
-#: ../building_blocks/init.lua
-msgid "Roof block"
-msgstr "Кровельный блок"
-
-#: ../building_blocks/init.lua
-msgid "Streak Free Glass"
-msgstr "Стекло без стыков"
-
-#: ../building_blocks/init.lua
+#: ../building_blocks/node_stairs.lua
 msgid "Grate"
 msgstr "Каминная решётка"
 
-#: ../building_blocks/init.lua
-msgid "Fireplace"
-msgstr "Камин"
+#: ../building_blocks/node_stairs.lua
+msgid "Streak Free Glass"
+msgstr "Стекло без стыков"
 
-#: ../building_blocks/init.lua
+#: ../building_blocks/node_stairs.lua
 msgid "Wood Framed Glass"
 msgstr "Деревянное окно"
 
-#: ../building_blocks/init.lua
-msgid "Terrycloth towel"
-msgstr "Махровое полотенце"
+#: ../building_blocks/node_stairs.lua
+msgid "Adobe"
+msgstr "Саман"
 
-#: ../building_blocks/init.lua
-msgid "Tarmac Spread"
-msgstr "Покрытие гудронной смолой"
-
-#: ../building_blocks/init.lua
-msgid "Chess board tiling"
-msgstr "Шахматная плитка"
-
-#. Translators: "Brobble" is a portmanteau of "Brick" and "Cobble".
-#. Translate however you see fit.
-#: ../building_blocks/init.lua
-msgid "Brobble Spread"
-msgstr "Настил кирпичного булыжника"
-
-#: ../building_blocks/init.lua
-msgid "Gravel Spread"
-msgstr "Настил гравия"
-
-#: ../building_blocks/init.lua
-msgid "Hardwood"
-msgstr "Твёрдая древесина"
-
-#: ../building_blocks/init.lua
-msgid "Marble"
-msgstr "Мрамор"
-
-#: ../building_blocks/init.lua
-msgid "Grass"
-msgstr "Трава"
-
-#: ../building_blocks/init.lua
-msgid "Tar"
-msgstr "Смола"
-
-#: ../building_blocks/init.lua
-msgid "Roofing"
-msgstr "Кровля"
-
-#: ../building_blocks/init.lua
-msgid "Marble stair"
-msgstr "Мраморная ступенька"
-
-#: ../building_blocks/init.lua
-msgid "Marble slab"
-msgstr "Мраморная блита"
-
-#: ../building_blocks/init.lua
-msgid "Hardwood stair"
-msgstr "Ступенька из твёрдой древесины"
-
-#: ../building_blocks/init.lua
-msgid "Hardwood slab"
-msgstr "Плита из твёрдой древесины"
-
-#: ../building_blocks/init.lua
-msgid "Grass stair"
-msgstr "Ступенька из травы"
-
-#: ../building_blocks/init.lua
-msgid "Grass slab"
-msgstr "Плита из травы"
-
-#: ../building_blocks/init.lua
-msgid "Tar stair"
-msgstr "Ступенька из смолы"
-
-#: ../building_blocks/init.lua
-msgid "Tar slab"
-msgstr "Плита из смолы"
-
-#: ../building_blocks/init.lua
-msgid "Grate Stair"
-msgstr "Решётчатая ступенька"
-
-#: ../building_blocks/init.lua
-msgid "Grate Slab"
-msgstr "Решётчатая плита"
-
-#: ../building_blocks/init.lua
-msgid "Adobe stair"
-msgstr "Саманная ступенька"
-
-#: ../building_blocks/init.lua
-msgid "Adobe slab"
-msgstr "Саманная плита"
-
-#: ../building_blocks/init.lua
-msgid "Roofing stair"
-msgstr "Ступенька из кровли"
-
-#: ../building_blocks/init.lua
-msgid "Roofing slab"
-msgstr "Плита из кровли"
-
-#: ../building_blocks/init.lua
+#: ../building_blocks/node_stairs.lua
 msgid "Fake Grass"
 msgstr "Псевдо трава"
 
-#: ../building_blocks/init.lua
+#: ../building_blocks/node_stairs.lua
+msgid "Hardwood"
+msgstr "Твёрдая древесина"
+
+#: ../building_blocks/node_stairs.lua
+msgid "Roof block"
+msgstr "Кровельный блок"
+
+#: ../building_blocks/node_stairs.lua
+msgid "Tar"
+msgstr "Смола"
+
+#: ../building_blocks/node_stairs.lua
+msgid "Marble"
+msgstr "Мрамор"
+
+#. Translators: "Brobble" is a portmanteau of "Brick" and "Cobble".
+#. Translate however you see fit.
+#: ../building_blocks/node_stairs.lua
+msgid "Brobble Spread"
+msgstr "Настил кирпичного булыжника"
+
+#: ../building_blocks/node_stairs.lua
+msgid "Gravel Spread"
+msgstr "Настил гравия"
+
+#: ../building_blocks/node_stairs.lua
+msgid "Tarmac Spread"
+msgstr "Покрытие гудронной смолой"
+
+#: ../building_blocks/node_stairs.lua
+msgid "Terrycloth towel"
+msgstr "Махровое полотенце"
+
+#: ../building_blocks/node_stairs.lua
+msgid "Chess board tiling"
+msgstr "Шахматная плитка"
+
+#: ../building_blocks/node_stairs.lua
+msgid "Fireplace"
+msgstr "Камин"
+
+#: ../building_blocks/others.lua
 msgid "Small bundle of sticks"
 msgstr "Небольшая связка палок"
 
-#: ../building_blocks/init.lua
+#: ../building_blocks/others.lua
 msgid "Tar base"
 msgstr "Смоляная основа"
 
-#: ../building_blocks/init.lua
+#: ../building_blocks/others.lua
 msgid "Tar Knife"
 msgstr "Смоляной нож"
-
-#: ../building_blocks/init.lua
-msgid "Granite"
-msgstr "Гранит"
 
 #: ../chains/init.lua
 msgid "Hanging chain (wrought iron)"
@@ -245,10 +182,6 @@ msgid "No room for place the Arcade!"
 msgstr "Недостаточно места для размещения игрового автомата!"
 
 #: ../fake_fire/init.lua
-msgid "Fake fire"
-msgstr "Псевдо огонь"
-
-#: ../fake_fire/init.lua
 msgid "Ice fire"
 msgstr "Ледяной огонь"
 
@@ -267,14 +200,6 @@ msgstr "Каменный дымоход на крышу"
 #: ../fake_fire/init.lua
 msgid "Sandstone chimney top"
 msgstr "Дымоход из песчаника на крышу"
-
-#: ../fake_fire/init.lua
-msgid "Flint and steel"
-msgstr "Кремень и сталь"
-
-#: ../fake_fire/init.lua
-msgid "This area is protected!"
-msgstr "Эта область защищена!"
 
 #: ../homedecor/bathroom_furniture.lua
 msgid "Bathroom/kitchen tiles (dark)"
@@ -368,8 +293,33 @@ msgstr "Тумба с двумя ящиками (@1)"
 msgid "Two-drawer Nightstand"
 msgstr "Тумба с двумя ящиками"
 
+#: ../homedecor/books.lua ../homedecor/exterior.lua
+msgid "red"
+msgstr "красный"
+
+#: ../homedecor/books.lua ../homedecor/exterior.lua ../homedecor/misc-nodes.lua
+msgid "green"
+msgstr "зелёный"
+
 #: ../homedecor/books.lua
-msgid "Writable Book"
+msgid "blue"
+msgstr ""
+
+#: ../homedecor/books.lua
+msgid "violet"
+msgstr ""
+
+#: ../homedecor/books.lua
+msgid "grey"
+msgstr ""
+
+#: ../homedecor/books.lua
+msgid "brown"
+msgstr ""
+
+#: ../homedecor/books.lua
+#, fuzzy
+msgid "Writable Book (@1)"
 msgstr "Записная книга"
 
 #: ../homedecor/books.lua
@@ -687,6 +637,10 @@ msgid "Deck Chair"
 msgstr "Шезлонг"
 
 #: ../homedecor/exterior.lua
+msgid "Deck Chair (blue striped)"
+msgstr ""
+
+#: ../homedecor/exterior.lua
 msgid "Doghouse"
 msgstr "Собачья будка"
 
@@ -728,17 +682,14 @@ msgstr "Качели для дерева"
 msgid "Water well"
 msgstr "Колодец с водой"
 
-#: ../homedecor/exterior.lua ../homedecor/misc-nodes.lua
-msgid "green"
-msgstr "зелёный"
-
-#: ../homedecor/exterior.lua
-msgid "red"
-msgstr "красный"
-
 #: ../homedecor/exterior.lua
 msgid "yellow"
 msgstr "жёлтый"
+
+#: ../homedecor/exterior.lua
+#, fuzzy
+msgid "Shrubbery (large, @1)"
+msgstr "Кустарник (@1)"
 
 #: ../homedecor/exterior.lua
 msgid "Shrubbery (@1)"
@@ -1296,7 +1247,8 @@ msgid "Metal tool cabinet and work table"
 msgstr "Шкаф с металлическим инструментом и рабочий стол"
 
 #: ../homedecor/misc-nodes.lua
-msgid "Picture Frame"
+#, fuzzy
+msgid "Picture Frame "
 msgstr "Рамка для картины"
 
 #: ../homedecor/misc-nodes.lua
@@ -1484,6 +1436,11 @@ msgid "Curtains"
 msgstr "Шторы"
 
 #: ../homedecor/window_treatments.lua
+#, fuzzy
+msgid "Curtains (open)"
+msgstr "Шторы"
+
+#: ../homedecor/window_treatments.lua
 msgid "Curtain Rod (@1)"
 msgstr "Карниз для штор (@1)"
 
@@ -1545,7 +1502,8 @@ msgstr "Кому-то другому принадлежит точка, где �
 
 #: ../lrfurn/init.lua
 msgid "Someone else owns the spot where the middle or far end goes!"
-msgstr "Кому-то другому принадлежит точка, куда выходит средний или дальний конец!"
+msgstr ""
+"Кому-то другому принадлежит точка, куда выходит средний или дальний конец!"
 
 #: ../lrfurn/init.lua
 msgid "Someone else owns the spot where the other end goes!"
@@ -1574,3 +1532,60 @@ msgstr "Плазменный телевизор"
 #: ../plasmascreen/init.lua
 msgid "Plasma TV (off)"
 msgstr "Плазменный телевизор (выключен)"
+
+#~ msgid "Grass"
+#~ msgstr "Трава"
+
+#~ msgid "Roofing"
+#~ msgstr "Кровля"
+
+#~ msgid "Marble stair"
+#~ msgstr "Мраморная ступенька"
+
+#~ msgid "Marble slab"
+#~ msgstr "Мраморная блита"
+
+#~ msgid "Hardwood stair"
+#~ msgstr "Ступенька из твёрдой древесины"
+
+#~ msgid "Hardwood slab"
+#~ msgstr "Плита из твёрдой древесины"
+
+#~ msgid "Grass stair"
+#~ msgstr "Ступенька из травы"
+
+#~ msgid "Grass slab"
+#~ msgstr "Плита из травы"
+
+#~ msgid "Tar stair"
+#~ msgstr "Ступенька из смолы"
+
+#~ msgid "Tar slab"
+#~ msgstr "Плита из смолы"
+
+#~ msgid "Grate Stair"
+#~ msgstr "Решётчатая ступенька"
+
+#~ msgid "Grate Slab"
+#~ msgstr "Решётчатая плита"
+
+#~ msgid "Adobe stair"
+#~ msgstr "Саманная ступенька"
+
+#~ msgid "Adobe slab"
+#~ msgstr "Саманная плита"
+
+#~ msgid "Roofing stair"
+#~ msgstr "Ступенька из кровли"
+
+#~ msgid "Roofing slab"
+#~ msgstr "Плита из кровли"
+
+#~ msgid "Fake fire"
+#~ msgstr "Псевдо огонь"
+
+#~ msgid "Flint and steel"
+#~ msgstr "Кремень и сталь"
+
+#~ msgid "This area is protected!"
+#~ msgstr "Эта область защищена!"

@@ -66,29 +66,24 @@ function stairsplus:register_slab(modname, subname, recipeitem, fields)
 	local defs = stairsplus.copytable(slabs_defs)
 	local desc_base = S("%s Slab"):format(fields.description)
 	for alternate, shape in pairs(defs) do
-
 		local def = {}
-
-		if type(shape) ~= "table" then
-			def = {
-					node_box = {
-						type = "fixed",
-						fixed = {-0.5, -0.5, -0.5, 0.5, (shape/16)-0.5, 0.5},
-					},
-					description = ("%s (%d/16)"):format(desc_base, shape)
-				}
-		else
-			def = {
-				node_box = {
-					type = "fixed",
-					fixed = shape,
-				},
-				description = desc_base
-			}
-		end
-
 		for k, v in pairs(fields) do
 			def[k] = v
+		end
+		if type(shape) ~= "table" then
+			def.node_box = {
+						type = "fixed",
+						fixed = {-0.5, -0.5, -0.5, 0.5, (shape/16)-0.5, 0.5},
+					}
+			def.description = ("%s (%d/16)"):format(desc_base, shape)
+		else
+			def.node_box = {
+					type = "fixed",
+					fixed = shape,
+				}
+			local desc_x = alternate:gsub("_", " ")
+			desc_x = desc_x:gsub("(%a)(%S*)", function(a, b) return a:upper() .. b end)
+			def.description = desc_base .. desc_x
 		end
 
 		def.drawtype = "nodebox"
@@ -96,12 +91,14 @@ function stairsplus:register_slab(modname, subname, recipeitem, fields)
 		def.paramtype2 = def.paramtype2 or "facedir"
 		def.on_place = minetest.rotate_node
 		def.groups = stairsplus:prepare_groups(fields.groups)
+		if alternate == "" then
+			def.groups.slab = 1
+		end
 		if fields.drop and not (type(fields.drop) == "table") then
 			def.drop = modname.. ":slab_" .. fields.drop .. alternate
 		end
 		minetest.register_node(":" .. modname .. ":slab_" .. subname .. alternate, def)
 	end
-	minetest.register_alias("stairs:slab_" .. subname, modname .. ":slab_" .. subname)
 
 	circular_saw.known_nodes[recipeitem] = {modname, subname}
 

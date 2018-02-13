@@ -5,1712 +5,1583 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-03 20:37+0200\n"
-"PO-Revision-Date: 2017-01-25 00:03-0300\n"
+"POT-Creation-Date: 2017-11-14 03:47+0800\n"
+"PO-Revision-Date: 2017-11-14 04:25+0800\n"
 "Last-Translator: muhdnurhidayat <MuhdNurHidayat@users.noreply.github.com>\n"
 "Language-Team: Malay\n"
 "Language: ms\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.4\n"
 
-#: ../building_blocks/init.lua
-msgid "Adobe"
-msgstr ""
+#: ../building_blocks/alias.lua
+msgid "Granite"
+msgstr "Granit"
 
-#: ../building_blocks/init.lua
-msgid "Roof block"
-msgstr ""
-
-#: ../building_blocks/init.lua
-msgid "Streak Free Glass"
-msgstr ""
-
-#: ../building_blocks/init.lua
+#: ../building_blocks/node_stairs.lua
 msgid "Grate"
-msgstr ""
+msgstr "Jeriji"
 
-#: ../building_blocks/init.lua
-msgid "Fireplace"
-msgstr ""
+#: ../building_blocks/node_stairs.lua
+msgid "Streak Free Glass"
+msgstr "Kaca Bebas Calar"
 
-#: ../building_blocks/init.lua
+#: ../building_blocks/node_stairs.lua
 msgid "Wood Framed Glass"
-msgstr ""
+msgstr "Kaca Berbingkai Kayu"
 
-#: ../building_blocks/init.lua
-msgid "Terrycloth towel"
-msgstr ""
+#: ../building_blocks/node_stairs.lua
+msgid "Adobe"
+msgstr "Adob"
 
-#: ../building_blocks/init.lua
-msgid "Tarmac Spread"
-msgstr ""
+#: ../building_blocks/node_stairs.lua
+msgid "Fake Grass"
+msgstr "Rumput Tiruan"
 
-#: ../building_blocks/init.lua
-msgid "Chess board tiling"
-msgstr ""
+#: ../building_blocks/node_stairs.lua
+msgid "Hardwood"
+msgstr "Kayu Keras"
+
+#: ../building_blocks/node_stairs.lua
+msgid "Roof block"
+msgstr "Blok Bumbung"
+
+#: ../building_blocks/node_stairs.lua
+msgid "Tar"
+msgstr "Tar"
+
+#: ../building_blocks/node_stairs.lua
+msgid "Marble"
+msgstr "Marmar"
 
 #. Translators: "Brobble" is a portmanteau of "Brick" and "Cobble".
 #. Translate however you see fit.
-#: ../building_blocks/init.lua
+#: ../building_blocks/node_stairs.lua
 msgid "Brobble Spread"
-msgstr ""
+msgstr "Sebaran Batu Merah"
 
-#: ../building_blocks/init.lua
+#: ../building_blocks/node_stairs.lua
 msgid "Gravel Spread"
-msgstr ""
+msgstr "Sebaran Kelikir"
 
-#: ../building_blocks/init.lua
-msgid "Hardwood"
-msgstr ""
+#: ../building_blocks/node_stairs.lua
+msgid "Tarmac Spread"
+msgstr "Sebaran Tar"
 
-#: ../building_blocks/init.lua
-msgid "Marble"
-msgstr ""
+#: ../building_blocks/node_stairs.lua
+msgid "Terrycloth towel"
+msgstr "Kain Tuala"
 
-#: ../building_blocks/init.lua
-#, fuzzy
-msgid "Grass"
-msgstr "Tiang Loyang"
+#: ../building_blocks/node_stairs.lua
+msgid "Chess board tiling"
+msgstr "Jubin Papan Catur"
 
-#: ../building_blocks/init.lua
-msgid "Tar"
-msgstr ""
+#: ../building_blocks/node_stairs.lua
+msgid "Fireplace"
+msgstr "Pendiangan"
 
-#: ../building_blocks/init.lua
-msgid "Roofing"
-msgstr ""
-
-#: ../building_blocks/init.lua
-msgid "Marble stair"
-msgstr ""
-
-#: ../building_blocks/init.lua
-msgid "Marble slab"
-msgstr ""
-
-#: ../building_blocks/init.lua
-msgid "Hardwood stair"
-msgstr ""
-
-#: ../building_blocks/init.lua
-msgid "Hardwood slab"
-msgstr ""
-
-#: ../building_blocks/init.lua
-msgid "Grass stair"
-msgstr ""
-
-#: ../building_blocks/init.lua
-#, fuzzy
-msgid "Grass slab"
-msgstr "Tiang Loyang"
-
-#: ../building_blocks/init.lua
-msgid "Tar stair"
-msgstr ""
-
-#: ../building_blocks/init.lua
-msgid "Tar slab"
-msgstr ""
-
-#: ../building_blocks/init.lua
-msgid "Grate Stair"
-msgstr ""
-
-#: ../building_blocks/init.lua
-msgid "Grate Slab"
-msgstr ""
-
-#: ../building_blocks/init.lua
-msgid "Adobe stair"
-msgstr ""
-
-#: ../building_blocks/init.lua
-msgid "Adobe slab"
-msgstr ""
-
-#: ../building_blocks/init.lua
-msgid "Roofing stair"
-msgstr ""
-
-#: ../building_blocks/init.lua
-msgid "Roofing slab"
-msgstr ""
-
-#: ../building_blocks/init.lua
-msgid "Fake Grass"
-msgstr ""
-
-#: ../building_blocks/init.lua
+#: ../building_blocks/others.lua
 msgid "Small bundle of sticks"
-msgstr ""
+msgstr "Seberkas Kecil Serpihan Kayu"
 
-#: ../building_blocks/init.lua
+#: ../building_blocks/others.lua
 msgid "Tar base"
-msgstr ""
+msgstr "Campuran Tar"
 
-#: ../building_blocks/init.lua
+#: ../building_blocks/others.lua
 msgid "Tar Knife"
-msgstr ""
-
-#: ../building_blocks/init.lua
-msgid "Granite"
-msgstr ""
+msgstr "Pisau Tar"
 
 #: ../chains/init.lua
-#, fuzzy
 msgid "Hanging chain (wrought iron)"
-msgstr "Tiang Besi Tempaan"
+msgstr "Rantai Gantung (Besi Tempaan)"
 
 #: ../chains/init.lua
 msgid "Hanging chain (brass)"
-msgstr ""
+msgstr "Rantai Gantung (Loyang)"
 
 #: ../chains/init.lua
 msgid "Hanging chain (ceiling mount, wrought iron)"
-msgstr ""
+msgstr "Rantai Gantung (Lekap Siling, Besi Tempaan)"
 
 #: ../chains/init.lua
 msgid "Hanging chain (ceiling mount, brass)"
-msgstr ""
+msgstr "Rantai Gantung (Lekap Siling, Loyang)"
 
 #: ../chains/init.lua
-#, fuzzy
 msgid "Chandelier (wrought iron)"
-msgstr "Tiang Besi Tempaan"
+msgstr "Candelier (Besi Tempaan)"
 
 #: ../chains/init.lua
 msgid "Chandelier (brass)"
-msgstr ""
+msgstr "Candelier (Loyang)"
 
 #: ../computer/computers.lua
 msgid "Monitor and keyboard"
-msgstr ""
+msgstr "Monitor dan Papan Kekunci"
 
 #: ../computer/computers.lua
 msgid "WIFI Router"
-msgstr ""
+msgstr "Penghala WIFI"
 
 #: ../computer/computers.lua
 msgid "Computer Tower"
-msgstr ""
+msgstr "Sistem Unit"
 
 #: ../computer/computers.lua
 msgid "Printer-Scanner Combo"
-msgstr ""
+msgstr "Pencetak Semua Dalam Satu"
 
 #: ../computer/computers.lua
 msgid "Rack Server"
-msgstr ""
+msgstr "Rak Pelayan"
 
 #: ../computer/computers.lua
-#, fuzzy
 msgid "Not enough vertical space to place a server!"
-msgstr "Tidak cukup ruangan menegak untuk meletak peti sejuk!"
+msgstr "Tidak cukup ruang menegak untuk letak rak pelayan!"
 
 #: ../computer/miscitems.lua ../homedecor/crafts.lua
-#, fuzzy
 msgid "Plastic sheet"
 msgstr "Kepingan Plastik"
 
 #: ../computer/miscitems.lua
-#, fuzzy
 msgid "Unprocessed Plastic base"
-msgstr "Bes Plastik Belum Diproses"
+msgstr "Campuran Plastik Belum Diproses"
 
 #: ../computer/tetris.lua
 msgid "L"
-msgstr ""
+msgstr "<"
 
 #: ../computer/tetris.lua
 msgid "R"
-msgstr ""
+msgstr ">"
 
 #: ../computer/tetris.lua
 msgid "New Game"
-msgstr ""
+msgstr "Main Baru"
 
 #: ../computer/tetris.lua
 msgid "Next..."
-msgstr ""
+msgstr "Seterusnya..."
 
 #: ../computer/tetris.lua
 msgid "Score: "
-msgstr ""
+msgstr "Markah:"
 
 #: ../computer/tetris.lua
 msgid "Tetris Arcade"
-msgstr ""
+msgstr "Arked Tetris"
 
 #: ../computer/tetris.lua
 msgid "No room for place the Arcade!"
-msgstr ""
-
-#: ../fake_fire/init.lua
-msgid "Fake fire"
-msgstr ""
+msgstr "Tiada ruang untuk letak Arked!"
 
 #: ../fake_fire/init.lua
 msgid "Ice fire"
-msgstr ""
+msgstr "Api Ais"
 
 #: ../fake_fire/init.lua
 msgid "Fancy Fire"
-msgstr ""
+msgstr "Api Hiasan"
 
 #: ../fake_fire/init.lua
 msgid "Glowing Embers"
-msgstr ""
+msgstr "Bara Api"
 
 #: ../fake_fire/init.lua
 msgid "Stone chimney top"
-msgstr ""
+msgstr "Kepala Serombong Batu"
 
 #: ../fake_fire/init.lua
 msgid "Sandstone chimney top"
-msgstr ""
-
-#: ../fake_fire/init.lua
-msgid "Flint and steel"
-msgstr ""
-
-#: ../fake_fire/init.lua
-msgid "This area is protected!"
-msgstr ""
+msgstr "Kepala Serombong Batu Pasir"
 
 #: ../homedecor/bathroom_furniture.lua
 msgid "Bathroom/kitchen tiles (dark)"
-msgstr ""
+msgstr "Jubin Dapur/Bilik Mandi (Gelap)"
 
 #: ../homedecor/bathroom_furniture.lua
 msgid "Bathroom/kitchen tiles (medium)"
-msgstr ""
+msgstr "Jubin Dapur/Bilik Mandi (Biasa)"
 
 #: ../homedecor/bathroom_furniture.lua
 msgid "Bathroom/kitchen tiles (light)"
-msgstr ""
+msgstr "Jubin Dapur/Bilik Mandi (Cerah)"
 
 #: ../homedecor/bathroom_furniture.lua
 msgid "Towel rod with towel"
-msgstr ""
+msgstr "Ampaian Beserta Tuala"
 
 #: ../homedecor/bathroom_furniture.lua
-#, fuzzy
 msgid "Medicine cabinet"
-msgstr "Kabinet Bawah Sinki"
+msgstr "Kabinet Ubat"
 
 #: ../homedecor/bathroom_sanitation.lua
-#, fuzzy
 msgid "Toilet"
 msgstr "Tandas"
 
 #: ../homedecor/bathroom_sanitation.lua
-#, fuzzy
 msgid "Toilet paper"
-msgstr "Tandas"
+msgstr "Tisu Tandas"
 
 #: ../homedecor/bathroom_sanitation.lua
 msgid "Bathroom Sink"
-msgstr ""
+msgstr "Sinki Bilik Mandi"
 
 #: ../homedecor/bathroom_sanitation.lua
 msgid "Bathroom taps/faucet"
-msgstr ""
+msgstr "Kepala Paip Bilik Mandi"
 
 #: ../homedecor/bathroom_sanitation.lua
 msgid "Bathroom taps/faucet (brass)"
-msgstr ""
+msgstr "Kepala Paip Bilik Mandi (Loyang)"
 
 #: ../homedecor/bathroom_sanitation.lua
-#, fuzzy
 msgid "Shower Tray"
 msgstr "Lubang Air Mandi"
 
 #: ../homedecor/bathroom_sanitation.lua
-#, fuzzy
 msgid "Shower Head"
-msgstr "Kepala Air Mandi"
+msgstr "Kepala Pancuran"
 
 #: ../homedecor/bathroom_sanitation.lua
 msgid "Bathtub, clawfoot, with brass taps"
-msgstr ""
+msgstr "Tab Mandi Berkaki Cakar, dengan Kepala Paip Loyang"
 
 #: ../homedecor/bathroom_sanitation.lua
 msgid "Bathtub, clawfoot, with chrome taps"
-msgstr ""
+msgstr "Tab Mandi Berkaki Cakar, dengan Kepala Paip Krom"
 
 #: ../homedecor/bathroom_sanitation.lua
 msgid "Bathroom sundries set"
-msgstr ""
+msgstr "Set Barangan Bilik Mandi"
 
 #: ../homedecor/bedroom.lua
-#, fuzzy
 msgid "Bed"
-msgstr "merah"
+msgstr "Katil"
 
 #: ../homedecor/bedroom.lua
 msgid "Bed (king sized)"
-msgstr ""
+msgstr "Katil Raja"
 
 #: ../homedecor/bedroom.lua
 msgid "mahogany"
-msgstr ""
+msgstr "Mahogani"
 
 #: ../homedecor/bedroom.lua
 msgid "oak"
-msgstr ""
+msgstr "Oak"
 
 #: ../homedecor/bedroom.lua
-#, fuzzy
 msgid "Nightstand with One Drawer (@1)"
-msgstr "Kabinet Katil Oak dengan Satu Laci"
+msgstr "Kabinet Katil dengan Satu Laci (@1)"
 
 #: ../homedecor/bedroom.lua
-#, fuzzy
 msgid "One-drawer Nightstand"
-msgstr "Kabinet Katil Laci Satu"
+msgstr "Kabinet Katil Satu Laci"
 
 #: ../homedecor/bedroom.lua
-#, fuzzy
 msgid "Nightstand with Two Drawers (@1)"
-msgstr "Kabinet Katil Oak dengan Dua Laci"
+msgstr "Kabinet Katil dengan Dua Laci (@1)"
 
 #: ../homedecor/bedroom.lua
-#, fuzzy
 msgid "Two-drawer Nightstand"
-msgstr "Kabinet Katil Laci Dua"
+msgstr "Kabinet Katil Dua Laci"
+
+#: ../homedecor/books.lua ../homedecor/exterior.lua
+msgid "red"
+msgstr "Merah"
+
+#: ../homedecor/books.lua ../homedecor/exterior.lua ../homedecor/misc-nodes.lua
+msgid "green"
+msgstr "Hijau"
 
 #: ../homedecor/books.lua
-msgid "Writable Book"
-msgstr ""
+msgid "blue"
+msgstr "Biru"
+
+#: ../homedecor/books.lua
+msgid "violet"
+msgstr "Ungu"
+
+#: ../homedecor/books.lua
+msgid "grey"
+msgstr "Kelabu"
+
+#: ../homedecor/books.lua
+msgid "brown"
+msgstr "Perang"
+
+#: ../homedecor/books.lua
+msgid "Writable Book (@1)"
+msgstr "Buku Boleh Ditulis (@1)"
 
 #: ../homedecor/books.lua
 msgid "@1 has written in a book (title: \"@2\"): \"@3\" at location @4"
-msgstr ""
+msgstr "@1 telah menulis dalam buku (tajuk: \"@2\"): \"@3\" di lokasi @4"
 
 #: ../homedecor/climate-control.lua
-#, fuzzy
 msgid "Air Conditioner"
 msgstr "Pendingin Hawa"
 
 #: ../homedecor/climate-control.lua
 msgid "Desk Fan"
-msgstr ""
+msgstr "Kipas Meja"
 
 #: ../homedecor/climate-control.lua
 msgid "Ceiling Fan"
-msgstr ""
+msgstr "Kipas Siling"
 
 #: ../homedecor/climate-control.lua
 msgid "Space heater"
-msgstr ""
+msgstr "Pemanas Ruang"
 
 #: ../homedecor/climate-control.lua
 msgid "Radiator heater"
-msgstr ""
+msgstr "Pemanas Radiator"
 
 #: ../homedecor/clocks.lua
 msgid "Plastic analog clock"
-msgstr ""
+msgstr "Jam Analog Plastik"
 
 #: ../homedecor/clocks.lua
 msgid "Wooden analog clock"
-msgstr ""
+msgstr "Jam Analog Kayu"
 
 #: ../homedecor/clocks.lua
 msgid "Digital clock"
-msgstr ""
+msgstr "Jam Digital"
 
 #: ../homedecor/clocks.lua
 msgid "Alarm clock"
-msgstr ""
+msgstr "Jam Loceng"
 
 #: ../homedecor/clocks.lua
 msgid "Grandfather Clock"
-msgstr ""
+msgstr "Jam Besar Berdiri"
 
 #: ../homedecor/cobweb.lua
 msgid "Cobweb"
-msgstr ""
+msgstr "Sarang Labah-Labah"
 
 #: ../homedecor/crafts.lua
-#, fuzzy
 msgid "Uncooked Terracotta Base"
-msgstr "Bes Terracotta Belum Dimasak"
+msgstr "Asas Terracotta Belum Dimasak"
 
 #: ../homedecor/crafts.lua
-#, fuzzy
 msgid "Terracotta Roof Tile"
 msgstr "Genting Bumbung Terracotta"
 
 #: ../homedecor/crafts.lua
 msgid "Oil extract"
-msgstr ""
+msgstr "Sari Minyak"
 
 #: ../homedecor/crafts.lua
-#, fuzzy
 msgid "Unprocessed paraffin"
-msgstr "Bes Plastik Belum Diproses"
+msgstr "Parafin Belum Diproses"
 
 #: ../homedecor/crafts.lua
-#, fuzzy
 msgid "Plastic strips"
-msgstr "Kepingan Plastik"
+msgstr "Jalur Plastik"
 
 #: ../homedecor/crafts.lua
-#, fuzzy
 msgid "Small Wooden Drawer"
 msgstr "Laci Kayu Kecil"
 
 #: ../homedecor/crafts.lua
-#, fuzzy
 msgid "Simple Integrated Circuit"
 msgstr "Litar Bersepadu Ringkas"
 
 #: ../homedecor/crafts.lua
 msgid "Heating element"
-msgstr ""
+msgstr "Unsur Pemanas"
 
 #: ../homedecor/crafts.lua
 msgid "Motor"
-msgstr ""
+msgstr "Motor"
 
 #: ../homedecor/crafts.lua
 msgid "Power Crystal"
-msgstr ""
+msgstr "Kristal Kuasa"
 
 #: ../homedecor/crafts.lua
 msgid "Blank Canvas"
-msgstr ""
+msgstr "Kanvas Kosong"
 
 #: ../homedecor/crafts.lua
 msgid "VCR"
-msgstr ""
+msgstr "Perakam Kaset Video"
 
 #: ../homedecor/crafts.lua
 msgid "DVD Player"
-msgstr ""
+msgstr "Pemain DVD"
 
 #: ../homedecor/crafts.lua
 msgid "Spool of copper wire"
-msgstr ""
+msgstr "Gelendong Wayar Tembaga"
 
 #: ../homedecor/crafts.lua
 msgid "Spool of steel wire"
-msgstr ""
+msgstr "Gelendong Wayar Keluli"
 
 #: ../homedecor/crafts.lua
 msgid "Speaker driver"
-msgstr ""
+msgstr "Pemacu Pembesar Suara"
 
 #: ../homedecor/crafts.lua
 msgid "Fan blades"
-msgstr ""
+msgstr "Bilah Kipas"
 
 #: ../homedecor/crafts.lua
 msgid "Copper Strip"
-msgstr ""
+msgstr "Jalur Tembaga"
 
 #: ../homedecor/crafts.lua
 msgid "Steel Strip"
-msgstr ""
+msgstr "Jalur Keluli"
 
 #: ../homedecor/crafts.lua
 msgid "Steel chainlink"
-msgstr ""
+msgstr "Dawai Rangkai Keluli"
 
 #: ../homedecor/crafts.lua
-#, fuzzy
 msgid "Brass chainlink"
-msgstr "Pagar/Kisi-kisi Loyang"
+msgstr "Dawai Rangkai Loyang"
 
 #: ../homedecor/crafts.lua
 msgid "Soda Can"
-msgstr ""
+msgstr "Tin Soda"
 
 #: ../homedecor/crafts.lua
 msgid "Gold Coin (for soda vending machine)"
-msgstr ""
+msgstr "Duit Syiling Emas (untuk mesin soda layan diri)"
 
 #: ../homedecor/crafts.lua
-#, fuzzy
 msgid "Silicon lump"
 msgstr "Ketulan Silikon"
 
 #: ../homedecor/crafts.lua
-#, fuzzy
 msgid "Brass Ingot"
 msgstr "Jongkong Loyang"
 
 #: ../homedecor/crafts.lua
-#, fuzzy
 msgid "Small Flower Pot"
-msgstr "Pasu Bunga Plastik Hitam"
+msgstr "Pasu Bunga Kecil"
 
 #: ../homedecor/doors_and_gates.lua
-#, fuzzy
 msgid "Mahogany Closet Door (@1 opening)"
-msgstr "Pintu Almari Mahogani"
+msgstr "Pintu Almari Mahogani (Bukaan @1)"
 
 #: ../homedecor/doors_and_gates.lua
-#, fuzzy
 msgid "Oak Closet Door (@1 opening)"
-msgstr "Pintu Almari Oak"
+msgstr "Pintu Almari Oak (Bukaan @1)"
 
 #: ../homedecor/doors_and_gates.lua
-#, fuzzy
 msgid "Fancy Wood/Glass Door (@1 opening)"
-msgstr "Pintu Hiasan Kayu/Kaca"
+msgstr "Pintu Hiasan Kayu/Kaca (Bukaan @1)"
 
 #: ../homedecor/doors_and_gates.lua
-#, fuzzy
 msgid "Glass Office Door (@1 opening)"
-msgstr "Pintu Pejabat Kaca"
+msgstr "Pintu Pejabat Kaca (Bukaan @1)"
 
 #: ../homedecor/doors_and_gates.lua
-#, fuzzy
 msgid "Glass and Wood, Oak-colored (@1 opening)"
-msgstr "Kaca dan Kayu, warna Oak"
+msgstr "Pintu Kayu Kaca, warna Oak (Bukaan @1)"
 
 #: ../homedecor/doors_and_gates.lua
-#, fuzzy
 msgid "Glass and Wood, Mahogany-colored (@1 opening)"
-msgstr "Kaca dan Kayu, warna Mahogani"
+msgstr "Pintu Kayu Kaca, warna Mahogani (Bukaan @1)"
 
 #: ../homedecor/doors_and_gates.lua
-#, fuzzy
 msgid "Glass and Wood, White (@1 opening)"
-msgstr "Kaca dan Kayu, warna Putih"
+msgstr "Pintu Kayu Kaca, warna Putih (Bukaan @1)"
 
 #: ../homedecor/doors_and_gates.lua
-#, fuzzy
 msgid "Plain Wooden Door (@1 opening)"
-msgstr "Pintu Kayu Biasa"
+msgstr "Pintu Kayu Biasa (Bukaan @1)"
 
 #: ../homedecor/doors_and_gates.lua
 msgid "White Bedroom Door (@1 opening)"
-msgstr ""
+msgstr "Pintu Bilik Tidur Putih (Bukaan @1)"
 
 #: ../homedecor/doors_and_gates.lua
-#, fuzzy
 msgid "Wrought Iron Gate/Door (@1 opening)"
-msgstr "Pagar/Kisi-kisi Besi Tempaan"
+msgstr "Pintu Besi Tempaan (Bukaan @1)"
 
 #: ../homedecor/doors_and_gates.lua
 msgid "Wooden door with glass insert (@1 opening)"
-msgstr ""
+msgstr "Pintu Kayu dengan Masukan Kaca (Bukaan @1)"
 
 #: ../homedecor/doors_and_gates.lua
 msgid "Wooden door with glass insert, type 2 (@1 opening)"
-msgstr ""
+msgstr "Pintu Kayu dengan Masukan Kaca, Jenis ke-2 (Bukaan @1)"
 
 #: ../homedecor/doors_and_gates.lua
-#, fuzzy
 msgid "left"
-msgstr "kiri"
+msgstr "Kiri"
 
 #: ../homedecor/doors_and_gates.lua
-#, fuzzy
 msgid "right"
-msgstr "kanan"
+msgstr "Kanan"
 
 #: ../homedecor/doors_and_gates.lua
-#, fuzzy
 msgid "Unpainted Picket Fence Gate"
 msgstr "Pintu Pagar Pancang Tidak Bercat"
 
 #: ../homedecor/doors_and_gates.lua
-#, fuzzy
 msgid "White Picket Fence Gate"
 msgstr "Pintu Pagar Pancang Putih"
 
 #: ../homedecor/doors_and_gates.lua
-#, fuzzy
 msgid "Barbed Wire Fence Gate"
 msgstr "Pintu Pagar Dawai Berduri"
 
 #: ../homedecor/doors_and_gates.lua
-#, fuzzy
 msgid "Chainlink Fence Gate"
 msgstr "Pintu Pagar Dawai Berangkai"
 
 #: ../homedecor/doors_and_gates.lua
 msgid "\"Half\" Door"
-msgstr ""
+msgstr "Pintu \"Separuh\""
 
 #: ../homedecor/doors_and_gates.lua
 msgid "\"Half\" Door (white)"
-msgstr ""
+msgstr "Pintu \"Separuh\" (Putih)"
 
 #: ../homedecor/doors_and_gates.lua
 msgid "Japanese wall (top)"
-msgstr ""
+msgstr "Dinding Jepun (Atas)"
 
 #: ../homedecor/doors_and_gates.lua
 msgid "Japanese wall"
-msgstr ""
+msgstr "Dinding Jepun"
 
 #: ../homedecor/doors_and_gates.lua
 msgid "Japanese wall (bottom)"
-msgstr ""
+msgstr "Dinding Jepun (Bawah)"
 
 #: ../homedecor/doors_and_gates.lua
 msgid "Japanese tatami"
-msgstr ""
+msgstr "Tatami Jepun"
 
 #: ../homedecor/doors_and_gates.lua
 msgid "Japanese-style door"
-msgstr ""
+msgstr "Pintu Gaya Jepun"
 
 #: ../homedecor/electrics.lua
 msgid "Power Outlet"
-msgstr ""
+msgstr "Palam Elektrik"
 
 #: ../homedecor/electrics.lua
 msgid "Light switch"
-msgstr ""
+msgstr "Suis Lampu"
 
 #: ../homedecor/electrics.lua
 msgid "Doorbell"
-msgstr ""
+msgstr "Loceng Pintu"
 
 #: ../homedecor/electronics.lua
-#, fuzzy
 msgid "Large Stereo Speaker"
 msgstr "Pembesar Suara Stereo Besar"
 
 #: ../homedecor/electronics.lua
-#, fuzzy
 msgid "Large Stereo Speaker, open front"
-msgstr "Pembesar Suara Stereo Besar"
+msgstr "Pembesar Suara Stereo Besar, bahagian depan terbuka"
 
 #: ../homedecor/electronics.lua
-#, fuzzy
 msgid "Small Surround Speaker"
 msgstr "Pembesar Suara Keliling Kecil"
 
 #: ../homedecor/electronics.lua
-#, fuzzy
 msgid "Stereo Receiver"
 msgstr "Penerima Stereo"
 
 #: ../homedecor/electronics.lua
-#, fuzzy
 msgid "Projection Screen Material"
 msgstr "Bahan Skrin Pemancaran"
 
 #: ../homedecor/electronics.lua
-#, fuzzy
 msgid "Small CRT Television"
 msgstr "Televisyen CRT Kecil"
 
 #: ../homedecor/electronics.lua
 msgid "DVD and VCR"
-msgstr ""
+msgstr "Pemain DVD beserta Perakam VCR"
 
 #: ../homedecor/electronics.lua
 msgid "Telephone"
-msgstr ""
+msgstr "Telefon"
 
 #: ../homedecor/exterior.lua
 msgid "Barbecue"
-msgstr ""
+msgstr "Barbeku"
 
 #: ../homedecor/exterior.lua
 msgid "Garden Bench (style 1)"
-msgstr ""
+msgstr "Bangku Taman (gaya 1)"
 
 #: ../homedecor/exterior.lua
 msgid "Garden Bench (style 2)"
-msgstr ""
+msgstr "Bangku Taman (gaya 2)"
 
 #: ../homedecor/exterior.lua
-#, fuzzy
 msgid "Deck Chair"
-msgstr "Kerusi"
+msgstr "Kerusi Anduh"
+
+#: ../homedecor/exterior.lua
+msgid "Deck Chair (blue striped)"
+msgstr "Kerusi Anduh (Berjalur Biru)"
 
 #: ../homedecor/exterior.lua
 msgid "Doghouse"
-msgstr ""
+msgstr "Rumah Anjing"
 
 #: ../homedecor/exterior.lua
 msgid "Simple Bench"
-msgstr ""
+msgstr "Bangku Ringkas"
 
 #: ../homedecor/exterior.lua
 msgid "Garden stone path"
-msgstr ""
+msgstr "Laluan Berbatu Taman"
 
 #: ../homedecor/exterior.lua ../homedecor/kitchen_appliances.lua
 #: ../homedecor/misc-nodes.lua ../homedecor/roofing.lua
 #: ../homedecor/window_treatments.lua
 msgid "wood"
-msgstr ""
+msgstr "Kayu"
 
 #: ../homedecor/exterior.lua
-#, fuzzy
 msgid "white wood"
-msgstr "putih"
+msgstr "Kayu Putih"
 
 #: ../homedecor/exterior.lua
 msgid "wood, with vegetation"
-msgstr ""
+msgstr "Kayu, dengan Tumbuhan"
 
 #: ../homedecor/exterior.lua
 msgid "white wood, with vegetation"
-msgstr ""
+msgstr "Kayu Putih, dengan Tumbuhan"
 
 #: ../homedecor/exterior.lua
 msgid "Garden Lattice (@1)"
-msgstr ""
+msgstr "Kekisi Taman (@1)"
 
 #: ../homedecor/exterior.lua
 msgid "Tree's swing"
-msgstr ""
+msgstr "Buaian Pokok"
 
 #: ../homedecor/exterior.lua
 msgid "Water well"
-msgstr ""
-
-#: ../homedecor/exterior.lua ../homedecor/misc-nodes.lua
-#, fuzzy
-msgid "green"
-msgstr "hijau"
-
-#: ../homedecor/exterior.lua
-#, fuzzy
-msgid "red"
-msgstr "merah"
+msgstr "Perigi Air"
 
 #: ../homedecor/exterior.lua
 msgid "yellow"
-msgstr ""
+msgstr "Kuning"
+
+#: ../homedecor/exterior.lua
+msgid "Shrubbery (large, @1)"
+msgstr "Rumpun Pokok Renek (Besar, @1)"
 
 #: ../homedecor/exterior.lua
 msgid "Shrubbery (@1)"
-msgstr ""
+msgstr "Rumpun Pokok Renek (@1)"
 
 #: ../homedecor/fences.lua ../homedecor/misc-nodes.lua ../homedecor/tables.lua
 #: ../homedecor/window_treatments.lua
 msgid "brass"
-msgstr ""
+msgstr "Loyang"
 
 #: ../homedecor/fences.lua ../homedecor/misc-nodes.lua ../homedecor/tables.lua
 #: ../homedecor/window_treatments.lua
-#, fuzzy
 msgid "wrought iron"
-msgstr "Tiang Besi Tempaan"
+msgstr "Besi Tempaan"
 
 #: ../homedecor/fences.lua
-#, fuzzy
 msgid "Fence/railing (@1)"
-msgstr "Pagar/Kisi-kisi Loyang"
+msgstr "Pagar/Kisi-Kisi (@1)"
 
 #: ../homedecor/fences.lua
-#, fuzzy
 msgid "Fence/railing with sign (@1)"
-msgstr "Pagar/Kisi-kisi Loyang dengan Papan Tanda"
+msgstr "Pagar/Kisi-Kisi dengan Papan Tanda (@1)"
 
 #: ../homedecor/fences.lua
-#, fuzzy
 msgid "Unpainted Picket Fence"
 msgstr "Pagar Pancang Tidak Bercat"
 
 #: ../homedecor/fences.lua
-#, fuzzy
 msgid "Unpainted Picket Fence Corner"
 msgstr "Bucu Pagar Pancang Tidak Bercat"
 
 #: ../homedecor/fences.lua
-#, fuzzy
 msgid "White Picket Fence"
 msgstr "Pagar Pancang Putih"
 
 #: ../homedecor/fences.lua
-#, fuzzy
 msgid "White Picket Fence Corner"
 msgstr "Bucu Pagar Pancang Putih"
 
 #: ../homedecor/fences.lua
-#, fuzzy
 msgid "Wooden Privacy Fence"
 msgstr "Pagar Privasi Kayu"
 
 #: ../homedecor/fences.lua
-#, fuzzy
 msgid "Wooden Privacy Fence Corner"
 msgstr "Bucu Pagar Privasi Kayu"
 
 #: ../homedecor/fences.lua
-#, fuzzy
 msgid "Barbed Wire Fence"
 msgstr "Pagar Dawai Berduri"
 
 #: ../homedecor/fences.lua
-#, fuzzy
 msgid "Barbed Wire Fence Corner"
 msgstr "Bucu Pagar Dawai Berduri"
 
 #: ../homedecor/fences.lua
-#, fuzzy
 msgid "Chainlink Fence"
 msgstr "Pagar Dawai Berangkai"
 
 #: ../homedecor/fences.lua
-#, fuzzy
 msgid "Chainlink Fence Corner"
 msgstr "Bucu Pagar Dawai Berangkai"
 
 #: ../homedecor/fences.lua
-#, fuzzy
 msgid "Wrought Iron fence (type 2)"
-msgstr "Pagar/Kisi-kisi Besi Tempaan"
+msgstr "Pagar Besi Tempaan (jenis ke-2)"
 
 #: ../homedecor/fences.lua
-#, fuzzy
 msgid "Wrought Iron fence (type 2) Corner"
-msgstr "Pagar/Kisi-kisi Besi Tempaan"
+msgstr "Bucu Pagar Besi Tempaan (jenis ke-2)"
 
 #: ../homedecor/foyer.lua
 msgid "Wall-mounted coat rack"
-msgstr ""
+msgstr "Penyangkut Baju Dinding"
 
 #: ../homedecor/foyer.lua
 msgid "Coat tree"
-msgstr ""
+msgstr "Penyangkut Baju Berdiri"
 
 #: ../homedecor/foyer.lua
 msgid "Green welcome mat"
-msgstr ""
+msgstr "Alas Kaki \"Welcome\" Hijau"
 
 #: ../homedecor/foyer.lua
 msgid "Brown welcome mat"
-msgstr ""
+msgstr "Alas Kaki \"Welcome\" Perang"
 
 #: ../homedecor/foyer.lua
 msgid "Grey welcome mat"
-msgstr ""
+msgstr "Alas Kaki \"Welcome\" Kelabu"
 
 #: ../homedecor/furniture.lua
-#, fuzzy
 msgid "Table"
 msgstr "Meja"
 
 #: ../homedecor/furniture.lua
-#, fuzzy
 msgid "Mahogany Table"
-msgstr "Pintu Almari Mahogani"
+msgstr "Meja Mahogani"
 
 #: ../homedecor/furniture.lua
-#, fuzzy
 msgid "White Table"
-msgstr "Meja Utiliti"
+msgstr "Meja Putih"
 
 #: ../homedecor/furniture.lua
-#, fuzzy
 msgid "Kitchen chair"
-msgstr "Kabinet Dapur"
+msgstr "Kerusi Dapur"
 
 #: ../homedecor/furniture.lua ../lrfurn/armchairs.lua
-#, fuzzy
 msgid "Armchair"
-msgstr "Kerusi Tangan (%s)"
+msgstr "Kerusi Berlengan"
 
 #: ../homedecor/furniture.lua
 msgid "Bookshelf (open-frame)"
-msgstr ""
+msgstr "Rak Buku (Bingkai Terbuka)"
 
 #: ../homedecor/furniture.lua
 msgid "Wall Shelf"
-msgstr ""
+msgstr "Rak Dinding"
 
 #: ../homedecor/furniture_medieval.lua
-#, fuzzy
 msgid "Bars"
 msgstr "Palang"
 
 #: ../homedecor/furniture_medieval.lua
-#, fuzzy
 msgid "Binding Bars"
-msgstr "Palang Bersambung"
+msgstr "Palang Bucu"
 
 #: ../homedecor/furniture_medieval.lua
-#, fuzzy
 msgid "Chains"
 msgstr "Rantai"
 
 #: ../homedecor/furniture_medieval.lua
-#, fuzzy
 msgid "Wall Torch"
 msgstr "Obor Dinding"
 
 #: ../homedecor/furniture_medieval.lua
-#, fuzzy
 msgid "Wall Lamp"
-msgstr "Lampu Meja"
+msgstr "Lantera Dinding"
 
 #: ../homedecor/gastronomy.lua
 msgid "Cutlery set"
-msgstr ""
+msgstr "Set Kutleri"
 
 #: ../homedecor/gastronomy.lua
 msgid "Brown bottle"
-msgstr ""
+msgstr "Botol Perang"
 
 #: ../homedecor/gastronomy.lua
 msgid "Four brown bottles"
-msgstr ""
+msgstr "Empat Botol Perang"
 
 #: ../homedecor/gastronomy.lua
 msgid "Four green bottles"
-msgstr ""
+msgstr "Empat Botol Hijau"
 
 #: ../homedecor/gastronomy.lua
 msgid "Green bottle"
-msgstr ""
+msgstr "Botol Hijau"
 
 #: ../homedecor/gastronomy.lua
 msgid "Four misc brown/green bottles"
-msgstr ""
+msgstr "Empat Botol Pelbagai Warna"
 
 #: ../homedecor/gastronomy.lua
 msgid "Wine rack"
-msgstr ""
+msgstr "Rak Wain"
 
 #: ../homedecor/gastronomy.lua
 msgid "Dartboard"
-msgstr ""
+msgstr "Papan Damak"
 
 #: ../homedecor/gastronomy.lua
 msgid "Beer tap"
-msgstr ""
+msgstr "Paip Bir"
 
 #: ../homedecor/gastronomy.lua
 msgid "Ahh, a frosty cold beer - look in your inventory for it!"
-msgstr ""
+msgstr "Ahh, bir sejuk dingin - cari dalam inventori anda!"
 
 #: ../homedecor/gastronomy.lua
 msgid "No room in your inventory to add a beer mug!"
-msgstr ""
+msgstr "Tiada ruang dalam inventori anda untuk menambah kole bir!"
 
 #: ../homedecor/gastronomy.lua
 msgid "Beer mug"
-msgstr ""
+msgstr "Kole Bir"
 
 #: ../homedecor/gastronomy.lua
 msgid "Soda vending machine"
-msgstr ""
+msgstr "Mesin Soda Layan Diri"
 
 #: ../homedecor/gastronomy.lua
 msgid "Please insert a coin in the machine."
-msgstr ""
+msgstr "Sila masukkan duit syiling ke dalam mesin."
 
 #: ../homedecor/handlers/expansion.lua
 msgid "Not enough room - the space for the headboard is occupied!"
-msgstr ""
+msgstr "Tidak cukup ruang - ada barang di kawasan untuk letak kepala katil!"
 
 #: ../homedecor/handlers/expansion.lua
 msgid "Someone already owns the spot where the headboard goes."
-msgstr ""
+msgstr "Tempat untuk letak kepala katil itu kawasan kepunyaan orang lain."
 
 #: ../homedecor/handlers/expansion.lua
 msgid "Not enough room - the upper space is occupied!"
-msgstr ""
+msgstr "Tidak cukup ruang - ada barang di kawasan atas!"
 
 #: ../homedecor/handlers/expansion.lua
-#, fuzzy
 msgid "Someone already owns that spot."
-msgstr "Maaf, ini kawasan %s."
+msgstr "Kawasan itu kepunyaan orang lain."
 
 #: ../homedecor/handlers/furnaces.lua
 msgid "Furnace"
-msgstr ""
+msgstr "Relau"
 
 #: ../homedecor/handlers/furnaces.lua
 msgid "@1 (empty)"
-msgstr ""
+msgstr "@1 (kosong)"
 
 #: ../homedecor/handlers/furnaces.lua
 msgid "@1 (active)"
-msgstr ""
+msgstr "@1 (aktif)"
 
 #: ../homedecor/handlers/furnaces.lua
-#, fuzzy
 msgid "@1 (active: @2%)"
-msgstr "%s aktif: %d%%"
+msgstr "@1 (aktif: @2)"
 
 #: ../homedecor/handlers/furnaces.lua
-#, fuzzy
 msgid "@1 (out of fuel)"
-msgstr ": Kehabisan bahan api"
+msgstr "@1 (kehabisan bahan api)"
 
 #: ../homedecor/handlers/furnaces.lua
-#, fuzzy
 msgid "@1 (output bins are full)"
-msgstr ": dulang keluar penuh"
+msgstr "@1 (dulang keluar penuh)"
 
 #: ../homedecor/handlers/inventory.lua
-#, fuzzy
 msgid "@1 moves stuff in @2 at @3"
-msgstr "%s pindah barang dalam kabinet katil dekat %s"
+msgstr "@1 pindah barang dalam @2 dekat @3"
 
 #: ../homedecor/handlers/inventory.lua
 msgid "@1 moves @2 to @3 at @4"
-msgstr ""
+msgstr "@1 pindahkan @2 ke @3 dekat @4"
 
 #: ../homedecor/handlers/inventory.lua
 msgid "@1 takes @2 from @3 at @4"
-msgstr ""
+msgstr "@1 ambil @2 daripada @3 dekat @4"
 
 #: ../homedecor/handlers/inventory.lua
-#, fuzzy
 msgid "@1 (owned by @2)"
-msgstr "%s (hak milik %s)"
+msgstr "@1 (hak milik @2)"
 
 #: ../homedecor/handlers/inventory.lua
-#, fuzzy
 msgid "@1 tried to access a @2 belonging to @3 at @4"
-msgstr "%s cuba untuk pakai %s milik %s dekat %s"
+msgstr "@1 cuba untuk pakai @2 milik @3 dekat @4"
 
 #: ../homedecor/handlers/inventory.lua
-#, fuzzy
 msgid "@1 (Locked)"
-msgstr "%s (Berkunci)"
+msgstr "@1 (Berkunci)"
 
 #: ../homedecor/init.lua ../lrfurn/armchairs.lua ../lrfurn/coffeetable.lua
 #: ../lrfurn/endtable.lua ../lrfurn/longsofas.lua ../lrfurn/sofas.lua
-#, fuzzy
 msgid "Loaded!"
 msgstr "Telah Dimuatkan!"
 
 #: ../homedecor/kitchen_appliances.lua
-#, fuzzy
 msgid "Refrigerator (stainless steel)"
-msgstr "Peti Sejuk"
+msgstr "Peti Sejuk (Keluli Tahan Karat)"
 
 #: ../homedecor/kitchen_appliances.lua
-#, fuzzy
 msgid "Refrigerator"
 msgstr "Peti Sejuk"
 
 #: ../homedecor/kitchen_appliances.lua
-#, fuzzy
 msgid "Oven"
 msgstr "Ketuhar"
 
 #: ../homedecor/kitchen_appliances.lua
 msgid "Oven (stainless steel)"
-msgstr ""
+msgstr "Ketuhar (Keluli Tahan Karat)"
 
 #: ../homedecor/kitchen_appliances.lua
-#, fuzzy
 msgid "Microwave Oven"
 msgstr "Ketuhar Gelombang Mikro"
 
 #: ../homedecor/kitchen_appliances.lua
 msgid "Coffee Maker"
-msgstr ""
+msgstr "Alat Pembuat Kopi"
 
 #: ../homedecor/kitchen_appliances.lua
 msgid "Toaster"
-msgstr ""
+msgstr "Pembakar Roti"
 
 #: ../homedecor/kitchen_appliances.lua
 msgid "Dishwasher"
-msgstr ""
+msgstr "Mesin Basuh Pinggan Mangkuk"
 
 #: ../homedecor/kitchen_appliances.lua ../homedecor/kitchen_furniture.lua
 msgid "granite"
-msgstr ""
+msgstr "Granit"
 
 #: ../homedecor/kitchen_appliances.lua ../homedecor/kitchen_furniture.lua
 msgid "marble"
-msgstr ""
+msgstr "Marmar"
 
 #: ../homedecor/kitchen_appliances.lua ../homedecor/kitchen_furniture.lua
 msgid "steel"
-msgstr ""
+msgstr "Keluli"
 
 #: ../homedecor/kitchen_appliances.lua
 msgid "Dishwasher (@1)"
-msgstr ""
+msgstr "Mesin Basuh Pinggan Mangkuk (@1)"
 
 #: ../homedecor/kitchen_furniture.lua
-#, fuzzy
 msgid "Kitchen Cabinet"
 msgstr "Kabinet Dapur"
 
 #: ../homedecor/kitchen_furniture.lua
-#, fuzzy
 msgid "Kitchen Cabinet (@1 top)"
-msgstr "Kabinet Dapur"
+msgstr "Kabinet Dapur (Beralaskan @1)"
 
 #: ../homedecor/kitchen_furniture.lua
-#, fuzzy
 msgid "Half-height Kitchen Cabinet (on ceiling)"
-msgstr "Kabinet Dapur Separuh (atas siling)"
+msgstr "Kabinet Dapur Separuh (dekat siling)"
 
 #: ../homedecor/kitchen_furniture.lua
-#, fuzzy
 msgid "Kitchen Cabinet with sink"
 msgstr "Kabinet Dapur dengan Sinki"
 
 #: ../homedecor/kitchen_furniture.lua
-#, fuzzy
 msgid "Under-sink cabinet"
 msgstr "Kabinet Bawah Sinki"
 
 #: ../homedecor/kitchen_furniture.lua
 msgid "Copper pans"
-msgstr ""
+msgstr "Kuali Leper Tembaga"
 
 #: ../homedecor/kitchen_furniture.lua
-#, fuzzy
 msgid "Kitchen Faucet"
-msgstr "Kabinet Dapur"
+msgstr "Kepala Paip Dapur"
 
 #: ../homedecor/kitchen_furniture.lua
 msgid "Paper towels"
-msgstr ""
+msgstr "Tuala Dapur Pakai Buang"
 
 #: ../homedecor/lighting.lua
-#, fuzzy
 msgid "Thick Glowlight"
-msgstr "Lampu Bara (nipis)"
+msgstr "Lampu Putih Tebal"
 
 #: ../homedecor/lighting.lua
-#, fuzzy
 msgid "Thin Glowlight"
-msgstr "Lampu Bara (nipis)"
+msgstr "Lampu Putih Nipis"
 
 #: ../homedecor/lighting.lua
-#, fuzzy
 msgid "Small Glowlight Cube"
-msgstr "Lampu Bara Kuning (kiub kecil)"
+msgstr "Kiub Lampu Putih Kecil"
 
 #: ../homedecor/lighting.lua
 msgid "Plasma Lamp"
-msgstr ""
+msgstr "Lampu Plasma"
 
 #: ../homedecor/lighting.lua
 msgid "Plasma Ball"
-msgstr ""
+msgstr "Bebola Plasma"
 
 #: ../homedecor/lighting.lua
 msgid "Thick Candle"
-msgstr ""
+msgstr "Lilin Tebal"
 
 #: ../homedecor/lighting.lua
 msgid "Thin Candle"
-msgstr ""
+msgstr "Lili Nipis"
 
 #: ../homedecor/lighting.lua
 msgid "Candlestick (wrought iron)"
-msgstr ""
+msgstr "Lilin Berkaki (Besi Tempaan)"
 
 #: ../homedecor/lighting.lua
 msgid "Candlestick (brass)"
-msgstr ""
+msgstr "Lilin Berkaki (Loyang)"
 
 #: ../homedecor/lighting.lua
-#, fuzzy
 msgid "Wall sconce"
-msgstr "Obor Dinding"
+msgstr "Pendakap Lilin Dinding"
 
 #: ../homedecor/lighting.lua
 msgid "Oil lamp (hurricane)"
-msgstr ""
+msgstr "Pelita Gantung"
 
 #: ../homedecor/lighting.lua
 msgid "Oil Lamp (tabletop)"
-msgstr ""
+msgstr "Pelita Duduk"
 
 #: ../homedecor/lighting.lua
 msgid "Ground Lantern"
-msgstr ""
+msgstr "Lantera Berdiri"
 
 #: ../homedecor/lighting.lua
 msgid "Hanging Lantern"
-msgstr ""
+msgstr "Lantera Bergantung"
 
 #: ../homedecor/lighting.lua
-#, fuzzy
 msgid "Ceiling Lantern"
-msgstr "Kabinet Bawah Sinki"
+msgstr "Lantera Siling"
 
 #: ../homedecor/lighting.lua
 msgid "Lattice lantern (large)"
-msgstr ""
+msgstr "Lantera Kekisi (Besar)"
 
 #: ../homedecor/lighting.lua
 msgid "Lattice lantern (small)"
-msgstr ""
+msgstr "Lantera Kekisi (Kecil)"
 
 #: ../homedecor/lighting.lua
-#, fuzzy
 msgid "Table Lamp"
 msgstr "Lampu Meja"
 
 #: ../homedecor/lighting.lua
 msgid "Standing Lamp"
-msgstr ""
+msgstr "Lampu Berdiri"
 
 #: ../homedecor/lighting.lua
-#, fuzzy
 msgid "Desk Lamp"
-msgstr "Lampu Meja"
+msgstr "Lampu Meja Kerja"
 
 #: ../homedecor/lighting.lua
 msgid "Ceiling Lamp"
-msgstr ""
+msgstr "Lampu Siling"
 
 #: ../homedecor/lighting.lua
 msgid "Ceiling Lamp (off)"
-msgstr ""
+msgstr "Lampu Siling (tutup)"
 
 #: ../homedecor/misc-nodes.lua
-#, fuzzy
 msgid "Textured Ceiling Paint"
 msgstr "Cat Siling Bertekstur"
 
 #: ../homedecor/misc-nodes.lua
-#, fuzzy
 msgid "Drop-Ceiling Tile"
 msgstr "Kepingan Siling"
 
 #: ../homedecor/misc-nodes.lua
 msgid "small"
-msgstr ""
+msgstr "Kecil"
 
 #: ../homedecor/misc-nodes.lua
 msgid "large"
-msgstr ""
+msgstr "Besar"
 
 #: ../homedecor/misc-nodes.lua
 msgid "persian"
-msgstr ""
+msgstr "Parsi"
 
 #: ../homedecor/misc-nodes.lua
 msgid "Rug (@1)"
-msgstr ""
+msgstr "Ambal (@1)"
 
 #: ../homedecor/misc-nodes.lua
-#, fuzzy
 msgid "black"
 msgstr "Hitam"
 
 #: ../homedecor/misc-nodes.lua ../homedecor/roofing.lua
-#, fuzzy
 msgid "terracotta"
-msgstr "Genting Terracotta"
+msgstr "Terracotta"
 
 #: ../homedecor/misc-nodes.lua
 msgid "Flower Pot (@1)"
-msgstr ""
+msgstr "Pasu Bunga (@1)"
 
 #: ../homedecor/misc-nodes.lua
 msgid "Rose"
-msgstr ""
+msgstr "Ros"
 
 #: ../homedecor/misc-nodes.lua
 msgid "Tulip"
-msgstr ""
+msgstr "Tulip"
 
 #: ../homedecor/misc-nodes.lua
 msgid "Yellow Dandelion"
-msgstr ""
+msgstr "Dandelion Kuning"
 
 #: ../homedecor/misc-nodes.lua
 msgid "White Dandelion"
-msgstr ""
+msgstr "Dandelion Putih"
 
 #: ../homedecor/misc-nodes.lua
 msgid "Blue Geranium"
-msgstr ""
+msgstr "Geranium Biru"
 
 #: ../homedecor/misc-nodes.lua
-#, fuzzy
 msgid "Viola"
-msgstr "Ungu"
+msgstr "Violet"
 
 #: ../homedecor/misc-nodes.lua
 msgid "Cactus"
-msgstr ""
+msgstr "Kaktus"
 
 #: ../homedecor/misc-nodes.lua
 msgid "Bonsai"
-msgstr ""
+msgstr "Bonsai"
 
 #: ../homedecor/misc-nodes.lua
 msgid "Potted flower (@1)"
-msgstr ""
+msgstr "Pasu Berbunga (@1)"
 
 #: ../homedecor/misc-nodes.lua
-#, fuzzy
 msgid "Brass Pole"
 msgstr "Tiang Loyang"
 
 #: ../homedecor/misc-nodes.lua
-#, fuzzy
 msgid "Wrought Iron Pole"
 msgstr "Tiang Besi Tempaan"
 
 #: ../homedecor/misc-nodes.lua
 msgid "Fishtank"
-msgstr ""
+msgstr "Tangki Ikan"
 
 #: ../homedecor/misc-nodes.lua
 msgid "Fishtank (lighted)"
-msgstr ""
+msgstr "Tangki Ikan (Bercahaya)"
 
 #: ../homedecor/misc-nodes.lua
 msgid "Cardboard box (big)"
-msgstr ""
+msgstr "Kotak Kadbod (Besar)"
 
 #: ../homedecor/misc-nodes.lua
 msgid "Cardboard box"
-msgstr ""
+msgstr "Kotak Kadbod (Kecil)"
 
 #: ../homedecor/misc-nodes.lua
 msgid "DVD/CD cabinet"
-msgstr ""
+msgstr "Kabinet DVD/CD"
 
 #: ../homedecor/misc-nodes.lua
-#, fuzzy
 msgid "Pool Table"
-msgstr "Meja"
+msgstr "Meja Pool"
 
 #: ../homedecor/misc-nodes.lua
 msgid "Piano"
-msgstr ""
+msgstr "Piano"
 
 #: ../homedecor/misc-nodes.lua
 msgid "Trophy"
-msgstr ""
+msgstr "Trofi"
 
 #: ../homedecor/misc-nodes.lua
 msgid "Sport bench"
-msgstr ""
+msgstr "Bangku Angkat Berat"
 
 #: ../homedecor/misc-nodes.lua
 msgid "Skateboard"
-msgstr ""
+msgstr "Papan Luncur"
 
 #: ../homedecor/misc-nodes.lua
 msgid "Metal tool cabinet and work table"
-msgstr ""
+msgstr "Kabinet Alatan Logam dan Meja Kerja"
 
 #: ../homedecor/misc-nodes.lua
-msgid "Picture Frame"
-msgstr ""
+msgid "Picture Frame "
+msgstr "Bingkai Gambar "
 
 #: ../homedecor/misc-nodes.lua
 msgid "Decorative painting #@1"
-msgstr ""
+msgstr "Lukisan Hiasan #@1"
 
 #: ../homedecor/misc-nodes.lua
 msgid "dark topped"
-msgstr ""
+msgstr "atasan gelap"
 
 #: ../homedecor/misc-nodes.lua
 msgid "diagonal"
-msgstr ""
+msgstr "pepenjuru"
 
 #: ../homedecor/misc-nodes.lua
 msgid "horizontal"
-msgstr ""
+msgstr "mendatar"
 
 #: ../homedecor/misc-nodes.lua
 msgid "Banister for Stairs (@1, @2)"
-msgstr ""
+msgstr "Selusur Tangga (@1, @2)"
 
 #: ../homedecor/misc-nodes.lua
 msgid "not enough space"
-msgstr ""
+msgstr "Tidak cukup ruang"
 
 #: ../homedecor/office.lua
-#, fuzzy
 msgid "Filing cabinet"
-msgstr "Kabinet Bawah Sinki"
+msgstr "Kabinet Pemfailan"
 
 #: ../homedecor/office.lua
-#, fuzzy
 msgid "Desk"
-msgstr "Lampu Meja"
+msgstr "Meja Kerja"
 
 #: ../homedecor/office.lua
 msgid "Desk globe"
-msgstr ""
+msgstr "Glob Dunia"
 
 #: ../homedecor/office.lua
 msgid "Calendar"
-msgstr ""
+msgstr "Kalendar"
 
 #: ../homedecor/office.lua
 msgid ""
 "Date (right-click to update):\n"
 "@1"
 msgstr ""
+"Tarikh (klik-kanan untuk kemaskini):\n"
+"@1"
 
 #: ../homedecor/office.lua
 msgid "Basic office chair"
-msgstr ""
+msgstr "Kerusi Pejabat Biasa"
 
 #: ../homedecor/office.lua
 msgid "Upscale office chair"
-msgstr ""
+msgstr "Kerusi Pejabat Besar"
 
 #: ../homedecor/roofing.lua
-#, fuzzy
 msgid "Glass Skylight"
 msgstr "Bumbung Kaca"
 
 #: ../homedecor/roofing.lua
-#, fuzzy
 msgid "Glass Skylight Frosted"
 msgstr "Bumbung Kaca Berkabut"
 
 #: ../homedecor/roofing.lua
 msgid "asphalt"
-msgstr ""
+msgstr "Asfalt"
 
 #: ../homedecor/roofing.lua
-#, fuzzy
 msgid "Shingles (@1)"
-msgstr "Genting Kayu"
+msgstr "Genting (@1)"
 
 #: ../homedecor/roofing.lua
-#, fuzzy
 msgid "@1 (outer corner)"
-msgstr "Genting Kayu (bucu luar)"
+msgstr "@1 (bucu luar)"
 
 #: ../homedecor/roofing.lua
-#, fuzzy
 msgid "@1 (inner corner)"
-msgstr "Genting Kayu (bucu dalam)"
+msgstr "@1 (bucu dalam)"
 
 #: ../homedecor/roofing.lua
-#, fuzzy
 msgid "Wood Shingles"
 msgstr "Genting Kayu"
 
 #: ../homedecor/roofing.lua
-#, fuzzy
 msgid "Asphalt Shingles"
 msgstr "Genting Asfalt"
 
 #: ../homedecor/roofing.lua
-#, fuzzy
 msgid "Terracotta Shingles"
 msgstr "Genting Terracotta"
 
 #: ../homedecor/roofing.lua
-#, fuzzy
 msgid "Glass Shingles"
-msgstr "Genting Asfalt"
+msgstr "Genting Kaca"
 
 #: ../homedecor/roofing.lua
 msgid "Chimney"
-msgstr ""
+msgstr "Serombong"
 
 #: ../homedecor/shutters.lua
-#, fuzzy
 msgid "Wooden Shutter"
-msgstr "Pengatup Kayu (Merah)"
+msgstr "Pengatup Kayu"
 
 #: ../homedecor/tables.lua
 msgid "Small square glass table"
-msgstr ""
+msgstr "Kaca Meja Segi Empat Kecil"
 
 #: ../homedecor/tables.lua
-#, fuzzy
 msgid "Small round glass table"
-msgstr "Pembesar Suara Keliling Kecil"
+msgstr "Kaca Meja Bulat Kecil"
 
 #: ../homedecor/tables.lua
 msgid "Large glass table piece"
-msgstr ""
+msgstr "Kepingan Kaca Meja Besar"
 
 #: ../homedecor/tables.lua
-#, fuzzy
 msgid "Small square wooden table"
-msgstr "Laci Kayu Kecil"
+msgstr "Kepingan Meja Kayu Segi Empat Kecil"
 
 #: ../homedecor/tables.lua
-#, fuzzy
 msgid "Small round wooden table"
-msgstr "Pembesar Suara Keliling Kecil"
+msgstr "Kepingan Meja Kayu Bulat Kecil"
 
 #: ../homedecor/tables.lua
 msgid "Large wooden table piece"
-msgstr ""
+msgstr "Kepingan Meja Kayu Besar"
 
 #: ../homedecor/tables.lua
-#, fuzzy
 msgid "Utility Table"
-msgstr "Meja Utiliti"
+msgstr "Kepingan Meja Utiliti"
 
 #: ../homedecor/tables.lua
-#, fuzzy
 msgid "Table Legs (@1)"
-msgstr "Kaki Meja Loyang"
+msgstr "Kaki Meja (@1)"
 
 #: ../homedecor/tables.lua
-#, fuzzy
 msgid "Legs for Utility Table"
 msgstr "Kaki untuk Meja Utiliti"
 
 #: ../homedecor/trash_cans.lua
 msgid "Green Trash Can"
-msgstr ""
+msgstr "Tong Sampah Hijau"
 
 #: ../homedecor/trash_cans.lua
 msgid "Trash Can"
-msgstr ""
+msgstr "Tong Sampah"
 
 #: ../homedecor/trash_cans.lua
 msgid "Small Trash Can"
-msgstr ""
+msgstr "Tong Sampah Kecil"
 
 #: ../homedecor/wardrobe.lua
 msgid "Wardrobe"
-msgstr ""
+msgstr "Almari Pakaian"
 
 #: ../homedecor/wardrobe.lua
 msgid "Clothes"
-msgstr ""
+msgstr "Pakaian"
 
 #: ../homedecor/wardrobe.lua
 msgid "Storage"
-msgstr ""
+msgstr "Simpanan"
 
 #: ../homedecor/window_treatments.lua
 msgid "Window (quartered)"
-msgstr ""
+msgstr "Tingkap (Berpalang)"
 
 #: ../homedecor/window_treatments.lua
 msgid "Window (plain)"
-msgstr ""
+msgstr "Tingkap (Biasa)"
 
 #: ../homedecor/window_treatments.lua
-#, fuzzy
 msgid "Window Blinds (thick)"
-msgstr "Lampu Bara Putih (tebal)"
+msgstr "Bidai Tingkap (Tebal)"
 
 #: ../homedecor/window_treatments.lua
-#, fuzzy
 msgid "Window Blinds (thin)"
-msgstr "Lampu Bara (nipis)"
+msgstr "Bidai Tingkap (Nipis)"
 
 #: ../homedecor/window_treatments.lua
-#, fuzzy
 msgid "Curtains"
-msgstr "Langsir (%s)"
+msgstr "Langsir"
 
 #: ../homedecor/window_treatments.lua
-#, fuzzy
+msgid "Curtains (open)"
+msgstr "Langsir (Terbuka)"
+
+#: ../homedecor/window_treatments.lua
 msgid "Curtain Rod (@1)"
-msgstr "Langsir (%s)"
+msgstr "Alang Langsir"
 
 #: ../homedecor/window_treatments.lua
 msgid "Window flowerbox"
-msgstr ""
+msgstr "Kotak Bunga Tingkap"
 
 #: ../homedecor/window_treatments.lua
 msgid "Stained Glass"
-msgstr ""
+msgstr "Kaca Berwarna"
 
 #: ../inbox/init.lua
 msgid "Mailbox"
-msgstr ""
+msgstr "Peti Surat"
 
 #: ../inbox/init.lua
 msgid "@1's Mailbox"
-msgstr ""
+msgstr "Peti Surat @1"
 
 #: ../itemframes/init.lua
 msgid "Item frame"
-msgstr ""
+msgstr "Bingkai Item"
 
 #: ../itemframes/init.lua
-#, fuzzy
 msgid "Item frame (owned by @1)"
-msgstr "%s (hak milik %s)"
+msgstr "Bingkai Item (hak milik @1)"
 
 #: ../itemframes/init.lua
 msgid "Pedestal"
-msgstr ""
+msgstr "Kekaki"
 
 #: ../itemframes/init.lua
-#, fuzzy
 msgid "Pedestal (owned by @1)"
-msgstr "%s (hak milik %s)"
+msgstr "Kekaki (hak milik @1)"
 
 #: ../lavalamp/init.lua
-#, fuzzy
 msgid "Lava Lamp"
-msgstr "Lampu Meja"
+msgstr "Lampu Lava"
 
 #: ../lavalamp/init.lua
 msgid "Lava Lamp (off)"
-msgstr ""
+msgstr "Lampu Lava (tutup)"
 
 #: ../lrfurn/coffeetable.lua
-#, fuzzy
 msgid "Coffee Table"
-msgstr "Meja"
+msgstr "Meja Kopi"
 
 #: ../lrfurn/coffeetable.lua
 msgid "No room to place the coffee table!"
-msgstr ""
+msgstr "Tiada ruang untuk letak meja kopi!"
 
 #: ../lrfurn/endtable.lua
-#, fuzzy
 msgid "End Table"
-msgstr "Meja"
+msgstr "Meja Hujung"
 
 #: ../lrfurn/init.lua
 msgid "Someone else owns the spot where other end goes!"
-msgstr ""
+msgstr "Tempat untuk letak hujung objek itu kawasan kepunyaan orang lain!"
 
 #: ../lrfurn/init.lua
 msgid "Someone else owns the spot where the middle or far end goes!"
 msgstr ""
+"Tempat untuk letak pertengahan atau hujung objek itu kawasan kepunyaan orang "
+"lain!"
 
 #: ../lrfurn/init.lua
 msgid "Someone else owns the spot where the other end goes!"
-msgstr ""
+msgstr "Tempat untuk letak hujung objek itu kawasan kepunyaan orang lain!"
 
 #: ../lrfurn/longsofas.lua
 msgid "Long Sofa"
-msgstr ""
+msgstr "Sofa Panjang"
 
 #: ../lrfurn/longsofas.lua ../lrfurn/sofas.lua
 msgid "No room to place the sofa!"
-msgstr ""
+msgstr "Tiada ruang untuk letak sofa!"
 
 #: ../lrfurn/sofas.lua
 msgid "Sofa"
-msgstr ""
+msgstr "Sofa"
 
 #: ../plasmascreen/init.lua
 msgid "Plasma Screen TV Stand"
-msgstr ""
+msgstr "Kaki TV Plasma"
 
 #: ../plasmascreen/init.lua
 msgid "Plasma TV"
-msgstr ""
+msgstr "TV Plasma"
 
 #: ../plasmascreen/init.lua
 msgid "Plasma TV (off)"
-msgstr ""
+msgstr "TV Plasma (tutup)"
 
-#, fuzzy
-#~ msgid "blue"
-#~ msgstr "biru"
+#~ msgid "Grass"
+#~ msgstr "Rumput"
+
+#~ msgid "Roofing"
+#~ msgstr "Bahan Bumbung"
+
+#~ msgid "Marble stair"
+#~ msgstr "Tangga Marmar"
+
+#~ msgid "Marble slab"
+#~ msgstr "Bidur Marmar"
+
+#~ msgid "Hardwood stair"
+#~ msgstr "Tangga Kayu Keras"
+
+#~ msgid "Hardwood slab"
+#~ msgstr "Bidur Kayu Keras"
+
+#~ msgid "Grass stair"
+#~ msgstr "Tangga Rumput"
+
+#~ msgid "Grass slab"
+#~ msgstr "Bidur Rumput"
+
+#~ msgid "Tar stair"
+#~ msgstr "Tangga Tar"
+
+#~ msgid "Tar slab"
+#~ msgstr "Bidur Tar"
+
+#~ msgid "Grate Stair"
+#~ msgstr "Tangga Jeriji"
+
+#~ msgid "Grate Slab"
+#~ msgstr "Bidur Jeriji"
+
+#~ msgid "Adobe stair"
+#~ msgstr "Tangga Adob"
+
+#~ msgid "Adobe slab"
+#~ msgstr "Bidur Adob"
+
+#~ msgid "Roofing stair"
+#~ msgstr "Tangga Bahan Bumbung"
+
+#~ msgid "Roofing slab"
+#~ msgstr "Bidur Bahan Bumbung"
+
+#~ msgid "Fake fire"
+#~ msgstr "Api Tiruan"
+
+#~ msgid "Flint and steel"
+#~ msgstr "Pemetik Api"
+
+#~ msgid "This area is protected!"
+#~ msgstr "Kawasan ini dilindungi!"
 
 #, fuzzy
 #~ msgid "white"
@@ -1719,10 +1590,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "pink"
 #~ msgstr "merah jambu"
-
-#, fuzzy
-#~ msgid "violet"
-#~ msgstr "ungu"
 
 #, fuzzy
 #~ msgid "dark green"
@@ -1743,10 +1610,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "white/tan"
 #~ msgstr "putih"
-
-#, fuzzy
-#~ msgid "dark grey"
-#~ msgstr "Hijau Gelap"
 
 #, fuzzy
 #~ msgid "light blue"

@@ -179,7 +179,7 @@ function unifieddyes.recolor_on_place(pos, placer, itemstack, pointed_thing)
 			end
 
 			local paletteidx, hue = unifieddyes.getpaletteidx(lastdye, palette_type)
-			if palette_type == true then newname = string.gsub(newname, "_grey", "_"..unifieddyes.HUES[hue]) end
+			if palette_type == true and hue ~= 0 then newname = string.gsub(newname, "_grey", "_"..unifieddyes.HUES[hue]) end
 
 			minetest.set_node(pos, { name = newname, param2 = oldfdir + paletteidx })
 
