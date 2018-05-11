@@ -2,8 +2,8 @@
 -- Ferns - Tree Fern 0.1.1
 -----------------------------------------------------------------------------------------------
 -- by Mossmanikin
--- License (everything): 	WTFPL
--- Contains code from: 		biome_lib
+-- License (everything):	WTFPL
+-- Contains code from:		biome_lib
 -- Looked at code from:		default	, trees
 -----------------------------------------------------------------------------------------------
 
@@ -31,20 +31,14 @@ abstract_ferns.grow_tree_fern = function(pos)
 	local i = 1
 	local brk = false
 	while (i < size) do
-		print(minetest.get_node({x = pos.x, y = pos.y + i, z = pos.z}).name)
 		if minetest.get_node({x = pos.x, y = pos.y + i, z = pos.z}).name ~= "air" then
 			brk = true
-			print("break!")
 			break
 		end
-		print("set trunk node at:")
-		print(dump({x = pos.x, y = pos.y + i, z = pos.z}))
 		minetest.set_node({x = pos.x, y = pos.y + i, z = pos.z}, { name = "ferns:fern_trunk" })
 		i = i + 1
 	end
 	if not brk then
-		print("set crown node at:")
-		print(dump({x = pos.x, y = pos.y + i, z = pos.z}))
 		minetest.set_node({x = pos.x, y = pos.y + i - 1, z = pos.z}, { name = crown })
 	end
 end
@@ -189,6 +183,7 @@ if abstract_ferns.config.enable_treeferns_in_jungle == true then
 	biome_lib:register_generate_plant({
 		surface = {
 			"default:dirt_with_grass",
+			"default:dirt_with_rainforest_litter", -- minetest >= 0.4.16
 			"default:sand",
 			"default:desert_sand",
 		},
@@ -225,7 +220,7 @@ if abstract_ferns.config.enable_treeferns_in_oases == true then
 		neighbors = {"default:desert_sand"},
 		ncount = 1,
 		min_elevation = 1,
-		near_nodes = {"default:water_source"},
+		near_nodes = {"default:water_source","default:river_water_source"},
 		near_nodes_size = 2,
 		near_nodes_vertical = 1,
 		near_nodes_count = 1,
