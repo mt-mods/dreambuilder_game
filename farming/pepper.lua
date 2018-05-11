@@ -11,6 +11,7 @@ local S = farming.intllib
 minetest.register_craftitem("farming:peppercorn", {
 	description = S("Peppercorn"),
 	inventory_image = "crops_peppercorn.png",
+	groups = {food_peppercorn = 1, flammable = 3},
 	on_place = function(itemstack, placer, pointed_thing)
 		return farming.place_seed(itemstack, placer, pointed_thing, "farming:pepper_1")
 	end,
@@ -21,13 +22,13 @@ minetest.register_craftitem("farming:pepper", {
 	description = S("Pepper"),
 	inventory_image = "crops_pepper.png",
 	on_use = minetest.item_eat(2),
-	groups = {pepper = 1},
+	groups = {food_pepper = 1, flammable = 3},
 })
 
 minetest.register_craft({
 	type = "shapeless",
 	output = "farming:peppercorn",
-	recipe = { "farming:pepper" }
+	recipe = {"farming:pepper"}
 })
 
 -- ground pepper
@@ -38,7 +39,10 @@ minetest.register_node("farming:pepper_ground", {
 	drawtype = "plantlike",
 	paramtype = "light",
 	tiles = {"crops_pepper_ground.png"},
-	groups = {vessel = 1, pepper_ground = 1, dig_immediate = 3, attached_node = 1},
+	groups = {
+		vessel = 1, food_pepper_ground = 1,
+		dig_immediate = 3, attached_node = 1
+	},
 	sounds = default.node_sound_glass_defaults(),
 	selection_box = {
 		type = "fixed",
@@ -49,7 +53,8 @@ minetest.register_node("farming:pepper_ground", {
 minetest.register_craft( {
 	output = "farming:pepper_ground",
 	type = "shapeless",
-	recipe = {"farming:peppercorn", "vessels:glass_bottle"}
+	recipe = {"group:food_peppercorn", "vessels:glass_bottle", "farming:mortar_pestle"},
+	replacements = {{"farming:mortar_pestle", "farming:mortar_pestle"}},
 })
 
 -- crop definition
@@ -92,8 +97,9 @@ crop_def.tiles = {"crops_pepper_plant_5.png"}
 crop_def.groups.growing = 0
 crop_def.drop = {
 	max_items = 2, items = {
-		{items = {'farming:pepper'}, rarity = 1},
+		{items = {'farming:pepper 2'}, rarity = 1},
 		{items = {'farming:pepper'}, rarity = 2},
+		{items = {'farming:pepper'}, rarity = 3},
 	}
 }
 minetest.register_node("farming:pepper_5", table.copy(crop_def))

@@ -39,7 +39,7 @@ minetest.register_node("farming:hemp_oil", {
 		type = "fixed",
 		fixed = {-0.25, -0.5, -0.25, 0.25, 0.3, 0.25}
 	},
-	groups = {vessel = 1, dig_immediate = 3, attached_node = 1},
+	groups = {food_oil = 1, vessel = 1, dig_immediate = 3, attached_node = 1},
 	sounds = default.node_sound_glass_defaults(),
 })
 
@@ -92,6 +92,23 @@ minetest.register_craft( {
 		{"farming:hemp_leaf", "farming:hemp_leaf", "farming:hemp_leaf"}
 	},
 	replacements = {{ "bucket:bucket_river_water", "bucket:bucket_empty"}}
+})
+
+-- hemp block
+minetest.register_node("farming:hemp_block", {
+	description = S("Hemp Block"),
+	tiles = {"farming_hemp_block.png"},
+	paramtype = "light",
+	groups = {snappy = 1, oddly_breakable_by_hand = 1, flammable = 2}
+})
+
+minetest.register_craft( {
+	output = "farming:hemp_block",
+	recipe = {
+		{"farming:hemp_fibre", "farming:hemp_fibre", "farming:hemp_fibre"},
+		{"farming:hemp_fibre", "farming:hemp_fibre", "farming:hemp_fibre"},
+		{"farming:hemp_fibre", "farming:hemp_fibre", "farming:hemp_fibre"}
+	},
 })
 
 -- paper

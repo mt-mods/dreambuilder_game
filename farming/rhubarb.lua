@@ -5,6 +5,7 @@ local S = farming.intllib
 minetest.register_craftitem("farming:rhubarb", {
 	description = S("Rhubarb"),
 	inventory_image = "farming_rhubarb.png",
+	groups = {food_rhubarb = 1, flammable = 2},
 	on_place = function(itemstack, placer, pointed_thing)
 		return farming.place_seed(itemstack, placer, pointed_thing, "farming:rhubarb_1")
 	end,
@@ -21,10 +22,11 @@ minetest.register_craftitem("farming:rhubarb_pie", {
 minetest.register_craft({
 	output = "farming:rhubarb_pie",
 	recipe = {
-		{"", "farming:sugar", ""},
-		{"farming:rhubarb", "farming:rhubarb", "farming:rhubarb"},
-		{"farming:wheat", "farming:wheat", "farming:wheat"},
-	}
+		{"farming:baking_tray", "group:food_sugar", ""},
+		{"group:food_rhubarb", "group:food_rhubarb", "group:food_rhubarb"},
+		{"group:food_wheat", "group:food_wheat", "group:food_wheat"},
+	},
+	replacements = {{"farming:baking_tray", "farming:baking_tray"}}
 })
 
 -- rhubarb definition

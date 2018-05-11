@@ -14,7 +14,7 @@ minetest.register_node("farming:pumpkin", {
 		"farming_pumpkin_side.png"
 	},
 	groups = {
-		choppy = 1, oddly_breakable_by_hand = 1,
+		food_pumpkin = 1, choppy = 1, oddly_breakable_by_hand = 1,
 		flammable = 2, plant = 1
 	},
 	drop = {
@@ -29,6 +29,7 @@ minetest.register_node("farming:pumpkin", {
 minetest.register_craftitem("farming:pumpkin_slice", {
 	description = S("Pumpkin Slice"),
 	inventory_image = "farming_pumpkin_slice.png",
+	groups = {food_pumpkin_slice = 1, flammable = 2},
 	on_place = function(itemstack, placer, pointed_thing)
 		return farming.place_seed(itemstack, placer, pointed_thing, "farming:pumpkin_1")
 	end,
@@ -97,9 +98,34 @@ minetest.register_node("farming:jackolantern_on", {
 minetest.register_craft({
 	output = "farming:jackolantern",
 	recipe = {
-		{"", "", ""},
-		{"", "default:torch", ""},
-		{"", "farming:pumpkin", ""},
+		{"default:torch"},
+		{"group:food_pumpkin"},
+	}
+})
+
+--- wooden scarecrow base
+minetest.register_node("farming:scarecrow_bottom", {
+	paramtype = "light",
+	sunlight_propagates = true,
+	paramtype2 = "facedir",
+	tiles = {"default_wood.png"},
+	drawtype = "nodebox",
+	node_box = {
+		type = "fixed",
+		fixed = {
+			{-1/16, -8/16, -1/16, 1/16, 8/16, 1/16},
+			{-12/16, 4/16, -1/16, 12/16, 2/16, 1/16},
+		},
+	},
+	groups = {snappy = 3, flammable = 2},
+})
+
+minetest.register_craft({
+	output = "farming:scarecrow_bottom",
+	recipe = {
+		{"", "group:stick", "",},
+		{"group:stick", "group:stick", "group:stick",},
+		{"", "group:stick", "",}
 	}
 })
 
@@ -107,7 +133,8 @@ minetest.register_craft({
 minetest.register_craftitem("farming:pumpkin_bread", {
 	description = S("Pumpkin Bread"),
 	inventory_image = "farming_pumpkin_bread.png",
-	on_use = minetest.item_eat(8)
+	on_use = minetest.item_eat(8),
+	groups = {food_bread = 1, flammable = 2},
 })
 
 minetest.register_craftitem("farming:pumpkin_dough", {
@@ -118,7 +145,7 @@ minetest.register_craftitem("farming:pumpkin_dough", {
 minetest.register_craft({
 	output = "farming:pumpkin_dough",
 	type = "shapeless",
-	recipe = {"farming:flour", "farming:pumpkin_slice", "farming:pumpkin_slice"}
+	recipe = {"group:food_flour", "group:food_pumpkin_slice", "group:food_pumpkin_slice"}
 })
 
 minetest.register_craft({

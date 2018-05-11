@@ -23,7 +23,7 @@ minetest.register_node("farming:seed_wheat", {
 minetest.register_craftitem("farming:wheat", {
 	description = S("Wheat"),
 	inventory_image = "farming_wheat.png",
-	groups = {flammable = 4},
+	groups = {food_wheat = 1, flammable = 4},
 })
 
 -- straw
@@ -55,13 +55,17 @@ minetest.register_craft({
 minetest.register_craftitem("farming:flour", {
 	description = S("Flour"),
 	inventory_image = "farming_flour.png",
-	groups = {flammable = 1},
+	groups = {food_flour = 1, flammable = 1},
 })
 
 minetest.register_craft({
 	type = "shapeless",
 	output = "farming:flour",
-	recipe = {"farming:wheat", "farming:wheat", "farming:wheat", "farming:wheat"}
+	recipe = {
+		"farming:wheat", "farming:wheat", "farming:wheat",
+		"farming:wheat", "farming:mortar_pestle"
+	},
+	replacements = {{"farming:mortar_pestle", "farming:mortar_pestle"}},
 })
 
 -- bread
@@ -69,7 +73,7 @@ minetest.register_craftitem("farming:bread", {
 	description = S("Bread"),
 	inventory_image = "farming_bread.png",
 	on_use = minetest.item_eat(5),
-	groups = {flammable = 2},
+	groups = {food_bread = 1, flammable = 2},
 })
 
 minetest.register_craft({
@@ -77,6 +81,53 @@ minetest.register_craft({
 	cooktime = 15,
 	output = "farming:bread",
 	recipe = "farming:flour"
+})
+
+-- sliced bread
+minetest.register_craftitem("farming:bread_slice", {
+	description = S("Sliced Bread"),
+	inventory_image = "farming_bread_slice.png",
+	on_use = minetest.item_eat(1),
+	groups = {food_bread_slice = 1, flammable = 2},
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "farming:bread_slice 5",
+	recipe = {"farming:bread", "group:food_cutting_board"},
+	replacements = {{"farming:cutting_board", "farming:cutting_board"}},
+})
+
+-- toast
+minetest.register_craftitem("farming:toast", {
+	description = S("Toast"),
+	inventory_image = "farming_toast.png",
+	on_use = minetest.item_eat(1),
+	groups = {food_toast = 1, flammable = 2},
+})
+
+minetest.register_craft({
+	type = "cooking",
+	cooktime = 3,
+	output = "farming:toast",
+	recipe = "farming:bread_slice"
+})
+
+-- toast sandwich
+minetest.register_craftitem("farming:toast_sandwich", {
+	description = S("Toast Sandwich"),
+	inventory_image = "farming_toast_sandwich.png",
+	on_use = minetest.item_eat(4),
+	groups = {flammable = 2},
+})
+
+minetest.register_craft({
+	output = "farming:toast_sandwich",
+	recipe = {
+		{"farming:bread_slice"},
+		{"farming:toast"},
+		{"farming:bread_slice"},
+	}
 })
 
 -- wheat definition

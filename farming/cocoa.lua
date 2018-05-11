@@ -59,6 +59,7 @@ end
 minetest.register_craftitem("farming:cocoa_beans", {
 	description = S("Cocoa Beans"),
 	inventory_image = "farming_cocoa_beans.png",
+	groups = {food_cocoa = 1, flammable = 2},
 	on_place = function(itemstack, placer, pointed_thing)
 		return place_cocoa(itemstack, placer, pointed_thing, "farming:cocoa_1")
 	end,
@@ -81,7 +82,7 @@ minetest.register_craftitem("farming:cookie", {
 minetest.register_craft( {
 	output = "farming:cookie 8",
 	recipe = {
-		{ "farming:wheat", "farming:cocoa_beans", "farming:wheat" },
+		{"group:food_wheat", "group:food_cocoa", "group:food_wheat" },
 	}
 })
 
@@ -95,7 +96,7 @@ minetest.register_craftitem("farming:chocolate_dark", {
 minetest.register_craft( {
 	output = "farming:chocolate_dark",
 	recipe = {
-		{ "farming:cocoa_beans", "farming:cocoa_beans", "farming:cocoa_beans" },
+		{"group:food_cocoa", "group:food_cocoa", "group:food_cocoa"},
 	}
 })
 
@@ -124,25 +125,30 @@ local crop_def = {
 -- stage 1
 minetest.register_node("farming:cocoa_1", table.copy(crop_def))
 
--- stage2
+-- stage 2
 crop_def.tiles = {"farming_cocoa_2.png"}
+minetest.register_node("farming:cocoa_2", table.copy(crop_def))
+
+-- stage3
+crop_def.tiles = {"farming_cocoa_3.png"}
 crop_def.drop = {
 	items = {
 		{items = {'farming:cocoa_beans 1'}, rarity = 1},
 	}
 }
-minetest.register_node("farming:cocoa_2", table.copy(crop_def))
+minetest.register_node("farming:cocoa_3", table.copy(crop_def))
 
--- stage 3 (final)
-crop_def.tiles = {"farming_cocoa_3.png"}
+-- stage 4 (final)
+crop_def.tiles = {"farming_cocoa_4.png"}
 crop_def.groups.growing = 0
 crop_def.drop = {
 	items = {
 		{items = {'farming:cocoa_beans 2'}, rarity = 1},
 		{items = {'farming:cocoa_beans 1'}, rarity = 2},
+		{items = {'farming:cocoa_beans 1'}, rarity = 4},
 	}
 }
-minetest.register_node("farming:cocoa_3", table.copy(crop_def))
+minetest.register_node("farming:cocoa_4", table.copy(crop_def))
 
 -- add random cocoa pods to jungle tree's
 minetest.register_on_generated(function(minp, maxp)
@@ -180,7 +186,7 @@ minetest.register_on_generated(function(minp, maxp)
 				--print ("Cocoa Pod added at " .. minetest.pos_to_string(pos))
 
 				minetest.swap_node(pos, {
-					name = "farming:cocoa_" .. tostring(math.random(1, 3))
+					name = "farming:cocoa_" .. tostring(math.random(1, 4))
 				})
 			end
 

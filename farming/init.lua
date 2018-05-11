@@ -7,7 +7,7 @@
 
 farming = {}
 farming.mod = "redo"
-farming.version = "1.31"
+farming.version = "1.33"
 farming.path = minetest.get_modpath("farming")
 farming.select = {
 	type = "fixed",
@@ -211,7 +211,7 @@ local function reg_plant_stages(plant_name, stage, force_last)
 end
 
 
-register_plant_node = function(node)
+local register_plant_node = function(node)
 
 	local plant_name, stage = plant_name_stage(node)
 
@@ -513,6 +513,7 @@ farming.register_plant = function(name, def)
 	minetest.register_craftitem(":" .. mname .. ":" .. pname, {
 		description = pname:gsub("^%l", string.upper),
 		inventory_image = mname .. "_" .. pname .. ".png",
+		groups = def.groups or {flammable = 2},
 	})
 
 	-- Register growing steps
@@ -554,8 +555,8 @@ farming.register_plant = function(name, def)
 			waving = 1,
 			tiles = {mname .. "_" .. pname .. "_" .. i .. ".png"},
 			paramtype = "light",
-			paramtype2 = def.paramtype2 or nil,
-			place_param2 = def.place_param2 or nil,
+			paramtype2 = def.paramtype2,
+			place_param2 = def.place_param2,
 			walkable = false,
 			buildable_to = true,
 			drop = drop,
@@ -582,7 +583,6 @@ farming.tomato = true
 farming.cucumber = true
 farming.corn = true
 farming.coffee = true
-farming.coffee = true
 farming.melon = true
 farming.sugar = true
 farming.pumpkin = true
@@ -599,8 +599,10 @@ farming.garlic = true
 farming.onion = true
 farming.pepper = true
 farming.pineapple = true
+farming.peas = true
+farming.beetroot = true
 farming.donuts = true
-farming.rarety = 0.006
+farming.rarety = 0.002 -- 0.006
 
 
 -- Load new global settings if found inside mod folder
@@ -625,6 +627,7 @@ end
 dofile(farming.path.."/soil.lua")
 dofile(farming.path.."/hoes.lua")
 dofile(farming.path.."/grass.lua")
+dofile(farming.path.."/utensils.lua")
 
 -- default crops
 dofile(farming.path.."/wheat.lua")
@@ -647,14 +650,17 @@ if farming.rhubarb then dofile(farming.path.."/rhubarb.lua") end
 if farming.beans then dofile(farming.path.."/beanpole.lua") end
 if farming.grapes then dofile(farming.path.."/grapes.lua") end
 if farming.barley then dofile(farming.path.."/barley.lua") end
-if farming.chili then dofile(farming.path.."/chili.lua") end
 if farming.hemp then dofile(farming.path.."/hemp.lua") end
-if farming.donuts then dofile(farming.path.."/donut.lua") end
 if farming.garlic then dofile(farming.path.."/garlic.lua") end
 if farming.onion then dofile(farming.path.."/onion.lua") end
 if farming.pepper then dofile(farming.path.."/pepper.lua") end
 if farming.pineapple then dofile(farming.path.."/pineapple.lua") end
+if farming.peas then dofile(farming.path.."/pea.lua") end
+if farming.beetroot then dofile(farming.path.."/beetroot.lua") end
+if farming.chili then dofile(farming.path.."/chili.lua") end
+if farming.donuts then dofile(farming.path.."/donut.lua") end
 
 dofile(farming.path.."/mapgen.lua")
 dofile(farming.path.."/compatibility.lua") -- Farming Plus compatibility
+dofile(farming.path.."/hoebomb.lua")
 dofile(farming.path.."/lucky_block.lua")

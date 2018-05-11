@@ -10,12 +10,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 
 - Listring add for circular saw.
+- Stairs+: New API function:
+ `stairsplus:register_custom_subset(subset, modname, subname, recipeitem, fields)`
 
 ### Fixed
 
 - Wool Stairs+ nodes can no longer be used in crafting.
 - The circular saw can no longer replace items from the player's inventory
   when it is full.
+
+### Changed
+
+- New craft for:
+  - Stone Tile
+  - Circle Stone Bricks
+- Stairs+:
+  - Move definitions to `stairsplus.defs` table in a separate file
+  - Move recipe definitions to `stairsplus.register_recipes` function in a separate file
 
 ## [1.1.0] - 2017-10-04
 
@@ -37,7 +48,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
   - Wool (all colors)
 - Other mods can now get a list of all the defined Stairs+ shapes
 
-## [1.0.0] - 2017-02-19
+## 1.0.0 - 2017-02-19
 
 - Initial versioned release.
 

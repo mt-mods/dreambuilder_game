@@ -11,9 +11,9 @@ minetest.register_craftitem("farming:donut", {
 minetest.register_craft({
 	output = "farming:donut 3",
 	recipe = {
-		{'', 'farming:wheat', ''},
-		{'farming:wheat', 'farming:sugar', 'farming:wheat'},
-		{'', 'farming:wheat', ''},
+		{"", "group:food_wheat", ""},
+		{"group:food_wheat", "group:food_sugar", "group:food_wheat"},
+		{"", "group:food_wheat", ""},
 	}
 })
 
@@ -27,7 +27,7 @@ minetest.register_craftitem("farming:donut_chocolate", {
 minetest.register_craft({
 	output = "farming:donut_chocolate",
 	recipe = {
-		{'farming:cocoa_beans'},
+		{'group:food_cocoa'},
 		{'farming:donut'},
 	}
 })
@@ -51,31 +51,26 @@ minetest.register_craft({
 minetest.register_craftitem("farming:porridge", {
 	description = S("Porridge"),
 	inventory_image = "farming_porridge.png",
-	on_use = minetest.item_eat(6),
+	on_use = minetest.item_eat(6, "farming:bowl"),
 })
 
 minetest.after(0, function()
 
+	local fluid = "bucket:bucket_water"
+	local fluid_return = "bucket:bucket_water"
+
 	if minetest.get_modpath("mobs") and mobs and mobs.mod == "redo" then
+		fluid = "group:food_milk"
+		fluid_return = "mobs:bucket_milk"
+	end
 
 	minetest.register_craft({
-		output = "farming:porridge",
 		type = "shapeless",
-		recipe = {
-			"farming:barley", "farming:barley", "farming:wheat",
-			"farming:wheat", "mobs:bucket_milk"
-		},
-		replacements = {{"mobs:bucket_milk", "bucket:bucket_empty"}}
-	})
-else
-	minetest.register_craft({
 		output = "farming:porridge",
-		type = "shapeless",
 		recipe = {
-			"farming:barley", "farming:barley", "farming:wheat",
-			"farming:wheat", "bucket:bucket_water"
+			"group:food_barley", "group:food_barley", "group:food_wheat",
+			"group:food_wheat", "group:food_bowl", fluid
 		},
-		replacements = {{"bucket:bucket_water", "bucket:bucket_empty"}}
+		replacements = {{fluid_return, "bucket:bucket_empty"}}
 	})
-	end
 end)

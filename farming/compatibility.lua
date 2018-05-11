@@ -1,3 +1,16 @@
+-- add food group to default apple and brown mushroom
+minetest.override_item("default:apple", {
+	groups = {food_apple = 1, fleshy = 3, dig_immediate = 3, flammable = 2,
+		leafdecay = 3, leafdecay_drop = 1},
+})
+
+if minetest.registered_nodes["flowers:mushroom_brown"] then
+minetest.override_item("flowers:mushroom_brown", {
+	light_source = 1,
+	groups = {food_mushroom = 1, snappy = 3, attached_node = 1, flammable = 2},
+})
+end
+
 -- is Ethereal mod installed?
 local eth = minetest.get_modpath("ethereal") or nil
 
@@ -20,7 +33,7 @@ else
 			type = "fixed",
 			fixed = {-0.2, -0.5, -0.2, 0.2, 0.2, 0.2}
 		},
-		groups = {fleshy = 3, dig_immediate = 3, flammable = 2},
+		groups = {food_banana = 1, fleshy = 3, dig_immediate = 3, flammable = 2},
 		on_use = minetest.item_eat(2),
 		sounds = default.node_sound_leaves_defaults(),
 	})
@@ -68,7 +81,7 @@ else
 			type = "fixed",
 			fixed = {-0.2, -0.3, -0.2, 0.2, 0.2, 0.2}
 		},
-		groups = {fleshy = 3, dig_immediate = 3, flammable = 2},
+		groups = {food_orange = 1, fleshy = 3, dig_immediate = 3, flammable = 2},
 		on_use = minetest.item_eat(4),
 		sounds = default.node_sound_leaves_defaults(),
 	})
@@ -94,7 +107,6 @@ minetest.register_alias("farming:big_pumpkin_side", "air")
 minetest.register_alias("farming:big_pumpkin_corner", "air")
 minetest.register_alias("farming:big_pumpkin_top", "air")
 minetest.register_alias("farming:scarecrow", "farming:jackolantern")
-minetest.register_alias("farming:scarecrow_bottom", "default:fence_wood")
 minetest.register_alias("farming:scarecrow_light", "farming:jackolantern_on")
 minetest.register_alias("farming:pumpkin_flour", "farming:pumpkin_dough")
 
@@ -118,6 +130,7 @@ else
 		description = "Strawberry",
 		inventory_image = "strawberry.png",
 		wield_image = "strawberry.png",
+		groups = {food_strawberry = 1, flammable = 2},
 		on_use = minetest.item_eat(1),
 	})
 
