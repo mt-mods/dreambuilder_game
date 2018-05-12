@@ -311,6 +311,7 @@ minetest.register_lbm({
 		if color2 == "_grey" then color2 = "grey" end
 
 		local paletteidx, hue = unifieddyes.getpaletteidx("unifieddyes:"..color2, "extended")
+		if not paletteidx or not hue then return end
 
 		if string.find(type, "multicolor") then
 
