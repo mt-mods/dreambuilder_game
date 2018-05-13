@@ -13,8 +13,28 @@ local set_player_textures =
 	or default.player_set_textures
 
 local armor_mod_path = minetest.get_modpath("3d_armor")
-local skins = {"male1", "male2", "male3", "male4", "male5"}
+
+local skinslist = {"male1", "male2", "male3", "male4", "male5"}
 local default_skin = "character.png"
+
+local skinsdb_mod_path = minetest.get_modpath("skinsdb")
+if skinsdb_mod_path then
+	for _, shrt in ipairs(skinslist) do
+		for _, prefix in ipairs({"", "fe"}) do
+			local skin_name = prefix..shrt
+			local skin_obj = skins.new("homedecor_clothes_"..skin_name..".png") -- Texture PNG file as key to be compatible in set_player_skin
+			skin_obj:set_preview("homedecor_clothes_"..skin_name.."_preview.png")
+			skin_obj:set_texture("homedecor_clothes_"..skin_name..".png")
+			skin_obj:set_meta("name", "Wardrobe "..skin_name)
+			skin_obj:set_meta("author", 'Calinou and Jordach')
+			skin_obj:set_meta("license", 'WTFPL')
+			local file = io.open(homedecor.modpath.."/textures/homedecor_clothes_"..skin_name..".png", "r")
+			skin_obj:set_meta("format", skins.get_skin_format(file))
+			file:close()
+			skin_obj:set_meta("in_inventory_list", false)
+		end
+	end
+end
 
 function homedecor.get_player_skin(player)
 	local skin = player:get_attribute("homedecor:player_skin")
@@ -26,7 +46,9 @@ end
 
 function homedecor.set_player_skin(player, skin, save)
 	skin = skin or default_skin
-	if armor_mod_path then -- if 3D_armor's installed, let it set the skin
+	if skinsdb_mod_path then
+		skins.set_player_skin(player, skin)
+	elseif armor_mod_path then -- if 3D_armor's installed, let it set the skin
 		armor.textures[player:get_player_name()].skin = skin
 		armor:update_player_visuals(player)
 	else
@@ -78,8 +100,8 @@ homedecor.register("wardrobe", {
 		local clothes_strings = ""
 		for i = 1,5 do
 			clothes_strings = clothes_strings..
-			  "image_button_exit["..(i-1)..".5,0;1.1,2;homedecor_clothes_"..skins[i].."_preview.png;"..skins[i]..";]"..
-			  "image_button_exit["..(i-1)..".5,2;1.1,2;homedecor_clothes_fe"..skins[i].."_preview.png;fe"..skins[i]..";]"
+			  "image_button_exit["..(i-1)..".5,0;1.1,2;homedecor_clothes_"..skinslist[i].."_preview.png;"..skinslist[i]..";]"..
+			  "image_button_exit["..(i-1)..".5,2;1.1,2;homedecor_clothes_fe"..skinslist[i].."_preview.png;fe"..skinslist[i]..";]"
 		end
 		meta:set_string("formspec", "size[5.5,8.5]"..default.gui_bg..default.gui_bg_img..default.gui_slots..
 			"vertlabel[0,0.5;"..minetest.formspec_escape(S("Clothes")).."]"..
@@ -97,11 +119,11 @@ homedecor.register("wardrobe", {
 		end
 
 		for i = 1,5 do
-			if fields[skins[i]] then
-				homedecor.set_player_skin(sender, "homedecor_clothes_"..skins[i]..".png", "player")
+			if fields[skinslist[i]] then
+				homedecor.set_player_skin(sender, "homedecor_clothes_"..skinslist[i]..".png", "player")
 				break
-			elseif fields["fe"..skins[i]] then
-				homedecor.set_player_skin(sender, "homedecor_clothes_fe"..skins[i]..".png", "player")
+			elseif fields["fe"..skinslist[i]] then
+				homedecor.set_player_skin(sender, "homedecor_clothes_fe"..skinslist[i]..".png", "player")
 				break
 			end
 		end
