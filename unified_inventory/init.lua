@@ -1,16 +1,10 @@
--- Unified Inventory for Minetest 0.4.8+
+-- Unified Inventory for Minetest >= 0.4.16
 
 local modpath = minetest.get_modpath(minetest.get_current_modname())
 local worldpath = minetest.get_worldpath()
-local mygettext
-if rawget(_G, "intllib") then
-	mygettext = intllib.Getter()
-else
-	function mygettext(s, ...)
-		local t = { ... }
-		return (s:gsub("@(%d+)", function(n) return t[tonumber(n)] end))
-	end
-end
+
+-- Intllib
+local S, NS = dofile(modpath .. "/intllib.lua")
 
 -- Data tables definitions
 unified_inventory = {
@@ -40,14 +34,13 @@ unified_inventory = {
 	default = "craft",
 
 	-- intllib
-	gettext = mygettext,
-	fgettext = function(...) return minetest.formspec_escape(mygettext(...)) end,
+	gettext = S,
 
 	-- "Lite" mode
-	lite_mode = minetest.setting_getbool("unified_inventory_lite"),
-	
+	lite_mode = minetest.settings:get_bool("unified_inventory_lite"),
+
 	-- Trash enabled
-	trash_enabled = (minetest.setting_getbool("unified_inventory_trash") ~= false),
+	trash_enabled = (minetest.settings:get_bool("unified_inventory_trash") ~= false),
 
 	pagecols = 8,
 	pagerows = 10,
@@ -80,7 +73,7 @@ dofile(modpath.."/internal.lua")
 dofile(modpath.."/callbacks.lua")
 dofile(modpath.."/register.lua")
 
-if minetest.setting_getbool("unified_inventory_bags") ~= false then
+if minetest.settings:get_bool("unified_inventory_bags") ~= false then
 	dofile(modpath.."/bags.lua")
 end
 

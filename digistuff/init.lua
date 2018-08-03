@@ -928,3 +928,89 @@ minetest.register_craft({
 		{"homedecor:plastic_sheeting","homedecor:plastic_sheeting","homedecor:plastic_sheeting"},
 	}
 })
+
+if minetest.get_modpath("mesecons_noteblock") then
+	minetest.register_node("digistuff:noteblock", {
+		description = "Digilines Noteblock",
+		groups = {cracky=3},
+		on_construct = function(pos)
+			local meta = minetest.get_meta(pos)
+			meta:set_string("formspec","field[channel;Channel;${channel}")
+		end,
+		on_destruct = function(pos)
+			local pos_hash = minetest.hash_node_position(pos)
+			if digistuff.sounds_playing[pos_hash] then
+				minetest.sound_stop(digistuff.sounds_playing[pos_hash])
+				digistuff.sounds_playing[pos_hash] = nil
+			end
+		end,
+		tiles = {
+			"mesecons_noteblock.png"
+			},
+		on_receive_fields = function(pos, formname, fields, sender)
+			local name = sender:get_player_name()
+			if minetest.is_protected(pos,name) and not minetest.check_player_privs(name,{protection_bypass=true}) then
+				minetest.record_protection_violation(pos,name)
+				return
+			end
+			local meta = minetest.get_meta(pos)
+			if fields.channel then meta:set_string("channel",fields.channel) end
+		end,
+		digiline = 
+		{
+			receptor = {},
+			effector = {
+				action = function(pos,node,channel,msg)
+						local meta = minetest.get_meta(pos)
+						local setchan = meta:get_string("channel")
+						if channel ~= setchan then return end
+						local valid_sounds = {
+							csharp = "mesecons_noteblock_csharp",
+							d = "mesecons_noteblock_d",
+							dsharp = "mesecons_noteblock_dsharp",
+							e = "mesecons_noteblock_e",
+							f = "mesecons_noteblock_f",
+							fsharp = "mesecons_noteblock_fsharp",
+							g = "mesecons_noteblock_g",
+							gsharp = "mesecons_noteblock_gsharp",
+							a = "mesecons_noteblock_a",
+							asharp = "mesecons_noteblock_asharp",
+							b = "mesecons_noteblock_b",
+							c = "mesecons_noteblock_c",
+							csharp2 = "mesecons_noteblock_csharp2",
+							d2 = "mesecons_noteblock_d2",
+							dsharp2 = "mesecons_noteblock_dsharp2",
+							e2 = "mesecons_noteblock_e2",
+							f2 = "mesecons_noteblock_f2",
+							fsharp2 = "mesecons_noteblock_fsharp2",
+							g2 = "mesecons_noteblock_g2",
+							gsharp2 = "mesecons_noteblock_gsharp2",
+							a2 = "mesecons_noteblock_a2",
+							asharp2 = "mesecons_noteblock_asharp2",
+							b2 = "mesecons_noteblock_b2",
+							c2 = "mesecons_noteblock_c2",
+							hihat = "mesecons_noteblock_hihat",
+							kick = "mesecons_noteblock_kick",
+							snare = "mesecons_noteblock_snare",
+							crash = "mesecons_noteblock_crash",
+							litecrash = "mesecons_noteblock_litecrash",
+							fire = "fire_large",
+							explosion = "tnt_explode"
+						}
+						if type(msg) == "string" then
+							local sound = valid_sounds[msg]
+							if sound then minetest.sound_play(sound,{pos=pos}) end
+						elseif type(msg) == "table" then
+							if type(msg.sound) ~= "string" then return end
+							local sound = valid_sounds[msg.sound]
+							local volume = 1
+							if type(msg.volume) == "number" then
+								volume = math.max(0,math.min(1,msg.volume))
+							end
+							if sound then minetest.sound_play({name=sound,gain=volume},{pos=pos}) end
+						end
+					end
+			},
+		},
+	})
+end

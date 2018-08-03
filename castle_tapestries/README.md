@@ -1,13 +1,9 @@
-=-=-=-=-=-=-=-=-=-=
+## Tapestries Mod
 
-Tapestries Mod
-by: Philipbenr And DanDuncombe
+By: Philipbenr, DanDuncombe, VanessaE, FaceDeer
 
 =-=-=-=-=-=-=-=-=-=
 
 Licence: MIT
-
-see: LICENSE
-
 
 This mod contains tapestries of three different lengths, and a wooden crosspiece to hang them from. The tapestries can be dyed any color once hung.

@@ -198,7 +198,11 @@ end
 -------------------------
 
 local function safe_print(param)
+	local string_meta = getmetatable("")
+	local sandbox = string_meta.__index
+	string_meta.__index = string -- Leave string sandbox temporarily
 	print(dump(param))
+	string_meta.__index = sandbox -- Restore string sandbox
 end
 
 local function safe_date()
@@ -718,7 +722,7 @@ local function on_receive_fields(pos, form_name, fields, sender)
 	local ok, err = set_program(pos, fields.code)
 	if not ok then
 		-- it's not an error from the server perspective
-		minetest.log("action", "Lua controller programming error: " .. err)
+		minetest.log("action", "Lua controller programming error: " .. tostring(err))
 	end
 end
 

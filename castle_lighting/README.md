@@ -1,13 +1,8 @@
-=-=-=-=-=-=-=-=-=-=
+## Castle Lighting
 
-Castles Mod
-by: Philipbenr And DanDuncombe
-
-=-=-=-=-=-=-=-=-=-=
+By: Philipbenr, DanDuncombe, FaceDeer
 
 Licence: MIT
-
-see: LICENSE
 
 =-=-=-=-=-=-=-=-=-=
 
