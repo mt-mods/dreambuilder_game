@@ -18,8 +18,6 @@ for i = 1, 8 do
 	minetest.override_item("farming:cotton_"..i, { waving = 1 })
 end
 
-minetest.override_item("farming:weed", { waving = 1 })
-
 -- Undergrowth modpack
 
 minetest.override_item("youngtrees:youngtree_top", { waving = 1 })
@@ -39,9 +37,4 @@ minetest.override_item("dryplants:reedmace_height_3", { waving = 1 })
 minetest.override_item("dryplants:reedmace_height_3_spikes", { waving = 1 })
 minetest.override_item("dryplants:juncus", { waving = 1 })
 minetest.override_item("dryplants:juncus_02", { waving = 1 })
-
--- Farming plus
-
-minetest.override_item("farming_plus:banana_leaves", { waving = 1 })
-minetest.override_item("farming_plus:cocoa_leaves", { waving = 1 })
 

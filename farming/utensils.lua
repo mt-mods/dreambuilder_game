@@ -17,6 +17,12 @@ minetest.register_craft({
 	}
 })
 
+minetest.register_craft({
+	type = "fuel",
+	recipe = "farming:bowl",
+	burntime = 10,
+})
+
 -- saucepan
 
 minetest.register_craftitem("farming:saucepan", {
@@ -71,7 +77,7 @@ minetest.register_craft({
 minetest.register_craftitem("farming:skillet", {
 	description = S("Skillet"),
 	inventory_image = "farming_skillet.png",
-	groups = {food_baking_tray = 1, flammable = 2},
+	groups = {food_skillet = 1, flammable = 2},
 })
 
 minetest.register_craft({
@@ -146,4 +152,12 @@ minetest.register_craft({
 		{"default:glass", "group:stick", "default:glass"},
 		{"", "default:glass", ""},
 	}
+})
+
+minetest.register_craft( {
+	type = "shapeless",
+	output = "vessels:glass_fragments",
+	recipe = {
+		"farming:mixing_bowl",
+	},
 })

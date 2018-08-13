@@ -7,7 +7,7 @@
 
 farming = {}
 farming.mod = "redo"
-farming.version = "1.33"
+farming.version = "20180617"
 farming.path = minetest.get_modpath("farming")
 farming.select = {
 	type = "fixed",
@@ -22,16 +22,16 @@ function farming.is_creative(name)
 end
 
 
-local statistics = dofile(farming.path.."/statistics.lua")
+local statistics = dofile(farming.path .. "/statistics.lua")
 
 -- Intllib
-local S = dofile(farming.path.."/intllib.lua")
+local S = dofile(farming.path .. "/intllib.lua")
 farming.intllib = S
 
 
 -- Utility Function
 local time_speed = tonumber(minetest.settings:get("time_speed")) or 72
-local SECS_PER_CYCLE = (time_speed > 0 and 24 * 60 * 60 / time_speed) or 0
+local SECS_PER_CYCLE = (time_speed > 0 and (24 * 60 * 60) / time_speed) or 0
 local function clamp(x, min, max)
 	return (x < min and min) or (x > max and max) or x
 end
@@ -273,15 +273,16 @@ minetest.after(0, function()
 end)
 
 
-local abm_func = farming.handle_growth
-
 -- Just in case a growing type or added node is missed (also catches existing
 -- nodes added to map before timers were incorporated).
 minetest.register_abm({
 	nodenames = { "group:growing" },
 	interval = 300,
 	chance = 1,
-	action = abm_func
+	catch_up = false,
+	action = function(pos, node)
+		farming.handle_growth(pos, node)
+	end
 })
 
 
@@ -300,11 +301,16 @@ function farming.plant_growth_timer(pos, elapsed, node_name)
 		return false
 	end
 
-	if stages.plant_name == "farming:cocoa" then
+	-- custom growth check
+	local chk = minetest.registered_nodes[node_name].growth_check
 
-		if not minetest.find_node_near(pos, 1, {"default:jungletree"}) then
+	if chk then
+
+		if chk(pos, node_name) then
 			return true
 		end
+
+	-- otherwise check for wet soil beneath crop
 	else
 		local under = minetest.get_node({ x = pos.x, y = pos.y - 1, z = pos.z })
 
@@ -413,7 +419,7 @@ function farming.place_seed(itemstack, placer, pointed_thing, plantname)
 	-- am I right-clicking on something that has a custom on_place set?
 	-- thanks to Krock for helping with this issue :)
 	local def = minetest.registered_nodes[under.name]
-	if def and def.on_rightclick then
+	if placer and def and def.on_rightclick then
 		return def.on_rightclick(pt.under, under, placer, itemstack)
 	end
 
@@ -438,16 +444,21 @@ function farming.place_seed(itemstack, placer, pointed_thing, plantname)
 		return
 	end
 
+	-- is player planting seed?
+	local name = placer and placer:get_player_name() or ""
+
 	-- if not protected then add node and remove 1 item from the itemstack
-	if not minetest.is_protected(pt.above, placer:get_player_name()) then
+	if not minetest.is_protected(pt.above, name) then
 
 		local p2 = minetest.registered_nodes[plantname].place_param2 or 1
 
 		minetest.set_node(pt.above, {name = plantname, param2 = p2})
 
+--minetest.get_node_timer(pt.above):start(1)
+
 		minetest.sound_play("default_place_node", {pos = pt.above, gain = 1.0})
 
-		if not placer or not farming.is_creative(placer:get_player_name()) then
+		if placer and not farming.is_creative(placer:get_player_name()) then
 
 			local name = itemstack:get_name()
 
@@ -494,7 +505,7 @@ farming.register_plant = function(name, def)
 		inventory_image = def.inventory_image,
 		wield_image = def.inventory_image,
 		drawtype = "signlike",
-		groups = {seed = 1, snappy = 3, attached_node = 1},
+		groups = {seed = 1, snappy = 3, attached_node = 1, flammable = 2},
 		paramtype = "light",
 		paramtype2 = "wallmounted",
 		walkable = false,
@@ -559,6 +570,7 @@ farming.register_plant = function(name, def)
 			place_param2 = def.place_param2,
 			walkable = false,
 			buildable_to = true,
+			sunlight_propagates = true,
 			drop = drop,
 			selection_box = farming.select,
 			groups = g,
@@ -567,8 +579,6 @@ farming.register_plant = function(name, def)
 			maxlight = def.maxlight,
 			next_plant = next_plant,
 		})
-
-		register_plant_node(node_name)
 	end
 
 	-- Return info
@@ -584,7 +594,6 @@ farming.cucumber = true
 farming.corn = true
 farming.coffee = true
 farming.melon = true
-farming.sugar = true
 farming.pumpkin = true
 farming.cocoa = true
 farming.raspberry = true
@@ -601,7 +610,6 @@ farming.pepper = true
 farming.pineapple = true
 farming.peas = true
 farming.beetroot = true
-farming.donuts = true
 farming.rarety = 0.002 -- 0.006
 
 
@@ -630,37 +638,44 @@ dofile(farming.path.."/grass.lua")
 dofile(farming.path.."/utensils.lua")
 
 -- default crops
-dofile(farming.path.."/wheat.lua")
-dofile(farming.path.."/cotton.lua")
+dofile(farming.path.."/crops/wheat.lua")
+dofile(farming.path.."/crops/cotton.lua")
 
--- additional crops and food (if enabled)
-if farming.carrot then dofile(farming.path.."/carrot.lua") end
-if farming.potato then dofile(farming.path.."/potato.lua") end
-if farming.tomato then dofile(farming.path.."/tomato.lua") end
-if farming.cucumber then dofile(farming.path.."/cucumber.lua") end
-if farming.corn then dofile(farming.path.."/corn.lua") end
-if farming.coffee then dofile(farming.path.."/coffee.lua") end
-if farming.melon then dofile(farming.path.."/melon.lua") end
-if farming.sugar then dofile(farming.path.."/sugar.lua") end
-if farming.pumpkin then dofile(farming.path.."/pumpkin.lua") end
-if farming.cocoa then dofile(farming.path.."/cocoa.lua") end
-if farming.raspberry then dofile(farming.path.."/raspberry.lua") end
-if farming.blueberry then dofile(farming.path.."/blueberry.lua") end
-if farming.rhubarb then dofile(farming.path.."/rhubarb.lua") end
-if farming.beans then dofile(farming.path.."/beanpole.lua") end
-if farming.grapes then dofile(farming.path.."/grapes.lua") end
-if farming.barley then dofile(farming.path.."/barley.lua") end
-if farming.hemp then dofile(farming.path.."/hemp.lua") end
-if farming.garlic then dofile(farming.path.."/garlic.lua") end
-if farming.onion then dofile(farming.path.."/onion.lua") end
-if farming.pepper then dofile(farming.path.."/pepper.lua") end
-if farming.pineapple then dofile(farming.path.."/pineapple.lua") end
-if farming.peas then dofile(farming.path.."/pea.lua") end
-if farming.beetroot then dofile(farming.path.."/beetroot.lua") end
-if farming.chili then dofile(farming.path.."/chili.lua") end
-if farming.donuts then dofile(farming.path.."/donut.lua") end
 
+-- helper function
+local function ddoo(file, check)
+
+	if check then
+		dofile(farming.path .. "/crops/" .. file)
+	end
+end
+
+-- add additional crops and food (if enabled)
+ddoo("carrot.lua", farming.carrot)
+ddoo("potato.lua", farming.potato)
+ddoo("tomato.lua", farming.tomato)
+ddoo("cucumber.lua", farming.cucumber)
+ddoo("corn.lua", farming.corn)
+ddoo("coffee.lua", farming.coffee)
+ddoo("melon.lua", farming.melon)
+ddoo("pumpkin.lua", farming.pumpkin)
+ddoo("cocoa.lua", farming.cocoa)
+ddoo("raspberry.lua", farming.raspberry)
+ddoo("blueberry.lua", farming.blueberry)
+ddoo("rhubarb.lua", farming.rhubarb)
+ddoo("beans.lua", farming.beans)
+ddoo("grapes.lua", farming.grapes)
+ddoo("barley.lua", farming.barley)
+ddoo("hemp.lua", farming.hemp)
+ddoo("garlic.lua", farming.garlic)
+ddoo("onion.lua", farming.onion)
+ddoo("pepper.lua", farming.pepper)
+ddoo("pineapple.lua", farming.pineapple)
+ddoo("peas.lua", farming.peas)
+ddoo("beetroot.lua", farming.beetroot)
+ddoo("chili.lua", farming.chili)
+
+dofile(farming.path.."/food.lua")
 dofile(farming.path.."/mapgen.lua")
 dofile(farming.path.."/compatibility.lua") -- Farming Plus compatibility
-dofile(farming.path.."/hoebomb.lua")
 dofile(farming.path.."/lucky_block.lua")
