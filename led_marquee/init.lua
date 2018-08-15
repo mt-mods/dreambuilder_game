@@ -61,7 +61,7 @@ local display_string = function(pos, channel, string)
 	local last_color = master_meta:get_int("last_color")
 	local pos2 = pos
 
-	if not last_color or last_color < 0 or last_color > 30 then
+	if not last_color or last_color < 0 or last_color > 27 then
 		last_color = 0
 		master_meta:set_int("last_color", 0)
 	end
@@ -76,7 +76,7 @@ local display_string = function(pos, channel, string)
 			minetest.swap_node(pos2, { name = "led_marquee:char_"..asc, param2 = master_fdir + (last_color*8)})
 			pos2.x = pos2.x + fdir_to_right[fdir+1][1]
 			pos2.z = pos2.z + fdir_to_right[fdir+1][2]
-		elseif asc < 31 then
+		elseif asc < 28 then
 			last_color = asc
 			master_meta:set_int("last_color", asc)
 		end
@@ -87,7 +87,7 @@ local on_digiline_receive_string = function(pos, node, channel, msg)
 	local meta = minetest.get_meta(pos)
 	local setchan = meta:get_string("channel")
 	local last_color = meta:get_int("last_color")
-	if not last_color or last_color < 0 or last_color > 30 then
+	if not last_color or last_color < 0 or last_color > 27 then
 		last_color = 0
 		meta:set_int("last_color", 0)
 	end
@@ -115,7 +115,7 @@ local on_digiline_receive_string = function(pos, node, channel, msg)
 			local asc = string.byte(msg)
 			if asc > 30 and asc < 256 then
 				minetest.swap_node(pos, { name = "led_marquee:char_"..asc, param2 = fdir + (last_color*8)})
-			elseif asc < 31 then
+			elseif asc < 28 then
 				last_color = asc
 				meta:set_int("last_color", asc)
 			elseif msg == "get" then -- get value as ASCII numerical value

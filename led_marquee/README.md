@@ -40,13 +40,13 @@ The panels also respond to these control messages:
 * "off_multi" turns all panels in a lineup off
 * "allon_multi" turns on all LEDs of all panels in a lineup.
 
-A byte value of 0 to 30 will change colors (i.e. string.char(0 to 30) ).  Color values 0 to 11 are:
+A byte value of 0 to 27 will change colors (i.e. string.char(0 to 27) ).  Color values 0 to 11 are:
 
 Red (0), orange, yellow, lime, green, aqua, cyan, sky blue, blue, violet, magenta, or red-violet (11)
 
 Colors 12 to 23 are the same as 0 to 11, but lower brightness.
 
-Colors 23 - 30 are white, light grey, medium grey, dim grey, light blue, brown, and pink.
+Colors 24 - 27 are white, light grey, medium grey, and dim grey.
 
 The left-most/"master" panel will remember the last color used, and defaults to red.
 
