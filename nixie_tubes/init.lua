@@ -250,6 +250,7 @@ Map of display wires:
 ]]--
 
 local alnum_chars = {
+	{ string.char(31),	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 } },	-- "cursor" segment
 	{ " ",	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 } },	-- 32
 	{ "!",	{ 0,0,0,0,1,1,0,0,0,0,0,0,0,0,0 } },
 	{ '"',	{ 0,0,0,0,0,1,0,1,0,0,0,0,0,0,0 } },
@@ -346,39 +347,81 @@ local alnum_chars = {
 	{ "}",	{ 1,0,0,1,0,0,0,0,1,1,1,0,0,0,0 } },
 	{ "~",	{ 0,1,0,0,0,1,1,0,0,1,0,0,0,0,0 } },
 	{ string.char(127),	{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,0 } },	-- "DEL"
-	{ string.char(128),	{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 } },	-- all-on
-	{ string.char(129),	{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,1 } },	-- "cursor" segment
+	{ string.char(144),	{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 } },	-- all-on
 }
+
+local fdir_to_right = {
+	{  1,  0 },
+	{  0, -1 },
+	{ -1,  0 },
+	{  0,  1 },
+}
+
+local padding = " "
+local allon = string.char(128)
+for i = 1, 64 do
+	padding = padding.." "
+	allon = allon..string.char(128)
+end
+
+local display_string = function(pos, channel, string)
+	if string == "off_multi" then
+		string = ""
+	elseif string == "allon_multi" then
+		string = allon
+	end
+	local padded_string = string.sub(string..padding, 1, 64)
+	local fdir = minetest.get_node(pos).param2 % 4
+	local pos2 = pos
+	for i = 1, 64 do
+		local node = minetest.get_node(pos2)
+		local meta = minetest.get_meta(pos2)
+		local setchan = meta:get_string("channel")
+		if not string.match(node.name, "nixie_tubes:alnum_") or (setchan ~= nil and setchan ~= "" and setchan ~= channel) then break end
+		local asc = string.byte(padded_string, i, i)
+		if node.param2 == fdir and ((asc > 30 and asc < 128) or asc == 144) then
+			minetest.swap_node(pos2, { name = "nixie_tubes:alnum_"..asc, param2 = node.param2})
+		end
+		pos2.x = pos2.x + fdir_to_right[fdir+1][1]
+		pos2.z = pos2.z + fdir_to_right[fdir+1][2]
+	end
+end
 
 local on_digiline_receive_alnum = function(pos, node, channel, msg)
 	local meta = minetest.get_meta(pos)
 	local setchan = meta:get_string("channel")
 	if setchan ~= channel then return end
 	if msg and msg ~= "" and type(msg) == "string" then
-		local asc = string.byte(msg)
-		if msg == "off" then
-			minetest.swap_node(pos, { name = "nixie_tubes:alnum_32", param2 = node.param2})
-		elseif msg == "colon" then
-			minetest.swap_node(pos, { name = "nixie_tubes:alnum_58", param2 = node.param2})
-		elseif msg == "period" then
-			minetest.swap_node(pos, { name = "nixie_tubes:alnum_46", param2 = node.param2})
-		elseif msg == "del" then
-			minetest.swap_node(pos, { name = "nixie_tubes:alnum_127", param2 = node.param2})
-		elseif msg == "allon" then
-			minetest.swap_node(pos, { name = "nixie_tubes:alnum_128", param2 = node.param2})
-		elseif msg == "cursor" then
-			minetest.swap_node(pos, { name = "nixie_tubes:alnum_129", param2 = node.param2})
-		elseif asc > 31 and alnum_chars[asc - 31] then
-			minetest.swap_node(pos, { name = "nixie_tubes:alnum_"..asc, param2 = node.param2})
-		elseif msg == "get" then -- get value as ASCII numerical value
-			digiline:receptor_send(pos, digiline.rules.default, channel, tonumber(string.match(minetest.get_node(pos).name,"nixie_tubes:alnum_(.+)"))) -- wonderfully horrible string manipulaiton
-		elseif msg == "getstr" then -- get actual char
-			digiline:receptor_send(pos, digiline.rules.default, channel, string.char(tonumber(string.match(minetest.get_node(pos).name,"nixie_tubes:alnum_(.+)"))))
+		if string.len(msg) > 1 then
+			if msg == "off" then
+				minetest.swap_node(pos, { name = "nixie_tubes:alnum_32", param2 = node.param2})
+			elseif msg == "colon" then
+				minetest.swap_node(pos, { name = "nixie_tubes:alnum_58", param2 = node.param2})
+			elseif msg == "period" then
+				minetest.swap_node(pos, { name = "nixie_tubes:alnum_46", param2 = node.param2})
+			elseif msg == "del" then
+				minetest.swap_node(pos, { name = "nixie_tubes:alnum_127", param2 = node.param2})
+			elseif msg == "allon" then
+				minetest.swap_node(pos, { name = "nixie_tubes:alnum_144", param2 = node.param2})
+			elseif msg == "cursor" then
+				minetest.swap_node(pos, { name = "nixie_tubes:alnum_31", param2 = node.param2})
+			else
+				display_string(pos, channel, msg)
+			end
+		else
+			local asc = string.byte(msg)
+			if (asc > 30 and asc < 128) or asc == 144 then
+				minetest.swap_node(pos, { name = "nixie_tubes:alnum_"..asc, param2 = node.param2})
+			elseif msg == "get" then -- get value as ASCII numerical value
+				digiline:receptor_send(pos, digiline.rules.default, channel, tonumber(string.match(minetest.get_node(pos).name,"nixie_tubes:alnum_(.+)"))) -- wonderfully horrible string manipulaiton
+			elseif msg == "getstr" then -- get actual char
+				digiline:receptor_send(pos, digiline.rules.default, channel, string.char(tonumber(string.match(minetest.get_node(pos).name,"nixie_tubes:alnum_(.+)"))))
+			end
 		end
 	elseif msg and type(msg) == "number" then
 		if msg == 0 then
 			minetest.swap_node(pos, { name = "nixie_tubes:alnum_32", param2 = node.param2})
-		elseif msg > 31 and alnum_chars[msg - 31] ~= nil then
+		elseif (msg > 30 and msg < 128) or msg == 144 then
 			minetest.swap_node(pos, { name = "nixie_tubes:alnum_"..tostring(msg), param2 = node.param2})
 		end
 	end
