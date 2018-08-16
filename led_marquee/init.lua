@@ -24,6 +24,35 @@ local on_digiline_receive_std = function(pos, node, channel, msg)
 	end
 end
 
+-- convert Lua's idea of a UTF-8 char to ISO-8859-1
+
+-- first char is non-break space, 0xA0
+local iso_chars=" ¡¢£¤¥¦§¨©ª«¬­®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿ"
+
+local get_iso = function(c)
+	local hb = string.byte(c,1) or 0
+	local lb = string.byte(c,2) or 0
+	local dec = lb+hb*256
+	local char = dec - 49664
+	if dec > 49855 then char = dec - 49856 end
+	return char
+end
+
+local make_iso = function(s)
+	local i = 1
+	local s2 = ""
+	while i <= string.len(s) do
+		if string.byte(s,i) > 159 then
+			s2 = s2..string.char(get_iso(string.sub(s, i, i+1)))
+			i = i + 2
+		else
+			s2 = s2..string.sub(s, i, i)
+			i = i + 1
+		end
+	end
+	return s2
+end
+
 -- the nodes:
 
 local fdir_to_right = {
@@ -42,43 +71,71 @@ local cbox = {
 	wall_side = { -8/16, -8/16, -8/16, -7/16, 8/16, 8/16 }
 }
 
-local padding = " "
-local allon = string.char(128)
-for i = 1, 64 do
-	padding = padding.." "
-	allon = allon..string.char(144)
-end
-
 local display_string = function(pos, channel, string)
+	string = string.sub(string, 1, 1024)
 	if string == "off_multi" then
-		string = ""
+		string = string.rep(" ", 1024)
 	elseif string == "allon_multi" then
-		string = allon
+		string = string.rep(string.char(144), 1024)
+	elseif string.sub(string,1,1) == string.char(255) then -- treat it as incoming UTF-8
+		string = make_iso(string.sub(string, 2, 1024))
 	end
-	local padded_string = string.sub(string..padding, 1, 64)
+
 	local master_fdir = minetest.get_node(pos).param2 % 8
 	local master_meta = minetest.get_meta(pos)
 	local last_color = master_meta:get_int("last_color")
-	local pos2 = pos
-
+	local pos2 = table.copy(pos)
 	if not last_color or last_color < 0 or last_color > 27 then
 		last_color = 0
 		master_meta:set_int("last_color", 0)
 	end
-	for i = 1, 64 do
+	local i = 1
+	local len = string.len(string)
+	local wrapped = nil
+	while i <= len do
 		local node = minetest.get_node(pos2)
 		local fdir = node.param2 % 8
 		local meta = minetest.get_meta(pos2)
-		local setchan = meta:get_string("channel")
-		if not string.match(node.name, "led_marquee:char_") or (setchan ~= nil and setchan ~= "" and setchan ~= channel) then break end
-		local asc = string.byte(padded_string, i, i)
-		if master_fdir == fdir and asc > 30 and asc < 256 then
+		local setchan = nil
+		if meta then setchan = meta:get_string("channel") end
+		local asc = string.byte(string, i, i)
+		if not string.match(node.name, "led_marquee:char_") then
+			if not wrapped then
+				pos2.x = pos.x
+				pos2.y = pos2.y-1
+				pos2.z = pos.z
+				wrapped = true
+			else
+				break
+			end
+		elseif string.match(node.name, "led_marquee:char_")
+			and fdir ~= master_fdir or (setchan ~= nil and setchan ~= "" and setchan ~= channel) then
+			break
+		elseif asc == 28 then
+			pos2.x = pos.x
+			pos2.y = pos2.y-1
+			pos2.z = pos.z
+			i = i + 1
+			wrapped = nil
+		elseif asc == 29 then
+			local c = string.byte(string, i+1, i+1) or 0
+			local r = string.byte(string, i+2, i+2) or 0
+			pos2.x = pos.x + (fdir_to_right[fdir+1][1])*c
+			pos2.y = pos.y - r
+			pos2.z = pos.z + (fdir_to_right[fdir+1][2])*c
+			i = i + 3
+			wrapped = nil
+		elseif asc > 30 and asc < 256 then
 			minetest.swap_node(pos2, { name = "led_marquee:char_"..asc, param2 = master_fdir + (last_color*8)})
 			pos2.x = pos2.x + fdir_to_right[fdir+1][1]
 			pos2.z = pos2.z + fdir_to_right[fdir+1][2]
+			i = i + 1
+			wrapped = nil
 		elseif asc < 28 then
 			last_color = asc
 			master_meta:set_int("last_color", asc)
+			i = i + 1
+			wrapped = nil
 		end
 	end
 end
