@@ -62,7 +62,6 @@ minetest.register_node("gloopblocks:evil_block", {
 	sounds = default.node_sound_stone_defaults(),
 })
 
-
 minetest.register_node("gloopblocks:basalt", {
 	description = S("Basalt"),
 	tiles = {"gloopblocks_basalt.png"},
@@ -158,6 +157,176 @@ minetest.register_node("gloopblocks:scaffolding", {
 
 minetest.register_alias("moreblocks:oerkkiblock", "gloopblocks:oerkki_block")
 minetest.register_alias("gloopblocks:obsidian", "default:obsidian")
+
+-- Nodes imported from Usesdirt ================================================================================
+
+if not minetest.get_modpath("usesdirt") then
+
+	local dirt_brick_tex  = "default_dirt.png^gloopblocks_dirt_brick_overlay.png"
+	local dirt_cobble_tex = "default_cobble.png^(default_dirt.png^[mask:gloopblocks_dirt_cobble_mask.png)"
+	local dirt_stone_tex  = "default_stone.png^(default_dirt.png^[mask:gloopblocks_dirt_stone_mask.png)"
+
+	local dirt_ladder_tex = "(default_dirt.png^[mask:gloopblocks_ladder_mask.png)^gloopblocks_ladder_overlay.png"
+	local dirt_cobble_ladder_tex = "(("..dirt_cobble_tex..")^[mask:gloopblocks_ladder_mask.png)^gloopblocks_ladder_overlay.png"
+	local dirt_stone_ladder_tex = "(("..dirt_stone_tex..")^[mask:gloopblocks_ladder_mask.png)^gloopblocks_ladder_overlay.png"
+
+	minetest.register_node(":usesdirt:dirt_brick", {
+		tiles = { dirt_brick_tex },
+		description = "Dirt Brick",
+		groups = {snappy=2,choppy=1,oddly_breakable_by_hand=2},
+	})
+	minetest.register_craft({
+		output = '"usesdirt:dirt_brick" 6',
+		recipe = {
+			{'default:dirt', 'default:dirt', 'default:dirt'},
+			{'default:dirt', 'default:dirt', 'default:dirt'},
+			{'default:dirt', 'default:dirt', 'default:dirt'},
+		}
+	})
+
+	minetest.register_node(":usesdirt:dirt_ladder", {
+		description = "Ladder",
+		drawtype = "signlike",
+		tiles = { dirt_ladder_tex },
+		inventory_image = dirt_ladder_tex,
+		wield_image     = dirt_ladder_tex,
+		paramtype = "light",
+		paramtype2 = "wallmounted",
+		is_ground_content = true,
+		walkable = false,
+		climbable = true,
+		selection_box = {
+			type = "wallmounted",
+			--wall_top = = <default>
+			--wall_bottom = = <default>
+			--wall_side = = <default>
+		},
+		groups = {snappy=2,choppy=2,oddly_breakable_by_hand=3},
+		legacy_wallmounted = true,
+	})
+	minetest.register_craft({
+		output = 'usesdirt:dirt_ladder 3',
+		recipe = {
+			{'usesdirt:dirt_brick', '', 'usesdirt:dirt_brick'},
+			{'usesdirt:dirt_brick', 'usesdirt:dirt_brick','usesdirt:dirt_brick'},
+			{'usesdirt:dirt_brick','','usesdirt:dirt_brick'},
+		}
+	})
+
+	default.register_fence(":usesdirt:dirt_fence", {
+		description = "Dirt Fence",
+		texture = "default_dirt.png",
+		inventory_image = "default_fence_overlay.png^default_dirt.png^default_fence_overlay.png^[makealpha:255,126,126",
+		wield_image = "default_fence_overlay.png^default_dirt.png^default_fence_overlay.png^[makealpha:255,126,126",
+		material = "default:dirt",
+		groups = {snappy=2,choppy=1,oddly_breakable_by_hand=3},
+		sounds = default.node_sound_dirt_defaults()
+	})
+
+----
+
+	minetest.register_node(":usesdirt:dirt_cobble_stone", {
+		tiles = { dirt_cobble_tex },
+		description = "Dirt Cobble Stone",
+		is_ground_content = true,
+		groups = {cracky=3, stone=2},
+	})
+	minetest.register_craft({
+		output = '"usesdirt:dirt_cobble_stone" 3',
+		recipe = {
+			{'usesdirt:dirt_brick', 'usesdirt:dirt_brick', 'usesdirt:dirt_brick'},
+			{'usesdirt:dirt_brick', 'usesdirt:dirt_brick', 'usesdirt:dirt_brick'},
+			{'usesdirt:dirt_brick', 'usesdirt:dirt_brick', 'usesdirt:dirt_brick'},
+		}
+	})
+
+	minetest.register_node(":usesdirt:dirt_cobble_stone_ladder", {
+		description = "Ladder",
+		drawtype = "signlike",
+		tiles = { dirt_cobble_ladder_tex },
+		inventory_image = dirt_cobble_ladder_tex,
+		wield_image     = dirt_cobble_ladder_tex,
+		paramtype = "light",
+		paramtype2 = "wallmounted",
+		is_ground_content = true,
+		walkable = false,
+		climbable = true,
+		selection_box = {
+			type = "wallmounted",
+			--wall_top = = <default>
+			--wall_bottom = = <default>
+			--wall_side = = <default>
+		},
+		groups = {cracky=3, stone=2},
+		legacy_wallmounted = true,
+	})
+	minetest.register_craft({
+		output = 'usesdirt:dirt_cobble_stone_ladder 3',
+		recipe = {
+			{'usesdirt:dirt_cobble_stone', '', 'usesdirt:dirt_cobble_stone'},
+			{'usesdirt:dirt_cobble_stone', 'usesdirt:dirt_cobble_stone','usesdirt:dirt_cobble_stone'},
+			{'usesdirt:dirt_cobble_stone','','usesdirt:dirt_cobble_stone'},
+		}
+	})
+
+	default.register_fence(":usesdirt:dirt_cobble_stone_fence", {
+		description = "Dirt Cobble Stone Fence",
+		texture = dirt_cobble_tex,
+		inventory_image = "default_fence_overlay.png^("..dirt_cobble_tex..")^default_fence_overlay.png^[makealpha:255,126,126",
+		wield_image = "default_fence_overlay.png^("..dirt_cobble_tex..")^default_fence_overlay.png^[makealpha:255,126,126",
+		material = "usesdirt:dirt_cobble_stone",
+		groups = {cracky=3, stone=2},
+		sounds = default.node_sound_stone_defaults()
+	})
+
+----
+
+	minetest.register_node(":usesdirt:dirt_stone", {
+		tiles = { dirt_stone_tex },
+		description = "Dirt Stone",
+		is_ground_content = true,
+		groups = {cracky=3, stone=2},
+	})
+
+	minetest.register_node(":usesdirt:dirt_stone_ladder", {
+		description = "Ladder",
+		drawtype = "signlike",
+		tiles = { dirt_stone_ladder_tex },
+		inventory_image = dirt_stone_ladder_tex,
+		wield_image     = dirt_stone_ladder_tex,
+		paramtype = "light",
+		paramtype2 = "wallmounted",
+		is_ground_content = true,
+		walkable = false,
+		climbable = true,
+		selection_box = {
+			type = "wallmounted",
+			--wall_top = = <default>
+			--wall_bottom = = <default>
+			--wall_side = = <default>
+		},
+		groups = {cracky=3, stone=2},
+		legacy_wallmounted = true,
+	})
+	minetest.register_craft({
+		output = 'usesdirt:dirt_stone_ladder 3',
+		recipe = {
+			{'usesdirt:dirt_stone', '', 'usesdirt:dirt_stone'},
+			{'usesdirt:dirt_stone', 'usesdirt:dirt_stone','usesdirt:dirt_stone'},
+			{'usesdirt:dirt_stone','','usesdirt:dirt_stone'},
+		}
+	})
+
+	default.register_fence(":usesdirt:dirt_stone_fence", {
+		description = "Dirt Cobble Stone Fence",
+		texture = dirt_cobble_tex,
+		inventory_image = "default_fence_overlay.png^("..dirt_stone_tex..")^default_fence_overlay.png^[makealpha:255,126,126",
+		wield_image = "default_fence_overlay.png^("..dirt_stone_tex..")^default_fence_overlay.png^[makealpha:255,126,126",
+		material = "usesdirt:dirt_stone",
+		groups = {cracky=3, stone=2},
+		sounds = default.node_sound_stone_defaults()
+	})
+end
 
 -- Stairs/slabs defs, conversion of normal -> mossy items
 

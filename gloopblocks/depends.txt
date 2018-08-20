@@ -10,3 +10,4 @@ xdecor?
 caverealms?
 technic?
 nyancat?
+usesdirt?

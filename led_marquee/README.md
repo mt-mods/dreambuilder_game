@@ -4,9 +4,11 @@ Simply place one or more panels, and set a channel on just the left-most or uppe
 
 Then send a character, a string, or one of several control words or codes to that channel from a Mesecons Lua Controller and the mod will try to display it.
 
-A single character will be displayed on the connected panel. A numeric message (i.e. not a string) will display the first digit on the connected panel.
+A single character will be displayed on the connected panel.
 
-Strings will be displayed using all panels in a lineup, so long as they all face the same way, starting from the panel the Lua Controller is connected to, going left to right. The other panels in the line do not need to be connected to anything - think of them as being connected together internally. Only the panel at the far left need be connected to the Lua Controller.
+A numeric message (i.e. not a string) will be converted into a string.
+
+Strings of all types (other than the keywords below) will be displayed using all panels in a lineup, so long as they all face the same way, starting from the panel the Lua Controller is connected to, going left to right. The other panels in the line do not need to be connected to anything - think of them as being connected together internally. Only the panel at the far left need be connected to the Lua Controller.
 
 The string will spread down the line until either a panel is found that faces the wrong way, or has a channel that's not empty/nil and is set to something other than what the first is set to, or if a node is encountered that is not an alpha-numeric panel at all.
 
@@ -40,13 +42,22 @@ This mod uses the full ISO-8859-1 character set (see https://en.wikipedia.org/wi
 If a string is prefixed with character code 255, it is treated as UTF-8 and passed through a simple translation function.  Only characters with codes greater than 159 are altered; normal ASCII text, color codes, control codes, and the above symbols are passed through unchanged.  Note that in this mode, a character code over 159 is treated as the first byte of a two-byte symbol.
 
 The panels also respond to these control messages:
-the keywords "off", "colon" and "period" translate to a blank space, ":", and ".", respectively (they're leftover from the nixie tubes fork, but might be useful anyway)
 
-* "del" is mapped to character #127, a square with an X in it.
-* "allon" is mapped to character #144, the full/all-on block graphic.
-* "cursor" or character code 31 will display a short, thick, flashing line at the bottom of the panel.
-* "off_multi" turns all panels in a lineup or wall off - essentially a "clear screen" command.
-* "allon_multi" turns on all LEDs of all panels in a lineup/wall (by filling them with char #144).
+* "clear" turns all panels in a lineup or wall off - essentially a "clear screen" command.
+* "allon" fills all panels in a lineup/wall with char(144), i.e. the reverse of "clear".
+* "start_scroll" starts the automatic scrolling function, repeatedly moving the last displayed message to the left one character space each time the scroll timer runs out (and automatically restarting it, natch).  The scroll action will spread across the line, and down a multi-line wall (just set a new, different channel on the first row you want to exclude), and will continue until "stop_scroll" or any displayable message is received.
+
+	As it advances through the message, the scroll code will search through the message for a printable character, on each scroll step, basically stripping-out color code, and using just the last one before the new start position.  This is done in order to keep a constant visible speed (the text will still be colored properly though).
+* "stop_scroll" does just what it says - it stops the auto-scroll timer.  
+* "scroll_speed" followed by a decimal number (in the string, not a byte value) sets the time between scroll steps.  Minimum 0.5s, maximum 5s.
+* "scroll_step" will immediately advance the last-displayed message by one character.  Omit the above automatic scrolling keywords, and use ONLY this keyword instead if you want to let your LuaController control the scrolling speed.  Optionally, you can follow this with a number and the scroll code will skip forward that many bytes into the message, starting from the current position, before starting the above-mentioned color-vs-character search.  Essentially, this value will roughly translate to the number of printable characters to skip.
+* "get" will read the one character (as a numerical character value) currently displayed by the master panel (by reading its node name)
+* "getstr" will read the last-stored message for the entire lineup/wall (from the master panel's meta).  Note that even if the message has been or is being scrolled, you'll get the original stored message.
+* "getindex" will read the scroll index position in that message, which will always point at a printable character, per the above color-versus-character search.
+
+During a scroll event, the printed string is padded with spaces (one in auto mode, or as many as the skip value when manually stepping).
+
+If you need vertical scrolling, you will have to handle that yourself (since the size of a screen/wall is not hard-coded).
 
 A byte value of 0 to 27 in a string will change colors (i.e. string.char(0 to 27) ).
 
@@ -64,8 +75,10 @@ A byte value of 28 in a string will act as a line feed (I would have used 10, bu
 
 A byte value of 29 in a string signals a cursor position command. The next two byte values select a column and row, respectively. The next character after the row byte will be printed there, and the rest of the string then continues printing from that spot onward with normal line wrapping, colors and so forth. Note that any string that does NOT contain cursor positioning commands will automatically start printing at the upper-left.
 
-You can use "get" and "getstr" to read the one character from the connected panel. These messages will not read the other panels in the lineup.
+Any number of color, line feed, and cursor position commands may be present in a string, making it possible to "frame-buffer" a screen full of text into a string before printing it.
 
 All panels emit a small amount of light when displaying something.
 
 The panels only mount on a wall.
+
+The "master"/connected panel stores the last-displayed message and some other details in its metadata, so you may occasionally need to dig and re-place the panel if things go wonky (this won't happen during normal use, but it may happen if you're making lots of changes to the panels' layout, channel names, etc).
