@@ -10,7 +10,7 @@ dofile(MP.."/paving.lua")
 local S, NS = dofile(MP.."/intllib.lua")
 
 local read_setting = function(name, default)
-	local setting = minetest.settings:get_bool(name)
+	local setting = minetest.setting_getbool(name)
 	if setting == nil then return default end
 	return setting
 end
@@ -26,7 +26,7 @@ end
 
 castle_masonry.materials = {}
 if read_setting("castle_masonry_stonewall", true) then
-	table.insert(castle_masonry.materials, {name="stonewall", desc=S("Stonewall"), tile="castle_stonewall.png", craft_material="castle_masonry:stonewall"})
+	table.insert(castle_masonry.materials, {name="stonewall", desc=S("Stonewall"), tile="castle_stonewall.png", craft_material="castle:stonewall"})
 end
 if read_setting("castle_masonry_cobble", true) then
 	table.insert(castle_masonry.materials, {name="cobble", desc=S("Cobble"), tile="default_cobble.png", craft_material="default:cobble"})
@@ -72,7 +72,7 @@ castle_masonry.get_material_properties = function(material)
 		composition_def = minetest.registered_nodes[material.craft_material]
 		burn_time = minetest.get_craft_result({method="fuel", width=1, items={ItemStack(material.craft_materia)}}).time
 	end
-
+	
 	local tiles = material.tile
 	if tiles == nil then
 		tiles = composition_def.tile
@@ -84,7 +84,7 @@ castle_masonry.get_material_properties = function(material)
 	if desc == nil then
 		desc = composition_def.description
 	end
-
+	
 	return composition_def, burn_time, tiles, desc
 end
 
@@ -117,7 +117,7 @@ minetest.register_alias("castle:arrowslit_cross", "castle_masonry:arrowslit_ston
 for _, material in pairs(castle_masonry.materials) do
 	castle_masonry.register_murderhole_alias("castle", material.name, "castle_masonry", material.name)
 	castle_masonry.register_pillar_alias("castle", material.name, "castle_masonry", material.name)
-
+	
 	-- Arrowslit upgrade has special handling because the castle mod arrow slit is reversed relative to current build-from-inside standard
 	local lbm_def = {
 		name = "castle_masonry:arrowslit_flip_front_to_back"..material.name,

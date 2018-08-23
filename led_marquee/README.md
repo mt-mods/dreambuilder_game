@@ -24,7 +24,7 @@ If the program finds something other than a panel, it wraps to the next line. If
 
 Lines of panels don't need to be all the same length, the program will wrap as needed, with the left margin always being aligned with the panel the LuaController is connected to.
 
-Strings are trimmed to 1 kB.
+Strings are trimmed to 6 kB.
 
 Panels are not erased between prints.
 
@@ -43,13 +43,13 @@ If a string is prefixed with character code 255, it is treated as UTF-8 and pass
 
 The panels also respond to these control messages:
 
-* "clear" turns all panels in a lineup or wall off - essentially a "clear screen" command.
-* "allon" fills all panels in a lineup/wall with char(144), i.e. the reverse of "clear".
+* "clear" turns all panels in a lineup or wall off, or up to 2048 of them, anyway - essentially a "clear screen" command.
+* "allon" fills all panels in a lineup/wall, up to a max of 2048 of them, with char(144), i.e. the reverse of "clear".
 * "start_scroll" starts the automatic scrolling function, repeatedly moving the last displayed message to the left one character space each time the scroll timer runs out (and automatically restarting it, natch).  The scroll action will spread across the line, and down a multi-line wall (just set a new, different channel on the first row you want to exclude), and will continue until "stop_scroll" or any displayable message is received.
 
 	As it advances through the message, the scroll code will search through the message for a printable character, on each scroll step, basically stripping-out color code, and using just the last one before the new start position.  This is done in order to keep a constant visible speed (the text will still be colored properly though).
 * "stop_scroll" does just what it says - it stops the auto-scroll timer.  
-* "scroll_speed" followed by a decimal number (in the string, not a byte value) sets the time between scroll steps.  Minimum 0.5s, maximum 5s.
+* "scroll_speed" followed by a decimal number (in the string, not a byte value) sets the time between scroll steps.  Minimum 0.2s, maximum 5s.
 * "scroll_step" will immediately advance the last-displayed message by one character.  Omit the above automatic scrolling keywords, and use ONLY this keyword instead if you want to let your LuaController control the scrolling speed.  Optionally, you can follow this with a number and the scroll code will skip forward that many bytes into the message, starting from the current position, before starting the above-mentioned color-vs-character search.  Essentially, this value will roughly translate to the number of printable characters to skip.
 * "get" will read the one character (as a numerical character value) currently displayed by the master panel (by reading its node name)
 * "getstr" will read the last-stored message for the entire lineup/wall (from the master panel's meta).  Note that even if the message has been or is being scrolled, you'll get the original stored message.
@@ -59,7 +59,7 @@ During a scroll event, the printed string is padded with spaces (one in auto mod
 
 If you need vertical scrolling, you will have to handle that yourself (since the size of a screen/wall is not hard-coded).
 
-A byte value of 0 to 27 in a string will change colors (i.e. string.char(0 to 27) ).
+To change colors, put a "/" followed by a digit or a letter from "A" to "R" (or "a" to "r") into your printed string.  Digits 0 to 9 trigger colors 0 to 9 (obviously :-) ), while A/a through R/r set colors 10 to 27.  Any other sequence is invalid and will just be printed literally.  Two slashes "//" will translated to a single char(30) internally, and displayed as a single slash (doing it that way makes the code easier).
 
 Color values 0 to 11 are:
 
@@ -71,9 +71,9 @@ Colors 24 - 27 are white, light grey, medium grey, and dim grey (or think of the
 
 The last color that was used is stored in the left-most/upper-left "master" panel's metadata, and defaults to red. It should persist across reboots.
 
-A byte value of 28 in a string will act as a line feed (I would have used 10, but that's a color code :-P )
+char(10) will do its job as linefeed/newline.
 
-A byte value of 29 in a string signals a cursor position command. The next two byte values select a column and row, respectively. The next character after the row byte will be printed there, and the rest of the string then continues printing from that spot onward with normal line wrapping, colors and so forth. Note that any string that does NOT contain cursor positioning commands will automatically start printing at the upper-left.
+char(29) signals a cursor position command. The next two byte values select a column and row, respectively. The next character after the row byte will be printed there, and the rest of the string then continues printing from that spot onward with normal line wrapping, colors and so forth. Note that any string that does NOT contain cursor positioning commands will automatically start printing at the upper-left.
 
 Any number of color, line feed, and cursor position commands may be present in a string, making it possible to "frame-buffer" a screen full of text into a string before printing it.
 

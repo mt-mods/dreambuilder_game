@@ -6,10 +6,7 @@ minetest.register_node("solidcolor:block", {
 	sounds = (default and default.node_sound_stone_defaults()),
 	paramtype2 = "color",
 	palette = "unifieddyes_palette_extended.png",
-	after_dig_node = unifieddyes.after_dig_node,
-	place_param2 = 240,
 	on_construct = unifieddyes.on_construct,
-	after_place_node = unifieddyes.recolor_on_place,
 })
 
 minetest.register_craft( {

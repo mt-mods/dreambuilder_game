@@ -41,9 +41,7 @@ homedecor.register("shutter", {
 	node_box = shutter_cbox,
 	after_place_node = function(pos, placer, itemstack, pointed_thing)
 		unifieddyes.fix_rotation(pos, placer, itemstack, pointed_thing)
-		unifieddyes.recolor_on_place(pos, placer, itemstack, pointed_thing)
 	end,
-	after_dig_node = unifieddyes.after_dig_node
 })
 
 homedecor.register("shutter_colored", {
@@ -60,10 +58,7 @@ homedecor.register("shutter_colored", {
 	node_box = shutter_cbox,
 	after_place_node = function(pos, placer, itemstack, pointed_thing)
 		unifieddyes.fix_rotation(pos, placer, itemstack, pointed_thing)
-		unifieddyes.recolor_on_place(pos, placer, itemstack, pointed_thing)
 	end,
-	after_dig_node = unifieddyes.after_dig_node,
-	drop = "homedecor:shutter"
 })
 
 minetest.register_alias("homedecor:shutter_purple", "homedecor:shutter_violet")

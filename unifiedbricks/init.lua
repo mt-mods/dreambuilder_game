@@ -103,21 +103,15 @@ minetest.register_node("unifiedbricks:brickblock", {
 	paramtype = "light",
 	paramtype2 = "color",
 	palette = "unifieddyes_palette_extended.png",
-	place_param2 = 240,
 	is_ground_content = true,
 	groups = {cracky=3, not_in_creative_inventory=1, ud_param2_colorable = 1},
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = unifieddyes.on_construct,
-	after_place_node = unifieddyes.recolor_on_place,
-	after_dig_node = unifieddyes.after_dig_node,
-	drop = "default:brick"
 })
 
 minetest.override_item("default:brick", {
-	ud_replacement_node = "unifiedbricks:brickblock",
 	palette = "unifieddyes_palette_extended.png",
 	groups = {cracky = 3, ud_param2_colorable = 1},
-	after_place_node = unifieddyes.recolor_on_place
 })
 
 minetest.register_node("unifiedbricks:clayblock", {
@@ -127,23 +121,17 @@ minetest.register_node("unifiedbricks:clayblock", {
 	},
 	paramtype2 = "color",
 	palette = "unifieddyes_palette_extended.png",
-	place_param2 = 240,
 	is_ground_content = true,
 	groups = {crumbly=3, not_in_creative_inventory=1, ud_param2_colorable = 1},
 		sounds = default.node_sound_dirt_defaults({
 			footstep = "",
 		}),
 	on_construct = unifieddyes.on_construct,
-	after_place_node = unifieddyes.recolor_on_place,
-	after_dig_node = unifieddyes.after_dig_node,
-	drop = "default:clay"
 })
 
 minetest.override_item("default:clay", {
-	ud_replacement_node = "unifiedbricks:clayblock",
 	palette = "unifieddyes_palette_extended.png",
 	groups = {crumbly = 3, ud_param2_colorable = 1},
-	after_place_node = unifieddyes.recolor_on_place,
 })
 
 minetest.register_node("unifiedbricks:brickblock_multicolor_dark", {
@@ -157,13 +145,10 @@ minetest.register_node("unifiedbricks:brickblock_multicolor_dark", {
 	paramtype = "light",
 	paramtype2 = "color",
 	palette = "unifieddyes_palette_extended.png",
-	place_param2 = 240,
 	is_ground_content = true,
 	groups = {cracky=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = unifieddyes.on_construct,
-	after_place_node = unifieddyes.recolor_on_place,
-	after_dig_node = unifieddyes.after_dig_node,
 })
 
 minetest.register_node("unifiedbricks:brickblock_multicolor_medium", {
@@ -177,13 +162,10 @@ minetest.register_node("unifiedbricks:brickblock_multicolor_medium", {
 	paramtype = "light",
 	paramtype2 = "color",
 	palette = "unifieddyes_palette_extended.png",
-	place_param2 = 240,
 	is_ground_content = true,
 	groups = {cracky=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = unifieddyes.on_construct,
-	after_place_node = unifieddyes.recolor_on_place,
-	after_dig_node = unifieddyes.after_dig_node,
 })
 
 minetest.register_node("unifiedbricks:brickblock_multicolor_light", {
@@ -197,13 +179,10 @@ minetest.register_node("unifiedbricks:brickblock_multicolor_light", {
 	paramtype = "light",
 	paramtype2 = "color",
 	palette = "unifieddyes_palette_extended.png",
-	place_param2 = 240,
 	is_ground_content = true,
 	groups = {cracky=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = unifieddyes.on_construct,
-	after_place_node = unifieddyes.recolor_on_place,
-	after_dig_node = unifieddyes.after_dig_node,
 })
 
 minetest.register_craft( {
@@ -237,6 +216,61 @@ minetest.register_craft( {
 		"unifieddyes:white",
 		"unifieddyes:grey"
 	},
+})
+
+unifieddyes.register_color_craft({
+	output = "unifiedbricks:brickblock",
+	palette = "extended",
+	neutral_node = "default:brick",
+	type = "shapeless",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
+	}
+})
+
+unifieddyes.register_color_craft({
+	output = "unifiedbricks:clayblock",
+	palette = "extended",
+	neutral_node = "default:clay",
+	type = "shapeless",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
+	}
+})
+
+unifieddyes.register_color_craft({
+	output = "unifiedbricks:brickblock_multicolor_dark",
+	palette = "extended",
+	neutral_node = "unifiedbricks:brickblock_multicolor_dark",
+	type = "shapeless",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
+	}
+})
+
+unifieddyes.register_color_craft({
+	output = "unifiedbricks:brickblock_multicolor_medium",
+	palette = "extended",
+	neutral_node = "unifiedbricks:brickblock_multicolor_medium",
+	type = "shapeless",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
+	}
+})
+
+unifieddyes.register_color_craft({
+	output = "unifiedbricks:brickblock_multicolor_light",
+	palette = "extended",
+	neutral_node = "unifiedbricks:brickblock_multicolor_light",
+	type = "shapeless",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
+	}
 })
 
 -- static nodes

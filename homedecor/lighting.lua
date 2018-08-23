@@ -46,9 +46,7 @@ minetest.register_node("homedecor:glowlight_half", {
 	sounds = default.node_sound_glass_defaults(),
 	after_place_node = function(pos, placer, itemstack, pointed_thing)
 		unifieddyes.fix_rotation(pos, placer, itemstack, pointed_thing)
-		unifieddyes.recolor_on_place(pos, placer, itemstack, pointed_thing)
 	end,
-	after_dig_node = unifieddyes.after_dig_node
 })
 
 minetest.register_node("homedecor:glowlight_quarter", {
@@ -86,9 +84,7 @@ minetest.register_node("homedecor:glowlight_quarter", {
 	sounds = default.node_sound_glass_defaults(),
 	after_place_node = function(pos, placer, itemstack, pointed_thing)
 		unifieddyes.fix_rotation(pos, placer, itemstack, pointed_thing)
-		unifieddyes.recolor_on_place(pos, placer, itemstack, pointed_thing)
 	end,
-	after_dig_node = unifieddyes.after_dig_node
 })
 
 minetest.register_node("homedecor:glowlight_small_cube", {
@@ -126,9 +122,7 @@ minetest.register_node("homedecor:glowlight_small_cube", {
 	sounds = default.node_sound_glass_defaults(),
 	after_place_node = function(pos, placer, itemstack, pointed_thing)
 		unifieddyes.fix_rotation(pos, placer, itemstack, pointed_thing)
-		unifieddyes.recolor_on_place(pos, placer, itemstack, pointed_thing)
 	end,
-	after_dig_node = unifieddyes.after_dig_node
 })
 
 homedecor.register("plasma_lamp", {
@@ -449,7 +443,6 @@ local function reg_lamp(suffix, nxt, light, brightness)
 		paramtype = "light",
 		paramtype2 = "color",
 		palette = "unifieddyes_palette_extended.png",
-		place_param2 = 240,
 		walkable = false,
 		light_source = light,
 		selection_box = tlamp_cbox,
@@ -457,14 +450,17 @@ local function reg_lamp(suffix, nxt, light, brightness)
 		groups = {cracky=2,oddly_breakable_by_hand=1, ud_param2_colorable = 1,
 			not_in_creative_inventory=((light ~= nil) and 1) or nil,
 		},
-		drop = "homedecor:table_lamp_off",
 		on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
 			node.name = "homedecor:table_lamp_"..repl[suffix]
 			minetest.set_node(pos, node)
 		end,
 		on_construct = unifieddyes.on_construct,
-		after_place_node = unifieddyes.recolor_on_place,
-		after_dig_node = unifieddyes.after_dig_node
+		drop = {
+			items = {
+				{items = {"homedecor:table_lamp_off"}, inherit_color = true },
+			}
+		}
+
 	})
 
 	homedecor.register("standing_lamp_"..suffix, {
@@ -480,7 +476,6 @@ local function reg_lamp(suffix, nxt, light, brightness)
 		paramtype = "light",
 		paramtype2 = "color",
 		palette = "unifieddyes_palette_extended.png",
-		place_param2 = 240,
 		walkable = false,
 		light_source = light,
 		groups = {cracky=2,oddly_breakable_by_hand=1, ud_param2_colorable = 1,
@@ -494,9 +489,12 @@ local function reg_lamp(suffix, nxt, light, brightness)
 			minetest.set_node(pos, node)
 		end,
 		on_construct = unifieddyes.on_construct,
-		after_place_node = unifieddyes.recolor_on_place,
-		after_dig_node = unifieddyes.after_dig_node,
-		expand = { top="air" },
+		--expand = { top="air" },
+		drop = {
+			items = {
+				{items = {"homedecor:standing_lamp_off"}, inherit_color = true },
+			}
+		}
 	})
 
 	-- for old maps that had the original 3dforniture mod
@@ -535,9 +533,7 @@ homedecor.register("desk_lamp", {
 	groups = {snappy=3, ud_param2_colorable = 1},
 	after_place_node = function(pos, placer, itemstack, pointed_thing)
 		unifieddyes.fix_rotation_nsew(pos, placer, itemstack, pointed_thing)
-		unifieddyes.recolor_on_place(pos, placer, itemstack, pointed_thing)
 	end,
-	after_dig_node = unifieddyes.after_dig_node,
 	on_rotate = unifieddyes.fix_after_screwdriver_nsew
 })
 

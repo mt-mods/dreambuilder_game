@@ -546,6 +546,17 @@ minetest.register_craft( {
 	},
 })
 
+unifieddyes.register_color_craft({
+	output = "homedecor:shutter_colored",
+	palette = "wallmounted",
+	type = "shapeless",
+	neutral_node = "homedecor:shutter",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
+	}
+})
+
 minetest.register_craft({
         type = "fuel",
         recipe = "homedecor:shutter_oak",
@@ -865,6 +876,28 @@ minetest.register_craft( {
 		{ "cottages:wool", "", ""},
 		{ "cottages:wool", "", ""},
 	},
+})
+
+unifieddyes.register_color_craft({
+	output = "homedecor:curtain_closed",
+	palette = "wallmounted",
+	type = "shapeless",
+	neutral_node = "homedecor:curtain_closed",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
+	}
+})
+
+unifieddyes.register_color_craft({
+	output = "homedecor:curtain_open",
+	palette = "wallmounted",
+	type = "shapeless",
+	neutral_node = "homedecor:curtain_open",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
+	}
 })
 
 local mats = {
@@ -1195,7 +1228,6 @@ minetest.register_craft( {
 minetest.register_craft({
 	output = "homedecor:glowlight_half 6",
 	recipe = {
-		{ "dye:white", "dye:white", "dye:white" },
 		{ "default:glass", "homedecor:power_crystal", "default:glass", },
 	}
 })
@@ -1203,8 +1235,35 @@ minetest.register_craft({
 minetest.register_craft({
         output = "homedecor:glowlight_half 6",
         recipe = {
-		{ "dye:white", "dye:white", "dye:white" },
 		{"moreblocks:super_glow_glass", "moreblocks:glow_glass", "moreblocks:super_glow_glass", },
+	}
+})
+
+minetest.register_craft({
+        output = "homedecor:glowlight_half",
+        recipe = {
+		{"homedecor:glowlight_small_cube","homedecor:glowlight_small_cube"},
+		{"homedecor:glowlight_small_cube","homedecor:glowlight_small_cube"}
+	}
+})
+
+minetest.register_craft({
+		output = "homedecor:glowlight_half",
+		type = "shapeless",
+		recipe = {
+		"homedecor:glowlight_quarter",
+		"homedecor:glowlight_quarter"
+	}
+})
+
+unifieddyes.register_color_craft({
+	output = "homedecor:glowlight_half",
+	palette = "wallmounted",
+	type = "shapeless",
+	neutral_node = "homedecor:glowlight_half",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
 	}
 })
 
@@ -1212,6 +1271,17 @@ minetest.register_craft({
         output = "homedecor:glowlight_quarter 6",
         recipe = {
 		{"homedecor:glowlight_half", "homedecor:glowlight_half", "homedecor:glowlight_half", },
+	}
+})
+
+unifieddyes.register_color_craft({
+	output = "homedecor:glowlight_quarter",
+	palette = "wallmounted",
+	type = "shapeless",
+	neutral_node = "homedecor:glowlight_quarter",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
 	}
 })
 
@@ -1239,20 +1309,14 @@ minetest.register_craft({
 	}
 })
 
-minetest.register_craft({
-        output = "homedecor:glowlight_half",
-        recipe = {
-		{"homedecor:glowlight_small_cube","homedecor:glowlight_small_cube"},
-		{"homedecor:glowlight_small_cube","homedecor:glowlight_small_cube"}
-	}
-})
-
-minetest.register_craft({
-		output = "homedecor:glowlight_half",
-		type = "shapeless",
-		recipe = {
-		"homedecor:glowlight_quarter",
-		"homedecor:glowlight_quarter"
+unifieddyes.register_color_craft({
+	output = "homedecor:glowlight_small_cube",
+	palette = "wallmounted",
+	type = "shapeless",
+	neutral_node = "homedecor:glowlight_small_cube",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
 	}
 })
 
@@ -2227,6 +2291,17 @@ minetest.register_craft( {
 		},
 })
 
+unifieddyes.register_color_craft({
+	output = "homedecor:bathroom_tiles_light",
+	palette = "extended",
+	type = "shapeless",
+	neutral_node = "homedecor:bathroom_tiles_light",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
+	}
+})
+
 minetest.register_craft( {
 		output = "homedecor:bathroom_tiles_medium 4",
 		recipe = {
@@ -2235,12 +2310,34 @@ minetest.register_craft( {
 		},
 })
 
+unifieddyes.register_color_craft({
+	output = "homedecor:bathroom_tiles_medium",
+	palette = "extended",
+	type = "shapeless",
+	neutral_node = "homedecor:bathroom_tiles_medium",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
+	}
+})
+
 minetest.register_craft( {
 		output = "homedecor:bathroom_tiles_dark 4",
 		recipe = {
 			{ "group:marble", "group:marble", "" },
 			{ "group:marble", "group:marble", "dye:dark_grey" }
 		},
+})
+
+unifieddyes.register_color_craft({
+	output = "homedecor:bathroom_tiles_dark",
+	palette = "extended",
+	type = "shapeless",
+	neutral_node = "homedecor:bathroom_tiles_dark",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
+	}
 })
 
 -- misc electrical
@@ -2476,11 +2573,45 @@ minetest.register_craft( {
 	},
 })
 
+unifieddyes.register_color_craft({
+	output = "homedecor:bed_regular",
+	palette = "wallmounted",
+	type = "shapeless",
+	neutral_node = "homedecor:bed_regular",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
+	}
+})
+
 minetest.register_craft( {
 	output = "homedecor:bed_kingsize",
 	recipe = {
 		{ "homedecor:bed_regular", "homedecor:bed_regular" }
 	},
+})
+
+unifieddyes.register_color_craft({
+	output = "homedecor:bed_kingsize",
+	palette = "wallmounted",
+	type = "shapeless",
+	neutral_node = "homedecor:bed_kingsize",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
+	}
+})
+
+unifieddyes.register_color_craft({
+	output = "homedecor:bed_kingsize",
+	palette = "wallmounted",
+	type = "shapeless",
+	neutral_node = "homedecor:bed_regular",
+	recipe = {
+		"NEUTRAL_NODE",
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
+	}
 })
 
 minetest.register_craft( {
@@ -2841,6 +2972,17 @@ minetest.register_craft({
 		{ "", "homedecor:steel_strip", "" },
 		{ "homedecor:plastic_sheeting", "homedecor:copper_wire", "homedecor:plastic_sheeting" },
 	},
+})
+
+unifieddyes.register_color_craft({
+	output = "homedecor:desk_lamp",
+	palette = "wallmounted",
+	type = "shapeless",
+	neutral_node = "homedecor:desk_lamp",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
+	}
 })
 
 minetest.register_craft({

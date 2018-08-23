@@ -35,7 +35,7 @@ minetest.register_node("technic:power_monitor",{
 	end,
 })
 
-if technic.config:get_bool("enable_creative_mode") then
+if technic.config:get_bool("creative_mode") then
 	--Power distribution is not used in this mode,
 	--so the power monitor is inert and never needs to run.
 	return

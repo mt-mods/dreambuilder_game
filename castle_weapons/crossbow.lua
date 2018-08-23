@@ -79,22 +79,12 @@ function crossbow:spawn_particles(pos, texture)
 			texture = CROSSBOW_EXPLOSION_TEXTURE
 		end
 		local spread = {x=0.1, y=0.1, z=0.1}
-		minetest.add_particlespawner({
-			amount = 15,
-			time = 0.3,
-			minpos = vector.subtract(pos, spread),
-			maxpos = vector.add(pos, spread),
-			minvel = {x=-1, y=1, z=-1},
-			maxvel = {x=1, y=2, z=1},
-			minacc = {x=-2, y=-2, z=-2},
-			maxacc = {x=2, y=-2, z=2},
-			minexptime = 0.1,
-			maxexptime = 0.75,
-			minsize = 1,
-			maxsize = 2,
-			collisiondetection = false,
-			texture = texture,
-		})
+		minetest.add_particlespawner(15, 0.3,
+			vector.subtract(pos, spread), vector.add(pos, spread),
+			{x=-1, y=1, z=-1}, {x=1, y=2, z=1},
+			{x=-2, y=-2, z=-2}, {x=2, y=-2, z=2},
+			0.1, 0.75, 1, 2, false, texture
+		)
 	end
 end
 
@@ -371,7 +361,7 @@ minetest.register_entity("castle_weapons:crossbow_bolt_entity", {
 		groups = {not_in_creative_inventory=1},
 		on_use = function(itemstack, user, pointed_thing)
 			minetest.sound_play("castle_crossbow_click", {object=user})
-			if not minetest.settings:get_bool("creative_mode") then
+			if not minetest.setting_getbool("creative_mode") then
 				itemstack:add_wear(65535/CROSSBOW_USES)
 			end
 			itemstack = "castle_weapons:crossbow 1 "..itemstack:get_wear()
@@ -431,7 +421,7 @@ minetest.register_tool("castle_weapons:crossbow", {
 		local inv = user:get_inventory()
 if inv:contains_item("main", "castle_weapons:crossbow_bolt") then
 				minetest.sound_play("castle_crossbow_reload", {object=user})
-				if not minetest.settings:get_bool("creative_mode") then
+				if not minetest.setting_getbool("creative_mode") then
 					inv:remove_item("main", "castle_weapons:crossbow_bolt 1")
 				end
 				return "castle_weapons:crossbow_loaded 1 "..itemstack:get_wear()

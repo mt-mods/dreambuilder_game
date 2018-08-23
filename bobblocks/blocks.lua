@@ -40,7 +40,6 @@ minetest.register_node("bobblocks:block", {
 	paramtype = "light",
 	paramtype2 = "color",
 	palette = "unifieddyes_palette_extended.png",
-	place_param2 = 240,
 	sunlight_propagates = true,
 	is_ground_content = false,
 	sounds = default.node_sound_glass_defaults(),
@@ -53,8 +52,6 @@ minetest.register_node("bobblocks:block", {
 	},
 	on_rightclick = bobblocks.update_bobblock,
 	on_construct = unifieddyes.on_construct,
-	after_place_node = unifieddyes.recolor_on_place,
-	after_dig_node = unifieddyes.after_dig_node
 })
 
 minetest.register_node("bobblocks:block_off", {
@@ -63,7 +60,6 @@ minetest.register_node("bobblocks:block_off", {
 	tiles = {"bobblocks_block.png^[opacity:"..bobblocks.opacity},
 	paramtype2 = "color",
 	palette = "unifieddyes_palette_extended.png",
-	place_param2 = 240,
 	is_ground_content = false,
 	use_texture_alpha = true,
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3,not_in_creative_inventory=1, ud_param2_colorable = 1},
@@ -75,8 +71,6 @@ minetest.register_node("bobblocks:block_off", {
 	},
 	on_rightclick = bobblocks.update_bobblock,
 	on_construct = unifieddyes.on_construct,
-	after_place_node = unifieddyes.recolor_on_place,
-	after_dig_node = unifieddyes.after_dig_node
 })
 
 -- Block Poles
@@ -88,7 +82,6 @@ minetest.register_node("bobblocks:pole", {
 	paramtype = "light",
 	paramtype2 = "color",
 	palette = "unifieddyes_palette_extended.png",
-	place_param2 = 240,
 	sunlight_propagates = true,
 	is_ground_content = false,
 	sounds = default.node_sound_glass_defaults(),
@@ -101,8 +94,6 @@ minetest.register_node("bobblocks:pole", {
 	},
 	on_rightclick = bobblocks.update_bobblock,
 	on_construct = unifieddyes.on_construct,
-	after_place_node = unifieddyes.recolor_on_place,
-	after_dig_node = unifieddyes.after_dig_node
 })
 
 minetest.register_node("bobblocks:pole_off", {
@@ -112,7 +103,6 @@ minetest.register_node("bobblocks:pole_off", {
 	paramtype = "light",
 	paramtype2 = "color",
 	palette = "unifieddyes_palette_extended.png",
-	place_param2 = 240,
 	sunlight_propagates = true,
 	is_ground_content = false,
 	use_texture_alpha = true,
@@ -127,8 +117,6 @@ minetest.register_node("bobblocks:pole_off", {
 	},
 	on_rightclick = bobblocks.update_bobblock,
 	on_construct = unifieddyes.on_construct,
-	after_place_node = unifieddyes.recolor_on_place,
-	after_dig_node = unifieddyes.after_dig_node
 })
 
 -- old nodes grandfathered-in because they have a different texture or usage than the colored ones.
@@ -150,7 +138,6 @@ minetest.register_node("bobblocks:wavyblock", {
 	paramtype = "light",
 	paramtype2 = "color",
 	palette = "unifieddyes_palette_extended.png",
-	place_param2 = 240,
 	sunlight_propagates = true,
 	is_ground_content = false,
 	sounds = default.node_sound_glass_defaults(),
@@ -164,8 +151,6 @@ minetest.register_node("bobblocks:wavyblock", {
 	},
 	on_rightclick = bobblocks.update_bobblock,
 	on_construct = unifieddyes.on_construct,
-	after_place_node = unifieddyes.recolor_on_place,
-	after_dig_node = unifieddyes.after_dig_node
 })
 
 minetest.register_node("bobblocks:wavyblock_off", {
@@ -174,7 +159,6 @@ minetest.register_node("bobblocks:wavyblock_off", {
 	tiles = {"bobblocks_wavyblock.png^[opacity:"..bobblocks.opacity},
 	paramtype2 = "color",
 	palette = "unifieddyes_palette_extended.png",
-	place_param2 = 240,
 	is_ground_content = false,
 	use_texture_alpha = true,
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3,not_in_creative_inventory=1, ud_param2_colorable = 1},
@@ -187,8 +171,6 @@ minetest.register_node("bobblocks:wavyblock_off", {
 	},
 	on_rightclick = bobblocks.update_bobblock,
 	on_construct = unifieddyes.on_construct,
-	after_place_node = unifieddyes.recolor_on_place,
-	after_dig_node = unifieddyes.after_dig_node
 })
 
 minetest.register_node("bobblocks:wavypole", {
@@ -199,14 +181,11 @@ minetest.register_node("bobblocks:wavypole", {
 	paramtype = "light",
 	paramtype2 = "color",
 	palette = "unifieddyes_palette_extended.png",
-	place_param2 = 240,
 	sunlight_propagates = true,
 	is_ground_content = false,
 	sounds = default.node_sound_glass_defaults(),
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, ud_param2_colorable = 1},
 	on_construct = unifieddyes.on_construct,
-	after_place_node = unifieddyes.recolor_on_place,
-	after_dig_node = unifieddyes.after_dig_node,
 	--light_source = LIGHT_MAX-0,
 })
 
@@ -231,10 +210,32 @@ minetest.register_craft({
 	},
 })
 
+unifieddyes.register_color_craft({
+	output = "bobblocks:block",
+	palette = "extended",
+	type = "shapeless",
+	neutral_node = "bobblocks:block",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
+	}
+})
+
 minetest.register_craft({
 	output = "bobblocks:pole",
 	recipe = {
 		{ "bobblocks:block", "group:stick" },
+	}
+})
+
+unifieddyes.register_color_craft({
+	output = "bobblocks:pole",
+	palette = "extended",
+	type = "shapeless",
+	neutral_node = "bobblocks:pole",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
 	}
 })
 
@@ -243,14 +244,49 @@ minetest.register_craft({
 	type = "shapeless",
 	recipe = {
 		"bobblocks:block",
-		"bobblocks:block"
+		"default:cobble"
 	},
+})
+
+
+unifieddyes.register_color_craft({
+	output = "bobblocks:wavyblock 2",
+	palette = "extended",
+	type = "shapeless",
+	neutral_node = "bobblocks:block",
+	recipe = {
+		"MAIN_DYE",
+		"NEUTRAL_NODE",
+		"default:cobble"
+	}
+})
+
+unifieddyes.register_color_craft({
+	output = "bobblocks:wavyblock",
+	palette = "extended",
+	type = "shapeless",
+	neutral_node = "bobblocks:wavyblock",
+	recipe = {
+		"MAIN_DYE",
+		"NEUTRAL_NODE"
+	}
 })
 
 minetest.register_craft({
 	output = "bobblocks:wavypole",
 	recipe = {
 		{ "bobblocks:wavyblock", "group:stick" },
+	}
+})
+
+unifieddyes.register_color_craft({
+	output = "bobblocks:wavypole",
+	palette = "extended",
+	type = "shapeless",
+	neutral_node = "bobblocks:wavypole",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
 	}
 })
 

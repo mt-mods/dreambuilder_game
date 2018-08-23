@@ -110,15 +110,12 @@ for _, nodeclass in ipairs(NodeClass) do
 			"blox_stone_"..nodeclass..".png"
 		},
 		palette = "unifieddyes_palette_extended.png",
-		place_param2 = 240,
 		paramtype = "light",
 		paramtype2 = "color",
 		is_ground_content = true,
 		groups = {cracky=3, ud_param2_colorable = 1},
 		sounds = default.node_sound_stone_defaults(),
 		on_construct = unifieddyes.on_construct,
-		after_place_node = unifieddyes.recolor_on_place,
-		after_dig_node = unifieddyes.after_dig_node
 	})
 
 	minetest.register_node("blox:cobble_"..nodeclass, {
@@ -130,15 +127,12 @@ for _, nodeclass in ipairs(NodeClass) do
 			"blox_cobble_"..nodeclass..".png"
 		},
 		palette = "unifieddyes_palette_extended.png",
-		place_param2 = 240,
 		paramtype = "light",
 		paramtype2 = "color",
 		is_ground_content = true,
 		groups = {cracky=3, ud_param2_colorable = 1},
 		sounds = default.node_sound_stone_defaults(),
 		on_construct = unifieddyes.on_construct,
-		after_place_node = unifieddyes.recolor_on_place,
-		after_dig_node = unifieddyes.after_dig_node
 	})
 
 	minetest.register_node("blox:wood_"..nodeclass, {
@@ -150,15 +144,12 @@ for _, nodeclass in ipairs(NodeClass) do
 			"blox_wood_"..nodeclass..".png"
 		},
 		palette = "unifieddyes_palette_extended.png",
-		place_param2 = 240,
 		paramtype = "light",
 		paramtype2 = "color",
 		is_ground_content = true,
 		groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, ud_param2_colorable = 1},
 		sounds = default.node_sound_wood_defaults(),
 		on_construct = unifieddyes.on_construct,
-		after_place_node = unifieddyes.recolor_on_place,
-		after_dig_node = unifieddyes.after_dig_node
 	})
 
 	table.insert(blox.old_89_color_nodes, "blox:stone_"..nodeclass)
@@ -172,62 +163,53 @@ minetest.register_node("blox:wood_tinted", {
 	description = "Blox tinted wood",
 	tiles = { "blox_wood_tinted.png" },
 	palette = "unifieddyes_palette_extended.png",
-	place_param2 = 240,
 	paramtype = "light",
 	paramtype2 = "color",
 	is_ground_content = true,
 	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
 	on_construct = unifieddyes.on_construct,
-	after_place_node = unifieddyes.recolor_on_place,
-	after_dig_node = unifieddyes.after_dig_node
 })
 
 minetest.register_node("blox:stone_square", {
 	description = "Blox stone square",
 	tiles = { "blox_stone_square.png" },
 	palette = "unifieddyes_palette_extended.png",
-	place_param2 = 240,
 	paramtype = "light",
 	paramtype2 = "color",
 	is_ground_content = true,
 	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
 	on_construct = unifieddyes.on_construct,
-	after_place_node = unifieddyes.recolor_on_place,
-	after_dig_node = unifieddyes.after_dig_node
 })
 
 minetest.register_node("blox:cobble_tinted", {
 	description = "Blox tinted cobble",
 	tiles = { "blox_cobble_tinted.png" },
 	palette = "unifieddyes_palette_extended.png",
-	place_param2 = 240,
 	paramtype = "light",
 	paramtype2 = "color",
 	is_ground_content = true,
 	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory = 1, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
 	on_construct = unifieddyes.on_construct,
-	after_place_node = unifieddyes.recolor_on_place,
-	after_dig_node = unifieddyes.after_dig_node,
-	drop = "default:cobble"
 })
 
 minetest.register_node("blox:stone_tinted", {
 	description = "Blox tinted stone",
 	tiles = { "blox_stone_tinted.png" },
 	palette = "unifieddyes_palette_extended.png",
-	place_param2 = 240,
 	paramtype = "light",
 	paramtype2 = "color",
 	is_ground_content = true,
 	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory = 1, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
 	on_construct = unifieddyes.on_construct,
-	after_place_node = unifieddyes.recolor_on_place,
-	after_dig_node = unifieddyes.after_dig_node,
-	drop = "default:cobble"
+	drop = {
+		items = {
+			{items = {"blox:cobble_tinted"}, inherit_color = true },
+		}
+	}
 })
 
 table.insert(blox.old_89_color_nodes, "blox:wood_tinted")
@@ -237,106 +219,228 @@ table.insert(blox.old_89_color_nodes, "blox:stone_tinted")
 
 -- Override default stone and default cobble
 
+minetest.override_item("default:stone_block", {
+	palette = "unifieddyes_palette_extended.png",
+	ud_replacement_node = "blox:stone_square",
+	groups = {cracky = 3, stone = 1, ud_param2_colorable = 1},
+})
+
 minetest.override_item("default:stone", {
 	palette = "unifieddyes_palette_extended.png",
 	ud_replacement_node = "blox:stone_tinted",
-	after_place_node = unifieddyes.recolor_on_place,
 	groups = {cracky = 3, stone = 1, ud_param2_colorable = 1},
 })
 
 minetest.override_item("default:cobble", {
 	palette = "unifieddyes_palette_extended.png",
 	ud_replacement_node = "blox:cobble_tinted",
-	after_place_node = unifieddyes.recolor_on_place,
 	groups = {cracky = 3, stone = 2, ud_param2_colorable = 1},
 })
 
-local dye_color = "unifieddyes:white"
+-- override the Moreblocks nodes we use
 
 if moreblocks then
-	minetest.override_item("moreblocks:stone_tile", {
-		palette = "unifieddyes_palette_extended.png",
-		ud_replacement_node = "blox:stone_square",
-		after_place_node = unifieddyes.recolor_on_place,
-		groups = {cracky = 3, ud_param2_colorable = 1},
-	})
-
-	minetest.override_item("blox:stone_square", {
-		drop = "moreblocks:stone_tile",
-		groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory = 1, ud_param2_colorable = 1},
-	})
-
 	minetest.override_item("moreblocks:circle_stone_bricks", {
 		palette = "unifieddyes_palette_extended.png",
 		ud_replacement_node = "blox:stone_loop",
-		after_place_node = unifieddyes.recolor_on_place,
 		groups = {cracky = 3, ud_param2_colorable = 1},
 	})
-	minetest.override_item("blox:stone_loop", {
-		drop = "moreblocks:circle_stone_bricks",
-		groups = {cracky = 3, not_in_creative_inventory = 1, ud_param2_colorable = 1},
+
+	unifieddyes.register_color_craft({
+		output = "blox:stone_loop",
+		type = "shapeless",
+		palette = "extended",
+		neutral_node = "moreblocks:circle_stone_bricks",
+		recipe = {
+			"NEUTRAL_NODE",
+			"MAIN_DYE"
+		}
 	})
 
 	minetest.override_item("moreblocks:iron_checker", {
 		palette = "unifieddyes_palette_extended.png",
 		ud_replacement_node = "blox:stone_checker",
-		after_place_node = unifieddyes.recolor_on_place,
 		groups = {cracky = 3, ud_param2_colorable = 1},
 	})
-	minetest.override_item("blox:stone_checker", {
-		drop = "moreblocks:iron_checker",
-		groups = {cracky = 3, not_in_creative_inventory = 1, ud_param2_colorable = 1},
+
+	unifieddyes.register_color_craft({
+		output = "blox:stone_checker",
+		type = "shapeless",
+		palette = "extended",
+		neutral_node = "moreblocks:iron_checker",
+		recipe = {
+			"NEUTRAL_NODE",
+			"MAIN_DYE"
+		}
 	})
 
 	minetest.override_item("moreblocks:wood_tile", {
 		palette = "unifieddyes_palette_extended.png",
 		ud_replacement_node = "blox:wood_quarter",
-		after_place_node = unifieddyes.recolor_on_place,
 		groups = {wood = 1, snappy = 1, choppy = 2, oddly_breakable_by_hand = 2, flammable = 3, ud_param2_colorable = 1},
 	})
-	minetest.override_item("blox:wood_quarter", {
-		drop = "moreblocks:wood_tile",
-		groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory = 1, ud_param2_colorable = 1},
+
+	unifieddyes.register_color_craft({
+		output = "blox:wood_quarter",
+		type = "shapeless",
+		palette = "extended",
+		neutral_node = "moreblocks:wood_tile",
+		recipe = {
+			"NEUTRAL_NODE",
+			"MAIN_DYE"
+		}
 	})
 
 	minetest.override_item("moreblocks:wood_tile_flipped", {
 		palette = "unifieddyes_palette_extended.png",
 		ud_replacement_node = "blox:wood_quarter",
-		after_place_node = unifieddyes.recolor_on_place,
 		groups = {wood = 1, snappy = 1, choppy = 2, oddly_breakable_by_hand = 2, flammable = 3, ud_param2_colorable = 1},
 	})
-else
-	minetest.register_craft({
-		output = "blox:stone_square 6",
+
+	unifieddyes.register_color_craft({
+		output = "blox:wood_quarter",
+		type = "shapeless",
+		palette = "extended",
+		neutral_node = "moreblocks:wood_tile_flipped",
 		recipe = {
-			{ dye_color,       "default:stone", "default:stone" },
-			{ "default:stone", dye_color,       "default:stone" },
-			{ "default:stone", "default:stone", dye_color       },
+			"NEUTRAL_NODE",
+			"MAIN_DYE"
 		}
 	})
 end
 
+local dye_color = "dye:white"
+
 if minetest.get_modpath("coloredwood") then
 	minetest.register_craft({
-		output = "blox:wood_tinted 6",
+		output = unifieddyes.make_colored_itemstack("blox:wood_tinted 4", "extended", dye_color),
 		recipe = {
-			{ "",             "default:wood", ""             },
-			{ "default:wood", dye_color,      "default:wood" },
-			{ "",             "default:wood", ""             },
+			{ dye_color,      "default:wood", dye_color      },
+			{ "default:wood", "",             "default:wood" },
+			{ dye_color,      "default:wood", dye_color      },
 		}
 	})
+
+	unifieddyes.register_color_craft({
+		output = "blox:wood_tinted",
+		type = "shapeless",
+		palette = "extended",
+		neutral_node = "blox:wood_tinted",
+		recipe = {
+			"NEUTRAL_NODE",
+			"MAIN_DYE"
+		}
+	})
+
 else
 	minetest.override_item("default:wood", {
 		ud_replacement_node = "blox:wood_tinted",
 		groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, wood = 1, ud_param2_colorable = 1},
 	})
+
 	minetest.override_item("blox:wood_tinted", {
 		drop = "default:wood",
 		groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory = 1, ud_param2_colorable = 1},
 	})
+
+	unifieddyes.register_color_craft({
+		output = "blox:wood_tinted",
+		type = "shapeless",
+		palette = "extended",
+		neutral_node = "default:wood",
+		recipe = {
+			"NEUTRAL_NODE",
+			"MAIN_DYE"
+		}
+	})
+
 end
 
--- Crafting
+-- Other crafts
+
+for _, nodeclass in ipairs(NodeClass) do
+	for _, material in ipairs(NodeMaterial) do
+
+		local item = "blox:"..material.."_"..nodeclass
+		unifieddyes.register_color_craft({
+			output = item,
+			type = "shapeless",
+			palette = "extended",
+			neutral_node = item,
+			recipe = {
+				"NEUTRAL_NODE",
+				"MAIN_DYE"
+			}
+		})
+	end
+end
+
+unifieddyes.register_color_craft({
+	output = "blox:stone_square",
+	type = "shapeless",
+	palette = "extended",
+	neutral_node = "default:stone_block",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
+	}
+})
+
+unifieddyes.register_color_craft({
+	output = "blox:stone_square",
+	type = "shapeless",
+	palette = "extended",
+	neutral_node = "blox:stone_square",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
+	}
+})
+
+unifieddyes.register_color_craft({
+	output = "blox:cobble_tinted",
+	type = "shapeless",
+	palette = "extended",
+	neutral_node = "default:cobble",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
+	}
+})
+
+unifieddyes.register_color_craft({
+	output = "blox:cobble_tinted",
+	type = "shapeless",
+	palette = "extended",
+	neutral_node = "blox:cobble_tinted",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
+	}
+})
+
+unifieddyes.register_color_craft({
+	output = "blox:stone_tinted",
+	type = "shapeless",
+	palette = "extended",
+	neutral_node = "default:stone",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
+	}
+})
+
+unifieddyes.register_color_craft({
+	output = "blox:stone_tinted",
+	type = "shapeless",
+	palette = "extended",
+	neutral_node = "blox:stone_tinted",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
+	}
+})
+
 
 minetest.register_craft({
 	output = 'blox:glowstone 2',
@@ -351,71 +455,86 @@ for _, material in ipairs(NodeMaterial) do
 
 	local def_mat = "default:"..material
 
-	minetest.register_craft({
+	unifieddyes.register_color_craft({
 		output = "blox:"..material.."_diamond 4",
+		palette = "extended",
+		neutral_node = def_mat,
 		recipe = {
-			{ def_mat,   dye_color, def_mat   },
-			{ dye_color, "",        dye_color },
-			{ def_mat,   dye_color, def_mat   },
+			{ "NEUTRAL_NODE", "MAIN_DYE", "NEUTRAL_NODE" },
+			{ "MAIN_DYE",     "",         "MAIN_DYE"     },
+			{ "NEUTRAL_NODE", "MAIN_DYE", "NEUTRAL_NODE" }
 		}
 	})
 
 	if not (moreblocks and material == "wood") then
-		minetest.register_craft({
+		unifieddyes.register_color_craft({
 			output = "blox:"..material.."_quarter 4",
+			palette = "extended",
+			neutral_node = def_mat,
 			recipe = {
-				{ dye_color, def_mat   },
-				{ def_mat,   dye_color },
+				{ "MAIN_DYE",     "NEUTRAL_NODE" },
+				{ "NEUTRAL_NODE", "MAIN_DYE"     },
 			}
 		})
 	end
 
-	minetest.register_craft({
+	unifieddyes.register_color_craft({
 		output = "blox:"..material.."_cross 4",
+		palette = "extended",
+		neutral_node = def_mat,
 		recipe = {
-			{ def_mat, "",        def_mat },
-			{ "",      dye_color, ""      },
-			{ def_mat, "",        def_mat },
+			{ "NEUTRAL_NODE", "",         "NEUTRAL_NODE" },
+			{ "",             "MAIN_DYE", ""             },
+			{ "NEUTRAL_NODE", "",         "NEUTRAL_NODE" }
 		}
 	})
 
-	minetest.register_craft({
+	unifieddyes.register_color_craft({
 		output = "blox:"..material.."_corner 4",
+		palette = "extended",
+		neutral_node = def_mat,
 		recipe = {
-			{ dye_color, "",      dye_color },
-			{ "",        def_mat, ""        },
-			{ dye_color, "",      dye_color },
+			{ "MAIN_DYE", "",             "MAIN_DYE" },
+			{ "",         "NEUTRAL_NODE", ""         },
+			{ "MAIN_DYE", "",             "MAIN_DYE" }
 		}
 	})
 
 	if not (moreblocks and material == "stone") then
 
-		minetest.register_craft({
+		unifieddyes.register_color_craft({
 			output = "blox:"..material.."_checker 6",
+			palette = "extended",
+			neutral_node = def_mat,
 			recipe = {
-				{ def_mat,   dye_color, def_mat   },
-				{ dye_color, def_mat,   dye_color },
-				{ def_mat,   dye_color, def_mat   },
+				{ "NEUTRAL_NODE", "MAIN_DYE",     "NEUTRAL_NODE" },
+				{ "MAIN_DYE",     "NEUTRAL_NODE", "MAIN_DYE"     },
+				{ "NEUTRAL_NODE", "MAIN_DYE",     "NEUTRAL_NODE" }
 			}
 		})
 
-		minetest.register_craft({
+		unifieddyes.register_color_craft({
 			output = "blox:"..material.."_checker 8",
+			palette = "extended",
+			neutral_node = def_mat,
 			recipe = {
-				{ dye_color, def_mat,   dye_color },
-				{ def_mat,   dye_color, def_mat   },
-				{ dye_color, def_mat,   dye_color },
+				{ "MAIN_DYE",     "NEUTRAL_NODE", "MAIN_DYE"     },
+				{ "NEUTRAL_NODE", "MAIN_DYE",     "NEUTRAL_NODE" },
+				{ "MAIN_DYE",     "NEUTRAL_NODE", "MAIN_DYE"     }
 			}
 		})
 
-		minetest.register_craft({
+		unifieddyes.register_color_craft({
 			output = "blox:"..material.."_loop 6",
+			palette = "extended",
+			neutral_node = def_mat,
 			recipe = {
-				{ def_mat, def_mat,   def_mat },
-				{ def_mat, dye_color, def_mat },
-				{ def_mat, def_mat,   def_mat },
+				{ "NEUTRAL_NODE", "NEUTRAL_NODE", "NEUTRAL_NODE" },
+				{ "NEUTRAL_NODE", "MAIN_DYE",     "NEUTRAL_NODE" },
+				{ "NEUTRAL_NODE", "NEUTRAL_NODE", "NEUTRAL_NODE" },
 			}
 		})
+
 	end
 end
 

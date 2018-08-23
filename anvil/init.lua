@@ -5,17 +5,13 @@
 -- * the hammer gets dammaged a bit at each repair step
 ---------------------------------------------------------------------------------------
 
-anvil = {
-  setting = {
-    item_displacement = 7/16,
-  }
-}
-
 minetest.register_alias("castle:anvil", "anvil:anvil")
 
 -- internationalization boilerplate
 local MP = minetest.get_modpath(minetest.get_current_modname())
 local S, NS = dofile(MP.."/intllib.lua")
+
+local item_displacement = 7/16
 
 -- the hammer for the anvil
 minetest.register_tool("anvil:hammer", {
@@ -73,7 +69,7 @@ minetest.register_entity("anvil:item",{
 })
 
 local remove_item = function(pos, node)
-	local objs = minetest.get_objects_inside_radius({x = pos.x, y = pos.y + anvil.setting.item_displacement, z = pos.z}, .5)
+	local objs = minetest.env:get_objects_inside_radius({x = pos.x, y = pos.y + item_displacement, z = pos.z}, .5)
 	if objs then
 		for _, obj in ipairs(objs) do
 			if obj and obj:get_luaentity() and obj:get_luaentity().name == "anvil:item" then
@@ -84,13 +80,13 @@ local remove_item = function(pos, node)
 end
 
 local update_item = function(pos, node)
-	local meta = minetest.get_meta(pos)
+	local meta = minetest.env:get_meta(pos)
 	local inv = meta:get_inventory()
 	if not inv:is_empty("input") then
-		pos.y = pos.y + anvil.setting.item_displacement
+		pos.y = pos.y + item_displacement
 		tmp.nodename = node.name
 		tmp.texture = inv:get_stack("input", 1):get_name()
-		local e = minetest.add_entity(pos,"anvil:item")
+		local e = minetest.env:add_entity(pos,"anvil:item")
 		local yaw = math.pi*2 - node.param2 * math.pi/2
 		e:setyaw(yaw)
 	end
@@ -161,7 +157,6 @@ minetest.register_node("anvil:anvil", {
 		end
 		if (listname=='input'
 			and(stack:get_wear() == 0
-			or minetest.get_item_group(stack:get_name(), "not_repaired_by_anvil") ~= 0
 			or stack:get_name() == "technic:water_can" 
 			or stack:get_name() == "technic:lava_can" )) then
 			
@@ -184,13 +179,12 @@ minetest.register_node("anvil:anvil", {
 	
 	on_rightclick = function(pos, node, clicker, itemstack)
 		if itemstack:get_count() == 0 then
-			local meta = minetest.get_meta(pos)
+			local meta = minetest.env:get_meta(pos)
 			local inv = meta:get_inventory()
 			if not inv:is_empty("input") then
 				local return_stack = inv:get_stack("input", 1)
 				inv:set_stack("input", 1, nil)
-				local wield_index = clicker:get_wield_index()
-				clicker:get_inventory():set_stack("main", wield_index, return_stack)
+				clicker:get_inventory():add_item("main", return_stack)
 				remove_item(pos, node)
 				return return_stack
 			end		
@@ -198,7 +192,7 @@ minetest.register_node("anvil:anvil", {
 		local this_def = minetest.registered_nodes[node.name]
 		if this_def.allow_metadata_inventory_put(pos, "input", 1, itemstack:peek_item(), clicker) > 0 then
 			local s = itemstack:take_item()
-			local meta = minetest.get_meta(pos)
+			local meta = minetest.env:get_meta(pos)
 			local inv = meta:get_inventory()
 			inv:add_item("input", s)
 			update_item(pos,node)
@@ -219,8 +213,7 @@ minetest.register_node("anvil:anvil", {
 			if not inv:is_empty("input") then
 				local return_stack = inv:get_stack("input", 1)
 				inv:set_stack("input", 1, nil)
-				local wield_index = puncher:get_wield_index()
-				puncher:get_inventory():set_stack("main", wield_index, return_stack)
+				puncher:get_inventory():add_item("main", return_stack)
 				remove_item(pos, node)
 			end		
 		end
@@ -287,7 +280,7 @@ minetest.register_node("anvil:anvil", {
 			minetest.chat_send_player( puncher:get_player_name(), S('Your @1 has been repaired successfully.', tool_desc))
 			return
 		else
-			pos.y = pos.y + anvil.setting.item_displacement
+			pos.y = pos.y + item_displacement
 			minetest.sound_play({name="anvil_clang"}, {pos=pos})
 			minetest.add_particlespawner({
 				amount = 10,
@@ -325,7 +318,7 @@ minetest.register_lbm({
 	nodenames = { "anvil:anvil" },
 	run_at_every_load = true,
 	action = function(pos, node, active_object_count, active_object_count_wider)
-		local test_pos = {x=pos.x, y=pos.y + anvil.setting.item_displacement, z=pos.z}
+		local test_pos = {x=pos.x, y=pos.y + item_displacement, z=pos.z}
 		if #minetest.get_objects_inside_radius(test_pos, 0.5) > 0 then return end
 		update_item(pos, node)
 	end
@@ -368,6 +361,6 @@ minetest.register_craft({
 	recipe = {
                 {"default:steel_ingot","default:steel_ingot","default:steel_ingot"},
                 {"default:steel_ingot","default:steel_ingot","default:steel_ingot"},
-                {"group:stick", '', ''} },
+                {'',                   "group:stick",      ''                   } }
 })
 

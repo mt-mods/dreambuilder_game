@@ -4,5 +4,3 @@ vines?
 doc?
 intllib?
 loot?
-hemp?
-cottages?

@@ -175,14 +175,25 @@ if not minetest.get_modpath("usesdirt") then
 		description = "Dirt Brick",
 		groups = {snappy=2,choppy=1,oddly_breakable_by_hand=2},
 	})
-	minetest.register_craft({
-		output = '"usesdirt:dirt_brick" 6',
-		recipe = {
-			{'default:dirt', 'default:dirt', 'default:dirt'},
-			{'default:dirt', 'default:dirt', 'default:dirt'},
-			{'default:dirt', 'default:dirt', 'default:dirt'},
-		}
-	})
+
+	if minetest.get_modpath("moreblocks") then
+		minetest.register_craft({
+			output = 'usesdirt:dirt_brick 24',
+			recipe = {
+				{'moreblocks:dirt_compressed', 'moreblocks:dirt_compressed', '' },
+				{'moreblocks:dirt_compressed', 'moreblocks:dirt_compressed', '' }
+			}
+		})
+	else
+		minetest.register_craft({
+			output = 'usesdirt:dirt_brick 6',
+			recipe = {
+				{'default:dirt', 'default:dirt', 'default:dirt'},
+				{'default:dirt', 'default:dirt', 'default:dirt'},
+				{'default:dirt', 'default:dirt', 'default:dirt'},
+			}
+		})
+	end
 
 	minetest.register_node(":usesdirt:dirt_ladder", {
 		description = "Ladder",

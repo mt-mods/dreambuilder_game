@@ -56,9 +56,7 @@ minetest.register_node("ilights:light", {
 	node_box = lamp_cbox,
 	after_place_node = function(pos, placer, itemstack, pointed_thing)
 		unifieddyes.fix_rotation(pos, placer, itemstack, pointed_thing)
-		unifieddyes.recolor_on_place(pos, placer, itemstack, pointed_thing)
 	end,
-	after_dig_node = unifieddyes.after_dig_node
 })
 
 minetest.register_craft({
@@ -68,6 +66,28 @@ minetest.register_craft({
 		{ "",                     "default:glass",        "" },
 		{ "default:steel_ingot",  "default:torch",        "default:steel_ingot" }
 	},
+})
+
+unifieddyes.register_color_craft({
+	output = "ilights:light 3",
+	palette = "wallmounted",
+	neutral_node = "",
+	recipe = {
+		{ "",                     "default:steel_ingot",  ""                    },
+		{ "",                     "default:glass",        "MAIN_DYE"            },
+		{ "default:steel_ingot",  "default:torch",        "default:steel_ingot" }
+	}
+})
+
+unifieddyes.register_color_craft({
+	output = "ilights:light",
+	palette = "wallmounted",
+	type = "shapeless",
+	neutral_node = "ilights:light",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE",
+	}
 })
 
 -- convert old static nodes to param2 coloring

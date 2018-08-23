@@ -10,6 +10,89 @@ else
 	S = function(s) return s end
 end
 
+local color_to_char = {
+	"0",
+	"1",
+	"2",
+	"3",
+	"4",
+	"5",
+	"6",
+	"7",
+	"8",
+	"9",
+	"A",
+	"B",
+	"C",
+	"D",
+	"E",
+	"F",
+	"G",
+	"H",
+	"I",
+	"J",
+	"K",
+	"L",
+	"M",
+	"N",
+	"O",
+	"P",
+	"Q",
+	"R"
+}
+
+local char_to_color = {
+	["0"] = 0,
+	["1"] = 1,
+	["2"] = 2,
+	["3"] = 3,
+	["4"] = 4,
+	["5"] = 5,
+	["6"] = 6,
+	["7"] = 7,
+	["8"] = 8,
+	["9"] = 9,
+
+	["A"] = 10,
+	["B"] = 11,
+	["C"] = 12,
+	["D"] = 13,
+	["E"] = 14,
+	["F"] = 15,
+	["G"] = 16,
+	["H"] = 17,
+	["I"] = 18,
+	["J"] = 19,
+	["K"] = 20,
+	["L"] = 21,
+	["M"] = 22,
+	["N"] = 23,
+	["O"] = 24,
+	["P"] = 25,
+	["Q"] = 26,
+	["R"] = 27,
+
+	["a"] = 10,
+	["b"] = 11,
+	["c"] = 12,
+	["d"] = 13,
+	["e"] = 14,
+	["f"] = 15,
+	["g"] = 16,
+	["h"] = 17,
+	["i"] = 18,
+	["j"] = 19,
+	["k"] = 20,
+	["l"] = 21,
+	["m"] = 22,
+	["n"] = 23,
+	["o"] = 24,
+	["p"] = 25,
+	["q"] = 26,
+	["r"] = 27
+
+}
+
 -- the following functions based on the so-named ones in Jeija's digilines mod
 
 local reset_meta = function(pos)
@@ -60,43 +143,51 @@ end
 led_marquee.set_timer = function(pos, timeout)
 	local timer = minetest.get_node_timer(pos)
 	timer:stop()
+	if not timeout or timeout < 0.2 or timeout > 5 then return false end
+
 	if timeout > 0 then
 		local meta = minetest.get_meta(pos)
+		meta:set_int("timeout", timeout)
 		timer:start(timeout)
 	end
 end
 
 led_marquee.scroll_text = function(pos, elapsed, skip)
+	skip = skip or 1
 	local meta = minetest.get_meta(pos)
 	local msg = meta:get_string("last_msg")
 	local channel = meta:get_string("channel")
 	local index = meta:get_int("index")
-	if not index or index < 1 or not string.byte(msg, index) then index = 1 end
+	local color = meta:get_int("last_color")
+	local colorchar = color_to_char[color+1]
+	if not index or index < 1 then index = 1 end
 	local len = string.len(msg)
-	skip = skip or 1
-
 	index = index + skip
+	if index > len then index = 1 end
 
-	while index < len and string.byte(msg, index) < 28 do
-		index = index + 1
-		if index > len then index = 1 break end
+	-- search backward to find the most recent color code in the string
+	local r = index
+	while r > 0 and not string.match(string.sub(msg, r, r+1), "/[0-9A-Ra-r]") do
+		r = r - 1
+	end
+	if r == 0 then r = 1 end
+	if string.match(string.sub(msg, r, r+1), "/[0-9A-Ra-r]") then
+		colorchar = string.sub(msg, r+1, r+1)
 	end
 
-	if string.byte(msg, index - 1) < 28 then
-		led_marquee.display_msg(pos, channel, string.sub(msg, index - 1)..string.rep(" ", skip + 1))
-	else
-		local i = index - 1
-		local color = ""
-		while i > 0 and string.byte(msg, i) > 27 do
-			i = i - 1
-			if i == 0 then break end
+	-- search forward to find the next printable symbol after the current index
+	local f = index
+	while f < len do
+		if string.match(string.sub(msg, f-1, f), "/[0-9A-Ra-r]") then
+			f = f + 2
+		else
+			break
 		end
-		if i > 0 then color = string.sub(msg, i, i) end
-		led_marquee.display_msg(pos, channel, color..string.sub(msg, index)..string.rep(" ", skip + 1))
 	end
+	led_marquee.display_msg(pos, channel, "/"..colorchar..string.sub(msg, f)..string.rep(" ", skip + 1))
 
-	meta:set_int("index", index)
-	if not elapsed or elapsed < 0.5 then return false end
+	meta:set_int("index", f)
+	if not elapsed or elapsed < 0.2 then return false end
 	return true
 end
 
@@ -118,10 +209,14 @@ local cbox = {
 	wall_side = { -8/16, -8/16, -8/16, -7/16, 8/16, 8/16 }
 }
 
+led_marquee.decode_color = function(msg)
+
+end
+
 led_marquee.display_msg = function(pos, channel, msg)
-	msg = string.sub(msg, 1, 4096)
+	msg = string.sub(msg, 1, 6144).." "
 	if string.sub(msg,1,1) == string.char(255) then -- treat it as incoming UTF-8
-		msg = make_iso(string.sub(msg, 2, 4096))
+		msg = make_iso(string.sub(msg, 2, 6144))
 	end
 
 	local master_fdir = minetest.get_node(pos).param2 % 8
@@ -154,7 +249,7 @@ led_marquee.display_msg = function(pos, channel, msg)
 		elseif string.match(node.name, "led_marquee:char_")
 			and fdir ~= master_fdir or (setchan ~= nil and setchan ~= "" and setchan ~= channel) then
 			break
-		elseif asc == 28 then
+		elseif asc == 10 then
 			pos2.x = pos.x
 			pos2.y = pos2.y-1
 			pos2.z = pos.z
@@ -168,17 +263,34 @@ led_marquee.display_msg = function(pos, channel, msg)
 			pos2.z = pos.z + (fdir_to_right[fdir+1][2])*c
 			i = i + 3
 			wrapped = nil
+		elseif asc == 30 then -- translate to slash for printing
+			minetest.swap_node(pos2, { name = "led_marquee:char_47", param2 = master_fdir + (last_color*8)})
+			pos2.x = pos2.x + fdir_to_right[fdir+1][1]
+			pos2.z = pos2.z + fdir_to_right[fdir+1][2]
+			i = i + 1
+		elseif asc == 47 then -- slash
+			local ccode = string.sub(msg, i+1, i+1)
+			if ccode then
+				if char_to_color[ccode] then
+					last_color = char_to_color[ccode]
+					i = i + 2
+				else
+					minetest.swap_node(pos2, { name = "led_marquee:char_47", param2 = master_fdir + (last_color*8)})
+					pos2.x = pos2.x + fdir_to_right[fdir+1][1]
+					pos2.z = pos2.z + fdir_to_right[fdir+1][2]
+					i = i + 1
+				end
+			end
+			master_meta:set_int("last_color", last_color)
+			wrapped = nil
 		elseif asc > 30 and asc < 256 then
 			minetest.swap_node(pos2, { name = "led_marquee:char_"..asc, param2 = master_fdir + (last_color*8)})
 			pos2.x = pos2.x + fdir_to_right[fdir+1][1]
 			pos2.z = pos2.z + fdir_to_right[fdir+1][2]
 			i = i + 1
 			wrapped = nil
-		elseif asc < 28 then
-			last_color = asc
-			master_meta:set_int("last_color", asc)
+		else
 			i = i + 1
-			wrapped = nil
 		end
 	end
 end
@@ -210,15 +322,12 @@ local on_digiline_receive_string = function(pos, node, channel, msg)
 				meta:set_int("index", 1)
 			elseif msg == "start_scroll" then
 				local timeout = meta:get_int("timeout")
-				if not timeout or timeout < 0.5 or timeout > 5 then timeout = 0 end
 				led_marquee.set_timer(pos, timeout)
 			elseif msg == "stop_scroll" then
 				led_marquee.set_timer(pos, 0)
 				return
 			elseif string.sub(msg, 1, 12) == "scroll_speed" then
 				local timeout = tonumber(string.sub(msg, 13))
-				if not timeout or timeout < 0.5 or timeout > 5 then timeout = 0 end
-				meta:set_int("timeout", timeout)
 				led_marquee.set_timer(pos, timeout)
 			elseif string.sub(msg, 1, 11) == "scroll_step" then
 				local skip = tonumber(string.sub(msg, 12))
@@ -230,20 +339,21 @@ local on_digiline_receive_string = function(pos, node, channel, msg)
 			elseif msg == "getindex" then -- get the scroll index
 				digilines.receptor_send(pos, digiline.rules.default, channel, meta:get_int("index"))
 			else
+				msg = string.gsub(msg, "//", string.char(30))
 				led_marquee.set_timer(pos, 0)
+				local last_msg = meta:get_string("last_msg")
 				meta:set_string("last_msg", msg)
 				led_marquee.display_msg(pos, channel, msg)
-				meta:set_int("index", 1)
+				if last_msg ~= msg then
+					meta:set_int("index", 1)
+				end
 			end
 		else
 			local asc = string.byte(msg)
-			if asc > 30 and asc < 256 then
+			if asc > 29 and asc < 256 then
 				minetest.swap_node(pos, { name = "led_marquee:char_"..asc, param2 = fdir + (last_color*8)})
 				meta:set_string("last_msg", tostring(msg))
 				meta:set_int("index", 1)
-			elseif asc < 28 then
-				last_color = asc
-				meta:set_int("last_color", asc)
 			end
 		end
 	elseif msg and type(msg) == "number" then
@@ -258,7 +368,7 @@ end
 for i = 31, 255 do
 	local groups = { cracky = 2, not_in_creative_inventory = 1}
 	local light = LIGHT_MAX-2
-	local description = S("Alphanumeric LED marquee panel ("..i..")")
+	local description = S("LED marquee panel ("..i..")")
 	local tiles = {
 				{ name="led_marquee_base.png", color="white"},
 				{ name="led_marquee_leds_off.png", color="white"},
@@ -279,7 +389,8 @@ for i = 31, 255 do
 	if i == 32 then
 		groups = {cracky = 2}
 		light = nil
-		description = S("Alphanumeric LED marquee panel")
+		description = S("LED marquee panel")
+		wimage = "led_marquee_leds_off.png^(led_marquee_char_155.png^[multiply:red)"
 	end
 
 	minetest.register_node("led_marquee:char_"..i, {
@@ -287,6 +398,8 @@ for i = 31, 255 do
 		drawtype = "mesh",
 		mesh = "led_marquee.obj",
 		tiles = tiles,
+		inventory_image = wimage,
+		wield_image = wimage,
 		palette="led_marquee_palette.png",
 		use_texture_alpha = true,
 		groups = groups,

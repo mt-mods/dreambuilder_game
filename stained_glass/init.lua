@@ -17,6 +17,7 @@ Email: doyousketch2 @ yahoo.com
 Unified Dyes was released under GNU-GPL 2.0, see LICENSE for info.
 More Blocks was released under zlib/libpng for code and CC BY-SA 3.0 Unported for textures, see LICENSE.txt for info.
 
+
 Additional changes by VanessaEzekowitz in July 2013 to take all items 
 out of creative inventory.
 
@@ -33,6 +34,8 @@ January 2017 -- rewritten a bit more by Vanessa E. to use engine param2 coloriza
 				some dye to re-color it (you have to dig and re-place if you want to
 				darken it).  Crafting is no longer used to create the colors.
 
+August 2018 -- altered to use proper colored itemstacks with crafting
+
 ==============================================================================
 ]]--
 
@@ -48,7 +51,6 @@ minetest.register_node("stained_glass:stained_glass", {
 	paramtype = "light",
 	paramtype2 = "color",
 	palette = "unifieddyes_palette_extended.png",
-	place_param2 = 240,
 	sunlight_propagates = true,
 	use_texture_alpha = true,
 	light_source = myglow,
@@ -56,18 +58,12 @@ minetest.register_node("stained_glass:stained_glass", {
 	walkable = true,
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, not_in_creative_inventory=1, ud_param2_colorable = 1},
 	sounds = default.node_sound_glass_defaults(),
-	drop = "moreblocks:super_glow_glass",
 	on_construct = unifieddyes.on_construct,
-	after_place_node = unifieddyes.recolor_on_place,
-	after_dig_node = unifieddyes.after_dig_node,
-	drop = "moreblocks:super_glow_glass"
 })
 
 minetest.override_item("moreblocks:super_glow_glass", {
 	palette = "unifieddyes_palette_extended.png",
 	groups = {snappy = 2, cracky = 3, oddly_breakable_by_hand = 3, ud_param2_colorable = 1},
-	ud_replacement_node = "stained_glass:stained_glass",
-	after_place_node = unifieddyes.recolor_on_place
 })
 
 -- trap glass
@@ -79,7 +75,6 @@ minetest.register_node("stained_glass:stained_trap_glass", {
 	paramtype = "light",
 	paramtype2 = "color",
 	palette = "unifieddyes_palette_extended.png",
-	place_param2 = 240,
 	sunlight_propagates = true,
 	use_texture_alpha = true,
 	light_source = myglow,
@@ -87,19 +82,39 @@ minetest.register_node("stained_glass:stained_trap_glass", {
 	walkable = false,
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, not_in_creative_inventory=1, ud_param2_colorable = 1},
 	sounds = default.node_sound_glass_defaults(),
-	drop = "moreblocks:trap_super_glow_glass",
 	on_construct = unifieddyes.on_construct,
-	after_place_node = unifieddyes.recolor_on_place,
-	after_dig_node = unifieddyes.after_dig_node,
-	drop = "moreblocks:trap_super_glow_glass"
 })
 
 minetest.override_item("moreblocks:trap_super_glow_glass", {
 	palette = "unifieddyes_palette_extended.png",
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, ud_param2_colorable = 1},
-	ud_replacement_node = "stained_glass:stained_trap_glass",
-	after_place_node = unifieddyes.recolor_on_place
 })
+
+-- crafting
+
+unifieddyes.register_color_craft({
+	output = "stained_glass:stained_glass",
+	palette = "extended",
+	type = "shapeless",
+	neutral_node = "moreblocks:super_glow_glass",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
+	}
+})
+
+unifieddyes.register_color_craft({
+	output = "stained_glass:stained_trap_glass",
+	palette = "extended",
+	type = "shapeless",
+	neutral_node = "moreblocks:trap_super_glow_glass",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
+	}
+})
+
+-- old static stuff
 
 function stainedglass.makenode(arg)
 	local name=arg.blockname
