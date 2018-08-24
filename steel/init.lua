@@ -100,8 +100,11 @@ minetest.register_node("steel:plate_rusted", {
 	sounds = default.node_sound_stone_defaults(),
 })
 
+local base_tex = "strut.png"
+
 if minetest.registered_nodes["streets:steel_support"] then
 	minetest.register_alias("steel:strut","streets:steel_support")
+	base_tex = "streets_support.png"
 else
 	minetest.register_node("steel:strut", {
 		drawtype = "glasslike",
@@ -114,6 +117,26 @@ else
 	})
 	minetest.register_alias("streets:steel_support","steel:strut")
 end
+
+minetest.register_node("steel:strut_mount", {
+	description = "Strut with mount",
+	drawtype = "mesh",
+	mesh = "steel_cube.obj",
+	tiles = {
+		base_tex,
+		base_tex,
+		base_tex.."^steel_strut_overlay.png",
+		base_tex.."^steel_strut_overlay.png",
+		base_tex.."^steel_strut_overlay.png",
+		base_tex.."^steel_strut_overlay.png",
+	},
+	is_ground_content = true,
+	paramtype= "light",
+	paramtype2 = "wallmounted",
+	groups = {choppy=1,cracky=1},
+	sounds =  default.node_sound_stone_defaults(),
+})
+
 minetest.register_node("steel:grate_soft", {
 	description = "Soft Steel Grate",
 	drawtype = "fencelike",
@@ -266,6 +289,22 @@ minetest.register_craft({
 		{'default:steel_ingot', 'default:steel_ingot', 'default:steel_ingot'},
 	}
 })
+
+minetest.register_craft({
+	output = 'steel:strut_mount',
+	recipe = {
+		{'steel:strut', 'default:steel_ingot'},
+	}
+})
+
+minetest.register_craft({
+	output = 'steel:strut_mount',
+	recipe = {
+		{'streets:steel_support', 'default:steel_ingot'},
+	}
+})
+
+
 	--remelting recipes
 
 minetest.register_craft({
@@ -317,6 +356,34 @@ minetest.register_craft({
 	}
 })
 
+if minetest.get_modpath("unifieddyes") then
+	-- Colorize default:steel_block
 
+	minetest.register_node("steel:steel_block", {
+		description = "Steel block (colorized)",
+		tiles = {"steel_default_steel_block.png"},
+		paramtype = "light",
+		paramtype2 = "color",
+		is_ground_content = false,
+		palette = "unifieddyes_palette_extended.png",
+		groups = {cracky=1, level=2, ud_param2_colorable=1, not_in_creative_inventory=1},
+		on_construct = unifieddyes.on_construct,
+		sounds = default.node_sound_metal_defaults(),
+	})
 
+	minetest.override_item("default:steelblock", {
+		palette = "unifieddyes_palette_extended.png",
+		groups = {cracky=1, level=2, ud_param2_colorable=1},
+	})
 
+	unifieddyes.register_color_craft({
+		output = "steel:steel_block",
+		palette = "extended",
+		neutral_node = "default:steelblock",
+		type = "shapeless",
+		recipe = {
+			"NEUTRAL_NODE",
+			"MAIN_DYE",
+		}
+	})
+end

@@ -597,180 +597,6 @@ function unifieddyes.getpaletteidx(color, palette_type)
 	end
 end
 
-function unifieddyes.on_use(itemstack, player, pointed_thing)
-	local stackname = itemstack:get_name()
-	local playername = player:get_player_name()
-
-	if pointed_thing and pointed_thing.type == "node" and unifieddyes.select_node(pointed_thing) then
-		if minetest.is_protected(unifieddyes.select_node(pointed_thing), playername)
-		  and not minetest.check_player_privs(playername, "protection_bypass") then
-			minetest.chat_send_player(playername, "Sorry, someone else owns that spot.")
-			return
-		end
-	end
-
-	if pointed_thing and pointed_thing.type == "object" then
-		pointed_thing.ref:punch(player, 0, itemstack:get_tool_capabilities())
-		return player:get_wielded_item() -- punch may modified the wielded item, load the new and return it
-	end
-
-	if not (pointed_thing and pointed_thing.type == "node") then return end  -- if "using" the dye on nothing at all (e.g. air)
-
-	local pos = minetest.get_pointed_thing_position(pointed_thing)
-	local node = minetest.get_node(pos)
-
-	local nodedef = minetest.registered_nodes[node.name]
-
-	if not nodedef then return end -- target was an unknown node, just bail out
-
-	-- if the node has an on_punch defined, bail out and call that instead, unless "sneak" is pressed.
-	if not player:get_player_control().sneak then
-		local onpunch = nodedef.on_punch(pos, node, player, pointed_thing)
-		if onpunch then
-			return onpunch
-		end
-	end
-
-	-- if the target is unknown, has no groups defined, or isn't UD-colorable, just bail out
-	if not (nodedef and nodedef.groups and nodedef.groups.ud_param2_colorable) then
-		minetest.chat_send_player(playername, "That node can't be colored.")
-		return
-	end
-
-	local newnode = nodedef.ud_replacement_node
-	local palette_type
-
-	if nodedef.palette == "unifieddyes_palette_extended.png" then
-		palette_type = "extended"
-	elseif nodedef.palette == "unifieddyes_palette.png" then
-		palette_type = false
-	elseif nodedef.paramtype2 == "colorfacedir" then
-		palette_type = true
-	elseif nodedef.paramtype2 == "colorwallmounted" then
-		palette_type = "wallmounted"
-	end
-
-	if minetest.is_protected(pos, playername) and not minetest.check_player_privs(playername, {protection_bypass=true}) then
-		minetest.record_protection_violation(pos, playername)
-		return
-	end
-
-	local pos2 = unifieddyes.select_node(pointed_thing)
-	local paletteidx, hue = unifieddyes.getpaletteidx(stackname, palette_type)
-
-	if paletteidx then
-
-		local meta = minetest.get_meta(pos)
-		local prevdye = meta:get_string("dye")
-		local inv = player:get_inventory()
-
-		if not (inv:contains_item("main", prevdye) and creative_mode) and minetest.registered_items[prevdye] then
-			if inv:room_for_item("main", prevdye) then
-				inv:add_item("main", prevdye)
-			else
-				minetest.add_item(pos, prevdye)
-			end
-		end
-
-		meta:set_string("dye", stackname)
-
-		if prevdye == stackname then
-			local a,b = string.find(stackname, ":")
-			minetest.chat_send_player(playername, "That node is already "..string.sub(stackname, a + 1).."." )
-			return
-		elseif not creative_mode then
-			itemstack:take_item()
-		end
-
-		node.param2 = paletteidx
-
-		local oldpaletteidx, oldhuenum = unifieddyes.getpaletteidx(prevdye, palette_type)
-		local oldnode = minetest.get_node(pos)
-
-		local oldhue = nil
-		for _, i in ipairs(unifieddyes.HUES) do
-			if string.find(oldnode.name, "_"..i) and not
-				( string.find(oldnode.name, "_redviolet") and i == "red" ) then
-				oldhue = i
-				break
-			end
-		end
-
-		if newnode then -- this path is used when the calling mod want to supply a replacement node
-			if palette_type == "wallmounted" then
-				node.param2 = paletteidx + (minetest.get_node(pos).param2 % 8)
-			elseif palette_type == true then  -- it's colorfacedir
-				if oldhue ~=0 then -- it's colored, not grey
-					if oldhue ~= nil then -- it's been painted before
-						if hue ~= 0 then -- the player's wielding a colored dye
-							newnode = string.gsub(newnode, "_"..oldhue, "_"..unifieddyes.HUES[hue])
-						else -- it's a greyscale dye
-							newnode = string.gsub(newnode, "_"..oldhue, "_grey")
-						end
-					else -- it's never had a color at all
-						if hue ~= 0 then -- and if the wield is greyscale, don't change the node name
-							newnode = string.gsub(newnode, "_grey", "_"..unifieddyes.HUES[hue])
-						end
-					end
-				else
-					if hue ~= 0 then  -- greyscale dye on greyscale node = no hue change
-						newnode = string.gsub(newnode, "_grey", "_"..unifieddyes.HUES[hue])
-					end
-				end
-				node.param2 = paletteidx + (minetest.get_node(pos).param2 % 32)
-			else -- it's the 89-color palette, or the extended palette
-				node.param2 = paletteidx
-			end
-			node.name = newnode
-			minetest.swap_node(pos, node)
-			if palette_type == "extended" then
-				meta:set_string("palette", "ext")
-			end
-			if not creative_mode then
-				return itemstack
-			end
-		else -- this path is used when you're just painting an existing node, rather than replacing one.
-			newnode = oldnode  -- note that here, newnode/oldnode are a full node, not just the name.
-			if palette_type == "wallmounted" then
-				newnode.param2 = paletteidx + (minetest.get_node(pos).param2 % 8)
-			elseif palette_type == true then -- it's colorfacedir
-				if oldhue then
-					if hue ~= 0 then
-						newnode.name = string.gsub(newnode.name, "_"..oldhue, "_"..unifieddyes.HUES[hue])
-					else
-						newnode.name = string.gsub(newnode.name, "_"..oldhue, "_grey")
-					end
-				elseif string.find(minetest.get_node(pos).name, "_grey") and hue ~= 0 then
-					newnode.name = string.gsub(newnode.name, "_grey", "_"..unifieddyes.HUES[hue])
-				end
-				newnode.param2 = paletteidx + (minetest.get_node(pos).param2 % 32)
-			else -- it's the 89-color palette, or the extended palette
-				newnode.param2 = paletteidx
-			end
-			minetest.swap_node(pos, newnode)
-			if palette_type == "extended" then
-				meta:set_string("palette", "ext")
-			end
-			if not creative_mode then
-				return itemstack
-			end
-		end
-	else
-		local a,b = string.find(stackname, ":")
-		if a then
-			minetest.chat_send_player(playername, "That node can't be colored "..string.sub(stackname, a + 1).."." )
-		end
-	end
-end
-
--- re-define default dyes slightly, to add on_use
-
-for _, color in ipairs(default_dyes) do
-	minetest.override_item("dye:"..color, {
-		on_use = unifieddyes.on_use
-	})
-end
-
 -- build a table to convert from classic/89-color palette to extended palette
 
 -- the first five entries are for the old greyscale - white, light, grey, dark, black
@@ -825,7 +651,6 @@ for _, h in ipairs(unifieddyes.HUES_EXTENDED) do
 		if minetest.registered_items["dye:"..val..hue] then
 			minetest.override_item("dye:"..val..hue, {
 				inventory_image = "unifieddyes_dye.png^[colorize:#"..color..":200",
-				on_use = unifieddyes.on_use
 			})
 		else
 			if (val..hue) ~= "medium_orange"
@@ -834,7 +659,6 @@ for _, h in ipairs(unifieddyes.HUES_EXTENDED) do
 					description = S(desc),
 					inventory_image = "unifieddyes_dye.png^[colorize:#"..color..":200",
 					groups = { dye=1, not_in_creative_inventory=1 },
-					on_use = unifieddyes.on_use
 				})
 			end
 		end
@@ -857,7 +681,6 @@ for _, h in ipairs(unifieddyes.HUES_EXTENDED) do
 				description = S(desc.." (low saturation)"),
 				inventory_image = "unifieddyes_dye.png^[colorize:#"..color..":200",
 				groups = { dye=1, not_in_creative_inventory=1 },
-				on_use = unifieddyes.on_use
 			})
 			minetest.register_alias("unifieddyes:"..val..hue.."_s50", "dye:"..val..hue.."_s50")
 		end
@@ -878,7 +701,6 @@ for y = 1, 14 do -- colors 0 and 15 are black and white, default dyes
 			description = S(desc),
 			inventory_image = "unifieddyes_dye.png^[colorize:#"..rgb..":200",
 			groups = { dye=1, not_in_creative_inventory=1 },
-			on_use = unifieddyes.on_use
 		})
 		minetest.register_alias("unifieddyes:"..name, "dye:"..name)
 	end
@@ -886,19 +708,16 @@ end
 
 minetest.override_item("dye:grey", {
 	inventory_image = "unifieddyes_dye.png^[colorize:#888888:200",
-	on_use = unifieddyes.on_use
 })
 
 minetest.override_item("dye:dark_grey", {
 	inventory_image = "unifieddyes_dye.png^[colorize:#444444:200",
-	on_use = unifieddyes.on_use
 })
 
 minetest.register_craftitem(":dye:light_grey", {
 	description = S("Light grey Dye"),
 	inventory_image = "unifieddyes_dye.png^[colorize:#cccccc:200",
 	groups = { dye=1, not_in_creative_inventory=1 },
-	on_use = unifieddyes.on_use
 })
 
 unifieddyes.base_color_crafts = {

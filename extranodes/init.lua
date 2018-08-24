@@ -146,6 +146,33 @@ local iclipfence_def = {
 	sounds = default.node_sound_stone_defaults(),
 }
 
+local sclip_tex = {
+	"technic_insulator_clip.png",
+	{ name = "strut.png^steel_strut_overlay.png", color = "white" },
+	{ name = "strut.png", color = "white" }
+}
+
+if minetest.registered_nodes["streets:steel_support"] then
+	sclip_tex = {
+		"technic_insulator_clip.png",
+		{ name = "streets_support.png^technic_steel_strut_overlay.png", color = "white" },
+		{ name = "streets_support.png", color = "white" }
+	}
+end
+
+local sclip_def = {
+	description = "Steel strut with insulator/cable clip",
+	drawtype = "mesh",
+	mesh = "technic_steel_strut_with_insulator_clip.obj",
+	tiles = sclip_tex,
+	paramtype = "light",
+	paramtype2 = "wallmounted",
+	is_ground_content = false,
+	sounds = default.node_sound_stone_defaults(),
+	groups = { choppy=1, cracky=1 },
+	backface_culling = false
+}
+
 if minetest.get_modpath("unifieddyes") then
 	iclip_def.paramtype2 = "colorwallmounted"
 	iclip_def.palette = "unifieddyes_palette_colorwallmounted.png"
@@ -158,10 +185,18 @@ if minetest.get_modpath("unifieddyes") then
 	iclipfence_def.palette = "unifieddyes_palette_extended.png"
 	iclipfence_def.on_construct = unifieddyes.on_construct
 	iclipfence_def.groups = {fence=1, choppy=1, snappy=1, oddly_breakable_by_hand=1, ud_param2_colorable = 1}
+
+	sclip_def.paramtype2 = "colorwallmounted"
+	sclip_def.palette = "unifieddyes_palette_colorwallmounted.png"
+	sclip_def.after_place_node = function(pos, placer, itemstack, pointed_thing)
+		unifieddyes.fix_rotation(pos, placer, itemstack, pointed_thing)
+	end
+	sclip_def.groups = {choppy=1, cracky=1, ud_param2_colorable = 1}
 end
 
 minetest.register_node(":technic:insulator_clip", iclip_def)
 minetest.register_node(":technic:insulator_clip_fencepost", iclipfence_def)
+minetest.register_node(":technic:steel_strut_with_insulator_clip", sclip_def)
 
 minetest.register_craft({
 	output = "technic:insulator_clip",
@@ -180,6 +215,39 @@ minetest.register_craft({
 		{ "technic:raw_latex", "default:fence_wood", "technic:raw_latex"},
 	}
 })
+
+if minetest.registered_nodes["steel:strut_mount"] then
+	minetest.register_craft({
+		output = "technic:steel_strut_with_insulator_clip",
+		recipe = {
+			{"technic:insulator_clip_fencepost"},
+			{"steel:strut_mount"}
+		}
+	})
+end
+
+if minetest.registered_nodes["steel:strut"] then
+	minetest.register_craft({
+		output = "technic:steel_strut_with_insulator_clip",
+		recipe = {
+			{"technic:insulator_clip_fencepost"},
+			{"steel:strut"},
+			{"default:steel_ingot"}
+		}
+	})
+
+end
+
+if minetest.registered_nodes["streets:steel_support"] then
+	minetest.register_craft({
+		output = "technic:steel_strut_with_insulator_clip",
+		recipe = {
+			{"technic:insulator_clip_fencepost"},
+			{"streets:steel_support"},
+			{"default:steel_ingot"}
+		}
+	})
+end
 
 if minetest.get_modpath("unifieddyes") then
 
@@ -205,4 +273,52 @@ if minetest.get_modpath("unifieddyes") then
 		}
 	})
 
+	unifieddyes.register_color_craft({
+		output = "technic:steel_strut_with_insulator_clip",
+		palette = "wallmounted",
+		type = "shapeless",
+		neutral_node = "",
+		recipe = {
+			"technic:steel_strut_with_insulator_clip",
+			"MAIN_DYE"
+		}
+	})
+
+	if minetest.registered_nodes["steel:strut_mount"] then
+		unifieddyes.register_color_craft({
+			output = "technic:steel_strut_with_insulator_clip",
+			palette = "wallmounted",
+			neutral_node = "",
+			recipe = {
+				{ "technic:insulator_clip_fencepost", "MAIN_DYE" },
+				{ "steel:strut_mount",                ""         },
+			}
+		})
+	end
+
+	if minetest.registered_nodes["steel:strut"] then
+		unifieddyes.register_color_craft({
+			output = "technic:steel_strut_with_insulator_clip",
+			palette = "wallmounted",
+			neutral_node = "",
+			recipe = {
+				{ "technic:insulator_clip_fencepost", "MAIN_DYE" },
+				{ "steel:strut",                      ""         },
+				{ "default:steel_ingot",              ""         }
+			}
+		})
+	end
+
+	if minetest.registered_nodes["streets:steel_support"] then
+		unifieddyes.register_color_craft({
+			output = "technic:steel_strut_with_insulator_clip",
+			palette = "wallmounted",
+			neutral_node = "technic:steel_strut_with_insulator_clip",
+			recipe = {
+				{ "technic:insulator_clip_fencepost", "MAIN_DYE" },
+				{ "streets:steel_support",            ""         },
+				{ "default:steel_ingot",              ""         }
+			}
+		})
+	end
 end

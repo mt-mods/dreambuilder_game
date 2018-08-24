@@ -152,3 +152,5 @@ If your mod never has never used Unified Dyes at all, in short, do the following
 If your colored node is based on someone else's neutral node, for example if you made a mod that creates multiple colors of minetest_game's default clay, you may find it best to create a single "stand-in" node that's identical to the neutral node, but named for your mod, hidden from the creative inventory, and has a properly-prepared grayscale texture image in addition to the above keys.  Use the neutral node and the custom hidden node as in the above craft helper call.  Then use minetest.override_item() to add the on_construct and palette keys and the ud_param2_colorable group to that "someone else's" node.
 
 * You will need to write a run-only-once LBM to convert your old statically-colored nodes to use hardware coloring.  See above for functions that will help reduce the work required for this part.
+
+If your mod has no colorable items, and you wish to expand it accordingly, follow the above "never used" section, skipping the "remove/delete this and that" items, and of course omitting the LBM.
