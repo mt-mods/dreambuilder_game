@@ -153,6 +153,36 @@ local default_dyes = {
 	"yellow"
 }
 
+-- if a node with a palette is placed in the world,
+-- but the itemstack used to place it has no palette_index (color byte),
+-- create something appropriate to make it officially white.
+
+minetest.register_on_placenode(
+	function(pos, newnode, placer, oldnode, itemstack, pointed_thing)
+		local def = minetest.registered_items[newnode.name]
+		if not def or not def.palette then return false end
+		if string.find(itemstack:to_string(), "palette_index") then
+			minetest.swap_node(pos, {name = newnode.name, param2 = newnode.param2})
+			return
+		end
+
+		local param2 = 0
+		local color = 0
+
+		if def.palette == "unifieddyes_palette_extended.png" then
+			param2 = 240
+			color = 240
+		elseif def.palette == "unifieddyes_palette_colorwallmounted.png" then
+			param2 = newnode.param2 % 8
+		elseif def.palette ~= "unifieddyes_palette.png" then -- it's a split palette
+			param2 = newnode.param2 % 32
+		end
+
+		minetest.swap_node(pos, {name = newnode.name, param2 = param2})
+		minetest.get_meta(pos):set_int("palette_index", color)
+	end
+)
+
 -- just stubs to keep old mods from crashing when expecting auto-coloring
 -- or getting back the dye on dig.
 
