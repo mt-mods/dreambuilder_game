@@ -77,6 +77,10 @@ When given a `color` string (in the form of "dye:foo" or "unifieddyes:foo") and 
 
 This function, called in your node definition's on_construct, just sets the `palette = "ext"` metadata key for the node after it's been placed. This can then be read in an LBM to determine if this node needs to be converted from the old 89-color palette to the extended 256-color palette. Although it is good practice to call this for any node that uses the 256-color palette, it isn't actually necessary as long as the node has never used the 89-color palette, and won't be subjected to an LBM that changes its color.
 
+**`unifieddyes.make_colored_itemstack(itemstack, palette, color)`**
+
+Makes a colored itemstack out of the given `itemstack` and `color` (as a dye, e.g. "dye:dark_red_s50", setting the correct index per the `palette` field, which works as described above for `unifieddyes.getpaletteidx()`.  Said itemstack is returned as a string suitable for use as the output field of a craft recipe, equal in size to the itemstack passed into the function (e.g. if you give it "mymod:colored_node 7", it'll return a stack of 7 colored items).
+
 #### Tables
 
 In addition to the above API calls, Unified Dyes provides several useful tables

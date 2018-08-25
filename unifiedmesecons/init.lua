@@ -11,7 +11,13 @@ local hues = {
 	"violet",
 	"magenta",
 	"redviolet",
-	"grey"
+	"pink",
+	"dark_green",
+	"brown",
+	"black",
+	"dark_grey",
+	"grey",
+	"white",
 }
 
 local function insulated_wire_get_rules(node)
@@ -55,11 +61,21 @@ minetest.unregister_item("mesecons_extrawires:corner_on")
 minetest.unregister_item("mesecons_extrawires:tjunction_off")
 minetest.unregister_item("mesecons_extrawires:tjunction_on")
 
-minetest.register_alias("mesecons_insulated:insulated_off", "mesecons_insulated:insulated_grey_off")
-minetest.register_alias("mesecons_extrawires:corner_off", "mesecons_extrawires:insulated_corner_grey_off")
-minetest.register_alias("mesecons_extrawires:tjunction_off", "mesecons_extrawires:insulated_tjunction_grey_off")
+minetest.register_alias("mesecons_insulated:insulated_off", "mesecons_insulated:insulated_white_off")
+minetest.register_alias("mesecons_extrawires:corner_off", "mesecons_extrawires:insulated_corner_white_off")
+minetest.register_alias("mesecons_extrawires:tjunction_off", "mesecons_extrawires:insulated_tjunction_white_off")
 
 for _,color in pairs(hues) do
+	local palettecolor = color
+	if color == "black" or string.find(color, "grey") or color == "white" then
+		palettecolor = "grey"
+	elseif color == "pink" then
+		palettecolor = "red"
+	elseif color == "dark_green" then
+		palettecolor = "green"
+	elseif color == "brown" then
+		palettecolor = "orange"
+	end
 	mesecon.register_node(":mesecons_insulated:insulated_"..color, {
 		drawtype = "nodebox",
 		description = "Insulated Mesecon",
@@ -68,8 +84,8 @@ for _,color in pairs(hues) do
 		walkable = false,
 		sunlight_propagates = true,
 		on_place = minetest.rotate_node,
-		drop = "mesecons_insulated:insulated_grey_off",
-		palette = "unifieddyes_palette_"..color.."s.png",
+		drop = "mesecons_insulated:insulated_white_off",
+		palette = "unifieddyes_palette_"..palettecolor.."s.png",
 		selection_box = {
 			type = "fixed",
 			fixed = { -16/32-0.001, -18/32, -7/32, 16/32+0.001, -12/32, 7/32 }
@@ -80,7 +96,7 @@ for _,color in pairs(hues) do
 		},
 	},
 	{
-		groups = {dig_immediate = 3,ud_param2_colorable = 1,not_in_creative_inventory = (color~="grey" and 1 or nil)},
+		groups = {dig_immediate = 3,not_in_creative_inventory = (color~="white" and 1 or nil)},
 		mesecons = {conductor = {
 			state = mesecon.state.off,
 			onstate = "mesecons_insulated:insulated_"..color.."_on",
@@ -96,7 +112,7 @@ for _,color in pairs(hues) do
 		},
 	},
 	{
-		groups = {dig_immediate = 3,not_in_creative_inventory = 1,ud_param2_colorable = 1},
+		groups = {dig_immediate = 3,not_in_creative_inventory = 1},
 		mesecons = {conductor = {
 			state = mesecon.state.on,
 			offstate = "mesecons_insulated:insulated_"..color.."_off",
@@ -119,8 +135,8 @@ for _,color in pairs(hues) do
 		walkable = false,
 		sunlight_propagates = true,
 		on_place = minetest.rotate_node,
-		drop = "mesecons_extrawires:insulated_corner_grey_off",
-		palette = "unifieddyes_palette_"..color.."s.png",
+		drop = "mesecons_extrawires:insulated_corner_white_off",
+		palette = "unifieddyes_palette_"..palettecolor.."s.png",
 		selection_box = {
 				type = "fixed",
 				fixed = { -16/32-0.001, -18/32, -16/32, 5/32, -12/32, 5/32 },
@@ -132,7 +148,7 @@ for _,color in pairs(hues) do
 		},
 	},
 	{
-		groups = {dig_immediate = 3,ud_param2_colorable = 1,not_in_creative_inventory = (color~="grey" and 1 or nil)},
+		groups = {dig_immediate = 3,not_in_creative_inventory = (color~="white" and 1 or nil)},
 		mesecons = {conductor = {
 			state = mesecon.state.off,
 			onstate = "mesecons_extrawires:insulated_corner_"..color.."_on",
@@ -148,7 +164,7 @@ for _,color in pairs(hues) do
 		},
 	},
 	{
-		groups = {dig_immediate = 3,not_in_creative_inventory = 1,ud_param2_colorable = 1},
+		groups = {dig_immediate = 3,not_in_creative_inventory = 1},
 		mesecons = {conductor = {
 			state = mesecon.state.on,
 			offstate = "mesecons_extrawires:insulated_corner_"..color.."_off",
@@ -171,8 +187,8 @@ for _,color in pairs(hues) do
 		walkable = false,
 		sunlight_propagates = true,
 		on_place = minetest.rotate_node,
-		drop = "mesecons_extrawires:insulated_tjunction_grey_off",
-		palette = "unifieddyes_palette_"..color.."s.png",
+		drop = "mesecons_extrawires:insulated_tjunction_white_off",
+		palette = "unifieddyes_palette_"..palettecolor.."s.png",
 		node_box = {
 			type = "fixed",
 			fixed = {{ -16/32-0.001, -17/32, -3/32, 16/32+0.001, -13/32, 3/32 },
@@ -184,7 +200,7 @@ for _,color in pairs(hues) do
 		},
 	},
 	{
-		groups = {dig_immediate = 3,ud_param2_colorable = 1,not_in_creative_inventory = (color~="grey" and 1 or nil)},
+		groups = {dig_immediate = 3,not_in_creative_inventory = (color~="white" and 1 or nil)},
 		mesecons = {conductor = {
 			state = mesecon.state.off,
 			onstate = "mesecons_extrawires:insulated_tjunction_"..color.."_on",
@@ -200,7 +216,7 @@ for _,color in pairs(hues) do
 		},
 	},
 	{
-		groups = {dig_immediate = 3,not_in_creative_inventory = 1,ud_param2_colorable = 1},
+		groups = {dig_immediate = 3,not_in_creative_inventory = 1},
 		mesecons = {conductor = {
 			state = mesecon.state.on,
 			offstate = "mesecons_extrawires:insulated_tjunction_"..color.."_off",
@@ -284,25 +300,25 @@ minetest.register_lbm({
 })
 
 minetest.register_craft({
-	output = "mesecons_extrawires:insulated_corner_grey_off 3",
+	output = "mesecons_extrawires:insulated_corner_white_off 3",
 	recipe = {
 		{"", "", ""},
-		{"mesecons_insulated:insulated_grey_off", "mesecons_insulated:insulated_grey_off", ""},
-		{"", "mesecons_insulated:insulated_grey_off", ""},
+		{"mesecons_insulated:insulated_white_off", "mesecons_insulated:insulated_white_off", ""},
+		{"", "mesecons_insulated:insulated_white_off", ""},
 	}
 })
 
 minetest.register_craft({
-	output = "mesecons_extrawires:insulated_tjunction_grey_off 3",
+	output = "mesecons_extrawires:insulated_tjunction_white_off 3",
 	recipe = {
 		{"", "", ""},
-		{"mesecons_insulated:insulated_grey_off", "mesecons_insulated:insulated_grey_off", "mesecons_insulated:insulated_grey_off"},
-		{"", "mesecons_insulated:insulated_grey_off", ""},
+		{"mesecons_insulated:insulated_white_off", "mesecons_insulated:insulated_white_off", "mesecons_insulated:insulated_white_off"},
+		{"", "mesecons_insulated:insulated_white_off", ""},
 	}
 })
 
 minetest.register_craft({
-	output = "mesecons_insulated:insulated_grey_off 3",
+	output = "mesecons_insulated:insulated_white_off 3",
 	recipe = {
 		{"mesecons_materials:fiber", "mesecons_materials:fiber", "mesecons_materials:fiber"},
 		{"mesecons:wire_00000000_off", "mesecons:wire_00000000_off", "mesecons:wire_00000000_off"},
@@ -314,14 +330,14 @@ minetest.register_craft({
 	type = "shapeless",
 	output = "mesecons_extrawires:crossover_off",
 	recipe = {
-		"mesecons_insulated:insulated_grey_off",
-		"mesecons_insulated:insulated_grey_off",
+		"mesecons_insulated:insulated_white_off",
+		"mesecons_insulated:insulated_white_off",
 	},
 })
 
 minetest.register_craft({
 	type = "shapeless",
-	output = "mesecons_insulated:insulated_grey_off 2",
+	output = "mesecons_insulated:insulated_white_off 2",
 	recipe = {
 		"mesecons_extrawires:crossover_off",
 	},
@@ -332,8 +348,115 @@ if minetest.get_modpath("digilines") then
 		output = 'digilines:wire_std_00000000 2',
 		recipe = {
 			{'mesecons_materials:fiber', 'mesecons_materials:fiber', 'mesecons_materials:fiber'},
-			{'mesecons_insulated:insulated_grey_off', 'mesecons_insulated:insulated_grey_off', 'default:gold_ingot'},
+			{'mesecons_insulated:insulated_white_off', 'mesecons_insulated:insulated_white_off', 'default:gold_ingot'},
 			{'mesecons_materials:fiber', 'mesecons_materials:fiber', 'mesecons_materials:fiber'},
 		}
 	})
+end
+
+for _,color in pairs(hues) do
+	if color ~= "white" then
+		local dye = "dye:"..color
+		minetest.register_craft({
+			output = unifieddyes.make_colored_itemstack(
+				"mesecons_extrawires:insulated_corner_"..color.."_off 3",
+				true,
+				dye),
+			recipe = {
+				{"", dye, ""},
+				{"mesecons_insulated:insulated_white_off", "mesecons_insulated:insulated_white_off", ""},
+				{"", "mesecons_insulated:insulated_white_off", ""},
+			}
+		})
+
+		minetest.register_craft({
+			output = unifieddyes.make_colored_itemstack(
+				"mesecons_extrawires:insulated_tjunction_"..color.."_off 3",
+				true,
+				dye),
+			recipe = {
+				{"", dye, ""},
+				{"mesecons_insulated:insulated_white_off", "mesecons_insulated:insulated_white_off", "mesecons_insulated:insulated_white_off"},
+				{"", "mesecons_insulated:insulated_white_off", ""},
+			}
+		})
+
+		minetest.register_craft({
+			type = "shapeless",
+			output = unifieddyes.make_colored_itemstack(
+				"mesecons_insulated:insulated_"..color.."_off",
+				true,
+				dye),
+			recipe = {
+				dye,
+				"mesecons_insulated:insulated_white_off",
+			},
+		})
+
+		minetest.register_craft({
+			output = unifieddyes.make_colored_itemstack(
+				"mesecons_extrawires:insulated_corner_"..color.."_off",
+				true,
+				dye),
+			type = "shapeless",
+			recipe = {
+				dye,
+				"mesecons_extrawires:insulated_corner_white_off"
+			}
+		})
+
+		minetest.register_craft({
+			output = unifieddyes.make_colored_itemstack(
+				"mesecons_extrawires:insulated_tjunction_"..color.."_off",
+				true,
+				dye),
+			type = "shapeless",
+			recipe = {
+				dye,
+				"mesecons_extrawires:insulated_tjunction_white_off"
+			}
+		})
+	end
+end
+
+for _,color in pairs(hues) do -- allow re-dying of grey wires since they're so lightly-shaded.
+	if color ~= "grey" then
+		local dye = "dye:"..color
+
+		minetest.register_craft({
+			type = "shapeless",
+			output = unifieddyes.make_colored_itemstack(
+				"mesecons_insulated:insulated_"..color.."_off",
+				true,
+				dye),
+			recipe = {
+				dye,
+				"mesecons_insulated:insulated_grey_off",
+			},
+		})
+
+		minetest.register_craft({
+			output = unifieddyes.make_colored_itemstack(
+				"mesecons_extrawires:insulated_corner_"..color.."_off",
+				true,
+				dye),
+			type = "shapeless",
+			recipe = {
+				dye,
+				"mesecons_extrawires:insulated_corner_grey_off"
+			}
+		})
+
+		minetest.register_craft({
+			output = unifieddyes.make_colored_itemstack(
+				"mesecons_extrawires:insulated_tjunction_"..color.."_off",
+				true,
+				dye),
+			type = "shapeless",
+			recipe = {
+				dye,
+				"mesecons_extrawires:insulated_tjunction_grey_off"
+			}
+		})
+	end
 end

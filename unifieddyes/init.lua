@@ -198,7 +198,7 @@ function unifieddyes.make_colored_itemstack(item, palette, color)
 	local paletteidx = unifieddyes.getpaletteidx(color, palette)
 	local stack = ItemStack(item)
 	stack:get_meta():set_int("palette_index", paletteidx)
-	return stack:to_string()
+	return stack:to_string(),paletteidx
 end
 
 -- if your node was once 89-color and uses an LBM to convert to the 256-color palette,
@@ -225,7 +225,6 @@ local function register_c(craft, hue, sat, val)
 	end
 
 	local dye = "dye:"..color
-
 	local recipe = minetest.serialize(craft.recipe)
 	recipe = string.gsub(recipe, "MAIN_DYE", dye)
 	recipe = string.gsub(recipe, "NEUTRAL_NODE", craft.neutral_node)
@@ -265,6 +264,8 @@ function unifieddyes.register_color_craft(craft)
 	local greys_table = unifieddyes.GREYS
 
 	if craft.palette == "wallmounted" then
+		register_c(craft, "green", "", "light_")
+		register_c(craft, "azure", "", "")
 		hues_table = unifieddyes.HUES_WALLMOUNTED
 		sats_table = {""}
 		vals_table = unifieddyes.VALS
@@ -411,6 +412,7 @@ function unifieddyes.getpaletteidx(color, palette_type)
 	local aliases = {
 		["pink"] = "light_red",
 		["brown"] = "medium_orange",
+		["azure"] = "light_blue"
 	}
 
 	local grayscale = {
@@ -585,9 +587,10 @@ function unifieddyes.getpaletteidx(color, palette_type)
 	end
 
 	if palette_type == "wallmounted" then
-		if color == "brown" then return 48,1
+		if color == "green" and shade == "light" then return 48,3
+		elseif color == "brown" then return 17,1
 		elseif color == "pink" then return 56,7
-		elseif color == "blue" and shade == "light" then return 40,5
+		elseif color == "azure" then return 40,5
 		elseif hues_wallmounted[color] and shades_wallmounted[shade] then
 			return (shades_wallmounted[shade] * 64 + hues_wallmounted[color] * 8), hues_wallmounted[color]
 		end
@@ -599,7 +602,20 @@ function unifieddyes.getpaletteidx(color, palette_type)
 			color = "red"
 			shade = "light"
 		end
-		if palette_type == true then -- it's colorfacedir
+		if palette_type == true then -- it's colorfacedir, so "split" 89-color palette
+
+			-- If using this palette, translate new color names back to old.
+
+			if shade == "" then
+				if color == "spring" then
+					color = "aqua"
+				elseif color == "azure" then
+					color = "skyblue"
+				elseif color == "rose" then
+					color = "redviolet"
+				end
+			end
+
 			if hues[color] and shades[shade] then
 				return (shades[shade] * 32), hues[color]
 			end
@@ -607,10 +623,7 @@ function unifieddyes.getpaletteidx(color, palette_type)
 			if hues_extended[color] and shades_extended[shade] then
 				return (hues_extended[color] + shades_extended[shade]*24), hues_extended[color]
 			end
-		else -- it's the 89-color palette
-
-			-- If using this palette, translate new color names back to old.
-
+		else -- it's the regular 89-color palette, do the same translation if needed
 			if shade == "" then
 				if color == "spring" then
 					color = "aqua"
@@ -938,10 +951,16 @@ minetest.register_alias("unifieddyes:carbon_black", "dye:black")
 -- note that technically, lime should be aliased, but can't be (there IS
 -- lime in the new color table, it's just shifted up a bit)
 
-minetest.register_alias("unifieddyes:aqua", "unifieddyes:spring")
-minetest.register_alias("unifieddyes:skyblue", "unifieddyes:azure")
-minetest.register_alias("unifieddyes:redviolet", "unifieddyes:rose")
-minetest.register_alias("unifieddyes:brown", 	  "dye:brown")
+minetest.register_alias("unifieddyes:aqua", "dye:spring")
+minetest.register_alias("dye:aqua", "dye:spring")
+
+minetest.register_alias("unifieddyes:skyblue", "dye:azure")
+minetest.register_alias("dye:skyblue", "dye:azure")
+
+minetest.register_alias("unifieddyes:redviolet", "dye:rose")
+minetest.register_alias("dye:redviolet", "dye:rose")
+
+minetest.register_alias("unifieddyes:brown", "dye:brown")
 
 print(S("[UnifiedDyes] Loaded!"))
 

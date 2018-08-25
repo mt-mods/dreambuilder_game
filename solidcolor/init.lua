@@ -17,6 +17,17 @@ minetest.register_craft( {
         },
 })
 
+unifieddyes.register_color_craft({
+	output = "solidcolor:block",
+	palette = "extended",
+	type = "shapeless",
+	neutral_node = "solidcolor:block",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
+	}
+})
+
 minetest.register_lbm({
 	name = "solidcolor:recolor",
 	label = "Convert to new palette",
