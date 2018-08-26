@@ -103,7 +103,7 @@ if minetest.get_modpath("moreblocks") then
 end
 
 local iclip_def = {
-	description = "Insulator/cable clip",
+	description = S("Insulator/cable clip"),
 	drawtype = "mesh",
 	mesh = "technic_insulator_clip.obj",
 	tiles = {"technic_insulator_clip.png"},
@@ -113,7 +113,7 @@ local iclip_def = {
 }
 
 local iclipfence_def = {
-	description = "Insulator/cable clip",
+	description = S("Insulator/cable clip"),
 	tiles = {"technic_insulator_clip.png"},
 	is_ground_content = false,
 	paramtype = "light",
@@ -161,7 +161,7 @@ if minetest.registered_nodes["streets:steel_support"] then
 end
 
 local sclip_def = {
-	description = "Steel strut with insulator/cable clip",
+	description = S("Steel strut with insulator/cable clip"),
 	drawtype = "mesh",
 	mesh = "technic_steel_strut_with_insulator_clip.obj",
 	tiles = sclip_tex,

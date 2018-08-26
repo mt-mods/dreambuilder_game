@@ -13,6 +13,7 @@ minetest.register_node("mymod:colored_node", {
 	palette = "unifieddyes_palette_extended.png",
 	groups = {snappy = 1, cracky = 2, ud_param2_colorable = 1}
 	on_construct = unifieddyes.on_construct,
+	airbrush_replacement_node = "mymod:my_other_colored_node"
 })
 ```
 
@@ -31,6 +32,8 @@ minetest.register_node("mymod:colored_node", {
 
 `on_construct`: see below.
 
+`airbrush_replacement_node`:  The node to swap in when the airbrush is used on this node.  For example, you could `minetest.override_item()` on some default node to add this field, pointing to a colorable node of your own, so that when the default node is painted, it's replaced with yours in the new color.
+
 #### Function calls
 
 **`unifieddyes.fix_rotation(pos, placer, itemstack, pointed_thing)`
@@ -41,10 +44,6 @@ These two are used to re-orient `wallmounted` nodes after placing. The former al
 **`unifieddyes.fix_after_screwdriver_nsew(pos, node, user, mode, new_param2)`**
 
 This serves the same purpose as the `fix_rotation_nsew`, but is used to restrict the node's rotation after it's been hit with the screwdriver.
-
-**`unifieddyes.select_node(pointed_thing)`**
-
-Just what it says on the tin. :-) This function returns a position and node definition of whatever is being pointed at. 
 
 **`unifieddyes.is_buildable_to(placer_name, ...)`**
 

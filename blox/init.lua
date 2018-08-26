@@ -221,19 +221,19 @@ table.insert(blox.old_89_color_nodes, "blox:stone_tinted")
 
 minetest.override_item("default:stone_block", {
 	palette = "unifieddyes_palette_extended.png",
-	ud_replacement_node = "blox:stone_square",
+	airbrush_replacement_node = "blox:stone_square",
 	groups = {cracky = 3, stone = 1, ud_param2_colorable = 1},
 })
 
 minetest.override_item("default:stone", {
 	palette = "unifieddyes_palette_extended.png",
-	ud_replacement_node = "blox:stone_tinted",
+	airbrush_replacement_node = "blox:stone_tinted",
 	groups = {cracky = 3, stone = 1, ud_param2_colorable = 1},
 })
 
 minetest.override_item("default:cobble", {
 	palette = "unifieddyes_palette_extended.png",
-	ud_replacement_node = "blox:cobble_tinted",
+	airbrush_replacement_node = "blox:cobble_tinted",
 	groups = {cracky = 3, stone = 2, ud_param2_colorable = 1},
 })
 
@@ -242,7 +242,7 @@ minetest.override_item("default:cobble", {
 if moreblocks then
 	minetest.override_item("moreblocks:circle_stone_bricks", {
 		palette = "unifieddyes_palette_extended.png",
-		ud_replacement_node = "blox:stone_loop",
+		airbrush_replacement_node = "blox:stone_loop",
 		groups = {cracky = 3, ud_param2_colorable = 1},
 	})
 
@@ -259,7 +259,7 @@ if moreblocks then
 
 	minetest.override_item("moreblocks:iron_checker", {
 		palette = "unifieddyes_palette_extended.png",
-		ud_replacement_node = "blox:stone_checker",
+		airbrush_replacement_node = "blox:stone_checker",
 		groups = {cracky = 3, ud_param2_colorable = 1},
 	})
 
@@ -276,7 +276,7 @@ if moreblocks then
 
 	minetest.override_item("moreblocks:wood_tile", {
 		palette = "unifieddyes_palette_extended.png",
-		ud_replacement_node = "blox:wood_quarter",
+		airbrush_replacement_node = "blox:wood_quarter",
 		groups = {wood = 1, snappy = 1, choppy = 2, oddly_breakable_by_hand = 2, flammable = 3, ud_param2_colorable = 1},
 	})
 
@@ -293,7 +293,7 @@ if moreblocks then
 
 	minetest.override_item("moreblocks:wood_tile_flipped", {
 		palette = "unifieddyes_palette_extended.png",
-		ud_replacement_node = "blox:wood_quarter",
+		airbrush_replacement_node = "blox:wood_quarter",
 		groups = {wood = 1, snappy = 1, choppy = 2, oddly_breakable_by_hand = 2, flammable = 3, ud_param2_colorable = 1},
 	})
 
@@ -334,7 +334,7 @@ if minetest.get_modpath("coloredwood") then
 
 else
 	minetest.override_item("default:wood", {
-		ud_replacement_node = "blox:wood_tinted",
+		airbrush_replacement_node = "blox:wood_tinted",
 		groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, wood = 1, ud_param2_colorable = 1},
 	})
 

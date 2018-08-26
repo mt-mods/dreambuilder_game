@@ -153,6 +153,9 @@ local default_dyes = {
 	"yellow"
 }
 
+unifieddyes.player_current_dye = {}
+unifieddyes.player_selected_dye = {}
+
 -- if a node with a palette is placed in the world,
 -- but the itemstack used to place it has no palette_index (color byte),
 -- create something appropriate to make it officially white.
@@ -160,26 +163,29 @@ local default_dyes = {
 minetest.register_on_placenode(
 	function(pos, newnode, placer, oldnode, itemstack, pointed_thing)
 		local def = minetest.registered_items[newnode.name]
-		if not def or not def.palette then return false end
-		if string.find(itemstack:to_string(), "palette_index") then
-			minetest.swap_node(pos, {name = newnode.name, param2 = newnode.param2})
-			return
+
+		if not def
+		  or not def.palette
+		  or def.after_place_node then
+			return false
 		end
 
-		local param2 = 0
-		local color = 0
+		if not string.find(itemstack:to_string(), "palette_index") then
+			local param2 = 0
+			local color = 0
 
-		if def.palette == "unifieddyes_palette_extended.png" then
-			param2 = 240
-			color = 240
-		elseif def.palette == "unifieddyes_palette_colorwallmounted.png" then
-			param2 = newnode.param2 % 8
-		elseif def.palette ~= "unifieddyes_palette.png" then -- it's a split palette
-			param2 = newnode.param2 % 32
+			if def.palette == "unifieddyes_palette_extended.png" then
+				param2 = 240
+				color = 240
+			elseif def.palette == "unifieddyes_palette_colorwallmounted.png" then
+				param2 = newnode.param2 % 8
+			elseif def.palette ~= "unifieddyes_palette.png" then -- it's a split palette
+				param2 = newnode.param2 % 32
+			end
+
+			minetest.swap_node(pos, {name = newnode.name, param2 = param2})
+			minetest.get_meta(pos):set_int("palette_index", color)
 		end
-
-		minetest.swap_node(pos, {name = newnode.name, param2 = param2})
-		minetest.get_meta(pos):set_int("palette_index", color)
 	end
 )
 
@@ -339,19 +345,6 @@ function unifieddyes.fix_after_screwdriver_nsew(pos, node, user, mode, new_param
 		minetest.swap_node(pos, { name = node.name, param2 = new_fdir + color })
 		return true
 	end
-end
-
-function unifieddyes.select_node(pointed_thing)
-	local pos = pointed_thing.under
-	local node = minetest.get_node_or_nil(pos)
-	local def = node and minetest.registered_nodes[node.name]
-
-	if not def or not def.buildable_to then
-		pos = pointed_thing.above
-		node = minetest.get_node_or_nil(pos)
-		def = node and minetest.registered_nodes[node.name]
-	end
-	return def and pos, def
 end
 
 function unifieddyes.is_buildable_to(placer_name, ...)
@@ -640,6 +633,294 @@ function unifieddyes.getpaletteidx(color, palette_type)
 	end
 end
 
+-- punch-to-recolor using the airbrush
+
+function unifieddyes.on_airbrush(itemstack, player, pointed_thing)
+	local player_name = player:get_player_name()
+	local painting_with = nil
+
+	if unifieddyes.player_current_dye[player_name] and minetest.registered_items[unifieddyes.player_current_dye[player_name]] then
+		painting_with = unifieddyes.player_current_dye[player_name]
+	end
+
+	local pos = minetest.get_pointed_thing_position(pointed_thing)
+	if not pos or player:get_player_control().sneak then
+		unifieddyes.show_airbrush_form(player)
+		return
+	end
+
+	if not painting_with then return end
+
+	local node = minetest.get_node(pos)
+	local def = minetest.registered_items[node.name]
+	if not def then return end
+
+	if minetest.is_protected(pos, player_name) then
+		minetest.chat_send_player(player_name, "Sorry, someone else owns that node.")
+		return
+	end
+
+	if not def.palette then
+		minetest.chat_send_player(player_name, "That node can't be colored.")
+		return
+	end
+
+	local palette = nil
+	local fdir = 0
+	if def.palette == "unifieddyes_palette_extended.png" then
+		palette = "extended"
+	elseif def.palette == "unifieddyes_palette_colorwallmounted.png" then
+		palette = "wallmounted"
+		fdir = node.param2 % 8
+	elseif def.palette ~= "unifieddyes_palette.png" then
+		palette = true
+		fdir = node.param2 % 32
+	end
+
+	local idx, hue = unifieddyes.getpaletteidx(painting_with, palette)
+
+	local inv = player:get_inventory()
+	if (not creative or not creative.is_enabled_for(player_name)) and not inv:contains_item("main", painting_with) then
+		local suff = ""
+		if not idx then
+			suff = "  Besides, "..string.sub(painting_with, 5).." can't be applied to that node."
+		end
+		minetest.chat_send_player(player_name, "You're in survival mode, and you're out of "..string.sub(painting_with, 5).."."..suff)
+		return
+	end
+
+	if not idx then
+		minetest.chat_send_player(player_name, string.sub(painting_with, 5).." can't be applied to that node.")
+		return
+	end
+
+	local oldidx = node.param2 - fdir
+	if idx == oldidx then
+		minetest.chat_send_player(player_name, "That node is already "..string.sub(painting_with, 5)..".")
+		return
+	end
+
+	local name = def.airbrush_replacement_node or node.name
+
+	minetest.swap_node(pos, {name = name, param2 = fdir + idx})
+	if not creative or not creative.is_enabled_for(player_name) then
+		inv:remove_item("main", painting_with)
+		return
+	end
+end
+
+function unifieddyes.show_airbrush_form(player)
+	if not player then return end
+	local player_name = player:get_player_name()
+	local creative = creative and creative.is_enabled_for(player_name)
+	local inv = player:get_inventory()
+
+	local base_form = "size[15,8.5]label[7,-0.25;Select a color:]"
+	local size="0.75,0.75;"
+	local hps=0.6
+	local vps=1.3
+	local vs=0.3
+
+	for v = 0, 6 do
+		local val = unifieddyes.VALS_EXTENDED[v+1]
+
+		local sat = ""
+		local v2=(v/2)
+
+		for hi, h in ipairs(unifieddyes.HUES_EXTENDED) do
+			local hue = h[1]
+			local hp=hi-0.5
+
+			local r = h[2]
+			local g = h[3]
+			local b = h[4]
+
+			local factor = 40
+			if v > 3 then
+				factor = 75
+				v2 = (v-2)
+			end
+
+			local r2 = math.max(math.min(r + (4-v)*factor, 255), 0)
+			local g2 = math.max(math.min(g + (4-v)*factor, 255), 0)
+			local b2 = math.max(math.min(b + (4-v)*factor, 255), 0)
+
+			local color = string.format("%02x", r2)..string.format("%02x", g2)..string.format("%02x", b2)
+			local dye = "dye:"..val..hue..sat
+			local overlay = ""
+			if not creative and inv:contains_item("main", dye) then
+				overlay = "^unifieddyes_available_overlay.png"
+			end
+
+			if dye == unifieddyes.player_selected_dye[player_name] then
+				overlay = "^unifieddyes_select_overlay.png"
+			end
+
+			local colorize = minetest.formspec_escape("^[colorize:#"..color..":255")
+			base_form = base_form.."image_button["..
+									(hp*hps)..","..(v2*vps+vs)..";"..
+									size..
+									"unifieddyes_white_square.png"..colorize..overlay..";"..
+									val..hue..sat..";]"..
+									"tooltip["..val..hue..sat..";"..val..hue..sat.."]"
+
+		end
+
+		if v > 3 then
+			sat = "_s50"
+			v2 = (v-1.5)
+
+			for hi, h in ipairs(unifieddyes.HUES_EXTENDED) do
+				local hue = h[1]
+				local hp=hi-0.5
+
+				local r = h[2]
+				local g = h[3]
+				local b = h[4]
+
+				local factor = 75
+
+				local pr = 0.299
+				local pg = 0.587
+				local pb = 0.114
+
+				local r2 = math.max(math.min(r + (4-v)*factor, 255), 0)
+				local g2 = math.max(math.min(g + (4-v)*factor, 255), 0)
+				local b2 = math.max(math.min(b + (4-v)*factor, 255), 0)
+
+				local p = math.sqrt(r2*r2*pr + g2*g2*pg + b2*b2*pb)
+				local r3 = math.floor(p+(r2-p)*0.5)
+				local g3 = math.floor(p+(g2-p)*0.5)
+				local b3 = math.floor(p+(b2-p)*0.5)
+
+				local color = string.format("%02x", r3)..string.format("%02x", g3)..string.format("%02x", b3)
+				local dye = "dye:"..val..hue..sat
+
+				local overlay = ""
+				if not creative and inv:contains_item("main", dye) then
+					overlay = "^unifieddyes_available_overlay.png"
+				end
+
+				if dye == unifieddyes.player_selected_dye[player_name] then
+					overlay = "^unifieddyes_select_overlay.png"
+				end
+
+				local colorize = minetest.formspec_escape("^[colorize:#"..color..":255")
+
+				base_form = base_form.."image_button["..
+										(hp*hps)..","..(v2*vps+vs)..";"..
+										size..
+										"unifieddyes_white_square.png"..colorize..overlay..";"..
+										val..hue..sat..";]"..
+										"tooltip["..val..hue..sat..";"..val..hue..sat.."]"
+			end
+		end
+	end
+
+	local v2=5
+	for y = 0, 15 do
+
+		local hp=(15-y)+0.5
+
+		local grey = string.format("%02x", y*17)..string.format("%02x", y*17)..string.format("%02x", y*17)
+		local grey2 = "grey_"..y
+
+		if y == 0 then grey2 = "black" 
+		elseif y == 4 then grey2 = "dark_grey"
+		elseif y == 8 then grey2 = "grey"
+		elseif y == 11 then grey2 = "light_grey"
+		elseif y == 15 then grey2 = "white"
+		end
+
+		local dye = "dye:"..grey2
+
+		local overlay = ""
+		if not creative and inv:contains_item("main", dye) then
+			overlay = "^unifieddyes_available_overlay.png"
+		end
+
+		if dye == unifieddyes.player_selected_dye[player_name] then
+			overlay = "^unifieddyes_select_overlay.png"
+		end
+
+		local colorize = minetest.formspec_escape("^[colorize:#"..grey..":255")
+		base_form = base_form.."image_button["..
+								(hp*hps)..","..(v2*vps+vs)..";"..
+								size..
+								"unifieddyes_white_square.png"..colorize..overlay..";"..
+								grey2..";]tooltip["..grey2..";"..grey2.."]"
+
+	end
+
+	if not creative then
+		base_form = base_form..
+				"image[10.3,"..(vps*5+vs)..";"..size..
+				"unifieddyes_available_overlay.png]"..
+				"label[11.0,"..(vps*5.1+vs)..";Dyes on hand]"..
+				"image[12.5,"..(vps*5+vs)..";"..size..
+				"unifieddyes_select_overlay.png]"..
+				"label[13.2,"..(vps*5.1+vs)..";Your selection]"
+	end
+
+	base_form = base_form..
+				"button_exit[11,8;2,1;cancel;Cancel]"..
+				"button_exit[13,8;2,1;accept;Accept]"
+
+	if unifieddyes.player_selected_dye[player_name] then
+		base_form = base_form..
+					"label[1,"..(7.5+vs)..";Selected dye:  "..
+					unifieddyes.player_selected_dye[player_name].."]"
+	end
+
+	minetest.show_formspec(player_name, "unifieddyes:dye_select_form", base_form)
+end
+
+minetest.register_tool("unifieddyes:airbrush", {
+	description = S("Dye Airbrush"),
+	inventory_image = "unifieddyes_airbrush.png",
+	use_texture_alpha = true,
+	tool_capabilities = {
+		full_punch_interval=0.1,
+	},
+	range = 12,
+	on_use = unifieddyes.on_airbrush
+})
+
+minetest.register_craft( {
+	output = "unifieddyes:airbrush",
+	recipe = {
+		{ "default:gold_ingot", "",                    "bucket:bucket_empty" },
+		{ "",                   "default:steel_ingot", ""                    },
+		{ "",                   "",                    "default:steel_ingot" }
+	},
+})
+
+minetest.register_on_player_receive_fields(function(player, formname, fields)
+	if formname == "unifieddyes:dye_select_form" then
+		local player_name = player:get_player_name()
+		local s1 = string.sub(minetest.serialize(fields), 11)
+		local s3 = string.sub(s1,1, string.find(s1, '"')-1)
+		if s3 == "cancel" then
+			unifieddyes.player_selected_dye[player_name] = nil
+			return
+		elseif s3 == "accept" and unifieddyes.player_selected_dye[player_name] then
+			local dye = unifieddyes.player_selected_dye[player_name]
+			unifieddyes.player_current_dye[player_name] = dye
+			unifieddyes.player_selected_dye[player_name] = nil
+				minetest.chat_send_player(player_name, "Selected "..string.sub(dye, 5).." for the airbrush.")
+			return
+		else
+			local inv = player:get_inventory()
+			local creative = creative and creative.is_enabled_for(player_name)
+			local dye = "dye:"..s3
+			if minetest.registered_items[dye] and (creative or inv:contains_item("main", dye)) then
+				unifieddyes.player_selected_dye[player_name] = dye 
+				unifieddyes.show_airbrush_form(player)
+			end
+		end
+	end
+end)
+
 -- build a table to convert from classic/89-color palette to extended palette
 
 -- the first five entries are for the old greyscale - white, light, grey, dark, black
@@ -924,6 +1205,8 @@ minetest.register_craft( {
 		"dye:brown"
 	},
 })
+
+-- aliases
 
 minetest.register_alias("dye:light_red",  "dye:pink")
 minetest.register_alias("dye:medium_orange", "dye:brown")

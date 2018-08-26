@@ -21,11 +21,11 @@ function steel_node_is_owned(pos, placer)
 			end
 		end
 
-	elseif type(isprotect)=="function" then 					-- glomie's protection mod
+	elseif type(isprotect)=="function" then						-- glomie's protection mod
 		if not isprotect(5, pos, placer) then
 			ownername = "someone"
 		end
-	elseif type(protector)=="table" and type(protector.can_dig)=="function" then 					-- Zeg9's protection mod
+	elseif type(protector)=="table" and type(protector.can_dig)=="function" then					-- Zeg9's protection mod
 		if not protector.can_dig(5, pos, placer) then
 			ownername = "someone"
 		end
@@ -58,7 +58,7 @@ function steel_rotate_and_place(itemstack, placer, pointed_thing)
 		local iswall = (above.x ~= under.x) or (above.z ~= under.z)
 		local isceiling = (above.x == under.x) and (above.z == under.z) and (pitch > 0)
 
-		if iswall then 
+		if iswall then
 			local dirs = { 2, 3, 0, 1 }
 			minetest.add_node(above, {name = wield_name.."_wall", param2 = dirs[fdir+1] }) -- place wall variant
 		elseif isceiling then
@@ -217,15 +217,15 @@ minetest.register_node("steel:roofing_wall", {
 })
 
 if homedecor_register_slope and homedecor_register_roof then
-	homedecor_register_slope("steel", "roofing", 
-		"steel:roofing", 
-		{bendy=2,snappy=1,dig_immediate=2}, 
-		{"corrugated_steel.png"}, 
+	homedecor_register_slope("steel", "roofing",
+		"steel:roofing",
+		{bendy=2,snappy=1,dig_immediate=2},
+		{"corrugated_steel.png"},
 		"Corrugated steel roofing"
 	)
-	homedecor_register_roof("steel", "roofing", 
-		{bendy=2,snappy=1,dig_immediate=2}, 
-		{"corrugated_steel.png"}, 
+	homedecor_register_roof("steel", "roofing",
+		{bendy=2,snappy=1,dig_immediate=2},
+		{"corrugated_steel.png"},
 		"Corrugated steel roofing"
 	)
 end
@@ -276,9 +276,9 @@ if not minetest.registered_nodes["streets:steel_support"] then
 	minetest.register_craft({
 		output = 'steel:strut 5',
 		recipe = {
-			{'default:steel_ingot', '', 'default:steel_ingot'},
 			{'', 'default:steel_ingot', ''},
-			{'default:steel_ingot', '', 'default:steel_ingot'},
+			{'default:steel_ingot', 'default:steel_ingot', 'default:steel_ingot'},
+			{'', 'default:steel_ingot', ''},
 		}
 	})
 end
