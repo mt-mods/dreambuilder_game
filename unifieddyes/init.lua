@@ -453,12 +453,15 @@ function unifieddyes.getpaletteidx(color, palette_type)
 		["lime"] = 4,
 		["green"] = 5,
 		["aqua"] = 6,
+		["spring"] = 6,
 		["cyan"] = 7,
 		["skyblue"] = 8,
+		["azure"] = 8,
 		["blue"] = 9,
 		["violet"] = 10,
 		["magenta"] = 11,
 		["redviolet"] = 12,
+		["rose"] = 12,
 	}
 
 	local hues_extended = {
@@ -473,10 +476,12 @@ function unifieddyes.getpaletteidx(color, palette_type)
 		["green"] = 8,
 		["malachite"] = 9,
 		["spring"] = 10,
+		["aqua"] = 10,
 		["turquoise"] = 11,
 		["cyan"] = 12,
 		["cerulean"] = 13,
 		["azure"] = 14,
+		["skyblue"] = 14,
 		["sapphire"] = 15,
 		["blue"] = 16,
 		["indigo"] = 17,
@@ -485,6 +490,7 @@ function unifieddyes.getpaletteidx(color, palette_type)
 		["magenta"] = 20,
 		["fuchsia"] = 21,
 		["rose"] = 22,
+		["redviolet"] = 22,
 		["crimson"] = 23,
 	}
 
@@ -599,14 +605,12 @@ function unifieddyes.getpaletteidx(color, palette_type)
 
 			-- If using this palette, translate new color names back to old.
 
-			if shade == "" then
-				if color == "spring" then
-					color = "aqua"
-				elseif color == "azure" then
-					color = "skyblue"
-				elseif color == "rose" then
-					color = "redviolet"
-				end
+			if color == "spring" then
+				color = "aqua"
+			elseif color == "azure" then
+				color = "skyblue"
+			elseif color == "rose" then
+				color = "redviolet"
 			end
 
 			if hues[color] and shades[shade] then
@@ -617,14 +621,12 @@ function unifieddyes.getpaletteidx(color, palette_type)
 				return (hues_extended[color] + shades_extended[shade]*24), hues_extended[color]
 			end
 		else -- it's the regular 89-color palette, do the same translation if needed
-			if shade == "" then
-				if color == "spring" then
-					color = "aqua"
-				elseif color == "azure" then
-					color = "skyblue"
-				elseif color == "rose" then
-					color = "redviolet"
-				end
+			if color == "spring" then
+				color = "aqua"
+			elseif color == "azure" then
+				color = "skyblue"
+			elseif color == "rose" then
+				color = "redviolet"
 			end
 			if hues[color] and shades[shade] then
 				return (hues[color] * 8 + shades[shade]), hues[color]
@@ -639,29 +641,32 @@ function unifieddyes.on_airbrush(itemstack, player, pointed_thing)
 	local player_name = player:get_player_name()
 	local painting_with = nil
 
-	if unifieddyes.player_current_dye[player_name] and minetest.registered_items[unifieddyes.player_current_dye[player_name]] then
+	if unifieddyes.player_current_dye[player_name] then
 		painting_with = unifieddyes.player_current_dye[player_name]
 	end
 
 	local pos = minetest.get_pointed_thing_position(pointed_thing)
-	if not pos or player:get_player_control().sneak then
-		unifieddyes.show_airbrush_form(player)
-		return
-	end
-
-	if not painting_with then return end
+	if not pos then return end
 
 	local node = minetest.get_node(pos)
 	local def = minetest.registered_items[node.name]
 	if not def then return end
 
 	if minetest.is_protected(pos, player_name) then
-		minetest.chat_send_player(player_name, "Sorry, someone else owns that node.")
+		minetest.chat_send_player(player_name, "*** Sorry, someone else owns that node.")
+		return
+	end
+
+	if not painting_with then
+		minetest.chat_send_player(player_name, "*** You need to set a color first.")
+		minetest.chat_send_player(player_name, "*** Right-click any random node to open the color selector,")
+		minetest.chat_send_player(player_name, "*** or shift+right-click a colorized node to use its color.")
+		minetest.chat_send_player(player_name, "*** Be sure to click \"Accept\", or the color you select will be ignored.")
 		return
 	end
 
 	if not def.palette then
-		minetest.chat_send_player(player_name, "That node can't be colored.")
+		minetest.chat_send_player(player_name, "*** That node can't be colored.")
 		return
 	end
 
@@ -678,34 +683,149 @@ function unifieddyes.on_airbrush(itemstack, player, pointed_thing)
 	end
 
 	local idx, hue = unifieddyes.getpaletteidx(painting_with, palette)
-
 	local inv = player:get_inventory()
 	if (not creative or not creative.is_enabled_for(player_name)) and not inv:contains_item("main", painting_with) then
 		local suff = ""
 		if not idx then
 			suff = "  Besides, "..string.sub(painting_with, 5).." can't be applied to that node."
 		end
-		minetest.chat_send_player(player_name, "You're in survival mode, and you're out of "..string.sub(painting_with, 5).."."..suff)
+		minetest.chat_send_player(player_name, "*** You're in survival mode, and you're out of "..string.sub(painting_with, 5).."."..suff)
 		return
 	end
 
 	if not idx then
-		minetest.chat_send_player(player_name, string.sub(painting_with, 5).." can't be applied to that node.")
+		minetest.chat_send_player(player_name, "*** "..string.sub(painting_with, 5).." can't be applied to that node.")
 		return
 	end
 
 	local oldidx = node.param2 - fdir
-	if idx == oldidx then
-		minetest.chat_send_player(player_name, "That node is already "..string.sub(painting_with, 5)..".")
-		return
-	end
 
 	local name = def.airbrush_replacement_node or node.name
+
+	if palette == true then
+		local s = string.sub(def.palette, 21)
+		local oldcolor = string.sub(s, 1, string.find(s, "s.png")-1)
+
+		local modname = string.sub(name, 1, string.find(name, ":")-1)
+		local nodename2 = string.sub(name, string.find(name, ":")+1)
+
+		local a,b
+
+		local newcolor = "grey"
+		if hue ~= 0 then
+			newcolor = unifieddyes.HUES[hue]
+		end
+
+		local a,b = string.gsub(nodename2, oldcolor, newcolor)
+		name = modname..":"..a
+
+		print("[UD]", name, modname, nodename2, oldcolor, newcolor)
+
+	elseif idx == oldidx then
+		return
+	end
 
 	minetest.swap_node(pos, {name = name, param2 = fdir + idx})
 	if not creative or not creative.is_enabled_for(player_name) then
 		inv:remove_item("main", painting_with)
 		return
+	end
+end
+
+-- get a node's dye color based on its palette and param2
+
+function unifieddyes.color_to_name(param2, def)
+	if not param2 or not def or not def.palette then return end
+
+	if def.palette == "unifieddyes_palette_extended.png" then
+		local color = param2
+
+		local v = 0
+		local s = 1 
+		if color < 24 then v = 1
+		elseif color > 23  and color < 48  then v = 2
+		elseif color > 47  and color < 72  then v = 3
+		elseif color > 71  and color < 96  then v = 4
+		elseif color > 95  and color < 120 then v = 5
+		elseif color > 119 and color < 144 then v = 5 s = 2
+		elseif color > 143 and color < 168 then v = 6
+		elseif color > 167 and color < 192 then v = 6 s = 2
+		elseif color > 191 and color < 216 then v = 7
+		elseif color > 215 and color < 240 then v = 7 s = 2
+		end
+
+		if color > 239 then
+			if color == 240 then return "white"
+			elseif color == 244 then return "light_grey"
+			elseif color == 247 then return "grey"
+			elseif color == 251 then return "dark_grey"
+			elseif color == 255 then return "black" 
+			else return "grey_"..15-(color-240)
+			end
+		else
+			local h = color - math.floor(color/24)*24
+			return unifieddyes.VALS_EXTENDED[v]..unifieddyes.HUES_EXTENDED[h+1][1]..unifieddyes.SATS[s]
+		end
+
+	elseif def.palette == "unifieddyes_palette.png" then
+		local color = param2
+		local h = math.floor(color/8)
+		local s = 1
+		local val = ""
+		if color == 1 or color == h or color > 103 or color == 6 or color == 7 then return "white"
+		elseif color == 2 then return "light_grey"
+		elseif color == 3 then return "grey"
+		elseif color == 4 then return "dark_grey"
+		elseif color == 5 then return "black"
+		end
+		local c = color - h*8
+		if c == 2 then s = 2
+		elseif c == 3 then val = "light_"
+		elseif c == 4 then val = "medium_"
+		elseif c == 5 then val = "medium_" s = 2
+		elseif c == 6 then val = "dark_"
+		else val = "dark_" s = 2
+		end
+
+		return val..unifieddyes.HUES[h+1]..unifieddyes.SATS[s]
+ 
+	elseif def.palette == "unifieddyes_palette_colorwallmounted.png" then
+		local color = math.floor(param2 / 8)
+		if color == 0 then return "white"
+		elseif color == 1 then return "light_grey"
+		elseif color == 2 then return "grey"
+		elseif color == 3 then return "dark_grey"
+		elseif color == 4 then return "black"
+		elseif color == 5 then return "light_blue"
+		elseif color == 6 then return "light_green"
+		elseif color == 7 then return "pink"
+		end
+		local v = math.floor(color/8)
+		local h = color - v * 8
+		return unifieddyes.VALS[v]..unifieddyes.HUES_WALLMOUNTED[h+1]
+
+	elseif string.find(def.palette, "unifieddyes_palette") then -- it's the "split" 89-color palette
+		-- palette names in this mode are always "unifieddyes_palette_COLORs.png"
+
+		local s = string.sub(def.palette, 21)
+		local color = string.sub(s, 1, string.find(s, "s.png")-1)
+
+		local v = math.floor(param2/32)
+		if v == 0 then return "white" end
+		if color ~= "grey" then
+			if v == 1 then return color
+			elseif v == 2 then return color.."_s50"
+			elseif v == 3 then return "light_"..color
+			elseif v == 4 then return "medium_"..color
+			elseif v == 5 then return "medium_"..color.."_s50"
+			elseif v == 6 then return "dark_"..color
+			elseif v == 7 then return "dark_"..color.."_s50"
+			end
+		else
+			if v > 0 and v < 6 then return unifieddyes.GREYS[v]
+			else return "white"
+			end
+		end
 	end
 end
 
@@ -883,7 +1003,28 @@ minetest.register_tool("unifieddyes:airbrush", {
 		full_punch_interval=0.1,
 	},
 	range = 12,
-	on_use = unifieddyes.on_airbrush
+	on_use = unifieddyes.on_airbrush,
+	on_place = function(itemstack, placer, pointed_thing)
+		local keys = placer:get_player_control()
+		if not keys.sneak then
+			unifieddyes.show_airbrush_form(placer)
+		elseif keys.sneak then
+			local player_name = placer:get_player_name()
+			local pos = minetest.get_pointed_thing_position(pointed_thing)
+			if not pos then return end
+			local node = minetest.get_node(pos)
+			local def = minetest.registered_items[node.name]
+			if not def then return end
+			local newcolor = unifieddyes.color_to_name(node.param2, def)
+
+			if not newcolor then
+				minetest.chat_send_player(player_name, "*** That node is uncolored.")
+				return
+			end
+			minetest.chat_send_player(player_name, "*** Switching to "..newcolor.." for the airbrush, to match that node.")
+			unifieddyes.player_current_dye[player_name] = "dye:"..newcolor 
+		end
+	end
 })
 
 minetest.register_craft( {
@@ -907,7 +1048,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 			local dye = unifieddyes.player_selected_dye[player_name]
 			unifieddyes.player_current_dye[player_name] = dye
 			unifieddyes.player_selected_dye[player_name] = nil
-				minetest.chat_send_player(player_name, "Selected "..string.sub(dye, 5).." for the airbrush.")
+				minetest.chat_send_player(player_name, "*** Selected "..string.sub(dye, 5).." for the airbrush.")
 			return
 		else
 			local inv = player:get_inventory()
@@ -987,6 +1128,14 @@ for _, h in ipairs(unifieddyes.HUES_EXTENDED) do
 			end
 		end
 		minetest.register_alias("unifieddyes:"..val..hue, "dye:"..val..hue)
+		if h[1] == "spring" then
+			minetest.register_alias("unifieddyes:"..val.."aqua", "dye:"..val.."spring")
+		elseif h[1] == "azure" then
+			minetest.register_alias("unifieddyes:"..val.."skyblue", "dye:"..val.."azure")
+		elseif h[1] == "rose" then
+			minetest.register_alias("unifieddyes:"..val.."redviolet", "dye:"..val.."rose")
+		end
+
 
 		if v > 3 then -- also register the low-sat version
 
@@ -1007,6 +1156,13 @@ for _, h in ipairs(unifieddyes.HUES_EXTENDED) do
 				groups = { dye=1, not_in_creative_inventory=1 },
 			})
 			minetest.register_alias("unifieddyes:"..val..hue.."_s50", "dye:"..val..hue.."_s50")
+			if h[1] == "spring" then
+				minetest.register_alias("unifieddyes:"..val.."aqua_s50", "dye:"..val.."spring_s50")
+			elseif h[1] == "azure" then
+				minetest.register_alias("unifieddyes:"..val.."skyblue_s50", "dye:"..val.."azure_s50")
+			elseif h[1] == "rose" then
+				minetest.register_alias("unifieddyes:"..val.."redviolet_s50", "dye:"..val.."rose_s50")
+			end
 		end
 	end
 end
@@ -1229,19 +1385,6 @@ minetest.register_alias("unifieddyes:lightgrey_paint", "dye:light_grey")
 minetest.register_alias("unifieddyes:grey_paint", "dye:grey")
 minetest.register_alias("unifieddyes:darkgrey_paint", "dye:dark_grey")
 minetest.register_alias("unifieddyes:carbon_black", "dye:black")
-
--- aqua -> spring, skyblue -> azure, and redviolet -> rose aliases
--- note that technically, lime should be aliased, but can't be (there IS
--- lime in the new color table, it's just shifted up a bit)
-
-minetest.register_alias("unifieddyes:aqua", "dye:spring")
-minetest.register_alias("dye:aqua", "dye:spring")
-
-minetest.register_alias("unifieddyes:skyblue", "dye:azure")
-minetest.register_alias("dye:skyblue", "dye:azure")
-
-minetest.register_alias("unifieddyes:redviolet", "dye:rose")
-minetest.register_alias("dye:redviolet", "dye:rose")
 
 minetest.register_alias("unifieddyes:brown", "dye:brown")
 
