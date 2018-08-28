@@ -718,9 +718,6 @@ function unifieddyes.on_airbrush(itemstack, player, pointed_thing)
 
 		local a,b = string.gsub(nodename2, oldcolor, newcolor)
 		name = modname..":"..a
-
-		print("[UD]", name, modname, nodename2, oldcolor, newcolor)
-
 	elseif idx == oldidx then
 		return
 	end
@@ -832,10 +829,13 @@ end
 function unifieddyes.show_airbrush_form(player)
 	if not player then return end
 	local player_name = player:get_player_name()
+	local painting_with = unifieddyes.player_selected_dye[player_name] or unifieddyes.player_current_dye[player_name]
 	local creative = creative and creative.is_enabled_for(player_name)
 	local inv = player:get_inventory()
 
 	local base_form = "size[15,8.5]label[7,-0.25;Select a color:]"
+	local selindic = "unifieddyes_select_overlay.png^unifieddyes_question.png]"
+
 	local size="0.75,0.75;"
 	local hps=0.6
 	local vps=1.3
@@ -867,16 +867,20 @@ function unifieddyes.show_airbrush_form(player)
 
 			local color = string.format("%02x", r2)..string.format("%02x", g2)..string.format("%02x", b2)
 			local dye = "dye:"..val..hue..sat
+
 			local overlay = ""
+			local colorize = minetest.formspec_escape("^[colorize:#"..color..":255")
+
 			if not creative and inv:contains_item("main", dye) then
 				overlay = "^unifieddyes_available_overlay.png"
 			end
 
-			if dye == unifieddyes.player_selected_dye[player_name] then
+			if dye == painting_with then
 				overlay = "^unifieddyes_select_overlay.png"
+				selindic = "unifieddyes_white_square.png"..colorize..overlay.."]"..
+							"tooltip["..val..hue..sat..";"..val..hue..sat.."]"
 			end
 
-			local colorize = minetest.formspec_escape("^[colorize:#"..color..":255")
 			base_form = base_form.."image_button["..
 									(hp*hps)..","..(v2*vps+vs)..";"..
 									size..
@@ -917,15 +921,17 @@ function unifieddyes.show_airbrush_form(player)
 				local dye = "dye:"..val..hue..sat
 
 				local overlay = ""
+				local colorize = minetest.formspec_escape("^[colorize:#"..color..":255")
+
 				if not creative and inv:contains_item("main", dye) then
 					overlay = "^unifieddyes_available_overlay.png"
 				end
 
-				if dye == unifieddyes.player_selected_dye[player_name] then
+				if dye == painting_with then
 					overlay = "^unifieddyes_select_overlay.png"
+					selindic = "unifieddyes_white_square.png"..colorize..overlay.."]"..
+								"tooltip["..val..hue..sat..";"..val..hue..sat.."]"
 				end
-
-				local colorize = minetest.formspec_escape("^[colorize:#"..color..":255")
 
 				base_form = base_form.."image_button["..
 										(hp*hps)..","..(v2*vps+vs)..";"..
@@ -955,15 +961,18 @@ function unifieddyes.show_airbrush_form(player)
 		local dye = "dye:"..grey2
 
 		local overlay = ""
+		local colorize = minetest.formspec_escape("^[colorize:#"..grey..":255")
+
 		if not creative and inv:contains_item("main", dye) then
 			overlay = "^unifieddyes_available_overlay.png"
 		end
 
-		if dye == unifieddyes.player_selected_dye[player_name] then
+		if dye == painting_with then
 			overlay = "^unifieddyes_select_overlay.png"
+			slindic = "unifieddyes_white_square.png"..colorize..overlay.."]"..
+						"tooltip["..grey2..";"..grey2.."]"
 		end
 
-		local colorize = minetest.formspec_escape("^[colorize:#"..grey..":255")
 		base_form = base_form.."image_button["..
 								(hp*hps)..","..(v2*vps+vs)..";"..
 								size..
@@ -976,20 +985,21 @@ function unifieddyes.show_airbrush_form(player)
 		base_form = base_form..
 				"image[10.3,"..(vps*5+vs)..";"..size..
 				"unifieddyes_available_overlay.png]"..
-				"label[11.0,"..(vps*5.1+vs)..";Dyes on hand]"..
-				"image[12.5,"..(vps*5+vs)..";"..size..
-				"unifieddyes_select_overlay.png]"..
-				"label[13.2,"..(vps*5.1+vs)..";Your selection]"
+				"label[11.0,"..(vps*5.1+vs)..";Dyes on hand]"
 	end
+		base_form = base_form..
+				"image[12.5,"..(vps*5+vs)..";"..size..
+				selindic..
+				"label[13.2,"..(vps*5.1+vs)..";Your selection]"
 
 	base_form = base_form..
 				"button_exit[11,8;2,1;cancel;Cancel]"..
 				"button_exit[13,8;2,1;accept;Accept]"
 
-	if unifieddyes.player_selected_dye[player_name] then
+	if painting_with then
 		base_form = base_form..
 					"label[1,"..(7.5+vs)..";Selected dye:  "..
-					unifieddyes.player_selected_dye[player_name].."]"
+					painting_with.."]"
 	end
 
 	minetest.show_formspec(player_name, "unifieddyes:dye_select_form", base_form)
@@ -1039,18 +1049,25 @@ minetest.register_craft( {
 minetest.register_on_player_receive_fields(function(player, formname, fields)
 	if formname == "unifieddyes:dye_select_form" then
 		local player_name = player:get_player_name()
-		local s1 = string.sub(minetest.serialize(fields), 11)
-		local s3 = string.sub(s1,1, string.find(s1, '"')-1)
-		if s3 == "cancel" then
-			unifieddyes.player_selected_dye[player_name] = nil
-			return
-		elseif s3 == "accept" and unifieddyes.player_selected_dye[player_name] then
-			local dye = unifieddyes.player_selected_dye[player_name]
-			unifieddyes.player_current_dye[player_name] = dye
-			unifieddyes.player_selected_dye[player_name] = nil
-				minetest.chat_send_player(player_name, "*** Selected "..string.sub(dye, 5).." for the airbrush.")
-			return
+		if fields.quit then
+			if not fields.accept then
+				unifieddyes.player_selected_dye[player_name] = nil
+				return
+			else
+				local dye = unifieddyes.player_selected_dye[player_name]
+				if not dye then
+					minetest.chat_send_player(player_name, "*** Clicked \"Accept\", but no color was selected!")
+					return
+				end
+				unifieddyes.player_current_dye[player_name] = dye
+				unifieddyes.player_selected_dye[player_name] = nil
+					minetest.chat_send_player(player_name, "*** Selected "..string.sub(dye, 5).." for the airbrush.")
+				return
+			end
 		else
+			local s1 = string.sub(minetest.serialize(fields), 11)
+			local s3 = string.sub(s1,1, string.find(s1, '"')-1)
+
 			local inv = player:get_inventory()
 			local creative = creative and creative.is_enabled_for(player_name)
 			local dye = "dye:"..s3

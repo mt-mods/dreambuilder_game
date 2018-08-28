@@ -152,7 +152,10 @@ local sclip_tex = {
 	{ name = "strut.png", color = "white" }
 }
 
-if minetest.registered_nodes["streets:steel_support"] then
+local streetsmod = minetest.get_modpath("streets") or minetest.get_modpath ("steelsupport")
+-- cheapie's fork breaks it into several individual mods, with differernt names for the same content.
+
+if streetsmod then
 	sclip_tex = {
 		"technic_insulator_clip.png",
 		{ name = "streets_support.png^technic_steel_strut_overlay.png", color = "white" },
@@ -216,7 +219,9 @@ minetest.register_craft({
 	}
 })
 
-if minetest.registered_nodes["steel:strut_mount"] then
+local steelmod = minetest.get_modpath("steel")
+
+if steelmod then
 	minetest.register_craft({
 		output = "technic:steel_strut_with_insulator_clip",
 		recipe = {
@@ -224,27 +229,23 @@ if minetest.registered_nodes["steel:strut_mount"] then
 			{"steel:strut_mount"}
 		}
 	})
-end
 
-if minetest.registered_nodes["steel:strut"] then
 	minetest.register_craft({
 		output = "technic:steel_strut_with_insulator_clip",
 		recipe = {
-			{"technic:insulator_clip_fencepost"},
-			{"steel:strut"},
-			{"default:steel_ingot"}
+			{"technic:insulator_clip_fencepost", ""                    },
+			{"steel:strut",                      "default:steel_ingot" },
 		}
 	})
 
 end
 
-if minetest.registered_nodes["streets:steel_support"] then
+if streetsmod then
 	minetest.register_craft({
 		output = "technic:steel_strut_with_insulator_clip",
 		recipe = {
-			{"technic:insulator_clip_fencepost"},
-			{"streets:steel_support"},
-			{"default:steel_ingot"}
+			{"technic:insulator_clip_fencepost", ""                   },
+			{"streets:steel_support",           "default:steel_ingot" },
 		}
 	})
 end
@@ -284,7 +285,7 @@ if minetest.get_modpath("unifieddyes") then
 		}
 	})
 
-	if minetest.registered_nodes["steel:strut_mount"] then
+	if steelmod then
 		unifieddyes.register_color_craft({
 			output = "technic:steel_strut_with_insulator_clip",
 			palette = "wallmounted",
@@ -296,28 +297,14 @@ if minetest.get_modpath("unifieddyes") then
 		})
 	end
 
-	if minetest.registered_nodes["steel:strut"] then
-		unifieddyes.register_color_craft({
-			output = "technic:steel_strut_with_insulator_clip",
-			palette = "wallmounted",
-			neutral_node = "",
-			recipe = {
-				{ "technic:insulator_clip_fencepost", "MAIN_DYE" },
-				{ "steel:strut",                      ""         },
-				{ "default:steel_ingot",              ""         }
-			}
-		})
-	end
-
-	if minetest.registered_nodes["streets:steel_support"] then
+	if streetsmod then
 		unifieddyes.register_color_craft({
 			output = "technic:steel_strut_with_insulator_clip",
 			palette = "wallmounted",
 			neutral_node = "technic:steel_strut_with_insulator_clip",
 			recipe = {
-				{ "technic:insulator_clip_fencepost", "MAIN_DYE" },
-				{ "streets:steel_support",            ""         },
-				{ "default:steel_ingot",              ""         }
+				{ "technic:insulator_clip_fencepost", "MAIN_DYE"            },
+				{ "streets:steel_support",            "default:steel_ingot" },
 			}
 		})
 	end
