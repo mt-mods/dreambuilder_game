@@ -28,7 +28,9 @@ minetest.register_node("mymod:colored_node", {
 - "unifieddyes_palette_colorwallmounted.png"
 - or one of the "split" hues palettes (see below).
 
-`groups`: If your node can be colored by punching it with dye, its groups entry must contain the key ud_param2_colorable = 1, among whatever else you'd normally put there. If the node is software-controlled, as might be the case for some mesecons-digilines aware node, then this group key should be omitted.
+`groups`: If your node can be colored by using the airbrush, its groups entry must contain the key ud_param2_colorable = 1, among whatever else you'd normally put there. If the node is software-controlled, as might be the case for some mesecons-digilines aware node, then this group key should be omitted.
+
+If your node if of the kind where you need the split palette, but you need to put the *full color name* into the node name, as opposed to just the hue, then add the keys `ud_color_start` and `ud_color_end` and set them to the positions of the first and last characters of the color name (where 1 is the first character of the mod name at the start of the node name, i.e. "mymod:foo_bar_orange_baz" would have the start set to 15 and the end at 20).
 
 `on_construct`: see below.
 

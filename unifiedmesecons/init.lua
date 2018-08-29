@@ -66,6 +66,9 @@ minetest.register_alias("mesecons_extrawires:corner_off", "mesecons_extrawires:i
 minetest.register_alias("mesecons_extrawires:tjunction_off", "mesecons_extrawires:insulated_tjunction_white_off")
 
 for _,color in pairs(hues) do
+	local cstart = 30
+	local cend = cstart + string.len(color) - 1
+
 	local palettecolor = color
 	if color == "black" or string.find(color, "grey") or color == "white" then
 		palettecolor = "grey"
@@ -86,6 +89,8 @@ for _,color in pairs(hues) do
 		on_place = minetest.rotate_node,
 		drop = "mesecons_insulated:insulated_white_off",
 		palette = "unifieddyes_palette_"..palettecolor.."s.png",
+		ud_color_start = cstart,
+		ud_color_end = cend,
 		selection_box = {
 			type = "fixed",
 			fixed = { -16/32-0.001, -18/32, -7/32, 16/32+0.001, -12/32, 7/32 }
@@ -96,7 +101,7 @@ for _,color in pairs(hues) do
 		},
 	},
 	{
-		groups = {dig_immediate = 3,not_in_creative_inventory = (color~="white" and 1 or nil)},
+		groups = {ud_param2_colorable = 1, dig_immediate = 3,not_in_creative_inventory = (color~="white" and 1 or nil)},
 		mesecons = {conductor = {
 			state = mesecon.state.off,
 			onstate = "mesecons_insulated:insulated_"..color.."_on",
@@ -112,7 +117,7 @@ for _,color in pairs(hues) do
 		},
 	},
 	{
-		groups = {dig_immediate = 3,not_in_creative_inventory = 1},
+		groups = {ud_param2_colorable = 1, dig_immediate = 3,not_in_creative_inventory = 1},
 		mesecons = {conductor = {
 			state = mesecon.state.on,
 			offstate = "mesecons_insulated:insulated_"..color.."_off",
@@ -127,6 +132,10 @@ for _,color in pairs(hues) do
 			"unifiedmesecons_wire_on.png",
 		},
 	})
+
+	cstart = 38
+	cend = cstart + string.len(color) - 1
+
 	mesecon.register_node(":mesecons_extrawires:insulated_corner_"..color, {
 		drawtype = "nodebox",
 		description = "Insulated Mesecon Corner",
@@ -137,6 +146,8 @@ for _,color in pairs(hues) do
 		on_place = minetest.rotate_node,
 		drop = "mesecons_extrawires:insulated_corner_white_off",
 		palette = "unifieddyes_palette_"..palettecolor.."s.png",
+		ud_color_start = cstart,
+		ud_color_end = cend,
 		selection_box = {
 				type = "fixed",
 				fixed = { -16/32-0.001, -18/32, -16/32, 5/32, -12/32, 5/32 },
@@ -148,7 +159,7 @@ for _,color in pairs(hues) do
 		},
 	},
 	{
-		groups = {dig_immediate = 3,not_in_creative_inventory = (color~="white" and 1 or nil)},
+		groups = {ud_param2_colorable = 1, dig_immediate = 3,not_in_creative_inventory = (color~="white" and 1 or nil)},
 		mesecons = {conductor = {
 			state = mesecon.state.off,
 			onstate = "mesecons_extrawires:insulated_corner_"..color.."_on",
@@ -164,7 +175,7 @@ for _,color in pairs(hues) do
 		},
 	},
 	{
-		groups = {dig_immediate = 3,not_in_creative_inventory = 1},
+		groups = {ud_param2_colorable = 1, dig_immediate = 3,not_in_creative_inventory = 1},
 		mesecons = {conductor = {
 			state = mesecon.state.on,
 			offstate = "mesecons_extrawires:insulated_corner_"..color.."_off",
@@ -179,6 +190,10 @@ for _,color in pairs(hues) do
 			"unifiedmesecons_wire_end_on.png",
 		},
 	})
+
+	cstart = 41
+	cend = cstart + string.len(color) - 1
+
 	mesecon.register_node(":mesecons_extrawires:insulated_tjunction_"..color, {
 		drawtype = "nodebox",
 		description = "Insulated Mesecon T-Junction",
@@ -189,6 +204,8 @@ for _,color in pairs(hues) do
 		on_place = minetest.rotate_node,
 		drop = "mesecons_extrawires:insulated_tjunction_white_off",
 		palette = "unifieddyes_palette_"..palettecolor.."s.png",
+		ud_color_start = cstart,
+		ud_color_end = cend,
 		node_box = {
 			type = "fixed",
 			fixed = {{ -16/32-0.001, -17/32, -3/32, 16/32+0.001, -13/32, 3/32 },
@@ -200,7 +217,7 @@ for _,color in pairs(hues) do
 		},
 	},
 	{
-		groups = {dig_immediate = 3,not_in_creative_inventory = (color~="white" and 1 or nil)},
+		groups = {ud_param2_colorable = 1, dig_immediate = 3,not_in_creative_inventory = (color~="white" and 1 or nil)},
 		mesecons = {conductor = {
 			state = mesecon.state.off,
 			onstate = "mesecons_extrawires:insulated_tjunction_"..color.."_on",
@@ -216,7 +233,7 @@ for _,color in pairs(hues) do
 		},
 	},
 	{
-		groups = {dig_immediate = 3,not_in_creative_inventory = 1},
+		groups = {ud_param2_colorable = 1, dig_immediate = 3,not_in_creative_inventory = 1},
 		mesecons = {conductor = {
 			state = mesecon.state.on,
 			offstate = "mesecons_extrawires:insulated_tjunction_"..color.."_off",

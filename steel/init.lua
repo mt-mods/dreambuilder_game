@@ -377,6 +377,7 @@ if minetest.get_modpath("unifieddyes") then
 
 	minetest.override_item("default:steelblock", {
 		palette = "unifieddyes_palette_extended.png",
+		airbrush_replacement_node = "steel:steel_block",
 		groups = {cracky=1, level=2, ud_param2_colorable=1},
 	})
 

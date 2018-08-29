@@ -665,7 +665,7 @@ function unifieddyes.on_airbrush(itemstack, player, pointed_thing)
 		return
 	end
 
-	if not def.palette then
+	if not def.palette or not (def.groups and def.groups.ud_param2_colorable > 0) then
 		minetest.chat_send_player(player_name, "*** That node can't be colored.")
 		return
 	end
@@ -699,29 +699,41 @@ function unifieddyes.on_airbrush(itemstack, player, pointed_thing)
 	end
 
 	local oldidx = node.param2 - fdir
-
 	local name = def.airbrush_replacement_node or node.name
 
 	if palette == true then
-		local s = string.sub(def.palette, 21)
-		local oldcolor = string.sub(s, 1, string.find(s, "s.png")-1)
-
 		local modname = string.sub(name, 1, string.find(name, ":")-1)
 		local nodename2 = string.sub(name, string.find(name, ":")+1)
+		local oldcolor = "snozzberry"
+		local newcolor = "razzberry" -- intentionally misspelled ;-)
 
-		local a,b
+		if def.ud_color_start and def.ud_color_end then
+			oldcolor = string.sub(node.name, def.ud_color_start, def.ud_color_end)
+			newcolor = string.sub(painting_with, 5)
+		else
+			if hue ~= 0 then
+				newcolor = unifieddyes.HUES[hue]
+			else
+				newcolor = "grey"
+			end
 
-		local newcolor = "grey"
-		if hue ~= 0 then
-			newcolor = unifieddyes.HUES[hue]
+			local s = string.sub(def.palette, 21)
+			oldcolor = string.sub(s, 1, string.find(s, "s.png")-1)
 		end
 
-		local a,b = string.gsub(nodename2, oldcolor, newcolor)
-		name = modname..":"..a
+		if newcolor == "spring" then newcolor = "aqua"
+		elseif newcolor == "azure" then newcolor = "skyblue"
+		elseif newcolor == "rose" then newcolor = "redviolet"
+		end
+
+		name = modname..":"..string.gsub(nodename2, oldcolor, newcolor)
+		if not minetest.registered_items[name] then
+			minetest.chat_send_player(player_name, "*** "..string.sub(painting_with, 5).." can't be applied to that node.")
+			return
+		end
 	elseif idx == oldidx then
 		return
 	end
-
 	minetest.swap_node(pos, {name = name, param2 = fdir + idx})
 	if not creative or not creative.is_enabled_for(player_name) then
 		inv:remove_item("main", painting_with)
@@ -969,7 +981,7 @@ function unifieddyes.show_airbrush_form(player)
 
 		if dye == painting_with then
 			overlay = "^unifieddyes_select_overlay.png"
-			slindic = "unifieddyes_white_square.png"..colorize..overlay.."]"..
+			selindic = "unifieddyes_white_square.png"..colorize..overlay.."]"..
 						"tooltip["..grey2..";"..grey2.."]"
 		end
 

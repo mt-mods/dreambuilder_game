@@ -4,6 +4,8 @@ local S = homedecor_i18n.gettext
 
 local function N_(x) return x end
 
+local m_rules = mesecon and mesecon.rules and mesecon.rules.pplate
+
 -- doors
 
 local function isSolid(pos, adjust)
@@ -264,6 +266,7 @@ for i, side in ipairs(sides) do
 			drop = "homedecor:door_"..doorname.."_left",
 		    mesecons = {
 		        effector = {
+					rules = m_rules,
 		            action_on = function(pos,node)
 		                local isClosed = getClosed(pos)
 		                if isClosed then
@@ -405,6 +408,7 @@ for i, g in ipairs(gate_list) do
 		end,
         mesecons = {
             effector = {
+				rules = m_rules,
                 action_on = function(pos,node) homedecor.flip_gate(pos,node,nil,gate, "closed") end
             }
         }
@@ -433,6 +437,7 @@ for i, g in ipairs(gate_list) do
         return itemstack
 	end
     def.mesecons.effector = {
+		rules = m_rules,
         action_off = function(pos,node) homedecor.flip_gate(pos,node,nil,gate, "open") end
     }
 
