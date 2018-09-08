@@ -134,6 +134,17 @@ local function register_rope_block(multiple, max_multiple, name_prefix, node_pre
 		selection_box = {type="regular"},
 		collision_box = {type="regular"},
 		groups = {choppy=2, oddly_breakable_by_hand=1, rope_block = 1},
+		
+		on_place = function(itemstack, placer, pointed_thing)
+			if pointed_thing.type == "node" then
+				local target_node = minetest.get_node(pointed_thing.under)
+				local target_def = minetest.registered_nodes[target_node.name]
+				if target_def.walkable == false then
+					return itemstack
+				end
+			end
+			return minetest.item_place(itemstack, placer, pointed_thing)
+		end,
 	
 		after_place_node = function(pos, placer)
 			local pos_below = {x=pos.x, y=pos.y-1, z=pos.z}
@@ -225,9 +236,8 @@ local rope_def = {
 	drop = "",
 	tiles = { "ropes_3.png", "ropes_3.png", "ropes_3.png", "ropes_3.png", "ropes_5.png", "ropes_5.png" },
 	groups = {choppy=2, flammable=2, not_in_creative_inventory=1},
-	sounds =  default.node_sound_leaves_defaults(),
 	sounds = {
-            footstep = "ropes_creak",
+            footstep = {name = "ropes_creak", gain = 0.8, max_hear_distance = 6},
             dig = "__group",
             dug = "__group",
 	},
@@ -262,7 +272,7 @@ local rope_bottom_def = {
 	drawtype = "nodebox",
 	groups = {choppy=2, flammable=2, not_in_creative_inventory=1},
 	sounds = {
-            footstep = "ropes_creak",
+            footstep = {name = "ropes_creak", gain = 0.8, max_hear_distance = 6},
             dig = "__group",
             dug = "__group",
 	},

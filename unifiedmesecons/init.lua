@@ -377,7 +377,7 @@ for _,color in pairs(hues) do
 		minetest.register_craft({
 			output = unifieddyes.make_colored_itemstack(
 				"mesecons_extrawires:insulated_corner_"..color.."_off 3",
-				true,
+				"split",
 				dye),
 			recipe = {
 				{"", dye, ""},
@@ -389,7 +389,7 @@ for _,color in pairs(hues) do
 		minetest.register_craft({
 			output = unifieddyes.make_colored_itemstack(
 				"mesecons_extrawires:insulated_tjunction_"..color.."_off 3",
-				true,
+				"split",
 				dye),
 			recipe = {
 				{"", dye, ""},
@@ -402,7 +402,7 @@ for _,color in pairs(hues) do
 			type = "shapeless",
 			output = unifieddyes.make_colored_itemstack(
 				"mesecons_insulated:insulated_"..color.."_off",
-				true,
+				"split",
 				dye),
 			recipe = {
 				dye,
@@ -413,7 +413,7 @@ for _,color in pairs(hues) do
 		minetest.register_craft({
 			output = unifieddyes.make_colored_itemstack(
 				"mesecons_extrawires:insulated_corner_"..color.."_off",
-				true,
+				"split",
 				dye),
 			type = "shapeless",
 			recipe = {
@@ -425,7 +425,7 @@ for _,color in pairs(hues) do
 		minetest.register_craft({
 			output = unifieddyes.make_colored_itemstack(
 				"mesecons_extrawires:insulated_tjunction_"..color.."_off",
-				true,
+				"split",
 				dye),
 			type = "shapeless",
 			recipe = {
@@ -444,7 +444,7 @@ for _,color in pairs(hues) do -- allow re-dying of grey wires since they're so l
 			type = "shapeless",
 			output = unifieddyes.make_colored_itemstack(
 				"mesecons_insulated:insulated_"..color.."_off",
-				true,
+				"split",
 				dye),
 			recipe = {
 				dye,
@@ -455,7 +455,7 @@ for _,color in pairs(hues) do -- allow re-dying of grey wires since they're so l
 		minetest.register_craft({
 			output = unifieddyes.make_colored_itemstack(
 				"mesecons_extrawires:insulated_corner_"..color.."_off",
-				true,
+				"split",
 				dye),
 			type = "shapeless",
 			recipe = {
@@ -467,7 +467,7 @@ for _,color in pairs(hues) do -- allow re-dying of grey wires since they're so l
 		minetest.register_craft({
 			output = unifieddyes.make_colored_itemstack(
 				"mesecons_extrawires:insulated_tjunction_"..color.."_off",
-				true,
+				"split",
 				dye),
 			type = "shapeless",
 			recipe = {

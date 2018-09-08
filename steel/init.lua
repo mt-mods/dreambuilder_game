@@ -102,8 +102,8 @@ minetest.register_node("steel:plate_rusted", {
 
 local base_tex = "strut.png"
 
-local streetsmod = minetest.get_modpath("streets") or minetest.get_modpath ("steelsupport")
--- cheapie's fork breaks it into several individual mods, with differernt names for the same content.
+local streetsmod = minetest.get_modpath("streets") or minetest.get_modpath("steelsupport")
+-- cheapie's fork breaks it into several individual mods, with different names for the same content.
 
 if streetsmod then
 	minetest.register_alias("steel:strut","streets:steel_support")

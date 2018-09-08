@@ -1,0 +1,56 @@
+# ITALIAN LOCALE FILE FOR THE CASTLE STORAGE MODULE
+# Copyright (C) 2017 Philipbenr And DanDuncombe
+# This file is distributed under the same license as the CASTLE STORAGE package.
+# Hamlet <h4mlet@riseup.net>, 2017.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Castle Storage\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-02-25 19:18-0700\n"
+"PO-Revision-Date: 2017-09-10 22:46+0100\n"
+"Last-Translator: H4mlet <h4mlet@riseup.net>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: it\n"
+"X-Generator: Poedit 1.6.10\n"
+
+#: crate.lua:9 crate.lua:24
+msgid "Crate"
+msgstr "Cassa"
+
+#: crate.lua:34
+msgid "@1 moves stuff in crate at @2"
+msgstr "@1 mette delle cose nella cassa alle coordinate @2"
+
+#: crate.lua:37
+msgid "@1 moves stuff to crate at @2"
+msgstr "@1 prende delle cose dalla cassa alle coordinate @2"
+
+#: crate.lua:40 ironbound_chest.lua:113
+msgid "@1 takes stuff from locked chest at @2"
+msgstr "@1 prende delle cose dal baule chiuso a chiave alle coordinate @2"
+
+#: ironbound_chest.lua:35 ironbound_chest.lua:69
+msgid "Ironbound Chest"
+msgstr "Baule rinforzato col ferro"
+
+#: ironbound_chest.lua:65
+msgid "Ironbound Chest (owned by @1)"
+msgstr "Baule rinforzato col ferro (di @1)"
+
+#: ironbound_chest.lua:82 ironbound_chest.lua:91 ironbound_chest.lua:100
+msgid "@1 tried to access a locked chest belonging to @2 at @3"
+msgstr ""
+"@1 ha tentato di aprire un baule chiuso a chiave di @2 alle coordinate @3"
+
+#: ironbound_chest.lua:107
+msgid "@1 moves stuff in locked chest at @2"
+msgstr "@1 sposta delle cose nel baule chiuso a chiave alle coordinate @2"
+
+#: ironbound_chest.lua:110
+msgid "@1 moves stuff to locked chest at @2"
+msgstr "@1 mette delle cose nel baule chiuso a chiave alle coordinate @2"

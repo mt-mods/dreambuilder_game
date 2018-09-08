@@ -1,13 +1,8 @@
-=-=-=-=-=-=-=-=-=-=
+## Castle farm products
 
-Castles Mod
-by: Philipbenr And DanDuncombe
-
-=-=-=-=-=-=-=-=-=-=
+B: Philipbenr, DanDuncombe, FaceDeer
 
 Licence: MIT
-
-see: LICENSE
 
 =-=-=-=-=-=-=-=-=-=
 
@@ -16,5 +11,3 @@ Contains farm products useful for decorating a castle:
 * Hide wall and floor coverings
 * Bound straw bale
 * Straw training dummy
-
-=-=-=-=-=-=-=-=-=-=

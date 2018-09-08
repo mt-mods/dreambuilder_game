@@ -222,7 +222,7 @@ for _, mname in ipairs(coloredwood_cuts) do
 	unifieddyes.register_color_craft({
 		output_prefix = "coloredwood:"..class.."_wood_",
 		output_suffix = shape,
-		palette = true,
+		palette = "split",
 		type = "shapeless",
 		neutral_node = mname,
 		recipe = {
@@ -325,112 +325,5 @@ if coloredwood.enable_stairsplus then
 		end
 	end
 end
-
-local old_shades = {
-	"",
-	"",
-	"",
-	"light_",
-	"medium_",
-	"medium_",
-	"dark_",
-	"dark_"
-}
-
-local old_greys = {
-	"white",
-	"white",
-	"light_grey",
-	"grey",
-	"dark_grey",
-	"black",
-	"white",
-	"white"
-}
-
-minetest.register_lbm({
-	name = "coloredwood:convert",
-	label = "Convert wood blocks, fences, stairsplus stuff, etc to use param2 color",
-	run_at_every_load = false,
-	nodenames = coloredwood.old_static_nodes,
-	action = function(pos, node)
-		local meta = minetest.get_meta(pos)
-
-		local name = node.name
-		local hue, sat, val = unifieddyes.get_hsv(name)
-		local color = val..hue..sat
-		local s1, s2 = is_stairsplus(name, true)
-
-		if meta and (meta:get_string("dye") ~= "") then return end -- node has already been converted before.
-
-		if s1 then
-
-			if not s2 then print("impossible conversion request!  name = "..node.name.." --> ".."coloredwood:"..s1.."_wood_"..hue.."*nil*") return end
-
-			local paletteidx, _ = unifieddyes.getpaletteidx("unifieddyes:"..color, true)
-			local cfdir = paletteidx + (node.param2 % 32)
-			local newname = "coloredwood:"..s1.."_wood_"..hue..s2
-
-			minetest.set_node(pos, { name = newname, param2 = cfdir })
-			local meta = minetest.get_meta(pos)
-			meta:set_string("dye", "unifieddyes:"..color)
-
-		elseif string.find(name, ":fence") then
-			local paletteidx, hue = unifieddyes.getpaletteidx("unifieddyes:"..color, "extended")
-			minetest.set_node(pos, { name = "coloredwood:fence", param2 = paletteidx })
-			meta:set_string("dye", "unifieddyes:"..color)
-			meta:set_string("palette", "ext")
-		else
-			if hue == "aqua" then
-				hue = "spring"
-			elseif hue == "skyblue" then
-				hue = "azure"
-			elseif hue == "redviolet" then
-				hue = "rose"
-			end
-
-			color = val..hue..sat
-
-			local paletteidx, hue = unifieddyes.getpaletteidx("unifieddyes:"..color, "extended")
-			minetest.set_node(pos, { name = "coloredwood:wood_block", param2 = paletteidx })
-			meta:set_string("dye", "unifieddyes:"..color)
-			meta:set_string("palette", "ext")
-		end
-	end
-})
-
-table.insert(coloredwood.old_13_color_nodes, "coloredwood:fence")
-
-minetest.register_lbm({
-	name = "coloredwood:recolor_basics",
-	label = "Convert fences and base 13-color wood to use UD extended palette",
-	run_at_every_load = false,
-	nodenames = coloredwood.old_13_color_nodes,
-	action = function(pos, node)
-		local meta = minetest.get_meta(pos)
-		if meta:get_string("palette") ~= "ext" then
-			if node.name == "coloredwood:fence" then
-				minetest.swap_node(pos, { name = node.name, param2 = unifieddyes.convert_classic_palette[node.param2] })
-			else
-				local hue = string.sub(node.name, 18)
-				local shadenum = math.floor(node.param2/32) + 1
-				local shade = old_shades[shadenum]
-				local sat = ""
-
-				if hue == "grey" then
-					hue = old_greys[shadenum]
-					shade = ""
-					sat = ""
-				elseif shadenum == 3 or shadenum == 6 or shadenum == 8 then
-					sat = "_s50"
-				end
-
-				local newcolor = unifieddyes.convert_classic_palette[unifieddyes.getpaletteidx("unifieddyes:"..shade..hue..sat)]
-				minetest.swap_node(pos, { name = "coloredwood:wood_block", param2 = newcolor })
-			end
-			meta:set_string("palette", "ext")
-		end
-	end
-})
 
 print("[Colored Wood] Loaded!")

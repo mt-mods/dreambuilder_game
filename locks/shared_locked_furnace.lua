@@ -3,6 +3,7 @@
 -- containing only the furnace and adopted slightly for my locks mod
 
 
+-- 25.02.16 Added new Locks config Buttons.
 -- 09.01.13 Added support for pipeworks.
 
 
@@ -60,7 +61,7 @@ if( locks.pipeworks_enabled ) then
 	tubedevice = 1, tubedevice_receiver = 1 };
    locks.furnace_add.tube = {
 		insert_object = function(pos, node, stack, direction)
-			local meta = minetest.env:get_meta(pos)
+			local meta = minetest.get_meta(pos)
 			local inv = meta:get_inventory()
 			if direction.y == 1 then
 				return inv:add_item("fuel",stack)
@@ -69,7 +70,7 @@ if( locks.pipeworks_enabled ) then
 			end
 		end,
 		can_insert = function(pos, node, stack, direction)
-			local meta = minetest.env:get_meta(pos)
+			local meta = minetest.get_meta(pos)
 			local inv = meta:get_inventory()
 			if direction.y == 1 then
 				return inv:room_for_item("fuel", stack)
@@ -86,29 +87,29 @@ end
 function locks.get_furnace_active_formspec(pos, percent)
 	local formspec =
 		"size[8,9]"..
-		"image[2,2;1,1;default_furnace_fire_bg.png^[lowpart:"..
+		"image[2,1.5;1,1;default_furnace_fire_bg.png^[lowpart:"..
 		(100-percent)..":default_furnace_fire_fg.png]"..
-		"list[current_name;fuel;2,3;1,1;]"..
-		"list[current_name;src;2,1;1,1;]"..
+		"list[current_name;fuel;2,2.5;1,1;]"..
+		"list[current_name;src;2,0.5;1,1;]"..
 		"list[current_name;dst;5,1;2,2;]"..
 		"list[current_player;main;0,5;8,4;]"..
-		"background[-0.5,-0.65;9,10.35;bg_shared_locked_furnace.jpg]"..
-
-                                "field[0.3,4.5;6,0.7;locks_sent_lock_command;Locked furnace. Type /help for help:;]"..
-                                "button_exit[6.3,4;1.7,0.7;locks_sent_input;Proceed]" ;
+		locks.uniform_background..
+		locks.get_authorize_button(6,0)..
+		locks.get_config_button(7,0)
+		
 	return formspec
 end
 
 locks.furnace_inactive_formspec =
 	"size[8,9]"..
-	"image[2,2;1,1;default_furnace_fire_bg.png]"..
-	"list[current_name;fuel;2,3;1,1;]"..
-	"list[current_name;src;2,1;1,1;]"..
+	"image[2,1.5;1,1;default_furnace_fire_bg.png]"..
+	"list[current_name;fuel;2,2.5;1,1;]"..
+	"list[current_name;src;2,0.5;1,1;]"..
 	"list[current_name;dst;5,1;2,2;]"..
 	"list[current_player;main;0,5;8,4;]"..
-	"background[-0.5,-0.65;9,10.35;bg_shared_locked_furnace.jpg]"..
-                                "field[0.3,4.5;6,0.7;locks_sent_lock_command;Locked furnace. Type /help for help:;]"..
-                                "button_exit[6.3,4;1.7,0.7;locks_sent_input;Proceed]" ;
+	locks.uniform_background..
+	locks.get_authorize_button(6,0)..
+	locks.get_config_button(7,0)
 
 minetest.register_node("locks:shared_locked_furnace", {
 	description = "Shared locked furnace",

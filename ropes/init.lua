@@ -6,12 +6,12 @@ ropes = {
 local MP = minetest.get_modpath(minetest.get_current_modname())
 local S, NS = dofile(MP.."/intllib.lua")
 
-ropes.ropeLength = tonumber(minetest.setting_get("ropes_rope_length")) or 50
-ropes.ropeLadderLength = tonumber(minetest.setting_get("ropes_rope_ladder_length")) or 50
-ropes.woodRopeBoxMaxMultiple = tonumber(minetest.setting_get("ropes_wood_rope_box_max_multiple")) or 2
-ropes.copperRopeBoxMaxMultiple = tonumber(minetest.setting_get("ropes_copper_rope_box_max_multiple")) or 5
-ropes.steelRopeBoxMaxMultiple = tonumber(minetest.setting_get("ropes_steel_rope_box_max_multiple")) or 9
-ropes.create_all_definitions = minetest.setting_getbool("ropes_create_all_definitions")
+ropes.ropeLength = tonumber(minetest.settings:get("ropes_rope_length")) or 50
+ropes.ropeLadderLength = tonumber(minetest.settings:get("ropes_rope_ladder_length")) or 50
+ropes.woodRopeBoxMaxMultiple = tonumber(minetest.settings:get("ropes_wood_rope_box_max_multiple")) or 2
+ropes.copperRopeBoxMaxMultiple = tonumber(minetest.settings:get("ropes_copper_rope_box_max_multiple")) or 5
+ropes.steelRopeBoxMaxMultiple = tonumber(minetest.settings:get("ropes_steel_rope_box_max_multiple")) or 9
+ropes.create_all_definitions = minetest.settings:get_bool("ropes_create_all_definitions")
 
 dofile( minetest.get_modpath( ropes.name ) .. "/doc.lua" )
 dofile( minetest.get_modpath( ropes.name ) .. "/functions.lua" )
