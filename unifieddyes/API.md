@@ -117,11 +117,16 @@ This will loop through all of Unified Dyes' color lists, generating one recipe f
 
 `recipe` is the same as in the normal call, except that Unified Dyes will replace all instances of the string "NEUTRAL_NODE" with the item specified in the preceding `neutral_node` field.  Every instance of "MAIN_DYE" will be replaced with a portion of dye, as Unified Dyes' recipe helper works through its color lists (i.e. this field will become whatever dye is needed for each recipe).
 
-`output_prefix` and `output_suffix`, if specified (must use both if at all), will cause the recipe registration to ignore the usual `output` field, and instead set to the output item to `output_prefix` + (hue) + `output_suffix`.  Used for mods that use the split 89-color palette.  `hue` will thus be one of the 12 hues, or "grey", as defined by the split palettes.
+`output_prefix` and `output_suffix`, if specified (must use both if at all), will cause the recipe registration to set to the output item to `output_prefix` + (hue) + `output_suffix` + `output`.  Used for mods that use the split 89-color palette.  `hue` will thus be one of the 12 hues, or "grey", as defined by the split palettes.  In this situation, you can set `output` to your recipe yield (with a leading space) if needed.  For example, if the prefix is "foo:bar", the suffix is "baz", and the output is set to " 3", then the craft helper will generate output item strings of the form "foo:bar_COLOR_baz 3", for each color in the table.
 
 **`unifieddyes.make_colored_itemstack(itemstack, palette, color)`**
 
 Makes a colored itemstack out of the given `itemstack` and `color` (as a dye, e.g. "dye:dark_red_s50"), setting the correct index per the `palette` field, which works as described above for `unifieddyes.getpaletteidx()`.  Said itemstack is returned as a string suitable for use as the output field of a craft recipe, equal in size to the itemstack passed into the function (e.g. if you give it "mymod:colored_node 7", it'll return a stack of 7 colored items).
+
+**`unifieddyes.generate_split_palette_nodes(name, def, drop)`**
+
+Does just what it sounds like - it registers all the nodes that are needed for a given base node (`def`) to be able to use the split palette, each named according to `name`, with the palette hue appended.  If a custom drop is needed, it can be passed along (only a string is allowed here, specifying a single item).  
+
 
 #### Tables
 

@@ -3273,6 +3273,19 @@ for i in ipairs(homedecor.banister_materials) do
 	})
 end
 
+unifieddyes.register_color_craft({
+	output = "",
+	palette = "split",
+	neutral_node = "homedecor:banister_wood_horizontal",
+	type = "shapeless",
+	output_prefix = "homedecor:banister_wood_horizontal_",
+	output_suffix = "",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE",
+	}
+})
+
 if (minetest.get_modpath("technic") and minetest.get_modpath("dye") and minetest.get_modpath("bees")) then
 	technic.register_separating_recipe({ input = {"bees:wax 1"}, output = {"homedecor:oil_extract 2","dye:yellow 1"} })
 end

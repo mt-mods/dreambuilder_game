@@ -257,6 +257,8 @@ function homedecor.place_banister(itemstack, placer, pointed_thing)
 	if not pos then return itemstack end
 
 	local fdir = minetest.dir_to_facedir(placer:get_look_dir())
+	local meta = itemstack:get_meta()
+	local pindex = meta:get_int("palette_index")
 
 	local abovepos  = { x=pos.x, y=pos.y+1, z=pos.z }
 	local abovenode = minetest.get_node(abovepos)
@@ -371,7 +373,7 @@ function homedecor.place_banister(itemstack, placer, pointed_thing)
 		end
 	end
 
-	minetest.set_node(pos, {name = new_place_name, param2 = fdir})
+	minetest.set_node(pos, {name = new_place_name, param2 = fdir+pindex})
 	itemstack:take_item()
 	return itemstack
 end

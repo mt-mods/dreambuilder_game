@@ -1,3 +1,4 @@
+local S = homedecor_i18n.gettext
 
 lrfurn = {}
 screwdriver = screwdriver or {}
