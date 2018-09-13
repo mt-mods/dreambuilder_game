@@ -3,6 +3,11 @@ for _,i in ipairs({"pink","dark_green","brown","black","dark_grey","white"}) do
 	table.insert(hues, i)
 end
 
+local explist = {}
+for _,i in ipairs(hues) do
+	explist[i] = true
+end
+
 local function insulated_wire_get_rules(node)
 	local rules = 	{{x = 1,  y = 0,  z = 0},
 			 {x =-1,  y = 0,  z = 0}}
@@ -74,6 +79,7 @@ for _,color in pairs(hues) do
 		palette = "unifieddyes_palette_"..palettecolor.."s.png",
 		ud_color_start = cstart,
 		ud_color_end = cend,
+		explist = explist,
 		selection_box = {
 			type = "fixed",
 			fixed = { -16/32-0.001, -18/32, -7/32, 16/32+0.001, -12/32, 7/32 }
@@ -131,6 +137,7 @@ for _,color in pairs(hues) do
 		palette = "unifieddyes_palette_"..palettecolor.."s.png",
 		ud_color_start = cstart,
 		ud_color_end = cend,
+		explist = explist,
 		selection_box = {
 				type = "fixed",
 				fixed = { -16/32-0.001, -18/32, -16/32, 5/32, -12/32, 5/32 },
@@ -189,6 +196,7 @@ for _,color in pairs(hues) do
 		palette = "unifieddyes_palette_"..palettecolor.."s.png",
 		ud_color_start = cstart,
 		ud_color_end = cend,
+		explist = explist,
 		node_box = {
 			type = "fixed",
 			fixed = {{ -16/32-0.001, -17/32, -3/32, 16/32+0.001, -13/32, 3/32 },

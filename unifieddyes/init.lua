@@ -806,8 +806,9 @@ local hps = 0.6 -- horizontal position scale
 local vps = 1.3 -- vertical position scale
 local vs = 0.3  -- vertical shift/offset
 local color_button_size = ";0.75,0.75;"
+local color_square_size = ";0.69,0.69;"
 
-function unifieddyes.make_colored_square(hexcolor, colorname, showall, creative, painting_with, nodepalette, hp, v2, selindic, inv)
+function unifieddyes.make_colored_square(hexcolor, colorname, showall, creative, painting_with, nodepalette, hp, v2, selindic, inv, explist)
 
 	local dye = "dye:"..colorname
 
@@ -819,7 +820,8 @@ function unifieddyes.make_colored_square(hexcolor, colorname, showall, creative,
 	end
 
 	local unavail_overlay = ""
-	if not showall and not unifieddyes.palette_has_color[nodepalette.."_"..colorname] then
+	if not showall and not unifieddyes.palette_has_color[nodepalette.."_"..colorname]
+		or (explist and not explist[colorname]) then
 		if overlay == "" then
 			unavail_overlay = "^unifieddyes_unavailable_overlay.png"
 		else
@@ -832,13 +834,22 @@ function unifieddyes.make_colored_square(hexcolor, colorname, showall, creative,
 		selindic = "unifieddyes_white_square.png"..colorize..overlay..unavail_overlay.."]"..
 					"tooltip["..colorname..";"..colorname.."]"
 	end
+	local form
 
-	local form = "image_button["..
-				(hp*hps)..","..(v2*vps+vs)..
-				color_button_size..
-				"unifieddyes_white_square.png"..colorize..overlay..unavail_overlay..";"..
-				colorname..";]"..
-				"tooltip["..colorname..";"..colorname.."]"
+	if unavail_overlay == "" then
+		form = "image_button["..
+					(hp*hps)..","..(v2*vps+vs)..
+					color_button_size..
+					"unifieddyes_white_square.png"..colorize..overlay..unavail_overlay..";"..
+					colorname..";]"..
+					"tooltip["..colorname..";"..colorname.."]"
+	else
+		form = "image["..
+					(hp*hps)..","..(v2*vps+vs)..
+					color_square_size..
+					"unifieddyes_white_square.png"..colorize..overlay..unavail_overlay.."]"..
+					"tooltip["..colorname.." (unavailable);"..colorname.."]"
+	end
 
 	return form, selindic
 end
@@ -876,6 +887,8 @@ function unifieddyes.show_airbrush_form(player)
 		t[#t+1] = "label[0.5,8.25;(Right-clicked a node not supported by the Airbrush, showing all colors)]"
 	end
 
+	local explist = last_right_click.def.explist
+
 	for v = 0, 6 do
 		local val = unifieddyes.VALS_EXTENDED[v+1]
 
@@ -902,7 +915,7 @@ function unifieddyes.show_airbrush_form(player)
 
 			local hexcolor = string.format("%02x", r2)..string.format("%02x", g2)..string.format("%02x", b2)
 			local f
-			f, selindic = unifieddyes.make_colored_square(hexcolor, val..hue..sat, showall, creative, painting_with, nodepalette, hp, v2, selindic, inv)
+			f, selindic = unifieddyes.make_colored_square(hexcolor, val..hue..sat, showall, creative, painting_with, nodepalette, hp, v2, selindic, inv, explist)
 			t[#t+1] = f
 		end
 
@@ -935,7 +948,7 @@ function unifieddyes.show_airbrush_form(player)
 
 				local hexcolor = string.format("%02x", r3)..string.format("%02x", g3)..string.format("%02x", b3)
 				local f
-				f, selindic = unifieddyes.make_colored_square(hexcolor, val..hue..sat, showall, creative, painting_with, nodepalette, hp, v2, selindic, inv)
+				f, selindic = unifieddyes.make_colored_square(hexcolor, val..hue..sat, showall, creative, painting_with, nodepalette, hp, v2, selindic, inv, explist)
 				t[#t+1] = f
 			end
 		end
@@ -957,7 +970,7 @@ function unifieddyes.show_airbrush_form(player)
 		end
 
 		local f
-		f, selindic = unifieddyes.make_colored_square(hexgrey, grey, showall, creative, painting_with, nodepalette, hp, v2, selindic, inv)
+		f, selindic = unifieddyes.make_colored_square(hexgrey, grey, showall, creative, painting_with, nodepalette, hp, v2, selindic, inv, explist)
 		t[#t+1] = f
 
 	end
