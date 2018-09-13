@@ -34,7 +34,7 @@ homedecor.register("shutter", {
 	wield_image = inv,
 	paramtype2 = "colorwallmounted",
 	palette = "unifieddyes_palette_colorwallmounted.png",
-	ud_replacement_node = "homedecor:shutter_colored",
+	airbrush_replacement_node = "homedecor:shutter_colored",
 	groups = { snappy = 3, ud_param2_colorable = 1 },
 	sounds = default.node_sound_wood_defaults(),
 	selection_box = shutter_cbox,
