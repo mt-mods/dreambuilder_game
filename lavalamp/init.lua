@@ -146,20 +146,3 @@ minetest.register_lbm({
 
 	end
 })
-
-minetest.register_lbm({
-	name = "lavalamp:recolor",
-	label = "Convert 89-color lamps to use UD extended palette",
-	run_at_every_load = false,
-	nodenames = {
-		"lavalamp:lavalamp",
-		"lavalamp:lavalamp_off"
-	},
-	action = function(pos, node)
-		local meta = minetest.get_meta(pos)
-		if meta:get_string("palette") ~= "ext" then
-			minetest.swap_node(pos, { name = node.name, param2 = unifieddyes.convert_classic_palette[node.param2] })
-			meta:set_string("palette", "ext")
-		end
-	end
-})

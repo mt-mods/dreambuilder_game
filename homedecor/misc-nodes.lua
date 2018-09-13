@@ -529,6 +529,7 @@ for _, side in ipairs({"diagonal_left", "diagonal_right", "horizontal"}) do
 				homedecor.white_wood
 			}
 			def2.inventory_image = "homedecor_banister_wood_colored_inv.png"
+			def2.groups.not_in_creative_inventory = 1 
 
 			unifieddyes.generate_split_palette_nodes(nn, def2, "homedecor:banister_"..name.."_horizontal")
 		end

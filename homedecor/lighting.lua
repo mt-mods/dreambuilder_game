@@ -735,28 +735,3 @@ minetest.register_lbm({
 		meta:set_string("dye", "unifieddyes:"..color)
 	end
 })
-
-minetest.register_lbm({
-	name = "homedecor:recolor_lighting",
-	label = "Convert some kinds of lights to use UD extended palette",
-	run_at_every_load = false,
-	nodenames = {
-		"homedecor:table_lamp_off",
-		"homedecor:table_lamp_low",
-		"homedecor:table_lamp_med",
-		"homedecor:table_lamp_hi",
-		"homedecor:table_lamp_max",
-		"homedecor:standing_lamp_off",
-		"homedecor:standing_lamp_low",
-		"homedecor:standing_lamp_med",
-		"homedecor:standing_lamp_hi",
-		"homedecor:standing_lamp_max",
-	},
-	action = function(pos, node)
-		local meta = minetest.get_meta(pos)
-		if meta:get_string("palette") ~= "ext" then
-			minetest.swap_node(pos, { name = node.name, param2 = unifieddyes.convert_classic_palette[node.param2] })
-			meta:set_string("palette", "ext")
-		end
-	end
-})

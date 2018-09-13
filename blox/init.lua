@@ -693,7 +693,7 @@ minetest.register_lbm({
 		if color == "purple" then
 			color = "violet"
 		elseif color == "blue" then
-			color = "skyblue"
+			color = "azure"
 		elseif color == "pink" then
 			color = "magenta"
 		elseif color == "black" and

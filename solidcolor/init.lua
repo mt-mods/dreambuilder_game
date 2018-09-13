@@ -28,20 +28,3 @@ unifieddyes.register_color_craft({
 	}
 })
 
-minetest.register_lbm({
-	name = "solidcolor:recolor",
-	label = "Convert to new palette",
-	nodenames = {"solidcolor:block"},
-	action = function(pos, node)
-		local meta = minetest.get_meta(pos)
-		if meta:get_string("palette") ~= "ext" then
-			if node.param2 == 0 then
-				node.param2 = 240
-			else
-				node.param2 = unifieddyes.convert_classic_palette[node.param2]
-			end
-			minetest.swap_node(pos,node)
-			meta:set_string("palette", "ext")
-		end
-	end
-})

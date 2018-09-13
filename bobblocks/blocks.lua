@@ -321,7 +321,7 @@ minetest.register_lbm({
 
 		-- custom re-mappings to use unified dyes' colors that are most similar to the originals
 		if color == "blue" then
-			newcolor = "medium_skyblue"
+			newcolor = "medium_azure"
 		end
 		if color == "indigo" then
 			newcolor = "light_violet"
@@ -356,24 +356,3 @@ minetest.register_lbm({
 	end
 })
 
-minetest.register_lbm({
-	name = "bobblocks:recolor_stuff",
-	label = "Convert 89-color fences to use UD extended palette",
-	run_at_every_load = false,
-	nodenames = {
-		"bobblocks:block",
-		"bobblocks:block_off",
-		"bobblocks:pole",
-		"bobblocks:pole_off",
-		"bobblocks:wavyblock",
-		"bobblocks:wavyblock_off",
-		"bobblocks:wavypole"
-	},
-	action = function(pos, node)
-		local meta = minetest.get_meta(pos)
-		if meta:get_string("palette") ~= "ext" then
-			minetest.swap_node(pos, { name = node.name, param2 = unifieddyes.convert_classic_palette[node.param2] })
-			meta:set_string("palette", "ext")
-		end
-	end
-})

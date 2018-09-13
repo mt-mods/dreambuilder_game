@@ -402,32 +402,5 @@ minetest.register_lbm({
 	end
 })
 
-minetest.register_lbm({
-	name = "stained_glass:recolor_glass",
-	label = "Convert glass to use UD extended palette",
-	run_at_every_load = false,
-	nodenames = {
-		"stained_glass:stained_glass",
-		"stained_glass:stained_trap_glass",
-		"stained_glass:faint_stained_glass",
-		"stained_glass:faint_stained_trap_glass",
-		"stained_glass:pastel_stained_glass",
-		"stained_glass:pastel_stained_trap_glass"
-	},
-	action = function(pos, node)
-		local meta = minetest.get_meta(pos)
-		if meta:get_string("palette") ~= "ext" then
-
-			local newcolor = unifieddyes.convert_classic_palette[node.param2]
-			if string.find(node.name, "faint") then
-				newcolor = newcolor - 4*24
-			elseif string.find(node.name, "pastel") then
-				newcolor = newcolor - 3*24
-			end
-			minetest.swap_node(pos, { name = "stained_glass:stained_glass", param2 = newcolor })
-			meta:set_string("palette", "ext")
-		end
-	end
-})
 
 print("[stained_glass] Loaded!")

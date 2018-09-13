@@ -96,20 +96,3 @@ minetest.register_lbm({
 	end,
 })
 
-minetest.register_lbm({
-	name = "plasticbox:recolor",
-	label = "Convert to new palette",
-	nodenames = {"plasticbox:plasticbox"},
-	action = function(pos, node)
-		local meta = minetest.get_meta(pos)
-		if meta:get_string("palette") ~= "ext" then
-			if node.param2 == 0 then
-				node.param2 = 240
-			else
-				node.param2 = unifieddyes.convert_classic_palette[node.param2]
-			end
-			minetest.swap_node(pos,node)
-			meta:set_string("palette", "ext")
-		end
-	end
-})

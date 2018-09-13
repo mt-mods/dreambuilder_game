@@ -1,24 +1,7 @@
-local hues = {
-	"red",
-	"orange",
-	"yellow",
-	"lime",
-	"green",
-	"aqua",
-	"cyan",
-	"skyblue",
-	"blue",
-	"violet",
-	"magenta",
-	"redviolet",
-	"pink",
-	"dark_green",
-	"brown",
-	"black",
-	"dark_grey",
-	"grey",
-	"white",
-}
+local hues = table.copy(unifieddyes.HUES_WITH_GREY)
+for _,i in ipairs({"pink","dark_green","brown","black","dark_grey","white"}) do
+	table.insert(hues, i)
+end
 
 local function insulated_wire_get_rules(node)
 	local rules = 	{{x = 1,  y = 0,  z = 0},
@@ -475,5 +458,14 @@ for _,color in pairs(hues) do -- allow re-dying of grey wires since they're so l
 				"mesecons_extrawires:insulated_tjunction_grey_off"
 			}
 		})
+	end
+end
+
+for _,a in ipairs({{"skyblue","azure"}, {"redviolet","rose"}, {"aqua","spring"}}) do
+	for _,s in ipairs({"_", "_corner_", "_tjunction_"}) do
+		minetest.register_alias("mesecons_extrawires:insulated"..s..a[1].."_off",
+								"mesecons_extrawires:insulated"..s..a[2].."_off")
+		minetest.register_alias("mesecons_extrawires:insulated"..s..a[1].."_on",
+								"mesecons_extrawires:insulated"..s..a[2].."_on")
 	end
 end

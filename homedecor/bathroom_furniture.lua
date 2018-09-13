@@ -164,21 +164,3 @@ minetest.register_lbm({
 		meta:set_string("palette", "ext")
 	end
 })
-
-minetest.register_lbm({
-	name = "homedecor:recolor_bathroom_tiles",
-	label = "Convert bathroom tiles to use UD extended palette",
-	run_at_every_load = false,
-	nodenames = {
-		"homedecor:bathroom_tiles_light",
-		"homedecor:bathroom_tiles_medium",
-		"homedecor:bathroom_tiles_dark",
-	},
-	action = function(pos, node)
-		local meta = minetest.get_meta(pos)
-		if meta:get_string("palette") ~= "ext" then
-			minetest.swap_node(pos, { name = node.name, param2 = unifieddyes.convert_classic_palette[node.param2] })
-			meta:set_string("palette", "ext")
-		end
-	end
-})
