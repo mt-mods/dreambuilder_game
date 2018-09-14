@@ -125,6 +125,7 @@ if coloredwood.enable_stairsplus then
 			minetest.override_item(i.name, {
 				groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, wood = 1, not_in_creative_inventory=1, ud_param2_colorable = 1},
 				paramtype2 = "colorfacedir",
+				palette = "unifieddyes_palette_greys.png",
 				airbrush_replacement_node = "coloredwood:"..class.."_wood_grey_"..shape
 			})
 		end
