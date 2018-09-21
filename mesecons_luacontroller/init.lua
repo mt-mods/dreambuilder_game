@@ -552,6 +552,7 @@ local function save_memory(pos, meta, mem)
 
 	if (#memstring <= memsize_max) then
 		meta:set_string("lc_memory", memstring)
+		meta:mark_as_private("lc_memory")
 	else
 		print("Error: Luacontroller memory overflow. "..memsize_max.." bytes available, "
 				..#memstring.." required. Controller overheats.")
@@ -615,6 +616,7 @@ end
 
 local function reset_formspec(meta, code, errmsg)
 	meta:set_string("code", code)
+	meta:mark_as_private("code")
 	code = minetest.formspec_escape(code or "")
 	errmsg = minetest.formspec_escape(tostring(errmsg or ""))
 	meta:set_string("formspec", "size[12,10]"..
