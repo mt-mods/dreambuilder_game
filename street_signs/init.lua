@@ -305,6 +305,8 @@ local function make_sign_texture(lines, pos)
 		if lineno >= NUMBER_OF_LINES then break end
 		local linetex, ln = make_line_texture(lines[i], lineno, pos)
 		table.insert(texture, linetex)
+		local linetex, ln = make_line_texture(lines[i], lineno+1, pos)
+		table.insert(texture, linetex)
 		lineno = ln + 1
 	end
 	table.insert(texture, "^[makealpha:0,0,0")
