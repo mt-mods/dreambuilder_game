@@ -29,25 +29,6 @@ street_signs.modpath = minetest.get_modpath("street_signs")
 
 local DEFAULT_TEXT_SCALE = {x=10, y=10}
 
-street_signs.standard_sign_model = {
-	nodebox = {
-		type = "fixed",
-		fixed = {
-			{ -1/32, 23/16, -1/32, 1/32, 24/16, 1/32 },
-			{ -1/32, 18/16, -8/16, 1/32, 23/16, 8/16 },
-			{ -1/32, 17/16, -1/32, 1/32, 18/16, 1/32 },
-			{ -8/16, 12/16, -1/32, 8/16, 17/16, 1/32 },
-			{ -1/16, -8/16, -1/16, 1/16, 12/16, 1/16 },
-		}
-	},
-	yaw = {
-		0,
-		math.pi / -2,
-		math.pi,
-		math.pi / 2,
-	}
-}
-
 -- infinite stacks
 
 if not minetest.settings:get_bool("creative_mode") then
@@ -386,10 +367,13 @@ street_signs.update_sign = function(pos, fields)
 	-- if there is no entity
 	local signnode = minetest.get_node(pos)
 	local signname = signnode.name
-	local text = minetest.add_entity(pos, "street_signs:text")
-	local yaw = street_signs.standard_sign_model.yaw[minetest.get_node(pos).param2 + 1]
-	if not yaw then return end
-	text:setyaw(yaw)
+	local def = minetest.registered_items[signname]
+	local obj = minetest.add_entity(pos, "street_signs:text")
+	if not def.entity_info then return end
+	obj:setyaw(def.entity_info.yaw[signnode.param2 + 1])
+	obj:set_properties({
+		mesh = def.entity_info.mesh,
+	})
 end
 
 function street_signs.receive_fields(pos, formname, fields, sender)
@@ -408,14 +392,25 @@ function street_signs.receive_fields(pos, formname, fields, sender)
 	end
 end
 
+local cbox = {
+	type = "fixed",
+	fixed = {
+		{ -1/32, 23/16, -1/32, 1/32, 24/16, 1/32 },
+		{ -1/32, 18/16, -8/16, 1/32, 23/16, 8/16 },
+		{ -1/32, 17/16, -1/32, 1/32, 18/16, 1/32 },
+		{ -8/16, 12/16, -1/32, 8/16, 17/16, 1/32 },
+		{ -1/16, -8/16, -1/16, 1/16, 12/16, 1/16 },
+	}
+}
+
 minetest.register_node("street_signs:sign_basic", {
 	description = "Basic street name sign",
 	paramtype = "light",
 	sunlight_propagates = true,
 	paramtype2 = "facedir",
 	drawtype = "mesh",
-	node_box = street_signs.standard_sign_model.nodebox,
-	selection_box = street_signs.standard_sign_model.nodebox,
+	node_box = cbox,
+	selection_box = cbox,
 	mesh = "street_signs_basic.obj",
 	tiles = { "street_signs_basic.png" },
 	groups = {choppy=2, dig_immediate=2},
@@ -432,6 +427,62 @@ minetest.register_node("street_signs:sign_basic", {
 	on_punch = function(pos, node, puncher)
 		street_signs.update_sign(pos)
 	end,
+	entity_info = {
+		mesh = "street_signs_basic_entity.obj",
+		yaw = {
+			0,
+			math.pi / -2,
+			math.pi,
+			math.pi / 2,
+		}
+	}
+})
+
+cbox = {
+	type = "fixed",
+	fixed = {
+		{ -1/32,  7/16, -1/32, 1/32,  8/16, 1/32 },
+		{ -1/32,  2/16, -8/16, 1/32,  7/16, 8/16 },
+		{ -1/32,  1/16, -1/32, 1/32,  2/16, 1/32 },
+		{ -8/16, -4/16, -1/32, 8/16,  1/16, 1/32 },
+		{ -1/16, -8/16, -1/16, 1/16, -4/16, 1/16 },
+
+	}
+}
+
+minetest.register_node("street_signs:sign_basic_top_only", {
+	description = "Basic street name sign, top only",
+	paramtype = "light",
+	sunlight_propagates = true,
+	paramtype2 = "facedir",
+	drawtype = "mesh",
+	node_box = cbox,
+	selection_box = cbox,
+	mesh = "street_signs_basic_top_only.obj",
+	tiles = { "street_signs_basic.png" },
+	groups = {choppy=2, dig_immediate=2},
+	default_color = "f",
+	on_construct = function(pos) 
+		street_signs.construct_sign(pos)
+	end,
+	on_destruct = function(pos)
+		street_signs.destruct_sign(pos)
+	end,
+	on_receive_fields = function(pos, formname, fields, sender)
+		street_signs.receive_fields(pos, formname, fields, sender)
+	end,
+	on_punch = function(pos, node, puncher)
+		street_signs.update_sign(pos)
+	end,
+	entity_info = {
+		mesh = "street_signs_basic_top_only_entity.obj",
+		yaw = {
+			0,
+			math.pi / -2,
+			math.pi,
+			math.pi / 2,
+		}
+	}
 })
 
 local signs_text_on_activate
@@ -439,10 +490,16 @@ local signs_text_on_activate
 signs_text_on_activate = function(self)
 	local pos = self.object:getpos()
 	local meta = minetest.get_meta(pos)
+	local signnode = minetest.get_node(pos)
+	local signname = signnode.name
+	local def = minetest.registered_items[signname]
 	local text = meta:get_string("text")
-	if text and minetest.registered_nodes[minetest.get_node(pos).name] then
+	if text and def and def.entity_info then
 		text = trim_input(text)
 		set_obj_text(self.object, text, nil, pos)
+		self.object:set_properties({
+			mesh = def.entity_info.mesh,
+		})
 	end
 end
 
@@ -486,6 +543,44 @@ if minetest.get_modpath("signs_lib") then
 		}
 	})
 end
+
+
+minetest.register_craft({
+	output = "street_signs:sign_basic_top_only",
+	recipe = {
+		{ "dye:green", "default:sign_wall_steel", "dye:green" },
+		{ "dye:white", "default:steel_ingot",     ""          },
+
+	}
+})
+
+minetest.register_craft({
+	output = "street_signs:sign_basic_top_only",
+	recipe = {
+		{ "dye:green", "default:sign_wall_steel", "dye:green" },
+		{ "",          "default:steel_ingot",     "dye:white" },
+	}
+})
+
+if minetest.get_modpath("signs_lib") then
+	minetest.register_craft({
+		output = "street_signs:sign_basic_top_only",
+		recipe = {
+			{ "signs:sign_wall_green" },
+			{ "default:steel_ingot" },
+		}
+	})
+end
+
+minetest.register_craft({
+	output = "street_signs:sign_basic",
+	recipe = {
+		{ "street_signs:sign_basic_top_only" },
+		{ "default:steel_ingot" }
+	}
+})
+
+
 
 -- restore signs' text after /clearobjects and the like, the next time
 -- a block is reloaded by the server.
