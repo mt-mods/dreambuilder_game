@@ -340,7 +340,7 @@ end
 street_signs.update_sign = function(pos, fields)
 	local meta = minetest.get_meta(pos)
 
-	local text = (fields and fields.text) and fields.text or meta:get_string("text")
+	local text = fields and fields.text or meta:get_string("text")
 	text = trim_input(text)
 
 	meta:set_string("infotext", make_infotext(text).." ")
