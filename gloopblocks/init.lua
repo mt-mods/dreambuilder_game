@@ -487,6 +487,14 @@ if minetest.get_modpath("moreblocks") then
 		sunlight_propagates = true,
 	})
 
+	stairsplus:register_all("gloopblocks", "gravel", "default:gravel", {
+		description = S("Gravel"),
+		tiles = {"default_gravel.png"},
+		groups = {crumbly = 2, falling_node = 1, not_in_creative_inventory=1},
+		sounds = default.node_sound_stone_defaults(),
+		sunlight_propagates = false,
+	})
+
 	if minetest.get_modpath("caverealms") then
 		stairsplus:register_all("caverealms", "glow_crystal", "caverealms:glow_crystal", {
 			description = S("Glow Crystal"),
