@@ -806,9 +806,16 @@ end
 
 local hps = 0.6 -- horizontal position scale
 local vps = 1.3 -- vertical position scale
-local vs = 0.3  -- vertical shift/offset
+local vs = 0.1 -- vertical shift/offset
+
 local color_button_size = ";0.75,0.75;"
 local color_square_size = ";0.69,0.69;"
+
+function unifieddyes.make_readable_color(color)
+	local s = string.gsub(color, "_", " ")
+	s = string.gsub(s, "s50", "(low saturation)")
+	return s
+end
 
 function unifieddyes.make_colored_square(hexcolor, colorname, showall, creative, painting_with, nodepalette, hp, v2, selindic, inv, explist)
 
@@ -831,26 +838,29 @@ function unifieddyes.make_colored_square(hexcolor, colorname, showall, creative,
 		end
 	end
 
+	local tooltip = "tooltip["..colorname..";"..
+					unifieddyes.make_readable_color(colorname)..
+					"\n(dye:"..colorname..")]"
+
 	if dye == painting_with then
 		overlay = "^unifieddyes_select_overlay.png"
-		selindic = "unifieddyes_white_square.png"..colorize..overlay..unavail_overlay.."]"..
-					"tooltip["..colorname..";"..colorname.."]"
+		selindic = "unifieddyes_white_square.png"..colorize..overlay..unavail_overlay.."]"..tooltip
 	end
-	local form
 
+	local form
 	if unavail_overlay == "" then
 		form = "image_button["..
 					(hp*hps)..","..(v2*vps+vs)..
 					color_button_size..
 					"unifieddyes_white_square.png"..colorize..overlay..unavail_overlay..";"..
 					colorname..";]"..
-					"tooltip["..colorname..";"..colorname.."]"
+					tooltip
 	else
 		form = "image["..
 					(hp*hps)..","..(v2*vps+vs)..
 					color_square_size..
 					"unifieddyes_white_square.png"..colorize..overlay..unavail_overlay.."]"..
-					"tooltip["..colorname.." (unavailable);"..colorname.."]"
+					tooltip
 	end
 
 	return form, selindic
@@ -868,7 +878,7 @@ function unifieddyes.show_airbrush_form(player)
 	local nodepalette = "extended"
 	local showall = unifieddyes.player_showall[player_name]
 
-	t[1] = "size[15,8.5]label[7,-0.25;Select a color:]"
+	t[1] = "size[14.5,8.5]label[7,-0.3;Select a color:]"
 	local selindic = "unifieddyes_select_overlay.png^unifieddyes_question.png]"
 
 	local last_right_click = unifieddyes.player_last_right_clicked[player_name]
@@ -904,7 +914,7 @@ function unifieddyes.show_airbrush_form(player)
 
 		for hi, h in ipairs(unifieddyes.HUES_EXTENDED) do
 			local hue = h[1]
-			local hp=hi-0.5
+			local hp=hi-1
 
 			local r = h[2]
 			local g = h[3]
@@ -932,7 +942,7 @@ function unifieddyes.show_airbrush_form(player)
 
 			for hi, h in ipairs(unifieddyes.HUES_EXTENDED) do
 				local hue = h[1]
-				local hp=hi-0.5
+				local hp=hi-1
 
 				local r = h[2]
 				local g = h[3]
@@ -964,7 +974,7 @@ function unifieddyes.show_airbrush_form(player)
 	local v2=5
 	for y = 0, 15 do
 
-		local hp=(15-y)+0.5
+		local hp=15-y
 
 		local hexgrey = string.format("%02x", y*17)..string.format("%02x", y*17)..string.format("%02x", y*17)
 		local grey = "grey_"..y
@@ -983,48 +993,52 @@ function unifieddyes.show_airbrush_form(player)
 	end
 
 	if not creative then
-		t[#t+1] = "image[10.3,"
-		t[#t+1] = (vps*5+vs)
+		t[#t+1] = "image[10,"
+		t[#t+1] = (vps*5.55+vs)
 		t[#t+1] = color_button_size
-		t[#t+1] = "unifieddyes_onhand_overlay.png]label[11.0,"
-		t[#t+1] = (vps*5.02+vs)
+		t[#t+1] = "unifieddyes_onhand_overlay.png]label[10.7,"
+		t[#t+1] = (vps*5.51+vs)
 		t[#t+1] = ";Dyes]"
-		t[#t+1] = "label[11.0,"
-		t[#t+1] = (vps*5.18+vs)
+		t[#t+1] = "label[10.7,"
+		t[#t+1] = (vps*5.67+vs)
 		t[#t+1] = ";on hand]"
 
 	end
 
-	t[#t+1] = "image[11.9,"
+	t[#t+1] = "image[10,"
 	t[#t+1] = (vps*5+vs)
 	t[#t+1] = color_button_size
 	t[#t+1] = selindic
 
 	if painting_with then
-		t[#t+1] = "label[12.6,"
-		t[#t+1] = (vps*5.02+vs)
+		t[#t+1] = "label[10.7,"
+		t[#t+1] = (vps*4.90+vs)
 		t[#t+1] = ";Your selection:]"
-		t[#t+1] = "label[12.6,"
-		t[#t+1] = (vps*5.18+vs)
+		t[#t+1] = "label[10.7,"
+		t[#t+1] = (vps*5.07+vs)
 		t[#t+1] = ";"
+		t[#t+1] = unifieddyes.make_readable_color(string.sub(painting_with, 5))
+		t[#t+1] = "]label[10.7,"
+		t[#t+1] = (vps*5.24+vs)
+		t[#t+1] = ";("
 		t[#t+1] = painting_with
-		t[#t+1] = "]"
+		t[#t+1] = ")]"
 	else
-		t[#t+1] = "label[12.6,"
-		t[#t+1] = (vps*5.1+vs)
+		t[#t+1] = "label[10.7,"
+		t[#t+1] = (vps*5.07+vs)
 		t[#t+1] = ";Your selection]"
 	end
 
-	t[#t+1] = "button_exit[11,8;2,1;cancel;Cancel]button_exit[13,8;2,1;accept;Accept]"
+	t[#t+1] = "button_exit[10.5,8;2,1;cancel;Cancel]button_exit[12.5,8;2,1;accept;Accept]"
 
 
 	if last_right_click and last_right_click.def and nodepalette ~= "extended" then
 		if showall then
-			t[#t+1] = "button[0.5,8;2,1;show_avail;Show Available]"
-			t[#t+1] = "label[2.5,8.25;(Currently showing all 256 colors)]"
+			t[#t+1] = "button[0,8;2,1;show_avail;Show Available]"
+			t[#t+1] = "label[2,8.25;(Currently showing all 256 colors)]"
 		else
-			t[#t+1] = "button[0.5,8;2,1;show_all;Show All Colors]"
-			t[#t+1] = "label[2.5,8.25;(Currently only showing what the right-clicked node can use)]"
+			t[#t+1] = "button[0,8;2,1;show_all;Show All Colors]"
+			t[#t+1] = "label[2,8.25;(Currently only showing what the right-clicked node can use)]"
 		end
 	end
 
