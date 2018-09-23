@@ -339,13 +339,12 @@ end
 
 street_signs.update_sign = function(pos, fields)
 	local meta = minetest.get_meta(pos)
-	if not fields then return end
 
-	fields.text = trim_input(fields.text)
-	if not fields.text then return end
+	local text = (fields and fields.text) and fields.text or meta:get_string("text")
+	text = trim_input(text)
 
-	meta:set_string("infotext", make_infotext(fields.text).." ")
-	meta:set_string("text", fields.text)
+	meta:set_string("infotext", make_infotext(text).." ")
+	meta:set_string("text", text)
 
 	local objects = minetest.get_objects_inside_radius(pos, 0.5)
 	local found
@@ -355,7 +354,7 @@ street_signs.update_sign = function(pos, fields)
 			if found then
 				v:remove()
 			else
-				set_obj_text(v, fields.text, nil, pos)
+				set_obj_text(v, text, nil, pos)
 				found = true
 			end
 		end
