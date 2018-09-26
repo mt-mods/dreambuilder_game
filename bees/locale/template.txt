@@ -1,0 +1,22 @@
+# Template
+
+Bees = 
+Honey Extractor = 
+Wild Bee Hive = 
+Artificial Bee Hive = 
+Industrial Bee Hive = 
+Colony died, not enough flowers in area! = 
+Requires Queen bee to function = 
+Progress = 
+Does not have empty frame(s) = 
+Queen inserted, now for empty frames = 
+Bees are aclimating = 
+Empty hive frame = 
+Filled hive frame = 
+Honey Bottle = 
+Bees wax = 
+Honey comb = 
+Queen Bee = 
+Smoker = 
+Grafting tool = 
+[MOD] Bees Loaded! = 

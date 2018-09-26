@@ -1,4 +1,7 @@
--- This mod provides basic green two-stack street name signs
+-- This mod provides your standard green street name signs
+-- (that is, the two-up, 2m high ones identifying street intersections),
+-- and the larger kind found above or alongside highways
+--
 -- forked from signs_lib by Diego Martinez et. al
 
 street_signs = {}
@@ -46,9 +49,6 @@ local CHAR_FILE = "%s_%02x.png"
 -- Fonts path
 local CHAR_PATH = TP .. "/" .. CHAR_FILE
 
--- Font name.
-local font_name = "street_signs_font"
-
 -- Lots of overkill here. KISS advocates, go away, shoo! ;) -- kaeza
 
 local PNG_HDR = string.char(0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A)
@@ -93,26 +93,10 @@ local function read_image_size(filename)
 	return ws:byte(), hs:byte()
 end
 
--- Set by build_char_db()
-local LINE_HEIGHT
-local SIGN_WIDTH
-local COLORBGW, COLORBGH
-
--- Size of the canvas, in characters.
--- Please note that CHARS_PER_LINE is multiplied by the average character
--- width to get the total width of the canvas, so for proportional fonts,
--- either more or fewer characters may fit on a line.
-local CHARS_PER_LINE = 30
-local NUMBER_OF_LINES = 4
-
 -- 4 rows, max 80 chars per, plus a bit of fudge to
 -- avoid excess trimming (e.g. due to color codes)
 
 local MAX_INPUT_CHARS = 400
-
--- This holds the individual character widths.
--- Indexed by the actual character (e.g. charwidth["A"])
-local charwidth
 
 -- helper functions to trim sign text input/output
 
@@ -120,35 +104,40 @@ local function trim_input(text)
 	return text:sub(1, math.min(MAX_INPUT_CHARS, text:len()))
 end
 
-local function build_char_db()
+local function build_char_db(font_size)
 
-	charwidth = { }
+	local cw = {}
 
 	-- To calculate average char width.
 	local total_width = 0
 	local char_count = 0
 
 	for c = 32, 255 do
-		local w, h = read_image_size(CHAR_PATH:format(font_name, c))
+		local w, h = read_image_size(CHAR_PATH:format("street_signs_font_"..font_size.."px", c))
 		if w and h then
 			local ch = string.char(c)
-			charwidth[ch] = w
+			cw[ch] = w
 			total_width = total_width + w
 			char_count = char_count + 1
 		end
 	end
 
-	COLORBGW, COLORBGH = read_image_size(TP.."/street_signs_color_n.png")
-	assert(COLORBGW and COLORBGH, "error reading bg dimensions")
-	LINE_HEIGHT = COLORBGH + 6
-
-	-- XXX: Is there a better way to calc this?
-	SIGN_WIDTH = math.floor((total_width / char_count) * CHARS_PER_LINE)
-
+	local cbw, cbh = read_image_size(TP.."/street_signs_color_"..font_size.."px_n.png")
+	assert(cbw and cbh, "error reading bg dimensions")
+	return cw, cbw, cbh, (total_width / char_count)
 end
 
-local sign_groups = {choppy=2, dig_immediate=2}
+street_signs.charwidth15,
+street_signs.colorbgw15,
+street_signs.lineheight15,
+street_signs.avgwidth15 = build_char_db(15)
 
+street_signs.charwidth31,
+street_signs.colorbgw31,
+street_signs.lineheight31,
+street_signs.avgwidth31 = build_char_db(31)
+
+local sign_groups = {choppy=2, dig_immediate=2}
 local fences_with_sign = { }
 
 -- some local helper functions
@@ -164,11 +153,11 @@ end
 
 local math_max = math.max
 
-local function fill_line(x, y, w, c)
+local function fill_line(x, y, w, c, font_size, colorbgw)
 	c = c or "0"
 	local tex = { }
-	for xx = 0, math.max(0, w), COLORBGW do
-		table.insert(tex, (":%d,%d=street_signs_color_%s.png"):format(x + xx, y, c))
+	for xx = 0, math.max(0, w), colorbgw do
+		table.insert(tex, (":%d,%d=street_signs_color_"..font_size.."px_%s.png"):format(x + xx, y, c))
 	end
 	return table.concat(tex)
 end
@@ -186,14 +175,15 @@ local function char_tex(font_name, ch)
 	return tex, exists
 end
 
-local function make_line_texture(line, lineno, pos)
-
+local function make_line_texture(line, lineno, pos, line_width, line_height, cwidth_tab, font_size, colorbgw)
 	local width = 0
 	local maxw = 0
+	local font_name = "street_signs_font_"..font_size.."px"
 
 	local words = { }
-	local n = minetest.registered_nodes[minetest.get_node(pos).name]
-	local default_color = n.default_color or 0
+	local node = minetest.get_node(pos)
+	local def = minetest.registered_items[node.name]
+	local default_color = def.default_color or 0
 
 	local cur_color = tonumber(default_color, 16)
 
@@ -212,10 +202,10 @@ local function make_line_texture(line, lineno, pos)
 					cur_color = cc
 				end
 			else
-				local w = charwidth[c]
+				local w = cwidth_tab[c]
 				if w then
 					width = width + w + 1
-					if width >= (SIGN_WIDTH - charwidth[" "]) then
+					if width >= (line_width - cwidth_tab[" "]) then
 						width = 0
 					else
 						maxw = math_max(width, maxw)
@@ -232,7 +222,7 @@ local function make_line_texture(line, lineno, pos)
 			end
 			i = i + 1
 		end
-		width = width + charwidth[" "] + 1
+		width = width + cwidth_tab[" "] + 1
 		maxw = math_max(width, maxw)
 		table.insert(words, { chars=chars, w=ch_offs })
 	end
@@ -241,27 +231,27 @@ local function make_line_texture(line, lineno, pos)
 
 	local texture = { }
 
-	local start_xpos = math.floor((SIGN_WIDTH - maxw) / 2) + 6
+	local start_xpos = math.floor((line_width - maxw) / 2) + def.x_offset
 
 	local xpos = start_xpos
-	local ypos = (LINE_HEIGHT * lineno) + 4
+	local ypos = (line_height + def.line_spacing)* lineno + def.y_offset
 
 	cur_color = nil
 
 	for word_i, word in ipairs(words) do
 		local xoffs = (xpos - start_xpos)
 		if (xoffs > 0) and ((xoffs + word.w) > maxw) then
-			table.insert(texture, fill_line(xpos, ypos, maxw, "n"))
+			table.insert(texture, fill_line(xpos, ypos, maxw, "n", font_size, colorbgw))
 			xpos = start_xpos
-			ypos = ypos + LINE_HEIGHT
+			ypos = ypos + line_height + def.line_spacing
 			lineno = lineno + 1
-			if lineno >= NUMBER_OF_LINES then break end
-			table.insert(texture, fill_line(xpos, ypos, maxw, cur_color))
+			if lineno >= def.number_of_lines then break end
+			table.insert(texture, fill_line(xpos, ypos, maxw, cur_color, font_size, colorbgw))
 		end
 		for ch_i, ch in ipairs(word.chars) do
 			if ch.col ~= cur_color then
 				cur_color = ch.col
-				table.insert(texture, fill_line(xpos + ch.off, ypos, maxw, cur_color))
+				table.insert(texture, fill_line(xpos + ch.off, ypos, maxw, cur_color, font_size, colorbgw))
 			end
 			table.insert(texture, (":%d,%d=%s"):format(xpos + ch.off, ypos, ch.tex))
 		end
@@ -269,24 +259,46 @@ local function make_line_texture(line, lineno, pos)
 			texture, 
 			(":%d,%d="):format(xpos + word.w, ypos) .. char_tex(font_name, " ")
 		)
-		xpos = xpos + word.w + charwidth[" "]
-		if xpos >= (SIGN_WIDTH + charwidth[" "]) then break end
+		xpos = xpos + word.w + cwidth_tab[" "]
+		if xpos >= (line_width + cwidth_tab[" "]) then break end
 	end
 
-	table.insert(texture, fill_line(xpos, ypos, maxw, "n"))
-	table.insert(texture, fill_line(start_xpos, ypos + LINE_HEIGHT, maxw, "n"))
+	table.insert(texture, fill_line(xpos, ypos, maxw, "n", font_size, colorbgw))
+	table.insert(texture, fill_line(start_xpos, ypos + line_height, maxw, "n", font_size, colorbgw))
 
 	return table.concat(texture), lineno
 end
 
 local function make_sign_texture(lines, pos)
-	local texture = { ("[combine:%dx%d"):format(SIGN_WIDTH, LINE_HEIGHT * NUMBER_OF_LINES) }
+	local node = minetest.get_node(pos)
+	local def = minetest.registered_items[node.name]
+
+	local font_size
+	local line_width
+	local line_height
+	local char_width
+	local colorbgw
+
+	if def.font_size and def.font_size == 31 then
+		font_size = 31
+		line_width = math.floor(street_signs.avgwidth31 * def.chars_per_line) * def.horiz_scaling
+		line_height = street_signs.lineheight31
+		char_width = street_signs.charwidth31
+		colorbgw = street_signs.colorbgw31
+	else
+		font_size = 15
+		line_width = math.floor(street_signs.avgwidth15 * def.chars_per_line) * def.horiz_scaling
+		line_height = street_signs.lineheight15
+		char_width = street_signs.charwidth15
+		colorbgw = street_signs.colorbgw15
+	end
+
+	local texture = { ("[combine:%dx%d"):format(line_width, (line_height + def.line_spacing) * def.number_of_lines * def.vert_scaling) }
+
 	local lineno = 0
 	for i = 1, #lines do
-		if lineno >= NUMBER_OF_LINES then break end
-		local linetex, ln = make_line_texture(lines[i], lineno, pos)
-		table.insert(texture, linetex)
-		local linetex, ln = make_line_texture(lines[i], lineno+1, pos)
+		if lineno >= def.number_of_lines then break end
+		local linetex, ln = make_line_texture(lines[i], lineno, pos, line_width, line_height, char_width, font_size, colorbgw)
 		table.insert(texture, linetex)
 		lineno = ln + 1
 	end
@@ -426,6 +438,14 @@ minetest.register_node("street_signs:sign_basic", {
 	on_punch = function(pos, node, puncher)
 		street_signs.update_sign(pos)
 	end,
+	number_of_lines = 2,
+	horiz_scaling = 1,
+	vert_scaling = 1,
+	line_spacing = 6,
+	font_size = 15,
+	x_offset = 1,
+	y_offset = 3,
+	chars_per_line = 30,
 	entity_info = {
 		mesh = "street_signs_basic_entity.obj",
 		yaw = {
@@ -473,8 +493,325 @@ minetest.register_node("street_signs:sign_basic_top_only", {
 	on_punch = function(pos, node, puncher)
 		street_signs.update_sign(pos)
 	end,
+	number_of_lines = 2,
+	horiz_scaling = 1,
+	vert_scaling = 1,
+	line_spacing = 6,
+	font_size = 15,
+	x_offset = 1,
+	y_offset = 3,
+	chars_per_line = 30,
 	entity_info = {
 		mesh = "street_signs_basic_top_only_entity.obj",
+		yaw = {
+			0,
+			math.pi / -2,
+			math.pi,
+			math.pi / 2,
+		}
+	}
+})
+
+local colors = {
+	{ "green",  "f", "dye:green",  "dye:white" },
+	{ "blue",   "f", "dye:blue",   "dye:white" },
+	{ "yellow", "0", "dye:yellow", "dye:black" }
+}
+
+for _, c in ipairs(colors) do
+
+	cbox = {
+		type = "fixed",
+		fixed = { -0.4375, -0.4375, 0.375, 1.4375, 0.4375, 0.5 }
+	}
+
+	local color = c[1]
+	local defc = c[2]
+
+	minetest.register_node("street_signs:sign_highway_small_"..color, {
+		description = "Small highway sign ("..color..")",
+		inventory_image = "street_signs_highway_small_"..color.."_inv.png",
+		wield_image = "street_signs_highway_small_"..color.."_inv.png",
+		paramtype = "light",
+		sunlight_propagates = true,
+		paramtype2 = "facedir",
+		drawtype = "mesh",
+		node_box = cbox,
+		selection_box = cbox,
+		mesh = "street_signs_highway_small.obj",
+		tiles = { "street_signs_highway_small_"..color..".png" },
+		default_color = defc,
+		groups = {choppy=2, dig_immediate=2},
+		on_construct = function(pos)
+			street_signs.construct_sign(pos)
+		end,
+		on_destruct = function(pos)
+			street_signs.destruct_sign(pos)
+		end,
+		on_receive_fields = function(pos, formname, fields, sender)
+			street_signs.receive_fields(pos, formname, fields, sender)
+		end,
+		on_punch = function(pos, node, puncher)
+			street_signs.update_sign(pos)
+		end,
+		number_of_lines = 3,
+		horiz_scaling = 2,
+		vert_scaling = 1.15,
+		line_spacing = 2,
+		font_size = 31,
+		x_offset = 9,
+		y_offset = 7,
+		chars_per_line = 22,
+		entity_info = {
+			mesh = "street_signs_highway_small_entity.obj",
+			yaw = {
+				0,
+				math.pi / -2,
+				math.pi,
+				math.pi / 2,
+			}
+		}
+	})
+	cbox = {
+		type = "fixed",
+		fixed = { -0.4375, -0.4375, 0.375, 1.4375, 1.4375, 0.5 }
+	}
+
+	minetest.register_node("street_signs:sign_highway_medium_"..color, {
+		description = "Medium highway sign ("..color..")",
+		inventory_image = "street_signs_highway_medium_"..color.."_inv.png",
+		wield_image = "street_signs_highway_medium_"..color.."_inv.png",
+		paramtype = "light",
+		sunlight_propagates = true,
+		paramtype2 = "facedir",
+		drawtype = "mesh",
+		node_box = cbox,
+		selection_box = cbox,
+		mesh = "street_signs_highway_medium.obj",
+		tiles = { "street_signs_highway_medium_"..color..".png" },
+		default_color = defc,
+		groups = {choppy=2, dig_immediate=2},
+		on_construct = function(pos)
+			street_signs.construct_sign(pos)
+		end,
+		on_destruct = function(pos)
+			street_signs.destruct_sign(pos)
+		end,
+		on_receive_fields = function(pos, formname, fields, sender)
+			street_signs.receive_fields(pos, formname, fields, sender)
+		end,
+		on_punch = function(pos, node, puncher)
+			street_signs.update_sign(pos)
+		end,
+		number_of_lines = 6,
+		horiz_scaling = 2,
+		vert_scaling = 0.915,
+		line_spacing = 2,
+		font_size = 31,
+		x_offset = 7,
+		y_offset = 10,
+		chars_per_line = 22,
+		entity_info = {
+			mesh = "street_signs_highway_medium_entity.obj",
+			yaw = {
+				0,
+				math.pi / -2,
+				math.pi,
+				math.pi / 2,
+			}
+		}
+	})
+
+	cbox = {
+		type = "fixed",
+		fixed = { -0.4375, -0.4375, 0.375, 2.4375, 1.4375, 0.5 }
+	}
+
+	minetest.register_node("street_signs:sign_highway_large_"..color, {
+		description = "Large highway sign ("..color..")",
+		inventory_image = "street_signs_highway_large_"..color.."_inv.png",
+		wield_image = "street_signs_highway_large_"..color.."_inv.png",
+		paramtype = "light",
+		sunlight_propagates = true,
+		paramtype2 = "facedir",
+		drawtype = "mesh",
+		node_box = cbox,
+		selection_box = cbox,
+		mesh = "street_signs_highway_large.obj",
+		tiles = { "street_signs_highway_large_"..color..".png" },
+		default_color = defc,
+		groups = {choppy=2, dig_immediate=2},
+		on_construct = function(pos)
+			street_signs.construct_sign(pos)
+		end,
+		on_destruct = function(pos)
+			street_signs.destruct_sign(pos)
+		end,
+		on_receive_fields = function(pos, formname, fields, sender)
+			street_signs.receive_fields(pos, formname, fields, sender)
+		end,
+		on_punch = function(pos, node, puncher)
+			street_signs.update_sign(pos)
+		end,
+		number_of_lines = 6,
+		horiz_scaling = 2,
+		vert_scaling = 0.915,
+		line_spacing = 2,
+		font_size = 31,
+		x_offset = 12,
+		y_offset = 11,
+		chars_per_line = 25,
+		entity_info = {
+			mesh = "street_signs_highway_large_entity.obj",
+			yaw = {
+				0,
+				math.pi / -2,
+				math.pi,
+				math.pi / 2,
+			}
+		}
+	})
+end
+
+cbox = {
+	type = "fixed",
+	fixed = { -0.5, -0.5, 0.4375, 0.5, 0.5, 0.5 }
+}
+
+minetest.register_node("street_signs:sign_us_route", {
+	description = "Basic \"US Route\" sign",
+	paramtype = "light",
+	sunlight_propagates = true,
+	paramtype2 = "facedir",
+	drawtype = "mesh",
+	node_box = cbox,
+	selection_box = cbox,
+	mesh = "street_signs_us_route.obj",
+	tiles = { "street_signs_us_route.png" },
+	inventory_image = "street_signs_us_route_inv.png",
+	groups = {choppy=2, dig_immediate=2},
+	default_color = "0",
+	on_construct = function(pos) 
+		street_signs.construct_sign(pos)
+	end,
+	on_destruct = function(pos)
+		street_signs.destruct_sign(pos)
+	end,
+	on_receive_fields = function(pos, formname, fields, sender)
+		street_signs.receive_fields(pos, formname, fields, sender)
+	end,
+	on_punch = function(pos, node, puncher)
+		street_signs.update_sign(pos)
+	end,
+	number_of_lines = 1,
+	horiz_scaling = 3.5,
+	vert_scaling = 1.4,
+	line_spacing = 6,
+	font_size = 31,
+	x_offset = 8,
+	y_offset = 12,
+	chars_per_line = 3,
+	entity_info = {
+		mesh = "street_signs_us_route_entity.obj",
+		yaw = {
+			0,
+			math.pi / -2,
+			math.pi,
+			math.pi / 2,
+		}
+	}
+})
+
+cbox = {
+	type = "fixed",
+	fixed = { -0.45, -0.45, 0.4375, 0.45, 0.45, 0.5 }
+}
+
+minetest.register_node("street_signs:sign_us_interstate", {
+	description = "Basic US \"Interstate\" sign",
+	paramtype = "light",
+	sunlight_propagates = true,
+	paramtype2 = "facedir",
+	drawtype = "mesh",
+	node_box = cbox,
+	selection_box = cbox,
+	mesh = "street_signs_us_interstate.obj",
+	tiles = { "street_signs_us_interstate.png" },
+	inventory_image = "street_signs_us_interstate_inv.png",
+	groups = {choppy=2, dig_immediate=2},
+	default_color = "f",
+	on_construct = function(pos) 
+		street_signs.construct_sign(pos)
+	end,
+	on_destruct = function(pos)
+		street_signs.destruct_sign(pos)
+	end,
+	on_receive_fields = function(pos, formname, fields, sender)
+		street_signs.receive_fields(pos, formname, fields, sender)
+	end,
+	on_punch = function(pos, node, puncher)
+		street_signs.update_sign(pos)
+	end,
+	number_of_lines = 1,
+	horiz_scaling = 4.5,
+	vert_scaling = 1.4,
+	line_spacing = 6,
+	font_size = 31,
+	x_offset = 8,
+	y_offset = 14,
+	chars_per_line = 3,
+	entity_info = {
+		mesh = "street_signs_us_interstate_entity.obj",
+		yaw = {
+			0,
+			math.pi / -2,
+			math.pi,
+			math.pi / 2,
+		}
+	}
+})
+
+
+cbox = {
+	type = "fixed",
+	fixed = { -0.5, -0.5, 0.4375, 0.5, 0.5, 0.5 }
+}
+
+minetest.register_node("street_signs:sign_warning", {
+	description = "Basic US diamond-shaped \"warning\" sign",
+	paramtype = "light",
+	sunlight_propagates = true,
+	paramtype2 = "facedir",
+	drawtype = "mesh",
+	node_box = cbox,
+	selection_box = cbox,
+	mesh = "street_signs_warning.obj",
+	tiles = { "street_signs_warning.png" },
+	inventory_image = "street_signs_warning_inv.png",
+	groups = {choppy=2, dig_immediate=2},
+	default_color = "0",
+	on_construct = function(pos) 
+		street_signs.construct_sign(pos)
+	end,
+	on_destruct = function(pos)
+		street_signs.destruct_sign(pos)
+	end,
+	on_receive_fields = function(pos, formname, fields, sender)
+		street_signs.receive_fields(pos, formname, fields, sender)
+	end,
+	on_punch = function(pos, node, puncher)
+		street_signs.update_sign(pos)
+	end,
+	number_of_lines = 3,
+	horiz_scaling = 1.75,
+	vert_scaling = 1.4,
+	line_spacing = 1,
+	font_size = 15,
+	x_offset = 6,
+	y_offset = 10,
+	chars_per_line = 15,
+	entity_info = {
+		mesh = "street_signs_warning_entity.obj",
 		yaw = {
 			0,
 			math.pi / -2,
@@ -510,9 +847,7 @@ minetest.register_entity("street_signs:text", {
 	on_activate = signs_text_on_activate,
 })
 
-build_char_db()
-
--- craft it!
+-- crafts
 
 minetest.register_craft({
 	output = "street_signs:sign_basic",
@@ -532,18 +867,6 @@ minetest.register_craft({
 	}
 })
 
-if minetest.get_modpath("signs_lib") then
-	minetest.register_craft({
-		output = "street_signs:sign_basic",
-		recipe = {
-			{ "", "signs:sign_wall_green", "" },
-			{ "", "default:steel_ingot",   "" },
-			{ "", "default:steel_ingot",   "" },
-		}
-	})
-end
-
-
 minetest.register_craft({
 	output = "street_signs:sign_basic_top_only",
 	recipe = {
@@ -560,16 +883,6 @@ minetest.register_craft({
 		{ "",          "default:steel_ingot",     "dye:white" },
 	}
 })
-
-if minetest.get_modpath("signs_lib") then
-	minetest.register_craft({
-		output = "street_signs:sign_basic_top_only",
-		recipe = {
-			{ "signs:sign_wall_green" },
-			{ "default:steel_ingot" },
-		}
-	})
-end
 
 minetest.register_craft({
 	output = "street_signs:sign_basic",
@@ -579,6 +892,100 @@ minetest.register_craft({
 	}
 })
 
+for _, c in ipairs(colors) do
+
+	local color = c[1]
+	local defc =  c[2]
+	local dye1 =  c[3]
+	local dye2 =  c[4]
+
+	minetest.register_craft({
+		output = "street_signs:sign_highway_small_"..color,
+		recipe = {
+			{ dye1,                      dye2,                      dye1 },
+			{ dye1,                      dye2,                      dye1 },
+			{ "default:sign_wall_steel", "default:sign_wall_steel", ""   }
+		}
+	})
+
+	minetest.register_craft({
+		output = "street_signs:sign_highway_small_"..color,
+		recipe = {
+			{ dye1, dye2,                      dye1                      },
+			{ dye1, dye2,                      dye1                      },
+			{ "",   "default:sign_wall_steel", "default:sign_wall_steel" }
+		}
+	})
+
+	minetest.register_craft({
+		output = "street_signs:sign_highway_medium_"..color,
+		recipe = {
+			{ "street_signs:sign_highway_small_"..color },
+			{ "street_signs:sign_highway_small_"..color }
+		}
+	})
+
+	minetest.register_craft({
+		output = "street_signs:sign_highway_large_"..color,
+		recipe = {
+			{ "street_signs:sign_highway_small_"..color },
+			{ "street_signs:sign_highway_small_"..color },
+			{ "street_signs:sign_highway_small_"..color }
+		}
+	})
+end
+
+if minetest.get_modpath("signs_lib") then
+
+	minetest.register_craft({
+		output = "street_signs:sign_basic",
+		recipe = {
+			{ "", "signs:sign_wall_green", "" },
+			{ "", "default:steel_ingot",   "" },
+			{ "", "default:steel_ingot",   "" },
+		}
+	})
+
+	minetest.register_craft({
+		output = "street_signs:sign_basic_top_only",
+		recipe = {
+			{ "signs:sign_wall_green" },
+			{ "default:steel_ingot" },
+		}
+	})
+
+	for _, c in ipairs(colors) do
+
+		local color = c[1]
+		local defc =  c[2]
+
+		minetest.register_craft({
+			output = "street_signs:sign_highway_small_"..color,
+			recipe = {
+				{ "signs:sign_wall_"..color, "signs:sign_wall_"..color },
+			}
+		})
+
+		minetest.register_craft({
+			output = "street_signs:sign_highway_medium_"..color,
+			recipe = {
+				{ "signs:sign_wall_"..color, "signs:sign_wall_"..color },
+				{ "signs:sign_wall_"..color, "signs:sign_wall_"..color }
+			}
+		})
+
+		minetest.register_craft({
+			output = "street_signs:sign_highway_large_"..color,
+			recipe = {
+				{ "signs:sign_wall_"..color, "signs:sign_wall_"..color, "signs:sign_wall_"..color },
+				{ "signs:sign_wall_"..color, "signs:sign_wall_"..color, "signs:sign_wall_"..color }
+			}
+		})
+
+	end
+end
+
+-- crafts, highway signs
 
 
 -- restore signs' text after /clearobjects and the like, the next time
