@@ -15,9 +15,32 @@ street_signs.gettext = S
 -- text encoding
 dofile(street_signs.path .. "/encoding.lua");
 
-street_signs.wallmounted_rotate = function(pos, node, user, mode, new_param2)
-	if mode ~= screwdriver.ROTATE_AXIS then return false end
-	minetest.swap_node(pos, {name = node.name, param2 = (node.param2 + 1) % 6})
+local wall_dir_change = {
+	[0] = 2,
+	2,
+	5,
+	4,
+	2,
+	3,
+}
+
+street_signs.wallmounted_rotate = function(pos, node, user, mode)
+	if mode ~= screwdriver.ROTATE_FACE then return false end
+	minetest.swap_node(pos, { name = node.name, param2 = wall_dir_change[node.param2 % 6] })
+	for _, v in ipairs(minetest.get_objects_inside_radius(pos, 0.5)) do
+		local e = v:get_luaentity()
+		if e and e.name == "street_signs:text" then
+			v:remove()
+		end
+	end
+	street_signs.update_sign(pos)
+	return true
+end
+
+street_signs.facedir_rotate = function(pos, node, user, mode)
+	if mode ~= screwdriver.ROTATE_FACE then return false end
+	newparam2 = ((node.param2 % 6 ) == 0) and 1 or 0
+	minetest.swap_node(pos, { name = node.name, param2 = newparam2 })
 	for _, v in ipairs(minetest.get_objects_inside_radius(pos, 0.5)) do
 		local e = v:get_luaentity()
 		if e and e.name == "street_signs:text" then
@@ -379,8 +402,9 @@ street_signs.update_sign = function(pos, fields)
 	local signnode = minetest.get_node(pos)
 	local signname = signnode.name
 	local def = minetest.registered_items[signname]
+	if not def.entity_info or not def.entity_info.yaw[signnode.param2 + 1] then return end
 	local obj = minetest.add_entity(pos, "street_signs:text")
-	if not def.entity_info then return end
+
 	obj:setyaw(def.entity_info.yaw[signnode.param2 + 1])
 	obj:set_properties({
 		mesh = def.entity_info.mesh,
@@ -403,6 +427,8 @@ function street_signs.receive_fields(pos, formname, fields, sender)
 	end
 end
 
+local lbm_restore_nodes = {}
+
 local cbox = {
 	type = "fixed",
 	fixed = {
@@ -413,6 +439,25 @@ local cbox = {
 		{ -1/16, -8/16, -1/16, 1/16, 12/16, 1/16 },
 	}
 }
+
+local stdyaw = {
+	0,
+	math.pi / -2,
+	math.pi,
+	math.pi / 2,
+}
+
+local wmyaw = {
+	nil,
+	nil,
+	math.pi / -2,
+	math.pi / 2,
+	0,
+	math.pi,
+}
+
+table.insert(lbm_restore_nodes, "street_signs:sign_basic")
+table.insert(lbm_restore_nodes, "street_signs:sign_basic_top_only")
 
 minetest.register_node("street_signs:sign_basic", {
 	description = "Basic street name sign",
@@ -438,6 +483,7 @@ minetest.register_node("street_signs:sign_basic", {
 	on_punch = function(pos, node, puncher)
 		street_signs.update_sign(pos)
 	end,
+	on_rotate = street_signs.facedir_rotate,
 	number_of_lines = 2,
 	horiz_scaling = 1,
 	vert_scaling = 1,
@@ -448,12 +494,7 @@ minetest.register_node("street_signs:sign_basic", {
 	chars_per_line = 30,
 	entity_info = {
 		mesh = "street_signs_basic_entity.obj",
-		yaw = {
-			0,
-			math.pi / -2,
-			math.pi,
-			math.pi / 2,
-		}
+		yaw = stdyaw
 	}
 })
 
@@ -493,6 +534,7 @@ minetest.register_node("street_signs:sign_basic_top_only", {
 	on_punch = function(pos, node, puncher)
 		street_signs.update_sign(pos)
 	end,
+	on_rotate = street_signs.facedir_rotate,
 	number_of_lines = 2,
 	horiz_scaling = 1,
 	vert_scaling = 1,
@@ -503,12 +545,7 @@ minetest.register_node("street_signs:sign_basic_top_only", {
 	chars_per_line = 30,
 	entity_info = {
 		mesh = "street_signs_basic_top_only_entity.obj",
-		yaw = {
-			0,
-			math.pi / -2,
-			math.pi,
-			math.pi / 2,
-		}
+		yaw = stdyaw
 	}
 })
 
@@ -522,12 +559,27 @@ local colors = {
 for _, c in ipairs(colors) do
 
 	cbox = {
-		type = "fixed",
-		fixed = { -0.4375, -0.4375, 0.375, 1.4375, 0.4375, 0.5 }
+		type = "wallmounted",
+		wall_side = { -0.5, -0.4375, -0.4375, -0.375, 0.4375, 1.4375 }
 	}
+
+--[[
+		node_box = {
+			type = "wallmounted",
+			wall_top    = {-0.4375, 0.4375, -0.3125, 0.4375, 0.5, 0.3125},
+			wall_bottom = {-0.4375, -0.5, -0.3125, 0.4375, -0.4375, 0.3125},
+
+			wall_side   = {-0.5, -0.3125, -0.4375, -0.4375, 0.3125, 0.4375},
+		},
+
+]]--
 
 	local color = c[1]
 	local defc = c[2]
+
+	table.insert(lbm_restore_nodes, "street_signs:sign_highway_small_"..color)
+	table.insert(lbm_restore_nodes, "street_signs:sign_highway_medium_"..color)
+	table.insert(lbm_restore_nodes, "street_signs:sign_highway_large_"..color)
 
 	minetest.register_node("street_signs:sign_highway_small_"..color, {
 		description = "Small highway sign ("..color..")",
@@ -535,7 +587,7 @@ for _, c in ipairs(colors) do
 		wield_image = "street_signs_highway_small_"..color.."_inv.png",
 		paramtype = "light",
 		sunlight_propagates = true,
-		paramtype2 = "facedir",
+		paramtype2 = "wallmounted",
 		drawtype = "mesh",
 		node_box = cbox,
 		selection_box = cbox,
@@ -555,6 +607,7 @@ for _, c in ipairs(colors) do
 		on_punch = function(pos, node, puncher)
 			street_signs.update_sign(pos)
 		end,
+		on_rotate = street_signs.wallmounted_rotate,
 		number_of_lines = 3,
 		horiz_scaling = 2,
 		vert_scaling = 1.15,
@@ -565,17 +618,12 @@ for _, c in ipairs(colors) do
 		chars_per_line = 22,
 		entity_info = {
 			mesh = "street_signs_highway_small_entity.obj",
-			yaw = {
-				0,
-				math.pi / -2,
-				math.pi,
-				math.pi / 2,
-			}
+			yaw = wmyaw
 		}
 	})
 	cbox = {
-		type = "fixed",
-		fixed = { -0.4375, -0.4375, 0.375, 1.4375, 1.4375, 0.5 }
+		type = "wallmounted",
+		wall_side = { -0.5, -0.4375, -0.4375, -0.375, 1.4375, 1.4375 }
 	}
 
 	minetest.register_node("street_signs:sign_highway_medium_"..color, {
@@ -584,7 +632,7 @@ for _, c in ipairs(colors) do
 		wield_image = "street_signs_highway_medium_"..color.."_inv.png",
 		paramtype = "light",
 		sunlight_propagates = true,
-		paramtype2 = "facedir",
+		paramtype2 = "wallmounted",
 		drawtype = "mesh",
 		node_box = cbox,
 		selection_box = cbox,
@@ -604,6 +652,7 @@ for _, c in ipairs(colors) do
 		on_punch = function(pos, node, puncher)
 			street_signs.update_sign(pos)
 		end,
+		on_rotate = street_signs.wallmounted_rotate,
 		number_of_lines = 6,
 		horiz_scaling = 2,
 		vert_scaling = 0.915,
@@ -614,18 +663,13 @@ for _, c in ipairs(colors) do
 		chars_per_line = 22,
 		entity_info = {
 			mesh = "street_signs_highway_medium_entity.obj",
-			yaw = {
-				0,
-				math.pi / -2,
-				math.pi,
-				math.pi / 2,
-			}
+			yaw = wmyaw
 		}
 	})
 
 	cbox = {
-		type = "fixed",
-		fixed = { -0.4375, -0.4375, 0.375, 2.4375, 1.4375, 0.5 }
+		type = "wallmounted",
+		wall_side = { -0.5, -0.4375, -0.4375, -0.375, 1.4375, 2.4375 }
 	}
 
 	minetest.register_node("street_signs:sign_highway_large_"..color, {
@@ -634,7 +678,7 @@ for _, c in ipairs(colors) do
 		wield_image = "street_signs_highway_large_"..color.."_inv.png",
 		paramtype = "light",
 		sunlight_propagates = true,
-		paramtype2 = "facedir",
+		paramtype2 = "wallmounted",
 		drawtype = "mesh",
 		node_box = cbox,
 		selection_box = cbox,
@@ -654,6 +698,7 @@ for _, c in ipairs(colors) do
 		on_punch = function(pos, node, puncher)
 			street_signs.update_sign(pos)
 		end,
+		on_rotate = street_signs.wallmounted_rotate,
 		number_of_lines = 6,
 		horiz_scaling = 2,
 		vert_scaling = 0.915,
@@ -664,26 +709,24 @@ for _, c in ipairs(colors) do
 		chars_per_line = 25,
 		entity_info = {
 			mesh = "street_signs_highway_large_entity.obj",
-			yaw = {
-				0,
-				math.pi / -2,
-				math.pi,
-				math.pi / 2,
-			}
+			yaw = wmyaw
 		}
 	})
 end
 
 cbox = {
-	type = "fixed",
-	fixed = { -0.5, -0.5, 0.4375, 0.5, 0.5, 0.5 }
+	type = "wallmounted",
+	wall_side = { -0.5, -0.5, -0.5, -0.4375, 0.5, 0.5 }
 }
+
+table.insert(lbm_restore_nodes, "street_signs:sign_us_route")
+table.insert(lbm_restore_nodes, "street_signs:sign_us_interstate")
 
 minetest.register_node("street_signs:sign_us_route", {
 	description = "Basic \"US Route\" sign",
 	paramtype = "light",
 	sunlight_propagates = true,
-	paramtype2 = "facedir",
+	paramtype2 = "wallmounted",
 	drawtype = "mesh",
 	node_box = cbox,
 	selection_box = cbox,
@@ -704,6 +747,7 @@ minetest.register_node("street_signs:sign_us_route", {
 	on_punch = function(pos, node, puncher)
 		street_signs.update_sign(pos)
 	end,
+	on_rotate = street_signs.wallmounted_rotate,
 	number_of_lines = 1,
 	horiz_scaling = 3.5,
 	vert_scaling = 1.4,
@@ -714,25 +758,20 @@ minetest.register_node("street_signs:sign_us_route", {
 	chars_per_line = 3,
 	entity_info = {
 		mesh = "street_signs_us_route_entity.obj",
-		yaw = {
-			0,
-			math.pi / -2,
-			math.pi,
-			math.pi / 2,
-		}
+		yaw = wmyaw
 	}
 })
 
 cbox = {
-	type = "fixed",
-	fixed = { -0.45, -0.45, 0.4375, 0.45, 0.45, 0.5 }
+	type = "wallmounted",
+	wall_side = { -0.5, -0.45, -0.45, -0.4375, 0.45, 0.45 }
 }
 
 minetest.register_node("street_signs:sign_us_interstate", {
 	description = "Basic US \"Interstate\" sign",
 	paramtype = "light",
 	sunlight_propagates = true,
-	paramtype2 = "facedir",
+	paramtype2 = "wallmounted",
 	drawtype = "mesh",
 	node_box = cbox,
 	selection_box = cbox,
@@ -753,6 +792,7 @@ minetest.register_node("street_signs:sign_us_interstate", {
 	on_punch = function(pos, node, puncher)
 		street_signs.update_sign(pos)
 	end,
+	on_rotate = street_signs.wallmounted_rotate,
 	number_of_lines = 1,
 	horiz_scaling = 4.5,
 	vert_scaling = 1.4,
@@ -763,26 +803,25 @@ minetest.register_node("street_signs:sign_us_interstate", {
 	chars_per_line = 3,
 	entity_info = {
 		mesh = "street_signs_us_interstate_entity.obj",
-		yaw = {
-			0,
-			math.pi / -2,
-			math.pi,
-			math.pi / 2,
-		}
+		yaw = wmyaw
 	}
 })
 
-
 cbox = {
-	type = "fixed",
-	fixed = { -0.5, -0.5, 0.4375, 0.5, 0.5, 0.5 }
+	type = "wallmounted",
+	wall_side = { -0.5, -0.5, -0.5, -0.4375, 0.5, 0.5 }
 }
+
+table.insert(lbm_restore_nodes, "street_signs:sign_warning_3_line")
+table.insert(lbm_restore_nodes, "street_signs:sign_warning_4_line")
+table.insert(lbm_restore_nodes, "street_signs:sign_warning_orange_3_line")
+table.insert(lbm_restore_nodes, "street_signs:sign_warning_orange_4_line")
 
 minetest.register_node("street_signs:sign_warning_3_line", {
 	description = "Basic US diamond-shaped \"warning\" sign (3-line, yellow)",
 	paramtype = "light",
 	sunlight_propagates = true,
-	paramtype2 = "facedir",
+	paramtype2 = "wallmounted",
 	drawtype = "mesh",
 	node_box = cbox,
 	selection_box = cbox,
@@ -803,6 +842,7 @@ minetest.register_node("street_signs:sign_warning_3_line", {
 	on_punch = function(pos, node, puncher)
 		street_signs.update_sign(pos)
 	end,
+	on_rotate = street_signs.wallmounted_rotate,
 	number_of_lines = 3,
 	horiz_scaling = 1.75,
 	vert_scaling = 1.75,
@@ -813,12 +853,7 @@ minetest.register_node("street_signs:sign_warning_3_line", {
 	chars_per_line = 15,
 	entity_info = {
 		mesh = "street_signs_warning_entity.obj",
-		yaw = {
-			0,
-			math.pi / -2,
-			math.pi,
-			math.pi / 2,
-		}
+		yaw = wmyaw
 	}
 })
 
@@ -826,7 +861,7 @@ minetest.register_node("street_signs:sign_warning_4_line", {
 	description = "Basic US diamond-shaped \"warning\" sign (4-line, yellow)",
 	paramtype = "light",
 	sunlight_propagates = true,
-	paramtype2 = "facedir",
+	paramtype2 = "wallmounted",
 	drawtype = "mesh",
 	node_box = cbox,
 	selection_box = cbox,
@@ -847,6 +882,7 @@ minetest.register_node("street_signs:sign_warning_4_line", {
 	on_punch = function(pos, node, puncher)
 		street_signs.update_sign(pos)
 	end,
+	on_rotate = street_signs.wallmounted_rotate,
 	number_of_lines = 4,
 	horiz_scaling = 1.75,
 	vert_scaling = 1.75,
@@ -857,12 +893,7 @@ minetest.register_node("street_signs:sign_warning_4_line", {
 	chars_per_line = 15,
 	entity_info = {
 		mesh = "street_signs_warning_entity.obj",
-		yaw = {
-			0,
-			math.pi / -2,
-			math.pi,
-			math.pi / 2,
-		}
+		yaw = wmyaw
 	}
 })
 
@@ -870,7 +901,7 @@ minetest.register_node("street_signs:sign_warning_orange_3_line", {
 	description = "Basic US diamond-shaped \"warning\" sign (3-line, orange)",
 	paramtype = "light",
 	sunlight_propagates = true,
-	paramtype2 = "facedir",
+	paramtype2 = "wallmounted",
 	drawtype = "mesh",
 	node_box = cbox,
 	selection_box = cbox,
@@ -891,6 +922,7 @@ minetest.register_node("street_signs:sign_warning_orange_3_line", {
 	on_punch = function(pos, node, puncher)
 		street_signs.update_sign(pos)
 	end,
+	on_rotate = street_signs.wallmounted_rotate,
 	number_of_lines = 3,
 	horiz_scaling = 1.75,
 	vert_scaling = 1.75,
@@ -901,12 +933,7 @@ minetest.register_node("street_signs:sign_warning_orange_3_line", {
 	chars_per_line = 15,
 	entity_info = {
 		mesh = "street_signs_warning_entity.obj",
-		yaw = {
-			0,
-			math.pi / -2,
-			math.pi,
-			math.pi / 2,
-		}
+		yaw = wmyaw
 	}
 })
 
@@ -914,7 +941,7 @@ minetest.register_node("street_signs:sign_warning_orange_4_line", {
 	description = "Basic US diamond-shaped \"warning\" sign (4-line, orange)",
 	paramtype = "light",
 	sunlight_propagates = true,
-	paramtype2 = "facedir",
+	paramtype2 = "wallmounted",
 	drawtype = "mesh",
 	node_box = cbox,
 	selection_box = cbox,
@@ -935,6 +962,7 @@ minetest.register_node("street_signs:sign_warning_orange_4_line", {
 	on_punch = function(pos, node, puncher)
 		street_signs.update_sign(pos)
 	end,
+	on_rotate = street_signs.wallmounted_rotate,
 	number_of_lines = 4,
 	horiz_scaling = 1.75,
 	vert_scaling = 1.75,
@@ -945,12 +973,7 @@ minetest.register_node("street_signs:sign_warning_orange_4_line", {
 	chars_per_line = 15,
 	entity_info = {
 		mesh = "street_signs_warning_entity.obj",
-		yaw = {
-			0,
-			math.pi / -2,
-			math.pi,
-			math.pi / 2,
-		}
+		yaw = wmyaw
 	}
 })
 
@@ -1119,18 +1142,16 @@ if minetest.get_modpath("signs_lib") then
 	end
 end
 
--- crafts, highway signs
-
-
 -- restore signs' text after /clearobjects and the like, the next time
 -- a block is reloaded by the server.
 
 minetest.register_lbm({
-	nodenames = { "street_signs:sign_basic" },
+	nodenames = lbm_restore_nodes,
 	name = "street_signs:restore_sign_text",
 	label = "Restore sign text",
 	run_at_every_load = true,
 	action = function(pos, node)
+		print("LBM call update sign on "..minetest.get_node(pos).name)
 		street_signs.update_sign(pos)
 	end
 })
