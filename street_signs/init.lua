@@ -1151,7 +1151,6 @@ minetest.register_lbm({
 	label = "Restore sign text",
 	run_at_every_load = true,
 	action = function(pos, node)
-		print("LBM call update sign on "..minetest.get_node(pos).name)
 		street_signs.update_sign(pos)
 	end
 })
