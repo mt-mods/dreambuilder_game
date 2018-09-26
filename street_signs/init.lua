@@ -777,8 +777,8 @@ cbox = {
 	fixed = { -0.5, -0.5, 0.4375, 0.5, 0.5, 0.5 }
 }
 
-minetest.register_node("street_signs:sign_warning", {
-	description = "Basic US diamond-shaped \"warning\" sign",
+minetest.register_node("street_signs:sign_warning_3_line", {
+	description = "Basic US diamond-shaped \"warning\" sign (3-line)",
 	paramtype = "light",
 	sunlight_propagates = true,
 	paramtype2 = "facedir",
@@ -787,7 +787,7 @@ minetest.register_node("street_signs:sign_warning", {
 	selection_box = cbox,
 	mesh = "street_signs_warning.obj",
 	tiles = { "street_signs_warning.png" },
-	inventory_image = "street_signs_warning_inv.png",
+	inventory_image = "street_signs_warning_3_line_inv.png",
 	groups = {choppy=2, dig_immediate=2},
 	default_color = "0",
 	on_construct = function(pos) 
@@ -804,11 +804,55 @@ minetest.register_node("street_signs:sign_warning", {
 	end,
 	number_of_lines = 3,
 	horiz_scaling = 1.75,
-	vert_scaling = 1.4,
+	vert_scaling = 1.75,
 	line_spacing = 1,
 	font_size = 15,
 	x_offset = 6,
-	y_offset = 10,
+	y_offset = 19,
+	chars_per_line = 15,
+	entity_info = {
+		mesh = "street_signs_warning_entity.obj",
+		yaw = {
+			0,
+			math.pi / -2,
+			math.pi,
+			math.pi / 2,
+		}
+	}
+})
+
+minetest.register_node("street_signs:sign_warning_4_line", {
+	description = "Basic US diamond-shaped \"warning\" sign (4-line)",
+	paramtype = "light",
+	sunlight_propagates = true,
+	paramtype2 = "facedir",
+	drawtype = "mesh",
+	node_box = cbox,
+	selection_box = cbox,
+	mesh = "street_signs_warning.obj",
+	tiles = { "street_signs_warning.png" },
+	inventory_image = "street_signs_warning_4_line_inv.png",
+	groups = {choppy=2, dig_immediate=2},
+	default_color = "0",
+	on_construct = function(pos) 
+		street_signs.construct_sign(pos)
+	end,
+	on_destruct = function(pos)
+		street_signs.destruct_sign(pos)
+	end,
+	on_receive_fields = function(pos, formname, fields, sender)
+		street_signs.receive_fields(pos, formname, fields, sender)
+	end,
+	on_punch = function(pos, node, puncher)
+		street_signs.update_sign(pos)
+	end,
+	number_of_lines = 4,
+	horiz_scaling = 1.75,
+	vert_scaling = 1.75,
+	line_spacing = 1,
+	font_size = 15,
+	x_offset = 6,
+	y_offset = 25,
 	chars_per_line = 15,
 	entity_info = {
 		mesh = "street_signs_warning_entity.obj",
