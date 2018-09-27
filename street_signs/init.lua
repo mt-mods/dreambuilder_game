@@ -1002,6 +1002,18 @@ for _, m in ipairs({"", "_onpole"}) do
 
 -- below this point are image-only signs (i.e. no user-input)
 
+	if m ~= "" then
+		cbox = {
+			type = "wallmounted",
+			wall_side = { -0.8125, -0.5, -0.5, -0.75, 0.5, 0.5 }
+		}
+	else
+		cbox = {
+			type = "wallmounted",
+			wall_side = { -0.5, -0.5, -0.5, -0.4375, 0.5, 0.5 }
+		}
+	end
+
 	minetest.register_node("street_signs:sign_stop"..m, {
 		description = "Stop sign",
 		paramtype = "light",
