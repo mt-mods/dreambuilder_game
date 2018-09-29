@@ -473,7 +473,7 @@ table.insert(lbm_restore_nodes, "street_signs:sign_basic")
 table.insert(lbm_restore_nodes, "street_signs:sign_basic_top_only")
 
 minetest.register_node("street_signs:sign_basic", {
-	description = "Basic street name sign",
+	description = "D3-1a: Generic intersection street name sign",
 	paramtype = "light",
 	sunlight_propagates = true,
 	paramtype2 = "facedir",
@@ -516,7 +516,7 @@ cbox = {
 }
 
 minetest.register_node("street_signs:sign_basic_top_only", {
-	description = "Basic street name sign, top only",
+	description = "D3-1a: Generic intersection street name sign (top only)",
 	paramtype = "light",
 	sunlight_propagates = true,
 	paramtype2 = "facedir",
@@ -568,7 +568,7 @@ for _, c in ipairs(colors) do
 	table.insert(lbm_restore_nodes, "street_signs:sign_highway_large_"..color)
 
 	minetest.register_node("street_signs:sign_highway_small_"..color, {
-		description = "Small highway sign ("..color..")",
+		description = "Small generic highway sign (3-line, "..color..")",
 		inventory_image = "street_signs_highway_small_"..color.."_inv.png",
 		wield_image = "street_signs_highway_small_"..color.."_inv.png",
 		paramtype = "light",
@@ -605,7 +605,7 @@ for _, c in ipairs(colors) do
 	}
 
 	minetest.register_node("street_signs:sign_highway_medium_"..color, {
-		description = "Medium highway sign ("..color..")",
+		description = "Medium generic highway sign (5-line, "..color..")",
 		inventory_image = "street_signs_highway_medium_"..color.."_inv.png",
 		wield_image = "street_signs_highway_medium_"..color.."_inv.png",
 		paramtype = "light",
@@ -643,7 +643,7 @@ for _, c in ipairs(colors) do
 	}
 
 	minetest.register_node("street_signs:sign_highway_large_"..color, {
-		description = "Large highway sign ("..color..")",
+		description = "Large generic highway sign (5-line, "..color..")",
 		inventory_image = "street_signs_highway_large_"..color.."_inv.png",
 		wield_image = "street_signs_highway_large_"..color.."_inv.png",
 		paramtype = "light",
@@ -690,38 +690,55 @@ local after_place_node = function(pos, placer, itemstack, pointed_thing)
 	end
 end
 
+local function shift_to_pole(t, m)
+	if m ~= "" then
+		return {
+			type = "wallmounted",
+			wall_side = { t[1] - 0.3125, t[2], t[3], t[4] - 0.3125, t[5], t[6] },
+			wall_top = {-0.5, -0.5, -0.5, 0.5, 0.5, 0.5 },
+			wall_bottom = {-0.5, -0.5, -0.5, 0.5, 0.5, 0.5 },
+		}
+	else
+		return {
+			type = "wallmounted",
+			wall_side = t,
+			wall_top = { t[3], -t[1], t[2], t[6], -t[4], t[5] },
+			wall_bottom = { t[3], t[1], t[2], t[6], t[4], t[5] }
+		}
+	end
+end
+
+
 for _, m in ipairs({"", "_onpole"}) do
 
-	cbox = {
-		type = "wallmounted",
-		wall_side = { -0.5, -0.3125, -0.3125, -0.4375, 0.3125, 0.3125 }
-	}
+	cbox = shift_to_pole({ -0.5, -0.46, -0.46, -0.4375, 0.46, 0.46 }, m)
 
 	local nci = nil
 	local on_rotate = street_signs.wallmounted_rotate
+	local pole_mount_tex = nil
 
 	if m ~= "" then
 		nci = 1
 		on_rotate = nil
-		cbox = {
-			type = "wallmounted",
-			wall_side = { -0.8125, -0.3125, -0.3125, -0.75, 0.3125, 0.3125 }
-		}
+		pole_mount_tex = "street_signs_pole_mount.png"
 	end
 
 	table.insert(lbm_restore_nodes, "street_signs:sign_us_route"..m)
 	table.insert(lbm_restore_nodes, "street_signs:sign_us_interstate"..m)
 
 	minetest.register_node("street_signs:sign_us_route"..m, {
-		description = "Basic \"US Route\" sign",
+		description = "M1-4: Generic \"US Route\" sign",
 		paramtype = "light",
 		sunlight_propagates = true,
 		paramtype2 = "wallmounted",
 		drawtype = "mesh",
 		node_box = cbox,
 		selection_box = cbox,
-		mesh = "street_signs_regulatory_24x24"..m..".obj",
-		tiles = { "street_signs_us_route.png" },
+		mesh = "street_signs_regulatory_36x36"..m..".obj",
+		tiles = { "street_signs_us_route.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
 		inventory_image = "street_signs_us_route_inv.png",
 		wield_image = "street_signs_us_route_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
@@ -738,25 +755,28 @@ for _, m in ipairs({"", "_onpole"}) do
 		line_spacing = 6,
 		font_size = 31,
 		x_offset = 8,
-		y_offset = 12,
+		y_offset = 11,
 		chars_per_line = 3,
 		entity_info = {
-			mesh = "street_signs_regulatory_24x24_entity"..m..".obj",
+			mesh = "street_signs_regulatory_36x36_entity"..m..".obj",
 			yaw = wmyaw
 		},
 		drop = "street_signs:sign_us_route"
 	})
 
 	minetest.register_node("street_signs:sign_us_interstate"..m, {
-		description = "Basic US \"Interstate\" sign",
+		description = "M1-1: Generic US Interstate sign",
 		paramtype = "light",
 		sunlight_propagates = true,
 		paramtype2 = "wallmounted",
 		drawtype = "mesh",
 		node_box = cbox,
 		selection_box = cbox,
-		mesh = "street_signs_us_interstate"..m..".obj",
-		tiles = { "street_signs_us_interstate.png" },
+		mesh = "street_signs_interstate_shield"..m..".obj",
+		tiles = { "street_signs_us_interstate.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
 		inventory_image = "street_signs_us_interstate_inv.png",
 		wield_image = "street_signs_us_interstate_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
@@ -768,7 +788,7 @@ for _, m in ipairs({"", "_onpole"}) do
 		on_punch = on_punch,
 		on_rotate = on_rotate,
 		number_of_lines = 1,
-		horiz_scaling = 4.5,
+		horiz_scaling = 4.3,
 		vert_scaling = 1.4,
 		line_spacing = 6,
 		font_size = 31,
@@ -776,23 +796,13 @@ for _, m in ipairs({"", "_onpole"}) do
 		y_offset = 14,
 		chars_per_line = 3,
 		entity_info = {
-			mesh = "street_signs_us_interstate_entity"..m..".obj",
+			mesh = "street_signs_interstate_shield_entity"..m..".obj",
 			yaw = wmyaw
 		},
 		drop = "street_signs:sign_us_interstate"
 	})
 
-	if m ~= "" then
-		cbox = {
-			type = "wallmounted",
-			wall_side = { -0.8125, -0.5, -0.5, -0.75, 0.5, 0.5 }
-		}
-	else
-		cbox = {
-			type = "wallmounted",
-			wall_side = { -0.5, -0.5, -0.5, -0.4375, 0.5, 0.5 }
-		}
-	end
+	cbox = shift_to_pole({ -0.5, -0.5, -0.5, -0.4375, 0.5, 0.5 }, m)
 
 	table.insert(lbm_restore_nodes, "street_signs:sign_warning_3_line"..m)
 	table.insert(lbm_restore_nodes, "street_signs:sign_warning_4_line"..m)
@@ -800,15 +810,18 @@ for _, m in ipairs({"", "_onpole"}) do
 	table.insert(lbm_restore_nodes, "street_signs:sign_warning_orange_4_line"..m)
 
 	minetest.register_node("street_signs:sign_warning_3_line"..m, {
-		description = "Basic US diamond-shaped \"warning\" sign (3-line, yellow)",
+		description = "W3-4: Generic US diamond \"warning\" sign (3-line, yellow)",
 		paramtype = "light",
 		sunlight_propagates = true,
 		paramtype2 = "wallmounted",
 		drawtype = "mesh",
 		node_box = cbox,
 		selection_box = cbox,
-		mesh = "street_signs_warning"..m..".obj",
-		tiles = { "street_signs_warning.png" },
+		mesh = "street_signs_warning_36x36"..m..".obj",
+		tiles = { "street_signs_warning.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
 		inventory_image = "street_signs_warning_3_line_inv.png",
 		wield_image = "street_signs_warning_3_line_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
@@ -828,22 +841,25 @@ for _, m in ipairs({"", "_onpole"}) do
 		y_offset = 19,
 		chars_per_line = 15,
 		entity_info = {
-			mesh = "street_signs_warning_entity"..m..".obj",
+			mesh = "street_signs_warning_36x36_entity"..m..".obj",
 			yaw = wmyaw
 		},
 		drop = "street_signs:sign_warning_3_line"
 	})
 
 	minetest.register_node("street_signs:sign_warning_4_line"..m, {
-		description = "Basic US diamond-shaped \"warning\" sign (4-line, yellow)",
+		description = "W23-2: Generic US diamond \"warning\" sign (4-line, yellow)",
 		paramtype = "light",
 		sunlight_propagates = true,
 		paramtype2 = "wallmounted",
 		drawtype = "mesh",
 		node_box = cbox,
 		selection_box = cbox,
-		mesh = "street_signs_warning"..m..".obj",
-		tiles = { "street_signs_warning.png" },
+		mesh = "street_signs_warning_36x36"..m..".obj",
+		tiles = { "street_signs_warning.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
 		inventory_image = "street_signs_warning_4_line_inv.png",
 		wield_image = "street_signs_warning_4_line_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
@@ -863,22 +879,25 @@ for _, m in ipairs({"", "_onpole"}) do
 		y_offset = 25,
 		chars_per_line = 15,
 		entity_info = {
-			mesh = "street_signs_warning_entity"..m..".obj",
+			mesh = "street_signs_warning_36x36_entity"..m..".obj",
 			yaw = wmyaw
 		},
 		drop = "street_signs:sign_warning_4_line"
 	})
 
 	minetest.register_node("street_signs:sign_warning_orange_3_line"..m, {
-		description = "Basic US diamond-shaped \"warning\" sign (3-line, orange)",
+		description = "W3-4: Generic US diamond \"warning\" sign (3-line, orange)",
 		paramtype = "light",
 		sunlight_propagates = true,
 		paramtype2 = "wallmounted",
 		drawtype = "mesh",
 		node_box = cbox,
 		selection_box = cbox,
-		mesh = "street_signs_warning"..m..".obj",
-		tiles = { "street_signs_warning_orange.png" },
+		mesh = "street_signs_warning_36x36"..m..".obj",
+		tiles = { "street_signs_warning_orange.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
 		inventory_image = "street_signs_warning_orange_3_line_inv.png",
 		wield_image = "street_signs_warning_orange_3_line_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
@@ -898,22 +917,25 @@ for _, m in ipairs({"", "_onpole"}) do
 		y_offset = 19,
 		chars_per_line = 15,
 		entity_info = {
-			mesh = "street_signs_warning_entity"..m..".obj",
+			mesh = "street_signs_warning_36x36_entity"..m..".obj",
 			yaw = wmyaw
 		},
 		drop = "street_signs:sign_warning_orange_3_line"
 	})
 
 	minetest.register_node("street_signs:sign_warning_orange_4_line"..m, {
-		description = "Basic US diamond-shaped \"warning\" sign (4-line, orange)",
+		description = "W23-2: Generic US diamond \"warning\" sign (4-line, orange)",
 		paramtype = "light",
 		sunlight_propagates = true,
 		paramtype2 = "wallmounted",
 		drawtype = "mesh",
 		node_box = cbox,
 		selection_box = cbox,
-		mesh = "street_signs_warning"..m..".obj",
-		tiles = { "street_signs_warning_orange.png" },
+		mesh = "street_signs_warning_36x36"..m..".obj",
+		tiles = { "street_signs_warning_orange.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
 		inventory_image = "street_signs_warning_orange_4_line_inv.png",
 		wield_image = "street_signs_warning_orange_4_line_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
@@ -933,36 +955,29 @@ for _, m in ipairs({"", "_onpole"}) do
 		y_offset = 25,
 		chars_per_line = 15,
 		entity_info = {
-			mesh = "street_signs_warning_entity"..m..".obj",
+			mesh = "street_signs_warning_36x36_entity"..m..".obj",
 			yaw = wmyaw
 		},
 		drop = "street_signs:sign_warning_orange_4_line"
 	})
 
-	if m ~= "" then
-		cbox = {
-			type = "wallmounted",
-			wall_side = { -0.8125, -0.625, -0.47, -0.75, 0.625, 0.47 }
-		}
-	else
-		cbox = {
-			type = "wallmounted",
-			wall_side = { -0.5, -0.625, -0.47, -0.4375, 0.625, 0.47 }
-		}
-	end
+	cbox = shift_to_pole({ -0.5, -0.47, -0.4, -0.4375, 0.47, 0.4 }, m)
 
 	table.insert(lbm_restore_nodes, "street_signs:sign_speed_limit"..m)
 
 	minetest.register_node("street_signs:sign_speed_limit"..m, {
-		description = "Basic speed limit sign",
+		description = "R2-1: Generic speed limit sign",
 		paramtype = "light",
 		sunlight_propagates = true,
 		paramtype2 = "wallmounted",
 		drawtype = "mesh",
 		node_box = cbox,
 		selection_box = cbox,
-		mesh = "street_signs_regulatory_36x48"..m..".obj",
-		tiles = { "street_signs_speed_limit.png" },
+		mesh = "street_signs_regulatory_30x36"..m..".obj",
+		tiles = { "street_signs_speed_limit.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
 		inventory_image = "street_signs_speed_limit_inv.png",
 		wield_image = "street_signs_speed_limit_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
@@ -982,7 +997,7 @@ for _, m in ipairs({"", "_onpole"}) do
 		y_offset = 37,
 		chars_per_line = 4,
 		entity_info = {
-			mesh = "street_signs_regulatory_36x48_entity"..m..".obj",
+			mesh = "street_signs_regulatory_30x36_entity"..m..".obj",
 			yaw = wmyaw
 		},
 		drop = "street_signs:sign_speed_limit"
@@ -990,20 +1005,10 @@ for _, m in ipairs({"", "_onpole"}) do
 
 -- below this point are image-only signs (i.e. no user-input)
 
-	if m ~= "" then
-		cbox = {
-			type = "wallmounted",
-			wall_side = { -0.8125, -0.5, -0.5, -0.75, 0.5, 0.5 }
-		}
-	else
-		cbox = {
-			type = "wallmounted",
-			wall_side = { -0.5, -0.5, -0.5, -0.4375, 0.5, 0.5 }
-		}
-	end
+	cbox = shift_to_pole({ -0.5, -0.5, -0.5, -0.4375, 0.5, 0.5 }, m)
 
 	minetest.register_node("street_signs:sign_stop"..m, {
-		description = "Stop sign",
+		description = "R1-1: Stop sign",
 		paramtype = "light",
 		sunlight_propagates = true,
 		paramtype2 = "wallmounted",
@@ -1011,7 +1016,10 @@ for _, m in ipairs({"", "_onpole"}) do
 		node_box = cbox,
 		selection_box = cbox,
 		mesh = "street_signs_stop"..m..".obj",
-		tiles = { "street_signs_stop.png" },
+		tiles = { "street_signs_stop.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
 		inventory_image = "street_signs_stop_inv.png",
 		wield_image = "street_signs_stop_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
@@ -1021,8 +1029,10 @@ for _, m in ipairs({"", "_onpole"}) do
 		drop = "street_signs:sign_stop"
 	})
 
+	cbox = shift_to_pole({ -0.5, -0.61, -0.61, -0.4375, 0.61, 0.61 }, m)
+
 	minetest.register_node("street_signs:sign_yield"..m, {
-		description = "Yield sign",
+		description = "R1-2: Yield sign",
 		paramtype = "light",
 		sunlight_propagates = true,
 		paramtype2 = "wallmounted",
@@ -1030,7 +1040,10 @@ for _, m in ipairs({"", "_onpole"}) do
 		node_box = cbox,
 		selection_box = cbox,
 		mesh = "street_signs_yield"..m..".obj",
-		tiles = { "street_signs_yield.png" },
+		tiles = { "street_signs_yield.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
 		inventory_image = "street_signs_yield_inv.png",
 		wield_image = "street_signs_yield_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
@@ -1040,16 +1053,21 @@ for _, m in ipairs({"", "_onpole"}) do
 		drop = "street_signs:sign_yield"
 	})
 
+	cbox = shift_to_pole({ -0.5, -0.5, -0.5, -0.4375, 0.5, 0.5 }, m)
+
 	minetest.register_node("street_signs:sign_pedestrian_crossing"..m, {
-		description = "Pedestrian crossing sign",
+		description = "W11-2: Pedestrian crossing sign",
 		paramtype = "light",
 		sunlight_propagates = true,
 		paramtype2 = "wallmounted",
 		drawtype = "mesh",
 		node_box = cbox,
 		selection_box = cbox,
-		mesh = "street_signs_warning"..m..".obj",
-		tiles = { "street_signs_pedestrian_crossing.png" },
+		mesh = "street_signs_warning_36x36"..m..".obj",
+		tiles = { "street_signs_pedestrian_crossing.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
 		inventory_image = "street_signs_pedestrian_crossing_inv.png",
 		wield_image = "street_signs_pedestrian_crossing_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
@@ -1060,15 +1078,18 @@ for _, m in ipairs({"", "_onpole"}) do
 	})
 
 	minetest.register_node("street_signs:sign_signal_ahead"..m, {
-		description = "Traffic signal ahead",
+		description = "W3-3: Traffic signal ahead",
 		paramtype = "light",
 		sunlight_propagates = true,
 		paramtype2 = "wallmounted",
 		drawtype = "mesh",
 		node_box = cbox,
 		selection_box = cbox,
-		mesh = "street_signs_warning"..m..".obj",
-		tiles = { "street_signs_signal_ahead.png" },
+		mesh = "street_signs_warning_36x36"..m..".obj",
+		tiles = { "street_signs_signal_ahead.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
 		inventory_image = "street_signs_signal_ahead_inv.png",
 		wield_image = "street_signs_signal_ahead_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
@@ -1079,15 +1100,18 @@ for _, m in ipairs({"", "_onpole"}) do
 	})
 
 	minetest.register_node("street_signs:sign_stop_ahead"..m, {
-		description = "Stop sign ahead",
+		description = "W3-1: Stop sign ahead",
 		paramtype = "light",
 		sunlight_propagates = true,
 		paramtype2 = "wallmounted",
 		drawtype = "mesh",
 		node_box = cbox,
 		selection_box = cbox,
-		mesh = "street_signs_warning"..m..".obj",
-		tiles = { "street_signs_stop_ahead.png" },
+		mesh = "street_signs_warning_36x36"..m..".obj",
+		tiles = { "street_signs_stop_ahead.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
 		inventory_image = "street_signs_stop_ahead_inv.png",
 		wield_image = "street_signs_stop_ahead_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
@@ -1098,15 +1122,18 @@ for _, m in ipairs({"", "_onpole"}) do
 	})
 
 	minetest.register_node("street_signs:sign_yield_ahead"..m, {
-		description = "Yield sign ahead",
+		description = "W3-2: Yield sign ahead",
 		paramtype = "light",
 		sunlight_propagates = true,
 		paramtype2 = "wallmounted",
 		drawtype = "mesh",
 		node_box = cbox,
 		selection_box = cbox,
-		mesh = "street_signs_warning"..m..".obj",
-		tiles = { "street_signs_yield_ahead.png" },
+		mesh = "street_signs_warning_36x36"..m..".obj",
+		tiles = { "street_signs_yield_ahead.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
 		inventory_image = "street_signs_yield_ahead_inv.png",
 		wield_image = "street_signs_yield_ahead_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
@@ -1117,15 +1144,18 @@ for _, m in ipairs({"", "_onpole"}) do
 	})
 
 	minetest.register_node("street_signs:sign_merging_traffic"..m, {
-		description = "Merging traffic sign",
+		description = "W4-1: Traffic merging from right sign",
 		paramtype = "light",
 		sunlight_propagates = true,
 		paramtype2 = "wallmounted",
 		drawtype = "mesh",
 		node_box = cbox,
 		selection_box = cbox,
-		mesh = "street_signs_warning"..m..".obj",
-		tiles = { "street_signs_merging_traffic.png" },
+		mesh = "street_signs_warning_36x36"..m..".obj",
+		tiles = { "street_signs_merging_traffic.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
 		inventory_image = "street_signs_merging_traffic_inv.png",
 		wield_image = "street_signs_merging_traffic_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
@@ -1136,15 +1166,18 @@ for _, m in ipairs({"", "_onpole"}) do
 	})
 
 	minetest.register_node("street_signs:sign_two_way_traffic"..m, {
-		description = "Two-way traffic sign",
+		description = "W6-3: Two-way traffic sign",
 		paramtype = "light",
 		sunlight_propagates = true,
 		paramtype2 = "wallmounted",
 		drawtype = "mesh",
 		node_box = cbox,
 		selection_box = cbox,
-		mesh = "street_signs_warning"..m..".obj",
-		tiles = { "street_signs_two_way_traffic.png" },
+		mesh = "street_signs_warning_36x36"..m..".obj",
+		tiles = { "street_signs_two_way_traffic.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
 		inventory_image = "street_signs_two_way_traffic_inv.png",
 		wield_image = "street_signs_two_way_traffic_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
@@ -1155,15 +1188,18 @@ for _, m in ipairs({"", "_onpole"}) do
 	})
 
 	minetest.register_node("street_signs:sign_left_lane_ends"..m, {
-		description = "Left lane ends sign",
+		description = "W4-2: Left lane ends sign",
 		paramtype = "light",
 		sunlight_propagates = true,
 		paramtype2 = "wallmounted",
 		drawtype = "mesh",
 		node_box = cbox,
 		selection_box = cbox,
-		mesh = "street_signs_warning"..m..".obj",
-		tiles = { "street_signs_left_lane_ends.png" },
+		mesh = "street_signs_warning_36x36"..m..".obj",
+		tiles = { "street_signs_left_lane_ends.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
 		inventory_image = "street_signs_left_lane_ends_inv.png",
 		wield_image = "street_signs_left_lane_ends_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
@@ -1174,15 +1210,18 @@ for _, m in ipairs({"", "_onpole"}) do
 	})
 
 	minetest.register_node("street_signs:sign_right_lane_ends"..m, {
-		description = "Right lane ends sign",
+		description = "W4-2: Right lane ends sign",
 		paramtype = "light",
 		sunlight_propagates = true,
 		paramtype2 = "wallmounted",
 		drawtype = "mesh",
 		node_box = cbox,
 		selection_box = cbox,
-		mesh = "street_signs_warning"..m..".obj",
-		tiles = { "street_signs_right_lane_ends.png" },
+		mesh = "street_signs_warning_36x36"..m..".obj",
+		tiles = { "street_signs_right_lane_ends.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
 		inventory_image = "street_signs_right_lane_ends_inv.png",
 		wield_image = "street_signs_right_lane_ends_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
@@ -1192,20 +1231,33 @@ for _, m in ipairs({"", "_onpole"}) do
 		drop = "street_signs:sign_right_lane_ends"
 	})
 
-	if m ~= "" then
-		cbox = {
-			type = "wallmounted",
-			wall_side = { -0.8125, -0.47, -0.32, -0.75, 0.47, 0.32 }
-		}
-	else
-		cbox = {
-			type = "wallmounted",
-			wall_side = { -0.5, -0.47, -0.32, -0.4375, 0.47, 0.32 }
-		}
-	end
+	cbox = shift_to_pole({ -0.5, -0.47, -0.4, -0.4375, 0.47, 0.4 }, m)
+
+	minetest.register_node("street_signs:sign_left_on_green_arrow_only"..m, {
+		description = "R10-5: Left on green arrow only sign",
+		paramtype = "light",
+		sunlight_propagates = true,
+		paramtype2 = "wallmounted",
+		drawtype = "mesh",
+		node_box = cbox,
+		selection_box = cbox,
+		mesh = "street_signs_regulatory_30x36"..m..".obj",
+		tiles = { "street_signs_left_on_green_arrow_only.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
+		inventory_image = "street_signs_left_on_green_arrow_only_inv.png",
+		wield_image = "street_signs_left_on_green_arrow_only_inv.png",
+		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
+		after_place_node = after_place_node,
+		on_rotate = on_rotate,
+		drop = "street_signs:sign_left_on_green_arrow_only"
+	})
+
+	cbox = shift_to_pole({ -0.5, -0.47, -0.32, -0.4375, 0.47, 0.32 }, m)
 
 	minetest.register_node("street_signs:sign_stop_here_on_red"..m, {
-		description = "Stop here on red sign",
+		description = "R10-6: Stop here on red sign",
 		paramtype = "light",
 		sunlight_propagates = true,
 		paramtype2 = "wallmounted",
@@ -1213,7 +1265,10 @@ for _, m in ipairs({"", "_onpole"}) do
 		node_box = cbox,
 		selection_box = cbox,
 		mesh = "street_signs_regulatory_24x36"..m..".obj",
-		tiles = { "street_signs_stop_here_on_red.png" },
+		tiles = { "street_signs_stop_here_on_red.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
 		inventory_image = "street_signs_stop_here_on_red_inv.png",
 		wield_image = "street_signs_stop_here_on_red_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
@@ -1222,20 +1277,10 @@ for _, m in ipairs({"", "_onpole"}) do
 		drop = "street_signs:sign_stop_here_on_red"
 	})
 
-	if m ~= "" then
-		cbox = {
-			type = "wallmounted",
-			wall_side = { -0.8125, -0.625, -0.47, -0.75, 0.625, 0.47 }
-		}
-	else
-		cbox = {
-			type = "wallmounted",
-			wall_side = { -0.5, -0.625, -0.47, -0.4375, 0.625, 0.47 }
-		}
-	end
+	cbox = shift_to_pole({ -0.5, -0.625, -0.47, -0.4375, 0.625, 0.47 }, m)
 
 	minetest.register_node("street_signs:sign_keep_right"..m, {
-		description = "Keep right sign",
+		description = "R4-7: Keep right sign",
 		paramtype = "light",
 		sunlight_propagates = true,
 		paramtype2 = "wallmounted",
@@ -1243,7 +1288,10 @@ for _, m in ipairs({"", "_onpole"}) do
 		node_box = cbox,
 		selection_box = cbox,
 		mesh = "street_signs_regulatory_36x48"..m..".obj",
-		tiles = { "street_signs_keep_right.png" },
+		tiles = { "street_signs_keep_right.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
 		inventory_image = "street_signs_keep_right_inv.png",
 		wield_image = "street_signs_keep_right_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
@@ -1252,20 +1300,31 @@ for _, m in ipairs({"", "_onpole"}) do
 		drop = "street_signs:sign_keep_right"
 	})
 
-	if m ~= "" then
-		cbox = {
-			type = "wallmounted",
-			wall_side = { -0.8125, -0.4, -0.5625, -0.75, 0.4, 0.5625 }
-		}
-	else
-		cbox = {
-			type = "wallmounted",
-			wall_side = { -0.5, -0.4, -0.5625, -0.4375, 0.4, 0.5625 }
-		}
-	end
+	minetest.register_node("street_signs:sign_keep_left"..m, {
+		description = "R4-8: Keep left sign",
+		paramtype = "light",
+		sunlight_propagates = true,
+		paramtype2 = "wallmounted",
+		drawtype = "mesh",
+		node_box = cbox,
+		selection_box = cbox,
+		mesh = "street_signs_regulatory_36x48"..m..".obj",
+		tiles = { "street_signs_keep_left.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
+		inventory_image = "street_signs_keep_left_inv.png",
+		wield_image = "street_signs_keep_left_inv.png",
+		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
+		after_place_node = after_place_node,
+		on_rotate = on_rotate,
+		drop = "street_signs:sign_keep_left"
+	})
+
+	cbox = shift_to_pole({ -0.5, -0.46, -0.46, -0.4375, 0.46, 0.46 }, m)
 
 	minetest.register_node("street_signs:sign_do_not_enter"..m, {
-		description = "Do not enter sign",
+		description = "R5-1: Do not enter sign",
 		paramtype = "light",
 		sunlight_propagates = true,
 		paramtype2 = "wallmounted",
@@ -1273,7 +1332,11 @@ for _, m in ipairs({"", "_onpole"}) do
 		node_box = cbox,
 		selection_box = cbox,
 		mesh = "street_signs_regulatory_36x36"..m..".obj",
-		tiles = { "street_signs_do_not_enter.png" },
+		tiles = {
+			"street_signs_do_not_enter.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
 		inventory_image = "street_signs_do_not_enter_inv.png",
 		wield_image = "street_signs_do_not_enter_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
@@ -1282,8 +1345,10 @@ for _, m in ipairs({"", "_onpole"}) do
 		drop = "street_signs:sign_do_not_enter"
 	})
 
+	cbox = shift_to_pole({ -0.5, -0.4, -0.5625, -0.4375, 0.4, 0.5625 }, m)
+
 	minetest.register_node("street_signs:sign_wrong_way"..m, {
-		description = "Wrong way sign",
+		description = "R5-1a: Wrong way sign",
 		paramtype = "light",
 		sunlight_propagates = true,
 		paramtype2 = "wallmounted",
@@ -1291,7 +1356,10 @@ for _, m in ipairs({"", "_onpole"}) do
 		node_box = cbox,
 		selection_box = cbox,
 		mesh = "street_signs_regulatory_42x30"..m..".obj",
-		tiles = { "street_signs_wrong_way.png" },
+		tiles = { "street_signs_wrong_way.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
 		inventory_image = "street_signs_wrong_way_inv.png",
 		wield_image = "street_signs_wrong_way_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
@@ -1299,6 +1367,53 @@ for _, m in ipairs({"", "_onpole"}) do
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_wrong_way"
 	})
+
+	cbox = shift_to_pole({ -0.5, -0.55, -0.5, -0.4375, 0.55, 0.5 }, m)
+
+	minetest.register_node("street_signs:use_lane_with_green_arrow"..m, {
+		description = "R10-8: Use lane with green arrow",
+		paramtype = "light",
+		sunlight_propagates = true,
+		paramtype2 = "wallmounted",
+		drawtype = "mesh",
+		node_box = cbox,
+		selection_box = cbox,
+		mesh = "street_signs_regulatory_36x42"..m..".obj",
+		tiles = { "street_signs_use_lane_with_green_arrow.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
+		inventory_image = "street_signs_use_lane_with_green_arrow_inv.png",
+		wield_image = "street_signs_use_lane_with_green_arrow_inv.png",
+		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
+		after_place_node = after_place_node,
+		on_rotate = on_rotate,
+		drop = "street_signs:use_lane_with_green_arrow"
+	})
+
+	cbox = shift_to_pole({ -0.5, -0.625, -0.47, -0.4375, 0.625, 0.47 }, m)
+
+	minetest.register_node("street_signs:no_turn_on_red_light"..m, {
+		description = "R10-11: No turn on red light",
+		paramtype = "light",
+		sunlight_propagates = true,
+		paramtype2 = "wallmounted",
+		drawtype = "mesh",
+		node_box = cbox,
+		selection_box = cbox,
+		mesh = "street_signs_regulatory_36x48"..m..".obj",
+		tiles = { "street_signs_no_turn_on_red_light.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
+		inventory_image = "street_signs_no_turn_on_red_light_inv.png",
+		wield_image = "street_signs_no_turn_on_red_light_inv.png",
+		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
+		after_place_node = after_place_node,
+		on_rotate = on_rotate,
+		drop = "street_signs:no_turn_on_red_light"
+	})
+
 end
 
 cbox = {
@@ -1307,7 +1422,7 @@ cbox = {
 }
 
 minetest.register_node("street_signs:sign_stop_for_ped", {
-	description = "Pedestrian crossing sign",
+	description = "R1-6a: Stop for pedestrian in crosswalk sign",
 	paramtype = "light",
 	sunlight_propagates = true,
 	paramtype2 = "facedir",
@@ -1324,11 +1439,11 @@ for _, d in ipairs({"l", "c", "r"}) do
 
 	cbox = {
 		type = "wallmounted",
-		wall_side = { -0.5, -0.45, -0.1875, -0.4375, 0.5, 0.1875 }
+		wall_side = { -0.5, -0.5, -0.1875, -0.4375, 0.5, 0.1875 }
 	}
 
 	minetest.register_node("street_signs:sign_object_marker_type3_"..d, {
-		description = "Type 3 object marker ("..string.upper(d)..")",
+		description = "OM3-"..string.upper(d)..": Type 3 object marker",
 		paramtype = "light",
 		sunlight_propagates = true,
 		paramtype2 = "wallmounted",
@@ -1336,7 +1451,9 @@ for _, d in ipairs({"l", "c", "r"}) do
 		node_box = cbox,
 		selection_box = cbox,
 		mesh = "street_signs_object_marker_type_3.obj",
-		tiles = { "street_signs_object_marker_type3_"..d..".png" },
+		tiles = { "street_signs_object_marker_type3_"..d..".png",
+			"street_signs_sign_edge.png"
+		},
 		inventory_image = "street_signs_object_marker_type3_"..d.."_inv.png",
 		groups = {choppy=2, dig_immediate=2},
 	})
