@@ -23,10 +23,33 @@ street_signs.big_sign_colors = {
 	{ "orange", "0", "dye:orange", "dye:black" }
 }
 
+street_signs.lbm_restore_nodes = {}
+
 dofile(street_signs.path.."/api.lua")
-dofile(street_signs.path.."/signs.lua")
+
+dofile(street_signs.path.."/signs_misc_generic.lua")
+dofile(street_signs.path.."/signs_class_d.lua")
+dofile(street_signs.path.."/signs_class_om.lua")
+dofile(street_signs.path.."/signs_class_m.lua")
+dofile(street_signs.path.."/signs_class_r.lua")
+dofile(street_signs.path.."/signs_class_w.lua")
+
 dofile(street_signs.path.."/crafting.lua")
 dofile(street_signs.path.."/compat_convert.lua")
+
+-- restore signs' text after /clearobjects and the like, the next time
+-- a block is reloaded by the server.
+
+minetest.register_lbm({
+	nodenames = street_signs.lbm_restore_nodes,
+	name = "street_signs:restore_sign_text",
+	label = "Restore sign text",
+	run_at_every_load = true,
+	action = function(pos, node)
+		street_signs.update_sign(pos)
+	end
+})
+
 
 if minetest.settings:get("log_mods") then
 	minetest.log("action", S("[MOD] Street signs loaded"))

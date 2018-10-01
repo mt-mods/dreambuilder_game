@@ -2,6 +2,22 @@
 
 local S = street_signs.gettext
 
+street_signs.standard_yaw = {
+	0,
+	math.pi / -2,
+	math.pi,
+	math.pi / 2,
+}
+
+street_signs.wallmounted_yaw = {
+	nil,
+	nil,
+	math.pi / -2,
+	math.pi / 2,
+	0,
+	math.pi,
+}
+
 local wall_dir_change = {
 	[0] = 2,
 	2,
