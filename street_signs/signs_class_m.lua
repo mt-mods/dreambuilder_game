@@ -93,6 +93,52 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		drop = "street_signs:sign_us_interstate"
 	})
 
+	cbox = street_signs.make_selection_boxes(48, 18, onpole)
+
+	minetest.register_node("street_signs:sign_detour_right_m4_10"..onpole, {
+		description = "M4-10: Detour sign (to right)",
+		paramtype = "light",
+		sunlight_propagates = true,
+		paramtype2 = "wallmounted",
+		drawtype = "mesh",
+		node_box = cbox,
+		selection_box = cbox,
+		mesh = "street_signs_generic_sign_48x18"..onpole..".obj",
+		tiles = { "street_signs_detour_right_m4_10.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
+		inventory_image = "street_signs_detour_right_m4_10_inv.png",
+		wield_image = "street_signs_detour_right_m4_10_inv.png",
+		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
+		default_color = "0",
+		after_place_node = street_signs.after_place_node,
+		on_rotate = on_rotate,
+		drop = "street_signs:sign_detour_right_m4_10"
+	})
+
+	minetest.register_node("street_signs:sign_detour_left_m4_10"..onpole, {
+		description = "M4-10: Detour sign (to left)",
+		paramtype = "light",
+		sunlight_propagates = true,
+		paramtype2 = "wallmounted",
+		drawtype = "mesh",
+		node_box = cbox,
+		selection_box = cbox,
+		mesh = "street_signs_generic_sign_48x18"..onpole..".obj",
+		tiles = { "street_signs_detour_left_m4_10.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
+		inventory_image = "street_signs_detour_left_m4_10_inv.png",
+		wield_image = "street_signs_detour_left_m4_10_inv.png",
+		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
+		default_color = "0",
+		after_place_node = street_signs.after_place_node,
+		on_rotate = on_rotate,
+		drop = "street_signs:sign_detour_left_m4_10"
+	})
+
 	table.insert(street_signs.lbm_restore_nodes, "street_signs:sign_us_route"..onpole)
 	table.insert(street_signs.lbm_restore_nodes, "street_signs:sign_us_interstate"..onpole)
 end

@@ -286,6 +286,51 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		drop = "street_signs:sign_straight_through_only"
 	})
 
+	minetest.register_node("street_signs:sign_left_turn_or_straight"..onpole, {
+		description = "R3-6: Left turn or straight through",
+		paramtype = "light",
+		sunlight_propagates = true,
+		paramtype2 = "wallmounted",
+		drawtype = "mesh",
+		node_box = cbox,
+		selection_box = cbox,
+		mesh = "street_signs_generic_sign_30x36"..onpole..".obj",
+		tiles = {
+			"street_signs_left_turn_or_straight.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
+		inventory_image = "street_signs_left_turn_or_straight_inv.png",
+		wield_image = "street_signs_left_turn_or_straight_inv.png",
+		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
+		after_place_node = street_signs.after_place_node,
+		on_rotate = on_rotate,
+		drop = "street_signs:sign_left_turn_or_straight"
+	})
+
+	minetest.register_node("street_signs:sign_right_turn_or_straight"..onpole, {
+		description = "R3-6: Right turn or straight through",
+		paramtype = "light",
+		sunlight_propagates = true,
+		paramtype2 = "wallmounted",
+		drawtype = "mesh",
+		node_box = cbox,
+		selection_box = cbox,
+		mesh = "street_signs_generic_sign_30x36"..onpole..".obj",
+		tiles = {
+			"street_signs_right_turn_or_straight.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
+		inventory_image = "street_signs_right_turn_or_straight_inv.png",
+		wield_image = "street_signs_right_turn_or_straight_inv.png",
+		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
+		after_place_node = street_signs.after_place_node,
+		on_rotate = on_rotate,
+		drop = "street_signs:sign_right_turn_or_straight"
+	})
+
+
 	cbox = street_signs.make_selection_boxes(36, 36, onpole)
 
 	minetest.register_node("street_signs:sign_left_lane_must_turn_left"..onpole, {
@@ -535,6 +580,71 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		drop = "street_signs:sign_roundabout_directional"
 	})
 
+	minetest.register_node("street_signs:sign_roundabout_directional_left"..onpole, {
+		description = "R6-4b: Roundabout direction (4 chevrons, pointing left)",
+		paramtype = "light",
+		sunlight_propagates = true,
+		paramtype2 = "wallmounted",
+		drawtype = "mesh",
+		node_box = cbox,
+		selection_box = cbox,
+		mesh = "street_signs_generic_sign_60x24"..onpole..".obj",
+		tiles = { "street_signs_roundabout_directional_left.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
+		inventory_image = "street_signs_roundabout_directional_left_inv.png",
+		wield_image = "street_signs_roundabout_directional_left.png",
+		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
+		after_place_node = street_signs.after_place_node,
+		on_rotate = on_rotate,
+		drop = "street_signs:sign_roundabout_directional_left"
+	})
+
+	cbox = street_signs.make_selection_boxes(30, 30, onpole)
+
+	minetest.register_node("street_signs:sign_roundabout_counter_clockwise"..onpole, {
+		description = "R6-5P: Roundabout plaque (to the left/counter-clockwise)",
+		paramtype = "light",
+		sunlight_propagates = true,
+		paramtype2 = "wallmounted",
+		drawtype = "mesh",
+		node_box = cbox,
+		selection_box = cbox,
+		mesh = "street_signs_generic_sign_30x30"..onpole..".obj",
+		tiles = { "street_signs_roundabout_counter_clockwise.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
+		inventory_image = "street_signs_roundabout_counter_clockwise_inv.png",
+		wield_image = "street_signs_roundabout_counter_clockwise.png",
+		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
+		after_place_node = street_signs.after_place_node,
+		on_rotate = on_rotate,
+		drop = "street_signs:sign_roundabout_counter_clockwise"
+	})
+
+	minetest.register_node("street_signs:sign_roundabout_clockwise"..onpole, {
+		description = "R6-5P: Roundabout plaque (to the right/clockwise)",
+		paramtype = "light",
+		sunlight_propagates = true,
+		paramtype2 = "wallmounted",
+		drawtype = "mesh",
+		node_box = cbox,
+		selection_box = cbox,
+		mesh = "street_signs_generic_sign_30x30"..onpole..".obj",
+		tiles = { "street_signs_roundabout_clockwise.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
+		inventory_image = "street_signs_roundabout_clockwise_inv.png",
+		wield_image = "street_signs_roundabout_clockwise.png",
+		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
+		after_place_node = street_signs.after_place_node,
+		on_rotate = on_rotate,
+		drop = "street_signs:sign_roundabout_clockwise"
+	})
+
 	cbox = street_signs.make_selection_boxes(24, 30, onpole)
 
 	minetest.register_node("street_signs:sign_do_not_stop_on_tracks"..onpole, {
@@ -603,6 +713,28 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		after_place_node = street_signs.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_ped_push_button_to_cross_r10_3a_right"
+	})
+
+	minetest.register_node("street_signs:sign_ped_push_button_to_cross_r10_3a_both_ways"..onpole, {
+		description = "R10-3a: Pedestrians, push button to cross (pointing both ways)",
+		paramtype = "light",
+		sunlight_propagates = true,
+		paramtype2 = "wallmounted",
+		drawtype = "mesh",
+		node_box = cbox,
+		selection_box = cbox,
+		mesh = "street_signs_generic_sign_9x15"..onpole..".obj",
+		tiles = { "street_signs_ped_push_button_to_cross_r10_3a_both_ways.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
+		inventory_image = "street_signs_ped_push_button_to_cross_r10_3a_both_ways_inv.png",
+		wield_image = "street_signs_ped_push_button_to_cross_r10_3a_both_ways_inv.png",
+		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
+		default_color = "0",
+		after_place_node = street_signs.after_place_node,
+		on_rotate = on_rotate,
+		drop = "street_signs:sign_ped_push_button_to_cross_r10_3a_both_ways"
 	})
 
 	minetest.register_node("street_signs:sign_ped_push_button_to_cross_r10_3e"..onpole, {
@@ -909,6 +1041,31 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_rr_grade_crossbuck"
 	})
+
+	cbox = street_signs.make_selection_boxes(24, 12, onpole, 0, 12, 0)
+
+	minetest.register_node("street_signs:sign_rr_exempt_r15_3p"..onpole, {
+		description = "R15-3P: Railroad \"EXEMPT\" sign (white)",
+		paramtype = "light",
+		sunlight_propagates = true,
+		paramtype2 = "wallmounted",
+		drawtype = "mesh",
+		node_box = cbox,
+		selection_box = cbox,
+		mesh = "street_signs_generic_sign_24x12_top"..onpole..".obj",
+		tiles = { "street_signs_rr_exempt_r15_3p.png",
+			"street_signs_sign_edge.png",
+			pole_mount_tex
+		},
+		inventory_image = "street_signs_rr_exempt_r15_3p_inv.png",
+		wield_image = "street_signs_rr_exempt_r15_3p_inv.png",
+		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
+		default_color = "0",
+		after_place_node = street_signs.after_place_node,
+		on_rotate = on_rotate,
+		drop = "street_signs:sign_rr_exempt_r15_3p"
+	})
+
 
 	table.insert(street_signs.lbm_restore_nodes, "street_signs:sign_ped_push_button_to_cross_r10_3i"..onpole)
 	table.insert(street_signs.lbm_restore_nodes, "street_signs:sign_ped_push_button_to_cross_r10_3i_left"..onpole)

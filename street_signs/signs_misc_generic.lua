@@ -175,126 +175,62 @@ for _, onpole in ipairs({"", "_onpole"}) do
 	table.insert(street_signs.lbm_restore_nodes, "street_signs:sign_warning_orange_4_line"..onpole)
 end
 
-for _, c in ipairs(street_signs.big_sign_colors) do
-
-	cbox = {
+for _, s in ipairs(street_signs.big_sign_sizes) do
+	local size =   s[1]
+	local nlines = s[2]
+	local nchars = s[3]
+	local hscale = s[4]
+	local vscale = s[5]
+	local xoffs =  s[6]
+	local yoffs =  s[7]
+	local cbox = {
 		type = "wallmounted",
-		wall_side = { -0.5, -0.4375, -0.4375, -0.375, 0.4375, 1.4375 }
+		wall_side = s[8]
 	}
 
-	local color = c[1]
-	local defc = c[2]
+	for _, c in ipairs(street_signs.big_sign_colors) do
 
-	minetest.register_node("street_signs:sign_highway_small_"..color, {
-		description = "Small generic highway sign (3-line, "..color..")",
-		inventory_image = "street_signs_highway_small_"..color.."_inv.png",
-		wield_image = "street_signs_highway_small_"..color.."_inv.png",
-		paramtype = "light",
-		sunlight_propagates = true,
-		paramtype2 = "wallmounted",
-		drawtype = "mesh",
-		node_box = cbox,
-		selection_box = cbox,
-		mesh = "street_signs_highway_small.obj",
-		tiles = { "street_signs_highway_small_"..color..".png" },
-		default_color = defc,
-		groups = {choppy=2, dig_immediate=2},
-		on_construct = street_signs.construct_sign,
-		on_destruct = street_signs.destruct_sign,
-		on_receive_fields = street_signs.receive_fields,
-		on_punch = street_signs.update_sign,
-		on_rotate = street_signs.wallmounted_rotate,
-		number_of_lines = 3,
-		horiz_scaling = 2,
-		vert_scaling = 1.15,
-		line_spacing = 2,
-		font_size = 31,
-		x_offset = 9,
-		y_offset = 7,
-		chars_per_line = 22,
-		entity_info = {
-			mesh = "street_signs_highway_small_entity.obj",
-			yaw = street_signs.wallmounted_yaw
-		}
-	})
-	cbox = {
-		type = "wallmounted",
-		wall_side = { -0.5, -0.4375, -0.4375, -0.375, 1.4375, 1.4375 }
-	}
+		local color = c[1]
+		local defc = c[2]
 
-	minetest.register_node("street_signs:sign_highway_medium_"..color, {
-		description = "Medium generic highway sign (5-line, "..color..")",
-		inventory_image = "street_signs_highway_medium_"..color.."_inv.png",
-		wield_image = "street_signs_highway_medium_"..color.."_inv.png",
-		paramtype = "light",
-		sunlight_propagates = true,
-		paramtype2 = "wallmounted",
-		drawtype = "mesh",
-		node_box = cbox,
-		selection_box = cbox,
-		mesh = "street_signs_highway_medium.obj",
-		tiles = { "street_signs_highway_medium_"..color..".png" },
-		default_color = defc,
-		groups = {choppy=2, dig_immediate=2},
-		on_construct = street_signs.construct_sign,
-		on_destruct = street_signs.destruct_sign,
-		on_receive_fields = street_signs.receive_fields,
-		on_punch = street_signs.update_sign,
-		on_rotate = street_signs.wallmounted_rotate,
-		number_of_lines = 6,
-		horiz_scaling = 2,
-		vert_scaling = 0.915,
-		line_spacing = 2,
-		font_size = 31,
-		x_offset = 7,
-		y_offset = 10,
-		chars_per_line = 22,
-		entity_info = {
-			mesh = "street_signs_highway_medium_entity.obj",
-			yaw = street_signs.wallmounted_yaw
-		}
-	})
+		minetest.register_node("street_signs:sign_highway_"..size.."_"..color, {
+			description = "Generic highway sign (3-line, "..size..", "..color..")",
+			inventory_image = "street_signs_generic_highway_"..size.."_"..color.."_inv.png",
+			wield_image = "street_signs_generic_highway_"..size.."_"..color.."_inv.png",
+			paramtype = "light",
+			sunlight_propagates = true,
+			paramtype2 = "wallmounted",
+			drawtype = "mesh",
+			node_box = cbox,
+			selection_box = cbox,
+			mesh = "street_signs_generic_highway_"..size..".obj",
+			tiles = {
+				"street_signs_generic_highway_front_"..size.."_"..color..".png",
+				"street_signs_generic_highway_back_"..size..".png",
+				"street_signs_generic_highway_edges.png"
+			},
+			default_color = defc,
+			groups = {choppy=2, dig_immediate=2},
+			on_construct = street_signs.construct_sign,
+			on_destruct = street_signs.destruct_sign,
+			on_receive_fields = street_signs.receive_fields,
+			on_punch = street_signs.update_sign,
+			on_rotate = street_signs.wallmounted_rotate,
+			number_of_lines = nlines,
+			chars_per_line = nchars,
+			horiz_scaling = hscale,
+			vert_scaling = vscale,
+			line_spacing = 2,
+			font_size = 31,
+			x_offset = xoffs,
+			y_offset = yoffs,
+			entity_info = {
+				mesh = "street_signs_generic_highway_"..size.."_entity.obj",
+				yaw = street_signs.wallmounted_yaw
+			}
+		})
 
-	cbox = {
-		type = "wallmounted",
-		wall_side = { -0.5, -0.4375, -0.4375, -0.375, 1.4375, 2.4375 }
-	}
-
-	minetest.register_node("street_signs:sign_highway_large_"..color, {
-		description = "Large generic highway sign (5-line, "..color..")",
-		inventory_image = "street_signs_highway_large_"..color.."_inv.png",
-		wield_image = "street_signs_highway_large_"..color.."_inv.png",
-		paramtype = "light",
-		sunlight_propagates = true,
-		paramtype2 = "wallmounted",
-		drawtype = "mesh",
-		node_box = cbox,
-		selection_box = cbox,
-		mesh = "street_signs_highway_large.obj",
-		tiles = { "street_signs_highway_large_"..color..".png" },
-		default_color = defc,
-		groups = {choppy=2, dig_immediate=2},
-		on_construct = street_signs.construct_sign,
-		on_destruct = street_signs.destruct_sign,
-		on_receive_fields = street_signs.receive_fields,
-		on_punch = street_signs.update_sign,
-		on_rotate = street_signs.wallmounted_rotate,
-		number_of_lines = 6,
-		horiz_scaling = 2,
-		vert_scaling = 0.915,
-		line_spacing = 2,
-		font_size = 31,
-		x_offset = 12,
-		y_offset = 11,
-		chars_per_line = 25,
-		entity_info = {
-			mesh = "street_signs_highway_large_entity.obj",
-			yaw = street_signs.wallmounted_yaw
-		}
-	})
-
-	table.insert(street_signs.lbm_restore_nodes, "street_signs:sign_highway_small_"..color)
-	table.insert(street_signs.lbm_restore_nodes, "street_signs:sign_highway_medium_"..color)
-	table.insert(street_signs.lbm_restore_nodes, "street_signs:sign_highway_large_"..color)
+		table.insert(street_signs.lbm_restore_nodes, "street_signs:sign_highway_"..size.."_"..color)
+	end
 end
 

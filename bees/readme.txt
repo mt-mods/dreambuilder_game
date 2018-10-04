@@ -9,6 +9,9 @@ FEATURES
 - protection check when removing items from extractor
 - Intllib support (template added)
 - Wild hives are removed if found floating in mid air
+- Change compatibility abm to lbm
+- Change from WTFPL to MIT license
+- Make wild hive abm less intensive (thanks VanessaE)
 
 2.2.2
 - Pipeworks compatibility (Industrial beehive)

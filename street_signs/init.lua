@@ -16,16 +16,23 @@ street_signs.gettext = S
 
 dofile(street_signs.path .. "/encoding.lua") -- text encoding
 
+street_signs.lbm_restore_nodes = {}
+
+dofile(street_signs.path.."/api.lua")
+
+street_signs.big_sign_sizes = {
+--    "size",   lines, chars, hscale, vscale, xoffs, yoffs, box
+	{ "small",  3,     50,    1.3,    1.05,    7,     5,     { -0.5, -0.5, -0.5, -0.4, 0.5, 1.5 } },
+	{ "medium", 6,     50,    1.3,    1.05,    7,     5,     { -0.5, -0.5, -0.5, -0.4, 1.5, 1.5 } },
+	{ "large",  6,     80,    1,      1.05,    7,     5,     { -0.5, -0.5, -0.5, -0.4, 1.5, 2.5 } }
+}
+
 street_signs.big_sign_colors = {
 	{ "green",  "f", "dye:green",  "dye:white" },
 	{ "blue",   "f", "dye:blue",   "dye:white" },
 	{ "yellow", "0", "dye:yellow", "dye:black" },
 	{ "orange", "0", "dye:orange", "dye:black" }
 }
-
-street_signs.lbm_restore_nodes = {}
-
-dofile(street_signs.path.."/api.lua")
 
 dofile(street_signs.path.."/signs_misc_generic.lua")
 dofile(street_signs.path.."/signs_class_d.lua")
