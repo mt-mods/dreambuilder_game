@@ -99,6 +99,14 @@ unifieddyes.VALS = {
 	"dark_"
 }
 
+unifieddyes.VALS_SPLIT = {
+	"faint_",
+	"light_",
+	"",
+	"medium_",
+	"dark_"
+}
+
 unifieddyes.VALS_EXTENDED = {
 	"faint_",
 	"pastel_",
@@ -282,7 +290,7 @@ end
 function unifieddyes.register_color_craft(craft)
 	local hues_table = unifieddyes.HUES_EXTENDED
 	local sats_table = unifieddyes.SATS
-	local vals_table = unifieddyes.VALS
+	local vals_table = unifieddyes.VALS_SPLIT
 	local greys_table = unifieddyes.GREYS
 
 	if craft.palette == "wallmounted" then

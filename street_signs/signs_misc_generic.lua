@@ -194,7 +194,7 @@ for _, s in ipairs(street_signs.big_sign_sizes) do
 		local defc = c[2]
 
 		minetest.register_node("street_signs:sign_highway_"..size.."_"..color, {
-			description = "Generic highway sign (3-line, "..size..", "..color..")",
+			description = "Generic highway sign ("..nlines.."-line, "..size..", "..color..")",
 			inventory_image = "street_signs_generic_highway_"..size.."_"..color.."_inv.png",
 			wield_image = "street_signs_generic_highway_"..size.."_"..color.."_inv.png",
 			paramtype = "light",
@@ -230,7 +230,46 @@ for _, s in ipairs(street_signs.big_sign_sizes) do
 			}
 		})
 
+		minetest.register_node("street_signs:sign_highway_widefont_"..size.."_"..color, {
+			description = "Generic highway sign (Wide font, "..nlines.."-line, "..size..", "..color..")",
+			inventory_image = "street_signs_generic_highway_"..size.."_"..color.."_inv.png",
+			wield_image = "street_signs_generic_highway_"..size.."_"..color.."_inv.png",
+			paramtype = "light",
+			sunlight_propagates = true,
+			paramtype2 = "wallmounted",
+			drawtype = "mesh",
+			node_box = cbox,
+			selection_box = cbox,
+			mesh = "street_signs_generic_highway_"..size..".obj",
+			tiles = {
+				"street_signs_generic_highway_front_"..size.."_"..color..".png",
+				"street_signs_generic_highway_back_"..size..".png",
+				"street_signs_generic_highway_edges.png"
+			},
+			default_color = defc,
+			groups = {choppy=2, dig_immediate=2},
+			on_construct = street_signs.construct_sign,
+			on_destruct = street_signs.destruct_sign,
+			on_receive_fields = street_signs.receive_fields,
+			on_punch = street_signs.update_sign,
+			on_rotate = street_signs.wallmounted_rotate,
+			number_of_lines = nlines,
+			chars_per_line = math.ceil(nchars/1.4),
+			horiz_scaling = hscale/1.4,
+			vert_scaling = vscale,
+			line_spacing = 2,
+			font_size = 31,
+			x_offset = xoffs,
+			y_offset = yoffs,
+			entity_info = {
+				mesh = "street_signs_generic_highway_"..size.."_entity.obj",
+				yaw = street_signs.wallmounted_yaw
+			}
+		})
+
 		table.insert(street_signs.lbm_restore_nodes, "street_signs:sign_highway_"..size.."_"..color)
+		table.insert(street_signs.lbm_restore_nodes, "street_signs:sign_highway_widefont_"..size.."_"..color)
+
 	end
 end
 
