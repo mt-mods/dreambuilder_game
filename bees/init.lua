@@ -5,7 +5,7 @@
 
 -- Intllib support
 local S
-if intllib then
+if minetest.global_exists('intllib') then
 	S = intllib.Getter()
 else
 	S = function(s) return s end
@@ -13,6 +13,9 @@ end
 
 
 -- FUNCTIONS
+
+local floor = math.floor
+local random = math.random
 
 local hive_wild = function(pos, grafting)
 
@@ -44,9 +47,9 @@ end
 local polinate_flower = function(pos, flower)
 
 	local spawn_pos = {
-		x = pos.x + math.random(-3, 3),
-		y = pos.y + math.random(-3, 3),
-		z = pos.z + math.random(-3, 3)
+		x = pos.x + random(-3, 3),
+		y = pos.y + random(-3, 3),
+		z = pos.z + random(-3, 3)
 	}
 	local floor_pos = {x = spawn_pos.x, y = spawn_pos.y - 1, z = spawn_pos.z}
 	local spawn = minetest.get_node(spawn_pos).name
@@ -121,22 +124,22 @@ minetest.register_node('bees:extractor', {
 			inv:remove_item('frames_filled', 'bees:frame_full')
 
 			local p = {
-				x = pos.x + math.random() - 0.5,
-				y = pos.y + math.random() - 0.5,
-				z = pos.z + math.random() - 0.5
+				x = pos.x + random() - 0.5,
+				y = pos.y + random() - 0.5,
+				z = pos.z + random() - 0.5
 			}
 
 			--wax flying all over the place
 			minetest.add_particle({
 				pos = {x = pos.x, y = pos.y, z = pos.z},
 				vel = {
-					x = math.random(-1, 1),
-					y = math.random(4),
-					z = math.random(-1, 1)
+					x = random(-1, 1),
+					y = random(4),
+					z = random(-1, 1)
 				},
 				acc = {x = 0, y = -6, z = 0},
 				expirationtime = 2,
-				size = math.random(1, 3),
+				size = random(1, 3),
 				collisiondetection = false,
 				texture = 'bees_wax_particle.png',
 			})
@@ -253,7 +256,12 @@ minetest.register_node('bees:bees', {
 	damage_per_second = 1,
 	walkable = false,
 	buildable_to = true,
-	pointable = false,
+	selection_box = {
+		type = 'fixed',
+		fixed = {
+			{-0.3, -0.4, -0.3, 0.3, 0.4, 0.3},
+		}
+	},
 
 	on_punch = function(pos, node, puncher)
 
@@ -312,7 +320,7 @@ minetest.register_node('bees:hive_wild', {
 		-- Requires 2 or more flowers to make honey
 		if #flowers < 3 then return end
 
-		local flower = flowers[math.random(#flowers)]
+		local flower = flowers[random(#flowers)]
 
 		polinate_flower(flower, minetest.get_node(flower).name)
 
@@ -342,13 +350,13 @@ minetest.register_node('bees:hive_wild', {
 
 		meta:set_int('agressive', 1)
 
-		timer:start(100+math.random(100))
+		timer:start(100 + random(100))
 
 		inv:set_size('queen', 1)
 		inv:set_size('combs', 5)
 		inv:set_stack('queen', 1, 'bees:queen')
 
-		for i = 1, math.random(3) do
+		for i = 1, random(3) do
 			inv:set_stack('combs', i, 'bees:honey_comb')
 		end
 	end,
@@ -539,7 +547,7 @@ minetest.register_node('bees:hive_artificial', {
 
 				if progress > 1000 then
 
-					local flower = flowers[math.random(#flowers)]
+					local flower = flowers[random(#flowers)]
 
 					polinate_flower(flower, minetest.get_node(flower).name)
 
@@ -651,17 +659,17 @@ minetest.register_abm({
 		minetest.add_particle({
 			pos = {x = pos.x, y = pos.y, z = pos.z},
 			vel = {
-				x = (math.random() - 0.5) * 5,
-				y = (math.random() - 0.5) * 5,
-				z = (math.random() - 0.5) * 5
+				x = (random() - 0.5) * 5,
+				y = (random() - 0.5) * 5,
+				z = (random() - 0.5) * 5
 			},
 			acc = {
-				x = math.random() - 0.5,
-				y = math.random() - 0.5,
-				z = math.random() - 0.5
+				x = random() - 0.5,
+				y = random() - 0.5,
+				z = random() - 0.5
 			},
-			expirationtime = math.random(2.5),
-			size = math.random(3),
+			expirationtime = random(2.5),
+			size = random(3),
 			collisiondetection = true,
 			texture = 'bees_particle_bee.png',
 		})
@@ -681,8 +689,6 @@ minetest.register_abm({
 	end,
 })
 
-
-local floor = math.floor
 
 -- spawn abm. This should be changed to a more realistic type of spawning
 minetest.register_abm({
@@ -720,9 +726,9 @@ minetest.register_abm({
 	action = function(pos, node, _, _)
 
 		local p = {
-			x = pos.x + math.random(-5, 5),
-			y = pos.y - math.random(0, 3),
-			z = pos.z + math.random(-5, 5)
+			x = pos.x + random(-5, 5),
+			y = pos.y - random(0, 3),
+			z = pos.z + random(-5, 5)
 		}
 
 		if minetest.get_node(p).name == 'air' then
@@ -854,39 +860,38 @@ minetest.register_tool('bees:smoker', {
 		damage_groups = {fleshy = 2},
 	},
 
-	on_use = function(tool, user, node)
+	on_use = function(itemstack, user, pointed_thing)
 
-		if node then
-
-			local pos = node.under
-
-			if pos then
-
-				for i = 1, 6 do
-
-					minetest.add_particle({
-						pos = {
-							x = pos.x + math.random() - 0.5,
-							y = pos.y,
-							z = pos.z + math.random() - 0.5
-						},
-						vel = {x = 0, y = 0.5 + math.random(), z = 0},
-						acc = {x = 0, y = 0, z = 0},
-						expirationtime = 2 + math.random(2.5),
-						size = math.random(3),
-						collisiondetection = false,
-						texture = 'bees_smoke_particle.png',
-					})
-				end
-
-				--tool:add_wear(2)
-				local meta = minetest.get_meta(pos)
-
-				meta:set_int('agressive', 0)
-
-				return nil
-			end
+		if pointed_thing.type ~= "node" then
+			return
 		end
+
+		local pos = pointed_thing.under
+
+		for i = 1, 6 do
+
+			minetest.add_particle({
+				pos = {
+					x = pos.x + random() - 0.5,
+					y = pos.y,
+					z = pos.z + random() - 0.5
+				},
+				vel = {x = 0, y = 0.5 + random(), z = 0},
+				acc = {x = 0, y = 0, z = 0},
+				expirationtime = 2 + random(2.5),
+				size = random(3),
+				collisiondetection = false,
+				texture = 'bees_smoke_particle.png',
+			})
+		end
+
+		itemstack:add_wear(65535 / 200)
+
+		local meta = minetest.get_meta(pos)
+
+		meta:set_int('agressive', 0)
+
+		return itemstack
 	end,
 })
 
@@ -1083,7 +1088,7 @@ if minetest.get_modpath("pipeworks") then
 
 					if progress > 1000 then
 
-						local flower = flowers[math.random(#flowers)] 
+						local flower = flowers[random(#flowers)] 
 
 						polinate_flower(flower, minetest.get_node(flower).name)
 
@@ -1191,6 +1196,45 @@ if minetest.get_modpath("pipeworks") then
 			{'pipeworks:tube_1','bees:hive_artificial','pipeworks:tube_1'},
 			{'default:steel_ingot','homedecor:plastic_sheeting','default:steel_ingot'},
 		}
+	})
+end
+
+
+-- LUCKY BLOCKS
+
+if minetest.get_modpath('lucky_block') then
+
+	local add_bees = function(pos, player)
+
+		local objs = minetest.get_objects_inside_radius(pos, 15)
+		local violet = minetest.get_color_escape_sequence("#ff00ff")
+
+		minetest.chat_send_player(player:get_player_name(),
+			violet .. S("Bees! Bees for all!"))
+
+		for n = 1, #objs do
+
+			if objs[n]:is_player() then
+
+				local player_pos = objs[n]:get_pos()
+
+				player_pos.y = player_pos.y + 1
+
+				minetest.swap_node(player_pos, {name = 'bees:bees'})
+			end
+		end
+	end
+
+	lucky_block:add_blocks({
+		{'cus', add_bees},
+		{'dro', {'bees:grafting_tool'}, 1},
+		{'dro', {'bees:frame_empty'}, 2},
+		{'dro', {'bees:queen'}, 1},
+		{'nod', 'bees:extractor'},
+		{'dro', {'bees:frame_full'}, 2},
+		{'dro', {'bees:bottle_honey'}, 3},
+		{'dro', {'bees:smoker'}, 1},
+		{'nod', 'bees:hive_artificial'},
 	})
 end
 

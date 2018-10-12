@@ -12,6 +12,8 @@ FEATURES
 - Change compatibility abm to lbm
 - Change from WTFPL to MIT license
 - Make wild hive abm less intensive (thanks VanessaE)
+- Added 9x Lucky Blocks
+- Smokers have 200 uses before breaking
 
 2.2.2
 - Pipeworks compatibility (Industrial beehive)

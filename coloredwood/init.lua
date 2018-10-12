@@ -164,7 +164,7 @@ default.register_fence("coloredwood:fence", {
 	palette = "unifieddyes_palette_extended.png",
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
-	material = "default:wood"
+	material = "coloredwood:wood_block"
 })
 
 minetest.override_item("default:fence_wood", {
@@ -190,6 +190,17 @@ unifieddyes.register_color_craft({
 	palette = "extended",
 	type = "shapeless",
 	neutral_node = "default:fence_wood",
+	recipe = {
+		"NEUTRAL_NODE",
+		"MAIN_DYE"
+	}
+})
+
+unifieddyes.register_color_craft({
+	output = "coloredwood:fence",
+	palette = "extended",
+	type = "shapeless",
+	neutral_node = "coloredwood:fence",
 	recipe = {
 		"NEUTRAL_NODE",
 		"MAIN_DYE"

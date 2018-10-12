@@ -172,20 +172,25 @@ minetest.register_on_placenode(
 		end
 
 		if not string.find(itemstack:to_string(), "palette_index") then
-			local param2 = 0
+			local param2
 			local color = 0
 
-			if def.palette == "unifieddyes_palette_extended.png" then
+			if def.palette == "unifieddyes_palette_extended.png"
+			  and def.paramtype2 == "color" then
 				param2 = 240
 				color = 240
-			elseif def.palette == "unifieddyes_palette_colorwallmounted.png" then
+			elseif def.palette == "unifieddyes_palette_colorwallmounted.png"
+			  and def.paramtype2 == "colorwallmounted" then
 				param2 = newnode.param2 % 8
-			else  -- it's a split palette
+			elseif string.find(def.palette, "unifieddyes_palette_")
+			  and def.paramtype2 == "colorfacedir" then -- it's a split palette
 				param2 = newnode.param2 % 32
 			end
 
-			minetest.swap_node(pos, {name = newnode.name, param2 = param2})
-			minetest.get_meta(pos):set_int("palette_index", color)
+			if param2 then
+				minetest.swap_node(pos, {name = newnode.name, param2 = param2})
+				minetest.get_meta(pos):set_int("palette_index", color)
+			end
 		end
 	end
 )

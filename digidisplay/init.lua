@@ -1,7 +1,7 @@
 local function removeEntity(pos)
 	local entitiesNearby = minetest.get_objects_inside_radius(pos,0.5)
 	for _,i in pairs(entitiesNearby) do
-		if i:get_luaentity().name == "digidisplay:text" then
+		if i:get_luaentity() and i:get_luaentity().name == "digidisplay:text" then
 			i:remove()
 		end
 	end
