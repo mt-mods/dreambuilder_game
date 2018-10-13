@@ -3,6 +3,94 @@
 local S = street_signs.gettext
 local cbox
 
+local cbox = {
+	type = "fixed",
+	fixed = {
+		{ -1/32, 23/16, -1/32, 1/32, 24/16, 1/32 },
+		{ -1/32, 18/16, -8/16, 1/32, 23/16, 8/16 },
+		{ -1/32, 17/16, -1/32, 1/32, 18/16, 1/32 },
+		{ -8/16, 12/16, -1/32, 8/16, 17/16, 1/32 },
+		{ -1/16, -8/16, -1/16, 1/16, 12/16, 1/16 },
+	}
+}
+
+minetest.register_node("street_signs:sign_basic", {
+	description = "D3-1a: Generic intersection street name sign",
+	paramtype = "light",
+	sunlight_propagates = true,
+	paramtype2 = "facedir",
+	drawtype = "mesh",
+	node_box = cbox,
+	selection_box = cbox,
+	mesh = "street_signs_basic.obj",
+	tiles = { "street_signs_basic.png" },
+	groups = {choppy=2, dig_immediate=2},
+	default_color = "f",
+	on_construct = street_signs.construct_sign,
+	on_destruct = street_signs.destruct_sign,
+	on_receive_fields = street_signs.receive_fields,
+	on_punch = street_signs.update_sign,
+	on_rotate = street_signs.facedir_rotate,
+	number_of_lines = 2,
+	horiz_scaling = 0.8,
+	vert_scaling = 1,
+	line_spacing = 9,
+	font_size = 31,
+	x_offset = 7,
+	y_offset = 4,
+	chars_per_line = 40,
+	entity_info = {
+		mesh = "street_signs_basic_entity.obj",
+		yaw = street_signs.standard_yaw
+	}
+})
+
+cbox = {
+	type = "fixed",
+	fixed = {
+		{ -1/32,  7/16, -1/32, 1/32,  8/16, 1/32 },
+		{ -1/32,  2/16, -8/16, 1/32,  7/16, 8/16 },
+		{ -1/32,  1/16, -1/32, 1/32,  2/16, 1/32 },
+		{ -8/16, -4/16, -1/32, 8/16,  1/16, 1/32 },
+		{ -1/16, -8/16, -1/16, 1/16, -4/16, 1/16 },
+
+	}
+}
+
+minetest.register_node("street_signs:sign_basic_top_only", {
+	description = "D3-1a: Generic intersection street name sign (top only)",
+	paramtype = "light",
+	sunlight_propagates = true,
+	paramtype2 = "facedir",
+	drawtype = "mesh",
+	node_box = cbox,
+	selection_box = cbox,
+	mesh = "street_signs_basic_top_only.obj",
+	tiles = { "street_signs_basic.png" },
+	groups = {choppy=2, dig_immediate=2},
+	default_color = "f",
+	on_construct = street_signs.construct_sign,
+	on_destruct = street_signs.destruct_sign,
+	on_receive_fields = street_signs.receive_fields,
+	on_punch = street_signs.update_sign,
+	on_rotate = street_signs.facedir_rotate,
+	number_of_lines = 2,
+	horiz_scaling = 0.8,
+	vert_scaling = 1,
+	line_spacing = 9,
+	font_size = 31,
+	x_offset = 7,
+	y_offset = 4,
+	chars_per_line = 40,
+	entity_info = {
+		mesh = "street_signs_basic_top_only_entity.obj",
+		yaw = street_signs.standard_yaw
+	}
+})
+
+table.insert(street_signs.lbm_restore_nodes, "street_signs:sign_basic")
+table.insert(street_signs.lbm_restore_nodes, "street_signs:sign_basic_top_only")
+
 for _, onpole in ipairs({"", "_onpole"}) do
 
 	local nci = nil
@@ -150,90 +238,3 @@ for _, onpole in ipairs({"", "_onpole"}) do
 	})
 end
 
-local cbox = {
-	type = "fixed",
-	fixed = {
-		{ -1/32, 23/16, -1/32, 1/32, 24/16, 1/32 },
-		{ -1/32, 18/16, -8/16, 1/32, 23/16, 8/16 },
-		{ -1/32, 17/16, -1/32, 1/32, 18/16, 1/32 },
-		{ -8/16, 12/16, -1/32, 8/16, 17/16, 1/32 },
-		{ -1/16, -8/16, -1/16, 1/16, 12/16, 1/16 },
-	}
-}
-
-minetest.register_node("street_signs:sign_basic", {
-	description = "D3-1a: Generic intersection street name sign",
-	paramtype = "light",
-	sunlight_propagates = true,
-	paramtype2 = "facedir",
-	drawtype = "mesh",
-	node_box = cbox,
-	selection_box = cbox,
-	mesh = "street_signs_basic.obj",
-	tiles = { "street_signs_basic.png" },
-	groups = {choppy=2, dig_immediate=2},
-	default_color = "f",
-	on_construct = street_signs.construct_sign,
-	on_destruct = street_signs.destruct_sign,
-	on_receive_fields = street_signs.receive_fields,
-	on_punch = street_signs.update_sign,
-	on_rotate = street_signs.facedir_rotate,
-	number_of_lines = 2,
-	horiz_scaling = 1.5,
-	vert_scaling = 1,
-	line_spacing = 9,
-	font_size = 31,
-	x_offset = 7,
-	y_offset = 4,
-	chars_per_line = 40,
-	entity_info = {
-		mesh = "street_signs_basic_entity.obj",
-		yaw = street_signs.standard_yaw
-	}
-})
-
-cbox = {
-	type = "fixed",
-	fixed = {
-		{ -1/32,  7/16, -1/32, 1/32,  8/16, 1/32 },
-		{ -1/32,  2/16, -8/16, 1/32,  7/16, 8/16 },
-		{ -1/32,  1/16, -1/32, 1/32,  2/16, 1/32 },
-		{ -8/16, -4/16, -1/32, 8/16,  1/16, 1/32 },
-		{ -1/16, -8/16, -1/16, 1/16, -4/16, 1/16 },
-
-	}
-}
-
-minetest.register_node("street_signs:sign_basic_top_only", {
-	description = "D3-1a: Generic intersection street name sign (top only)",
-	paramtype = "light",
-	sunlight_propagates = true,
-	paramtype2 = "facedir",
-	drawtype = "mesh",
-	node_box = cbox,
-	selection_box = cbox,
-	mesh = "street_signs_basic_top_only.obj",
-	tiles = { "street_signs_basic.png" },
-	groups = {choppy=2, dig_immediate=2},
-	default_color = "f",
-	on_construct = street_signs.construct_sign,
-	on_destruct = street_signs.destruct_sign,
-	on_receive_fields = street_signs.receive_fields,
-	on_punch = street_signs.update_sign,
-	on_rotate = street_signs.facedir_rotate,
-	number_of_lines = 2,
-	horiz_scaling = 1.5,
-	vert_scaling = 1,
-	line_spacing = 9,
-	font_size = 31,
-	x_offset = 7,
-	y_offset = 4,
-	chars_per_line = 40,
-	entity_info = {
-		mesh = "street_signs_basic_top_only_entity.obj",
-		yaw = street_signs.standard_yaw
-	}
-})
-
-table.insert(street_signs.lbm_restore_nodes, "street_signs:sign_basic")
-table.insert(street_signs.lbm_restore_nodes, "street_signs:sign_basic_top_only")
