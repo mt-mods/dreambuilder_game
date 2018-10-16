@@ -535,9 +535,6 @@ if minetest.get_modpath("moreblocks") then
 	if minetest.setting_getbool("gloopblocks_mossy_conversion") ~= false then
 
 		gloopblocks_register_mossy_conversion({
-			{ "default:cobble", 						"default:mossycobble" },
-			{ "default:stair_cobble", 					"default:stair_mossycobble" },
-			{ "default:slab_cobble", 					"default:slab_mossycobble" },
 			{ "moreblocks:stair_cobble", 				"moreblocks:stair_mossycobble" },
 			{ "moreblocks:stair_cobble_inner", 			"moreblocks:stair_mossycobble_inner" },
 			{ "moreblocks:stair_cobble_outer", 			"moreblocks:stair_mossycobble_outer" },
