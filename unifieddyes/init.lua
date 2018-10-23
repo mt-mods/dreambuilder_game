@@ -667,7 +667,10 @@ function unifieddyes.on_airbrush(itemstack, player, pointed_thing)
 
 	local palette = nil
 	local fdir = 0
-	if def.palette == "unifieddyes_palette_extended.png" then
+	if not def or not def.palette then
+		minetest.chat_send_player(player_name, "*** That node can't be colored -- it's either undefined or has no palette.")
+		return
+	elseif def.palette == "unifieddyes_palette_extended.png" then
 		palette = "extended"
 	elseif def.palette == "unifieddyes_palette_colorwallmounted.png" then
 		palette = "wallmounted"

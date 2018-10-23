@@ -1207,21 +1207,60 @@ minetest.register_craft({
 
 -- wood-lattice lamps
 
-minetest.register_craft( {
-        output = "homedecor:lattice_lantern_large 2",
-        recipe = {
-			{ "dye:black", "dye:yellow", "dye:black" },
-			{ "group:stick", "building_blocks:woodglass", "group:stick" },
-			{ "group:stick", "homedecor:power_crystal", "group:stick" }
-        },
-})
+if minetest.get_modpath("darkage") then
+	minetest.register_craft( {
+		output = "homedecor:lattice_lantern_small 8",
+		recipe = {
+			{ "darkage:lamp" },
+		},
+	})
 
-minetest.register_craft( {
-        output = "homedecor:lattice_lantern_small 8",
-        recipe = {
+	minetest.register_craft( {
+		output = "darkage:lamp",
+		type = "shapeless",
+		recipe = {
+			"homedecor:lattice_lantern_small",
+			"homedecor:lattice_lantern_small",
+			"homedecor:lattice_lantern_small",
+			"homedecor:lattice_lantern_small",
+			"homedecor:lattice_lantern_small",
+			"homedecor:lattice_lantern_small",
+			"homedecor:lattice_lantern_small",
+			"homedecor:lattice_lantern_small",
+		},
+	})
+else
+	minetest.register_craft( {
+			output = "homedecor:lattice_lantern_large 2",
+			recipe = {
+				{ "dye:black", "dye:yellow", "dye:black" },
+				{ "group:stick", "building_blocks:woodglass", "group:stick" },
+				{ "group:stick", "homedecor:power_crystal", "group:stick" }
+			},
+	})
+
+	minetest.register_craft( {
+		output = "homedecor:lattice_lantern_small 8",
+		recipe = {
 			{ "homedecor:lattice_lantern_large" },
-        },
-})
+		},
+	})
+
+	minetest.register_craft( {
+		output = "homedecor:lattice_lantern_large",
+		type = "shapeless",
+		recipe = {
+			"homedecor:lattice_lantern_small",
+			"homedecor:lattice_lantern_small",
+			"homedecor:lattice_lantern_small",
+			"homedecor:lattice_lantern_small",
+			"homedecor:lattice_lantern_small",
+			"homedecor:lattice_lantern_small",
+			"homedecor:lattice_lantern_small",
+			"homedecor:lattice_lantern_small",
+		},
+	})
+end
 
 -- glowlights
 
@@ -2166,6 +2205,15 @@ minetest.register_craft({
     recipe = {
 		{ "", "dye:white", "" },
 		{ "wool:dark_green", "wool:dark_green", "wool:dark_green" },
+    },
+})
+
+minetest.register_craft({
+    output = "homedecor:welcome_mat_green 2",
+    recipe = {
+		{ "", "dye:white", "" },
+		{ "dye:black", "dye:black", "dye:black" },
+		{ "wool:green", "wool:green", "wool:green" },
     },
 })
 
