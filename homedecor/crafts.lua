@@ -78,6 +78,11 @@ minetest.register_craftitem("homedecor:dvd_player", {
 	inventory_image = "homedecor_dvd_player.png"
 })
 
+minetest.register_craftitem("homedecor:empty_spool", {
+	description = S("Empty wire spool"),
+	inventory_image = "homedecor_empty_spool.png"
+})
+
 minetest.register_craftitem("homedecor:copper_wire", {
 	description = S("Spool of copper wire"),
 	inventory_image = "homedecor_copper_wire.png"
@@ -207,21 +212,32 @@ minetest.register_craft( {
 })
 
 minetest.register_craft( {
-    output = "homedecor:steel_wire 4",
+    output = "homedecor:empty_spool 3",
     recipe = {
+		{ "homedecor:plastic_sheeting", "homedecor:plastic_sheeting", "homedecor:plastic_sheeting" },
 		{ "", "homedecor:plastic_sheeting", "" },
-		{ "default:steel_ingot", "homedecor:plastic_sheeting", "default:steel_ingot" },
-		{ "", "homedecor:plastic_sheeting", "" }
+		{ "homedecor:plastic_sheeting", "homedecor:plastic_sheeting", "homedecor:plastic_sheeting" }
     },
 })
 
 minetest.register_craft( {
-    output = "homedecor:copper_wire 4",
-    recipe = {
-		{ "", "homedecor:plastic_sheeting", "" },
-		{ "default:copper_ingot", "homedecor:plastic_sheeting", "default:copper_ingot" },
-		{ "", "homedecor:plastic_sheeting", "" }
-    },
+	output = "homedecor:steel_wire 2",
+	type = "shapeless",
+	recipe = {
+		"default:steel_ingot",
+		"homedecor:empty_spool",
+		"homedecor:empty_spool",
+	},
+})
+
+minetest.register_craft( {
+	output = "homedecor:copper_wire 2",
+	type = "shapeless",
+	recipe = {
+		"default:copper_ingot",
+		"homedecor:empty_spool",
+		"homedecor:empty_spool",
+	},
 })
 
 minetest.register_craft( {
