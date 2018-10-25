@@ -9,6 +9,7 @@
 -- Various settings - most of these probably won't need to be changed
 
 biome_lib = {}
+biome_lib.air = {name = "air"}
 
 plantslib = setmetatable({}, { __index=function(t,k) print("Use of deprecated function:", k) return biome_lib[k] end })
 
@@ -233,7 +234,6 @@ function biome_lib:populate_surfaces(biome, nodes_or_function_or_model, snodes, 
 		end
 
 		if surface_ok
-		  and (not checkair or minetest.get_node(p_top).name == "air")
 		  and pos.y >= biome.min_elevation
 		  and pos.y <= biome.max_elevation
 		  and noise1 > biome.plantlife_limit
@@ -241,6 +241,7 @@ function biome_lib:populate_surfaces(biome, nodes_or_function_or_model, snodes, 
 		  and noise2 >= biome.temp_max
 		  and noise3 <= biome.humidity_min
 		  and noise3 >= biome.humidity_max
+		  and (not checkair or minetest.get_node(p_top).name == "air")
 		  and (not biome.ncount or #(minetest.find_nodes_in_area({x=pos.x-1, y=pos.y, z=pos.z-1}, {x=pos.x+1, y=pos.y, z=pos.z+1}, biome.neighbors)) > biome.ncount)
 		  and (not biome.near_nodes or #(minetest.find_nodes_in_area({x=pos.x-biome.near_nodes_size, y=pos.y-biome.near_nodes_vertical, z=pos.z-biome.near_nodes_size}, {x=pos.x+biome.near_nodes_size, y=pos.y+biome.near_nodes_vertical, z=pos.z+biome.near_nodes_size}, biome.near_nodes)) >= biome.near_nodes_count)
 		  and math.random(1,100) > biome.rarity
@@ -267,24 +268,24 @@ function biome_lib:populate_surfaces(biome, nodes_or_function_or_model, snodes, 
 
 				if not (biome.avoid_nodes and biome.avoid_radius and minetest.find_node_near(p_top, biome.avoid_radius + math.random(-1.5,2), biome.avoid_nodes)) then
 					if biome.delete_above then
-						minetest.remove_node(p_top)
-						minetest.remove_node({x=p_top.x, y=p_top.y+1, z=p_top.z})
+						minetest.swap_node(p_top, biome_lib.air)
+						minetest.swap_node({x=p_top.x, y=p_top.y+1, z=p_top.z}, biome_lib.air)
 					end
 
 					if biome.delete_above_surround then
-						minetest.remove_node({x=p_top.x-1, y=p_top.y, z=p_top.z})
-						minetest.remove_node({x=p_top.x+1, y=p_top.y, z=p_top.z})
-						minetest.remove_node({x=p_top.x,   y=p_top.y, z=p_top.z-1})
-						minetest.remove_node({x=p_top.x,   y=p_top.y, z=p_top.z+1})
+						minetest.swap_node({x=p_top.x-1, y=p_top.y, z=p_top.z}, biome_lib.air)
+						minetest.swap_node({x=p_top.x+1, y=p_top.y, z=p_top.z}, biome_lib.air)
+						minetest.swap_node({x=p_top.x,   y=p_top.y, z=p_top.z-1}, biome_lib.air)
+						minetest.swap_node({x=p_top.x,   y=p_top.y, z=p_top.z+1}, biome_lib.air)
 
-						minetest.remove_node({x=p_top.x-1, y=p_top.y+1, z=p_top.z})
-						minetest.remove_node({x=p_top.x+1, y=p_top.y+1, z=p_top.z})
-						minetest.remove_node({x=p_top.x,   y=p_top.y+1, z=p_top.z-1})
-						minetest.remove_node({x=p_top.x,   y=p_top.y+1, z=p_top.z+1})
+						minetest.swap_node({x=p_top.x-1, y=p_top.y+1, z=p_top.z}, biome_lib.air)
+						minetest.swap_node({x=p_top.x+1, y=p_top.y+1, z=p_top.z}, biome_lib.air)
+						minetest.swap_node({x=p_top.x,   y=p_top.y+1, z=p_top.z-1}, biome_lib.air)
+						minetest.swap_node({x=p_top.x,   y=p_top.y+1, z=p_top.z+1}, biome_lib.air)
 					end
 
 					if biome.spawn_replace_node then
-						minetest.remove_node(pos)
+						minetest.swap_node(pos, biome_lib.air)
 					end
 
 					local objtype = type(nodes_or_function_or_model)
@@ -298,7 +299,7 @@ function biome_lib:populate_surfaces(biome, nodes_or_function_or_model, snodes, 
 							if biome.random_facedir then
 								fdir = math.random(biome.random_facedir[1], biome.random_facedir[2])
 							end
-							minetest.set_node(p_top, { name = nodes_or_function_or_model[math.random(#nodes_or_function_or_model)], param2 = fdir })
+							minetest.swap_node(p_top, { name = nodes_or_function_or_model[math.random(#nodes_or_function_or_model)], param2 = fdir })
 							spawned = true
 						end
 					elseif objtype == "string" and
@@ -307,7 +308,7 @@ function biome_lib:populate_surfaces(biome, nodes_or_function_or_model, snodes, 
 						if biome.random_facedir then
 							fdir = math.random(biome.random_facedir[1], biome.random_facedir[2])
 						end
-						minetest.set_node(p_top, { name = nodes_or_function_or_model, param2 = fdir })
+						minetest.swap_node(p_top, { name = nodes_or_function_or_model, param2 = fdir })
 						spawned = true
 					elseif objtype == "function" then
 						nodes_or_function_or_model(pos)
@@ -529,7 +530,7 @@ function biome_lib:spawn_on_surfaces(sd,sp,sr,sc,ss,sa)
 					local walldir = biome_lib:find_adjacent_wall(p_top, biome.verticals_list, biome.choose_random_wall)
 					if biome.alt_wallnode and walldir then
 						if n_top.name == "air" then
-							minetest.set_node(p_top, { name = biome.alt_wallnode, param2 = walldir })
+							minetest.swap_node(p_top, { name = biome.alt_wallnode, param2 = walldir })
 						end
 					else
 						local currentsurface = minetest.get_node(pos).name
@@ -546,19 +547,19 @@ function biome_lib:spawn_on_surfaces(sd,sp,sr,sc,ss,sa)
 								assert(loadstring(biome.spawn_plants.."(...)"))(pos)
 							elseif not biome.spawn_on_side and not biome.spawn_on_bottom and not biome.spawn_replace_node then
 								if n_top.name == "air" then
-									minetest.set_node(p_top, { name = plant_to_spawn, param2 = fdir })
+									minetest.swap_node(p_top, { name = plant_to_spawn, param2 = fdir })
 								end
 							elseif biome.spawn_replace_node then
-								minetest.set_node(pos, { name = plant_to_spawn, param2 = fdir })
+								minetest.swap_node(pos, { name = plant_to_spawn, param2 = fdir })
 
 							elseif biome.spawn_on_side then
 								local onside = biome_lib:find_open_side(pos)
 								if onside then 
-									minetest.set_node(onside.newpos, { name = plant_to_spawn, param2 = onside.facedir })
+									minetest.swap_node(onside.newpos, { name = plant_to_spawn, param2 = onside.facedir })
 								end
 							elseif biome.spawn_on_bottom then
 								if minetest.get_node({x=pos.x, y=pos.y-1, z=pos.z}).name == "air" then
-									minetest.set_node({x=pos.x, y=pos.y-1, z=pos.z}, { name = plant_to_spawn, param2 = fdir} )
+									minetest.swap_node({x=pos.x, y=pos.y-1, z=pos.z}, { name = plant_to_spawn, param2 = fdir} )
 								end
 							end
 						end
@@ -605,15 +606,15 @@ function biome_lib:grow_plants(opts)
 				-- corner case for changing short junglegrass
 				-- to dry shrub in desert
 				if n_bot.name == options.dry_early_node and options.grow_plant == "junglegrass:short" then
-					minetest.set_node(pos, { name = "default:dry_shrub" })
+					minetest.swap_node(pos, { name = "default:dry_shrub" })
 
 				elseif options.grow_vertically and walldir then
 					if biome_lib:search_downward(pos, options.height_limit, options.ground_nodes) then
-						minetest.set_node(p_top, { name = options.grow_plant, param2 = walldir})
+						minetest.swap_node(p_top, { name = options.grow_plant, param2 = walldir})
 					end
 
 				elseif not options.grow_result and not options.grow_function then
-					minetest.remove_node(pos)
+					minetest.swap_node(pos, biome_lib.air)
 
 				else
 					biome_lib:replace_object(pos, options.grow_result, options.grow_function, options.facedir, options.seed_diff)
@@ -629,7 +630,7 @@ end
 function biome_lib:replace_object(pos, replacement, grow_function, walldir, seeddiff)
 	local growtype = type(grow_function)
 	if growtype == "table" then
-		minetest.remove_node(pos)
+		minetest.swap_node(pos, biome_lib.air)
 		biome_lib:grow_tree(pos, grow_function)
 		return
 	elseif growtype == "function" then
@@ -645,7 +646,7 @@ function biome_lib:replace_object(pos, replacement, grow_function, walldir, seed
 		assert(loadstring(grow_function.."(...)"))(pos,noise1,noise2,walldir)
 		return
 	elseif growtype == "nil" then
-		minetest.set_node(pos, { name = replacement, param2 = walldir})
+		minetest.swap_node(pos, { name = replacement, param2 = walldir})
 		return
 	elseif growtype ~= "nil" and growtype ~= "string" and growtype ~= "table" then
 		error("Invalid grow function "..dump(grow_function).." used on object at ("..dump(pos)..")")
