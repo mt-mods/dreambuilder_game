@@ -41,31 +41,6 @@ minetest.register_craft({
 	}
 })
 
-minetest.register_craft({
-	type = "shapeless",
-	output = "gloopblocks:wet_cement",
-	recipe = {
-		"bucket:bucket_water",
-		"default:gravel",
-	},
-	replacements = {{'bucket:bucket_water', 'bucket:bucket_empty'},},
-})
-
-minetest.register_craft({
-	type = "cooking",
-	output = "gloopblocks:cement",
-	recipe = "gloopblocks:wet_cement",
-	cooktime = 8
-})
-
-minetest.register_craft({
-	output = "default:gravel",
-	recipe = {
-		{"gloopblocks:cement"},
-	},
-})
-
-
 if minetest.get_modpath("glooptest") then
 
 	minetest.register_craft({
@@ -193,24 +168,6 @@ minetest.register_craft({
 		{"group:stick"},
 	}
 })
-
-if minetest.get_modpath("building_blocks") then
-	minetest.register_craft({
-		output = "default:wood 4",
-		recipe = {
-			 {"building_blocks:sticks", "building_blocks:sticks"},
-			 {"building_blocks:sticks", "building_blocks:sticks"},
-		}
-	})
-else
-	minetest.register_craft({
-		output = "default:wood",
-		recipe = {
-			 {"default:stick", "default:stick"},
-			 {"default:stick", "default:stick"},
-		}
-	})
-end
 
 minetest.register_craft({
 	output = "gloopblocks:pavement 5",

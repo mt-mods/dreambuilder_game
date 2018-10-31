@@ -742,3 +742,141 @@ minetest.register_lbm({
 		meta:set_string("dye", "unifieddyes:"..color)
 	end
 })
+
+local chains_sbox = {
+	type = "fixed",
+	fixed = { -0.1, -0.5, -0.1, 0.1, 0.5, 0.1 }
+}
+
+local topchains_sbox = {
+	type = "fixed",
+	fixed = {
+		{ -0.25, 0.35, -0.25, 0.25, 0.5, 0.25 },
+		{ -0.1, -0.5, -0.1, 0.1, 0.4, 0.1 }
+	}
+}
+
+minetest.register_node("homedecor:chain_steel_top", {
+	description = S("Hanging chain (ceiling mount, steel)"),
+	drawtype = "mesh",
+	mesh = "homedecor_chains_top.obj",
+	tiles = {"basic_materials_chain_steel.png"},
+	walkable = false,
+	climbable = true,
+	sunlight_propagates = true,
+	paramtype = "light",
+	inventory_image = "basic_materials_chain_steel_inv.png",
+	groups = {cracky=3},
+	selection_box = topchains_sbox,
+})
+
+minetest.register_node("homedecor:chain_brass_top", {
+	description = S("Hanging chain (ceiling mount, brass)"),
+	drawtype = "mesh",
+	mesh = "homedecor_chains_top.obj",
+	tiles = {"basic_materials_chain_brass.png"},
+	walkable = false,
+	climbable = true,
+	sunlight_propagates = true,
+	paramtype = "light",
+	inventory_image = "basic_materials_chain_brass_inv.png",
+	groups = {cracky=3},
+	selection_box = topchains_sbox,
+})
+
+minetest.register_node("homedecor:chandelier_steel", {
+	description = S("Chandelier (steel)"),
+	paramtype = "light",
+	light_source = 12,
+	walkable = false,
+	climbable = true,
+	sunlight_propagates = true,
+	tiles = {
+		"basic_materials_chain_steel.png",
+		"homedecor_candle_flat.png",
+		{
+			name="homedecor_candle_flame.png",
+			animation={
+				type="vertical_frames",
+				aspect_w=16,
+				aspect_h=16,
+				length=3.0
+			}
+		}
+	},
+	drawtype = "mesh",
+	mesh = "homedecor_chandelier.obj",
+	groups = {cracky=3},
+	sounds =  default.node_sound_stone_defaults(),
+})
+
+minetest.register_node("homedecor:chandelier_brass", {
+	description = S("Chandelier (brass)"),
+	paramtype = "light",
+	light_source = 12,
+	walkable = false,
+	climbable = true,
+	sunlight_propagates = true,
+	tiles = {
+		"basic_materials_chain_brass.png",
+		"homedecor_candle_flat.png",
+		{
+			name="homedecor_candle_flame.png",
+			animation={
+				type="vertical_frames",
+				aspect_w=16,
+				aspect_h=16,
+				length=3.0
+			}
+		}
+	},
+	drawtype = "mesh",
+	mesh = "homedecor_chandelier.obj",
+	groups = {cracky=3},
+	sounds =  default.node_sound_stone_defaults(),
+})
+
+-- crafts
+
+minetest.register_craft({
+	output = 'homedecor:chain_steel_top',
+	recipe = {
+		{'default:steel_ingot'},
+		{'basic_materials:chainlink_steel'},
+	},
+})
+
+minetest.register_craft({
+	output = 'homedecor:chandelier_steel',
+	recipe = {
+		{'', 'basic_materials:chainlink_steel', ''},
+		{'default:torch', 'basic_materials:chainlink_steel', 'default:torch'},
+		{'default:steel_ingot', 'default:steel_ingot', 'default:steel_ingot'},
+	}
+})
+
+-- brass versions
+
+minetest.register_craft({
+	output = 'homedecor:chain_brass_top',
+	recipe = {
+		{'basic_materials:brass_ingot'},
+		{'basic_materials:chainlink_brass'},
+	},
+})
+
+minetest.register_craft({
+	output = 'homedecor:chandelier_brass',
+	recipe = {
+		{'', 'basic_materials:chainlink_brass', ''},
+		{'default:torch', 'basic_materials:chainlink_brass', 'default:torch'},
+		{'basic_materials:brass_ingot', 'basic_materials:brass_ingot', 'basic_materials:brass_ingot'},
+	}
+})
+
+minetest.register_alias("chains:chain_top",        "homedecor:chain_steel_top")
+minetest.register_alias("chains:chain_top_brass",  "homedecor:chain_brass_top")
+
+minetest.register_alias("chains:chandelier_steel", "homedecor:chandelier_steel")
+minetest.register_alias("chains:chandelier_brass", "homedecor:chandelier_brass")
+

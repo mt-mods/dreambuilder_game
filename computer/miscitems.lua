@@ -8,7 +8,7 @@ local S = homedecor_i18n.gettext
 
 if (not minetest.get_modpath("homedecor")) then
 
-	minetest.register_craftitem(":homedecor:plastic_sheeting", {
+	minetest.register_craftitem(":basic_materials:plastic_sheet", {
 		description = S("Plastic sheet"),
 		inventory_image = "homedecor_plastic_sheeting.png",
 	})
@@ -51,7 +51,7 @@ if (not minetest.get_modpath("homedecor")) then
 
 	minetest.register_craft({
 		type = "cooking",
-		output = "homedecor:plastic_sheeting",
+		output = "basic_materials:plastic_sheet",
 		recipe = "homedecor:plastic_base",
 	})
 
@@ -63,7 +63,7 @@ if (not minetest.get_modpath("homedecor")) then
 
 	minetest.register_craft({
 		type = 'fuel',
-		recipe = 'homedecor:plastic_sheeting',
+		recipe = 'basic_materials:plastic_sheet',
 		burntime = 30,
 	})
 

@@ -142,11 +142,6 @@ local door_model_list = {
 		usealpha = true
 	},
 
-	{	name = "glass",
-		description = N_("Glass Office Door (@1 opening)"),
-		mesh = "homedecor_door_plain.obj"
-	},
-
 	{	name = "wood_glass_oak",
 		description = N_("Glass and Wood, Oak-colored (@1 opening)"),
 		mesh = "homedecor_door_wood_glass.obj",
@@ -662,3 +657,6 @@ minetest.register_alias("homedecor:jpn_door_bottom", "homedecor:door_japanese_cl
 
 minetest.register_alias("homedecor:jpn_door_top_open", "air")
 minetest.register_alias("homedecor:jpn_door_bottom_open", "homedecor:door_japanese_open")
+
+minetest.register_alias("homedecor:door_glass_right", "doors:door_glass_b")
+minetest.register_alias("homedecor:door_glass_left", "doors:door_glass_a")

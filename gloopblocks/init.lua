@@ -45,14 +45,6 @@ if not minetest.setting_getbool("pbj_pup_alias_nyancat") then
 	end
 end
 
-minetest.register_node("gloopblocks:cement", {
-	description = S("Cement"),
-	tiles = {"gloopblocks_cement.png"},
-	is_ground_content = true,
-	groups = {cracky=2},
-	sounds = default.node_sound_stone_defaults(),
-})
-
 minetest.register_node("gloopblocks:evil_block", {
 	description = S("Evil Block"),
 	tiles = {"gloopblocks_evil_block.png"},
@@ -167,6 +159,7 @@ if not minetest.get_modpath("usesdirt") then
 	local dirt_stone_tex  = "default_stone.png^(default_dirt.png^[mask:gloopblocks_dirt_stone_mask.png)"
 
 	local dirt_ladder_tex = "(default_dirt.png^[mask:gloopblocks_ladder_mask.png)^gloopblocks_ladder_overlay.png"
+	local dirt_brick_ladder_tex = "(("..dirt_brick_tex..")^[mask:gloopblocks_ladder_mask.png)^gloopblocks_ladder_overlay.png"
 	local dirt_cobble_ladder_tex = "(("..dirt_cobble_tex..")^[mask:gloopblocks_ladder_mask.png)^gloopblocks_ladder_overlay.png"
 	local dirt_stone_ladder_tex = "(("..dirt_stone_tex..")^[mask:gloopblocks_ladder_mask.png)^gloopblocks_ladder_overlay.png"
 
@@ -174,6 +167,45 @@ if not minetest.get_modpath("usesdirt") then
 		tiles = { dirt_brick_tex },
 		description = "Dirt Brick",
 		groups = {snappy=2,choppy=1,oddly_breakable_by_hand=2},
+	})
+
+	minetest.register_node(":usesdirt:dirt_brick_ladder", {
+		description = "Dirt Brick Ladder",
+		drawtype = "signlike",
+		tiles = { dirt_brick_ladder_tex },
+		inventory_image = dirt_brick_ladder_tex,
+		wield_image     = dirt_brick_ladder_tex,
+		paramtype = "light",
+		paramtype2 = "wallmounted",
+		is_ground_content = true,
+		walkable = false,
+		climbable = true,
+		selection_box = {
+			type = "wallmounted",
+			--wall_top = = <default>
+			--wall_bottom = = <default>
+			--wall_side = = <default>
+		},
+		groups = {cracky=3, stone=2},
+		legacy_wallmounted = true,
+	})
+	minetest.register_craft({
+		output = 'usesdirt:dirt_brick_ladder 3',
+		recipe = {
+			{'usesdirt:dirt_brick', '', 'usesdirt:dirt_brick'},
+			{'usesdirt:dirt_brick', 'usesdirt:dirt_brick','usesdirt:dirt_brick'},
+			{'usesdirt:dirt_brick','','usesdirt:dirt_brick'},
+		}
+	})
+
+	default.register_fence(":usesdirt:dirt_brick_fence", {
+		description = "Dirt Brick Fence",
+		texture = dirt_brick_tex,
+		inventory_image = "default_fence_overlay.png^("..dirt_brick_tex..")^default_fence_overlay.png^[makealpha:255,126,126",
+		wield_image = "default_fence_overlay.png^("..dirt_brick_tex..")^default_fence_overlay.png^[makealpha:255,126,126",
+		material = "usesdirt:dirt_brick",
+		groups = {cracky=3, stone=2},
+		sounds = default.node_sound_stone_defaults()
 	})
 
 	if minetest.get_modpath("moreblocks") then
@@ -196,7 +228,7 @@ if not minetest.get_modpath("usesdirt") then
 	end
 
 	minetest.register_node(":usesdirt:dirt_ladder", {
-		description = "Ladder",
+		description = "Dirt Ladder",
 		drawtype = "signlike",
 		tiles = { dirt_ladder_tex },
 		inventory_image = dirt_ladder_tex,
@@ -252,7 +284,7 @@ if not minetest.get_modpath("usesdirt") then
 	})
 
 	minetest.register_node(":usesdirt:dirt_cobble_stone_ladder", {
-		description = "Ladder",
+		description = "Dirt Cobble Stone Ladder",
 		drawtype = "signlike",
 		tiles = { dirt_cobble_ladder_tex },
 		inventory_image = dirt_cobble_ladder_tex,
@@ -300,7 +332,7 @@ if not minetest.get_modpath("usesdirt") then
 	})
 
 	minetest.register_node(":usesdirt:dirt_stone_ladder", {
-		description = "Ladder",
+		description = "Dirt Stone Ladder",
 		drawtype = "signlike",
 		tiles = { dirt_stone_ladder_tex },
 		inventory_image = dirt_stone_ladder_tex,
@@ -329,8 +361,8 @@ if not minetest.get_modpath("usesdirt") then
 	})
 
 	default.register_fence(":usesdirt:dirt_stone_fence", {
-		description = "Dirt Cobble Stone Fence",
-		texture = dirt_cobble_tex,
+		description = "Dirt Stone Fence",
+		texture = dirt_stone_tex,
 		inventory_image = "default_fence_overlay.png^("..dirt_stone_tex..")^default_fence_overlay.png^[makealpha:255,126,126",
 		wield_image = "default_fence_overlay.png^("..dirt_stone_tex..")^default_fence_overlay.png^[makealpha:255,126,126",
 		material = "usesdirt:dirt_stone",
@@ -360,35 +392,7 @@ if minetest.setting_getbool("gloopblocks_mossy_conversion") ~= false then
 		end
 	end
 end
---[[
-if minetest.get_modpath("xdecor") then
-	xdecor.worktable_nodes.gloopblocks = {
-		"oerkki_block", "stone_brick_mossy", "stone_mossy", "cobble_road",
-		"cobble_road_mossy", "cement", "pavement","rainbow_block",
-		"evil_block", "basalt", "pumice"
-	}
 
-	if minetest.setting_getbool("gloopblocks_mossy_conversion") then
-		local subnames = {
-			"", "_nanoslab", "_micropanel", "_microslab", "_thinstair", "_cube",
-			"_panel", "_slab", "_doublepanel", "_halfstair", "_outerstair",
-			"_stair", "_innerstair"
-		}
-		for _, subname in ipairs(subnames) do
-			gloopblocks_register_mossy_conversion({
-				-- Cobble --> Mossy Cobble
-				{ "default:cobble"..subname, "default:mossycobble"..subname },
-				-- Cobble Road --> Mossy Cobble Road
-				{ "gloopblocks:cobble_road"..subname, "gloopblocks:cobble_road_mossy"..subname },
-				-- Stone Brick --> Stone Brick Mossy
-				{ "default:stonebrick"..subname, "gloopblocks:stone_brick_mossy"..subname},
-				-- Stone --> Mossy Stone
-				{ "default:stone"..subname, "gloopblocks:stone_mossy"..subname}
-			})
-		end
-	end
-end
---]]
 if minetest.get_modpath("moreblocks") then
 
 	stairsplus:register_all("gloopblocks", "oerkki_block", "gloopblocks:oerkki_block", {
@@ -438,9 +442,9 @@ if minetest.get_modpath("moreblocks") then
 		sunlight_propagates = true,
 	})
 
-	stairsplus:register_all("gloopblocks", "cement", "gloopblocks:cement", {
+	stairsplus:register_all("gloopblocks", "cement", "basic_materials:cement_block", {
 		description = S("Cement"),
-		tiles = {"gloopblocks_cement.png"},
+		tiles = {"basic_materials_cement_block.png"},
 		groups = {cracky=2, not_in_creative_inventory=1},
 		sounds = default.node_sound_stone_defaults(),
 		sunlight_propagates = true,
@@ -825,11 +829,6 @@ minetest.register_tool("gloopblocks:sword_evil", {
 })
 
 -- Other items
-
-minetest.register_craftitem("gloopblocks:wet_cement", {
-	description = S("Wet Cement"),
-	inventory_image = "gloopblocks_wet_cement.png",
-})
 
 minetest.register_craftitem("gloopblocks:evil_stick", {
 	description = S("Evil Stick"),

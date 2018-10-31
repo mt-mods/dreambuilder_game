@@ -2,7 +2,7 @@
 minetest.register_craft({
 	output = "homedecor:table",
 	recipe = {
-		{ "group:wood","group:wood", "group:wood" },
+		{ "default:wood","default:wood", "default:wood" },
 		{ "group:stick", "", "group:stick" },
 	},
 })
@@ -205,6 +205,7 @@ minetest.register_craft({
 	output = "homedecor:sink",
 	recipe = {
 		{ "group:marble","bucket:bucket_empty", "group:marble" },
+		{ "", "group:marble", "" }
 	},
 })
 
@@ -225,7 +226,7 @@ minetest.register_craft({
 minetest.register_craft({
 	output = "homedecor:shower_tray",
 	recipe = {
-		{ "group:marble","bucket:bucket_water", "group:marble" },
+		{ "group:marble","bucket:bucket_empty", "group:marble" },
 	},
 })
 

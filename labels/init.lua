@@ -188,7 +188,7 @@ minetest.register_craft({
 
 minetest.register_craft({
 	output = "streets:printer",
-	recipe =       {{"","homedecor:plastic_sheeting","homedecor:power_crystal"},
+	recipe =       {{"","homedecor:plastic_sheeting","basic_materials:energy_crystal_simple"},
 			{"homedecor:motor","default:steel_ingot","group:wool"},
 			{"","homedecor:plastic_sheeting","homedecor:motor"}}
 })
