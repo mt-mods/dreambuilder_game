@@ -11,12 +11,12 @@ minetest.register_craftitem("basic_materials:copper_wire", {
 })
 
 minetest.register_craftitem("basic_materials:silver_wire", {
-	description = "Spool of copper wire",
+	description = "Spool of silver wire",
 	inventory_image = "basic_materials_silver_wire.png"
 })
 
 minetest.register_craftitem("basic_materials:gold_wire", {
-	description = "Spool of copper wire",
+	description = "Spool of gold wire",
 	inventory_image = "basic_materials_gold_wire.png"
 })
 
