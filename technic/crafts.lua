@@ -88,16 +88,13 @@ minetest.register_craft({
 		{'basic_materials:copper_wire', 'technic:wrought_iron_ingot', 'basic_materials:copper_wire'},
 		{'technic:wrought_iron_ingot', '', 'technic:wrought_iron_ingot'},
 		{'basic_materials:copper_wire', 'technic:wrought_iron_ingot', 'basic_materials:copper_wire'},
-	}
-})
-
-minetest.register_craft({
-	output = 'technic:motor',
-	recipe = {
-		{'technic:carbon_steel_ingot', 'technic:copper_coil', 'technic:carbon_steel_ingot'},
-		{'technic:carbon_steel_ingot', 'technic:copper_coil', 'technic:carbon_steel_ingot'},
-		{'technic:carbon_steel_ingot', 'default:copper_ingot', 'technic:carbon_steel_ingot'},
-	}
+	},
+	replacements = {
+		{"basic_materials:copper_wire", "basic_materials:empty_spool"},
+		{"basic_materials:copper_wire", "basic_materials:empty_spool"},
+		{"basic_materials:copper_wire", "basic_materials:empty_spool"},
+		{"basic_materials:copper_wire", "basic_materials:empty_spool"}
+	},
 })
 
 local isolation = mesecons_materials and "mesecons_materials:fiber" or "technic:rubber"
