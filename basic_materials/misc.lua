@@ -83,10 +83,12 @@ minetest.register_craft( {
 
 minetest.register_craft({
 	type = "shapeless",
-	output = "basic_materials:wet_cement 2",
+	output = "basic_materials:wet_cement 3",
 	recipe = {
 		"default:dirt",
-		"farming:flour",
+		"dye:dark_grey",
+		"dye:dark_grey",
+		"dye:dark_grey",
 		"bucket:bucket_water"
 	},
 	replacements = {{'bucket:bucket_water', 'bucket:bucket_empty'},},
