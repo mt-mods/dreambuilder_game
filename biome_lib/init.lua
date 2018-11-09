@@ -1,6 +1,4 @@
--- Plantlife library mod by Vanessa Ezekowitz
---
--- License:  WTFPL
+-- Biome library mod by Vanessa Ezekowitz
 --
 -- I got the temperature map idea from "hmmmm", values used for it came from
 -- Splizard's snow mod.

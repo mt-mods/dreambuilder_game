@@ -71,12 +71,12 @@ minetest.register_node("framedglass:wooden_framed_obsidian_glass", {
 minetest.register_node("framedglass:steel_framed_obsidian_glass", {
 	description = "Steel-framed Obsidian Glass",
 	drawtype = "glasslike_framed",
-	tiles = {"framedglass_steel_frame.png","framedglass_glass_face_clean.png"},
+	tiles = {"framedglass_steel_frame.png", "framedglass_glass_face_clean.png"},
 	paramtype = "light",
 	sunlight_propagates = true,
 	palette = "unifieddyes_palette_extended.png",
 	airbrush_replacement_node = "framedglass:steel_framed_obsidian_glass_tinted",
-	groups = {cracky=3,oddly_breakable_by_hand=3, ud_param2_colorable = 1},
+	groups = {cracky=3, oddly_breakable_by_hand=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_glass_defaults(),
 })
 
@@ -84,8 +84,8 @@ minetest.register_node("framedglass:steel_framed_obsidian_glass_tinted", {
 	description = "Steel-framed Obsidian Glass",
 	drawtype = "glasslike_framed",
 	tiles = {
-			{ name = "framedglass_steel_frame.png", color = "white" },
-			"framedglass_whiteglass.png",
+		{ name = "framedglass_steel_frame.png", color = "white" },
+		"framedglass_whiteglass.png",
 	},
 	palette = "unifieddyes_palette_extended.png",
 	inventory_image = minetest.inventorycube("framedglass_glass_face_inv_static.png"),
@@ -94,7 +94,7 @@ minetest.register_node("framedglass:steel_framed_obsidian_glass_tinted", {
 	sunlight_propagates = true,
 	is_ground_content = true,
 	use_texture_alpha = true,
-	groups = {cracky=3,oddly_breakable_by_hand=3, ud_param2_colorable = 1, not_in_creative_inventory = 1},
+	groups = {cracky=3, oddly_breakable_by_hand=3, ud_param2_colorable = 1, not_in_creative_inventory = 1},
 	sounds = default.node_sound_glass_defaults(),
 })
 
@@ -114,26 +114,26 @@ unifieddyes.register_color_craft({
 -- Convert old nodes
 
 local static_colors = {
-	red         =  4*24      ,
-	orange      =  4*24 +  2 ,
-	yellow      =  4*24 +  4 ,
-	green       =  4*24 +  8 ,
-	cyan        =  4*24 + 12 ,
-	blue        =  4*24 + 16 ,
-	violet      =  4*24 + 18 ,
-	magenta     =  4*24 + 20 ,
-	darkgreen   =  8*24 +  8 ,
-	pink        =         23 ,
-	brown       =  8*24 +  2 ,
-	white       = 10*24      ,
-	grey        = 10*24 +  7 ,
-	darkgrey    = 10*24 + 11 ,
-	black       = 10*24 + 15 
+	red         =  4*24     ,
+	orange      =  4*24 +  2,
+	yellow      =  4*24 +  4,
+	green       =  4*24 +  8,
+	cyan        =  4*24 + 12,
+	blue        =  4*24 + 16,
+	violet      =  4*24 + 18,
+	magenta     =  4*24 + 20,
+	darkgreen   =  8*24 +  8,
+	pink        =         23,
+	brown       =  8*24 +  2,
+	white       = 10*24     ,
+	grey        = 10*24 +  7,
+	darkgrey    = 10*24 + 11,
+	black       = 10*24 + 15
 }
 
 local old_nodes = {}
 for k, v in pairs(static_colors) do
-	table.insert(old_nodes, "framedglass:steel_framed_obsidian_glass"..k)
+	table.insert(old_nodes, "framedglass:steel_framed_obsidian_glass" .. k)
 end
 
 minetest.register_lbm({
@@ -144,10 +144,15 @@ minetest.register_lbm({
 	action = function(pos, node)
 		local oldcolor = string.sub(node.name, 40)
 		if oldcolor then
-			minetest.swap_node(pos, {name = "framedglass:steel_framed_obsidian_glass_tinted",
-				param2 = static_colors[oldcolor] })
+			minetest.swap_node(pos, {
+				name = "framedglass:steel_framed_obsidian_glass_tinted",
+				param2 = static_colors[oldcolor]
+			})
 		else
-			minetest.swap_node(pos, {name = "framedglass:steel_framed_obsidian_glass", param2 = 0 })
+			minetest.swap_node(pos, {
+				name = "framedglass:steel_framed_obsidian_glass",
+				param2 = 0
+			})
 		end
 	end
 })

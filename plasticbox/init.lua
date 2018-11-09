@@ -21,16 +21,16 @@ end
 minetest.register_craft( {
         output = "plasticbox:plasticbox 4",
         recipe = {
-                { "homedecor:plastic_sheeting", "homedecor:plastic_sheeting", "homedecor:plastic_sheeting" },
-                { "homedecor:plastic_sheeting", "", "homedecor:plastic_sheeting" },
-                { "homedecor:plastic_sheeting", "homedecor:plastic_sheeting", "homedecor:plastic_sheeting" }
+                { "basic_materials:plastic_sheet", "basic_materials:plastic_sheet", "basic_materials:plastic_sheet" },
+                { "basic_materials:plastic_sheet", "", "basic_materials:plastic_sheet" },
+                { "basic_materials:plastic_sheet", "basic_materials:plastic_sheet", "basic_materials:plastic_sheet" }
         },
 })
 
 unifieddyes.register_color_craft({
 	output = "plasticbox:plasticbox 4",
 	palette = "extended",
-	neutral_node = "homedecor:plastic_sheeting",
+	neutral_node = "basic_materials:plastic_sheet",
 	recipe = {
 		{ "NEUTRAL_NODE", "NEUTRAL_NODE", "NEUTRAL_NODE" },
 		{ "NEUTRAL_NODE", "MAIN_DYE",     "NEUTRAL_NODE" },

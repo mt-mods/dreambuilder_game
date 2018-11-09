@@ -1,6 +1,4 @@
-
 -- Copyright (C) 2012-2013 Diego Martínez <kaeza@users.sf.net>
--- License is WTFPL (see README.txt).
 
 -- This file defines some items in order to not have to depend on other mods.
 

@@ -1,7 +1,6 @@
 --[[
 GloopBlocks
 Originally written by GloopMaster
-Licensed under WTFPL.
 
 Maintained by VanessaE.
 

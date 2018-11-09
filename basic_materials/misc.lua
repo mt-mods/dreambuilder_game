@@ -30,6 +30,13 @@ minetest.register_node("basic_materials:cement_block", {
 	sounds = default.node_sound_stone_defaults(),
 })
 
+minetest.register_node("basic_materials:concrete_block", {
+	description = "Concrete Block",
+	tiles = {"basic_materials_concrete_block.png",},
+	groups = {cracky=1, level=2, concrete=1},
+	sounds = default.node_sound_stone_defaults(),
+})
+
 -- crafts
 
 minetest.register_craft({
@@ -65,12 +72,12 @@ minetest.register_craft({
 
 minetest.register_craft( {
 	type = "shapeless",
-        output = "basic_materials:terracotta_base 8",
-        recipe = {
-		"default:dirt",
+	output = "basic_materials:terracotta_base 8",
+	recipe = {
+		"bucket:bucket_water",
 		"default:clay_lump",
-		"bucket:bucket_water"
-        },
+		"default:gravel",
+	},
 	replacements = { {"bucket:bucket_water", "bucket:bucket_empty"}, },
 })
 
@@ -78,9 +85,9 @@ minetest.register_craft({
 	type = "shapeless",
 	output = "basic_materials:wet_cement 2",
 	recipe = {
-		"bucket:bucket_water",
-		"default:clay_lump",
-		"default:gravel",
+		"default:dirt",
+		"farming:flour",
+		"bucket:bucket_water"
 	},
 	replacements = {{'bucket:bucket_water', 'bucket:bucket_empty'},},
 })
@@ -92,15 +99,13 @@ minetest.register_craft({
 	cooktime = 8
 })
 
-minetest.register_craft( {
-	type = "shapeless",
-	output = "basic_materials:terracotta_base 8",
+minetest.register_craft({
+	output = 'basic_materials:concrete_block 6',
 	recipe = {
-		"default:dirt",
-		"default:clay_lump",
-		"bucket:bucket_water"
-	},
-	replacements = { {"bucket:bucket_water", "bucket:bucket_empty"}, },
+		{'group:sand',                'basic_materials:wet_cement', 'default:gravel'},
+		{'basic_materials:steel_bar', 'basic_materials:wet_cement', 'basic_materials:steel_bar'},
+		{'default:gravel',            'basic_materials:wet_cement', 'group:sand'},
+	}
 })
 
 -- aliases
@@ -109,7 +114,8 @@ minetest.register_alias("homedecor:oil_extract",      "basic_materials:oil_extra
 minetest.register_alias("homedecor:paraffin",         "basic_materials:paraffin")
 minetest.register_alias("homedecor:plastic_base",     "basic_materials:paraffin")
 minetest.register_alias("homedecor:terracotta_base",  "basic_materials:terracotta_base")
-minetest.register_alias("homedecor:power_crystal",    "basic_materials:energy_crystal")
 
 minetest.register_alias("gloopblocks:wet_cement",     "basic_materials:wet_cement")
 minetest.register_alias("gloopblocks:cement",         "basic_materials:cement_block")
+
+minetest.register_alias("technic:concrete",           "basic_materials:concrete_block")

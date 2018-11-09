@@ -1,13 +1,9 @@
 -- Colored Wood mod by Vanessa "VanessaE" Dannenberg
 -- based on my unifieddyes template.
 --
--- License:  WTFPL
+-- This mod provides many colors of wood and fences, with crafting recipes
+-- as appropriate.  Works with the airbrush, too.
 --
--- This mod provides 89 colors of wood, fences, and sticks, and enough
--- cross-compatible recipes to make everything fit together naturally.
---
--- Colored wood is created by placing a regular wood block on the ground
--- and then right-clicking on it with some dye.
 -- All materials are flammable and can be used as fuel.
 
 

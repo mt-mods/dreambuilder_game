@@ -1,6 +1,4 @@
-
 -- Copyright (C) 2012-2013 Diego Martínez <kaeza@users.sf.net>
--- License is WTFPL (see README.txt).
 
 minetest.register_craft({
 	output = "computer:shefriendSOO",

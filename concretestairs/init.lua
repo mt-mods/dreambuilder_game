@@ -3,7 +3,7 @@
 ]]
 if rawget(_G, "register_stair_slab_panel_micro")
 and type(register_stair_slab_panel_micro) == "function" and streets.extendedBy.prefab == false then
-	register_stair_slab_panel_micro("streets", "concrete", "streets:concrete", {cracky=2}, {"streets_concrete.png"}, "Concrete", "concrete", nil)
+	register_stair_slab_panel_micro("streets", "concrete", "streets:concrete", {cracky=2}, {"basic_materials_concrete_block.png"}, "Concrete", "concrete", nil)
 	table.insert(circular_saw.known_stairs,"streets:concrete")
 	minetest.register_alias("stairs:stair_concrete","streets:stair_concrete")
 else

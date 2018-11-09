@@ -50,11 +50,6 @@ minetest.register_craftitem("basic_materials:brass_ingot", {
 	inventory_image = "basic_materials_brass_ingot.png",
 })
 
-minetest.register_craftitem("basic_materials:brass_block", {
-	description = "Brass Block",
-	inventory_image = "basic_materials_brass_block.png",
-})
-
 minetest.register_craftitem("basic_materials:gear_steel", {
 	description = "Steel gear",
 	inventory_image = "basic_materials_gear_steel.png"
@@ -106,6 +101,14 @@ minetest.register_node("basic_materials:chain_brass", {
 	inventory_image = "basic_materials_chain_brass_inv.png",
 	groups = {cracky=3},
 	selection_box = chains_sbox,
+})
+
+minetest.register_node("basic_materials:brass_block", {
+	description = "Brass Block",
+	tiles = { "basic_materials_brass_block.png" },
+	is_ground_content = false,
+	groups = {cracky=1, level=2},
+	sounds = default.node_sound_metal_defaults()
 })
 
 -- crafts

@@ -17,9 +17,9 @@ minetest.register_alias("prefab:concrete_railing_corner","prefab_redo:concrete_r
 minetest.register_alias("prefab:concrete_catwalk","prefab_redo:concrete_catwalk")
 minetest.register_alias("prefab:concrete_bench","prefab_redo:concrete_bench")
 
-stairsplus:register_all("technic","concrete","technic:concrete",{
+stairsplus:register_all("technic","concrete","basic_materials:concrete_block",{
 	description = "Concrete",
-	tiles = {"technic_concrete_block.png",},
+	tiles = {"basic_materials_concrete_block.png",},
 	groups = {cracky=1, level=2, concrete=1},
 	sounds = default.node_sound_stone_defaults(),
 })
@@ -43,8 +43,8 @@ minetest.register_node("prefab_redo:concrete_with_grass", {
 	paramtype = "light",
 	tiles = {
 		"default_grass.png",
-		"technic_concrete_block.png",
-		"technic_concrete_block.png^default_grass_side.png"
+		"basic_materials_concrete_block.png",
+		"basic_materials_concrete_block.png^default_grass_side.png"
 	},
 	groups = {cracky = 1},
 })
@@ -54,7 +54,7 @@ minetest.register_node("prefab_redo:concrete_wall", {
 	sounds = default.node_sound_stone_defaults(),
 	paramtype = "light",
 	drawtype = "nodebox",
-	tiles = {"technic_concrete_block.png"},
+	tiles = {"basic_materials_concrete_block.png"},
 	sunlight_propagates = true,
 	groups = {cracky = 1},
 	node_box = {
@@ -96,7 +96,7 @@ minetest.register_node("prefab_redo:concrete_wall_upper", {
 	sounds = default.node_sound_stone_defaults(),
 	paramtype = "light",
 	drawtype = "nodebox",
-	tiles = {"technic_concrete_block.png"},
+	tiles = {"basic_materials_concrete_block.png"},
 	sunlight_propagates = true,
 	groups = {cracky = 1,not_in_creative_inventory = 1},
 	drop = "prefab_redo:concrete_wall",
@@ -123,9 +123,9 @@ minetest.register_node("prefab_redo:concrete_wall_upper", {
 minetest.register_node("prefab_redo:concrete_ladder", {
 	description = "Concrete Ladder",
 	drawtype = "signlike",
-	tiles = {"technic_concrete_block.png^[mask:prefab_redo_ladder_mask.png^prefab_redo_ladder_overlay.png"},
-	inventory_image = "technic_concrete_block.png^[mask:prefab_redo_ladder_mask.png^prefab_redo_ladder_overlay.png",
-	wield_image = "technic_concrete_block.png^[mask:prefab_redo_ladder_mask.png^prefab_redo_ladder_overlay.png",
+	tiles = {"basic_materials_concrete_block.png^[mask:prefab_redo_ladder_mask.png^prefab_redo_ladder_overlay.png"},
+	inventory_image = "basic_materials_concrete_block.png^[mask:prefab_redo_ladder_mask.png^prefab_redo_ladder_overlay.png",
+	wield_image = "basic_materials_concrete_block.png^[mask:prefab_redo_ladder_mask.png^prefab_redo_ladder_overlay.png",
 	paramtype = "light",
 	paramtype2 = "wallmounted",
 	sunlight_propagates = true,
@@ -139,9 +139,9 @@ minetest.register_node("prefab_redo:concrete_ladder", {
 })
 
 doors.register("door_concrete", {
-		tiles = { "technic_concrete_block.png^prefab_redo_door_resize.png^[mask:prefab_redo_door_mask.png^prefab_redo_door_overlay.png" },
+		tiles = { "basic_materials_concrete_block.png^prefab_redo_door_resize.png^[mask:prefab_redo_door_mask.png^prefab_redo_door_overlay.png" },
 		description = "Concrete Door",
-		inventory_image = "technic_concrete_block.png^prefab_redo_door_overlay_half.png^[mask:prefab_redo_door_mask_half.png",
+		inventory_image = "basic_materials_concrete_block.png^prefab_redo_door_overlay_half.png^[mask:prefab_redo_door_mask_half.png",
 		groups = { snappy=1, cracky=1, oddly_breakable_by_hand=3 },
 		sounds = default.node_sound_stone_defaults(),
 		recipe = {
@@ -156,7 +156,7 @@ minetest.register_node("prefab_redo:concrete_railing", {
 	sounds = default.node_sound_stone_defaults(),
 	paramtype = "light",
 	drawtype = "nodebox",
-	tiles = {"technic_concrete_block.png"},
+	tiles = {"basic_materials_concrete_block.png"},
 	sunlight_propagates = true,
 	groups = {cracky = 1},
 	node_box = {
@@ -178,7 +178,7 @@ minetest.register_node("prefab_redo:concrete_catwalk",{
 	description= "Concrete Catwalk",
 	paramtype = "light",
 	paramtype2 = "facedir",
-	tiles = {"technic_concrete_block.png"},
+	tiles = {"basic_materials_concrete_block.png"},
 	drawtype = "nodebox",
 	node_box = {
 		type = "fixed",
@@ -195,7 +195,7 @@ minetest.register_node("prefab_redo:concrete_catwalk",{
 
 minetest.register_node("prefab_redo:concrete_bench", {
 	description = "Concrete Bench",
-	tiles = {"technic_concrete_block.png"},
+	tiles = {"basic_materials_concrete_block.png"},
 	paramtype = "light",
 	paramtype2 = "facedir",
         drawtype = "nodebox",
