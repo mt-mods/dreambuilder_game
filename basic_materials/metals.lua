@@ -236,9 +236,9 @@ minetest.register_craft( {
 	type = "shapeless",
 	output = "basic_materials:brass_ingot 3",
 	recipe = {
-		"default:steel_ingot",
 		"default:copper_ingot",
-		"default:gold_ingot",
+		"default:copper_ingot",
+		"moreores:silver_ingot",
 	},
 })
 
