@@ -47,11 +47,6 @@ minetest.register_craftitem("homedecor:soda_can", {
 	on_use = minetest.item_eat(2),
 })
 
-minetest.register_craftitem("homedecor:coin", {
-	description = S("Gold Coin (for soda vending machine)"),
-	inventory_image = "homedecor_coin.png",
-})
-
 -- the actual crafts
 
 minetest.register_craft( {

@@ -1,5 +1,4 @@
 -- Industrial lights mod by DanDuncombe
--- License: CC-By-Sa
 -- rewritten by VanessaE to use param2 colorization
 
 ilights = {}
