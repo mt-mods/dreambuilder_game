@@ -72,6 +72,16 @@ minetest.register_node("rgblightstone:rgblightstone", {
 	end,
 	light_source = 0,
 	digiline = {
+		wire = {
+			rules = {
+				{x = 1,y = 0,z = 0},
+				{x = -1,y = 0,z = 0},
+				{x = 0,y = 0,z = 1},
+				{x = 0,y = 0,z = -1},
+				{x = 0,y = 1,z = 0},
+				{x = 0,y = -1,z = 0},
+			},
+		},
 		receptor = {},
 		effector = {
 			action = function(pos, node, channel, msg)

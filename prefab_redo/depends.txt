@@ -1,5 +1,4 @@
 default
 doors
-concrete
 basic_materials
 moreblocks

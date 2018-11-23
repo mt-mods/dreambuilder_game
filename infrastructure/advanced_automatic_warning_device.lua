@@ -83,7 +83,7 @@ minetest.register_node("infrastructure:automatic_warning_device_top", {
 		"infrastructure_automatic_warning_device_top_side.png",
 		"infrastructure_automatic_warning_device_top.png"
 	},
-	on_destruct = stop_bell,
+	on_destruct = infrastructure.stop_bell,
 	drawtype = "nodebox",
 	paramtype = "light",
 	paramtype2 = "facedir",

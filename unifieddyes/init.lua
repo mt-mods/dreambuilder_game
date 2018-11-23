@@ -1102,9 +1102,9 @@ minetest.register_tool("unifieddyes:airbrush", {
 minetest.register_craft( {
 	output = "unifieddyes:airbrush",
 	recipe = {
-		{ "default:gold_ingot", "",                    "bucket:bucket_empty" },
-		{ "",                   "default:steel_ingot", ""                    },
-		{ "",                   "",                    "default:steel_ingot" }
+		{ "basic_materials:brass_ingot", "",           "basic_materials:plastic_sheet" },
+		{ "",                   "default:steel_ingot", ""                              },
+		{ "",                   "",                    "default:steel_ingot"           }
 	},
 })
 

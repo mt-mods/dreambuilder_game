@@ -27,6 +27,9 @@ local wall_dir_change = {
 	3,
 }
 
+-- Initialize character texture cache
+local ctexcache = {}
+
 street_signs.wallmounted_rotate = function(pos, node, user, mode)
 	if mode ~= screwdriver.ROTATE_FACE then return false end
 	minetest.swap_node(pos, { name = node.name, param2 = wall_dir_change[node.param2 % 6] })
@@ -191,14 +194,19 @@ end
 -- make char texture file name
 -- if texture file does not exist use fallback texture instead
 local function char_tex(font_name, ch)
-	local c = ch:byte()
-	local exists, tex = file_exists(CHAR_PATH:format(font_name, c))
-	if exists and c ~= 14 then
-		tex = CHAR_FILE:format(font_name, c)
+	if ctexcache[font_name..ch] then
+		return ctexcache[font_name..ch], true
 	else
-		tex = CHAR_FILE:format(font_name, 0x0)
+		local c = ch:byte()
+		local exists, tex = file_exists(CHAR_PATH:format(font_name, c))
+		if exists and c ~= 14 then
+			tex = CHAR_FILE:format(font_name, c)
+		else
+			tex = CHAR_FILE:format(font_name, 0x0)
+		end
+		ctexcache[font_name..ch] = tex
+		return tex, exists
 	end
-	return tex, exists
 end
 
 local function make_line_texture(line, lineno, pos, line_width, line_height, cwidth_tab, font_size, colorbgw)

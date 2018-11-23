@@ -3,7 +3,7 @@ basic_materials
 unifieddyes
 homedecor_i18n
 creative
-currency
+currency?
 building_blocks?
 signs_lib?
 moreblocks?
