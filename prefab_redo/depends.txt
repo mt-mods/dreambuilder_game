@@ -1,4 +1,3 @@
 default
 doors
 basic_materials
-moreblocks

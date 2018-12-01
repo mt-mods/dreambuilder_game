@@ -262,7 +262,7 @@ minetest.register_craft( {
 minetest.register_alias("homedecor:copper_wire",           "basic_materials:copper_wire")
 minetest.register_alias("technic:fine_copper_wire",        "basic_materials:copper_wire")
 minetest.register_alias("technic:fine_silver_wire",        "basic_materials:silver_wire")
-minetest.register_alias("technic:fine_gold_wire",          "basic_materialsgold_wire")
+minetest.register_alias("technic:fine_gold_wire",          "basic_materials:gold_wire")
 
 minetest.register_alias("homedecor:steel_wire",            "basic_materials:steel_wire")
 
@@ -282,3 +282,4 @@ minetest.register_alias("chains:chain_brass",              "basic_materials:chai
 minetest.register_alias("pipeworks:gear",                  "basic_materials:gear_steel")
 
 minetest.register_alias("technic:rebar",                  "basic_materials:steel_bar")
+

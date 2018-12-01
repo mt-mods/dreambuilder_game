@@ -441,14 +441,6 @@ if minetest.get_modpath("moreblocks") then
 		sunlight_propagates = true,
 	})
 
-	stairsplus:register_all("gloopblocks", "cement", "basic_materials:cement_block", {
-		description = S("Cement"),
-		tiles = {"basic_materials_cement_block.png"},
-		groups = {cracky=2, not_in_creative_inventory=1},
-		sounds = default.node_sound_stone_defaults(),
-		sunlight_propagates = true,
-	})
-
 	stairsplus:register_all("gloopblocks", "pavement", "gloopblocks:pavement", {
 		description = S("Pavement"),
 		tiles = {"gloopblocks_pavement.png"},

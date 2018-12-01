@@ -57,12 +57,6 @@ if minetest.get_modpath("moreblocks") then
 		tiles={"technic_stainless_steel_block.png"},
 	})
 
-	stairsplus:register_all("technic", "brass_block", "basic_materials:brass_block", {
-		description=S("Brass Block"),
-		groups={cracky=1, not_in_creative_inventory=1},
-		tiles={"basic_materials_brass_block.png"},
-	})
-
 	function register_technic_stairs_alias(modname, origname, newmod, newname)
 		minetest.register_alias(modname .. ":slab_" .. origname, newmod..":slab_" .. newname)
 		minetest.register_alias(modname .. ":slab_" .. origname .. "_inverted", newmod..":slab_" .. newname .. "_inverted")
@@ -199,7 +193,6 @@ end
 
 minetest.register_node(":technic:insulator_clip", iclip_def)
 minetest.register_node(":technic:insulator_clip_fencepost", iclipfence_def)
-minetest.register_node(":technic:steel_strut_with_insulator_clip", sclip_def)
 
 minetest.register_craft({
 	output = "technic:insulator_clip",
@@ -221,33 +214,35 @@ minetest.register_craft({
 
 local steelmod = minetest.get_modpath("steel")
 
-if steelmod then
-	minetest.register_craft({
-		output = "technic:steel_strut_with_insulator_clip",
-		recipe = {
-			{"technic:insulator_clip_fencepost"},
-			{"steel:strut_mount"}
-		}
-	})
+if streetsmod or steelmod then
+	minetest.register_node(":technic:steel_strut_with_insulator_clip", sclip_def)
 
-	minetest.register_craft({
-		output = "technic:steel_strut_with_insulator_clip",
-		recipe = {
-			{"technic:insulator_clip_fencepost", ""                    },
-			{"steel:strut",                      "default:steel_ingot" },
-		}
-	})
+	if steelmod then
+		minetest.register_craft({
+			output = "technic:steel_strut_with_insulator_clip",
+			recipe = {
+				{"technic:insulator_clip_fencepost"},
+				{"steel:strut_mount"}
+			}
+		})
 
-end
+		minetest.register_craft({
+			output = "technic:steel_strut_with_insulator_clip",
+			recipe = {
+				{"technic:insulator_clip_fencepost", ""                    },
+				{"steel:strut",                      "default:steel_ingot" },
+			}
+		})
 
-if streetsmod then
-	minetest.register_craft({
-		output = "technic:steel_strut_with_insulator_clip",
-		recipe = {
-			{"technic:insulator_clip_fencepost", ""                   },
-			{"streets:steel_support",           "default:steel_ingot" },
-		}
-	})
+	elseif streetsmod then
+		minetest.register_craft({
+			output = "technic:steel_strut_with_insulator_clip",
+			recipe = {
+				{"technic:insulator_clip_fencepost", ""                   },
+				{"streets:steel_support",           "default:steel_ingot" },
+			}
+		})
+	end
 end
 
 if minetest.get_modpath("unifieddyes") then

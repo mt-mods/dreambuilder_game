@@ -5,8 +5,6 @@
 minetest.register_alias("prefab:concrete","technic:concrete")
 minetest.register_alias("prefab:concrete_wall","prefab_redo:concrete_wall")
 minetest.register_alias("prefab:concrete_with_grass","prefab_redo:concrete_with_grass")
-minetest.register_alias("prefab:concrete_stair","technic:stair_concrete")
-minetest.register_alias("prefab:concrete_slab","technic:slab_concrete")
 minetest.register_alias("prefab:concrete_ladder","prefab_redo:concrete_ladder")
 minetest.register_alias("prefab:concrete_door_a","doors:door_concrete_a")
 minetest.register_alias("prefab:concrete_door_b","doors:door_concrete_b")
@@ -16,26 +14,6 @@ minetest.register_alias("prefab:concrete_railing","prefab_redo:concrete_railing"
 minetest.register_alias("prefab:concrete_railing_corner","prefab_redo:concrete_railing")
 minetest.register_alias("prefab:concrete_catwalk","prefab_redo:concrete_catwalk")
 minetest.register_alias("prefab:concrete_bench","prefab_redo:concrete_bench")
-
-stairsplus:register_all("technic","concrete","basic_materials:concrete_block",{
-	description = "Concrete",
-	tiles = {"basic_materials_concrete_block.png",},
-	groups = {cracky=1, level=2, concrete=1},
-	sounds = default.node_sound_stone_defaults(),
-})
-
-stairsplus:register_all("technic","blast_resistant_concrete","technic:blast_resistant_concrete",{
-	description = "Blast-resistant Concrete",
-	tiles = {"technic_blast_resistant_concrete_block.png",},
-	groups = {cracky=1, level=3, concrete=1},
-	sounds = default.node_sound_stone_defaults(),
-	on_blast = function(pos, intensity)
-		if intensity > 1 then
-			minetest.remove_node(pos)
-			minetest.add_item(pos, "technic:blast_resistant_concrete")
-		end
-	end,
-})
 
 minetest.register_node("prefab_redo:concrete_with_grass", {
 	description = "Concrete with Grass",
