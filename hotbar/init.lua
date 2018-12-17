@@ -1,4 +1,15 @@
-local hotbar_size_default = minetest.setting_get("hotbar_size") or 16
+local mtver = minetest.get_version()
+local maxslots = (string.sub(mtver.string, 1, 4) ~= "0.4.") and 32 or 23
+
+local function validate_size(s)
+	local size = s and tonumber(s) or 16
+	if (size == 8 or size == 16 or size == 23 or size == 24 or size == 32)
+	  and size <= maxslots then
+		return size
+	end
+end
+
+local hotbar_size_default = validate_size(minetest.setting_get("hotbar_size"))
 
 local player_hotbar_settings = {}
 
@@ -27,18 +38,12 @@ end
 
 load_hotbar_settings()
 
-local function resize_hotbar(size)
-	if size == 8 then return "gui_hb_bg.png" end
-	if size == 23 then return "gui_hb_bg_23.png" end
-	return "gui_hb_bg_16.png"
-end
-
 minetest.register_on_joinplayer(function(player)
-	local hotbar_size = get_hotbar_setting(player:get_player_name())
+	local hotbar_size = validate_size(get_hotbar_setting(player:get_player_name()))
 	player:hud_set_hotbar_itemcount(hotbar_size)
 	minetest.after(0.5,function(hotbar_size)
 		player:hud_set_hotbar_selected_image("gui_hotbar_selected.png")
-		player:hud_set_hotbar_image(resize_hotbar(hotbar_size))
+		player:hud_set_hotbar_image("gui_hb_bg_"..hotbar_size..".png")
 	end,hotbar_size)
 end)
 
@@ -46,12 +51,12 @@ minetest.register_chatcommand("hotbar", {
 	params = "[size]",
 	description = "Sets the size of your hotbar",
 	func = function(name, slots)
-		if slots ~= "8" and slots ~= "23" then slots = "16" end
-		player_hotbar_settings[name] = slots
+		hotbar_size = validate_size(tonumber(slots))
+		player_hotbar_settings[name] = hotbar_size
 		local player = minetest.get_player_by_name(name)
-		player:hud_set_hotbar_itemcount(tonumber(slots))
-		minetest.chat_send_player(name, "[_] Hotbar size set to " .. tonumber(slots) .. ".")
-		player:hud_set_hotbar_image(resize_hotbar(tonumber(slots)))
+		player:hud_set_hotbar_itemcount(hotbar_size)
+		minetest.chat_send_player(name, "[_] Hotbar size set to " ..hotbar_size.. ".")
+		player:hud_set_hotbar_image("gui_hb_bg_"..hotbar_size..".png")
 		save_hotbar_settings()
 	end,
 })

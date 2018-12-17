@@ -39,6 +39,14 @@ ropes.doc.ropebox_usage = rope_length_doc .. "\n\n" ..
 	S("When a rope box is placed the rope will immediately begin lowering from it at one meter per second. The rope will only descend when its end is in the vicinity of an active player, suspending its journey when no players are nearby, so a long descent may require a player to climb down the rope as it goes. If you are near the bottom end of a rope that's extending you'll be automatically carried down with it. The rope will stop when it encounters and obstruction, but will resume lowering if the obstruction is removed.") .. "\n\n" ..
 	S("A rope can be severed midway using an axe or other similar tool. The section of rope below the cut will collapse and disappear, potentially causing players who were hanging on to it to fall. The remaining rope will not resume descent on its own, but the rope box at the top of the rope \"remembers\" how long the rope was and if it is deconstructed and replaced it will still have the same maximum length of rope as before - no rope is permanently lost when a rope is severed like this.")
 
+if ropes.extending_ladder_enabled then
+	ropes.doc.ladder_longdesc = S("A ladder for climbing. It can reach greater heights when placed against a supporting block.")
+	ropes.doc.ladder_usagehelp = S("Right-clicking on a ladder with a stack of identical ladder items will automatically add new ladder segments to the top, provided it hasn't extended too far up beyond the last block behind it providing support.")
+end
+
+ropes.doc.wooden_bridge_longdesc = S("A wooden platform with support struts useful for bridging gaps.")
+ropes.doc.wooden_bridge_usagehelp = S("This behaves like most structural blocks except in one circumstance: when placed on top of a block with buildable space on the side facing away from you, this block will not be built on top but instead will extend out from that far side of the target block. This allows a platform to be easily built that juts out away from the location you're standing on.")
+
 doc.add_entry_alias("nodes", "ropes:ropeladder_top", "nodes", "ropes:ropeladder")
 doc.add_entry_alias("nodes", "ropes:ropeladder_top", "nodes", "ropes:ropeladder_bottom")
 doc.add_entry_alias("nodes", "ropes:ropeladder_top", "nodes", "ropes:ropeladder_falling")

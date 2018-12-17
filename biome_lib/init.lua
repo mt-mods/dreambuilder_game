@@ -501,11 +501,20 @@ function biome_lib:spawn_on_surfaces(sd,sp,sr,sc,ss,sa)
 	biome_lib:set_defaults(biome)
 	biome.spawn_plants_count = #(biome.spawn_plants)
 
+	local n
+	if type(biome.spawn_plants) == "table" then
+		n = "random: "..biome.spawn_plants[1]..", ..."
+	else
+		n = biome.spawn_plants
+	end
+	biome.label = biome.label or "biome_lib spawn_on_surfaces(): "..n
+
 	minetest.register_abm({
 		nodenames = biome.spawn_surfaces,
 		interval = biome.interval,
 		chance = biome.spawn_chance,
 		neighbors = biome.neighbors,
+		label = biome.label,
 		action = function(pos, node, active_object_count, active_object_count_wider)
 			local p_top = { x = pos.x, y = pos.y + 1, z = pos.z }	
 			local n_top = minetest.get_node(p_top)
@@ -583,6 +592,16 @@ function biome_lib:grow_plants(opts)
 	options.grow_nodes = options.grow_nodes or { "default:dirt_with_grass" }
 	options.seed_diff = options.seed_diff or 0
 
+	local n
+
+	if type(options.grow_plant) == "table" then
+		n = "multi: "..options.grow_plant[1]..", ..."
+	else
+		n = options.grow_plant
+	end
+
+	options.label = options.label or "biome_lib grow_plants(): "..n
+
 	if options.grow_delay*time_scale >= 1 then
 		options.interval = options.grow_delay*time_scale
 	else
@@ -593,6 +612,7 @@ function biome_lib:grow_plants(opts)
 		nodenames = { options.grow_plant },
 		interval = options.interval,
 		chance = options.grow_chance,
+		label = options.label,
 		action = function(pos, node, active_object_count, active_object_count_wider)
 			local p_top = {x=pos.x, y=pos.y+1, z=pos.z}
 			local p_bot = {x=pos.x, y=pos.y-1, z=pos.z}

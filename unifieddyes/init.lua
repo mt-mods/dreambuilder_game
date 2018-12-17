@@ -128,7 +128,7 @@ unifieddyes.GREYS = {
 unifieddyes.GREYS_EXTENDED = table.copy(unifieddyes.GREYS)
 
 for i = 1, 14 do
-	if i ~= 0 and i ~= 3 and i ~= 7 and i ~= 11 and i ~= 15 then
+	if i ~= 0 and i ~= 4 and i ~= 8 and i ~= 11 and i ~= 15 then
 		table.insert(unifieddyes.GREYS_EXTENDED, "grey_"..i)
 	end
 end
@@ -449,7 +449,7 @@ function unifieddyes.getpaletteidx(color, palette_type)
 		["grey_14"] = 1,
 		["grey_13"] = 2,
 		["grey_12"] = 3,
-		["light_grey"] = 3,
+		["light_grey"] = 4,
 		["grey_11"] = 4,
 		["grey_10"] = 5,
 		["grey_9"] = 6,
@@ -630,6 +630,19 @@ function unifieddyes.getpaletteidx(color, palette_type)
 	end
 end
 
+function unifieddyes.get_color_from_dye_name(name)
+	if name == "dye:black" then
+		return "000000"
+	elseif name == "dye:white" then
+		return "ffffff"
+	end
+	local item = minetest.registered_items[name]
+	if not item then return end
+	local inv_image = item.inventory_image
+	if not inv_image then return end
+	return string.match(inv_image,"colorize:#(......):200")
+end
+
 -- punch-to-recolor using the airbrush
 
 function unifieddyes.on_airbrush(itemstack, player, pointed_thing)
@@ -640,8 +653,28 @@ function unifieddyes.on_airbrush(itemstack, player, pointed_thing)
 		painting_with = unifieddyes.player_current_dye[player_name]
 	end
 
+	if not painting_with then
+		minetest.chat_send_player(player_name, "*** You need to set a color first.")
+		minetest.chat_send_player(player_name, "*** Right-click any random node to open the color selector,")
+		minetest.chat_send_player(player_name, "*** or shift+right-click a colorized node to use its color.")
+		minetest.chat_send_player(player_name, "*** Be sure to click \"Accept\", or the color you select will be ignored.")
+		return
+	end
+
 	local pos = minetest.get_pointed_thing_position(pointed_thing)
-	if not pos then return end
+	if not pos then
+		local look_angle = player:get_look_vertical()
+		if look_angle > -1.55 then
+			minetest.chat_send_player(player_name, "*** No node selected")
+		else
+			local hexcolor = unifieddyes.get_color_from_dye_name(painting_with)
+			local r = tonumber(string.sub(hexcolor,1,2),16)
+			local g = tonumber(string.sub(hexcolor,3,4),16)
+			local b = tonumber(string.sub(hexcolor,5,6),16)
+			player:set_sky({r=r,g=g,b=b,a=255},"plain")
+		end
+		return
+	end
 
 	local node = minetest.get_node(pos)
 	local def = minetest.registered_items[node.name]
@@ -649,14 +682,6 @@ function unifieddyes.on_airbrush(itemstack, player, pointed_thing)
 
 	if minetest.is_protected(pos, player_name) then
 		minetest.chat_send_player(player_name, "*** Sorry, someone else owns that node.")
-		return
-	end
-
-	if not painting_with then
-		minetest.chat_send_player(player_name, "*** You need to set a color first.")
-		minetest.chat_send_player(player_name, "*** Right-click any random node to open the color selector,")
-		minetest.chat_send_player(player_name, "*** or shift+right-click a colorized node to use its color.")
-		minetest.chat_send_player(player_name, "*** Be sure to click \"Accept\", or the color you select will be ignored.")
 		return
 	end
 

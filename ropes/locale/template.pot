@@ -8,15 +8,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-09 21:21-0700\n"
+"POT-Creation-Date: 2018-11-27 22:45-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: crafts.lua:17
+#: bridge.lua:47
+msgid "Wooden Bridge"
+msgstr ""
+
+#: crafts.lua:54
 msgid "Rope Segment"
 msgstr ""
 
@@ -58,23 +63,33 @@ msgid ""
 "box in the crafting grid by itself."
 msgstr ""
 
-#: doc.lua:20 doc.lua:22 ropeboxes.lua:302
+#: doc.lua:20
+#: doc.lua:22
+#: ropeboxes.lua:321
 msgid "Wood"
 msgstr ""
 
-#: doc.lua:20 doc.lua:26 doc.lua:32
+#: doc.lua:20
+#: doc.lua:26
+#: doc.lua:32
 msgid "rope boxes can hold @1m of rope."
 msgstr ""
 
-#: doc.lua:22 doc.lua:28 doc.lua:34
+#: doc.lua:22
+#: doc.lua:28
+#: doc.lua:34
 msgid "rope boxes can hold rope lengths from @1m to @2m."
 msgstr ""
 
-#: doc.lua:26 doc.lua:28 ropeboxes.lua:319
+#: doc.lua:26
+#: doc.lua:28
+#: ropeboxes.lua:338
 msgid "Copper"
 msgstr ""
 
-#: doc.lua:32 doc.lua:34 ropeboxes.lua:336
+#: doc.lua:32
+#: doc.lua:34
+#: ropeboxes.lua:355
 msgid "Steel"
 msgstr ""
 
@@ -106,18 +121,52 @@ msgid ""
 "permanently lost when a rope is severed like this."
 msgstr ""
 
-#: init.lua:72
-msgid "[Ropes] Loaded!"
+#: doc.lua:43
+msgid ""
+"A ladder for climbing. It can reach greater heights when placed against a "
+"supporting block."
 msgstr ""
 
-#: ladder.lua:27 ladder.lua:78 ladder.lua:108 ladder.lua:142
-msgid "Rope Ladder"
+#: doc.lua:44
+msgid ""
+"Right-clicking on a ladder with a stack of identical ladder items will "
+"automatically add new ladder segments to the top, provided it hasn't "
+"extended too far up beyond the last block behind it providing support."
+msgstr ""
+
+#: doc.lua:47
+msgid "A wooden platform with support struts useful for bridging gaps."
+msgstr ""
+
+#: doc.lua:48
+msgid ""
+"This behaves like most structural blocks except in one circumstance: when "
+"placed on top of a block with buildable space on the side facing away from "
+"you, this block will not be built on top but instead will extend out from "
+"that far side of the target block. This allows a platform to be easily built "
+"that juts out away from the location you're standing on."
+msgstr ""
+
+#: extendingladder.lua:103
+msgid "Wooden Ladder"
+msgstr ""
+
+#: extendingladder.lua:136
+msgid "Steel Ladder"
 msgstr ""
 
 #: ropeboxes.lua:121
 msgid "@1 Ropebox @2m"
 msgstr ""
 
-#: ropeboxes.lua:218 ropeboxes.lua:249
+#: ropeboxes.lua:229
+#: ropeboxes.lua:264
 msgid "Rope"
+msgstr ""
+
+#: ropeladder.lua:27
+#: ropeladder.lua:89
+#: ropeladder.lua:119
+#: ropeladder.lua:153
+msgid "Rope Ladder"
 msgstr ""

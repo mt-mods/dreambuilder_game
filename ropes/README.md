@@ -6,6 +6,8 @@ The rope stops lowering if it reaches an obstruction. Ropes can be cut using an 
 
 Also included is a rope ladder that behaves similarly, though it only comes in one standard maximum length - 50m by default, again changeable in settings.
 
+This mod will also enhance default wood ladders and steel ladders to make them "extendable", capable of building upward independent of support to a setting-defined limit (defaulting to 5 nodes for wood and 15 nodes for steel ladders). This can be disabled if undesired.
+
 This mod retains optional backward compatibility with the crafting items from the vines mod (anything with group "vines" can be used to make rope boxes and rope ladders). Ropes can also be made from cotton, available via an optional dependency on the farming mod.
 
 In-game documentation is provided via an optional dependency on the doc mod.
