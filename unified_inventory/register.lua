@@ -290,8 +290,7 @@ unified_inventory.register_page("craftguide", {
 			alternates = #crafts
 			craft = crafts[alternate]
 		end
-		local has_creative = player_privs.give or player_privs.creative or
-			minetest.settings:get_bool("creative_mode")
+		local has_give = player_privs.give or unified_inventory.is_creative(player_name)
 
 		formspec = formspec.."background[0.5,"..(formspecy + 0.2)..";8,3;ui_craftguide_form.png]"
 		formspec = formspec.."textarea["..craftresultx..","..craftresulty
@@ -307,7 +306,7 @@ unified_inventory.register_page("craftguide", {
 			formspec = formspec.."image["..no_pos..","..formspecy..";1.1,1.1;ui_no.png]"
 			formspec = formspec..stack_image_button(item_pos, formspecy, 1.1, 1.1, "item_button_"
 			                   ..other_dir[dir].."_", ItemStack(item_name))
-			if has_creative then
+			if has_give then
 				formspec = formspec.."label[0,"..(formspecy + 2.10)..";" .. F(S("Give me:")) .. "]"
 						.."button[0,  "..(formspecy + 2.7)..";0.6,0.5;craftguide_giveme_1;1]"
 						.."button[0.6,"..(formspecy + 2.7)..";0.7,0.5;craftguide_giveme_10;10]"
@@ -384,7 +383,7 @@ unified_inventory.register_page("craftguide", {
 					.."button[0.6,"..(formspecy + 1.5)..";0.7,0.5;craftguide_craft_10;10]"
 					.."button[1.3,"..(formspecy + 1.5)..";0.8,0.5;craftguide_craft_max;" .. F(S("All")) .. "]"
 		end
-		if has_creative then
+		if has_give then
 			formspec = formspec.."label[0,"..(formspecy + 2.1)..";" .. F(S("Give me:")) .. "]"
 					.."button[0,  "..(formspecy + 2.7)..";0.6,0.5;craftguide_giveme_1;1]"
 					.."button[0.6,"..(formspecy + 2.7)..";0.7,0.5;craftguide_giveme_10;10]"
@@ -404,17 +403,23 @@ unified_inventory.register_page("craftguide", {
 })
 
 local function craftguide_giveme(player, formname, fields)
+	local player_name = player:get_player_name()
+	local player_privs = minetest.get_player_privs(player_name)
+	if not player_privs.give and
+			not unified_inventory.is_creative(player_name) then
+		minetest.log("action", "[unified_inventory] Denied give action to player " ..
+			player_name)
+		return
+	end
+
 	local amount
 	for k, v in pairs(fields) do
 		amount = k:match("craftguide_giveme_(.*)")
 		if amount then break end
 	end
-	if not amount then return end
 
-	amount = tonumber(amount)
+	amount = tonumber(amount) or 0
 	if amount == 0 then return end
-
-	local player_name = player:get_player_name()
 
 	local output = unified_inventory.current_item[player_name]
 	if (not output) or (output == "") then return end
@@ -562,6 +567,10 @@ local function craftguide_craft(player, formname, fields)
 end
 
 minetest.register_on_player_receive_fields(function(player, formname, fields)
+	if formname ~= "" then
+		return
+	end
+
 	for k, v in pairs(fields) do
 		if k:match("craftguide_craft_") then
 			craftguide_craft(player, formname, fields)

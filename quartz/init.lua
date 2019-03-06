@@ -62,7 +62,8 @@ minetest.register_node("quartz:chiseled", {
 minetest.register_node("quartz:pillar", {
 	description = S("Quartz Pillar"),
 	paramtype2 = "facedir",
-	tiles = {"quartz_pillar_top.png", "quartz_pillar_top.png", "quartz_pillar_side.png"},
+	tiles = {"quartz_pillar_top.png", "quartz_pillar_top.png",
+		"quartz_pillar_side.png"},
 	groups = {cracky=3, oddly_breakable_by_hand=1},
 	sounds = default.node_sound_glass_defaults(),
 	on_place = minetest.rotate_node
@@ -78,7 +79,8 @@ stairs.register_stair_and_slab("quartzblock", "quartz:block",
 
 stairs.register_stair_and_slab("quartzstair", "quartz:pillar",
 		{cracky=3, oddly_breakable_by_hand=1},
-		{"quartz_pillar_top.png", "quartz_pillar_top.png", "quartz_pillar_side.png"},
+		{"quartz_pillar_top.png", "quartz_pillar_top.png",
+			"quartz_pillar_side.png"},
 		S("Quartz Pillar stair"),
 		S("Quartz Pillar slab"),
 		default.node_sound_glass_defaults())
@@ -157,34 +159,28 @@ minetest.register_abm({
 -- Compatibility with stairsplus
 --
 
-if minetest.get_modpath("moreblocks") and settings:get_bool("ENABLE_STAIRSPLUS") then
-	register_stair_slab_panel_micro("quartz", "block", "quartz:block",
-		{cracky=3},
-		{"quartz_block.png"},
-		"Quartz Block",
-		"block",
-		0
-	)
+if minetest.global_exists("stairsplus") then
+	stairsplus:register_all("quartz", "block", "quartz:block", {
+		description = "Quartz Block",
+		tiles  = {"quartz_block.png"},
+		groups = {cracky=3},
+		sounds = default.node_sound_glass_defaults()
+	})
 
-	register_stair_slab_panel_micro("quartz", "chiseled", "quartz:chiseled",
-		{cracky=3},
-		{"quartz_chiseled.png"},
-		"Chiseled Quartz",
-		"chiseled",
-		0
-	)
+	stairsplus:register_all("quartz", "chiseled", "quartz:chiseled", {
+		description = "Chiseled Quartz",
+		tiles  = {"quartz_chiseled.png"},
+		groups = {cracky=3},
+		sounds = default.node_sound_glass_defaults()
+	})
 
-	register_stair_slab_panel_micro("quartz", "pillar", "quartz:pillar",
-		{cracky=3},
-		{"quartz_pillar_top.png", "quartz_pillar_top.png", "quartz_pillar_side.png"},
-		"Quartz Pillar",
-		"pillar",
-		0
-	)
-
-	table.insert(circular_saw.known_stairs, "quartz:block")
-	table.insert(circular_saw.known_stairs, "quartz:chiseled")
-	table.insert(circular_saw.known_stairs, "quartz:pillar")
+	stairsplus:register_all("quartz", "pillar", "quartz:pillar", {
+		description = "Quartz Pillar",
+		tiles  = {"quartz_pillar_top.png", "quartz_pillar_top.png",
+			"quartz_pillar_side.png"},
+		groups = {cracky=3},
+		sounds = default.node_sound_glass_defaults()
+	})
 end
 
 --
@@ -195,11 +191,14 @@ if settings:get_bool("ENABLE_HORIZONTAL_PILLAR") then
 	-- Quartz Pillar (horizontal)
 	minetest.register_node("quartz:pillar_horizontal", {
 			description = "Quartz Pillar Horizontal",
-			tiles = {"quartz_pillar_side.png", "quartz_pillar_side.png", "quartz_pillar_side.png^[transformR90",
-			"quartz_pillar_side.png^[transformR90", "quartz_pillar_top.png", "quartz_pillar_top.png"},
+			tiles = {"quartz_pillar_side.png", "quartz_pillar_side.png",
+				"quartz_pillar_side.png^[transformR90",
+				"quartz_pillar_side.png^[transformR90", "quartz_pillar_top.png",
+				"quartz_pillar_top.png"},
 			paramtype2 = "facedir",
 			drop = 'quartz:pillar',
-			groups = {cracky=3, oddly_breakable_by_hand=1, not_in_creative_inventory=1},
+			groups = {cracky=3, oddly_breakable_by_hand=1,
+				not_in_creative_inventory=1},
 			sounds = default.node_sound_glass_defaults(),
 	})
 end

@@ -1,7 +1,7 @@
 --[[
 More Blocks: registrations
 
-Copyright (c) 2011-2018 Hugo Locurcio and contributors.
+Copyright © 2011-2019 Hugo Locurcio and contributors.
 Licensed under the zlib license. See LICENSE.md for more information.
 --]]
 
@@ -10,11 +10,11 @@ local S = moreblocks.intllib
 
 stairsplus.register_single = function(category, alternate, info, modname, subname, recipeitem, fields)
 	local descriptions = {
-		["micro"] = "Microblock",
-		["slab"] = "Slab",
-		["slope"] = "Slope",
-		["panel"] = "Panel",
-		["stair"] = "Stairs",
+		["micro"] = S("Microblock"),
+		["slab"] = S("Slab"),
+		["slope"] = S("Slope"),
+		["panel"] = S("Panel"),
+		["stair"] = S("Stairs"),
 	}
 	local def = {}
 	if category ~= "slab" then
@@ -30,6 +30,10 @@ stairsplus.register_single = function(category, alternate, info, modname, subnam
 	end
 	def.paramtype = "light"
 	def.paramtype2 = def.paramtype2 or "facedir"
+
+	-- This makes node rotation work on placement
+	def.place_param2 = nil
+
 	def.on_place = minetest.rotate_node
 	if category ~= "slab" then
 		def.description = S("%s " .. descriptions[category]):format(fields.description)

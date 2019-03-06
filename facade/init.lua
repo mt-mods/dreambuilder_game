@@ -234,12 +234,12 @@ function facade.register_corbel(modname, subname, recipeitem, desc)
 				{-0.1875, -0.3125, -0.3125, 0.1875, 0.5, 0},
 			},
 		},
-	--  	selection_box = {
-	--  		type = "fixed",
-	--  		fixed = {
-	--  			{-0.5, -0.5, -0.5, 0.5, 0.5, 0.5},
-	--  		}
-	--  	},
+--			selection_box = {
+--				type = "fixed",
+--				fixed = {
+--					{-0.5, -0.5, -0.5, 0.5, 0.5, 0.5},
+--				}
+--			},
 	})
 end
 
@@ -262,12 +262,12 @@ function facade.register_corbel_corner(modname, subname, recipeitem, desc)
 				{0, -0.3125, -0.3125, 0.3125, 0.5, 0},
 			},
 		},
-	--  	selection_box = {
-	--  		type = "fixed",
-	--  		fixed = {
-	--  			{-0.5, -0.5, -0.5, 0.5, 0.5, 0.5},
-	--  		}
-	--  	},
+--			selection_box = {
+--				type = "fixed",
+--				fixed = {
+--					{-0.5, -0.5, -0.5, 0.5, 0.5, 0.5},
+--				}
+--			},
 	})
 end
 
@@ -291,12 +291,12 @@ function facade.register_corbel_corner_inner(modname, subname, recipeitem, desc)
 				{-0.5, -0.5, -0.5, 0, 0.5, 0.5},
 			},
 		},
-	--  	selection_box = {
-	--  		type = "fixed",
-	--  		fixed = {
-	--  			{-0.5, -0.5, -0.5, 0.5, 0.5, 0.5},
-	--  		}
-	--  	},
+--			selection_box = {
+--				type = "fixed",
+--				fixed = {
+--					{-0.5, -0.5, -0.5, 0.5, 0.5, 0.5},
+--				}
+--			},
 	})
 end
 
@@ -310,7 +310,7 @@ function facade.register_carved_stone_a(modname, subname, recipeitem, desc)
 	minetest.register_node("facade:" .. subname .. "_carved_stone_a", {
 		description = desc .. " Carved Stone A",
 		drawtype = "nodebox",
-        tiles = {
+		tiles = {
 		"" .. modname.. "_" .. subname .. ".png",
 		"" .. modname.. "_" .. subname .. ".png",
 		"" .. modname.. "_" .. subname .. ".png",
@@ -326,16 +326,16 @@ function facade.register_carved_stone_a(modname, subname, recipeitem, desc)
 			type = "fixed",
 			fixed = {
 				{-0.5, -0.5, -0.4375, 0.5, 0.5, 0.5},
-			{-0.5, 0.4375, -0.5, 0.5, 0.5, -0.4375},
-			{-0.5, -0.5, -0.5, 0.5, -0.4375, 0.5},
-			{-0.4375, -0.375, -0.5, -0.3125, 0.375, -0.4375},
-			{-0.5, -0.375, -0.5, -0.3125, -0.25, 0.5},
-			{-0.4375, 0.25, -0.5, 0.4375, 0.375, 0.5},
-			{0.3125, -0.125, -0.5, 0.4375, 0.25, 0.5},
-			{-0.1875, -0.375, -0.5, 0.5, -0.25, 0.5},
-			{-0.1875, -0.25, -0.5, -0.0625, 0.125, 0.5},
-			{0.0625, -0.125, -0.5, 0.3125, 0, 0.5},
-			{-0.0625, 0, -0.5, 0.1875, 0.125, 0.5},
+				{-0.5, 0.4375, -0.5, 0.5, 0.5, -0.4375},
+				{-0.5, -0.5, -0.5, 0.5, -0.4375, 0.5},
+				{-0.4375, -0.375, -0.5, -0.3125, 0.375, -0.4375},
+				{-0.5, -0.375, -0.5, -0.3125, -0.25, 0.5},
+				{-0.4375, 0.25, -0.5, 0.4375, 0.375, 0.5},
+				{0.3125, -0.125, -0.5, 0.4375, 0.25, 0.5},
+				{-0.1875, -0.375, -0.5, 0.5, -0.25, 0.5},
+				{-0.1875, -0.25, -0.5, -0.0625, 0.125, 0.5},
+				{0.0625, -0.125, -0.5, 0.3125, 0, 0.5},
+				{-0.0625, 0, -0.5, 0.1875, 0.125, 0.5},
 			},
 		},
 		selection_box = {
@@ -352,7 +352,7 @@ function facade.register_carved_stone_a_corner(modname, subname, recipeitem, des
 	minetest.register_node("facade:" .. subname .. "_carved_stone_a_corner", {
 		description = desc .. " Carved Stone A Corner",
 		drawtype = "nodebox",
-        tiles = {
+		tiles = {
 		"" .. modname.. "_" .. subname .. ".png",
 		"" .. modname.. "_" .. subname .. ".png",
 		"" .. modname.. "_" .. subname .. ".png",
@@ -368,24 +368,24 @@ function facade.register_carved_stone_a_corner(modname, subname, recipeitem, des
 			type = "fixed",
 			fixed = {
 				{-0.4375, -0.5, -0.4375, 0.5, 0.5, 0.5},
-			{-0.5, 0.4375, -0.5, 0.5, 0.5, -0.4375},
-			{-0.5, -0.5, -0.5, 0.5, -0.4375, 0.5},
-			{-0.4375, -0.375, -0.5, -0.3125, 0.375, -0.4375},
-			{-0.5, -0.375, -0.5, -0.3125, -0.25, 0.1875},
-			{-0.4375, 0.25, -0.5, 0.4375, 0.375, 0.5},
-			{0.3125, -0.125, -0.5, 0.4375, 0.25, 0.5},
-			{-0.1875, -0.375, -0.5, 0.5, -0.25, 0.5},
-			{-0.1875, -0.25, -0.5, -0.0625, 0.125, 0.5},
-			{0.0625, -0.125, -0.5, 0.3125, 0, 0.5},
-			{-0.0625, 0, -0.5, 0.1875, 0.125, 0.5},
-			{-0.5, 0.4375, -0.5, 0.5, 0.5, 0.5},
-			{-0.5, -0.125, -0.4375, 0.5, 0.375, -0.3125},
-			{-0.5, 0.25, -0.3125, 0.5, 0.375, 0.4375},
-			{-0.5, -0.375, 0.3125, 0.4375, 0.375, 0.4375},
-			{-0.5, -0.375, 0.3125, 0.4375, -0.25, 0.5},
-			{-0.5, -0.125, -0.3125, 0.4375, 0, -0.0625},
-			{-0.5, 0, -0.1875, 0.4375, 0.125, 0.1875},
-			{-0.5, -0.25, 0.0625, 0.4375, 0.125, 0.1875},
+				{-0.5, 0.4375, -0.5, 0.5, 0.5, -0.4375},
+				{-0.5, -0.5, -0.5, 0.5, -0.4375, 0.5},
+				{-0.4375, -0.375, -0.5, -0.3125, 0.375, -0.4375},
+				{-0.5, -0.375, -0.5, -0.3125, -0.25, 0.1875},
+				{-0.4375, 0.25, -0.5, 0.4375, 0.375, 0.5},
+				{0.3125, -0.125, -0.5, 0.4375, 0.25, 0.5},
+				{-0.1875, -0.375, -0.5, 0.5, -0.25, 0.5},
+				{-0.1875, -0.25, -0.5, -0.0625, 0.125, 0.5},
+				{0.0625, -0.125, -0.5, 0.3125, 0, 0.5},
+				{-0.0625, 0, -0.5, 0.1875, 0.125, 0.5},
+				{-0.5, 0.4375, -0.5, 0.5, 0.5, 0.5},
+				{-0.5, -0.125, -0.4375, 0.5, 0.375, -0.3125},
+				{-0.5, 0.25, -0.3125, 0.5, 0.375, 0.4375},
+				{-0.5, -0.375, 0.3125, 0.4375, 0.375, 0.4375},
+				{-0.5, -0.375, 0.3125, 0.4375, -0.25, 0.5},
+				{-0.5, -0.125, -0.3125, 0.4375, 0, -0.0625},
+				{-0.5, 0, -0.1875, 0.4375, 0.125, 0.1875},
+				{-0.5, -0.25, 0.0625, 0.4375, 0.125, 0.1875},
 			},
 		},
 		selection_box = {
@@ -395,6 +395,158 @@ function facade.register_carved_stone_a_corner(modname, subname, recipeitem, des
 			},
 		},
 	})
+end
+
+
+--------------------------
+--- RGSpro Facia
+--------------------------
+
+--Node will be called facade:<subname>_rgspro
+function facade.register_rgspro(modname, subname, recipeitem, desc)
+	minetest.register_node("facade:" .. subname .. "_rgspro", {
+		description = desc .. " RGSpro",
+		drawtype = "nodebox",
+		tiles = {
+		"" .. modname.. "_" .. subname .. ".png",
+		"" .. modname.. "_" .. subname .. ".png",
+		"" .. modname.. "_" .. subname .. ".png^facade_rgspro.png",
+		"" .. modname.. "_" .. subname .. ".png^facade_rgspro.png",
+		"" .. modname.. "_" .. subname .. ".png^facade_rgspro.png",
+		"" .. modname.. "_" .. subname .. ".png^facade_rgspro.png"},
+		paramtype = "light",
+		paramtype2 = "facedir",
+		is_ground_content = false,
+		groups = {cracky = 3, oddly_breakable_by_hand = 2, stone = 1},
+		sounds = default.node_sound_stone_defaults(),
+		node_box = {
+			type = "fixed",
+			fixed = {
+				{-0.5, -0.5, 0.375, 0.5, -0.3125, 0.5},
+				{-0.5, -0.3125, 0.25, 0.5, -0.125, 0.5},
+				{-0.5, -0.125, 0.125, 0.5, 0.5, 0.5},
+			},
+		},
+--		selection_box = {
+--			type = "fixed",
+--			fixed = {
+--				{-0.5, -0.5, -0.5, 0.5, 0.5, 0.5},
+--			},
+--		},
+	})
+end
+
+--Node will be called facade:<subname>_rgspro_inner_corner
+function facade.register_rgspro_inner_corner(modname, subname, recipeitem, desc)
+	minetest.register_node("facade:" .. subname .. "_rgspro_inner_corner", {
+		description = desc .. " RGSpro Inner Corner",
+		drawtype = "nodebox",
+		tiles = {
+		"" .. modname.. "_" .. subname .. ".png",
+		"" .. modname.. "_" .. subname .. ".png",
+		"" .. modname.. "_" .. subname .. ".png^facade_rgspro.png",
+		"" .. modname.. "_" .. subname .. ".png^facade_rgspro.png",
+		"" .. modname.. "_" .. subname .. ".png^facade_rgspro.png",
+		"" .. modname.. "_" .. subname .. ".png^facade_rgspro.png"},
+		paramtype = "light",
+		paramtype2 = "facedir",
+		is_ground_content = false,
+		groups = {cracky = 3, oddly_breakable_by_hand = 2, stone = 1},
+		sounds = default.node_sound_stone_defaults(),
+		node_box = {
+			type = "fixed",
+			fixed = {
+				{-0.5, -0.5, 0.375, 0.5, -0.3125, 0.5},
+				{-0.5, -0.3125, 0.25, 0.5, -0.125, 0.5},
+				{-0.5, -0.125, 0.125, 0.5, 0.5, 0.5},
+				{0.375, -0.5, -0.5, 0.5, -0.3125, 0.375},
+				{0.25, -0.3125, -0.5, 0.5, -0.0625, 0.25},
+				{0.125, -0.125, -0.5, 0.5, 0.5, 0.125},
+			},
+		},
+--		selection_box = {
+--			type = "fixed",
+--			fixed = {
+--				{-0.5, -0.5, -0.5, 0.5, 0.5, 0.5},
+--			},
+--		},
+	})
+end
+
+
+--Node will be called facade:<subname>_rgspro_outer_corner
+function facade.register_rgspro_outer_corner(modname, subname, recipeitem, desc)
+	minetest.register_node("facade:" .. subname .. "_rgspro_outer_corner", {
+		description = desc .. " RGSpro Outer Corner",
+		drawtype = "nodebox",
+		tiles = {
+		"" .. modname.. "_" .. subname .. ".png",
+		"" .. modname.. "_" .. subname .. ".png",
+		"" .. modname.. "_" .. subname .. ".png^facade_rgspro.png",
+		"" .. modname.. "_" .. subname .. ".png^facade_rgspro.png",
+		"" .. modname.. "_" .. subname .. ".png^facade_rgspro.png",
+		"" .. modname.. "_" .. subname .. ".png^facade_rgspro.png"},
+		paramtype = "light",
+		paramtype2 = "facedir",
+		is_ground_content = false,
+		groups = {cracky = 3, oddly_breakable_by_hand = 2, stone = 1},
+		sounds = default.node_sound_stone_defaults(),
+		node_box = {
+			type = "fixed",
+			fixed = {
+				{-0.5, -0.5, 0.375, 0.5, -0.3125, 0.5},
+				{-0.5, -0.3125, 0.25, 0.5, -0.0625, 0.5},
+				{-0.5, -0.125, 0.125, 0.5, 0.5, 0.5},
+				{-0.625, -0.5, 0.375, -0.5, -0.3125, 1.5},
+				{-0.75, -0.3125, 0.25, -0.5, -0.125, 1.5},
+				{-0.875, -0.125, 0.125, -0.5, 0.5, 1.5},
+			},
+		},
+--		selection_box = {
+--			type = "fixed",
+--			fixed = {
+--				{-0.5, -0.5, -0.5, 0.5, 0.5, 0.5},
+--			},
+--		},
+	})
+end
+
+
+--------------------------
+--- Corner Bricks
+--------------------------
+
+--Node will be called facade:<subname>_corner_bricks
+function facade.register_corner_bricks(modname, subname, recipeitem, desc)
+	if not string.match(recipeitem,"clay")
+	then	-- do not do for clay things that is ugly
+		minetest.register_node("facade:" .. subname .. "_corner_bricks", {
+			description = desc .. " Corner Bricks",
+			drawtype = "nodebox",
+			tiles = {
+			"" .. modname.. "_" .. subname .. "_brick.png"},
+			paramtype = "light",
+			paramtype2 = "facedir",
+			is_ground_content = false,
+			groups = {cracky = 3, oddly_breakable_by_hand = 2, stone = 1},
+			sounds = default.node_sound_stone_defaults(),
+			node_box = {
+				type = "fixed",
+				fixed = {
+					{-0.5625, -0.5, 0.4375, -0.5, 0, 1},
+					{-0.5, -0.5, 0.4375, 0, 0, 0.5},
+					{-0.5625, 0, 0.5, -0.5, 0.5, 1.5},
+					{-0.5625, 0, 0.4375, 0.5, 0.5, 0.5},
+				},
+			},
+--			selection_box = {
+--				type = "fixed",
+--				fixed = {
+--					{-0.5, -0.5, -0.5, 0.5, 0.5, 0.5},
+--				},
+--			},
+		})
+	end
 end
 
 
@@ -412,21 +564,31 @@ function facade.register_facade_nodes(modname, subname, recipeitem, desc)
 	facade.register_corbel_corner_inner(modname, subname, recipeitem, desc)
 	facade.register_carved_stone_a(modname, subname, recipeitem, desc)
 	facade.register_carved_stone_a_corner(modname, subname, recipeitem, desc)
+	facade.register_rgspro(modname, subname, recipeitem, desc)
+	facade.register_rgspro_inner_corner(modname, subname, recipeitem, desc)
+	facade.register_rgspro_outer_corner(modname, subname, recipeitem, desc)
+	facade.register_corner_bricks(modname, subname, recipeitem, desc)
 	if wehavechisels then                                                       -- register all nodes with mychisel mod to use them without creative priv
-	    chisel.register_node("facade",subname, recipeitem, "bannerstone")
-	    chisel.register_node("facade",subname, recipeitem, "bannerstone_corner")
-	    chisel.register_node("facade",subname, recipeitem, "centerstone")
-	    chisel.register_node("facade",subname, recipeitem, "column")
-	    chisel.register_node("facade",subname, recipeitem, "column_corner")
-	    chisel.register_node("facade",subname, recipeitem, "corbel")
-	    chisel.register_node("facade",subname, recipeitem, "corbel_corner")
-	    chisel.register_node("facade",subname, recipeitem, "corbel_corner_inner")
-	    chisel.register_node("facade",subname, recipeitem, "carved_stone_a")
-	    chisel.register_node("facade",subname, recipeitem, "carved_stone_a_corner")
+		chisel.register_node("facade",subname, recipeitem, "bannerstone")
+		chisel.register_node("facade",subname, recipeitem, "bannerstone_corner")
+		chisel.register_node("facade",subname, recipeitem, "centerstone")
+		chisel.register_node("facade",subname, recipeitem, "column")
+		chisel.register_node("facade",subname, recipeitem, "column_corner")
+		chisel.register_node("facade",subname, recipeitem, "corbel")
+		chisel.register_node("facade",subname, recipeitem, "corbel_corner")
+		chisel.register_node("facade",subname, recipeitem, "corbel_corner_inner")
+		chisel.register_node("facade",subname, recipeitem, "carved_stone_a")
+		chisel.register_node("facade",subname, recipeitem, "carved_stone_a_corner")
+		chisel.register_node("facade",subname, recipeitem, "rgspro")
+		chisel.register_node("facade",subname, recipeitem, "rgspro_inner_corner")
+		chisel.register_node("facade",subname, recipeitem, "rgspro_outer_corner")
+		chisel.register_node("facade",subname, recipeitem, "corner_bricks")
+		
+		
 	end
 end
 
-if wehavechisels then chisel.add_mod("facade",10) end                                -- register the total number of different designs in this mod with mychisel
+if wehavechisels then chisel.add_mod("facade",14) end                                -- register the total number of different designs in this mod with mychisel
 
 facade.register_facade_nodes("default", "clay", "default:clay", "Clay")
 facade.register_facade_nodes("default", "desert_sandstone", "default:desert_sandstone", "Desert Sandstone")

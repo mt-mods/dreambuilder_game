@@ -24,7 +24,7 @@ minetest.register_node("areasprotector:protector",{
 	tiles = {
 		"default_steel_block.png",
 		"default_steel_block.png",
-		"default_steel_block.png^areasprotector_protector.png"
+		"default_steel_block.png^basic_materials_padlock.png"
 	},
 	paramtype = "light",
 	drawtype = "nodebox",
@@ -149,5 +149,5 @@ minetest.register_node("areasprotector:display_node", {
 minetest.register_craft({
 	output = "areasprotector:protector",
 	type = "shapeless",
-	recipe = {"default:steelblock","default:steel_ingot"},
+	recipe = {"default:steelblock","basic_materials:padlock"},
 })

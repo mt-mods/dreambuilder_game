@@ -39,16 +39,11 @@ minetest.register_node("travelnet:travelnet", {
 		},
 	},
 
-	tiles = {
-		"travelnet_travelnet_front.png",  -- backward view
-		"travelnet_travelnet_back.png", -- front view
-		"travelnet_travelnet_side.png", -- sides :)
-		"default_steel_block.png",  -- view from top
-		"default_clay.png",  -- view from bottom
-	},
-    inventory_image = "travelnet_inv.png",
+	tiles = travelnet.tiles_travelnet,
 
-    groups = {cracky=1,choppy=1,snappy=1},
+	inventory_image = travelnet.travelnet_inventory_image,
+
+	groups = {}, --cracky=1,choppy=1,snappy=1},
 
     light_source = 10,
 
@@ -60,9 +55,7 @@ minetest.register_node("travelnet:travelnet", {
     
     on_receive_fields = travelnet.on_receive_fields,
     on_punch          = function(pos, node, puncher)
-                          if( not( travelnet.check_if_trying_to_dig( puncher, node ))) then
                              travelnet.update_formspec(pos, puncher:get_player_name(), nil)
-                          end
     end,
 
     can_dig = function( pos, player )
