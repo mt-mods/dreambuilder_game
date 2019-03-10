@@ -178,7 +178,7 @@ end
 
 local spawn_entity = function(pos)
 	if not get_entity(pos) then
-		local text = minetest.add_entity(pos, "digilines_lcd:text")
+		minetest.add_entity(pos, "digilines_lcd:text")
 		rotate_text(pos)
 	end
 end

@@ -46,7 +46,7 @@ minetest.register_privilege("diglocks",  { description = "allows to open/use and
 
 
 locks.config_button = [[
-	image_button[%d,%d;1,1;locks_lock16.png;locks_config;Config
+	image_button[%s,%s;1,1;locks_lock16.png;locks_config;Config
 Locks]
 	tooltip[locks_config;Configure the players or set the password to grant access to other players.]
 ]]
@@ -56,7 +56,7 @@ function locks.get_config_button(x,y)
 end
 
 locks.authorize_button = [[
-	image_button[%d,%d;1,1;locks_key16.png;locks_authorize;Autho-
+	image_button[%s,%s;1,1;locks_key16.png;locks_authorize;Autho-
 rize]
 	tooltip[locks_authorize;Opens a password prompt to grant you access to this object.]
 ]]
@@ -181,6 +181,7 @@ function locks:lock_init( pos, default_formspec )
    meta:set_string("allowed_users","");
    -- objects can be unlocked by passwords as well (if it is set)
    meta:set_string("password","");
+   meta:mark_as_private("password")
    -- the last player who entered the right password (to save space this is not a list)
    meta:set_string("pw_user","");
    -- this formspec is presented on right-click for every user
@@ -228,6 +229,7 @@ function locks:set_lockdata( pos, data )
    meta:set_string("owner",        (data.owner         or ""));
    meta:set_string("allowed_users",(data.allowed_users or ""));
    meta:set_string("password",     (data.password      or ""));
+   meta:mark_as_private("password")
    meta:set_string("pw_user",      (data.pw_user       or ""));
    meta:set_string("formspec",     (data.formspec      or ""));
 end
@@ -598,6 +600,7 @@ function locks:lock_handle_input( pos, formname, fields, player )
 
 
       meta:set_string( "password", help[2]);
+      meta:mark_as_private("password")
       -- reset the list of users who typed the right password
       meta:set_string("pw_users","");
 

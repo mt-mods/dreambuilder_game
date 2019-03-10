@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 
 - Ores are now slower to mine and cannot be mined using wooden tools anymore.
+- Updated intllib support to avoid using deprecated functions.
 
 ### Deprecated
 
