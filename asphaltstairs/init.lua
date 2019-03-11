@@ -1,8 +1,7 @@
 --[[
 	StreetsMod: Asphalt stairs
 ]]
-if not rawget(_G, "register_stair_slab_panel_micro")
-or type(register_stair_slab_panel_micro) ~= "function" then return end
+if not minetest.get_modpath("moreblocks") then return end
 
 	-- Asphalt solid line
 		-- Stair
@@ -227,18 +226,113 @@ or type(register_stair_slab_panel_micro) ~= "function" then return end
 	minetest.register_alias("streets:asphalt_stair","stairs:stair_asphalt")
 	minetest.register_alias("streets:asphalt_slab","stairs:slab_asphalt")
 
-	register_stair_slab_panel_micro("streets", "asphalt",              "streets:asphalt",              {cracky=3}, {"streets_asphalt.png"}, "Asphalt", "asphalt", nil)
-	register_stair_slab_panel_micro("streets", "asphalt_solid_line",   "streets:asphalt_solid_line",   {cracky=3}, {"streets_asphalt.png^streets_asphalt_solid_line.png","streets_asphalt.png","streets_asphalt.png","streets_asphalt.png","streets_asphalt.png","streets_asphalt.png^streets_asphalt_solid_line.png"},   "Asphalt with solid centerline",                        "asphalt", nil)
-	register_stair_slab_panel_micro("streets", "asphalt_dashed_line",  "streets:asphalt_dashed_line",  {cracky=3}, {"streets_asphalt.png^streets_asphalt_dashed_line.png","streets_asphalt.png","streets_asphalt.png","streets_asphalt.png","streets_asphalt.png","streets_asphalt.png^streets_asphalt_dashed_line.png"}, "Asphalt with dashed centerline",                       "asphalt", nil)
-	register_stair_slab_panel_micro("streets", "asphalt_side",         "streets:asphalt_sideline",     {cracky=3}, {"streets_asphalt.png^streets_asphalt_side.png","streets_asphalt.png","streets_asphalt.png","streets_asphalt.png","streets_asphalt.png","streets_asphalt.png^streets_asphalt_side.png"},               "Asphalt with solid outer line (left)",                 "asphalt", nil)
-	register_stair_slab_panel_micro("streets", "asphalt_side_r",       "streets:asphalt_side_r",       {cracky=3}, {"streets_asphalt.png^streets_asphalt_side_r.png","streets_asphalt.png","streets_asphalt.png","streets_asphalt.png","streets_asphalt.png","streets_asphalt.png^streets_asphalt_side_r.png"},           "Asphalt with solid outer line (right)",                "asphalt", nil)
-	register_stair_slab_panel_micro("streets", "asphalt_outer_edge",   "streets:asphalt_outer_edge",   {cracky=3}, {"streets_asphalt.png^streets_asphalt_outer_edge.png","streets_asphalt.png"},                                                                                                                          "Asphalt with solid outer line (corner/edge)",          "asphalt", nil)
-	register_stair_slab_panel_micro("streets", "asphalt_outer_edge_r", "streets:asphalt_outer_edge_r", {cracky=3}, {"streets_asphalt.png^(streets_asphalt_outer_edge.png^[transformR270)","streets_asphalt.png"},                                                                                                         "Asphalt with solid outer line (corner/edge, rotated)", "asphalt", nil)
+	stairsplus:register_all(
+		"streets",
+		"asphalt",
+		"streets:asphalt",
+		{
+			groups = {not_in_creative_inventory=1, cracky=3},
+			tiles = {"streets_asphalt.png"},
+			description = "Asphalt"
+		}
+	)
 
-	table.insert(circular_saw.known_stairs,"streets:asphalt")
-	table.insert(circular_saw.known_stairs,"streets:asphalt_solid_line")
-	table.insert(circular_saw.known_stairs,"streets:asphalt_dashed_line")
-	table.insert(circular_saw.known_stairs,"streets:asphalt_side")
-	table.insert(circular_saw.known_stairs,"streets:asphalt_side_r")
-	table.insert(circular_saw.known_stairs,"streets:asphalt_outer_edge")
-	table.insert(circular_saw.known_stairs,"streets:asphalt_outer_edge_r")
+	stairsplus:register_all(
+		"streets",
+		"asphalt_solid_line",
+		"streets:asphalt_solid_line",
+		{
+			groups = {not_in_creative_inventory=1, cracky=3},
+			tiles = {
+				"streets_asphalt.png^streets_asphalt_solid_line.png",
+				"streets_asphalt.png",
+				"streets_asphalt.png",
+				"streets_asphalt.png",
+				"streets_asphalt.png",
+				"streets_asphalt.png^streets_asphalt_solid_line.png"
+			},
+			description = "Asphalt with solid centerline"
+		}
+	)
+
+	stairsplus:register_all(
+		"streets",
+		"asphalt_dashed_line",
+		"streets:asphalt_dashed_line",
+		{
+			groups = {not_in_creative_inventory=1, cracky=3},
+			tiles = {
+				"streets_asphalt.png^streets_asphalt_dashed_line.png",
+				"streets_asphalt.png",
+				"streets_asphalt.png",
+				"streets_asphalt.png",
+				"streets_asphalt.png",
+				"streets_asphalt.png^streets_asphalt_dashed_line.png"
+			},
+			description = "Asphalt with dashed centerline"
+		}
+	)
+
+	stairsplus:register_all(
+		"streets",
+		"asphalt_side",
+		"streets:asphalt_sideline",
+		{
+			groups = {not_in_creative_inventory=1, cracky=3},
+			tiles = {
+				"streets_asphalt.png^streets_asphalt_side.png",
+				"streets_asphalt.png",
+				"streets_asphalt.png",
+				"streets_asphalt.png",
+				"streets_asphalt.png",
+				"streets_asphalt.png^streets_asphalt_side.png"
+			},
+			description = "Asphalt with solid outer line (left)"
+		}
+	)
+
+	stairsplus:register_all(
+		"streets",
+		"asphalt_side_r",
+		"streets:asphalt_side_r",
+		{
+			groups = {not_in_creative_inventory=1, cracky=3},
+			tiles = {
+				"streets_asphalt.png^streets_asphalt_side_r.png",
+				"streets_asphalt.png",
+				"streets_asphalt.png",
+				"streets_asphalt.png",
+				"streets_asphalt.png",
+				"streets_asphalt.png^streets_asphalt_side_r.png"
+			},
+			description = "Asphalt with solid outer line (right)"
+		}
+	)
+
+	stairsplus:register_all(
+		"streets",
+		"asphalt_outer_edge",
+		"streets:asphalt_outer_edge",
+		{
+			groups = {not_in_creative_inventory=1, cracky=3},
+			tiles = {
+				"streets_asphalt.png^streets_asphalt_outer_edge.png",
+				"streets_asphalt.png"
+			},
+			description = "Asphalt with solid outer line (corner/edge)",
+		}
+	)
+
+	stairsplus:register_all(
+		"streets",
+		"asphalt_outer_edge_r",
+		"streets:asphalt_outer_edge_r",
+		{
+			groups = {not_in_creative_inventory=1, cracky=3},
+			tiles = {
+				"streets_asphalt.png^(streets_asphalt_outer_edge.png^[transformR270)",
+				"streets_asphalt.png"
+			},
+			description = "Asphalt with solid outer line (corner/edge, rotated)"
+		}
+	)
