@@ -12,7 +12,8 @@ local get_ironbound_chest_formspec = function(pos)
 		default.gui_bg_img ..
 		default.gui_slots ..
 		"list[nodemeta:".. spos .. ";main;,0;8,4;]"..
-		"list[current_player;main;,5;8,4;]"
+		"list[current_player;main;,5;8,4;]"..
+		"listring[]"
 	return formspec
 end
 

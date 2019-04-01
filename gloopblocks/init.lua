@@ -633,7 +633,7 @@ elseif minetest.get_modpath("stairs") then
 	-- stairs:xxxx_cement
 	stairs.register_stair_and_slab("cement", "gloopblocks:cement",
 		{cracky=2},
-		{"gloopblocks_cement.png"},
+		{"basic_materials_cement_block.png"},
 		S("Cement Stair"),
 		S("Cement Slab"),
 		default.node_sound_stone_defaults())

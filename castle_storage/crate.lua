@@ -20,7 +20,8 @@ minetest.register_node("castle_storage:crate", {
 				 default.gui_bg_img ..
 				 default.gui_slots ..
 				"list[current_name;main;0,0;8,5;]"..
-				"list[current_player;main;0,5;8,4;]")
+				"list[current_player;main;0,5;8,4;]"..
+				"listring[]")
 		meta:set_string("infotext", S("Crate"))
 		local inv = meta:get_inventory()
 		inv:set_size("main", 8*4)

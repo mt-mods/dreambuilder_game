@@ -92,6 +92,7 @@ for _,tube in ipairs(nixie_types) do
 	local light2 = LIGHT_MAX-5
 	local description = S("Nixie Tube ("..tube..")")
 	local description2 = S("Decatron ("..tube..")")
+	local description3 = S("Numitron Tube")
 	local cathode = "nixie_tube_cathode_off.png^nixie_tube_cathode_"..tube..".png"
 	local cathode2 = "decatron_cathode_"..tube..".png"
 	local cathode3 = "numitron_filaments.png^numitron_"..tube..".png"
@@ -102,7 +103,6 @@ for _,tube in ipairs(nixie_types) do
 		light2 = nil
 		description = S("Nixie Tube")
 		description2 = S("Decatron")
-		description3 = S("Numitron Tube")
 		cathode = "nixie_tube_cathode_off.png"
 		cathode2 = "nixie_tube_blank.png"
 		cathode3 = "numitron_filaments.png"
