@@ -8,7 +8,7 @@ Licensed under the zlib license. See LICENSE.md for more information.
 maptools.config = {}
 
 local function getbool_default(setting, default)
-	local value = minetest.setting_getbool(setting)
+	local value = minetest.settings:get_bool(setting)
 	if value == nil then
 		value = default
 	end
@@ -21,7 +21,7 @@ local function setting(settingtype, name, default)
 			getbool_default("maptools." .. name, default)
 	else
 		maptools.config[name] =
-			minetest.setting_get("maptools." .. name) or default
+			minetest.settings:get("maptools." .. name) or default
 	end
 end
 

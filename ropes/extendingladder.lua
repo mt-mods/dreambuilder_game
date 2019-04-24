@@ -53,6 +53,11 @@ minetest.register_craft({
 
 
 local ladder_extender = function(pos, node, clicker, itemstack, pointed_thing, ladder_node, standing_limit)
+	-- on_rightclick can be called by other mods, make sure we have all the parameters we need
+	if pointed_thing == nil or itemstack == nil then
+		return itemstack
+	end
+
 	local clicked_stack = ItemStack(itemstack)
 	
 	-- true if we're pointing up at the ladder from below and there's a buildable space below it

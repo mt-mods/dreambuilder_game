@@ -36,14 +36,6 @@ minetest.register_node("gloopblocks:rainbow_block_horizontal", {
 	sounds = default.node_sound_defaults(),
 })
 
-if not minetest.setting_getbool("pbj_pup_alias_nyancat") then
-	if not minetest.registered_nodes["nyancat:nyancat_rainbow"] then
-		minetest.register_alias("nyancat:nyancat_rainbow", "gloopblocks:rainbow_block_horizontal")
-	elseif not minetest.registered_nodes["default:nyancat_rainbow"] then
-		minetest.register_alias("default:nyancat_rainbow", "gloopblocks:rainbow_block_horizontal")
-	end
-end
-
 minetest.register_node("gloopblocks:evil_block", {
 	description = S("Evil Block"),
 	tiles = {"gloopblocks_evil_block.png"},
@@ -912,5 +904,8 @@ minetest.register_node("gloopblocks:fence_steel", {
 })
 
 dofile(minetest.get_modpath("gloopblocks").."/crafts.lua")
+
+minetest.register_alias("nyancat:nyancat_rainbow", "gloopblocks:rainbow_block_horizontal")
+minetest.register_alias("default:nyancat_rainbow", "gloopblocks:rainbow_block_horizontal")
 
 print(S("Gloopblocks Loaded!"))

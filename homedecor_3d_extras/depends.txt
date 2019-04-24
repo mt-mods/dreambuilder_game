@@ -1,3 +1,4 @@
+homedecor_common
 default
-moreblocks?
 vessels?
+moreblocks?

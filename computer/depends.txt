@@ -1,2 +1,2 @@
 default
-homedecor_i18n
+homedecor_common

@@ -1,5 +1,5 @@
 
-local S = homedecor_i18n.gettext
+local S = homedecor.gettext
 
 -- Amiga 500 lookalike
 computer.register("computer:shefriendSOO", {

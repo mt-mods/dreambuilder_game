@@ -2,7 +2,7 @@
 
 -- This file defines some items in order to not have to depend on other mods.
 
-local S = homedecor_i18n.gettext
+local S = homedecor.gettext
 
 if (not minetest.get_modpath("homedecor")) then
 

@@ -9,7 +9,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
+- `settingtypes.txt` file to allow configuring settings in the main menu.
 - Polish translation.
+
+### Changed
+
+- The minimum supported Minetest version is now 5.0.0.
 
 ## [1.3.0] - 2019-03-23
 

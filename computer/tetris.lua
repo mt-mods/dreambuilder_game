@@ -1,5 +1,5 @@
 
-local S = homedecor_i18n.gettext
+local S = homedecor.gettext
 
 local shapes = {
    {  { x = {0, 1, 0, 1}, y = {0, 0, 1, 1} } },
@@ -231,7 +231,7 @@ local function step(pos, fields)
 	local scr = { formsize, background,
 		t.boardstring, t.previewstring,
 		draw_shape(t.cur, t.x, t.y, t.rot, boardx, boardy),
-		"label[3.8,0.1;"..S("Next...").."]label[3.8,2.7;"..S("Score: "), 
+		"label[3.8,0.1;"..S("Next...").."]label[3.8,2.7;"..S("Score: "),
 		t.score, close, buttons }
 
 

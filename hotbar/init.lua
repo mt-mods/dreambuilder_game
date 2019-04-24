@@ -6,6 +6,8 @@ local function validate_size(s)
 	if (size == 8 or size == 16 or size == 23 or size == 24 or size == 32)
 	  and size <= maxslots then
 		return size
+	else
+		return 16
 	end
 end
 
@@ -51,7 +53,7 @@ minetest.register_chatcommand("hotbar", {
 	params = "[size]",
 	description = "Sets the size of your hotbar",
 	func = function(name, slots)
-		hotbar_size = validate_size(tonumber(slots))
+		local hotbar_size = validate_size(tonumber(slots))
 		player_hotbar_settings[name] = hotbar_size
 		local player = minetest.get_player_by_name(name)
 		player:hud_set_hotbar_itemcount(hotbar_size)

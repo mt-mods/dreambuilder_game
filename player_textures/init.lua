@@ -22,5 +22,4 @@ end
 
 minetest.register_on_joinplayer(function(player)
 	applyskin(player)
-	minetest.after(10,applyskin,player)
 end)
