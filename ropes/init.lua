@@ -18,6 +18,8 @@ ropes.extending_ladder_enabled = minetest.settings:get_bool("ropes_extending_lad
 if ropes.extending_ladder_enabled == nil then
 	ropes.extending_ladder_enabled = true
 end
+ropes.replace_default_ladders = minetest.settings:get_bool("ropes_replace_default_ladders")
+
 ropes.extending_wood_ladder_limit = tonumber(minetest.settings:get("ropes_extending_wood_ladder_limit")) or 5
 ropes.extending_steel_ladder_limit = tonumber(minetest.settings:get("ropes_extending_steel_ladder_limit")) or 15
 
@@ -34,7 +36,6 @@ dofile( MP .. "/ropeladder.lua" )
 dofile( MP .. "/extendingladder.lua" )
 dofile( MP .. "/bridge.lua" )
 dofile( MP .. "/loot.lua" )
-
 
 for i=1,5 do
 	minetest.register_alias(string.format("vines:%irope_block", i), string.format("ropes:%irope_block", i))

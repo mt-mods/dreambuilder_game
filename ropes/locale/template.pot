@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-11-27 22:45-0700\n"
+"POT-Creation-Date: 2019-04-28 16:30-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: bridge.lua:47
+#: bridge.lua:49
 msgid "Wooden Bridge"
 msgstr ""
 
@@ -147,12 +147,20 @@ msgid ""
 "that juts out away from the location you're standing on."
 msgstr ""
 
-#: extendingladder.lua:103
+#: extendingladder.lua:11
 msgid "Wooden Ladder"
 msgstr ""
 
-#: extendingladder.lua:136
+#: extendingladder.lua:18
 msgid "Steel Ladder"
+msgstr ""
+
+#: extendingladder.lua:57
+msgid "Wooden Extendable Ladder"
+msgstr ""
+
+#: extendingladder.lua:64
+msgid "Steel Extendable Ladder"
 msgstr ""
 
 #: ropeboxes.lua:121

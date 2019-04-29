@@ -36,12 +36,16 @@ ropes_steel_rope_box_max_multiple (Maximum steel rope box multiple) int 9 0 9
 #existing rope boxes into "unknown node"s.
 ropes_create_all_definitions (Create all rope box definitions) bool false
 
-#Extending ladders replaces the default wallmounted wood and steel ladders
-#with ladders capable of standing on their own, to a defined limit.
+#Extending ladders are capable of standing on their own, to a defined limit.
 #A ladder can extend to its unsupported limit before needing another node
 #behind it to provide a new point of support. Right-clicking on an existing
 #ladder with a stack of ladders will add new ladder segments to its top.
 ropes_extending_ladder_enabled (Enable extendable ladders) bool true
+
+#If extending ladders are enabled, this setting will cause them to replace
+#the default ladders entirely.
+ropes_replace_default_ladders (Replace default ladders with extendable ladders) bool false
+
 ropes_extending_wood_ladder_limit (Unsupported limit of wooden ladders) int 5
 ropes_extending_steel_ladder_limit (Unsupported limit of steel ladders) int 15
 

@@ -3,6 +3,22 @@ local S, NS = dofile(modpath.."/intllib.lua")
 
 if ropes.extending_ladder_enabled then
 
+local wood_recipe = {
+		{"group:stick", "group:stick", "group:stick"},
+		{"group:stick", "", "group:stick"},
+		{"group:stick", "", "group:stick"},
+	}
+local wood_name = S("Wooden Extendable Ladder")
+
+local steel_recipe = {
+		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
+		{"default:steel_ingot", "", "default:steel_ingot"},
+		{"default:steel_ingot", "", "default:steel_ingot"},
+	}
+local steel_name = S("Steel Extendable Ladder")
+
+if ropes.replace_default_ladders then
+
 minetest.unregister_item("default:ladder_wood")
 minetest.unregister_item("default:ladder_steel")
 minetest.clear_craft({output = "default:ladder_wood"})
@@ -33,24 +49,31 @@ minetest.register_lbm({
 	end,
 })
 
-minetest.register_craft({
-	output = "ropes:ladder_wood 5",
-	recipe = {
+wood_recipe = {
 		{"group:stick", "", "group:stick"},
 		{"group:stick", "group:stick", "group:stick"},
 		{"group:stick", "", "group:stick"},
 	}
-})
+wood_name = S("Wooden Ladder")
 
-minetest.register_craft({
-	output = 'ropes:ladder_steel 15',
-	recipe = {
+steel_recipe = {
 		{'default:steel_ingot', '', 'default:steel_ingot'},
 		{'default:steel_ingot', 'default:steel_ingot', 'default:steel_ingot'},
 		{'default:steel_ingot', '', 'default:steel_ingot'},
 	}
+steel_name = S("Steel Ladder")
+
+end
+
+minetest.register_craft({
+	output = "ropes:ladder_wood 5",
+	recipe = wood_recipe,
 })
 
+minetest.register_craft({
+	output = 'ropes:ladder_steel 15',
+	recipe = steel_recipe,
+})
 
 local ladder_extender = function(pos, node, clicker, itemstack, pointed_thing, ladder_node, standing_limit)
 	-- on_rightclick can be called by other mods, make sure we have all the parameters we need
@@ -105,7 +128,7 @@ local ladder_extender = function(pos, node, clicker, itemstack, pointed_thing, l
 end
 
 minetest.register_node("ropes:ladder_wood", {
-	description = S("Wooden Ladder"),
+	description = wood_name,
 	_doc_items_longdesc = ropes.doc.ladder_longdesc,
 	_doc_items_usagehelp = ropes.doc.ladder_usagehelp,
 	tiles = {"default_wood.png","default_wood.png","default_wood.png^[transformR270","default_wood.png^[transformR270","default_ladder_wood.png"},
@@ -138,7 +161,7 @@ minetest.register_node("ropes:ladder_wood", {
 })
 
 minetest.register_node("ropes:ladder_steel", {
-	description = S("Steel Ladder"),
+	description = steel_name,
 	_doc_items_longdesc = ropes.doc.ladder_longdesc,
 	_doc_items_usagehelp = ropes.doc.ladder_usagehelp,
 	tiles = {"default_steel_block.png","default_steel_block.png","default_steel_block.png","default_steel_block.png","default_ladder_steel.png"},
