@@ -1,6 +1,8 @@
 default
+basic_materials?
 creative?
 ilights?
 gloopblocks?
-homedecor?
+homedecor_fences?
+homedecor_lighting?
 streetspoles?

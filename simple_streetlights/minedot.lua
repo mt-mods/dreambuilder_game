@@ -31,7 +31,7 @@ local offsets = {
 	},
 }
 
-local function takeMaterials(player,materials)
+local function takeMaterials(player, sneak, materials)
 	local name = player:get_player_name()
 	if creative and creative.is_enabled_for(name) then return true end
 	local inv = minetest.get_inventory({type = "player",name = name})
@@ -39,8 +39,14 @@ local function takeMaterials(player,materials)
 	for _,i in ipairs(materials) do
 		if not inv:contains_item("main",i) then hasMaterials = false end
 	end
+	if sneak and streetlights.basic_materials and not inv:contains_item("main", streetlights.concrete) then
+		hasMaterials = false
+	end
 	if hasMaterials then
 		for _,i in ipairs(materials) do inv:remove_item("main",i) end
+		if sneak then
+			inv:remove_item("main", streetlights.concrete)
+		end
 		return true
 	else
 		minetest.chat_send_player(name,"You don't have the necessary materials to do that!")
@@ -50,6 +56,7 @@ end
 
 local function place(itemstack,player,pointed)
 	if not player then return end
+	local sneak = player:get_player_control().sneak
 	local name = player:get_player_name()
 	if not minetest.check_player_privs(name,{streetlight = true}) then
 		minetest.chat_send_player(name,"*** You don't have permission to use a streetlight spawner.")
@@ -58,9 +65,10 @@ local function place(itemstack,player,pointed)
 	local pos = pointed.above
 	if minetest.is_protected(pos,name) and not minetest.check_player_privs(name,{protection_bypass = true}) then
 		minetest.record_protection_violation(pos,name)
+		return
 	end
 	local isDouble = string.sub(itemstack:get_name(),-6,-1) == "double"
-	if not takeMaterials(player,isDouble and doubleMaterials or singleMaterials) then return end
+	if not takeMaterials(player, sneak, isDouble and doubleMaterials or singleMaterials) then return end
 	local facedir = minetest.facedir_to_dir(minetest.dir_to_facedir(player:get_look_dir()))
 	local schemDir = 0
 	if facedir.x == 1 then schemDir = 180
@@ -69,6 +77,9 @@ local function place(itemstack,player,pointed)
 	local offset = offsets[isDouble and "double" or "single"][schemDir]
 	local pos = vector.add(pos,offset)
 	minetest.place_schematic(pos,isDouble and schems.double or schems.single,schemDir,nil,false)
+	if sneak and streetlights.basic_materials then
+		minetest.set_node({x=pos.x, y=pos.y-1, z=pos.z}, {name = streetlights.concrete})
+	end
 end
 
 minetest.register_tool(":minedot_streetlights:spawner_single",{
