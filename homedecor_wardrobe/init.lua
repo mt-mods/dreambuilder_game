@@ -1,4 +1,4 @@
-modpath = minetest.get_modpath("homedecor")
+modpath = minetest.get_modpath("homedecor_wardrobe")
 
 screwdriver = screwdriver or {}
 
