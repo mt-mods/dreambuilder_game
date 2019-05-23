@@ -9,7 +9,8 @@ local cave_nodes = { -- Default stairs/slabs/panels/microblocks:
         "caverealms:glow_ruby_ore",
         "caverealms:salt_crystal",
         "caverealms:stone_with_salt",
-        "caverealms:glow_obsidian"
+        "caverealms:glow_obsidian",
+        "caverealms:glow_obsidian_glass",
         
 }
  

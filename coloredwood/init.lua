@@ -158,13 +158,14 @@ default.register_fence("coloredwood:fence", {
 	texture = "coloredwood_fence_base.png",
 	paramtype2 = "color",
 	palette = "unifieddyes_palette_extended.png",
-	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, ud_param2_colorable = 1},
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, ud_param2_colorable = 1, not_in_creative_inventory=1},
 	sounds = default.node_sound_wood_defaults(),
 	material = "coloredwood:wood_block"
 })
 
 minetest.override_item("default:fence_wood", {
 	palette = "unifieddyes_palette_extended.png",
+	airbrush_replacement_node = "coloredwood:fence",
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, ud_param2_colorable = 1}
 })
 
