@@ -37,6 +37,15 @@ digistuff.update_ts_formspec = function (pos)
 				end
 				choices = string.sub(choices,1,-2)
 				fs = fs..string.format("dropdown[%s,%s;%s,%s;%s;%s;%s]",field.X,field.Y,field.W,field.H,field.name,choices,field.selected_id)
+			elseif field.type == "textlist" then
+				local listelements = ""
+				for _,i in ipairs(field.listelements) do
+					if type(i) == "string" then
+						listelements = listelements..minetest.formspec_escape(i)..","
+					end
+				end
+				listelements = string.sub(listelements,1,-2)
+				fs = fs..string.format("textlist[%s,%s;%s,%s;%s;%s;%s;%s]",field.X,field.Y,field.W,field.H,field.name,listelements,field.selected_id,field.transparent)
 			end
 		end
 	end
@@ -208,6 +217,23 @@ digistuff.process_command = function (meta, data, msg)
 			return
 		end
 		local field = {type="dropdown",X=msg.X,Y=msg.Y,W=msg.W,H=msg.H,name=msg.name,selected_id=msg.selected_id,choices=msg.choices}
+		table.insert(data,field)
+	elseif msg.command == "addtextlist" then
+		for _,i in pairs({"X","Y","W","H","selected_id"}) do
+			if not msg[i] or type(msg[i]) ~= "number" then
+				return
+			end
+		end
+		if not msg.name or type(msg.name) ~= "string" then
+			return
+		end
+		if not msg.listelements or type(msg.listelements) ~= "table" or #msg.listelements < 1 then
+			return
+		end
+		if not msg.transparent or type(msg.transparent) ~= "boolean" then
+			msg.transparent = false
+		end
+		local field = {type="textlist",X=msg.X,Y=msg.Y,W=msg.W,H=msg.H,name=msg.name,selected_id=msg.selected_id,listelements=msg.listelements,transparent=msg.transparent}
 		table.insert(data,field)
 	elseif msg.command == "lock" then
 		meta:set_int("locked",1)

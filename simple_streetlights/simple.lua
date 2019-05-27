@@ -60,17 +60,34 @@ local function check_and_place(itemstack, placer, pointed_thing, pole, light, pa
 
 	if sneak and minetest.is_protected(pos1, player_name) then return end
 
-	if not creative or not creative.is_enabled_for(player_name) then
+	if not creative.is_enabled_for(player_name) then
 		local inv = placer:get_inventory()
-		if not inv:contains_item("main", pole.." 5") or not inv:contains_item("main", light) then return end
-		if sneak and inv:contains_item("main", streetlights.concrete) then
-			inv:remove_item("main", streetlights.concrete)
-		else
+		if not inv:contains_item("main", pole.." 6") then
+			minetest.chat_send_player(placer:get_player_name(), "*** You don't have enough "..pole.." in your inventory!")
 			return
 		end
 
-		inv:remove_item("main", pole.." 5")
+		if not inv:contains_item("main", light) then
+			minetest.chat_send_player(placer:get_player_name(), "*** You don't have any "..light.." in your inventory!")
+			return
+		end
+
+		if sneak then
+			if not inv:contains_item("main", streetlights.concrete) then
+				minetest.chat_send_player(placer:get_player_name(), "*** You don't have any concrete in your inventory!")
+				return
+			else
+				inv:remove_item("main", streetlights.concrete)
+			end
+		end
+
+		inv:remove_item("main", pole.." 6")
 		inv:remove_item("main", light)
+
+	end
+
+	if sneak then
+		minetest.set_node(pos1, { name = streetlights.concrete })
 	end
 
 	for i = 1, 5 do
@@ -79,9 +96,6 @@ local function check_and_place(itemstack, placer, pointed_thing, pole, light, pa
 	end
 	minetest.set_node(pos3, { name = pole    })
 	minetest.set_node(pos4, { name = light, param2 = param2 })
-	if sneak then
-		minetest.set_node(pos1, { name = streetlights.concrete })
-	end
 end
 
 local poles_tab = {

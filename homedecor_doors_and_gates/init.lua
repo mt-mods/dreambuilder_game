@@ -1,6 +1,18 @@
 -- Node definitions for Homedecor doors
 
 local S = homedecor.gettext
+local mesecons_mp = minetest.get_modpath("mesecons")
+
+-- clone node
+
+function hd_doors_clone_node(name)
+	local node2 = {}
+	local node = minetest.registered_nodes[name]
+	for k,v in pairs(node) do
+		node2[k]=v
+	end
+	return node2
+end
 
 -- new doors using minetest_game doors API
 
@@ -24,7 +36,8 @@ local door_list = {
 			close = "homedecor_door_close",
 		},
 		backface = true,
-		alpha = true
+		alpha = true,
+		custom_model = "homedecor_door_fancy"
 	},
 
 	{	name = "wood_glass_oak",
@@ -33,6 +46,9 @@ local door_list = {
 		sounds = {
 			main = default.node_sound_glass_defaults(),
 		},
+		backface = true,
+		alpha = true,
+		custom_model = "homedecor_door_wood_glass"
 	},
 
 	{	name = "wood_glass_mahogany",
@@ -41,6 +57,9 @@ local door_list = {
 		sounds = {
 			main = default.node_sound_glass_defaults(),
 		},
+		backface = true,
+		alpha = true,
+		custom_model = "homedecor_door_wood_glass"
 	},
 
 	{	name = "wood_glass_white",
@@ -49,6 +68,9 @@ local door_list = {
 		sounds = {
 			main = default.node_sound_glass_defaults(),
 		},
+		backface = true,
+		alpha = true,
+		custom_model = "homedecor_door_wood_glass"
 	},
 
 	{	name = "bedroom",
@@ -70,18 +92,7 @@ local door_list = {
 			close = "doors_steel_door_close",
 		},
 		backface = true,
-	},
-
-	{	name = "woodglass",
-		description = "Wooden door with glass insert",
-		groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
-		sounds = {
-			main = default.node_sound_wood_defaults(),
-			open = "homedecor_door_open",
-			close = "homedecor_door_close",
-		},
-		backface = true,
-		alpha = true
+		custom_model = "homedecor_door_wrought_iron"
 	},
 
 	{	name = "woodglass2",
@@ -96,12 +107,26 @@ local door_list = {
 		alpha = true
 	},
 
+	{	name = "woodglass",
+		description = "Wooden door with glass insert, type 3",
+		groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
+		sounds = {
+			main = default.node_sound_wood_defaults(),
+			open = "homedecor_door_open",
+			close = "homedecor_door_close",
+		},
+		backface = true,
+		alpha = true,
+		custom_model = "homedecor_door_wood_glass_3"
+	},
+
 	{	name = "closet_mahogany",
 		description = "Mahogany Closet Door",
 		groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		sounds = {
 			main = default.node_sound_wood_defaults(),
-		}
+		},
+		custom_model = "homedecor_door_closet"
 	},
 
 	{	name = "closet_oak",
@@ -109,11 +134,34 @@ local door_list = {
 		groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		sounds = {
 			main = default.node_sound_wood_defaults(),
-		}
+		},
+		custom_model = "homedecor_door_closet"
 	},
 }
 
 local old_doors = {}
+local mesecons
+
+-- This part blatantly copied from Mesecons, and modified :-)
+if mesecons_mp then
+	mesecons = {
+		effector = {
+			action_on = function(pos, node)
+				local door = doors.get(pos)
+				if door then
+					door:open()
+				end
+			end,
+			action_off = function(pos, node)
+				local door = doors.get(pos)
+				if door then
+					door:close()
+				end
+			end,
+			rules = mesecon.rules.pplate
+		}
+	}
+end
 
 for _, door in ipairs(door_list) do
 	doors.register(door.name, {
@@ -123,16 +171,35 @@ for _, door in ipairs(door_list) do
 			groups = table.copy(door.groups),
 			sounds = door.sounds.main,
 			sound_open = door.sounds.open,
-			sound_close = door.sounds.close
+			sound_close = door.sounds.close,
+			mesecons = mesecons
 	})
+
+	local nn_a = "doors:"..door.name.."_a"
+	local nn_b = "doors:"..door.name.."_b"
+
+
 	if door.alpha then
-		minetest.override_item("doors:"..door.name.."_a", {
-			use_texture_apha = true
-		})
-		minetest.override_item("doors:"..door.name.."_b", {
-			use_texture_apha = true
-		})
-	end			
+		local def = hd_doors_clone_node(nn_a)
+			def.use_texture_alpha = true
+			def.mesh = "door_a.obj"                -- leaving this out will break the _a model
+			minetest.register_node(":"..nn_a, def) -- assignment when the override takes place
+
+		def = hd_doors_clone_node(nn_b)
+			def.use_texture_alpha = true
+			minetest.register_node(":"..nn_b, def)
+	end
+
+	if door.custom_model then
+		def = hd_doors_clone_node(nn_a)
+			def.mesh = door.custom_model.."_a.obj"
+			minetest.register_node(":"..nn_a, def)
+
+		def = hd_doors_clone_node(nn_b)
+			def.mesh = door.custom_model.."_b.obj"
+			minetest.register_node(":"..nn_b, def)
+	end
+
 	old_doors[#old_doors + 1] = "homedecor:door_"..door.name.."_left"
 	old_doors[#old_doors + 1] = "homedecor:door_"..door.name.."_right"
 end
@@ -250,13 +317,16 @@ for i, g in ipairs(gate_list) do
 			homedecor.flip_gate(pos, node, clicker, gate, "closed")
 			return itemstack
 		end,
-        mesecons = {
+	}
+
+	if mesecons_mp then
+        def.mesecons = {
             effector = {
-				rules = m_rules,
+				rules = mesecon.rules.pplate,
                 action_on = function(pos,node) homedecor.flip_gate(pos,node,nil,gate, "closed") end
             }
         }
-	}
+	end
 
     -- gates when placed default to closed, closed.
 
@@ -280,10 +350,13 @@ for i, g in ipairs(gate_list) do
         homedecor.flip_gate(pos, node, clicker, gate, "open")
         return itemstack
 	end
-    def.mesecons.effector = {
-		rules = m_rules,
-        action_off = function(pos,node) homedecor.flip_gate(pos,node,nil,gate, "open") end
-    }
+
+	if mesecons_mp then
+		def.mesecons.effector = {
+			rules = mesecon.rules.pplate,
+			action_off = function(pos,node) homedecor.flip_gate(pos,node,nil,gate, "open") end
+		}
+	end
 
 	minetest.register_node(":homedecor:gate_"..gate.."_open", def)
 end
@@ -391,17 +464,8 @@ minetest.register_craft( {
 	type = "shapeless",
 	output = "homedecor:gate_half_door_closed 4",
 	recipe = {
-		"homedecor:door_wood_plain_left",
-		"homedecor:door_wood_plain_left"
-	},
-})
-
-minetest.register_craft( {
-	type = "shapeless",
-	output = "homedecor:gate_half_door_closed 4",
-	recipe = {
-		"homedecor:door_wood_plain_right",
-		"homedecor:door_wood_plain_right"
+		"homedecor:door_wood_plain_a",
+		"homedecor:door_wood_plain_a"
 	},
 })
 
@@ -409,17 +473,8 @@ minetest.register_craft( {
 	type = "shapeless",
 	output = "homedecor:gate_half_door_white_closed 4",
 	recipe = {
-		"homedecor:door_bedroom_left",
-		"homedecor:door_bedroom_left"
-	},
-})
-
-minetest.register_craft( {
-	type = "shapeless",
-	output = "homedecor:gate_half_door_white_closed 4",
-	recipe = {
-		"homedecor:door_bedroom_right",
-		"homedecor:door_bedroom_right"
+		"homedecor:door_bedroom_a",
+		"homedecor:door_bedroom_a"
 	},
 })
 
@@ -494,7 +549,7 @@ minetest.register_craft( {
 -- plain wood, non-windowed
 
 minetest.register_craft( {
-        output = "homedecor:door_wood_plain_left 2",
+        output = "homedecor:door_wood_plain_a 2",
         recipe = {
 			{ "group:wood", "group:wood", "" },
 			{ "group:wood", "group:wood", "default:steel_ingot" },
@@ -505,7 +560,7 @@ minetest.register_craft( {
 -- fancy exterior
 
 minetest.register_craft( {
-        output = "homedecor:door_exterior_fancy_left 2",
+        output = "homedecor:door_exterior_fancy_a 2",
         recipe = {
 			{ "group:wood", "default:glass" },
 			{ "group:wood", "group:wood" },
@@ -518,7 +573,7 @@ minetest.register_craft( {
 -- bare
 
 minetest.register_craft( {
-        output = "homedecor:door_wood_glass_oak_left 2",
+        output = "homedecor:door_wood_glass_oak_a 2",
         recipe = {
 			{ "default:glass", "group:wood" },
 			{ "group:wood", "default:glass" },
@@ -527,7 +582,7 @@ minetest.register_craft( {
 })
 
 minetest.register_craft( {
-        output = "homedecor:door_wood_glass_oak_left 2",
+        output = "homedecor:door_wood_glass_oak_a 2",
         recipe = {
 			{ "group:wood", "default:glass" },
 			{ "default:glass", "group:wood" },
@@ -539,22 +594,11 @@ minetest.register_craft( {
 
 minetest.register_craft( {
 	type = "shapeless",
-        output = "homedecor:door_wood_glass_mahogany_left 2",
-        recipe = {
-			"default:dirt",
-			"default:coal_lump",
-			"homedecor:door_wood_glass_oak_left",
-			"homedecor:door_wood_glass_oak_left"
-        },
-})
-
-minetest.register_craft( {
-	type = "shapeless",
-        output = "homedecor:door_wood_glass_mahogany_left 2",
+        output = "homedecor:door_wood_glass_mahogany_a 2",
         recipe = {
 			"dye:brown",
-			"homedecor:door_wood_glass_oak_left",
-			"homedecor:door_wood_glass_oak_left"
+			"homedecor:door_wood_glass_oak_a",
+			"homedecor:door_wood_glass_oak_a"
         },
 })
 
@@ -562,11 +606,11 @@ minetest.register_craft( {
 
 minetest.register_craft( {
 	type = "shapeless",
-        output = "homedecor:door_wood_glass_white_left 2",
+        output = "homedecor:door_wood_glass_white_a 2",
         recipe = {
 			"dye:white",
-			"homedecor:door_wood_glass_oak_left",
-			"homedecor:door_wood_glass_oak_left"
+			"homedecor:door_wood_glass_oak_a",
+			"homedecor:door_wood_glass_oak_a"
         },
 })
 
@@ -575,7 +619,7 @@ minetest.register_craft( {
 -- oak
 
 minetest.register_craft( {
-        output = "homedecor:door_closet_oak_left 2",
+        output = "homedecor:door_closet_oak_a 2",
         recipe = {
 			{ "", "group:stick", "group:stick" },
 			{ "default:steel_ingot", "group:stick", "group:stick" },
@@ -587,21 +631,10 @@ minetest.register_craft( {
 
 minetest.register_craft( {
 	type = "shapeless",
-        output = "homedecor:door_closet_mahogany_left 2",
+        output = "homedecor:door_closet_mahogany_a 2",
         recipe = {
-			"homedecor:door_closet_oak_left",
-			"homedecor:door_closet_oak_left",
-			"default:dirt",
-			"default:coal_lump",
-        },
-})
-
-minetest.register_craft( {
-	type = "shapeless",
-        output = "homedecor:door_closet_mahogany_left 2",
-        recipe = {
-			"homedecor:door_closet_oak_left",
-			"homedecor:door_closet_oak_left",
+			"homedecor:door_closet_oak_a",
+			"homedecor:door_closet_oak_a",
 			"dye:brown"
         },
 })
@@ -609,7 +642,7 @@ minetest.register_craft( {
 -- wrought fence-like door
 
 minetest.register_craft( {
-        output = "homedecor:door_wrought_iron_left 2",
+        output = "homedecor:door_wrought_iron_a 2",
         recipe = {
 			{ "homedecor:pole_wrought_iron", "default:iron_lump" },
 			{ "homedecor:pole_wrought_iron", "default:iron_lump" },
@@ -620,10 +653,10 @@ minetest.register_craft( {
 -- bedroom door
 
 minetest.register_craft( {
-	output = "homedecor:door_bedroom_left",
+	output = "homedecor:door_bedroom_a",
 	recipe = {
 		{ "dye:white", "dye:white", "" },
-		{ "homedecor:door_wood_plain_left", "basic_materials:brass_ingot", "" },
+		{ "homedecor:door_wood_plain_a", "basic_materials:brass_ingot", "" },
 		{ "", "", "" },
 	},
 })
@@ -631,7 +664,7 @@ minetest.register_craft( {
 -- woodglass door
 
 minetest.register_craft( {
-	output = "homedecor:door_woodglass_left",
+	output = "homedecor:door_woodglass_a",
 	recipe = {
 		{ "group:wood", "default:glass", "" },
 		{ "group:wood", "default:glass", "basic_materials:brass_ingot" },
@@ -642,7 +675,7 @@ minetest.register_craft( {
 -- woodglass door type 2
 
 minetest.register_craft( {
-	output = "homedecor:door_woodglass2_left",
+	output = "homedecor:door_woodglass2_a",
 	recipe = {
 		{ "default:glass", "default:glass", "" },
 		{ "group:wood", "group:wood", "default:iron_lump" },
