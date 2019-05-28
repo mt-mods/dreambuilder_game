@@ -163,6 +163,8 @@ if mesecons_mp then
 	}
 end
 
+local hd_3d = minetest.get_modpath("homedecor_3d_extras")
+
 for _, door in ipairs(door_list) do
 	doors.register(door.name, {
 			tiles = {{ name = "homedecor_door_"..door.name..".png", backface_culling = door.backface }},
@@ -190,7 +192,7 @@ for _, door in ipairs(door_list) do
 			minetest.register_node(":"..nn_b, def)
 	end
 
-	if door.custom_model then
+	if door.custom_model and hd_3d then
 		def = hd_doors_clone_node(nn_a)
 			def.mesh = door.custom_model.."_a.obj"
 			minetest.register_node(":"..nn_a, def)
