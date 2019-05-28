@@ -23,6 +23,12 @@ How to use digimese:
 It conducts digilines signals (like digilines) in all directions (like mese). That's about it, really.
 
 
+How to use vertical/insulated digilines:
+These work exactly like the mesecons equivalents, that is:
+Vertical digilines will automatically connect to other vertical digilines directly above or below them, and form "plates" on each end of the stack. Signals can only be conducted into or out of the stack at these "plates".
+Insulated digilines conduct like regular digilines, but only into/out of the ends of the "wire".
+
+
 How to use the digilines player detector:
 Set a channel and radius (radius must be a number >0 and <10 - anything invalid will be ignored and "6" used instead).
 Every second while a player is within the radius, a table listing the players in range will be sent via digilines on the chosen channel.
@@ -39,3 +45,11 @@ Send a digilines signal with the URL you want to download. The HTTPRequestResult
 How to use the camera:
 Set the channel, distance, and radius. The camera will search for a node "distance" meters away and up to 10m down.
 Every second while a player is within "radius" meters of that point, a table listing the players in range will be sent via digilines on the chosen channel.
+
+
+How to use the dimmable lights:
+After setting the channel, send a number from 0 to 14 to set the light level.
+
+How to use the junction box:
+These are just plain digilines conductors (like digimese) but can skip over one node to another junction box or certain other nodes.
+As in, [digiline][junction box][dirt][junction box][digiline] will work to transmit signals "through" the dirt.

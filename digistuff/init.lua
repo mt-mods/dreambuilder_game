@@ -1,6 +1,8 @@
 digistuff = {}
 
 local components = {
+	"internal",
+	"conductors",
 	"touchscreen",
 	"light",
 	"noteblock",
@@ -9,7 +11,6 @@ local components = {
 	"panel",
 	"piezo",
 	"detector",
-	"conductors",
 	"piston",
 }
 for _,name in ipairs(components) do
