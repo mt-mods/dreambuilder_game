@@ -25,6 +25,123 @@ end
 
 ilights.modpath = minetest.get_modpath("ilights")
 
+local function is_protected(pos, clicker)
+	if minetest.is_protected(pos, clicker:get_player_name()) then
+		minetest.record_protection_violation(pos,
+		clicker:get_player_name())
+		return true
+	end
+	return false
+end
+
+if minetest.get_modpath("mesecons") then
+	actions = {
+		action_off = function(pos, node)
+			local sep = string.find(node.name, "_", -5)
+			local onoff = string.sub(node.name, sep + 1)
+			if minetest.get_meta(pos):get_int("toggled") > 0 then
+				minetest.swap_node(pos, {
+					name = string.sub(node.name, 1, sep - 1).."_off",
+					param2 = node.param2
+				})
+			end
+		end,
+		action_on = function(pos, node)
+			minetest.get_meta(pos):set_int("toggled", 1)
+			local sep = string.find(node.name, "_", -5)
+			local onoff = string.sub(node.name, sep + 1)
+			minetest.swap_node(pos, {
+				name = string.sub(node.name, 1, sep - 1).."_on",
+				param2 = node.param2
+			})
+		end
+	}
+
+	ilights.mesecons = {
+		effector = table.copy(actions)
+	}
+	ilights.mesecons.effector.rules = mesecon.rules.wallmounted_get
+end
+
+-- digilines compatibility
+-- this one is based on the so-named one in Jeija's digilines mod
+
+local player_last_clicked = {}
+
+local digiline_on_punch
+
+if minetest.get_modpath("digilines") then
+
+	local on_digiline_receive_string = function(pos, node, channel, msg)
+		local meta = minetest.get_meta(pos)
+		local setchan = meta:get_string("channel")
+
+		if setchan ~= channel then return end
+		if msg and msg ~= "" and type(msg) == "string" then
+			if msg == "off" or msg == "on" then
+				local basename = string.sub(node.name, 1, string.find(node.name, "_", -5) - 1)
+				if minetest.registered_nodes[basename.."_"..msg] then
+					minetest.swap_node(pos, {name = basename.."_"..msg, param2 = node.param2})
+				end
+			end
+		end
+	end
+
+	minetest.register_on_player_receive_fields(function(player, formname, fields)
+		local name = player:get_player_name()
+		local pos = player_last_clicked[name]
+		if pos and formname == "ilights:set_channel" then
+			if is_protected(pos, player) then return end
+			if (fields.channel) then
+				local meta = minetest.get_meta(pos)
+				meta:set_string("channel", fields.channel)
+			end
+		end
+	end)
+
+	if minetest.get_modpath("mesecons") then
+		ilights.digilines = {
+			effector = {
+				action = on_digiline_receive_string,
+			},
+			wire = {
+				rules = mesecon.rules.wallmounted_get
+			}
+		}
+	else
+		ilights.digilines = {
+			effector = {
+				action = on_digiline_receive_string,
+			},
+			wire = {
+				rules = rules_alldir
+			}
+		}
+	end
+
+	function digiline_on_punch(pos, node, puncher, pointed_thing)
+		if is_protected(pos, puncher) then return end
+
+		if puncher:get_player_control().sneak then
+			local name = puncher:get_player_name()
+			player_last_clicked[name] = pos
+			local meta = minetest.get_meta(pos)
+			local form = "field[channel;Channel;]"
+			minetest.show_formspec(name, "ilights:set_channel", form)
+		end
+	end
+end
+
+-- turn on/off
+
+function ilights.toggle_light(pos, node, clicker, itemstack, pointed_thing)
+	if is_protected(pos, clicker) then return end
+	local sep = string.find(node.name, "_o", -5)
+	local onoff = string.sub(node.name, sep + 1)
+	local newname = string.sub(node.name, 1, sep - 1)..((onoff == "off") and "_on" or "_off")
+	minetest.swap_node(pos, {name = newname, param2 = node.param2})
+end
+
 -- The important stuff!
 
 local lamp_cbox = {
@@ -34,32 +151,49 @@ local lamp_cbox = {
 	wall_side =   {  -8/16, -11/32, -11/32,  4/16, 11/32, 11/32 }
 }
 
-minetest.register_node("ilights:light", {
-	description = "Industrial Light",
-	drawtype = "mesh",
-	mesh = "ilights_lamp.obj",
-	tiles = {
-		{ name = "ilights_lamp_base.png", color = 0xffffffff },
-		{ name = "ilights_lamp_cage.png", color = 0xffffffff },
-		"ilights_lamp_bulb.png",
-		{ name = "ilights_lamp_bulb_base.png", color = 0xffffffff },
-		"ilights_lamp_lens.png"
-	},
-	use_texture_alpha = true,
-	groups = {cracky=3, ud_param2_colorable = 1},
-	paramtype = "light",
-	paramtype2 = "colorwallmounted",
-	palette = "unifieddyes_palette_colorwallmounted.png",
-	light_source = 14,
-	selection_box = lamp_cbox,
-	node_box = lamp_cbox,
-	after_place_node = function(pos, placer, itemstack, pointed_thing)
-		unifieddyes.fix_rotation(pos, placer, itemstack, pointed_thing)
-	end,
-})
+for _, onoff in ipairs({"on", "off"}) do
+
+	local light_source = (onoff == "on") and default.LIGHT_MAX or nil
+	local nici = (onoff == "off") and 1 or nil
+
+	minetest.register_node("ilights:light_"..onoff, {
+		description = "Industrial Light",
+		drawtype = "mesh",
+		mesh = "ilights_lamp.obj",
+		tiles = {
+			{ name = "ilights_lamp_base.png", color = 0xffffffff },
+			{ name = "ilights_lamp_cage.png", color = 0xffffffff },
+			"ilights_lamp_bulb_"..onoff..".png",
+			{ name = "ilights_lamp_bulb_base.png", color = 0xffffffff },
+			"ilights_lamp_lens_"..onoff..".png"
+		},
+		use_texture_alpha = true,
+		groups = {cracky=3, ud_param2_colorable = 1, not_in_creative_inventory = nici},
+		paramtype = "light",
+		paramtype2 = "colorwallmounted",
+		palette = "unifieddyes_palette_colorwallmounted.png",
+		light_source = light_source,
+		selection_box = lamp_cbox,
+		node_box = lamp_cbox,
+		after_place_node = function(pos, placer, itemstack, pointed_thing)
+			unifieddyes.fix_rotation(pos, placer, itemstack, pointed_thing)
+		end,
+		drop = {
+			items = {
+				{items = {"ilights:light_on"}, inherit_color = true },
+			}
+		},
+		on_rightclick = ilights.toggle_light,
+		mesecons =      ilights.mesecons,
+		digiline =      ilights.digilines,
+		on_punch =      digiline_on_punch
+	})
+end
+
+minetest.register_alias("ilights:light", "ilights:light_on")
 
 minetest.register_craft({
-	output = "ilights:light 3",
+	output = "ilights:light_on 3",
 	recipe = {
 		{ "",                     "default:steel_ingot",  "" },
 		{ "",                     "default:glass",        "" },
@@ -68,7 +202,7 @@ minetest.register_craft({
 })
 
 unifieddyes.register_color_craft({
-	output = "ilights:light 3",
+	output = "ilights:light_on 3",
 	palette = "wallmounted",
 	neutral_node = "",
 	recipe = {
@@ -79,7 +213,7 @@ unifieddyes.register_color_craft({
 })
 
 unifieddyes.register_color_craft({
-	output = "ilights:light",
+	output = "ilights:light_on",
 	palette = "wallmounted",
 	type = "shapeless",
 	neutral_node = "ilights:light",

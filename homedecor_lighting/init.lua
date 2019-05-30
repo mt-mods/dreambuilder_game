@@ -11,26 +11,23 @@ local function is_protected(pos, clicker)
 	return false
 end
 
-local actions = {
-	action_off = function(pos, node)
-		local sep = string.find(node.name, "_o", -5)
-		local onoff = string.sub(node.name, sep + 1)
-		if minetest.get_meta(pos):get_int("toggled") > 0 then
-			minetest.swap_node(pos, {
-				name = string.sub(node.name, 1, sep - 1).."_off",
-				param2 = node.param2
-			})
-		end
-	end,
-	action_on = function(pos, node)
-		minetest.get_meta(pos):set_int("toggled", 1)
-		local sep = string.find(node.name, "_o", -5)
-		local onoff = string.sub(node.name, sep + 1)
-		minetest.swap_node(pos, {
-			name = string.sub(node.name, 1, sep - 1).."_on",
-			param2 = node.param2
-		})
-	end
+-- control and brightness for dimmable lamps
+
+local repl = {
+	["off"] = "low",
+	["low"] = "med",
+	["med"] = "hi",
+	["hi"]  = "max",
+	["max"] = "off",
+	["on"]  = "off",
+}
+
+local brightness_tab = {
+	0xffd0d0d0,
+	0xffd8d8d8,
+	0xffe0e0e0,
+	0xffe8e8e8,
+	0xffffffff,
 }
 
 local rules_xz = {
@@ -63,7 +60,34 @@ local rules_toponly = {
 	{x =  0, y =  1, z = -1},
 }
 
+-- mesecons compatibility
+
+local actions
+
 if minetest.get_modpath("mesecons") then
+
+	actions = {
+		action_off = function(pos, node)
+			local sep = string.find(node.name, "_", -5)
+			local onoff = string.sub(node.name, sep + 1)
+			if minetest.get_meta(pos):get_int("toggled") > 0 then
+				minetest.swap_node(pos, {
+					name = string.sub(node.name, 1, sep - 1).."_off",
+					param2 = node.param2
+				})
+			end
+		end,
+		action_on = function(pos, node)
+			minetest.get_meta(pos):set_int("toggled", 1)
+			local sep = string.find(node.name, "_", -5)
+			local onoff = string.sub(node.name, sep + 1)
+			minetest.swap_node(pos, {
+				name = string.sub(node.name, 1, sep - 1).."_on",
+				param2 = node.param2
+			})
+		end
+	}
+
 	homedecor.mesecon_wall_light = {
 		effector = table.copy(actions)
 	}
@@ -87,57 +111,34 @@ if minetest.get_modpath("mesecons") then
 end
 
 -- digilines compatibility
--- the following functions are based on the so-named ones in Jeija's digilines mod
-
-local on_digiline_receive_std = function(pos, node, channel, msg)
-	local meta = minetest.get_meta(pos)
-	local setchan = meta:get_string("channel")
-	if setchan ~= channel then return end
-	local num = tonumber(msg)
-	if msg == "colon" or msg == "period" or msg == "off" or (num and (num >= 0 and num <= 9)) then
-			minetest.swap_node(pos, { name = "led_marquee:marquee_"..msg, param2 = node.param2})
-	end
-end
-
-local on_digiline_receive_string = function(pos, node, channel, msg)
-	local meta = minetest.get_meta(pos)
-	local setchan = meta:get_string("channel")
-
-	if setchan ~= channel then return end
-	if msg and msg ~= "" and type(msg) == "string" then
-		if msg == "off"
-		  or msg == "low"
-		  or msg == "med"
-		  or msg == "hi"
-		  or msg == "max" then
-			local basename = string.sub(node.name, 1, string.find(node.name, "_", -5) - 1)
-			minetest.swap_node(pos, {name = basename.."_"..msg, param2 = node.param2})
-		end
-	end
-end
-
-local repl = {
-	["off"] ="low",
-	["low"] ="med",
-	["med"] ="hi",
-	["hi"]  ="max",
-	["max"] ="off",
-}
+-- this one is based on the so-named one in Jeija's digilines mod
 
 local player_last_clicked = {}
 
-local dl_onreceive
-local dl_digiline
-local dl_on_punch
-local function dl_on_rightclick(pos, node, clicker, itemstack, pointed_thing)
-	if is_protected(pos, clicker) then return end
-	local delim = string.find(node.name, "_", -5)
-	local basename = string.sub(node.name, 1, delim - 1)
-	local suffix = string.sub(node.name, delim + 1)
-	minetest.set_node(pos, {name = basename.."_"..repl[suffix], param2 = node.param2})
-end
+local digiline_on_punch
 
 if minetest.get_modpath("digilines") then
+
+	local on_digiline_receive_string = function(pos, node, channel, msg)
+		local meta = minetest.get_meta(pos)
+		local setchan = meta:get_string("channel")
+
+		if setchan ~= channel then return end
+		if msg and msg ~= "" and type(msg) == "string" then
+			if msg == "off"
+			  or msg == "low"
+			  or msg == "med"
+			  or msg == "hi"
+			  or msg == "max"
+			  or msg == "on" then
+				local basename = string.sub(node.name, 1, string.find(node.name, "_", -5) - 1)
+				if minetest.registered_nodes[basename.."_"..msg] then
+					minetest.swap_node(pos, {name = basename.."_"..msg, param2 = node.param2})
+				end
+			end
+		end
+	end
+
 	minetest.register_on_player_receive_fields(function(player, formname, fields)
 		local name = player:get_player_name()
 		local pos = player_last_clicked[name]
@@ -150,14 +151,54 @@ if minetest.get_modpath("digilines") then
 		end
 	end)
 
-	dl_digiline = {
+	if minetest.get_modpath("mesecons") then
+		homedecor.digiline_wall_light = {
+			effector = {
+				action = on_digiline_receive_string,
+			},
+			wire = {
+				rules = mesecon.rules.wallmounted_get
+			}
+		}
+	else
+		homedecor.digiline_wall_light = {
+			effector = {
+				action = on_digiline_receive_string,
+			},
+			wire = {
+				rules = rules_alldir
+			}
+		}
+	end
+
+	homedecor.digiline_xz_light = {
 		effector = {
 			action = on_digiline_receive_string,
 		},
-		rules = rules_xz
+		wire = {
+			rules = rules_xz
+		}
 	}
 
-	function dl_on_punch(pos, node, puncher, pointed_thing)
+	homedecor.digiline_alldir_light = {
+		effector = {
+			action = on_digiline_receive_string,
+		},
+		wire = {
+			rules = rules_alldir
+		}
+	}
+
+	homedecor.digiline_toponly_light = {
+		effector = {
+			action = on_digiline_receive_string,
+		},
+		wire = {
+			rules = rules_toponly
+		}
+	}
+
+	function digiline_on_punch(pos, node, puncher, pointed_thing)
 		if is_protected(pos, puncher) then return end
 
 		if puncher:get_player_control().sneak then
@@ -168,23 +209,17 @@ if minetest.get_modpath("digilines") then
 			minetest.show_formspec(name, "homedecor:lamp_set_channel", form)
 		end
 	end
-
-	function dl_on_rightclick(pos, node, clicker, itemstack, pointed_thing)
-		if is_protected(pos, clicker) then return end
-		local delim = string.find(node.name, "_", -5)
-		local basename = string.sub(node.name, 1, delim - 1)
-		local suffix = string.sub(node.name, delim + 1)
-		minetest.swap_node(pos, {name = basename.."_"..repl[suffix], param2 = node.param2})
-	end
 end
 
-local brightness_tab = {
-	0xffd0d0d0,
-	0xffd8d8d8,
-	0xffe0e0e0,
-	0xffe8e8e8,
-	0xffffffff,
-}
+-- turn on/off, cycle brightness
+
+function on_rightclick(pos, node, clicker, itemstack, pointed_thing)
+	if is_protected(pos, clicker) then return end
+	local delim = string.find(node.name, "_", -5)
+	local basename = string.sub(node.name, 1, delim - 1)
+	local suffix = string.sub(node.name, delim + 1)
+	minetest.swap_node(pos, {name = basename.."_"..repl[suffix], param2 = node.param2})
+end
 
 function homedecor.toggle_light(pos, node, clicker, itemstack, pointed_thing)
 	if is_protected(pos, clicker) then return end
@@ -193,6 +228,9 @@ function homedecor.toggle_light(pos, node, clicker, itemstack, pointed_thing)
 	local newname = string.sub(node.name, 1, sep - 1)..((onoff == "off") and "_on" or "_off")
 	minetest.swap_node(pos, {name = newname, param2 = node.param2})
 end
+
+-----
+-- The actual lights! :-)
 
 for _, onoff in ipairs({"on", "off"}) do
 
@@ -277,7 +315,9 @@ for _, onoff in ipairs({"on", "off"}) do
 				{items = {"homedecor:glowlight_half_on"}, inherit_color = true },
 			}
 		},
-		mesecons = homedecor.mesecon_wall_light
+		mesecons = homedecor.mesecon_wall_light,
+		digiline = homedecor.digiline_wall_light,
+		on_punch = digiline_on_punch
 	})
 
 	sides_edges = "homedecor_glowlight_thin_sides_edges.png"
@@ -340,7 +380,9 @@ for _, onoff in ipairs({"on", "off"}) do
 				{items = {"homedecor:glowlight_quarter_on"}, inherit_color = true },
 			}
 		},
-		mesecons = homedecor.mesecon_wall_light
+		mesecons = homedecor.mesecon_wall_light,
+		digiline = homedecor.digiline_wall_light,
+		on_punch = digiline_on_punch
 	})
 
 	tb_edges =    "homedecor_glowlight_cube_tb_edges.png"
@@ -404,7 +446,9 @@ for _, onoff in ipairs({"on", "off"}) do
 				{items = {"homedecor:glowlight_small_cube_on"}, inherit_color = true },
 			}
 		},
-		mesecons = homedecor.mesecon_wall_light
+		mesecons = homedecor.mesecon_wall_light,
+		digiline = homedecor.digiline_wall_light,
+		on_punch = digiline_on_punch
 	})
 
 	local lighttex
@@ -437,7 +481,9 @@ for _, onoff in ipairs({"on", "off"}) do
 				{items = {"homedecor:plasma_lamp_on"}},
 			}
 		},
-		mesecons = homedecor.mesecon_alldir_light
+		mesecons = homedecor.mesecon_alldir_light,
+		digiline = homedecor.digiline_alldir_light,
+		on_punch = digiline_on_punch
 	})
 
 	local lighttex = "homedecor_blanktile.png"
@@ -473,7 +519,9 @@ for _, onoff in ipairs({"on", "off"}) do
 				{items = {"homedecor:plasma_ball_on"}},
 			}
 		},
-		mesecons = homedecor.mesecon_xz_light
+		mesecons = homedecor.mesecon_xz_light,
+		digiline = homedecor.digiline_xz_light,
+		on_punch = digiline_on_punch
 	})
 
 	local gl_cbox = {
@@ -505,7 +553,9 @@ for _, onoff in ipairs({"on", "off"}) do
 				{items = {"homedecor:ground_lantern_on"}},
 			}
 		},
-		mesecons = homedecor.mesecon_xz_light
+		mesecons = homedecor.mesecon_xz_light,
+		digiline = homedecor.digiline_xz_light,
+		on_punch = digiline_on_punch
 	})
 
 	local hl_cbox = {
@@ -530,7 +580,9 @@ for _, onoff in ipairs({"on", "off"}) do
 				{items = {"homedecor:hanging_lantern_on"}},
 			}
 		},
-		mesecons = homedecor.mesecon_alldir_light
+		mesecons = homedecor.mesecon_alldir_light,
+		digiline = homedecor.digiline_alldir_light,
+		on_punch = digiline_on_punch
 	})
 
 	local cl_cbox = {
@@ -555,7 +607,9 @@ for _, onoff in ipairs({"on", "off"}) do
 				{items = {"homedecor:ceiling_lantern_on"}},
 			}
 		},
-		mesecons = homedecor.mesecon_toponly_light
+		mesecons = homedecor.mesecon_toponly_light,
+		digiline = homedecor.digiline_toponly_light,
+		on_punch = digiline_on_punch
 	})
 
 	if minetest.get_modpath("darkage") then
@@ -580,7 +634,9 @@ for _, onoff in ipairs({"on", "off"}) do
 					{items = {"homedecor:lattice_lantern_large_on"}},
 				}
 			},
-			mesecons = homedecor.mesecon_alldir_light
+			mesecons = homedecor.mesecon_alldir_light,
+			digiline = homedecor.digiline_alldir_light,
+			on_punch = digiline_on_punch
 		})
 	end
 
@@ -620,7 +676,9 @@ for _, onoff in ipairs({"on", "off"}) do
 				{items = {"homedecor:lattice_lantern_small_on"}},
 			}
 		},
-		mesecons = homedecor.mesecon_wall_light
+		mesecons = homedecor.mesecon_alldir_light,
+		digiline = homedecor.digiline_alldir_light,
+		on_punch = digiline_on_punch
 	})
 
 	-- "gooseneck" style desk lamps
@@ -658,7 +716,9 @@ for _, onoff in ipairs({"on", "off"}) do
 				{items = {"homedecor:desk_lamp_on"}, inherit_color = true },
 			}
 		},
-		mesecons = homedecor.mesecon_xz_light
+		mesecons = homedecor.mesecon_xz_light,
+		digiline = homedecor.digiline_xz_light,
+		on_punch = digiline_on_punch
 	})
 
 	-- "kitchen"/"dining room" ceiling lamp
@@ -682,7 +742,9 @@ for _, onoff in ipairs({"on", "off"}) do
 				{items = {"homedecor:ceiling_lamp_on"}},
 			}
 		},
-		mesecons = homedecor.mesecon_toponly_light
+		mesecons = homedecor.mesecon_toponly_light,
+		digiline = homedecor.digiline_toponly_light,
+		on_punch = digiline_on_punch
 	})
 
 -- rope lighting
@@ -1067,9 +1129,10 @@ local function reg_lamp(suffix, nxt, light, brightness)
 				{items = {"homedecor:table_lamp_hi"}, inherit_color = true },
 			}
 		},
-		digiline = dl_digiline,
-		on_rightclick = dl_on_rightclick,
-		on_punch = dl_on_punch
+		digiline =      homedecor.digiline_xz_light,
+		mesecons =      homedecor.mesecon_wall_light,
+		on_rightclick = on_rightclick,
+		on_punch =      digiline_on_punch
 	})
 
 	homedecor.register("standing_lamp_"..suffix, {
@@ -1099,10 +1162,12 @@ local function reg_lamp(suffix, nxt, light, brightness)
 				{items = {"homedecor:standing_lamp_hi"}, inherit_color = true },
 			}
 		},
-		digiline = dl_digiline,
-		on_rightclick = dl_on_rightclick,
-		on_punch = dl_on_punch
+		digiline =      homedecor.digiline_xz_light,
+		mesecons =      homedecor.mesecon_wall_light,
+		on_rightclick = on_rightclick,
+		on_punch =      digiline_on_punch
 	})
+
 
 	-- for old maps that had the original 3dforniture mod
 	minetest.register_alias("3dforniture:table_lamp_"..suffix, "homedecor:table_lamp_"..suffix)
@@ -1114,6 +1179,9 @@ reg_lamp("med", "hi",   7,   3 )
 reg_lamp("hi",  "max", 11,   4 )
 reg_lamp("max", "off", 14,   5 )
 
+-- mesecons compatibility
+minetest.register_alias("homedecor:table_lamp_on",    "homedecor:table_lamp_max")
+minetest.register_alias("homedecor:standing_lamp_on", "homedecor:standing_lamp_max")
 
 -- conversion LBM for param2 coloring
 

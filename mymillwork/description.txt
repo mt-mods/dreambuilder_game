@@ -1,0 +1,10 @@
+Crown molding, columns and baseboards of different styles.
+
+
+
+If you want to add or remove a texture simply edit the materials.lua file.
+
+Each texture has 24 nodes so careful that you don't add too many textures.
+
+
+
