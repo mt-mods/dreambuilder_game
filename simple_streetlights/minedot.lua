@@ -75,11 +75,11 @@ local function place(itemstack,player,pointed)
 	elseif facedir.z == 1 then schemDir = 90
 	elseif facedir.z == -1 then schemDir = 270 end
 	local offset = offsets[isDouble and "double" or "single"][schemDir]
-	local pos = vector.add(pos,offset)
-	minetest.place_schematic(pos,isDouble and schems.double or schems.single,schemDir,nil,false)
 	if sneak and streetlights.basic_materials then
 		minetest.set_node({x=pos.x, y=pos.y-1, z=pos.z}, {name = streetlights.concrete})
 	end
+	local pos = vector.add(pos,offset)
+	minetest.place_schematic(pos,isDouble and schems.double or schems.single,schemDir,nil,false)
 end
 
 minetest.register_tool(":minedot_streetlights:spawner_single",{

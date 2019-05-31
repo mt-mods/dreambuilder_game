@@ -51,6 +51,10 @@ end
 
 -- the actual nodes!
 
+local groups = table.copy(minetest.registered_items["default:wood"].groups)
+groups.ud_param2_colorable = 1
+groups.not_in_creative_inventory=1
+
 minetest.register_node("coloredwood:wood_block", {
 	description = "Colored wooden planks",
 	tiles = { "coloredwood_base.png" },
@@ -59,7 +63,7 @@ minetest.register_node("coloredwood:wood_block", {
 	palette = "unifieddyes_palette_extended.png",
 	walkable = true,
 	sunlight_propagates = false,
-	groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=2, not_in_creative_inventory=1, ud_param2_colorable = 1},
+	groups = groups,
 	sounds = default.node_sound_wood_defaults(),
 })
 
@@ -147,10 +151,13 @@ for _, mname in ipairs(coloredwood_cuts) do
 	})
 end
 
+groups = table.copy(minetest.registered_items["default:wood"].groups)
+groups.ud_param2_colorable = 1
+
 minetest.override_item("default:wood", {
 	palette = "unifieddyes_palette_extended.png",
 	airbrush_replacement_node = "coloredwood:wood_block",
-	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, wood = 1, ud_param2_colorable = 1},
+	groups = groups,
 })
 
 default.register_fence("coloredwood:fence", {
@@ -163,10 +170,13 @@ default.register_fence("coloredwood:fence", {
 	material = "coloredwood:wood_block"
 })
 
+groups = table.copy(minetest.registered_items["default:fence_wood"].groups)
+groups.ud_param2_colorable = 1
+
 minetest.override_item("default:fence_wood", {
 	palette = "unifieddyes_palette_extended.png",
 	airbrush_replacement_node = "coloredwood:fence",
-	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, ud_param2_colorable = 1}
+	groups = groups
 })
 
 -- Crafts
