@@ -65,14 +65,11 @@ minetest.register_privilege("streetlight", {
 	give_to_singleplayer = true
 })
 
-local function check_and_place(itemstack, placer, pointed_thing, pole, light, param2, needs_digiline_wire, needs_distributor)
+local function check_and_place(itemstack, placer, pointed_thing, pole, light, param2, needs_digiline_wire, distributor_node)
 	local controls = placer:get_player_control()
 	if not placer then return end
 	local playername = placer:get_player_name()
-	if not minetest.check_player_privs(placer, "streetlight") then
-		minetest.chat_send_player(playername, "*** You don't have permission to use a streetlight spawner.")
-		return
-	end
+
 	local player_name = placer:get_player_name()
 	local fdir = minetest.dir_to_facedir(placer:get_look_dir())
 
@@ -81,14 +78,18 @@ local function check_and_place(itemstack, placer, pointed_thing, pole, light, pa
 	if not node1 or node1.name == "ignore" then return end
 	local def1 = minetest.registered_items[node1.name]
 
-	print(dump(pos1))
-	print(node1.name)
-	print(dump(def1))
-
-
 	if (def1 and def1.buildable_to) then
 		pos1.y = pos1.y-1
 	end
+
+	local rc = streetlights.rightclick_pointed_thing(pos1, placer, itemstack, pointed_thing)
+	if rc then return rc end
+
+	if not minetest.check_player_privs(placer, "streetlight") then
+		minetest.chat_send_player(playername, "*** You don't have permission to use a streetlight spawner.")
+		return
+	end
+
 	local node1 = minetest.get_node(pos1)
 
 	local node2, node3, node4
@@ -117,7 +118,7 @@ local function check_and_place(itemstack, placer, pointed_thing, pole, light, pa
 	if minetest.is_protected(pos4, player_name) or not (def3 and def4.buildable_to) then return end
 
 	if controls.sneak and minetest.is_protected(pos1, player_name) then return end
-	if needs_distributor and minetest.is_protected(pos0, player_name) then return end
+	if distributor_node and minetest.is_protected(pos0, player_name) then return end
 
 	if not creative.is_enabled_for(player_name) then
 		local inv = placer:get_inventory()
@@ -145,12 +146,12 @@ local function check_and_place(itemstack, placer, pointed_thing, pole, light, pa
 			end
 		end
 
-		if needs_distributor and needs_digiline_wire then
-			if not inv:contains_item("main", streetlights.distributor) then
-				minetest.chat_send_player(playername, "*** You don't have any Digiline distributors in your inventory!")
+		if distributor_node and needs_digiline_wire then
+			if not inv:contains_item("main", distributor_node) then
+				minetest.chat_send_player(playername, "*** You don't have any "..distributor_node.." in your inventory!")
 				return
 			else
-				inv:remove_item("main", streetlights.distributor)
+				inv:remove_item("main", distributor_node)
 			end
 		end
 
@@ -161,10 +162,6 @@ local function check_and_place(itemstack, placer, pointed_thing, pole, light, pa
 			inv:remove_item("main", digiline_wire_node.." 6")
 		end
 
-	end
-
-	if needs_distributor and needs_digiline_wire then
-		minetest.set_node(pos0, { name = streetlights.distributor })
 	end
 
 	if controls.sneak then
@@ -187,6 +184,12 @@ local function check_and_place(itemstack, placer, pointed_thing, pole, light, pa
 	if needs_digiline_wire and ilights.player_channels[playername] then
 		minetest.get_meta(pos4):set_string("channel", ilights.player_channels[playername])
 	end
+
+	if distributor_node and needs_digiline_wire then
+		minetest.set_node(pos0, { name = distributor_node })
+		digilines.update_autoconnect(pos0)
+	end
+
 end
 
 local poles_tab = {
@@ -331,17 +334,28 @@ for _, pole in ipairs(poles_tab) do
 						}
 					})
 
+					local distributor = nil
+					local dist_overlay = nil
+
 					if minetest.registered_items[streetlights.distributor] then
+						distributor = streetlights.distributor
+						dist_overlay = "^simple_streetlights_inv_pole_distributor_overlay.png"
+					elseif minetest.registered_items[streetlights.vert_digiline] then
+						distributor = streetlights.vert_digiline
+						dist_overlay = "^simple_streetlights_inv_pole_vertical_digiline_overlay.png"
+					end
+
+					if distributor then
 						minetest.register_tool("simple_streetlights:spawner_"..matname.."_"..lightname.."_digilines_distributor", {
 							description = "Streetlight spawner ("..matname.." pole, with "..lightname..", digilines conducting pole, with distributor 2m below)",
 							inventory_image = "simple_streetlights_inv_pole_"..matname..".png"..
 											  "^simple_streetlights_inv_pole_digiline_overlay.png"..
-											  "^simple_streetlights_inv_pole_distributor_overlay.png"..
+											  dist_overlay..
 											  "^simple_streetlights_inv_light_source_"..lightname..".png",
 							use_texture_alpha = true,
 							tool_capabilities = { full_punch_interval=0.1 },
 							on_place = function(itemstack, placer, pointed_thing)
-								check_and_place(itemstack, placer, pointed_thing, matnode, lightnode, lightparam2, true, true)
+								check_and_place(itemstack, placer, pointed_thing, matnode, lightnode, lightparam2, true, distributor)
 							end,
 							on_use = ilights.digiline_on_use
 						})
@@ -358,7 +372,7 @@ for _, pole in ipairs(poles_tab) do
 								matnode,
 								lightnode,
 								digiline_wire_node,
-								streetlights.distributor
+								distributor
 							}
 						})
 
@@ -368,7 +382,7 @@ for _, pole in ipairs(poles_tab) do
 							recipe = {
 								"simple_streetlights:spawner_"..matname.."_"..lightname,
 								digiline_wire_node,
-								streetlights.distributor
+								distributor
 							}
 						})
 
@@ -377,7 +391,7 @@ for _, pole in ipairs(poles_tab) do
 							type = "shapeless",
 							recipe = {
 								"simple_streetlights:spawner_"..matname.."_"..lightname.."_digilines",
-								streetlights.distributor
+								distributor
 							}
 						})
 					end
