@@ -70,6 +70,15 @@ local player_last_clicked = {}
 
 local digiline_on_punch
 
+local onoff_tab = {
+	["off"] = "off",
+	["low"] = "off",
+	["med"] = "on",
+	["hi"] = "on",
+	["max"] = "on",
+	["on"] = "on",
+}
+
 if minetest.get_modpath("digilines") then
 
 	local on_digiline_receive_string = function(pos, node, channel, msg)
@@ -77,11 +86,17 @@ if minetest.get_modpath("digilines") then
 		local setchan = meta:get_string("channel")
 
 		if setchan ~= channel then return end
-		if msg and msg ~= "" and type(msg) == "string" then
-			if msg == "off" or msg == "on" then
+		if msg and msg ~= "" then
+			local n = tonumber(msg)
+			if n then
+				msg = (n > 3) and "on" or "off" -- same threshold as in homedecor's lights
+			end
+
+			local light = onoff_tab[msg]
+			if light then
 				local basename = string.sub(node.name, 1, string.find(node.name, "_", -5) - 1)
-				if minetest.registered_nodes[basename.."_"..msg] then
-					minetest.swap_node(pos, {name = basename.."_"..msg, param2 = node.param2})
+				if minetest.registered_nodes[basename.."_"..light] then
+					minetest.swap_node(pos, {name = basename.."_"..light, param2 = node.param2})
 				end
 			end
 		end

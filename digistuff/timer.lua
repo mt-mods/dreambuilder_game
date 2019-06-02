@@ -1,20 +1,19 @@
-local http = ...
-minetest.register_node("digistuff:nic", {
-	description = "Digilines NIC",
+minetest.register_node("digistuff:timer", {
+	description = "Digilines Timer",
 	groups = {cracky=3},
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		meta:set_string("formspec","field[channel;Channel;${channel}")
 	end,
 	tiles = {
-		"digistuff_nic_top.png",
+		"digistuff_timer_top.png",
 		"jeija_microcontroller_bottom.png",
 		"jeija_microcontroller_sides.png",
 		"jeija_microcontroller_sides.png",
 		"jeija_microcontroller_sides.png",
 		"jeija_microcontroller_sides.png"
 	},
-	inventory_image = "digistuff_nic_top.png",
+	inventory_image = "digistuff_timer_top.png",
 	drawtype = "nodebox",
 	selection_box = {
 		--From luacontroller
@@ -41,6 +40,13 @@ minetest.register_node("digistuff:nic", {
 		local meta = minetest.get_meta(pos)
 		if fields.channel then meta:set_string("channel",fields.channel) end
 	end,
+	on_timer = function(pos)
+		local meta = minetest.get_meta(pos)
+		local channel = meta:get_string("channel")
+		digiline:receptor_send(pos,digiline.rules.default,channel,"done")
+		local loop = meta:get_int("loop") > 0
+		return loop
+	end,
 	digiline = 
 	{
 		receptor = {},
@@ -48,23 +54,27 @@ minetest.register_node("digistuff:nic", {
 			action = function(pos,node,channel,msg)
 					local meta = minetest.get_meta(pos)
 					if meta:get_string("channel") ~= channel then return end
-					if type(msg) ~= "string" then return end
-					http.fetch({
-						url = msg,
-						timeout = 5,
-						user_agent = "Minetest Digilines Modem",
-						},
-						function(res)
-							digiline:receptor_send(pos, digiline.rules.default, channel, res)
-						end)
+					if msg == "loop_on" then
+						meta:set_int("loop",1)
+					elseif msg == "loop_off" then
+						meta:set_int("loop",0)
+					else
+						local time = tonumber(msg)
+						if time and time >= 0.5 and time <= 3600 then
+							local timer = minetest.get_node_timer(pos)
+							timer:start(time)
+						end
+					end
 				end
 		},
 	},
+	
 })
 minetest.register_craft({
-	output = "digistuff:nic",
+	output = "digistuff:timer 2",
 	recipe = {
-		{"","","mesecons:wire_00000000_off"},
-		{"digilines:wire_std_00000000","mesecons_luacontroller:luacontroller0000","mesecons:wire_00000000_off"}
+		{"","mesecons:wire_00000000_off","default:coal_lump"},
+		{"digilines:wire_std_00000000","basic_materials:ic","mesecons:wire_00000000_off"},
+		{"","mesecons:wire_00000000_off","default:paper"},
 	}
 })
