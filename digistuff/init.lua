@@ -7,7 +7,7 @@ local components = {
 	"light",
 	"noteblock",
 	"camera",
-	"button",
+	"switches",
 	"panel",
 	"piezo",
 	"detector",

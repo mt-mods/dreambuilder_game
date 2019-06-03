@@ -5,7 +5,8 @@ digistuff.remove_receiver = function(pos,node)
 	if rnode.name == "digistuff:receiver" then
 		rnode.name = "digilines:wire_std_00000000"
 		minetest.remove_node(rpos)
-		minetest.place_node(rpos,rnode)
+		minetest.set_node(rpos,rnode)
+		digilines.update_autoconnect(rpos)
 	end
 end
 
@@ -125,15 +126,23 @@ minetest.register_node("digistuff:receiver", {
 	is_ground_content = false,
 	paramtype = "light",
 	paramtype2 = "facedir",
+	walkable = false,
 	drawtype = "nodebox",
 	node_box = {
 		type = "fixed",
 		fixed = {
-				{-0.05,-0.05,-1.49,0.05,0.05,-0.5},
-				{-0.2,-0.2,-0.5,0.2,0.2,-0.4},
-				{-0.0625,-0.5,-0.5,0.0625,-0.2,-0.4},
-				{-0.0625,-0.5,-0.4,0.0625,-0.4375,0.5},
+			{-0.05,-0.05,-1.49,0.05,0.05,-0.5},
+			{-0.2,-0.2,-0.5,0.2,0.2,-0.4},
+			{-0.0625,-0.5,-0.5,0.0625,-0.2,-0.4},
+			{-0.0625,-0.5,-0.4,0.0625,-0.4375,0.5},
 			},
+	},
+	selection_box = {
+		type = "fixed",
+		fixed = {
+			{-0.2,-0.5,-0.5,0.2,0.2,0.5},
+			{-0.075,-0.075,-1.49,0.075,0.075,-0.5},
+		},
 	},
 	digiline = {
 		receptor = {},
@@ -189,6 +198,12 @@ minetest.register_node("digistuff:vertical_bottom", {
 				{-0.05,-0.4375,-0.05,0.05,0.5,0.05},
 			},
 	},
+	collision_box = {
+		type = "fixed",
+		fixed = {
+				{-0.5,-0.5,-0.5,0.5,-0.4375,0.5},
+			},
+	},
 	after_place_node = digistuff.vertical_autoconnect,
 	after_destruct = digistuff.vertical_remove,
 	digiline = {
@@ -214,6 +229,7 @@ minetest.register_node("digistuff:vertical_middle", {
 	drop = "digistuff:vertical_bottom",
 	is_ground_content = false,
 	paramtype = "light",
+	walkable = false,
 	drawtype = "nodebox",
 	node_box = {
 		type = "fixed",
@@ -277,6 +293,7 @@ minetest.register_node("digistuff:insulated_straight", {
 	},
 	paramtype = "light",
 	paramtype2 = "facedir",
+	walkable = false,
 	on_rotate = minetest.get_modpath("screwdriver") and screwdriver.rotate_simple,
 	groups = {dig_immediate = 3,},
 	is_ground_content = false,
@@ -287,6 +304,12 @@ minetest.register_node("digistuff:insulated_straight", {
 		fixed = {
 				{-0.5,-0.5,-0.1,0.5,-0.4,0.1},
 			},
+	},
+	selection_box = {
+		type = "fixed",
+		fixed = {
+			{-0.5,-0.5,-0.15,0.5,-0.35,0.15},
+		},
 	},
 	after_place_node = digilines.update_autoconnect,
 	after_destruct = digilines.update_autoconnect,
@@ -316,6 +339,7 @@ minetest.register_node("digistuff:insulated_tjunction", {
 	},
 	paramtype = "light",
 	paramtype2 = "facedir",
+	walkable = false,
 	on_rotate = minetest.get_modpath("screwdriver") and screwdriver.rotate_simple,
 	groups = {dig_immediate = 3,},
 	is_ground_content = false,
@@ -327,6 +351,12 @@ minetest.register_node("digistuff:insulated_tjunction", {
 				{-0.5,-0.5,-0.1,0.5,-0.4,0.1},
 				{-0.1,-0.5,-0.5,0.1,-0.4,-0.1},
 			},
+	},
+	selection_box = {
+		type = "fixed",
+		fixed = {
+			{-0.5,-0.5,-0.5,0.5,-0.35,0.15},
+		},
 	},
 	after_place_node = digilines.update_autoconnect,
 	after_destruct = digilines.update_autoconnect,
@@ -357,6 +387,7 @@ minetest.register_node("digistuff:insulated_corner", {
 	},
 	paramtype = "light",
 	paramtype2 = "facedir",
+	walkable = false,
 	on_rotate = minetest.get_modpath("screwdriver") and screwdriver.rotate_simple,
 	groups = {dig_immediate = 3,},
 	is_ground_content = false,
@@ -368,6 +399,12 @@ minetest.register_node("digistuff:insulated_corner", {
 				{-0.1,-0.5,-0.5,0.1,-0.4,0.1},
 				{-0.5,-0.5,-0.1,0.1,-0.4,0.1},
 			},
+	},
+	selection_box = {
+		type = "fixed",
+		fixed = {
+			{-0.5,-0.5,-0.5,0.15,-0.35,0.15},
+		},
 	},
 	after_place_node = digilines.update_autoconnect,
 	after_destruct = digilines.update_autoconnect,
@@ -396,6 +433,7 @@ minetest.register_node("digistuff:insulated_fourway", {
 		"digistuff_insulated_edge.png",
 	},
 	paramtype = "light",
+	walkable = false,
 	groups = {dig_immediate = 3,},
 	is_ground_content = false,
 	paramtype = "light",
@@ -407,6 +445,12 @@ minetest.register_node("digistuff:insulated_fourway", {
 				{-0.1,-0.5,-0.5,0.1,-0.4,-0.1},
 				{-0.1,-0.5,0.1,0.1,-0.4,0.5},
 			},
+	},
+	selection_box = {
+		type = "fixed",
+		fixed = {
+			{-0.5,-0.5,-0.5,0.5,-0.35,0.5},
+		},
 	},
 	after_place_node = digilines.update_autoconnect,
 	after_destruct = digilines.update_autoconnect,
