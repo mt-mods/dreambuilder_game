@@ -222,7 +222,7 @@ minetest.register_node("digistuff:wall_knob", {
 				meta:set_int("min",math.floor(tonumber(fields.min)))
 				meta:set_int("max",math.floor(tonumber(fields.max)))
 				meta:set_int("value",math.floor(tonumber(fields.min)))
-				meta:set_string("infotext",string.format("Current setting: %d\nLeft-click to turn up or right-click to turn down",math.floor(tonumber(fields.min))))
+				meta:set_string("infotext",string.format("Current setting: %d\nLeft-click to turn down or right-click to turn up",math.floor(tonumber(fields.min))))
 				meta:set_string("formspec","")
 				minetest.swap_node(pos, {name = "digistuff:wall_knob_configured", param2=minetest.get_node(pos).param2})
 			else
@@ -264,24 +264,24 @@ minetest.register_node("digistuff:wall_knob_configured", {
 	drop = "digistuff:wall_knob",
 	after_place_node = digistuff.place_receiver,
 	after_destruct = digistuff.remove_receiver,
-	on_punch = function(pos,node,player)
+	on_rightclick = function(pos,node,player)
 		local meta = minetest.get_meta(pos)
 		local max = meta:get_int("max")
 		local value = meta:get_int("value")
 		local full = player:get_player_control().aux1
 		value = full and max or math.min(max,value+1)
 		meta:set_int("value",value)
-		meta:set_string("infotext",string.format("Current setting: %d\nLeft-click to turn up or right-click to turn down",math.floor(tonumber(value))))
+		meta:set_string("infotext",string.format("Current setting: %d\nLeft-click to turn down or right-click to turn up",math.floor(tonumber(value))))
 		digiline:receptor_send(pos,digistuff.button_get_rules(node),meta:get_string("channel"),value)
 	end,
-	on_rightclick = function(pos,node,player)
+	on_punch = function(pos,node,player)
 		local meta = minetest.get_meta(pos)
 		local min = meta:get_int("min")
 		local value = meta:get_int("value")
 		local full = player:get_player_control().aux1
 		value = full and min or math.max(min,value-1)
 		meta:set_int("value",value)
-		meta:set_string("infotext",string.format("Current setting: %d\nLeft-click to turn up or right-click to turn down",math.floor(tonumber(value))))
+		meta:set_string("infotext",string.format("Current setting: %d\nLeft-click to turn down or right-click to turn up",math.floor(tonumber(value))))
 		digiline:receptor_send(pos,digistuff.button_get_rules(node),meta:get_string("channel"),value)
 	end,
 	sounds = default and default.node_sound_stone_defaults(),

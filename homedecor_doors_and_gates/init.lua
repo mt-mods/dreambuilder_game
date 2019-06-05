@@ -730,8 +730,17 @@ minetest.register_alias("doors:bedroom_b",                      "doors:homedecor
 
 -- flip old homedecor doors around, since they use minetest_game doors API now
 
+old_doors[#old_doors + 1] = "homedecor:door_wood_glass_left"
+old_doors[#old_doors + 1] = "homedecor:door_wood_glass_right"
+
+old_doors[#old_doors + 1] = "homedecor:door_woodglass2_left"
+old_doors[#old_doors + 1] = "homedecor:door_woodglass2_right"
+
+old_doors[#old_doors + 1] = "homedecor:door_bedroom_left"
+old_doors[#old_doors + 1] = "homedecor:door_bedroom_right"
+
 minetest.register_lbm({
-	name = ":homedecor:convert_doors",
+	name = ":homedecor:convert_doors_2",
 	label = "Convert Homedecor doors to mtg doors API",
 	nodenames = old_doors,
 	run_at_every_load = false,
@@ -740,7 +749,7 @@ minetest.register_lbm({
 		local newparam2 = (node.param2 + 2) % 4
 		local e = string.find(node.name, "_", -7)
 		local dir = string.sub(node.name, e+1)
-		local newname = "doors:"..string.sub(node.name, 16, e-1)
+		local newname = "doors:homedecor_"..string.sub(node.name, 16, e-1)
 		if dir == "right" then
 			minetest.set_node(pos, {name = newname.."_a", param2 = newparam2 })
 		else
