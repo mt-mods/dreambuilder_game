@@ -724,7 +724,7 @@ for brightness_level = 0, 14 do
 		paramtype2 = "color",
 		palette = "unifieddyes_palette_extended.png",
 		walkable = false,
-		light_source = word_to_bright[light_brightn_name],
+		light_source = brightness_level,
 		groups = {cracky=2,oddly_breakable_by_hand=1, ud_param2_colorable = 1, not_in_creative_inventory=nici },
 		selection_box = slamp_cbox,
 		sounds = default.node_sound_wood_defaults(),
@@ -765,7 +765,7 @@ for _, light_brightn_name in ipairs({"off", "on"}) do
 	end
 
 	homedecor.register("plasma_ball_"..light_brightn_name, {
-		description = S("Plasma Ball"),
+		description = S("Plasma Ball/light"),
 		mesh = "homedecor_plasma_ball.obj",
 		tiles = {
 			{ name = "homedecor_generic_plastic.png", color = homedecor.color_black },
@@ -894,7 +894,7 @@ for _, light_brightn_name in ipairs({"off", "on"}) do
 	})
 
 	homedecor.register("wall_lamp_"..light_brightn_name, {
-		description = S("Wall Lamp"),
+		description = S("Wall Lamp/light"),
 		mesh = "homedecor_wall_lamp.obj",
 		tiles = {
 			{ name = "homedecor_generic_metal.png", color = homedecor.color_med_grey },
