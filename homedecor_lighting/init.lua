@@ -1836,8 +1836,7 @@ minetest.register_alias("homedecor:table_lamp_max",            "homedecor:table_
 minetest.register_alias("homedecor:standing_lamp",             "homedecor:standing_lamp_14")
 minetest.register_alias("homedecor:standing_lamp_max",         "homedecor:standing_lamp_14")
 
-minetest.register_alias("homedecor:wall_lamp",                 "homedecor:wall_lamp_14")
-minetest.register_alias("homedecor:wall_lamp_max",             "homedecor:wall_lamp_14")
+minetest.register_alias("homedecor:wall_lamp",                 "homedecor:wall_lamp_on")
 
 minetest.register_alias("3dforniture:table_lamp",              "homedecor:table_lamp_14")
 minetest.register_alias("3dforniture:table_lamp_max",          "homedecor:table_lamp_14")
@@ -1862,7 +1861,6 @@ for name, level in pairs(word_to_bright) do
 	minetest.register_alias("homedecor:ceiling_lamp_"..name,          "homedecor:ceiling_lamp_"..level)
 	minetest.register_alias("homedecor:table_lamp_"..name,            "homedecor:table_lamp_"..level)
 	minetest.register_alias("homedecor:standing_lamp_"..name,         "homedecor:standing_lamp_"..level)
-	minetest.register_alias("homedecor:wall_lamp_"..name,             "homedecor:wall_lamp_"..level)
 	minetest.register_alias("3dforniture:table_lamp_"..name,          "homedecor:table_lamp_"..level)
 end
 
