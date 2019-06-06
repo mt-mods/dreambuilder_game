@@ -1797,17 +1797,8 @@ minetest.register_alias("homedecor:glowlight_quarter_max",     "homedecor:glowli
 minetest.register_alias("homedecor:glowlight_small_cube",      "homedecor:glowlight_small_cube_14")
 minetest.register_alias("homedecor:glowlight_small_cube_max",  "homedecor:glowlight_small_cube_14")
 
-minetest.register_alias("homedecor:rope_light_14_floor",       "homedecor:rope_light_on_floor_14")
-minetest.register_alias("homedecor:rope_light_on_floor_max",   "homedecor:rope_light_on_floor_14")
-
-minetest.register_alias("homedecor:rope_light_on_ceiling",     "homedecor:rope_light_on_ceiling_14")
-minetest.register_alias("homedecor:rope_light_on_ceiling_max", "homedecor:rope_light_on_ceiling_14")
-
 minetest.register_alias("homedecor:plasma_lamp",               "homedecor:plasma_lamp_14")
 minetest.register_alias("homedecor:plasma_lamp_max",           "homedecor:plasma_lamp_14")
-
-minetest.register_alias("homedecor:plasma_ball",               "homedecor:plasma_ball_14")
-minetest.register_alias("homedecor:plasma_ball_max",           "homedecor:plasma_ball_14")
 
 minetest.register_alias("homedecor:ground_lantern",            "homedecor:ground_lantern_14")
 minetest.register_alias("homedecor:ground_lantern_max",        "homedecor:ground_lantern_14")
@@ -1836,13 +1827,15 @@ minetest.register_alias("homedecor:table_lamp_max",            "homedecor:table_
 minetest.register_alias("homedecor:standing_lamp",             "homedecor:standing_lamp_14")
 minetest.register_alias("homedecor:standing_lamp_max",         "homedecor:standing_lamp_14")
 
-minetest.register_alias("homedecor:wall_lamp",                 "homedecor:wall_lamp_on")
-
 minetest.register_alias("3dforniture:table_lamp",              "homedecor:table_lamp_14")
 minetest.register_alias("3dforniture:table_lamp_max",          "homedecor:table_lamp_14")
 
 minetest.register_alias("3dforniture:torch_wall",              "homedecor:torch_wall")
 minetest.register_alias("torch_wall",                          "homedecor:torch_wall")
+
+minetest.register_alias("homedecor:plasma_ball",               "homedecor:plasma_ball_on")
+minetest.register_alias("homedecor:wall_lamp",                 "homedecor:wall_lamp_on")
+
 
 for name, level in pairs(word_to_bright) do
 	minetest.register_alias("homedecor:glowlight_half_"..name,        "homedecor:glowlight_half_"..level)
