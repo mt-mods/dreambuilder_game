@@ -49,17 +49,6 @@ end
 
 local digiline_wire_node = "digilines:wire_std_00000000"
 
--- clone node
-
-local function clone_node(name)
-	local node2 = {}
-	local node = minetest.registered_nodes[name]
-	for k,v in pairs(node) do
-		node2[k]=v
-	end
-	return node2
-end
-
 minetest.register_privilege("streetlight", {
 	description = "Allows using streetlight spawners",
 	give_to_singleplayer = true
@@ -222,7 +211,7 @@ for _, pole in ipairs(poles_tab) do
 			local lightparam2 = light[4] or 0
 
 			if enable_digilines then
-				local def = clone_node(matnode)
+				local def = table.copy(minetest.registered_nodes[matnode])
 				local dl_overlay
 
 				if def.drawtype == "fencelike" then

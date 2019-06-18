@@ -3,17 +3,6 @@
 local S = homedecor.gettext
 local mesecons_mp = minetest.get_modpath("mesecons")
 
--- clone node
-
-function hd_doors_clone_node(name)
-	local node2 = {}
-	local node = minetest.registered_nodes[name]
-	for k,v in pairs(node) do
-		node2[k]=v
-	end
-	return node2
-end
-
 -- new doors using minetest_game doors API
 
 local door_list = {
@@ -181,22 +170,22 @@ for _, door in ipairs(door_list) do
 	local nn_b = "doors:homedecor_"..door.name.."_b"
 
 	if door.alpha then
-		local def = hd_doors_clone_node(nn_a)
+		local def = table.copy(minetest.registered_nodes[nn_a])
 			def.use_texture_alpha = true
 			def.mesh = "door_a.obj"                -- leaving this out will break the _a model
 			minetest.register_node(":"..nn_a, def) -- assignment when the override takes place
 
-		def = hd_doors_clone_node(nn_b)
+		def = table.copy(minetest.registered_nodes[nn_b])
 			def.use_texture_alpha = true
 			minetest.register_node(":"..nn_b, def)
 	end
 
 	if door.custom_model and hd_3d then
-		def = hd_doors_clone_node(nn_a)
+		def = table.copy(minetest.registered_nodes[nn_a])
 			def.mesh = door.custom_model.."_a.obj"
 			minetest.register_node(":"..nn_a, def)
 
-		def = hd_doors_clone_node(nn_b)
+		def = table.copy(minetest.registered_nodes[nn_b])
 			def.mesh = door.custom_model.."_b.obj"
 			minetest.register_node(":"..nn_b, def)
 	end

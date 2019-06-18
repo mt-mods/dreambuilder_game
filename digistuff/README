@@ -16,7 +16,16 @@ Only needed for craft recipes: default, mesecons_luacontroller, basic_materials
 How to use digilines buttons:
 Connect to a digiline (or digimese), right-click, and set a channel and message.
 When the button is pressed (right-click), it will send that message on that channel, over digilines.
+If the "Protected" checkbox is checked, only players allowed to interact in the area can push the button.
+If the "Manual Light Control" checkbox is checked, the light will not illuminate automatically when the button is pushed - use the "light_on" and "light_off" commands to control it.
 Note that the settings cannot be changed after setting - you must dig and re-place the button to do so.
+
+
+How to use the wall knob:
+Connect to a digiline, right-click, and set the channel and the minimum and maximum values.
+Left-click to decrease the current setting or right-click to increase it. If the "protected" checkbox was checked, then only players allowed to interact in the area can do this.
+Each time the setting is changed, the new setting is sent on the selected channel.
+Note that the settings cannot be changed after setting - you must dig and re-place the knob to do so.
 
 
 How to use digimese:
@@ -26,7 +35,7 @@ It conducts digilines signals (like digilines) in all directions (like mese). Th
 How to use vertical/insulated digilines:
 These work exactly like the mesecons equivalents, that is:
 Vertical digilines will automatically connect to other vertical digilines directly above or below them, and form "plates" on each end of the stack. Signals can only be conducted into or out of the stack at these "plates".
-Insulated digilines conduct like regular digilines, but only into/out of the ends of the "wire".
+Insulated digilines conduct like regular digilines, but only into/out of the ends of the "wire" or at locations where an intermediate connection has been placed.
 
 
 How to use the digilines player detector:

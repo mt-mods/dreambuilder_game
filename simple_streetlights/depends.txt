@@ -10,3 +10,4 @@ streets_trafficlight?
 trafficlight?
 digilines?
 digistuff?
+coloredwood?

@@ -167,6 +167,7 @@ digistuff.vertical_autoconnect = function(pos)
 			shouldbe = "digistuff:vertical_top"
 		end
 	end
+	if node.name == "digistuff:vertical_tap" then shouldbe = "digistuff:vertical_tap" end
 	if shouldbe ~= node.name or upnode.name == "digistuff:vertical_bottom" or dnnode.name == "digistuff:vertical_top" then
 		node.name = shouldbe
 		minetest.set_node(pos,node)
@@ -182,6 +183,44 @@ digistuff.vertical_remove = function(pos)
 	digistuff.vertical_autoconnect(uppos)
 	digistuff.vertical_autoconnect(dnpos)
 end
+
+minetest.register_node("digistuff:vertical_tap", {
+	description = "Vertical Digiline Intermediate Connection",
+	tiles = {"digistuff_digiline_full.png"},
+	paramtype = "light",
+	groups = {dig_immediate = 3,vertical_digiline = 1,},
+	is_ground_content = false,
+	paramtype = "light",
+	drawtype = "nodebox",
+	node_box = {
+		type = "fixed",
+		fixed = {
+				{-0.5,-0.5,-0.5,0.5,-0.4375,0.5},
+				{-0.05,-0.4375,-0.05,0.05,0.5,0.05},
+			},
+	},
+	collision_box = {
+		type = "fixed",
+		fixed = {
+				{-0.5,-0.5,-0.5,0.5,-0.4375,0.5},
+			},
+	},
+	after_place_node = digistuff.vertical_autoconnect,
+	after_destruct = digistuff.vertical_remove,
+	digiline = {
+		receptor = {},
+		wire = {
+			rules = {
+				{x =  1,y =  0,z =  0},
+				{x = -1,y =  0,z =  0},
+				{x =  0,y =  0,z =  1},
+				{x =  0,y =  0,z = -1},
+				{x =  0,y =  1,z =  0},
+				{x =  0,y = -1,z =  0},
+			},
+		},
+	},
+})
 
 minetest.register_node("digistuff:vertical_bottom", {
 	description = "Vertical Digiline",
@@ -502,6 +541,15 @@ minetest.register_craft({
 		{"digilines:wire_std_00000000",},
 		{"digilines:wire_std_00000000",},
 		{"digilines:wire_std_00000000",},
+	}
+})
+
+minetest.register_craft({
+	output = "digistuff:vertical_tap 5",
+	recipe = {
+		{"","digistuff:vertical_bottom",""},
+		{"digilines:wire_std_00000000","digistuff:vertical_bottom","digilines:wire_std_00000000"},
+		{"","digistuff:vertical_bottom",""},
 	}
 })
 
