@@ -11,3 +11,7 @@ This mod will also enhance default wood ladders and steel ladders to make them "
 This mod retains optional backward compatibility with the crafting items from the vines mod (anything with group "vines" can be used to make rope boxes and rope ladders). Ropes can also be made from cotton, available via an optional dependency on the farming mod.
 
 In-game documentation is provided via an optional dependency on the doc mod.
+
+## Interaction with other mods
+
+By default ropes and rope ladders only extend downward into "air" nodes. Other mods can modify this behaviour to add other nodes as valid targets for ropes to extend into using either of two mechanisms: either add `ropes_can_extend_into = 1` to the node definition's groups list or add a dependency on the ropes mod to your mod and then set `ropes.can_extend_into_nodes[target_node_name] = true`. There is also a configuration setting, `ropes_can_extend_into_airlike`, that will allow ropes to extend into any node with `drawtype = "airlike"` in its definition. Note that in cases where ropes extend into non-air nodes the rope will still be replaced with an "air" node when it's eventually destroyed.

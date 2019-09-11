@@ -220,3 +220,12 @@ minetest.register_node("digistuff:piston_pusher", {
 
 mesecon.register_mvps_stopper("digistuff:piston_ext")
 mesecon.register_mvps_stopper("digistuff:piston_pusher")
+
+minetest.register_craft({
+	output = "digistuff:piston",
+	recipe = {
+		{"mesecons_pistons:piston_normal_off"},
+		{"mesecons_luacontroller:luacontroller0000"},
+		{"digilines:wire_std_00000000"},
+	},
+})

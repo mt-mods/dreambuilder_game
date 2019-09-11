@@ -107,6 +107,7 @@ minetest.register_node("unifiedbricks:brickblock", {
 	groups = {cracky=3, not_in_creative_inventory=1, ud_param2_colorable = 1},
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = unifieddyes.on_construct,
+	on_dig = unifieddyes.on_dig,
 })
 
 minetest.override_item("default:brick", {
@@ -128,6 +129,7 @@ minetest.register_node("unifiedbricks:clayblock", {
 			footstep = "",
 		}),
 	on_construct = unifieddyes.on_construct,
+	on_dig = unifieddyes.on_dig,
 })
 
 minetest.override_item("default:clay", {
@@ -151,6 +153,7 @@ minetest.register_node("unifiedbricks:brickblock_multicolor_dark", {
 	groups = {cracky=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = unifieddyes.on_construct,
+	on_dig = unifieddyes.on_dig,
 })
 
 minetest.register_node("unifiedbricks:brickblock_multicolor_medium", {
@@ -168,6 +171,7 @@ minetest.register_node("unifiedbricks:brickblock_multicolor_medium", {
 	groups = {cracky=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = unifieddyes.on_construct,
+	on_dig = unifieddyes.on_dig,
 })
 
 minetest.register_node("unifiedbricks:brickblock_multicolor_light", {
@@ -185,6 +189,7 @@ minetest.register_node("unifiedbricks:brickblock_multicolor_light", {
 	groups = {cracky=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_stone_defaults(),
 	on_construct = unifieddyes.on_construct,
+	on_dig = unifieddyes.on_dig,
 })
 
 minetest.register_craft( {

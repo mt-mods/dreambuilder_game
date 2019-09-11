@@ -1,11 +1,11 @@
 -- Class-OM signs
 
-local S = street_signs.gettext
+local S = signs_lib.gettext
 local cbox
 
 for _, d in ipairs({"l", "c", "r"}) do
 
-	cbox = street_signs.make_selection_boxes(12, 36, nil)
+	cbox = signs_lib.make_selection_boxes(12, 36, nil)
 
 	minetest.register_node("street_signs:sign_object_marker_type3_"..d, {
 		description = "OM3-"..string.upper(d)..": Type 3 object marker",

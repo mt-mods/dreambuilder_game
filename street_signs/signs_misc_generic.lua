@@ -1,21 +1,21 @@
 -- Misc./Generic signs
 
-local S = street_signs.gettext
+local S = signs_lib.gettext
 local cbox
 
 for _, onpole in ipairs({"", "_onpole"}) do
 
 	local nci = nil
-	local on_rotate = street_signs.wallmounted_rotate
+	local on_rotate = signs_lib.wallmounted_rotate
 	local pole_mount_tex = nil
 
 	if onpole == "_onpole" then
 		nci = 1
 		on_rotate = nil
-		pole_mount_tex = "street_signs_pole_mount.png"
+		pole_mount_tex = "signs_lib_pole_mount.png"
 	end
 
-	cbox = street_signs.make_selection_boxes(36, 36, onpole)
+	cbox = signs_lib.make_selection_boxes(36, 36, onpole)
 
 	minetest.register_node("street_signs:sign_warning_3_line"..onpole, {
 		description = "W3-4: Generic US diamond \"warning\" sign (3-line, yellow)",
@@ -34,11 +34,11 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_warning_3_line_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
-		on_construct = street_signs.construct_sign,
-		on_destruct = street_signs.destruct_sign,
-		after_place_node = street_signs.after_place_node,
-		on_receive_fields = street_signs.receive_fields,
-		on_punch = street_signs.update_sign,
+		on_construct = signs_lib.construct_sign,
+		on_destruct = signs_lib.destruct_sign,
+		after_place_node = signs_lib.after_place_node,
+		on_receive_fields = signs_lib.receive_fields,
+		on_punch = signs_lib.update_sign,
 		on_rotate = on_rotate,
 		number_of_lines = 3,
 		horiz_scaling = 1.75,
@@ -50,7 +50,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		chars_per_line = 15,
 		entity_info = {
 			mesh = "street_signs_warning_36x36_entity"..onpole..".obj",
-			yaw = street_signs.wallmounted_yaw
+			yaw = signs_lib.wallmounted_yaw
 		},
 		drop = "street_signs:sign_warning_3_line"
 	})
@@ -72,11 +72,11 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_warning_4_line_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
-		on_construct = street_signs.construct_sign,
-		on_destruct = street_signs.destruct_sign,
-		after_place_node = street_signs.after_place_node,
-		on_receive_fields = street_signs.receive_fields,
-		on_punch = street_signs.update_sign,
+		on_construct = signs_lib.construct_sign,
+		on_destruct = signs_lib.destruct_sign,
+		after_place_node = signs_lib.after_place_node,
+		on_receive_fields = signs_lib.receive_fields,
+		on_punch = signs_lib.update_sign,
 		on_rotate = on_rotate,
 		number_of_lines = 4,
 		horiz_scaling = 1.75,
@@ -88,7 +88,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		chars_per_line = 15,
 		entity_info = {
 			mesh = "street_signs_warning_36x36_entity"..onpole..".obj",
-			yaw = street_signs.wallmounted_yaw
+			yaw = signs_lib.wallmounted_yaw
 		},
 		drop = "street_signs:sign_warning_4_line"
 	})
@@ -110,11 +110,11 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_warning_orange_3_line_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
-		on_construct = street_signs.construct_sign,
-		on_destruct = street_signs.destruct_sign,
-		after_place_node = street_signs.after_place_node,
-		on_receive_fields = street_signs.receive_fields,
-		on_punch = street_signs.update_sign,
+		on_construct = signs_lib.construct_sign,
+		on_destruct = signs_lib.destruct_sign,
+		after_place_node = signs_lib.after_place_node,
+		on_receive_fields = signs_lib.receive_fields,
+		on_punch = signs_lib.update_sign,
 		on_rotate = on_rotate,
 		number_of_lines = 3,
 		horiz_scaling = 1.75,
@@ -126,7 +126,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		chars_per_line = 15,
 		entity_info = {
 			mesh = "street_signs_warning_36x36_entity"..onpole..".obj",
-			yaw = street_signs.wallmounted_yaw
+			yaw = signs_lib.wallmounted_yaw
 		},
 		drop = "street_signs:sign_warning_orange_3_line"
 	})
@@ -148,11 +148,11 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_warning_orange_4_line_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
-		on_construct = street_signs.construct_sign,
-		on_destruct = street_signs.destruct_sign,
-		after_place_node = street_signs.after_place_node,
-		on_receive_fields = street_signs.receive_fields,
-		on_punch = street_signs.update_sign,
+		on_construct = signs_lib.construct_sign,
+		on_destruct = signs_lib.destruct_sign,
+		after_place_node = signs_lib.after_place_node,
+		on_receive_fields = signs_lib.receive_fields,
+		on_punch = signs_lib.update_sign,
 		on_rotate = on_rotate,
 		number_of_lines = 4,
 		horiz_scaling = 1.75,
@@ -164,15 +164,15 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		chars_per_line = 15,
 		entity_info = {
 			mesh = "street_signs_warning_36x36_entity"..onpole..".obj",
-			yaw = street_signs.wallmounted_yaw
+			yaw = signs_lib.wallmounted_yaw
 		},
 		drop = "street_signs:sign_warning_orange_4_line"
 	})
 
-	table.insert(street_signs.lbm_restore_nodes, "street_signs:sign_warning_3_line"..onpole)
-	table.insert(street_signs.lbm_restore_nodes, "street_signs:sign_warning_4_line"..onpole)
-	table.insert(street_signs.lbm_restore_nodes, "street_signs:sign_warning_orange_3_line"..onpole)
-	table.insert(street_signs.lbm_restore_nodes, "street_signs:sign_warning_orange_4_line"..onpole)
+	table.insert(signs_lib.lbm_restore_nodes, "street_signs:sign_warning_3_line"..onpole)
+	table.insert(signs_lib.lbm_restore_nodes, "street_signs:sign_warning_4_line"..onpole)
+	table.insert(signs_lib.lbm_restore_nodes, "street_signs:sign_warning_orange_3_line"..onpole)
+	table.insert(signs_lib.lbm_restore_nodes, "street_signs:sign_warning_orange_4_line"..onpole)
 end
 
 for _, s in ipairs(street_signs.big_sign_sizes) do
@@ -211,11 +211,11 @@ for _, s in ipairs(street_signs.big_sign_sizes) do
 			},
 			default_color = defc,
 			groups = {choppy=2, dig_immediate=2},
-			on_construct = street_signs.construct_sign,
-			on_destruct = street_signs.destruct_sign,
-			on_receive_fields = street_signs.receive_fields,
-			on_punch = street_signs.update_sign,
-			on_rotate = street_signs.wallmounted_rotate,
+			on_construct = signs_lib.construct_sign,
+			on_destruct = signs_lib.destruct_sign,
+			on_receive_fields = signs_lib.receive_fields,
+			on_punch = signs_lib.update_sign,
+			on_rotate = signs_lib.wallmounted_rotate,
 			number_of_lines = nlines,
 			chars_per_line = nchars,
 			horiz_scaling = hscale,
@@ -226,7 +226,7 @@ for _, s in ipairs(street_signs.big_sign_sizes) do
 			y_offset = yoffs,
 			entity_info = {
 				mesh = "street_signs_generic_highway_"..size.."_entity.obj",
-				yaw = street_signs.wallmounted_yaw
+				yaw = signs_lib.wallmounted_yaw
 			}
 		})
 
@@ -248,11 +248,11 @@ for _, s in ipairs(street_signs.big_sign_sizes) do
 			},
 			default_color = defc,
 			groups = {choppy=2, dig_immediate=2},
-			on_construct = street_signs.construct_sign,
-			on_destruct = street_signs.destruct_sign,
-			on_receive_fields = street_signs.receive_fields,
-			on_punch = street_signs.update_sign,
-			on_rotate = street_signs.wallmounted_rotate,
+			on_construct = signs_lib.construct_sign,
+			on_destruct = signs_lib.destruct_sign,
+			on_receive_fields = signs_lib.receive_fields,
+			on_punch = signs_lib.update_sign,
+			on_rotate = signs_lib.wallmounted_rotate,
 			number_of_lines = nlines,
 			chars_per_line = math.ceil(nchars/1.4),
 			horiz_scaling = hscale/1.4,
@@ -263,12 +263,12 @@ for _, s in ipairs(street_signs.big_sign_sizes) do
 			y_offset = yoffs,
 			entity_info = {
 				mesh = "street_signs_generic_highway_"..size.."_entity.obj",
-				yaw = street_signs.wallmounted_yaw
+				yaw = signs_lib.wallmounted_yaw
 			}
 		})
 
-		table.insert(street_signs.lbm_restore_nodes, "street_signs:sign_highway_"..size.."_"..color)
-		table.insert(street_signs.lbm_restore_nodes, "street_signs:sign_highway_widefont_"..size.."_"..color)
+		table.insert(signs_lib.lbm_restore_nodes, "street_signs:sign_highway_"..size.."_"..color)
+		table.insert(signs_lib.lbm_restore_nodes, "street_signs:sign_highway_widefont_"..size.."_"..color)
 
 	end
 end

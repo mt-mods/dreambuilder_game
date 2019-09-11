@@ -50,6 +50,9 @@ replacer.blacklist[ "tnt:boom"] = true;
 replacer.blacklist[ "tnt:gunpowder"] = true;
 replacer.blacklist[ "tnt:gunpowder_burning"] = true;
 replacer.blacklist[ "tnt:tnt"] = true;
+replacer.blacklist[ "default:water_source"] = true;
+replacer.blacklist[ "default:lava_source"] = true;
+replacer.blacklist[ "default:river_water_source"] = true;
 
 -- prevent accidental replacement of your protector
 replacer.blacklist[ "protector:protect"] = true;

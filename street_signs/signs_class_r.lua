@@ -1,21 +1,21 @@
 -- Class-R signs
 
-local S = street_signs.gettext
+local S = signs_lib.gettext
 local cbox
 
 for _, onpole in ipairs({"", "_onpole"}) do
 
 	local nci = nil
-	local on_rotate = street_signs.wallmounted_rotate
+	local on_rotate = signs_lib.wallmounted_rotate
 	local pole_mount_tex = nil
 
 	if onpole == "_onpole" then
 		nci = 1
 		on_rotate = nil
-		pole_mount_tex = "street_signs_pole_mount.png"
+		pole_mount_tex = "signs_lib_pole_mount.png"
 	end
 
-	cbox = street_signs.make_selection_boxes(36, 36, onpole)
+	cbox = signs_lib.make_selection_boxes(36, 36, onpole)
 
 	minetest.register_node("street_signs:sign_stop"..onpole, {
 		description = "R1-1: Stop sign",
@@ -34,12 +34,12 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_stop_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_stop"
 	})
 
-	cbox = street_signs.make_selection_boxes(36, 43.1, onpole, 0, -3.55, 0)
+	cbox = signs_lib.make_selection_boxes(36, 43.1, onpole, 0, -3.55, 0)
 
 	minetest.register_node("street_signs:sign_stop_all_way"..onpole, {
 		description = "R1-1 + R1-3P: Stop sign with \"all way\" plaque",
@@ -59,12 +59,12 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_stop_all_way_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_stop_all_way"
 	})
 
-	cbox = street_signs.make_selection_boxes(48, 48, onpole)
+	cbox = signs_lib.make_selection_boxes(48, 48, onpole)
 
 	minetest.register_node("street_signs:sign_yield"..onpole, {
 		description = "R1-2: Yield sign",
@@ -83,12 +83,12 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_yield_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_yield"
 	})
 
-	cbox = street_signs.make_selection_boxes(30, 36, onpole)
+	cbox = signs_lib.make_selection_boxes(30, 36, onpole)
 
 	minetest.register_node("street_signs:sign_speed_limit"..onpole, {
 		description = "R2-1: Generic speed limit sign",
@@ -107,11 +107,11 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_speed_limit_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
-		on_construct = street_signs.construct_sign,
-		on_destruct = street_signs.destruct_sign,
-		after_place_node = street_signs.after_place_node,
-		on_receive_fields = street_signs.receive_fields,
-		on_punch = street_signs.update_sign,
+		on_construct = signs_lib.construct_sign,
+		on_destruct = signs_lib.destruct_sign,
+		after_place_node = signs_lib.after_place_node,
+		on_receive_fields = signs_lib.receive_fields,
+		on_punch = signs_lib.update_sign,
 		on_rotate = on_rotate,
 		number_of_lines = 1,
 		horiz_scaling = 2.65,
@@ -123,12 +123,12 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		chars_per_line = 4,
 		entity_info = {
 			mesh = "street_signs_generic_sign_30x36_entity"..onpole..".obj",
-			yaw = street_signs.wallmounted_yaw
+			yaw = signs_lib.wallmounted_yaw
 		},
 		drop = "street_signs:sign_speed_limit"
 	})
 
-	cbox = street_signs.make_selection_boxes(36, 36, onpole)
+	cbox = signs_lib.make_selection_boxes(36, 36, onpole)
 
 	minetest.register_node("street_signs:sign_no_right_turn"..onpole, {
 		description = "R3-1: No right turn",
@@ -147,7 +147,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_no_right_turn_inv.png",
 		wield_image = "street_signs_no_right_turn_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_no_right_turn"
 	})
@@ -169,7 +169,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_no_left_turn_inv.png",
 		wield_image = "street_signs_no_left_turn_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_no_left_turn"
 	})
@@ -191,7 +191,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_no_u_turn_inv.png",
 		wield_image = "street_signs_no_u_turn_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_no_u_turn"
 	})
@@ -213,12 +213,12 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_u_turn_here_inv.png",
 		wield_image = "street_signs_u_turn_here_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_u_turn_here"
 	})
 
-	cbox = street_signs.make_selection_boxes(30, 36, onpole)
+	cbox = signs_lib.make_selection_boxes(30, 36, onpole)
 
 	minetest.register_node("street_signs:sign_left_turn_only"..onpole, {
 		description = "R3-5: Left turn only",
@@ -237,7 +237,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_left_turn_only_inv.png",
 		wield_image = "street_signs_left_turn_only_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_left_turn_only"
 	})
@@ -259,7 +259,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_right_turn_only_inv.png",
 		wield_image = "street_signs_right_turn_only_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_right_turn_only"
 	})
@@ -281,7 +281,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_straight_through_only_inv.png",
 		wield_image = "street_signs_straight_through_only_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_straight_through_only"
 	})
@@ -303,7 +303,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_left_turn_or_straight_inv.png",
 		wield_image = "street_signs_left_turn_or_straight_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_left_turn_or_straight"
 	})
@@ -325,13 +325,13 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_right_turn_or_straight_inv.png",
 		wield_image = "street_signs_right_turn_or_straight_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_right_turn_or_straight"
 	})
 
 
-	cbox = street_signs.make_selection_boxes(36, 36, onpole)
+	cbox = signs_lib.make_selection_boxes(36, 36, onpole)
 
 	minetest.register_node("street_signs:sign_left_lane_must_turn_left"..onpole, {
 		description = "R3-7: Left lane must turn left",
@@ -350,7 +350,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_left_lane_must_turn_left_inv.png",
 		wield_image = "street_signs_left_lane_must_turn_left_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_left_lane_must_turn_left"
 	})
@@ -372,7 +372,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_right_lane_must_turn_right_inv.png",
 		wield_image = "street_signs_right_lane_must_turn_right_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_right_lane_must_turn_right"
 	})
@@ -394,12 +394,12 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_no_straight_through_inv.png",
 		wield_image = "street_signs_no_straight_through_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_no_straight_through"
 	})
 
-	cbox = street_signs.make_selection_boxes(36, 48, onpole)
+	cbox = signs_lib.make_selection_boxes(36, 48, onpole)
 
 	minetest.register_node("street_signs:sign_keep_right"..onpole, {
 		description = "R4-7: Keep right sign",
@@ -417,7 +417,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_keep_right_inv.png",
 		wield_image = "street_signs_keep_right_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_keep_right"
 	})
@@ -438,12 +438,12 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_keep_left_inv.png",
 		wield_image = "street_signs_keep_left_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_keep_left"
 	})
 
-	cbox = street_signs.make_selection_boxes(36, 36, onpole)
+	cbox = signs_lib.make_selection_boxes(36, 36, onpole)
 
 	minetest.register_node("street_signs:sign_do_not_enter"..onpole, {
 		description = "R5-1: Do not enter sign",
@@ -462,12 +462,12 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_do_not_enter_inv.png",
 		wield_image = "street_signs_do_not_enter_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_do_not_enter"
 	})
 
-	cbox = street_signs.make_selection_boxes(42, 30, onpole)
+	cbox = signs_lib.make_selection_boxes(42, 30, onpole)
 
 	minetest.register_node("street_signs:sign_wrong_way"..onpole, {
 		description = "R5-1a: Wrong way sign",
@@ -485,12 +485,12 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_wrong_way_inv.png",
 		wield_image = "street_signs_wrong_way_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_wrong_way"
 	})
 
-	cbox = street_signs.make_selection_boxes(54, 18, onpole)
+	cbox = signs_lib.make_selection_boxes(54, 18, onpole)
 
 	minetest.register_node("street_signs:sign_one_way_left"..onpole, {
 		description = "R6-1: One way (left)",
@@ -508,7 +508,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_one_way_left_inv.png",
 		wield_image = "street_signs_one_way_left_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_one_way_left"
 	})
@@ -529,12 +529,12 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_one_way_right_inv.png",
 		wield_image = "street_signs_one_way_right_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_one_way_right"
 	})
 
-	cbox = street_signs.make_selection_boxes(30, 24, onpole)
+	cbox = signs_lib.make_selection_boxes(30, 24, onpole)
 
 	minetest.register_node("street_signs:sign_divided_highway_with_cross_road"..onpole, {
 		description = "R6-3: divided highway with cross road",
@@ -552,12 +552,12 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_divided_highway_with_cross_road_inv.png",
 		wield_image = "street_signs_divided_highway_with_cross_road_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_divided_highway_with_cross_road"
 	})
 
-	cbox = street_signs.make_selection_boxes(60, 24, onpole)
+	cbox = signs_lib.make_selection_boxes(60, 24, onpole)
 
 	minetest.register_node("street_signs:sign_roundabout_directional"..onpole, {
 		description = "R6-4b: Roundabout direction (4 chevrons)",
@@ -575,7 +575,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_roundabout_directional_inv.png",
 		wield_image = "street_signs_roundabout_directional.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_roundabout_directional"
 	})
@@ -596,12 +596,12 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_roundabout_directional_left_inv.png",
 		wield_image = "street_signs_roundabout_directional_left.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_roundabout_directional_left"
 	})
 
-	cbox = street_signs.make_selection_boxes(30, 30, onpole)
+	cbox = signs_lib.make_selection_boxes(30, 30, onpole)
 
 	minetest.register_node("street_signs:sign_roundabout_counter_clockwise"..onpole, {
 		description = "R6-5P: Roundabout plaque (to the left/counter-clockwise)",
@@ -619,7 +619,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_roundabout_counter_clockwise_inv.png",
 		wield_image = "street_signs_roundabout_counter_clockwise.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_roundabout_counter_clockwise"
 	})
@@ -640,12 +640,12 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_roundabout_clockwise_inv.png",
 		wield_image = "street_signs_roundabout_clockwise.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_roundabout_clockwise"
 	})
 
-	cbox = street_signs.make_selection_boxes(24, 30, onpole)
+	cbox = signs_lib.make_selection_boxes(24, 30, onpole)
 
 	minetest.register_node("street_signs:sign_do_not_stop_on_tracks"..onpole, {
 		description = "R8-8: Do not stop on tracks",
@@ -664,12 +664,12 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_do_not_stop_on_tracks.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_do_not_stop_on_tracks"
 	})
 
-	cbox = street_signs.make_selection_boxes(9, 15, onpole, 0, 0, -1.25)
+	cbox = signs_lib.make_selection_boxes(9, 15, onpole, 0, 0, -1.25)
 
 	minetest.register_node("street_signs:sign_ped_push_button_to_cross_r10_3a"..onpole, {
 		description = "R10-3a: Pedestrians, push button to cross (pointing left)",
@@ -688,7 +688,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_ped_push_button_to_cross_r10_3a_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_ped_push_button_to_cross_r10_3a"
 	})
@@ -710,7 +710,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_ped_push_button_to_cross_r10_3a_right_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_ped_push_button_to_cross_r10_3a_right"
 	})
@@ -732,7 +732,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_ped_push_button_to_cross_r10_3a_both_ways_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_ped_push_button_to_cross_r10_3a_both_ways"
 	})
@@ -754,7 +754,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_ped_push_button_to_cross_r10_3e_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_ped_push_button_to_cross_r10_3e"
 	})
@@ -776,7 +776,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_ped_push_button_to_cross_r10_3e_left_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_ped_push_button_to_cross_r10_3e_left"
 	})
@@ -798,11 +798,11 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_ped_push_button_to_cross_r10_3i_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
-		on_construct = street_signs.construct_sign,
-		on_destruct = street_signs.destruct_sign,
-		after_place_node = street_signs.after_place_node,
-		on_receive_fields = street_signs.receive_fields,
-		on_punch = street_signs.update_sign,
+		on_construct = signs_lib.construct_sign,
+		on_destruct = signs_lib.destruct_sign,
+		after_place_node = signs_lib.after_place_node,
+		on_receive_fields = signs_lib.receive_fields,
+		on_punch = signs_lib.update_sign,
 		on_rotate = on_rotate,
 		number_of_lines = 1,
 		horiz_scaling = 3,
@@ -814,7 +814,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		chars_per_line = 25,
 		entity_info = {
 			mesh = "street_signs_generic_sign_9x15_entity"..onpole..".obj",
-			yaw = street_signs.wallmounted_yaw
+			yaw = signs_lib.wallmounted_yaw
 		},
 		drop = "street_signs:sign_ped_push_button_to_cross_r10_3i"
 	})
@@ -836,11 +836,11 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_ped_push_button_to_cross_r10_3i_left_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
-		on_construct = street_signs.construct_sign,
-		on_destruct = street_signs.destruct_sign,
-		after_place_node = street_signs.after_place_node,
-		on_receive_fields = street_signs.receive_fields,
-		on_punch = street_signs.update_sign,
+		on_construct = signs_lib.construct_sign,
+		on_destruct = signs_lib.destruct_sign,
+		after_place_node = signs_lib.after_place_node,
+		on_receive_fields = signs_lib.receive_fields,
+		on_punch = signs_lib.update_sign,
 		on_rotate = on_rotate,
 		number_of_lines = 1,
 		horiz_scaling = 3,
@@ -852,12 +852,12 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		chars_per_line = 25,
 		entity_info = {
 			mesh = "street_signs_generic_sign_9x15_entity"..onpole..".obj",
-			yaw = street_signs.wallmounted_yaw
+			yaw = signs_lib.wallmounted_yaw
 		},
 		drop = "street_signs:sign_ped_push_button_to_cross_r10_3i_left"
 	})
 
-	cbox = street_signs.make_selection_boxes(30, 36, onpole)
+	cbox = signs_lib.make_selection_boxes(30, 36, onpole)
 
 	minetest.register_node("street_signs:sign_left_on_green_arrow_only"..onpole, {
 		description = "R10-5: Left on green arrow only sign",
@@ -875,12 +875,12 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_left_on_green_arrow_only_inv.png",
 		wield_image = "street_signs_left_on_green_arrow_only_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_left_on_green_arrow_only"
 	})
 
-	cbox = street_signs.make_selection_boxes(24, 36, onpole)
+	cbox = signs_lib.make_selection_boxes(24, 36, onpole)
 
 	minetest.register_node("street_signs:sign_stop_here_on_red"..onpole, {
 		description = "R10-6: Stop here on red sign",
@@ -898,12 +898,12 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_stop_here_on_red_inv.png",
 		wield_image = "street_signs_stop_here_on_red_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_stop_here_on_red"
 	})
 
-	cbox = street_signs.make_selection_boxes(36, 42, onpole)
+	cbox = signs_lib.make_selection_boxes(36, 42, onpole)
 
 	minetest.register_node("street_signs:sign_use_lane_with_green_arrow"..onpole, {
 		description = "R10-8: Use lane with green arrow",
@@ -921,12 +921,12 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_use_lane_with_green_arrow_inv.png",
 		wield_image = "street_signs_use_lane_with_green_arrow_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:use_lane_with_green_arrow"
 	})
 
-	cbox = street_signs.make_selection_boxes(36, 48, onpole)
+	cbox = signs_lib.make_selection_boxes(36, 48, onpole)
 
 	minetest.register_node("street_signs:sign_no_turn_on_red_light"..onpole, {
 		description = "R10-11: No turn on red light",
@@ -944,12 +944,12 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_no_turn_on_red_light_inv.png",
 		wield_image = "street_signs_no_turn_on_red_light_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:no_turn_on_red_light"
 	})
 
-	cbox = street_signs.make_selection_boxes(30, 36, onpole)
+	cbox = signs_lib.make_selection_boxes(30, 36, onpole)
 
 	minetest.register_node("street_signs:sign_left_turn_yield_on_green_light"..onpole, {
 		description = "R10-12: Left turn yield on green light",
@@ -967,12 +967,12 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_left_turn_yield_on_green_light_inv.png",
 		wield_image = "street_signs_left_turn_yield_on_green_light_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_left_turn_yield_on_green_light"
 	})
 
-	cbox = street_signs.make_selection_boxes(24, 30, onpole)
+	cbox = signs_lib.make_selection_boxes(24, 30, onpole)
 
 	minetest.register_node("street_signs:sign_crosswalk_stop_on_red_light"..onpole, {
 		description = "R10-23: Crosswalk: stop on red light",
@@ -990,12 +990,12 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_crosswalk_stop_on_red_light_inv.png",
 		wield_image = "street_signs_crosswalk_stop_on_red_light_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_crosswalk_stop_on_red_light"
 	})
 
-	cbox = street_signs.make_selection_boxes(9, 12, onpole, 0, 0, -1.25)
+	cbox = signs_lib.make_selection_boxes(9, 12, onpole, 0, 0, -1.25)
 
 	minetest.register_node("street_signs:sign_ped_push_button_to_turn_on_warning_lights"..onpole, {
 		description = "R10-25: Pedestrians, push button to turn on warning lights",
@@ -1014,12 +1014,12 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_ped_push_button_to_turn_on_warning_lights_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_ped_push_button_to_turn_on_warning_lights"
 	})
 
-	cbox = street_signs.make_selection_boxes(41, 41, onpole)
+	cbox = signs_lib.make_selection_boxes(41, 41, onpole)
 
 	minetest.register_node("street_signs:sign_rr_grade_crossbuck"..onpole, {
 		description = "R15-1: Railroad grade crossing (crossbuck)",
@@ -1037,12 +1037,12 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		inventory_image = "street_signs_rr_grade_crossbuck_inv.png",
 		wield_image = "street_signs_rr_grade_crossbuck_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_rr_grade_crossbuck"
 	})
 
-	cbox = street_signs.make_selection_boxes(24, 12, onpole, 0, 12, 0)
+	cbox = signs_lib.make_selection_boxes(24, 12, onpole, 0, 12, 0)
 
 	minetest.register_node("street_signs:sign_rr_exempt_r15_3p"..onpole, {
 		description = "R15-3P: Railroad \"EXEMPT\" sign (white)",
@@ -1061,15 +1061,15 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_rr_exempt_r15_3p_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_rr_exempt_r15_3p"
 	})
 
 
-	table.insert(street_signs.lbm_restore_nodes, "street_signs:sign_ped_push_button_to_cross_r10_3i"..onpole)
-	table.insert(street_signs.lbm_restore_nodes, "street_signs:sign_ped_push_button_to_cross_r10_3i_left"..onpole)
-	table.insert(street_signs.lbm_restore_nodes, "street_signs:sign_speed_limit"..onpole)
+	table.insert(signs_lib.lbm_restore_nodes, "street_signs:sign_ped_push_button_to_cross_r10_3i"..onpole)
+	table.insert(signs_lib.lbm_restore_nodes, "street_signs:sign_ped_push_button_to_cross_r10_3i_left"..onpole)
+	table.insert(signs_lib.lbm_restore_nodes, "street_signs:sign_speed_limit"..onpole)
 end
 
 cbox = {

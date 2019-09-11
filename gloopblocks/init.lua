@@ -6,6 +6,8 @@ Maintained by VanessaE.
 
 --]]
 
+gloopblocks = {}
+
 -- Load support for intllib.
 local MP = minetest.get_modpath(minetest.get_current_modname())
 local S, NS = dofile(MP.."/intllib.lua")
@@ -360,6 +362,14 @@ if not minetest.get_modpath("usesdirt") then
 		groups = {cracky=3, stone=2},
 		sounds = default.node_sound_stone_defaults()
 	})
+
+	if minetest.get_modpath("signs_lib") then
+		signs_lib.allowed_poles["usesdirt:dirt_brick_fence"]        = true
+		signs_lib.allowed_poles["usesdirt:dirt_fence"]              = true
+		signs_lib.allowed_poles["usesdirt:dirt_cobble_stone_fence"] = true
+		signs_lib.allowed_poles["usesdirt:dirt_stone_fence"]        = true
+		signs_lib.allowed_poles["usesdirt:dirt_stone_fence"]        = true
+	end
 end
 
 -- Stairs/slabs defs, conversion of normal -> mossy items
@@ -902,6 +912,42 @@ minetest.register_node("gloopblocks:fence_steel", {
 	groups = {choppy = 2, oddly_breakable_by_hand = 2 },
 	sounds = default.node_sound_stone_defaults(),
 })
+
+if minetest.get_modpath("worldedit") then
+	function gloopblocks.liquid_ungrief(pos1, pos2, name)
+		local count
+		local p1to2 = minetest.pos_to_string(pos1).." and "..minetest.pos_to_string(pos2)
+		local volume = worldedit.volume(pos1, pos2)
+		minetest.chat_send_player(name, "Cleaning-up lava/water griefing between "..p1to2.."...")
+		if volume > 1000000 then
+			minetest.chat_send_player(name, "This operation could affect up to "..volume.." nodes.  It may take a while.")
+		end
+		minetest.log("action", name.." performs lava/water greifing cleanup between "..p1to2..".")
+		count = worldedit.replace(pos1, pos2, "default:lava_source", "air")
+		count = worldedit.replace(pos1, pos2, "default:lava_flowing", "air")
+		count = worldedit.replace(pos1, pos2, "default:water_source", "air")
+		count = worldedit.replace(pos1, pos2, "default:water_flowing", "air")
+		count = worldedit.replace(pos1, pos2, "default:river_water_source", "air")
+		count = worldedit.replace(pos1, pos2, "default:river_water_flowing", "air")
+		count = worldedit.replace(pos1, pos2, "gloopblocks:pumice_cooled", "air")
+		count = worldedit.replace(pos1, pos2, "gloopblocks:basalt_cooled", "air")
+		count = worldedit.replace(pos1, pos2, "gloopblocks:obsidian_cooled", "air")
+		count = worldedit.fixlight(pos1, pos2)
+		minetest.chat_send_player(name, "Operation completed.")
+	end
+
+	minetest.register_chatcommand("/liquid_ungrief", {
+		params = "[size]",
+		privs = {worldedit = true},
+		description = "Repairs greifing caused by spilling lava and water (and their \"cooling\" results)",
+		func = function(name, params)
+			local pos1 = worldedit.pos1[name]
+			local pos2 = worldedit.pos2[name]
+			if not pos1 or not pos2 then return end
+			gloopblocks.liquid_ungrief(pos1, pos2, name)
+		end
+	})
+end
 
 dofile(minetest.get_modpath("gloopblocks").."/crafts.lua")
 

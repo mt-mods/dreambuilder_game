@@ -31,7 +31,7 @@ minetest.register_node("digistuff:piezo", {
 		local meta = minetest.get_meta(pos)
 		if fields.channel then meta:set_string("channel",fields.channel) end
 	end,
-	digiline = 
+	digiline =
 	{
 		receptor = {},
 		effector = {
@@ -76,5 +76,13 @@ minetest.register_node("digistuff:piezo", {
 					end
 				end
 		},
+	},
+})
+
+minetest.register_craft({
+	output = "digistuff:piezo",
+	recipe = {
+		{"quartz:quartz_crystal_piece","basic_materials:steel_strip"},
+		{"digilines:wire_std_00000000","mesecons_luacontroller:luacontroller0000"},
 	},
 })

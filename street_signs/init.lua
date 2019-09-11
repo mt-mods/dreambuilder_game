@@ -12,13 +12,7 @@ screwdriver = screwdriver or {}
 
 -- Load support for intllib.
 local S, NS = dofile(street_signs.path .. "/intllib.lua")
-street_signs.gettext = S
-
-dofile(street_signs.path .. "/encoding.lua") -- text encoding
-
 street_signs.lbm_restore_nodes = {}
-
-dofile(street_signs.path.."/api.lua")
 
 street_signs.big_sign_sizes = {
 --    "size",   lines, chars, hscale, vscale, xoffs, yoffs, box

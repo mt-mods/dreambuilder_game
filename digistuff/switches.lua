@@ -88,7 +88,7 @@ minetest.register_node("digistuff:button", {
 		{ -4/16, -2/16, 4/16, 4/16, 2/16, 6/16 }	-- the button itself
 	}
 	},
-	digiline = 
+	digiline =
 	{
 		receptor = {},
 		wire = {
@@ -150,7 +150,7 @@ minetest.register_node("digistuff:button_off", {
 		{ -4/16, -2/16, 4/16, 4/16, 2/16, 6/16 }	-- the button itself
 	}
 	},
-	digiline = 
+	digiline =
 	{
 		receptor = {},
 		wire = {
@@ -194,7 +194,7 @@ minetest.register_node("digistuff:button_off_pushed", {
 		{ -4/16, -2/16, 11/32, 4/16, 2/16, 6/16 }
 	}
     	},
-	digiline = 
+	digiline =
 	{
 		receptor = {},
 		wire = {
@@ -240,7 +240,7 @@ minetest.register_node("digistuff:button_on", {
 		{ -4/16, -2/16, 4/16, 4/16, 2/16, 6/16 }	-- the button itself
 	}
 	},
-	digiline = 
+	digiline =
 	{
 		receptor = {},
 		wire = {
@@ -286,7 +286,7 @@ minetest.register_node("digistuff:button_on_pushed", {
 		{ -4/16, -2/16, 11/32, 4/16, 2/16, 6/16 }
 	}
     	},
-	digiline = 
+	digiline =
 	{
 		receptor = {},
 		wire = {
@@ -319,7 +319,7 @@ minetest.register_node("digistuff:wall_knob", {
 	paramtype2 = "facedir",
 	walkable = false,
 	sunlight_propagates = true,
-	digiline = 
+	digiline =
 	{
 		receptor = {},
 		wire = {
@@ -378,7 +378,7 @@ minetest.register_node("digistuff:wall_knob_configured", {
 	paramtype2 = "facedir",
 	walkable = false,
 	sunlight_propagates = true,
-	digiline = 
+	digiline =
 	{
 		receptor = {},
 		wire = {
@@ -425,4 +425,13 @@ minetest.register_node("digistuff:wall_knob_configured", {
 		digiline:receptor_send(pos,digistuff.button_get_rules(node),meta:get_string("channel"),value)
 	end,
 	sounds = default and default.node_sound_stone_defaults(),
+})
+
+minetest.register_craft({
+	output = "digistuff:wall_knob",
+	recipe = {
+		{"",                           "mesecons_button:button_off",               ""},
+		{"digilines:wire_std_00000000","mesecons_luacontroller:luacontroller0000", "digilines:wire_std_00000000"},
+		{"",                           "digilines:wire_std_00000000",              ""},
+	},
 })

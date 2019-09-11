@@ -64,7 +64,7 @@ local rope_ladder_top_def = {
 		local this_node = minetest.get_node(pos)
 		local placer_name = placer:get_player_name()
 		-- param2 holds the facing direction of this node. If it's 0 or 1 the node is "flat" and we don't want the ladder to extend.
-		if node_below.name == "air" and this_node.param2 > 1
+		if ropes.can_place_rope_in_node(node_below.name) and this_node.param2 > 1
 		  and (not minetest.is_protected(pos_below, placer_name)
 		  or minetest.check_player_privs(placer_name, "protection_bypass")) then
 			minetest.add_node(pos_below, {name="ropes:ropeladder_bottom", param2=this_node.param2})

@@ -93,14 +93,6 @@ function worldedit.player_axis(name)
 	return "z", dir.z > 0 and 1 or -1
 end
 
-local function mkdir(path)
-	if minetest.mkdir then
-		minetest.mkdir(path)
-	else
-		os.execute('mkdir "' .. path .. '"')
-	end
-end
-
 local function check_filename(name)
 	return name:find("^[%w%s%^&'@{}%[%],%$=!%-#%(%)%%%.%+~_]+$") ~= nil
 end
@@ -257,7 +249,7 @@ minetest.register_chatcommand("/pos1", {
 	description = "Set WorldEdit region position 1 to the player's location",
 	privs = {worldedit=true},
 	func = function(name, param)
-		local pos = minetest.get_player_by_name(name):getpos()
+		local pos = minetest.get_player_by_name(name):get_pos()
 		pos.x, pos.y, pos.z = math.floor(pos.x + 0.5), math.floor(pos.y + 0.5), math.floor(pos.z + 0.5)
 		worldedit.pos1[name] = pos
 		worldedit.mark_pos1(name)
@@ -270,7 +262,7 @@ minetest.register_chatcommand("/pos2", {
 	description = "Set WorldEdit region position 2 to the player's location",
 	privs = {worldedit=true},
 	func = function(name, param)
-		local pos = minetest.get_player_by_name(name):getpos()
+		local pos = minetest.get_player_by_name(name):get_pos()
 		pos.x, pos.y, pos.z = math.floor(pos.x + 0.5), math.floor(pos.y + 0.5), math.floor(pos.z + 0.5)
 		worldedit.pos2[name] = pos
 		worldedit.mark_pos2(name)
@@ -827,8 +819,12 @@ minetest.register_chatcommand("/stack", {
 			axis, sign = worldedit.player_axis(name)
 			repetitions = repetitions * sign
 		end
-		local count = worldedit.stack(worldedit.pos1[name], worldedit.pos2[name], axis, repetitions)
-		worldedit.player_notify(name, count .. " nodes stacked")
+
+		local pos1, pos2 = worldedit.pos1[name], worldedit.pos2[name]
+		local count = worldedit.volume(pos1, pos2) * math.abs(repetitions)
+		worldedit.stack(pos1, pos2, axis, repetitions, function()
+			worldedit.player_notify(name, count .. " nodes stacked")
+		end)
 	end,
 	function(name, param)
 		local found, _, axis, repetitions = param:find("^([xyz%?])%s+([+-]?%d+)$")
@@ -836,8 +832,9 @@ minetest.register_chatcommand("/stack", {
 			worldedit.player_notify(name, "invalid usage: " .. param)
 			return
 		end
+
 		local count = check_region(name, param)
-		if count then return (tonumber(repetitions) + 1) * count end
+		if count then return tonumber(repetitions) * count end
 		return nil
 	end),
 })
@@ -846,15 +843,9 @@ minetest.register_chatcommand("/stack2", {
 	params = "<count> <x> <y> <z>",
 	description = "Stack the current WorldEdit region <count> times by offset <x>, <y>, <z>",
 	privs = {worldedit=true},
-	func = function(name, param)
-		local pos1, pos2 = worldedit.pos1[name], worldedit.pos2[name]
-		if pos1 == nil or pos2 == nil then
-			worldedit.player_notify(name, "Select a position first!")
-			return
-		end
+	func = safe_region(function(name, param)
 		local repetitions, incs = param:match("(%d+)%s*(.+)")
 		if repetitions == nil then
-			worldedit.player_notify(name, "invalid count: " .. param)
 			return
 		end
 		repetitions = tonumber(repetitions)
@@ -866,15 +857,24 @@ minetest.register_chatcommand("/stack2", {
 		end
 		x, y, z = tonumber(x), tonumber(y), tonumber(z)
 
+		local pos1, pos2 = worldedit.pos1[name], worldedit.pos2[name]
 		local count = worldedit.volume(pos1, pos2) * repetitions
+		worldedit.stack2(pos1, pos2, {x=x, y=y, z=z}, repetitions, function()
+			worldedit.player_notify(name, count .. " nodes stacked")
+		end)
+	end,
+	function(name, param)
+		local repetitions, incs = param:match("(%d+)%s*(.+)")
+		if repetitions == nil then
+			worldedit.player_notify(name, "invalid count: " .. param)
+			return
+		end
+		repetitions = tonumber(repetitions)
 
-		return safe_region(function()
-			worldedit.stack2(pos1, pos2, {x=x, y=y, z=z}, repetitions,
-				function() worldedit.player_notify(name, count .. " nodes stacked") end)
-		end, function()
-			return count
-		end)(name,param) -- more hax --wip: clean this up a little bit
-	end
+		local count = check_region(name, param)
+		if count then return repetitions * count end
+		return nil
+	end),
 })
 
 
@@ -990,7 +990,7 @@ minetest.register_chatcommand("/rotate", {
 			worldedit.player_notify(name, "invalid usage: " .. param)
 			return nil
 		end
-		if angle % 90 ~= 0 then
+		if angle % 90 ~= 0 or angle % 360 == 0 then
 			worldedit.player_notify(name, "invalid usage: angle must be multiple of 90")
 			return nil
 		end
@@ -1115,7 +1115,7 @@ minetest.register_chatcommand("/save", {
 
 		local path = minetest.get_worldpath() .. "/schems"
 		-- Create directory if it does not already exist
-		mkdir(path)
+		minetest.mkdir(path)
 
 		local filename = path .. "/" .. param .. ".we"
 		local file, err = io.open(filename, "wb")
@@ -1158,13 +1158,19 @@ minetest.register_chatcommand("/allocate", {
 		file:close()
 
 		local version = worldedit.read_header(value)
-		if version == 0 then
+		if version == nil or version == 0 then
 			worldedit.player_notify(name, "File is invalid!")
 			return
 		elseif version > worldedit.LATEST_SERIALIZATION_VERSION then
 			worldedit.player_notify(name, "File was created with newer version of WorldEdit!")
+			return
 		end
 		local nodepos1, nodepos2, count = worldedit.allocate(pos, value)
+
+		if not nodepos1 then
+			worldedit.player_notify(name, "Schematic empty, nothing allocated")
+			return
+		end
 
 		worldedit.pos1[name] = nodepos1
 		worldedit.mark_pos1(name)
@@ -1213,7 +1219,7 @@ minetest.register_chatcommand("/load", {
 		file:close()
 
 		local version = worldedit.read_header(value)
-		if version == 0 then
+		if version == nil or version == 0 then
 			worldedit.player_notify(name, "File is invalid!")
 			return
 		elseif version > worldedit.LATEST_SERIALIZATION_VERSION then
@@ -1276,7 +1282,7 @@ minetest.register_chatcommand("/mtschemcreate", {
 
 		local path = minetest.get_worldpath() .. "/schems"
 		-- Create directory if it does not already exist
-		mkdir(path)
+		minetest.mkdir(path)
 
 		local filename = path .. "/" .. param .. ".mts"
 		local ret = minetest.create_schematic(worldedit.pos1[name],

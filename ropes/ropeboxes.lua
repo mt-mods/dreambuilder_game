@@ -155,7 +155,7 @@ local function register_rope_block(multiple, max_multiple, name_prefix, node_pre
 			end
 		
 			local node_below = minetest.get_node(pos_below)
-			if node_below.name == "air" then
+			if ropes.can_place_rope_in_node(node_below.name) then
 				minetest.add_node(pos_below, {name="ropes:rope_bottom"})
 				local meta = minetest.get_meta(pos_below)
 				meta:set_int("length_remaining", ropes.ropeLength*multiple)

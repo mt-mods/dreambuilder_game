@@ -201,7 +201,8 @@ for _, onoff in ipairs({"on", "off"}) do
 		on_rightclick = ilights.toggle_light,
 		mesecons =      ilights.mesecons,
 		digiline =      ilights.digilines,
-		on_punch =      digiline_on_punch
+		on_punch =      digiline_on_punch,
+		on_dig = unifieddyes.on_dig,
 	})
 end
 

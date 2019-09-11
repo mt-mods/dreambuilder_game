@@ -7,6 +7,7 @@ minetest.register_node("plasticbox:plasticbox", {
 	paramtype2 = "color",
 	palette = "unifieddyes_palette_extended.png",
 	on_construct = unifieddyes.on_construct,
+	on_dig = unifieddyes.on_dig,
 })
 
 if minetest.global_exists("stairsplus") then

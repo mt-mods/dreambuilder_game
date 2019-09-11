@@ -7,6 +7,7 @@ minetest.register_node("solidcolor:block", {
 	paramtype2 = "color",
 	palette = "unifieddyes_palette_extended.png",
 	on_construct = unifieddyes.on_construct,
+	on_dig = unifieddyes.on_dig,
 })
 
 minetest.register_craft( {

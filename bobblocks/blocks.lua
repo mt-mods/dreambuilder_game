@@ -52,6 +52,7 @@ minetest.register_node("bobblocks:block", {
 	},
 	on_rightclick = bobblocks.update_bobblock,
 	on_construct = unifieddyes.on_construct,
+	on_dig = unifieddyes.on_dig,
 })
 
 minetest.register_node("bobblocks:block_off", {
@@ -71,6 +72,7 @@ minetest.register_node("bobblocks:block_off", {
 	},
 	on_rightclick = bobblocks.update_bobblock,
 	on_construct = unifieddyes.on_construct,
+	on_dig = unifieddyes.on_dig,
 })
 
 -- Block Poles
@@ -94,6 +96,7 @@ minetest.register_node("bobblocks:pole", {
 	},
 	on_rightclick = bobblocks.update_bobblock,
 	on_construct = unifieddyes.on_construct,
+	on_dig = unifieddyes.on_dig,
 })
 
 minetest.register_node("bobblocks:pole_off", {
@@ -117,6 +120,7 @@ minetest.register_node("bobblocks:pole_off", {
 	},
 	on_rightclick = bobblocks.update_bobblock,
 	on_construct = unifieddyes.on_construct,
+	on_dig = unifieddyes.on_dig,
 })
 
 -- old nodes grandfathered-in because they have a different texture or usage than the colored ones.
@@ -151,6 +155,7 @@ minetest.register_node("bobblocks:wavyblock", {
 	},
 	on_rightclick = bobblocks.update_bobblock,
 	on_construct = unifieddyes.on_construct,
+	on_dig = unifieddyes.on_dig,
 })
 
 minetest.register_node("bobblocks:wavyblock_off", {
@@ -171,6 +176,7 @@ minetest.register_node("bobblocks:wavyblock_off", {
 	},
 	on_rightclick = bobblocks.update_bobblock,
 	on_construct = unifieddyes.on_construct,
+	on_dig = unifieddyes.on_dig,
 })
 
 minetest.register_node("bobblocks:wavypole", {
@@ -186,6 +192,7 @@ minetest.register_node("bobblocks:wavypole", {
 	sounds = default.node_sound_glass_defaults(),
 	groups = {snappy=2,cracky=3,oddly_breakable_by_hand=3, ud_param2_colorable = 1},
 	on_construct = unifieddyes.on_construct,
+	on_dig = unifieddyes.on_dig,
 	--light_source = LIGHT_MAX-0,
 })
 

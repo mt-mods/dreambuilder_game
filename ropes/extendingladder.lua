@@ -11,9 +11,9 @@ local wood_recipe = {
 local wood_name = S("Wooden Extendable Ladder")
 
 local steel_recipe = {
+		{"default:steel_ingot", "", "default:steel_ingot"},
+		{"default:steel_ingot", "", "default:steel_ingot"},
 		{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
-		{"default:steel_ingot", "", "default:steel_ingot"},
-		{"default:steel_ingot", "", "default:steel_ingot"},
 	}
 local steel_name = S("Steel Extendable Ladder")
 

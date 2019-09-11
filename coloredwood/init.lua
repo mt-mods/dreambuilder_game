@@ -88,6 +88,7 @@ for _, color in ipairs(unifieddyes.HUES_WITH_GREY) do
 				after_place_node = function(pos, placer, itemstack, pointed_thing)
 					minetest.rotate_node(itemstack, placer, pointed_thing)
 				end,
+				on_dig = unifieddyes.on_dig,
 				groups = {snappy=1,choppy=2,oddly_breakable_by_hand=2,flammable=2, not_in_creative_inventory=1, ud_param2_colorable = 1},
 			}
 		)
@@ -167,7 +168,8 @@ default.register_fence("coloredwood:fence", {
 	palette = "unifieddyes_palette_extended.png",
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, ud_param2_colorable = 1, not_in_creative_inventory=1},
 	sounds = default.node_sound_wood_defaults(),
-	material = "coloredwood:wood_block"
+	material = "coloredwood:wood_block",
+	on_dig = unifieddyes.on_dig,
 })
 
 groups = table.copy(minetest.registered_items["default:fence_wood"].groups)
@@ -213,5 +215,9 @@ unifieddyes.register_color_craft({
 		"MAIN_DYE"
 	}
 })
+
+if minetest.get_modpath("signs_lib") then
+	signs_lib.allowed_poles["coloredwood:fence"] = true
+end
 
 print("[Colored Wood] Loaded!")

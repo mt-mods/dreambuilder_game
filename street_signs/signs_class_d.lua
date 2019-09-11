@@ -1,6 +1,6 @@
 -- Class D signs
 
-local S = street_signs.gettext
+local S = signs_lib.gettext
 local cbox
 
 local cbox = {
@@ -26,11 +26,11 @@ minetest.register_node("street_signs:sign_basic", {
 	tiles = { "street_signs_basic.png" },
 	groups = {choppy=2, dig_immediate=2},
 	default_color = "f",
-	on_construct = street_signs.construct_sign,
-	on_destruct = street_signs.destruct_sign,
-	on_receive_fields = street_signs.receive_fields,
-	on_punch = street_signs.update_sign,
-	on_rotate = street_signs.facedir_rotate,
+	on_construct = signs_lib.construct_sign,
+	on_destruct = signs_lib.destruct_sign,
+	on_receive_fields = signs_lib.receive_fields,
+	on_punch = signs_lib.update_sign,
+	on_rotate = signs_lib.facedir_rotate,
 	number_of_lines = 2,
 	horiz_scaling = 0.8,
 	vert_scaling = 1,
@@ -41,7 +41,7 @@ minetest.register_node("street_signs:sign_basic", {
 	chars_per_line = 40,
 	entity_info = {
 		mesh = "street_signs_basic_entity.obj",
-		yaw = street_signs.standard_yaw
+		yaw = signs_lib.standard_yaw
 	}
 })
 
@@ -69,11 +69,11 @@ minetest.register_node("street_signs:sign_basic_top_only", {
 	tiles = { "street_signs_basic.png" },
 	groups = {choppy=2, dig_immediate=2},
 	default_color = "f",
-	on_construct = street_signs.construct_sign,
-	on_destruct = street_signs.destruct_sign,
-	on_receive_fields = street_signs.receive_fields,
-	on_punch = street_signs.update_sign,
-	on_rotate = street_signs.facedir_rotate,
+	on_construct = signs_lib.construct_sign,
+	on_destruct = signs_lib.destruct_sign,
+	on_receive_fields = signs_lib.receive_fields,
+	on_punch = signs_lib.update_sign,
+	on_rotate = signs_lib.facedir_rotate,
 	number_of_lines = 2,
 	horiz_scaling = 0.8,
 	vert_scaling = 1,
@@ -84,26 +84,26 @@ minetest.register_node("street_signs:sign_basic_top_only", {
 	chars_per_line = 40,
 	entity_info = {
 		mesh = "street_signs_basic_top_only_entity.obj",
-		yaw = street_signs.standard_yaw
+		yaw = signs_lib.standard_yaw
 	}
 })
 
-table.insert(street_signs.lbm_restore_nodes, "street_signs:sign_basic")
-table.insert(street_signs.lbm_restore_nodes, "street_signs:sign_basic_top_only")
+table.insert(signs_lib.lbm_restore_nodes, "street_signs:sign_basic")
+table.insert(signs_lib.lbm_restore_nodes, "street_signs:sign_basic_top_only")
 
 for _, onpole in ipairs({"", "_onpole"}) do
 
 	local nci = nil
-	local on_rotate = street_signs.wallmounted_rotate
+	local on_rotate = signs_lib.wallmounted_rotate
 	local pole_mount_tex = nil
 
 	if onpole == "_onpole" then
 		nci = 1
 		on_rotate = nil
-		pole_mount_tex = "street_signs_pole_mount.png"
+		pole_mount_tex = "signs_lib_pole_mount.png"
 	end
 
-	cbox = street_signs.make_selection_boxes(24, 24, onpole)
+	cbox = signs_lib.make_selection_boxes(24, 24, onpole)
 
 	minetest.register_node("street_signs:sign_service_hospital"..onpole, {
 		description = "D9-2: General service: hospital",
@@ -122,7 +122,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_service_hospital_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_service_hospital"
 	})
@@ -144,7 +144,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_service_handicapped_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_service_handicapped"
 	})
@@ -166,7 +166,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_service_fuel_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_service_fuel"
 	})
@@ -188,7 +188,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_service_food_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_service_food"
 	})
@@ -210,7 +210,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_service_lodging_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_service_lodging"
 	})
@@ -232,7 +232,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_service_ev_charging_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
-		after_place_node = street_signs.after_place_node,
+		after_place_node = signs_lib.after_place_node,
 		on_rotate = on_rotate,
 		drop = "street_signs:sign_service_ev_charging"
 	})

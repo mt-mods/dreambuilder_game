@@ -28,6 +28,12 @@ if ropes.bridges_enabled == nil then
 	ropes.bridges_enabled = true
 end
 
+ropes.can_extend_into_airlike = minetest.settings:get_bool("ropes_can_extend_into_airlike")
+ropes.can_extend_into_nodes = {["air"] = true}
+if minetest.get_modpath("nether") then
+   ropes.can_extend_into_nodes["nether:fumes"] = true
+end
+
 dofile( MP .. "/doc.lua" )
 dofile( MP .. "/functions.lua" )
 dofile( MP .. "/crafts.lua" )

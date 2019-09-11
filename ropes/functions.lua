@@ -1,3 +1,19 @@
+ropes.can_place_rope_in_node = function(target_node_name)
+	if ropes.can_extend_into_nodes[target_node_name] == true then
+		return true
+	end
+	local target_def = minetest.registered_nodes[target_node_name]
+	if target_def then
+		if target_def.drawtype == "airlike" and ropes.can_extend_into_airlike then
+			return true
+		end
+		if target_def.groups and target_def.groups.ropes_can_extend_into then
+			return true
+		end
+	end
+	return false
+end
+
 ropes.make_rope_on_timer = function(rope_node_name)
 	return function(pos, elapsed)
 		local currentend = minetest.get_node(pos)
@@ -9,7 +25,7 @@ ropes.make_rope_on_timer = function(rope_node_name)
 		local oldnode = minetest.get_node(pos)
 		if currentlength > 1 and (not minetest.is_protected(newpos, placer_name)
 		or minetest.check_player_privs(placer_name, "protection_bypass")) then
-			if  newnode.name == "air" then
+			if ropes.can_place_rope_in_node(newnode.name) then
 				minetest.add_node(newpos, {name=currentend.name, param2=oldnode.param2})
 				local newmeta = minetest.get_meta(newpos)
 				newmeta:set_int("length_remaining", currentlength-1)

@@ -116,6 +116,7 @@ for _, nodeclass in ipairs(NodeClass) do
 		groups = {cracky=3, ud_param2_colorable = 1},
 		sounds = default.node_sound_stone_defaults(),
 		on_construct = unifieddyes.on_construct,
+		on_dig = unifieddyes.on_dig
 	})
 
 	minetest.register_node("blox:cobble_"..nodeclass, {
@@ -133,6 +134,7 @@ for _, nodeclass in ipairs(NodeClass) do
 		groups = {cracky=3, ud_param2_colorable = 1},
 		sounds = default.node_sound_stone_defaults(),
 		on_construct = unifieddyes.on_construct,
+		on_dig = unifieddyes.on_dig
 	})
 
 	minetest.register_node("blox:wood_"..nodeclass, {
@@ -150,6 +152,7 @@ for _, nodeclass in ipairs(NodeClass) do
 		groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, ud_param2_colorable = 1},
 		sounds = default.node_sound_wood_defaults(),
 		on_construct = unifieddyes.on_construct,
+		on_dig = unifieddyes.on_dig
 	})
 
 	table.insert(blox.old_89_color_nodes, "blox:stone_"..nodeclass)
@@ -169,6 +172,7 @@ minetest.register_node("blox:wood_tinted", {
 	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
 	on_construct = unifieddyes.on_construct,
+	on_dig = unifieddyes.on_dig
 })
 
 minetest.register_node("blox:stone_square", {
@@ -181,6 +185,7 @@ minetest.register_node("blox:stone_square", {
 	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
 	on_construct = unifieddyes.on_construct,
+	on_dig = unifieddyes.on_dig
 })
 
 minetest.register_node("blox:cobble_tinted", {
@@ -193,6 +198,7 @@ minetest.register_node("blox:cobble_tinted", {
 	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory = 1, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
 	on_construct = unifieddyes.on_construct,
+	on_dig = unifieddyes.on_dig
 })
 
 minetest.register_node("blox:stone_tinted", {
@@ -205,6 +211,7 @@ minetest.register_node("blox:stone_tinted", {
 	groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2,flammable=3, not_in_creative_inventory = 1, ud_param2_colorable = 1},
 	sounds = default.node_sound_wood_defaults(),
 	on_construct = unifieddyes.on_construct,
+	on_dig = unifieddyes.on_dig,
 	drop = {
 		items = {
 			{items = {"blox:cobble_tinted"}, inherit_color = true },

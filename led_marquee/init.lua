@@ -2,6 +2,13 @@
 -- by Vanessa Dannenberg
 
 led_marquee = {}
+led_marquee.scheduled_messages = {}
+
+led_marquee.message_minimum_time   = tonumber(minetest.settings:get("led_marquee_message_minimum_time"))   or 0.5
+
+led_marquee.message_schedule_dtime = tonumber(minetest.settings:get("led_marquee_message_schedule_dtime")) or 0.2
+led_marquee.message_schedule_size  = tonumber(minetest.settings:get("led_marquee_message_schedule_size"))  or 10
+led_marquee.relay_timer = 0
 
 local S
 if minetest.get_modpath("intllib") then
@@ -128,7 +135,12 @@ local make_iso = function(s)
 	local s2 = ""
 	while i <= string.len(s) do
 		if string.byte(s,i) > 159 then
-			s2 = s2..string.char(get_iso(string.sub(s, i, i+1)))
+			local ciso = get_iso(string.sub(s, i, i+1))
+			if ciso >= 0 and ciso < 256 then
+				s2 = s2..string.char(ciso)
+			else
+				s2 = s2..string.char(127)
+			end
 			i = i + 2
 		else
 			s2 = s2..string.sub(s, i, i)
@@ -143,7 +155,7 @@ end
 led_marquee.set_timer = function(pos, timeout)
 	local timer = minetest.get_node_timer(pos)
 	timer:stop()
-	if not timeout or timeout < 0.2 or timeout > 5 then return false end
+	if not timeout or timeout < led_marquee.message_minimum_time or timeout > 5 then return false end
 
 	if timeout > 0 then
 		local meta = minetest.get_meta(pos)
@@ -184,7 +196,7 @@ led_marquee.scroll_text = function(pos, elapsed, skip)
 			break
 		end
 	end
-	led_marquee.display_msg(pos, channel, "/"..colorchar..string.sub(msg, f)..string.rep(" ", skip + 1))
+	led_marquee.schedule_msg(pos, channel, "/"..colorchar..string.sub(msg, f)..string.rep(" ", skip + 1))
 
 	meta:set_int("index", f)
 	if not elapsed or elapsed < 0.2 then return false end
@@ -211,6 +223,27 @@ local cbox = {
 
 led_marquee.decode_color = function(msg)
 
+end
+
+minetest.register_globalstep(function(dtime)
+	if dtime <= led_marquee.message_schedule_dtime
+	  and (#led_marquee.scheduled_messages) > 0 then
+		led_marquee.display_msg(
+			led_marquee.scheduled_messages[1].pos,
+			led_marquee.scheduled_messages[1].channel,
+			led_marquee.scheduled_messages[1].msg
+		)
+	end
+	table.remove(led_marquee.scheduled_messages, 1)
+end)
+
+led_marquee.schedule_msg = function(pos, channel, msg)
+	local idx = #led_marquee.scheduled_messages
+	led_marquee.scheduled_messages[idx+1] = { pos=pos, channel=channel, msg=msg }
+
+	if idx >= led_marquee.message_schedule_size then
+		table.remove(led_marquee.scheduled_messages, 1)
+	end
 end
 
 led_marquee.display_msg = function(pos, channel, msg)
@@ -312,13 +345,13 @@ local on_digiline_receive_string = function(pos, node, channel, msg)
 				led_marquee.set_timer(pos, 0)
 				msg = string.rep(" ", 2048)
 				meta:set_string("last_msg", msg)
-				led_marquee.display_msg(pos, channel, msg)
+				led_marquee.schedule_msg(pos, channel, msg)
 				meta:set_int("index", 1)
 			elseif msg == "allon" then
 				led_marquee.set_timer(pos, 0)
 				msg = string.rep(string.char(144), 2048)
 				meta:set_string("last_msg", msg)
-				led_marquee.display_msg(pos, channel, msg)
+				led_marquee.schedule_msg(pos, channel, msg)
 				meta:set_int("index", 1)
 			elseif msg == "start_scroll" then
 				local timeout = meta:get_int("timeout")
@@ -328,7 +361,7 @@ local on_digiline_receive_string = function(pos, node, channel, msg)
 				return
 			elseif string.sub(msg, 1, 12) == "scroll_speed" then
 				local timeout = tonumber(string.sub(msg, 13))
-				led_marquee.set_timer(pos, timeout)
+				led_marquee.set_timer(pos, math.max(timeout, led_marquee.message_minimum_time))
 			elseif string.sub(msg, 1, 11) == "scroll_step" then
 				local skip = tonumber(string.sub(msg, 12))
 				led_marquee.scroll_text(pos, nil, skip)
@@ -343,7 +376,7 @@ local on_digiline_receive_string = function(pos, node, channel, msg)
 				led_marquee.set_timer(pos, 0)
 				local last_msg = meta:get_string("last_msg")
 				meta:set_string("last_msg", msg)
-				led_marquee.display_msg(pos, channel, msg)
+				led_marquee.schedule_msg(pos, channel, msg)
 				if last_msg ~= msg then
 					meta:set_int("index", 1)
 				end
@@ -358,7 +391,7 @@ local on_digiline_receive_string = function(pos, node, channel, msg)
 		end
 	elseif msg and type(msg) == "number" then
 		meta:set_string("last_msg", tostring(msg))
-		led_marquee.display_msg(pos, channel, tostring(msg))
+		led_marquee.schedule_msg(pos, channel, tostring(msg))
 		meta:set_int("index", 1)
 	end
 end

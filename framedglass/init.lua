@@ -78,6 +78,7 @@ minetest.register_node("framedglass:steel_framed_obsidian_glass", {
 	airbrush_replacement_node = "framedglass:steel_framed_obsidian_glass_tinted",
 	groups = {cracky=3, oddly_breakable_by_hand=3, ud_param2_colorable = 1},
 	sounds = default.node_sound_glass_defaults(),
+	on_dig = unifieddyes.on_dig,
 })
 
 minetest.register_node("framedglass:steel_framed_obsidian_glass_tinted", {
@@ -96,6 +97,7 @@ minetest.register_node("framedglass:steel_framed_obsidian_glass_tinted", {
 	use_texture_alpha = true,
 	groups = {cracky=3, oddly_breakable_by_hand=3, ud_param2_colorable = 1, not_in_creative_inventory = 1},
 	sounds = default.node_sound_glass_defaults(),
+	on_dig = unifieddyes.on_dig,
 })
 
 -- crafts!
