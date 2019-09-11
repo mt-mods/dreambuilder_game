@@ -35,7 +35,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_stop"
 	})
 
@@ -60,7 +60,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_stop_all_way"
 	})
 
@@ -84,7 +84,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_yield"
 	})
 
@@ -112,7 +112,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		after_place_node = signs_lib.after_place_node,
 		on_receive_fields = signs_lib.receive_fields,
 		on_punch = signs_lib.update_sign,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		number_of_lines = 1,
 		horiz_scaling = 2.65,
 		vert_scaling = 2.3,
@@ -148,7 +148,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_no_right_turn_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_no_right_turn"
 	})
 
@@ -170,7 +170,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_no_left_turn_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_no_left_turn"
 	})
 
@@ -192,7 +192,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_no_u_turn_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_no_u_turn"
 	})
 
@@ -214,7 +214,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_u_turn_here_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_u_turn_here"
 	})
 
@@ -238,7 +238,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_left_turn_only_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_left_turn_only"
 	})
 
@@ -260,7 +260,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_right_turn_only_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_right_turn_only"
 	})
 
@@ -282,7 +282,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_straight_through_only_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_straight_through_only"
 	})
 
@@ -304,7 +304,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_left_turn_or_straight_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_left_turn_or_straight"
 	})
 
@@ -326,7 +326,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_right_turn_or_straight_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_right_turn_or_straight"
 	})
 
@@ -351,7 +351,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_left_lane_must_turn_left_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_left_lane_must_turn_left"
 	})
 
@@ -373,7 +373,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_right_lane_must_turn_right_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_right_lane_must_turn_right"
 	})
 
@@ -395,7 +395,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_no_straight_through_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_no_straight_through"
 	})
 
@@ -418,7 +418,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_keep_right_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_keep_right"
 	})
 
@@ -439,7 +439,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_keep_left_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_keep_left"
 	})
 
@@ -463,7 +463,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_do_not_enter_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_do_not_enter"
 	})
 
@@ -486,7 +486,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_wrong_way_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_wrong_way"
 	})
 
@@ -509,7 +509,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_one_way_left_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_one_way_left"
 	})
 
@@ -530,7 +530,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_one_way_right_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_one_way_right"
 	})
 
@@ -553,7 +553,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_divided_highway_with_cross_road_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_divided_highway_with_cross_road"
 	})
 
@@ -576,7 +576,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_roundabout_directional.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_roundabout_directional"
 	})
 
@@ -597,7 +597,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_roundabout_directional_left.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_roundabout_directional_left"
 	})
 
@@ -620,7 +620,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_roundabout_counter_clockwise.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_roundabout_counter_clockwise"
 	})
 
@@ -641,7 +641,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_roundabout_clockwise.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_roundabout_clockwise"
 	})
 
@@ -665,7 +665,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_do_not_stop_on_tracks"
 	})
 
@@ -689,7 +689,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_ped_push_button_to_cross_r10_3a"
 	})
 
@@ -711,7 +711,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_ped_push_button_to_cross_r10_3a_right"
 	})
 
@@ -733,7 +733,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_ped_push_button_to_cross_r10_3a_both_ways"
 	})
 
@@ -755,7 +755,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_ped_push_button_to_cross_r10_3e"
 	})
 
@@ -777,7 +777,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_ped_push_button_to_cross_r10_3e_left"
 	})
 
@@ -803,7 +803,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		after_place_node = signs_lib.after_place_node,
 		on_receive_fields = signs_lib.receive_fields,
 		on_punch = signs_lib.update_sign,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		number_of_lines = 1,
 		horiz_scaling = 3,
 		vert_scaling = 12,
@@ -841,7 +841,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		after_place_node = signs_lib.after_place_node,
 		on_receive_fields = signs_lib.receive_fields,
 		on_punch = signs_lib.update_sign,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		number_of_lines = 1,
 		horiz_scaling = 3,
 		vert_scaling = 12,
@@ -876,7 +876,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_left_on_green_arrow_only_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_left_on_green_arrow_only"
 	})
 
@@ -899,7 +899,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_stop_here_on_red_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_stop_here_on_red"
 	})
 
@@ -922,7 +922,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_use_lane_with_green_arrow_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:use_lane_with_green_arrow"
 	})
 
@@ -945,7 +945,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_no_turn_on_red_light_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:no_turn_on_red_light"
 	})
 
@@ -968,7 +968,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_left_turn_yield_on_green_light_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_left_turn_yield_on_green_light"
 	})
 
@@ -991,7 +991,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_crosswalk_stop_on_red_light_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_crosswalk_stop_on_red_light"
 	})
 
@@ -1015,7 +1015,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_ped_push_button_to_turn_on_warning_lights"
 	})
 
@@ -1038,7 +1038,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		wield_image = "street_signs_rr_grade_crossbuck_inv.png",
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_rr_grade_crossbuck"
 	})
 
@@ -1062,7 +1062,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_rr_exempt_r15_3p"
 	})
 

@@ -123,7 +123,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_service_hospital"
 	})
 
@@ -145,7 +145,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_service_handicapped"
 	})
 
@@ -167,7 +167,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_service_fuel"
 	})
 
@@ -189,7 +189,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_service_food"
 	})
 
@@ -211,7 +211,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_service_lodging"
 	})
 
@@ -233,7 +233,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_service_ev_charging"
 	})
 end

@@ -39,7 +39,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		after_place_node = signs_lib.after_place_node,
 		on_receive_fields = signs_lib.receive_fields,
 		on_punch = signs_lib.update_sign,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		number_of_lines = 1,
 		horiz_scaling = 3.5,
 		vert_scaling = 1.4,
@@ -77,7 +77,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		after_place_node = signs_lib.after_place_node,
 		on_receive_fields = signs_lib.receive_fields,
 		on_punch = signs_lib.update_sign,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		number_of_lines = 1,
 		horiz_scaling = 4.3,
 		vert_scaling = 1.4,
@@ -113,7 +113,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_detour_right_m4_10"
 	})
 
@@ -135,7 +135,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		groups = {choppy=2, dig_immediate=2, not_in_creative_inventory = nci},
 		default_color = "0",
 		after_place_node = signs_lib.after_place_node,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		drop = "street_signs:sign_detour_left_m4_10"
 	})
 

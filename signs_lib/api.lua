@@ -37,15 +37,6 @@ signs_lib.wallmounted_yaw = {
 	math.pi,
 }
 
-local wall_dir_change = {
-	[0] = 2,
-	2,
-	5,
-	4,
-	2,
-	3,
-}
-
 signs_lib.fdir_to_back = {
 	{  0, -1 },
 	{ -1,  0 },
@@ -62,12 +53,38 @@ signs_lib.wall_fdir_to_back = {
 	{  1,  0 },
 }
 
+signs_lib.rotate_facedir = {
+	[0] = 1,
+	[1] = 6,
+	[2] = 3,
+	[3] = 0,
+	[4] = 2,
+	[5] = 6,
+	[6] = 4
+}
+
+signs_lib.rotate_walldir = {
+	[0] = 1,
+	[1] = 5,
+	[2] = 0,
+	[3] = 4,
+	[4] = 2,
+	[5] = 3
+}
+
 -- Initialize character texture cache
 local ctexcache = {}
 
 signs_lib.wallmounted_rotate = function(pos, node, user, mode)
-	if mode ~= screwdriver.ROTATE_FACE then return false end
-	minetest.swap_node(pos, { name = node.name, param2 = wall_dir_change[node.param2 % 6] })
+	if not signs_lib.can_modify(pos, user) then return false end
+
+	if mode ~= screwdriver.ROTATE_FACE or string.match(node.name, "_onpole") then
+		return false
+	end
+
+	local newparam2 = signs_lib.rotate_walldir[node.param2] or 0
+
+	minetest.swap_node(pos, { name = node.name, param2 = newparam2 })
 	for _, v in ipairs(minetest.get_objects_inside_radius(pos, 0.5)) do
 		local e = v:get_luaentity()
 		if e and e.name == "signs_lib:text" then
@@ -79,8 +96,14 @@ signs_lib.wallmounted_rotate = function(pos, node, user, mode)
 end
 
 signs_lib.facedir_rotate = function(pos, node, user, mode)
-	if mode ~= screwdriver.ROTATE_FACE or not signs_lib.can_modify(pos, user) then return end
-	newparam2 = ((node.param2 % 6 ) == 0) and 1 or 0
+	if not signs_lib.can_modify(pos, user) then return false end
+
+	if mode ~= screwdriver.ROTATE_FACE or string.match(node.name, "_onpole") then
+		return false
+	end
+
+	local newparam2 = signs_lib.rotate_facedir[node.param2] or 0
+
 	minetest.swap_node(pos, { name = node.name, param2 = newparam2 })
 	for _, v in ipairs(minetest.get_objects_inside_radius(pos, 0.5)) do
 		local e = v:get_luaentity()
@@ -561,7 +584,7 @@ function signs_lib.make_selection_boxes(sizex, sizey, onpole, xoffs, yoffs, zoff
 		if not fdir then
 			return {
 				type = "wallmounted",
-				wall_side =   { -0.5, -ty, -tx, -0.4375, ty, tx },
+				wall_side =   { -0.5 + zo, -ty + yo, -tx + xo, -0.4375 + zo, ty + yo, tx + xo },
 				wall_top =    { -tx - xo, 0.5 + zo, -ty + yo, tx - xo, 0.4375 + zo, ty + yo},
 				wall_bottom = { -tx - xo, -0.5 + zo, -ty + yo, tx - xo, -0.4375 + zo, ty + yo }
 			}
@@ -579,13 +602,20 @@ function signs_lib.check_for_pole(pos, pointed_thing)
 	local pnode = minetest.get_node(ppos)
 	local pdef = minetest.registered_items[pnode.name]
 
-	if signs_lib.allowed_poles[pnode.name]
+	print(dump(pos))
+	print(dump(ppos))
+
+	if (signs_lib.allowed_poles[pnode.name]
 		  or (pdef and pdef.drawtype == "fencelike")
 		  or string.find(pnode.name, "default:fence_")
 		  or string.find(pnode.name, "_post")
 		  or string.find(pnode.name, "fencepost")
 		  or (pnode.name == "streets:bigpole" and pnode.param2 < 4)
-		  or (pnode.name == "streets:bigpole" and pnode.param2 > 19 and pnode.param2 < 24) then
+		  or (pnode.name == "streets:bigpole" and pnode.param2 > 19 and pnode.param2 < 24)
+		)
+	  and
+		(pos.x ~= ppos.x or pos.z ~= ppos.z) then
+		print("signs_lib.check_for_pole returned true")
 		return true
 	end
 end

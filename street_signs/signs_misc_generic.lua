@@ -6,12 +6,10 @@ local cbox
 for _, onpole in ipairs({"", "_onpole"}) do
 
 	local nci = nil
-	local on_rotate = signs_lib.wallmounted_rotate
 	local pole_mount_tex = nil
 
 	if onpole == "_onpole" then
 		nci = 1
-		on_rotate = nil
 		pole_mount_tex = "signs_lib_pole_mount.png"
 	end
 
@@ -39,7 +37,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		after_place_node = signs_lib.after_place_node,
 		on_receive_fields = signs_lib.receive_fields,
 		on_punch = signs_lib.update_sign,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		number_of_lines = 3,
 		horiz_scaling = 1.75,
 		vert_scaling = 1.75,
@@ -77,7 +75,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		after_place_node = signs_lib.after_place_node,
 		on_receive_fields = signs_lib.receive_fields,
 		on_punch = signs_lib.update_sign,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		number_of_lines = 4,
 		horiz_scaling = 1.75,
 		vert_scaling = 1.75,
@@ -115,7 +113,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		after_place_node = signs_lib.after_place_node,
 		on_receive_fields = signs_lib.receive_fields,
 		on_punch = signs_lib.update_sign,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		number_of_lines = 3,
 		horiz_scaling = 1.75,
 		vert_scaling = 1.75,
@@ -153,7 +151,7 @@ for _, onpole in ipairs({"", "_onpole"}) do
 		after_place_node = signs_lib.after_place_node,
 		on_receive_fields = signs_lib.receive_fields,
 		on_punch = signs_lib.update_sign,
-		on_rotate = on_rotate,
+		on_rotate = signs_lib.wallmounted_rotate,
 		number_of_lines = 4,
 		horiz_scaling = 1.75,
 		vert_scaling = 1.75,
@@ -185,7 +183,9 @@ for _, s in ipairs(street_signs.big_sign_sizes) do
 	local yoffs =  s[7]
 	local cbox = {
 		type = "wallmounted",
-		wall_side = s[8]
+		wall_side = s[8],
+		wall_top =    { -s[8][3], -s[8][1], s[8][2], -s[8][6], -s[8][4], s[8][5] },
+		wall_bottom = {  s[8][3],  s[8][1], s[8][2],  s[8][6],  s[8][4], s[8][5] }
 	}
 
 	for _, c in ipairs(street_signs.big_sign_colors) do
