@@ -20,6 +20,6 @@ for _, d in ipairs({"l", "c", "r"}) do
 			"street_signs_sign_edge.png"
 		},
 		inventory_image = "street_signs_object_marker_type3_"..d.."_inv.png",
-		groups = {choppy=2, dig_immediate=2},
+		groups = {sign = 1, choppy=2, dig_immediate=2},
 	})
 end
