@@ -611,6 +611,14 @@ function signs_lib.check_for_pole(pos, pointed_thing)
 	end
 end
 
+function signs_lib.check_for_ceiling(pointed_thing)
+	if pointed_thing.above.x == pointed_thing.under.x
+	  and pointed_thing.above.z == pointed_thing.under.z
+	  and pointed_thing.above.y < pointed_thing.under.y then
+		return true
+	end
+end
+
 function signs_lib.after_place_node(pos, placer, itemstack, pointed_thing, locked)
 	local playername = placer:get_player_name()
 	local def = minetest.registered_items[itemstack:get_name()]
@@ -622,6 +630,10 @@ function signs_lib.after_place_node(pos, placer, itemstack, pointed_thing, locke
 	if (def.allow_onpole ~= false) and signs_lib.check_for_pole(pos, pointed_thing) then
 		local node = minetest.get_node(pos)
 		minetest.swap_node(pos, {name = itemstack:get_name().."_onpole", param2 = node.param2})
+	elseif def.allow_hanging and signs_lib.check_for_ceiling(pointed_thing) then
+		local newparam2 = minetest.dir_to_facedir(placer:get_look_dir())
+		local node = minetest.get_node(pos)
+		minetest.swap_node(pos, {name = itemstack:get_name().."_hanging", param2 = newparam2})
 	end
 	if locked then
 		local meta = minetest.get_meta(pos)
@@ -711,13 +723,13 @@ function signs_lib.register_sign(name, rdef)
 	end
 
 	def.paramtype           = rdef.paramtype           or "light"
-	def.paramtype2          = rdef.paramtype2          or "wallmounted"
 	def.drawtype            = rdef.drawtype            or "mesh"
 	def.mesh                = rdef.mesh                or "signs_lib_standard_wall_sign.obj"
 	def.wield_image         = rdef.wield_image         or def.inventory_image
 	def.drop                = rdef.drop                or name
 	def.sounds              = rdef.sounds              or signs_lib.standard_wood_sign_sounds
 	def.on_rotate           = rdef.on_rotate           or signs_lib.wallmounted_rotate
+	def.paramtype2          = rdef.paramtype2          or "wallmounted"
 
 	if rdef.on_rotate then
 		def.on_rotate = rdef.on_rotate
@@ -754,6 +766,9 @@ function signs_lib.register_sign(name, rdef)
 			offset = 0.35
 		end
 
+		opdef.selection_box = rdef.onpole_selection_box or opdef.selection_box
+		opdef.node_box = rdef.onpole_node_box or opdef.selection_box
+
 		if opdef.paramtype2 == "wallmounted" then
 			opdef.node_box.wall_side[1] = def.node_box.wall_side[1] - offset
 			opdef.node_box.wall_side[4] = def.node_box.wall_side[4] - offset
@@ -780,6 +795,31 @@ function signs_lib.register_sign(name, rdef)
 		minetest.register_node(":"..name.."_onpole", opdef)
 		table.insert(signs_lib.lbm_restore_nodes, name.."_onpole")
 	end
+
+	if rdef.allow_hanging then
+
+		local hdef = table.copy(def)
+		hdef.paramtype2 = "facedir"
+
+		local hcbox = signs_lib.make_selection_boxes(35, 32, false, 0, 3, -18.5, true)
+
+		hdef.selection_box = rdef.hanging_selection_box or hcbox
+		hdef.node_box = rdef.hanging_node_box or rdef.hanging_selection_box or hcbox
+
+		hdef.groups.not_in_creative_inventory = 1
+		hdef.tiles[3] = "signs_lib_hangers.png"
+		hdef.mesh = string.gsub(string.gsub(hdef.mesh, "_facedir.obj", ".obj"), ".obj$", "_hanging.obj")
+		hdef.on_rotate = nil
+
+		if hdef.entity_info then
+			hdef.entity_info.mesh = string.gsub(string.gsub(hdef.entity_info.mesh, "_facedir.obj", ".obj"), ".obj$", "_hanging.obj")
+			hdef.entity_info.yaw = signs_lib.standard_yaw
+		end
+
+		minetest.register_node(":"..name.."_hanging", hdef)
+		table.insert(signs_lib.lbm_restore_nodes, name.."_hanging")
+	end
+
 end
 
 -- restore signs' text after /clearobjects and the like, the next time
