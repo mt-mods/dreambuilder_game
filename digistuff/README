@@ -10,7 +10,8 @@ Textures WITH "adwaita" in the file name - These are icons by the GNOME Project,
 
 Depends:
 Required: digilines (base only) and mesecons (base only)
-Only needed for craft recipes: default, mesecons_luacontroller, basic_materials
+Optional: mesecons_noteblock (for digilines noteblock), mesecons_mvps (for digilines piston), mesecons_luacontroller (for I/O expander)
+Only needed for craft recipes: default, basic_materials
 
 
 How to use digilines buttons:
@@ -66,3 +67,7 @@ Send a number representing a time in seconds, from 0.5 to 3600. When the time ex
 How to use the junction box:
 These are just plain digilines conductors (like digimese) but can skip over one node to another junction box or certain other nodes.
 As in, [digiline][junction box][dirt][junction box][digiline] will work to transmit signals "through" the dirt.
+
+How to use the I/O expander:
+After setting a channel, send a table (same format as a Luacontroller's "port" table) to set the output states.
+A table in this same format will be sent back whenever an input changes or you manually poll it by sending a "GET" message.
