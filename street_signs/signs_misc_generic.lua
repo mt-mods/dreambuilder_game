@@ -2,6 +2,9 @@
 local S = signs_lib.gettext
 local cbox = signs_lib.make_selection_boxes(36, 36)
 
+local sgroups = table.copy(signs_lib.standard_steel_groups)
+sgroups.not_in_creative_inventory = 1
+
 signs_lib.register_sign("street_signs:sign_warning_3_line", {
 	description = "W3-4: Generic US diamond \"warning\" sign (3-line, yellow)",
 	selection_box = cbox,
@@ -25,8 +28,10 @@ signs_lib.register_sign("street_signs:sign_warning_3_line", {
 		mesh = "street_signs_warning_36x36_entity.obj",
 		yaw = signs_lib.wallmounted_yaw
 	},
-	drop = "street_signs:sign_warning_3_line"
+	drop = "street_signs:sign_warning_3_line",
+	allow_widefont = true
 })
+
 
 signs_lib.register_sign("street_signs:sign_warning_4_line", {
 	description = "W23-2: Generic US diamond \"warning\" sign (4-line, yellow)",
@@ -51,7 +56,8 @@ signs_lib.register_sign("street_signs:sign_warning_4_line", {
 		mesh = "street_signs_warning_36x36_entity.obj",
 		yaw = signs_lib.wallmounted_yaw
 	},
-	drop = "street_signs:sign_warning_4_line"
+	drop = "street_signs:sign_warning_4_line",
+	allow_widefont = true
 })
 
 signs_lib.register_sign("street_signs:sign_warning_orange_3_line", {
@@ -77,7 +83,8 @@ signs_lib.register_sign("street_signs:sign_warning_orange_3_line", {
 		mesh = "street_signs_warning_36x36_entity.obj",
 		yaw = signs_lib.wallmounted_yaw
 	},
-	drop = "street_signs:sign_warning_orange_3_line"
+	drop = "street_signs:sign_warning_orange_3_line",
+	allow_widefont = true
 })
 
 signs_lib.register_sign("street_signs:sign_warning_orange_4_line", {
@@ -103,8 +110,10 @@ signs_lib.register_sign("street_signs:sign_warning_orange_4_line", {
 		mesh = "street_signs_warning_36x36_entity.obj",
 		yaw = signs_lib.wallmounted_yaw
 	},
-	drop = "street_signs:sign_warning_orange_4_line"
+	drop = "street_signs:sign_warning_orange_4_line",
+	allow_widefont = true
 })
+
 for _, s in ipairs(street_signs.big_sign_sizes) do
 	local size =   s[1]
 	local nlines = s[2]
@@ -148,35 +157,11 @@ for _, s in ipairs(street_signs.big_sign_sizes) do
 				mesh = "street_signs_generic_highway_"..size.."_entity.obj",
 				yaw = signs_lib.wallmounted_yaw
 			},
-			allow_onpole = false
+			allow_onpole = false,
+			allow_widefont = true
 		})
-		
-		signs_lib.register_sign("street_signs:sign_highway_widefont_"..size.."_"..color, {
-			description = "Generic highway sign (Wide font, "..nlines.."-line, "..size..", "..color..")",
-			inventory_image = "street_signs_generic_highway_"..size.."_"..color.."_inv.png",
-			selection_box = cbox,
-			mesh = "street_signs_generic_highway_"..size..".obj",
-			tiles = {
-				"street_signs_generic_highway_front_"..size.."_"..color..".png",
-				"street_signs_generic_highway_back_"..size..".png",
-				"street_signs_generic_highway_edges.png"
-			},
-			default_color = defc,
-			groups = signs_lib.standard_steel_groups,
-			sounds = signs_lib.standard_steel_sign_sounds,
-			number_of_lines = nlines,
-			chars_per_line = math.ceil(nchars/1.4),
-			horiz_scaling = hscale/1.4,
-			vert_scaling = vscale,
-			line_spacing = 2,
-			font_size = 31,
-			x_offset = xoffs,
-			y_offset = yoffs,
-			entity_info = {
-				mesh = "street_signs_generic_highway_"..size.."_entity.obj",
-				yaw = signs_lib.wallmounted_yaw
-			},
-			allow_onpole = false
-		})
+
+		minetest.register_alias("street_signs:sign_highway_widefont_"..size.."_"..color,
+			"street_signs:sign_highway_"..size.."_"..color.."_widefont")
 	end
 end

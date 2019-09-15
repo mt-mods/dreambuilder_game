@@ -2,6 +2,9 @@
 local S = signs_lib.gettext
 local groups = table.copy(signs_lib.standard_steel_groups)
 
+local sgroups = table.copy(signs_lib.standard_steel_groups)
+sgroups.not_in_creative_inventory = 1
+
 local cbox = {
 	type = "fixed",
 	fixed = {
@@ -34,7 +37,8 @@ signs_lib.register_sign("street_signs:sign_basic", {
 		mesh = "street_signs_basic_entity.obj",
 		yaw = signs_lib.standard_yaw
 	},
-	allow_onpole = false
+	allow_onpole = false,
+	allow_widefont = true
 })
 
 cbox = {
@@ -69,7 +73,8 @@ signs_lib.register_sign("street_signs:sign_basic_top_only", {
 		mesh = "street_signs_basic_top_only_entity.obj",
 		yaw = signs_lib.standard_yaw
 	},
-	allow_onpole = false
+	allow_onpole = false,
+	allow_widefont = true
 })
 
 cbox = signs_lib.make_selection_boxes(24, 24)

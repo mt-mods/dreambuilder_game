@@ -469,6 +469,7 @@ signs_lib.register_sign("street_signs:sign_distance_2_lines", {
 		mesh = "street_signs_generic_sign_24x18_top_entity.obj",
 		yaw = signs_lib.wallmounted_yaw
 	},
+	allow_widefont = true
 })
 
 signs_lib.register_sign("street_signs:sign_distance_2_lines_orange", {
@@ -494,6 +495,7 @@ signs_lib.register_sign("street_signs:sign_distance_2_lines_orange", {
 		mesh = "street_signs_generic_sign_24x18_top_entity.obj",
 		yaw = signs_lib.wallmounted_yaw
 	},
+	allow_widefont = true
 })
 cbox = signs_lib.make_selection_boxes(30, 30, onpole)
 
@@ -561,6 +563,7 @@ signs_lib.register_sign("street_signs:sign_low_clearance", {
 		mesh = "street_signs_warning_36x36_entity.obj",
 		yaw = signs_lib.wallmounted_yaw
 	},
+	allow_widefont = true
 })
 cbox = signs_lib.make_selection_boxes(18, 18, onpole, 0, 10, 0)
 
@@ -587,6 +590,7 @@ signs_lib.register_sign("street_signs:sign_advisory_speed_mph", {
 		mesh = "street_signs_generic_sign_18x18_top_entity.obj",
 		yaw = signs_lib.wallmounted_yaw
 	},
+	allow_widefont = true
 })
 
 signs_lib.register_sign("street_signs:sign_advisory_speed_kmh", {
@@ -612,6 +616,7 @@ signs_lib.register_sign("street_signs:sign_advisory_speed_kmh", {
 		mesh = "street_signs_generic_sign_18x18_top_entity.obj",
 		yaw = signs_lib.wallmounted_yaw
 	},
+	allow_widefont = true
 })
 
 signs_lib.register_sign("street_signs:sign_advisory_speed_ms", {
@@ -637,4 +642,5 @@ signs_lib.register_sign("street_signs:sign_advisory_speed_ms", {
 		mesh = "street_signs_generic_sign_18x18_top_entity.obj",
 		yaw = signs_lib.wallmounted_yaw
 	},
+	allow_widefont = true
 })

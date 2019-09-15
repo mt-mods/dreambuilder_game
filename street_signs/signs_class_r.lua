@@ -73,6 +73,7 @@ signs_lib.register_sign("street_signs:sign_speed_limit", {
 		mesh = "street_signs_generic_sign_30x36_entity.obj",
 		yaw = signs_lib.wallmounted_yaw
 	},
+	allow_widefont = true
 })
 
 cbox = signs_lib.make_selection_boxes(36, 36)
@@ -505,6 +506,7 @@ signs_lib.register_sign("street_signs:sign_ped_push_button_to_cross_r10_3i", {
 		yaw = signs_lib.wallmounted_yaw
 	},
 	uses_slim_pole_mount = true,
+	allow_widefont = true
 })
 
 signs_lib.register_sign("street_signs:sign_ped_push_button_to_cross_r10_3i_left", {
@@ -531,8 +533,8 @@ signs_lib.register_sign("street_signs:sign_ped_push_button_to_cross_r10_3i_left"
 		yaw = signs_lib.wallmounted_yaw
 	},
 	uses_slim_pole_mount = true,
+	allow_widefont = true
 })
-
 
 cbox = signs_lib.make_selection_boxes(30, 36)
 

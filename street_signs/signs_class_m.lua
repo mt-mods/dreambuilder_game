@@ -2,6 +2,9 @@
 local S = signs_lib.gettext
 local cbox = signs_lib.make_selection_boxes(36, 36)
 
+local sgroups = table.copy(signs_lib.standard_steel_groups)
+sgroups.not_in_creative_inventory = 1
+
 signs_lib.register_sign("street_signs:sign_us_route", {
 	description = "M1-4: Generic \"US Route\" sign",
 	selection_box = cbox,
@@ -25,6 +28,7 @@ signs_lib.register_sign("street_signs:sign_us_route", {
 		mesh = "street_signs_generic_sign_36x36_entity.obj",
 		yaw = signs_lib.wallmounted_yaw
 	},
+	allow_widefont = true
 })
 
 signs_lib.register_sign("street_signs:sign_us_interstate", {
@@ -51,6 +55,7 @@ signs_lib.register_sign("street_signs:sign_us_interstate", {
 		mesh = "street_signs_interstate_shield_entity.obj",
 		yaw = signs_lib.wallmounted_yaw
 	},
+	allow_widefont = true
 })
 
 cbox = signs_lib.make_selection_boxes(48, 18)
