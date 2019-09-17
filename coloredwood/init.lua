@@ -102,6 +102,11 @@ local coloredwood_cuts = {}
 
 if coloredwood.enable_stairsplus then
 
+	local groups2 = table.copy(minetest.registered_items["default:wood"].groups)
+	groups2.wood = nil
+	groups2.ud_param2_colorable = 1
+	groups2.not_in_creative_inventory=1
+
 	for _, i in pairs(minetest.registered_nodes) do
 
 		local chk = string.sub(i.name, 1, 20)
@@ -124,7 +129,7 @@ if coloredwood.enable_stairsplus then
 			end
 
 			minetest.override_item(i.name, {
-				groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2, wood = 1, not_in_creative_inventory=1, ud_param2_colorable = 1},
+				groups = groups2,
 				paramtype2 = "colorfacedir",
 				palette = "unifieddyes_palette_greys.png",
 				airbrush_replacement_node = "coloredwood:"..class.."_wood_grey_"..shape

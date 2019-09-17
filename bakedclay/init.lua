@@ -20,6 +20,7 @@ local clay = {
 	{"dark_green", "Dark Green"},
 }
 
+local techcnc_mod = minetest.get_modpath("technic_cnc")
 local stairs_mod = minetest.get_modpath("stairs")
 local stairsplus_mod = minetest.get_modpath("moreblocks")
 	and minetest.global_exists("stairsplus")
@@ -79,6 +80,15 @@ for _, clay in pairs(clay) do
 			clay[2] .. " Baked Clay Stair",
 			clay[2] .. " Baked Clay Slab",
 			default.node_sound_stone_defaults())
+	end
+
+	-- register bakedclay for use in technic_cnc mod
+	if techcnc_mod then
+
+		technic_cnc.register_all("bakedclay:" .. clay[1],
+		{cracky = 3, not_in_creative_inventory = 1},
+		{"baked_clay_" .. clay[1] .. ".png"},
+		clay[2] .. " Baked Clay")
 	end
 end
 

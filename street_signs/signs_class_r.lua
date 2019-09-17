@@ -10,7 +10,7 @@ signs_lib.register_sign("street_signs:sign_stop", {
 	mesh = "street_signs_stop.obj",
 	tiles = {
 		"street_signs_stop.png",
-		"street_signs_sign_edge.png",
+		"street_signs_sign_edge.png"
 	},
 	inventory_image = "street_signs_stop_inv.png",
 	groups = groups,
@@ -25,8 +25,7 @@ signs_lib.register_sign("street_signs:sign_stop_all_way", {
 	mesh = "street_signs_stop_all_way.obj",
 	tiles = {
 		"street_signs_stop.png",
-		"street_signs_sign_edge.png",
-		"street_signs_stop_all_way_plaque.png",
+		"street_signs_sign_edge.png"
 	},
 	inventory_image = "street_signs_stop_all_way_inv.png",
 	groups = groups,
