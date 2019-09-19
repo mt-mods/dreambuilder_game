@@ -103,7 +103,7 @@ if minetest.get_modpath("digilines") then
 		local setchan = meta:get_string("channel")
 		if setchan ~= channel then return end
 
-		if msg and msg ~= "" then
+		if msg and msg ~= "" and type(msg) == "string" then
 			local n = tonumber(msg)
 			local suff = word_to_bright[msg] or "invalid"
 
