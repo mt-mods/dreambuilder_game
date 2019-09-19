@@ -74,6 +74,40 @@ signs_lib.register_sign("basic_signs:sign_wall_locked", {
 	allow_widefont = true
 })
 
+signs_lib.register_sign("basic_signs:sign_wall_glass", {
+	description = S("Glass Sign"),
+	tiles = {
+		{ name = "basic_signs_sign_wall_glass.png", backface_culling = true},
+		"basic_signs_sign_wall_glass_edges.png",
+	},
+	inventory_image = "basic_signs_sign_wall_glass_inv.png",
+	default_color = "c",
+	locked = true,
+	entity_info = "standard",
+	sounds = default.node_sound_glass_defaults(),
+	groups = {cracky = 3, oddly_breakable_by_hand = 3},
+	allow_hanging = true,
+	allow_widefont = true,
+	use_texture_alpha = true,
+})
+
+signs_lib.register_sign("basic_signs:sign_wall_obsidian_glass", {
+	description = S("Obsidian Glass Sign"),
+	tiles = {
+		{ name = "basic_signs_sign_wall_obsidian_glass.png", backface_culling = true},
+		"basic_signs_sign_wall_obsidian_glass_edges.png",
+	},
+	inventory_image = "basic_signs_sign_wall_obsidian_glass_inv.png",
+	default_color = "c",
+	locked = true,
+	entity_info = "standard",
+	sounds = default.node_sound_glass_defaults(),
+	groups = {cracky = 3},
+	allow_hanging = true,
+	allow_widefont = true,
+	use_texture_alpha = true,
+})
+
 minetest.register_alias("locked_sign:sign_wall_locked", "basic_signs:sign_wall_locked")
 
 

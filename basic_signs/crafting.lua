@@ -136,3 +136,40 @@ minetest.register_craft( {
 			{ "steel:sheet_metal", "steel:sheet_metal", "steel:sheet_metal" }
 	},
 })
+
+minetest.register_craft( {
+	output = "basic_signs:sign_wall_glass 8",
+	recipe = {
+			{ "default:glass", "default:glass", "default:glass" },
+			{ "default:glass", "default:glass", "default:glass" },
+			{ "",              "default:glass", "" }
+	},
+})
+
+minetest.register_craft( {
+	output = "basic_signs:sign_wall_obsidian_glass 8",
+	recipe = {
+			{ "default:obsidian_glass", "default:obsidian_glass", "default:obsidian_glass" },
+			{ "default:obsidian_glass", "default:obsidian_glass", "default:obsidian_glass" },
+			{ "",                       "default:obsidian_glass", "" }
+	},
+})
+
+minetest.register_craft( {
+	output = "basic_signs:sign_wall_glass 3",
+	recipe = {
+			{ "xpanes:pane_flat", "xpanes:pane_flat", "xpanes:pane_flat" },
+			{ "xpanes:pane_flat", "xpanes:pane_flat", "xpanes:pane_flat" },
+			{ "",                 "xpanes:pane_flat", "" }
+	},
+})
+
+minetest.register_craft( {
+	output = "basic_signs:sign_wall_obsidian_glass 3",
+	recipe = {
+			{ "xpanes:obsidian_pane_flat", "xpanes:obsidian_pane_flat", "xpanes:obsidian_pane_flat" },
+			{ "xpanes:obsidian_pane_flat", "xpanes:obsidian_pane_flat", "xpanes:obsidian_pane_flat" },
+			{ "",                       "xpanes:obsidian_pane_flat", "" }
+	},
+})
+
