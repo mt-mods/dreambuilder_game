@@ -63,23 +63,55 @@ signs_lib.wall_fdir_to_back = {
 	{  1,  0 },
 }
 
-signs_lib.rotate_facedir = {
-	[0] = 1,
-	[1] = 6,
-	[2] = 3,
-	[3] = 0,
-	[4] = 2,
-	[5] = 6,
-	[6] = 4
+signs_lib.fdir_to_back_left = {
+	[0] = { -1,  1 },
+	[1] = {  1,  1 },
+	[2] = {  1, -1 },
+	[3] = { -1, -1 }
+}
+
+signs_lib.wall_fdir_to_back_left = {
+	[2] = {  1,  1 },
+	[3] = { -1, -1 },
+	[4] = { -1,  1 },
+	[5] = {  1, -1 }
 }
 
 signs_lib.rotate_walldir = {
-	[0] = 1,
-	[1] = 5,
-	[2] = 0,
+	[0] = 4,
+	[1] = 0,
+	[2] = 5,
+	[3] = 1,
+	[4] = 2,
+	[5] = 3
+}
+
+signs_lib.rotate_walldir_simple = {
+	[0] = 4,
+	[1] = 4,
+	[2] = 5,
 	[3] = 4,
 	[4] = 2,
 	[5] = 3
+}
+
+signs_lib.rotate_facedir = {
+	[0] = 1,
+	[1] = 2,
+	[2] = 3,
+	[3] = 4,
+	[4] = 6,
+	[5] = 6,
+	[6] = 0
+}
+
+signs_lib.rotate_facedir_simple = {
+	[0] = 1,
+	[1] = 2,
+	[2] = 3,
+	[3] = 0,
+	[4] = 0,
+	[5] = 0
 }
 
 -- Initialize character texture cache
@@ -105,7 +137,7 @@ end
 function signs_lib.spawn_entity(pos, texture)
 	local node = minetest.get_node(pos)
 	local def = minetest.registered_items[node.name]
-	if not def or not def.entity_info or not def.entity_info.yaw[node.param2 + 1] then return end
+	if not def or not def.entity_info then return end
 
 	local text_scale = (node and node.text_scale) or signs_lib.default_text_scale
 	local objects = minetest.get_objects_inside_radius(pos, 0.5)
@@ -117,51 +149,95 @@ function signs_lib.spawn_entity(pos, texture)
 		obj = minetest.add_entity(pos, "signs_lib:text")
 	end
 
-	obj:setyaw(def.entity_info.yaw[node.param2 + 1])
+	local yaw = def.entity_info.yaw[node.param2 + 1]
+	local pitch = 0
 
-	if not texture then
-		obj:set_properties({
-			mesh = def.entity_info.mesh,
-			visual_size = text_scale,
-		})
-	else
-		obj:set_properties({
-			mesh = def.entity_info.mesh,
-			visual_size = text_scale,
-			textures={texture},
-		})
+	if not string.find(node.name, "onpole") and not string.find(node.name, "hanging") then
+		local rot90 = math.pi/2
+
+		if def.paramtype2 == "wallmounted" then
+			if node.param2 == 1 then -- on floor
+				pitch = -rot90
+				yaw = 0
+			elseif node.param2 == 0 then -- on ceiling
+				pitch = rot90
+				yaw = math.pi
+			end
+		elseif def.paramtype2 == "facedir" then
+			if node.param2 == 4 then
+				pitch = -rot90
+				yaw = 0
+			elseif node.param2 == 6 then
+				pitch = rot90
+				yaw = math.pi
+			end
+		end
+	end
+
+	if yaw then
+		obj:set_rotation({x = pitch, y = yaw, z=0})
+
+		if not texture then
+			obj:set_properties({
+				mesh = def.entity_info.mesh,
+				visual_size = text_scale,
+			})
+		else
+			obj:set_properties({
+				mesh = def.entity_info.mesh,
+				visual_size = text_scale,
+				textures={texture},
+			})
+		end
 	end
 end
 
 -- rotation
 
-function signs_lib.wallmounted_rotate(pos, node, user, mode)
-	if not signs_lib.can_modify(pos, user) then return false end
-
-	if mode ~= screwdriver.ROTATE_FACE or string.match(node.name, "_onpole") then
+function signs_lib.handle_rotation(pos, node, user, mode)
+	if not signs_lib.can_modify(pos, user)
+	  or mode ~= screwdriver.ROTATE_FACE then
 		return false
 	end
+	local newparam2
+	local tpos = pos
+	local def = minetest.registered_items[node.name]
 
-	local newparam2 = signs_lib.rotate_walldir[node.param2] or 0
+	if string.match(node.name, "_onpole") then
+		local newparam2 = signs_lib.rotate_walldir_simple[node.param2] or 4
+		local t = signs_lib.wall_fdir_to_back_left
 
-	minetest.swap_node(pos, { name = node.name, param2 = newparam2 })
-	signs_lib.delete_objects(pos)
-	signs_lib.update_sign(pos)
-	return true
-end
+		if def.paramtype2 ~= "wallmounted" then
+			newparam2 = signs_lib.rotate_facedir_simple[node.param2] or 0
+			t  = signs_lib.fdir_to_back_left
+		end
 
-function signs_lib.facedir_rotate(pos, node, user, mode)
-	if not signs_lib.can_modify(pos, user) then return false end
+		tpos = {
+			x = pos.x + t[node.param2][1],
+			y = pos.y,
+			z = pos.z + t[node.param2][2]
+		}
 
-	if mode ~= screwdriver.ROTATE_FACE or string.match(node.name, "_onpole") then
-		return false
+		local node2 = minetest.get_node(tpos)
+		local def2 = minetest.registered_items[node2.name]
+		if not def2 or not def2.buildable_to then return true end -- undefined, or not buildable_to.
+
+
+		minetest.set_node(tpos, {name = node.name, param2 = newparam2})
+		minetest.get_meta(tpos):from_table(minetest.get_meta(pos):to_table())
+		minetest.remove_node(pos)
+		signs_lib.delete_objects(pos)
+
+	elseif string.match(node.name, "_hanging") or string.match(node.name, "yard") then
+		minetest.swap_node(tpos, { name = node.name, param2 = signs_lib.rotate_facedir_simple[node.param2] or 0 })
+	elseif minetest.registered_items[node.name].paramtype2 == "wallmounted" then
+		minetest.swap_node(tpos, { name = node.name, param2 = signs_lib.rotate_walldir[node.param2] or 0 })
+	else
+		minetest.swap_node(tpos, { name = node.name, param2 = signs_lib.rotate_facedir[node.param2] or 0 })
 	end
 
-	local newparam2 = signs_lib.rotate_facedir[node.param2] or 0
-
-	minetest.swap_node(pos, { name = node.name, param2 = newparam2 })
-	signs_lib.delete_objects(pos)
-	signs_lib.update_sign(pos)
+	signs_lib.delete_objects(tpos)
+	signs_lib.update_sign(tpos)
 	return true
 end
 
@@ -646,6 +722,14 @@ function signs_lib.check_for_ceiling(pointed_thing)
 	end
 end
 
+function signs_lib.check_for_floor(pointed_thing)
+	if pointed_thing.above.x == pointed_thing.under.x
+	  and pointed_thing.above.z == pointed_thing.under.z
+	  and pointed_thing.above.y > pointed_thing.under.y then
+		return true
+	end
+end
+
 function signs_lib.after_place_node(pos, placer, itemstack, pointed_thing, locked)
 	local playername = placer:get_player_name()
 	local def = minetest.registered_items[itemstack:get_name()]
@@ -655,12 +739,23 @@ function signs_lib.after_place_node(pos, placer, itemstack, pointed_thing, locke
 	local pdef = minetest.registered_items[pnode.name]
 
 	if (def.allow_onpole ~= false) and signs_lib.check_for_pole(pos, pointed_thing) then
+		local newparam2
+		local lookdir = minetest.yaw_to_dir(placer:get_look_horizontal())
+		if def.paramtype2 == "wallmounted" then
+			newparam2 = minetest.dir_to_wallmounted(lookdir)
+		else
+			newparam2 = minetest.dir_to_facedir(lookdir)
+		end
 		local node = minetest.get_node(pos)
-		minetest.swap_node(pos, {name = itemstack:get_name().."_onpole", param2 = node.param2})
+		minetest.swap_node(pos, {name = itemstack:get_name().."_onpole", param2 = newparam2})
 	elseif def.allow_hanging and signs_lib.check_for_ceiling(pointed_thing) then
 		local newparam2 = minetest.dir_to_facedir(placer:get_look_dir())
 		local node = minetest.get_node(pos)
 		minetest.swap_node(pos, {name = itemstack:get_name().."_hanging", param2 = newparam2})
+	elseif def.paramtype2 == "facedir" and signs_lib.check_for_ceiling(pointed_thing) then
+		minetest.swap_node(pos, {name = itemstack:get_name(), param2 = 6})
+	elseif def.paramtype2 == "facedir" and signs_lib.check_for_floor(pointed_thing) then
+		minetest.swap_node(pos, {name = itemstack:get_name(), param2 = 4})
 	end
 	if locked then
 		local meta = minetest.get_meta(pos)
@@ -715,16 +810,8 @@ local function register_sign(name, rdef)
 	def.wield_image         = rdef.wield_image         or def.inventory_image
 	def.drop                = rdef.drop                or name
 	def.sounds              = rdef.sounds              or signs_lib.standard_wood_sign_sounds
-	def.on_rotate           = rdef.on_rotate           or signs_lib.wallmounted_rotate
 	def.paramtype2          = rdef.paramtype2          or "wallmounted"
-
-	if rdef.on_rotate then
-		def.on_rotate = rdef.on_rotate
-	elseif rdef.drawtype == "wallmounted" then
-		def.on_rotate = signs_lib.wallmounted_rotate
-	else
-		def.on_rotate = signs_lib.facedir_rotate
-	end
+	def.on_rotate           = rdef.on_rotate           or signs_lib.handle_rotation
 
 	if rdef.groups then
 		def.groups = rdef.groups
@@ -732,7 +819,7 @@ local function register_sign(name, rdef)
 		def.groups = signs_lib.standard_wood_groups
 	end
 
-	local cbox = signs_lib.make_selection_boxes(35, 25, allow_onpole)
+	local cbox = signs_lib.make_selection_boxes(35, 25)
 
 	def.selection_box = rdef.selection_box or cbox
 	def.node_box      = table.copy(rdef.node_box or rdef.selection_box or cbox)
@@ -773,8 +860,6 @@ local function register_sign(name, rdef)
 		opdef.groups.not_in_creative_inventory = 1
 		opdef.tiles[3] = "signs_lib_pole_mount.png"
 		opdef.mesh = string.gsub(opdef.mesh, ".obj$", "_onpole.obj")
-		opdef.on_rotate = nil
-
 
 		if opdef.entity_info then
 			opdef.entity_info.mesh = string.gsub(opdef.entity_info.mesh, ".obj$", "_onpole.obj")
@@ -788,7 +873,7 @@ local function register_sign(name, rdef)
 		local hdef = table.copy(def)
 		hdef.paramtype2 = "facedir"
 
-		local hcbox = signs_lib.make_selection_boxes(35, 32, false, 0, 3, -18.5, true)
+		local hcbox = signs_lib.make_selection_boxes(35, 32, nil, 0, 3, -18.5, true)
 
 		hdef.selection_box = rdef.hanging_selection_box or hcbox
 		hdef.node_box = rdef.hanging_node_box or rdef.hanging_selection_box or hcbox
@@ -796,7 +881,6 @@ local function register_sign(name, rdef)
 		hdef.groups.not_in_creative_inventory = 1
 		hdef.tiles[3] = "signs_lib_hangers.png"
 		hdef.mesh = string.gsub(string.gsub(hdef.mesh, "_facedir.obj", ".obj"), ".obj$", "_hanging.obj")
-		hdef.on_rotate = nil
 
 		if hdef.entity_info then
 			hdef.entity_info.mesh = string.gsub(string.gsub(hdef.entity_info.mesh, "_facedir.obj", ".obj"), ".obj$", "_hanging.obj")
@@ -852,7 +936,7 @@ function signs_lib.register_sign(name, rdef)
 
 	if rdef.allow_widefont then
 
-		wdef = table.copy(minetest.registered_items[name])
+		local wdef = table.copy(minetest.registered_items[name])
 		wdef.groups.not_in_creative_inventory = 1
 		wdef.horiz_scaling = wdef.horiz_scaling / 2
 
