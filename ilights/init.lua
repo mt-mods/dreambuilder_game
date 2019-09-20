@@ -86,7 +86,7 @@ if minetest.get_modpath("digilines") then
 		local setchan = meta:get_string("channel")
 
 		if setchan ~= channel then return end
-		if msg and msg ~= "" and type(msg) == "string" then
+		if msg ~= "" and (type(msg) == "string" or type(msg) == "number" ) then
 			local n = tonumber(msg)
 			if n then
 				msg = (n > 3) and "on" or "off" -- same threshold as in homedecor's lights
