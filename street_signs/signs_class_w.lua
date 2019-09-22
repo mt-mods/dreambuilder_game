@@ -13,6 +13,8 @@ signs_lib.register_sign("street_signs:sign_road_turns_sharp_left", {
 	inventory_image = "street_signs_road_turns_sharp_left_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_road_turns_sharp_right", {
@@ -26,6 +28,8 @@ signs_lib.register_sign("street_signs:sign_road_turns_sharp_right", {
 	inventory_image = "street_signs_road_turns_sharp_right_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_road_turns_left", {
@@ -39,6 +43,8 @@ signs_lib.register_sign("street_signs:sign_road_turns_left", {
 	inventory_image = "street_signs_road_turns_left_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_road_turns_right", {
@@ -52,6 +58,8 @@ signs_lib.register_sign("street_signs:sign_road_turns_right", {
 	inventory_image = "street_signs_road_turns_right_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_road_turns_dog_leg_left", {
@@ -65,6 +73,8 @@ signs_lib.register_sign("street_signs:sign_road_turns_dog_leg_left", {
 	inventory_image = "street_signs_road_turns_dog_leg_left_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_road_turns_dog_leg_right", {
@@ -78,6 +88,8 @@ signs_lib.register_sign("street_signs:sign_road_turns_dog_leg_right", {
 	inventory_image = "street_signs_road_turns_dog_leg_right_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_road_turns_dog_leg_curve_left", {
@@ -91,6 +103,8 @@ signs_lib.register_sign("street_signs:sign_road_turns_dog_leg_curve_left", {
 	inventory_image = "street_signs_road_turns_dog_leg_curve_left_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_road_turns_dog_leg_curve_right", {
@@ -104,6 +118,8 @@ signs_lib.register_sign("street_signs:sign_road_turns_dog_leg_curve_right", {
 	inventory_image = "street_signs_road_turns_dog_leg_curve_right_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_road_winding", {
@@ -117,6 +133,8 @@ signs_lib.register_sign("street_signs:sign_road_winding", {
 	inventory_image = "street_signs_road_winding_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_road_turns_hairpin_left", {
@@ -130,6 +148,8 @@ signs_lib.register_sign("street_signs:sign_road_turns_hairpin_left", {
 	inventory_image = "street_signs_road_turns_hairpin_left_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_road_turns_hairpin_right", {
@@ -143,6 +163,8 @@ signs_lib.register_sign("street_signs:sign_road_turns_hairpin_right", {
 	inventory_image = "street_signs_road_turns_hairpin_right_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_road_turns_270_left", {
@@ -156,6 +178,8 @@ signs_lib.register_sign("street_signs:sign_road_turns_270_left", {
 	inventory_image = "street_signs_road_turns_270_left_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_road_turns_270_right", {
@@ -169,6 +193,8 @@ signs_lib.register_sign("street_signs:sign_road_turns_270_right", {
 	inventory_image = "street_signs_road_turns_270_right_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 cbox = signs_lib.make_selection_boxes(48, 24, onpole)
 
@@ -183,6 +209,8 @@ signs_lib.register_sign("street_signs:sign_large_arrow_left", {
 	inventory_image = "street_signs_large_arrow_left_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_large_arrow_right", {
@@ -196,6 +224,8 @@ signs_lib.register_sign("street_signs:sign_large_arrow_right", {
 	inventory_image = "street_signs_large_arrow_right_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_two_direction_large_arrow", {
@@ -209,6 +239,8 @@ signs_lib.register_sign("street_signs:sign_two_direction_large_arrow", {
 	inventory_image = "street_signs_two_direction_large_arrow_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 cbox = signs_lib.make_selection_boxes(36, 36, onpole)
 
@@ -223,6 +255,8 @@ signs_lib.register_sign("street_signs:sign_cross_road_ahead", {
 	inventory_image = "street_signs_cross_road_ahead_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_side_road_right_ahead", {
@@ -236,6 +270,8 @@ signs_lib.register_sign("street_signs:sign_side_road_right_ahead", {
 	inventory_image = "street_signs_side_road_right_ahead_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_side_road_left_ahead", {
@@ -249,6 +285,8 @@ signs_lib.register_sign("street_signs:sign_side_road_left_ahead", {
 	inventory_image = "street_signs_side_road_left_ahead_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_t_junction_ahead", {
@@ -262,6 +300,8 @@ signs_lib.register_sign("street_signs:sign_t_junction_ahead", {
 	inventory_image = "street_signs_t_junction_ahead_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_circular_intersection_ahead", {
@@ -275,6 +315,8 @@ signs_lib.register_sign("street_signs:sign_circular_intersection_ahead", {
 	inventory_image = "street_signs_circular_intersection_ahead_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_offset_side_road_left_ahead", {
@@ -288,6 +330,8 @@ signs_lib.register_sign("street_signs:sign_offset_side_road_left_ahead", {
 	inventory_image = "street_signs_offset_side_road_left_ahead_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_offset_side_road_right_ahead", {
@@ -301,6 +345,8 @@ signs_lib.register_sign("street_signs:sign_offset_side_road_right_ahead", {
 	inventory_image = "street_signs_offset_side_road_right_ahead_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_stop_ahead", {
@@ -314,6 +360,8 @@ signs_lib.register_sign("street_signs:sign_stop_ahead", {
 	inventory_image = "street_signs_stop_ahead_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_yield_ahead", {
@@ -327,6 +375,8 @@ signs_lib.register_sign("street_signs:sign_yield_ahead", {
 	inventory_image = "street_signs_yield_ahead_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_signal_ahead", {
@@ -340,6 +390,8 @@ signs_lib.register_sign("street_signs:sign_signal_ahead", {
 	inventory_image = "street_signs_signal_ahead_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_merging_traffic", {
@@ -353,6 +405,8 @@ signs_lib.register_sign("street_signs:sign_merging_traffic", {
 	inventory_image = "street_signs_merging_traffic_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_left_lane_ends", {
@@ -366,6 +420,8 @@ signs_lib.register_sign("street_signs:sign_left_lane_ends", {
 	inventory_image = "street_signs_left_lane_ends_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_right_lane_ends", {
@@ -379,6 +435,8 @@ signs_lib.register_sign("street_signs:sign_right_lane_ends", {
 	inventory_image = "street_signs_right_lane_ends_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_divided_highway_begins", {
@@ -392,6 +450,8 @@ signs_lib.register_sign("street_signs:sign_divided_highway_begins", {
 	inventory_image = "street_signs_divided_highway_begins_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_divided_highway_ends", {
@@ -405,6 +465,8 @@ signs_lib.register_sign("street_signs:sign_divided_highway_ends", {
 	inventory_image = "street_signs_divided_highway_ends_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_two_way_traffic", {
@@ -418,6 +480,8 @@ signs_lib.register_sign("street_signs:sign_two_way_traffic", {
 	inventory_image = "street_signs_two_way_traffic_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_hill_with_grade_ahead", {
@@ -443,6 +507,8 @@ signs_lib.register_sign("street_signs:sign_hill_with_grade_ahead", {
 		mesh = "street_signs_warning_36x36_entity.obj",
 		yaw = signs_lib.wallmounted_yaw
 	},
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 cbox = signs_lib.make_selection_boxes(24, 18, onpole, 0, 9.75, 0)
 
@@ -469,7 +535,8 @@ signs_lib.register_sign("street_signs:sign_distance_2_lines", {
 		mesh = "street_signs_generic_sign_24x18_top_entity.obj",
 		yaw = signs_lib.wallmounted_yaw
 	},
-	allow_widefont = true
+	allow_widefont = true,
+	allow_onpole = true,
 })
 
 signs_lib.register_sign("street_signs:sign_distance_2_lines_orange", {
@@ -495,8 +562,10 @@ signs_lib.register_sign("street_signs:sign_distance_2_lines_orange", {
 		mesh = "street_signs_generic_sign_24x18_top_entity.obj",
 		yaw = signs_lib.wallmounted_yaw
 	},
-	allow_widefont = true
+	allow_widefont = true,
+	allow_onpole = true,
 })
+
 cbox = signs_lib.make_selection_boxes(30, 30, onpole)
 
 signs_lib.register_sign("street_signs:sign_rr_grade_crossing_advance", {
@@ -510,7 +579,10 @@ signs_lib.register_sign("street_signs:sign_rr_grade_crossing_advance", {
 	inventory_image = "street_signs_rr_grade_crossing_advance_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
+
 cbox = signs_lib.make_selection_boxes(24, 12, onpole, 0, 12, 0)
 
 signs_lib.register_sign("street_signs:sign_rr_exempt_w10_1ap", {
@@ -524,7 +596,9 @@ signs_lib.register_sign("street_signs:sign_rr_exempt_w10_1ap", {
 	inventory_image = "street_signs_rr_exempt_w10_1ap_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
 })
+
 cbox = signs_lib.make_selection_boxes(36, 36, onpole)
 
 signs_lib.register_sign("street_signs:sign_pedestrian_crossing", {
@@ -538,6 +612,8 @@ signs_lib.register_sign("street_signs:sign_pedestrian_crossing", {
 	inventory_image = "street_signs_pedestrian_crossing_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_low_clearance", {
@@ -563,8 +639,11 @@ signs_lib.register_sign("street_signs:sign_low_clearance", {
 		mesh = "street_signs_warning_36x36_entity.obj",
 		yaw = signs_lib.wallmounted_yaw
 	},
-	allow_widefont = true
+	allow_widefont = true,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
+
 cbox = signs_lib.make_selection_boxes(18, 18, onpole, 0, 10, 0)
 
 signs_lib.register_sign("street_signs:sign_advisory_speed_mph", {
@@ -590,7 +669,8 @@ signs_lib.register_sign("street_signs:sign_advisory_speed_mph", {
 		mesh = "street_signs_generic_sign_18x18_top_entity.obj",
 		yaw = signs_lib.wallmounted_yaw
 	},
-	allow_widefont = true
+	allow_widefont = true,
+	allow_onpole = true,
 })
 
 signs_lib.register_sign("street_signs:sign_advisory_speed_kmh", {
@@ -616,7 +696,8 @@ signs_lib.register_sign("street_signs:sign_advisory_speed_kmh", {
 		mesh = "street_signs_generic_sign_18x18_top_entity.obj",
 		yaw = signs_lib.wallmounted_yaw
 	},
-	allow_widefont = true
+	allow_widefont = true,
+	allow_onpole = true,
 })
 
 signs_lib.register_sign("street_signs:sign_advisory_speed_ms", {
@@ -642,5 +723,6 @@ signs_lib.register_sign("street_signs:sign_advisory_speed_ms", {
 		mesh = "street_signs_generic_sign_18x18_top_entity.obj",
 		yaw = signs_lib.wallmounted_yaw
 	},
-	allow_widefont = true
+	allow_widefont = true,
+	allow_onpole = true,
 })

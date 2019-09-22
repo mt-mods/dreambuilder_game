@@ -28,7 +28,9 @@ signs_lib.register_sign("street_signs:sign_us_route", {
 		mesh = "street_signs_generic_sign_36x36_entity.obj",
 		yaw = signs_lib.wallmounted_yaw
 	},
-	allow_widefont = true
+	allow_widefont = true,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_us_interstate", {
@@ -55,7 +57,9 @@ signs_lib.register_sign("street_signs:sign_us_interstate", {
 		mesh = "street_signs_interstate_shield_entity.obj",
 		yaw = signs_lib.wallmounted_yaw
 	},
-	allow_widefont = true
+	allow_widefont = true,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 cbox = signs_lib.make_selection_boxes(48, 18)
@@ -71,6 +75,8 @@ signs_lib.register_sign("street_signs:sign_detour_right_m4_10", {
 	inventory_image = "street_signs_detour_right_m4_10_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_detour_left_m4_10", {
@@ -84,4 +90,6 @@ signs_lib.register_sign("street_signs:sign_detour_left_m4_10", {
 	inventory_image = "street_signs_detour_left_m4_10_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })

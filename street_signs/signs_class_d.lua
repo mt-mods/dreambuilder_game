@@ -37,7 +37,6 @@ signs_lib.register_sign("street_signs:sign_basic", {
 		mesh = "street_signs_basic_entity.obj",
 		yaw = signs_lib.standard_yaw
 	},
-	allow_onpole = false,
 	allow_widefont = true
 })
 
@@ -73,7 +72,6 @@ signs_lib.register_sign("street_signs:sign_basic_top_only", {
 		mesh = "street_signs_basic_top_only_entity.obj",
 		yaw = signs_lib.standard_yaw
 	},
-	allow_onpole = false,
 	allow_widefont = true
 })
 
@@ -89,6 +87,8 @@ signs_lib.register_sign("street_signs:sign_service_hospital", {
 	inventory_image = "street_signs_service_hospital_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_service_handicapped", {
@@ -101,6 +101,8 @@ signs_lib.register_sign("street_signs:sign_service_handicapped", {
 	inventory_image = "street_signs_service_handicapped_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_service_fuel", {
@@ -113,6 +115,8 @@ signs_lib.register_sign("street_signs:sign_service_fuel", {
 	inventory_image = "street_signs_service_fuel_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_service_food", {
@@ -125,6 +129,8 @@ signs_lib.register_sign("street_signs:sign_service_food", {
 	inventory_image = "street_signs_service_food_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_service_lodging", {
@@ -137,6 +143,8 @@ signs_lib.register_sign("street_signs:sign_service_lodging", {
 	inventory_image = "street_signs_service_lodging_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_service_ev_charging", {
@@ -149,4 +157,6 @@ signs_lib.register_sign("street_signs:sign_service_ev_charging", {
 	inventory_image = "street_signs_service_ev_charging_inv.png",
 	groups = signs_lib.standard_steel_groups,
 	sounds = signs_lib.standard_steel_sign_sounds,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })

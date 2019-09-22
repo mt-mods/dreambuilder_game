@@ -29,7 +29,9 @@ signs_lib.register_sign("street_signs:sign_warning_3_line", {
 		yaw = signs_lib.wallmounted_yaw
 	},
 	drop = "street_signs:sign_warning_3_line",
-	allow_widefont = true
+	allow_widefont = true,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 
@@ -57,7 +59,9 @@ signs_lib.register_sign("street_signs:sign_warning_4_line", {
 		yaw = signs_lib.wallmounted_yaw
 	},
 	drop = "street_signs:sign_warning_4_line",
-	allow_widefont = true
+	allow_widefont = true,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_warning_orange_3_line", {
@@ -84,7 +88,9 @@ signs_lib.register_sign("street_signs:sign_warning_orange_3_line", {
 		yaw = signs_lib.wallmounted_yaw
 	},
 	drop = "street_signs:sign_warning_orange_3_line",
-	allow_widefont = true
+	allow_widefont = true,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 signs_lib.register_sign("street_signs:sign_warning_orange_4_line", {
@@ -111,7 +117,9 @@ signs_lib.register_sign("street_signs:sign_warning_orange_4_line", {
 		yaw = signs_lib.wallmounted_yaw
 	},
 	drop = "street_signs:sign_warning_orange_4_line",
-	allow_widefont = true
+	allow_widefont = true,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 })
 
 for _, s in ipairs(street_signs.big_sign_sizes) do
@@ -138,8 +146,7 @@ for _, s in ipairs(street_signs.big_sign_sizes) do
 			selection_box = cbox,
 			mesh = "street_signs_generic_highway_"..size..".obj",
 			tiles = {
-				"street_signs_generic_highway_front_"..size.."_"..color..".png",
-				"street_signs_generic_highway_back_"..size..".png",
+				"street_signs_generic_highway_"..size.."_"..color..".png",
 				"street_signs_generic_highway_edges.png"
 			},
 			default_color = defc,
@@ -157,8 +164,8 @@ for _, s in ipairs(street_signs.big_sign_sizes) do
 				mesh = "street_signs_generic_highway_"..size.."_entity.obj",
 				yaw = signs_lib.wallmounted_yaw
 			},
-			allow_onpole = false,
-			allow_widefont = true
+			allow_widefont = true,
+			allow_onpole = true
 		})
 
 		minetest.register_alias("street_signs:sign_highway_widefont_"..size.."_"..color,

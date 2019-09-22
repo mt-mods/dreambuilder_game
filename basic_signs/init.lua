@@ -35,11 +35,13 @@ function basic_signs.determine_sign_type(pos, placer, itemstack, pointed_thing)
 	   not placer:get_player_control().sneak then
 		return minetest.registered_nodes[pt_name].on_rightclick(pos, node, placer, itemstack, pointed_thing)
 	elseif signs_lib.check_for_pole(pos, pointed_thing) then
-		minetest.swap_node(pos, {name = "default:sign_wall_wood_onpole",  param2 = node.param2})
+		minetest.swap_node(pos, {name = "default:sign_wall_wood_onpole",       param2 = node.param2})
+	elseif signs_lib.check_for_horizontal_pole(pos, pointed_thing) then
+		minetest.swap_node(pos, {name = "default:sign_wall_wood_onpole_horiz", param2 = node.param2})
 	elseif signs_lib.check_for_ceiling(pointed_thing) then
-		minetest.swap_node(pos, {name = "default:sign_wall_wood_hanging", param2 = newparam2})
+		minetest.swap_node(pos, {name = "default:sign_wall_wood_hanging",      param2 = newparam2})
 	elseif basic_signs.check_for_floor(pointed_thing) then
-		minetest.swap_node(pos, {name = "basic_signs:yard_sign",              param2 = newparam2})
+		minetest.swap_node(pos, {name = "basic_signs:yard_sign",               param2 = newparam2})
 	end
 	signs_lib.update_sign(pos)
 
@@ -71,7 +73,9 @@ signs_lib.register_sign("basic_signs:sign_wall_locked", {
 	locked = true,
 	entity_info = "standard",
 	allow_hanging = true,
-	allow_widefont = true
+	allow_widefont = true,
+	allow_onpole = true,
+	allow_onpole_horizontal = true
 })
 
 signs_lib.register_sign("basic_signs:sign_wall_glass", {
@@ -88,6 +92,8 @@ signs_lib.register_sign("basic_signs:sign_wall_glass", {
 	groups = {cracky = 3, oddly_breakable_by_hand = 3},
 	allow_hanging = true,
 	allow_widefont = true,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 	use_texture_alpha = true,
 })
 
@@ -105,6 +111,8 @@ signs_lib.register_sign("basic_signs:sign_wall_obsidian_glass", {
 	groups = {cracky = 3},
 	allow_hanging = true,
 	allow_widefont = true,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
 	use_texture_alpha = true,
 })
 
@@ -145,7 +153,9 @@ for i, color in ipairs(sign_colors) do
 			yaw = signs_lib.standard_yaw
 		},
 		allow_hanging = true,
-		allow_widefont = true
+		allow_widefont = true,
+		allow_onpole = true,
+		allow_onpole_horizontal = true
 	})
 
 	table.insert(signs_lib.lbm_restore_nodes, "signs:sign_wall_"..color[1])
@@ -169,7 +179,6 @@ signs_lib.register_sign("basic_signs:yard_sign", {
 	},
 	groups = wgroups,
 	drop = "default:sign_wall_wood",
-	allow_onpole = false,
 	allow_widefont = true
 })
 

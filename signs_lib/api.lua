@@ -31,6 +31,11 @@ signs_lib.standard_steel_sign_sounds = table.copy(minetest.registered_items["def
 
 signs_lib.default_text_scale = {x=10, y=10}
 
+signs_lib.old_widefont_signs = {}
+
+signs_lib.block_list = {}
+signs_lib.totalblocks = 0
+
 signs_lib.standard_yaw = {
 	0,
 	math.pi / -2,
@@ -61,6 +66,20 @@ signs_lib.wall_fdir_to_back = {
 	{  0, -1 },
 	{ -1,  0 },
 	{  1,  0 },
+}
+
+signs_lib.fdir_flip_to_back = {
+	[0] = {  0,  2 },
+	[1] = {  2,  0 },
+	[2] = {  0, -2 },
+	[3] = { -2,  0 }
+}
+
+signs_lib.wall_fdir_flip_to_back = {
+	[2] = {  2,  0 },
+	[3] = { -2,  0 },
+	[4] = {  0,  2 },
+	[5] = {  0, -2 },
 }
 
 signs_lib.fdir_to_back_left = {
@@ -112,6 +131,97 @@ signs_lib.rotate_facedir_simple = {
 	[3] = 0,
 	[4] = 0,
 	[5] = 0
+}
+
+signs_lib.flip_facedir = {
+	[0] = 2,
+	[1] = 3,
+	[2] = 0,
+	[3] = 1,
+	[4] = 6,
+	[5] = 4,
+	[6] = 4
+}
+
+signs_lib.flip_walldir = {
+	[0] = 1,
+	[1] = 0,
+	[2] = 3,
+	[3] = 2,
+	[4] = 5,
+	[5] = 4
+}
+
+local htj_north = {
+	[1] = true,
+	[3] = true,
+	[9] = true,
+	[11] = true,
+	[21] = true,
+	[23] = true
+}
+
+local htj_east = {
+	[0] = true,
+	[2] = true,
+	[16] = true,
+	[18] = true,
+	[20] = true,
+	[22] = true
+}
+
+local htj_south = {
+	[1] = true,
+	[3] = true,
+	[5] = true,
+	[7] = true,
+	[21] = true,
+	[23] = true
+}
+
+local htj_west = {
+	[0] = true,
+	[2] = true,
+	[12] = true,
+	[14] = true,
+	[20] = true,
+	[22] = true
+}
+
+local vtj_north = {
+	[8] = true,
+	[10] = true,
+	[13] = true,
+	[15] = true,
+	[17] = true,
+	[19] = true
+}
+
+local vtj_east = {
+	[4] = true,
+	[6] = true,
+	[8] = true,
+	[10] = true,
+	[17] = true,
+	[19] = true
+}
+
+local vtj_south = {
+	[4] = true,
+	[6] = true,
+	[13] = true,
+	[15] = true,
+	[17] = true,
+	[10] = true
+}
+
+local vtj_west = {
+	[4] = true,
+	[6] = true,
+	[8] = true,
+	[10] = true,
+	[13] = true,
+	[15] = true
 }
 
 -- Initialize character texture cache
@@ -205,30 +315,44 @@ function signs_lib.handle_rotation(pos, node, user, mode)
 	local def = minetest.registered_items[node.name]
 
 	if string.match(node.name, "_onpole") then
-		local newparam2 = signs_lib.rotate_walldir_simple[node.param2] or 4
-		local t = signs_lib.wall_fdir_to_back_left
+		if not string.match(node.name, "_horiz") then
+			newparam2 = signs_lib.rotate_walldir_simple[node.param2] or 4
+			local t = signs_lib.wall_fdir_to_back_left
 
-		if def.paramtype2 ~= "wallmounted" then
-			newparam2 = signs_lib.rotate_facedir_simple[node.param2] or 0
-			t  = signs_lib.fdir_to_back_left
+			if def.paramtype2 ~= "wallmounted" then
+				newparam2 = signs_lib.rotate_facedir_simple[node.param2] or 0
+				t  = signs_lib.fdir_to_back_left
+			end
+
+			tpos = {
+				x = pos.x + t[node.param2][1],
+				y = pos.y,
+				z = pos.z + t[node.param2][2]
+			}
+		else
+			-- flip the sign to the other side of the horizontal pole
+			newparam2 = signs_lib.flip_walldir[node.param2] or 4
+			local t = signs_lib.wall_fdir_flip_to_back
+
+			if def.paramtype2 ~= "wallmounted" then
+				newparam2 = signs_lib.flip_facedir[node.param2] or 0
+				t  = signs_lib.fdir_flip_to_back
+			end
+
+			tpos = {
+				x = pos.x + t[node.param2][1],
+				y = pos.y,
+				z = pos.z + t[node.param2][2]
+			}
 		end
-
-		tpos = {
-			x = pos.x + t[node.param2][1],
-			y = pos.y,
-			z = pos.z + t[node.param2][2]
-		}
-
 		local node2 = minetest.get_node(tpos)
 		local def2 = minetest.registered_items[node2.name]
 		if not def2 or not def2.buildable_to then return true end -- undefined, or not buildable_to.
-
 
 		minetest.set_node(tpos, {name = node.name, param2 = newparam2})
 		minetest.get_meta(tpos):from_table(minetest.get_meta(pos):to_table())
 		minetest.remove_node(pos)
 		signs_lib.delete_objects(pos)
-
 	elseif string.match(node.name, "_hanging") or string.match(node.name, "yard") then
 		minetest.swap_node(tpos, { name = node.name, param2 = signs_lib.rotate_facedir_simple[node.param2] or 0 })
 	elseif minetest.registered_items[node.name].paramtype2 == "wallmounted" then
@@ -495,6 +619,8 @@ end
 
 local function make_sign_texture(lines, pos)
 	local node = minetest.get_node(pos)
+	local meta = minetest.get_meta(pos)
+
 	local def = minetest.registered_items[node.name]
 	if not def or not def.entity_info then return end
 
@@ -503,16 +629,21 @@ local function make_sign_texture(lines, pos)
 	local line_height
 	local char_width
 	local colorbgw
+	local widemult = 1
+
+	if meta:get_int("widefont") == 1 then
+		widemult = 0.5
+	end
 
 	if def.font_size and def.font_size == 31 then
 		font_size = 31
-		line_width = math.floor(signs_lib.avgwidth31 * def.chars_per_line) * def.horiz_scaling
+		line_width = math.floor(signs_lib.avgwidth31 * def.chars_per_line) * (def.horiz_scaling * widemult)
 		line_height = signs_lib.lineheight31
 		char_width = signs_lib.charwidth31
 		colorbgw = signs_lib.colorbgw31
 	else
 		font_size = 15
-		line_width = math.floor(signs_lib.avgwidth15 * def.chars_per_line) * def.horiz_scaling
+		line_width = math.floor(signs_lib.avgwidth15 * def.chars_per_line) * (def.horiz_scaling * widemult)
 		line_height = signs_lib.lineheight15
 		char_width = signs_lib.charwidth15
 		colorbgw = signs_lib.colorbgw15
@@ -534,7 +665,7 @@ end
 function signs_lib.split_lines_and_words(text)
 	if not text then return end
 	local lines = { }
-	for _, line in ipairs(text:split("\n")) do
+	for _, line in ipairs(text:split("\n", true)) do
 		table.insert(lines, line:split(" "))
 	end
 	return lines
@@ -548,27 +679,17 @@ function signs_lib.set_obj_text(pos, text)
 	signs_lib.spawn_entity(pos, make_sign_texture(split(text_ansi), pos))
 end
 
-local function make_widefont_nodename(name)
-	if string.find(name, "_widefont") then return name end
-	if string.find(name, "_onpole")  then
-		return string.gsub(name, "_onpole", "_widefont_onpole")
-	elseif string.find(name, "_hanging") then
-		return string.gsub(name, "_hanging", "_widefont_hanging")
-	else
-		return name.."_widefont"
-	end
-end
-
 function signs_lib.construct_sign(pos)
 	local form = "size[6,4]"..
 		"textarea[0,-0.3;6.5,3;text;;${text}]"..
 		"background[-0.5,-0.5;7,5;signs_lib_sign_bg.jpg]"
 	local node = minetest.get_node(pos)
-	local wname = make_widefont_nodename(node.name)
+	local def = minetest.registered_items[node.name]
+	local meta = minetest.get_meta(pos)
 
-	if minetest.registered_items[wname] then
+	if def.allow_widefont then
 		local state = "off"
-		if string.find(node.name, "widefont") then state = "on" end
+		if meta:get_int("widefont") == 1 then state = "on" end
 		form = form.."label[1,3.4;Use wide font]"..
 			"image_button[1.1,3.7;1,0.6;signs_lib_switch_"..
 			state..".png;"..
@@ -578,7 +699,6 @@ function signs_lib.construct_sign(pos)
 		form = form.."button_exit[2,3.4;2,1;ok;"..S("Write").."]"
 	end
 
-	local meta = minetest.get_meta(pos)
 	meta:set_string("formspec", form)
 	local i = meta:get_string("infotext")
 	if i == "" then -- it wasn't even set, so set it.
@@ -628,21 +748,22 @@ function signs_lib.receive_fields(pos, formname, fields, sender)
 		signs_lib.update_sign(pos, fields)
 	elseif fields.on or fields.off then
 		local node = minetest.get_node(pos)
-		local newname
+		local meta = minetest.get_meta(pos)
+		local change
 
-		if fields.on and string.find(node.name, "widefont") then
-			newname = string.gsub(node.name, "_widefont", "")
-		elseif fields.off and not string.find(node.name, "widefont") then
-			newname = make_widefont_nodename(node.name)
+		if fields.on and meta:get_int("widefont") == 1 then
+			meta:set_int("widefont", 0)
+			change = true
+		elseif fields.off and meta:get_int("widefont") == 0 then
+			meta:set_int("widefont", 1)
+			change = true
 		end
-		if newname then
+		if change then
 			minetest.log("action", S("@1 flipped the wide-font switch to \"@2\" at @3",
 				(sender:get_player_name() or ""),
 				(fields.on and "off" or "on"),
 				minetest.pos_to_string(pos)
 			))
-
-			minetest.swap_node(pos, {name = newname, param2 = node.param2})
 			signs_lib.construct_sign(pos)
 			signs_lib.update_sign(pos, fields)
 		end
@@ -696,22 +817,83 @@ function signs_lib.make_selection_boxes(sizex, sizey, foo, xoffs, yoffs, zoffs, 
 end
 
 function signs_lib.check_for_pole(pos, pointed_thing)
+	local node = minetest.get_node(pos)
+	local def = minetest.registered_items[node.name]
+
 	local ppos = minetest.get_pointed_thing_position(pointed_thing)
 	local pnode = minetest.get_node(ppos)
 	local pdef = minetest.registered_items[pnode.name]
 
 	if (signs_lib.allowed_poles[pnode.name]
-		  or (pdef and pdef.drawtype == "fencelike")
-		  or string.find(pnode.name, "default:fence_")
-		  or string.find(pnode.name, "_post")
-		  or string.find(pnode.name, "fencepost")
-		  or string.find(pnode.name, "streets:streetlamp_basic_top")
-		  or (pnode.name == "streets:bigpole" and pnode.param2 < 4)
-		  or (pnode.name == "streets:bigpole" and pnode.param2 > 19 and pnode.param2 < 24)
-		)
-	  and
-		(pos.x ~= ppos.x or pos.z ~= ppos.z) then
+	  or (pdef and pdef.drawtype == "fencelike")
+	  or string.find(pnode.name, "default:fence_")
+	  or string.find(pnode.name, "_post")
+	  or string.find(pnode.name, "fencepost")
+	  or string.find(pnode.name, "streets:streetlamp_basic_top")
+	  or (pnode.name == "streets:bigpole" and pnode.param2 < 4)
+	  or (pnode.name == "streets:bigpole" and pnode.param2 > 19 and pnode.param2 < 24) )
+	  and (pos.x ~= ppos.x or pos.z ~= ppos.z) then
 		return true
+	elseif pnode.name == "streets:bigpole_tjunction" then
+		if def.paramtype2 == "wallmounted" then
+			if   (node.param2 == 4 and vtj_north[pnode.param2])
+			  or (node.param2 == 2 and vtj_east[pnode.param2])
+			  or (node.param2 == 5 and vtj_south[pnode.param2])
+			  or (node.param2 == 3 and vtj_west[pnode.param2]) then
+				return true
+			end
+		else
+			if   (node.param2 == 0 and vtj_north[pnode.param2])
+			  or (node.param2 == 1 and vtj_east[pnode.param2])
+			  or (node.param2 == 2 and vtj_south[pnode.param2])
+			  or (node.param2 == 3 and vtj_west[pnode.param2]) then
+				return true
+			end
+		end
+	end
+end
+
+function signs_lib.check_for_horizontal_pole(pos, pointed_thing)
+	local node = minetest.get_node(pos)
+	local def = minetest.registered_items[node.name]
+	local ppos = minetest.get_pointed_thing_position(pointed_thing)
+	local pnode = minetest.get_node(ppos)
+	if pnode.name == "streets:bigpole" and pnode.param2 > 3 and pnode.param2 < 12 then
+		if def.paramtype2 == "wallmounted" then
+			if node.param2 == 2 or node.param2 == 3 -- E/W
+				then return true
+			end
+		else
+			if node.param2 == 1 or node.param2 == 3 -- E/W
+				then return true
+			end
+		end
+	elseif pnode.name == "streets:bigpole" and pnode.param2 > 11 and pnode.param2 < 20 then
+		if def.paramtype2 == "wallmounted" then
+			if node.param2 == 4 or node.param2 == 5 then
+				return true
+			end
+		else
+			if node.param2 == 0 or node.param2 == 2 then
+				return true
+			end
+		end
+	elseif pnode.name == "streets:bigpole_tjunction" then
+		if def.paramtype2 == "wallmounted" then
+			if   (node.param2 == 4 and htj_north[pnode.param2])
+			  or (node.param2 == 2 and htj_east[pnode.param2])
+			  or (node.param2 == 5 and htj_south[pnode.param2])
+			  or (node.param2 == 3 and htj_west[pnode.param2]) then
+				return true
+			end
+		else
+			if   (node.param2 == 0 and htj_north[pnode.param2])
+			  or (node.param2 == 1 and htj_east[pnode.param2])
+			  or (node.param2 == 2 and htj_south[pnode.param2])
+			  or (node.param2 == 3 and htj_west[pnode.param2]) then
+				return true
+			end
+		end
 	end
 end
 
@@ -738,8 +920,7 @@ function signs_lib.after_place_node(pos, placer, itemstack, pointed_thing, locke
 	local ppos = minetest.get_pointed_thing_position(pointed_thing)
 	local pnode = minetest.get_node(ppos)
 	local pdef = minetest.registered_items[pnode.name]
-
-	if (def.allow_onpole ~= false) and signs_lib.check_for_pole(pos, pointed_thing) then
+	if def.allow_onpole and signs_lib.check_for_pole(pos, pointed_thing) then
 		local newparam2
 		local lookdir = minetest.yaw_to_dir(placer:get_look_horizontal())
 		if def.paramtype2 == "wallmounted" then
@@ -749,6 +930,16 @@ function signs_lib.after_place_node(pos, placer, itemstack, pointed_thing, locke
 		end
 		local node = minetest.get_node(pos)
 		minetest.swap_node(pos, {name = itemstack:get_name().."_onpole", param2 = newparam2})
+	elseif def.allow_onpole_horizontal and signs_lib.check_for_horizontal_pole(pos, pointed_thing) then
+		local newparam2
+		local lookdir = minetest.yaw_to_dir(placer:get_look_horizontal())
+		if def.paramtype2 == "wallmounted" then
+			newparam2 = minetest.dir_to_wallmounted(lookdir)
+		else
+			newparam2 = minetest.dir_to_facedir(lookdir)
+		end
+		local node = minetest.get_node(pos)
+		minetest.swap_node(pos, {name = itemstack:get_name().."_onpole_horiz", param2 = newparam2})
 	elseif def.allow_hanging and signs_lib.check_for_ceiling(pointed_thing) then
 		local newparam2 = minetest.dir_to_facedir(placer:get_look_dir())
 		local node = minetest.get_node(pos)
@@ -769,7 +960,53 @@ function signs_lib.register_fence_with_sign()
 	minetest.log("warning", "[signs_lib] ".."Attempt to call no longer used function signs_lib.register_fence_with_sign()")
 end
 
-local function register_sign(name, rdef)
+--[[
+The main sign registration function
+===================================
+
+Example minimal recommended def for writable signs:
+
+signs_lib.register_sign("foo:my_cool_sign", {
+	description = "Wooden cool sign",
+	inventory_image = "signs_lib_sign_cool_inv.png",
+	tiles = {
+		"signs_lib_sign_cool.png",
+		"signs_lib_sign_cool_edges.png"
+	},
+	number_of_lines = 2,
+	horiz_scaling = 0.8,
+	vert_scaling = 1,
+	line_spacing = 9,
+	font_size = 31,
+	x_offset = 7,
+	y_offset = 4,
+	chars_per_line = 40,
+	entity_info = "standard"
+})
+
+* default def assumes a wallmounted sign with on-pole being allowed.
+
+*For signs that can support being on a pole, include in the def:
+	allow_onpole = true,
+	(defaults to disabled)
+
+*For signs that can support being on a horizontal pole, include in the def:
+	allow_onpole_horizontal = true,
+	(defaults to disabled)
+
+* onpole/onpole_horizontal are independent; one may be allowed without the other
+
+* "standard" entity info implies the standard wood/steel sign model, in
+  wallmounted mode.  For facedir signs using the standard model, use:
+
+	entity_info = {
+		mesh = "signs_lib_standard_wall_sign_entity.obj",
+		yaw = signs_lib.standard_yaw
+	},
+
+]]--
+
+function signs_lib.register_sign(name, rdef)
 	local def = table.copy(rdef)
 
 	if rdef.entity_info == "standard" then
@@ -832,9 +1069,9 @@ local function register_sign(name, rdef)
 	minetest.register_node(":"..name, def)
 	table.insert(signs_lib.lbm_restore_nodes, name)
 
-	if rdef.allow_onpole ~= false then
+	local opdef = table.copy(def)
 
-		local opdef = table.copy(def)
+	if rdef.allow_onpole or rdef.allow_onpole_horizontal then
 
 		local offset = 0.3125
 		if opdef.uses_slim_pole_mount then
@@ -859,14 +1096,30 @@ local function register_sign(name, rdef)
 		end
 
 		opdef.groups.not_in_creative_inventory = 1
-		opdef.tiles[3] = "signs_lib_pole_mount.png"
 		opdef.mesh = string.gsub(opdef.mesh, ".obj$", "_onpole.obj")
 
 		if opdef.entity_info then
 			opdef.entity_info.mesh = string.gsub(opdef.entity_info.mesh, ".obj$", "_onpole.obj")
 		end
+	end
+
+	-- setting one of item 3 or 4 to a texture and leaving the other "blank",
+	-- reveals either the vertical or horizontal pole mount part of the model
+
+	if rdef.allow_onpole then
+		opdef.tiles[3] = "signs_lib_pole_mount.png"
+		opdef.tiles[4] = "signs_lib_blank.png"
 		minetest.register_node(":"..name.."_onpole", opdef)
 		table.insert(signs_lib.lbm_restore_nodes, name.."_onpole")
+	end
+
+	local ophdef = table.copy(opdef)
+
+	if rdef.allow_onpole_horizontal then
+		ophdef.tiles[3] = "signs_lib_blank.png"
+		ophdef.tiles[4] = "signs_lib_pole_mount.png"
+		minetest.register_node(":"..name.."_onpole_horiz", ophdef)
+		table.insert(signs_lib.lbm_restore_nodes, name.."_onpole_horiz")
 	end
 
 	if rdef.allow_hanging then
@@ -891,57 +1144,9 @@ local function register_sign(name, rdef)
 		minetest.register_node(":"..name.."_hanging", hdef)
 		table.insert(signs_lib.lbm_restore_nodes, name.."_hanging")
 	end
-end
-
---[[
-The main sign registration function
-===================================
-
-Example minimal recommended def for writable signs:
-
-signs_lib.register_sign("foo:my_cool_sign", {
-	description = "Wooden cool sign",
-	inventory_image = "signs_lib_sign_cool_inv.png",
-	tiles = {
-		"signs_lib_sign_cool.png",
-		"signs_lib_sign_cool_edges.png"
-	},
-	number_of_lines = 2,
-	horiz_scaling = 0.8,
-	vert_scaling = 1,
-	line_spacing = 9,
-	font_size = 31,
-	x_offset = 7,
-	y_offset = 4,
-	chars_per_line = 40,
-	entity_info = "standard"
-})
-
-* default def assumes a wallmounted sign with on-pole being allowed.
-
-*For signs that can't support onpole, include in the def:
-	allow_onpole = false,
-
-* "standard" entity info implies the standard wood/steel sign model, in
-  wallmounted mode.  For facedir signs using the standard model, use:
-
-	entity_info = {
-		mesh = "signs_lib_standard_wall_sign_entity.obj",
-		yaw = signs_lib.standard_yaw
-	},
-
-]]--
-
-function signs_lib.register_sign(name, rdef)
-	register_sign(name, rdef)
 
 	if rdef.allow_widefont then
-
-		local wdef = table.copy(minetest.registered_items[name])
-		wdef.groups.not_in_creative_inventory = 1
-		wdef.horiz_scaling = wdef.horiz_scaling / 2
-
-		register_sign(name.."_widefont", wdef)
+		table.insert(signs_lib.old_widefont_signs, name.."_widefont")
 	end
 end
 
@@ -991,8 +1196,22 @@ minetest.register_lbm({
 	end
 })
 
-signs_lib.block_list = {}
-signs_lib.totalblocks = 0
+-- Convert widefont sign nodes to use one base node with meta flag to select wide mode
+
+minetest.register_lbm({
+	nodenames = signs_lib.old_widefont_signs,
+	name = "signs_lib:convert_widefont_signs",
+	label = "Convert widefont sign nodes",
+	run_at_every_load = false,
+	action = function(pos, node)
+		local basename = string.gsub(node.name, "_widefont", "")
+		minetest.swap_node(pos, {name = basename, param2 = node.param2})
+		local meta = minetest.get_meta(pos)
+		meta:set_int("widefont", 1)
+		signs_lib.delete_objects(pos)
+		signs_lib.update_sign(pos)
+	end
+})
 
 -- Maintain a list of currently-loaded blocks
 minetest.register_lbm({

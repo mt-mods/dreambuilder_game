@@ -15,6 +15,7 @@ for _, d in ipairs({"l", "c", "r"}) do
 		inventory_image = "street_signs_object_marker_type3_"..d.."_inv.png",
 		groups = signs_lib.standard_steel_groups,
 		sounds = signs_lib.standard_steel_sign_sounds,
+		allow_onpole = true,
 		uses_slim_pole_mount = true,
 	})
 end
