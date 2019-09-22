@@ -16,6 +16,26 @@ local cbox = {
 	}
 }
 
+local flip_facedir = {
+	[0] = 1,
+	[2] = 1,
+}
+
+local function rotate(pos, node, user, mode)
+	if not signs_lib.can_modify(pos, user)
+	  or mode ~= screwdriver.ROTATE_FACE then
+		return false
+	end
+	minetest.swap_node(pos, {name = node.name, param2 = flip_facedir[node.param2] or 0})
+	signs_lib.delete_objects(pos)
+	signs_lib.update_sign(pos)
+	return true
+end
+
+local function disable_apn(foo)
+	return
+end
+
 signs_lib.register_sign("street_signs:sign_basic", {
 	description = "D3-1a: Generic intersection street name sign",
 	paramtype2 = "facedir",
@@ -37,7 +57,9 @@ signs_lib.register_sign("street_signs:sign_basic", {
 		mesh = "street_signs_basic_entity.obj",
 		yaw = signs_lib.standard_yaw
 	},
-	allow_widefont = true
+	allow_widefont = true,
+	after_place_node = disable_apn,
+	on_rotate = rotate
 })
 
 cbox = {
@@ -72,7 +94,9 @@ signs_lib.register_sign("street_signs:sign_basic_top_only", {
 		mesh = "street_signs_basic_top_only_entity.obj",
 		yaw = signs_lib.standard_yaw
 	},
-	allow_widefont = true
+	allow_widefont = true,
+	after_place_node = disable_apn,
+	on_rotate = rotate
 })
 
 cbox = signs_lib.make_selection_boxes(24, 24)
