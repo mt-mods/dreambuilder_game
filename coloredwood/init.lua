@@ -222,7 +222,9 @@ unifieddyes.register_color_craft({
 })
 
 if minetest.get_modpath("signs_lib") then
-	signs_lib.allowed_poles["coloredwood:fence"] = true
+	minetest.override_item("coloredwood:fence", {
+		check_for_pole = true
+	})
 end
 
 print("[Colored Wood] Loaded!")

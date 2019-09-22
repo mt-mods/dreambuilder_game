@@ -198,7 +198,8 @@ if not minetest.get_modpath("usesdirt") then
 		wield_image = "default_fence_overlay.png^("..dirt_brick_tex..")^default_fence_overlay.png^[makealpha:255,126,126",
 		material = "usesdirt:dirt_brick",
 		groups = {cracky=3, stone=2},
-		sounds = default.node_sound_stone_defaults()
+		sounds = default.node_sound_stone_defaults(),
+		check_for_pole = true
 	})
 
 	if minetest.get_modpath("moreblocks") then
@@ -256,7 +257,8 @@ if not minetest.get_modpath("usesdirt") then
 		wield_image = "default_fence_overlay.png^default_dirt.png^default_fence_overlay.png^[makealpha:255,126,126",
 		material = "default:dirt",
 		groups = {snappy=2,choppy=1,oddly_breakable_by_hand=3},
-		sounds = default.node_sound_dirt_defaults()
+		sounds = default.node_sound_dirt_defaults(),
+		check_for_pole = true
 	})
 
 ----
@@ -312,7 +314,8 @@ if not minetest.get_modpath("usesdirt") then
 		wield_image = "default_fence_overlay.png^("..dirt_cobble_tex..")^default_fence_overlay.png^[makealpha:255,126,126",
 		material = "usesdirt:dirt_cobble_stone",
 		groups = {cracky=3, stone=2},
-		sounds = default.node_sound_stone_defaults()
+		sounds = default.node_sound_stone_defaults(),
+		check_for_pole = true
 	})
 
 ----
@@ -360,16 +363,9 @@ if not minetest.get_modpath("usesdirt") then
 		wield_image = "default_fence_overlay.png^("..dirt_stone_tex..")^default_fence_overlay.png^[makealpha:255,126,126",
 		material = "usesdirt:dirt_stone",
 		groups = {cracky=3, stone=2},
-		sounds = default.node_sound_stone_defaults()
+		sounds = default.node_sound_stone_defaults(),
+		check_for_pole = true
 	})
-
-	if minetest.get_modpath("signs_lib") then
-		signs_lib.allowed_poles["usesdirt:dirt_brick_fence"]        = true
-		signs_lib.allowed_poles["usesdirt:dirt_fence"]              = true
-		signs_lib.allowed_poles["usesdirt:dirt_cobble_stone_fence"] = true
-		signs_lib.allowed_poles["usesdirt:dirt_stone_fence"]        = true
-		signs_lib.allowed_poles["usesdirt:dirt_stone_fence"]        = true
-	end
 end
 
 -- Stairs/slabs defs, conversion of normal -> mossy items
