@@ -73,7 +73,7 @@ for index, connects in ipairs(cconnects) do
 			fixed = outsel
 		},
 		groups = pgroups,
-		sounds = default.node_sound_wood_defaults(),
+		sounds = default.node_sound_metal_defaults(),
 		walkable = true,
 		drop = "pipeworks:pipe_1_empty",
 		after_place_node = function(pos)
@@ -82,7 +82,10 @@ for index, connects in ipairs(cconnects) do
 		after_dig_node = function(pos)
 			pipeworks.scan_for_pipe_objects(pos)
 		end,
-		on_rotate = false
+		on_rotate = false,
+		check_for_pole = pipeworks.check_for_vert_pipe,
+		check_for_horiz_pole = pipeworks.check_for_horiz_pipe,
+		pipenumber = index
 	})
 	
 	local pgroups = {snappy = 3, pipe = 1, not_in_creative_inventory = 1}
@@ -104,7 +107,7 @@ for index, connects in ipairs(cconnects) do
 			fixed = outsel
 		},
 		groups = pgroups,
-		sounds = default.node_sound_wood_defaults(),
+		sounds = default.node_sound_metal_defaults(),
 		walkable = true,
 		drop = "pipeworks:pipe_1_empty",
 		after_place_node = function(pos)
@@ -114,7 +117,10 @@ for index, connects in ipairs(cconnects) do
 		after_dig_node = function(pos)
 			pipeworks.scan_for_pipe_objects(pos)
 		end,
-		on_rotate = false
+		on_rotate = false,
+		check_for_pole = pipeworks.check_for_vert_pipe,
+		check_for_horiz_pole = pipeworks.check_for_horiz_pipe,
+		pipenumber = index
 	})
 	
 	local emptypipe = "pipeworks:pipe_"..index.."_empty"

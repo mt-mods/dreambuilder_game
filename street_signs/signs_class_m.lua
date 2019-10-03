@@ -8,7 +8,7 @@ sgroups.not_in_creative_inventory = 1
 signs_lib.register_sign("street_signs:sign_us_route", {
 	description = "M1-4: Generic \"US Route\" sign",
 	selection_box = cbox,
-	mesh = "street_signs_generic_sign_36x36.obj",
+	mesh = "street_signs_generic_sign_36x36_wall.obj",
 	tiles = {
 		"street_signs_us_route.png",
 		"street_signs_sign_edge.png",
@@ -25,7 +25,7 @@ signs_lib.register_sign("street_signs:sign_us_route", {
 	y_offset = 11,
 	chars_per_line = 3,
 	entity_info = {
-		mesh = "street_signs_generic_sign_36x36_entity.obj",
+		mesh = "street_signs_generic_sign_36x36_entity_wall.obj",
 		yaw = signs_lib.wallmounted_yaw
 	},
 	allow_widefont = true,
@@ -36,7 +36,7 @@ signs_lib.register_sign("street_signs:sign_us_route", {
 signs_lib.register_sign("street_signs:sign_us_interstate", {
 	description = "M1-1: Generic US Interstate sign",
 	selection_box = cbox,
-	mesh = "street_signs_interstate_shield.obj",
+	mesh = "street_signs_interstate_shield_wall.obj",
 	tiles = {
 		"street_signs_us_interstate.png",
 		"street_signs_sign_edge.png",
@@ -54,7 +54,7 @@ signs_lib.register_sign("street_signs:sign_us_interstate", {
 	y_offset = 14,
 	chars_per_line = 3,
 	entity_info = {
-		mesh = "street_signs_interstate_shield_entity.obj",
+		mesh = "street_signs_interstate_shield_entity_wall.obj",
 		yaw = signs_lib.wallmounted_yaw
 	},
 	allow_widefont = true,
@@ -67,7 +67,7 @@ cbox = signs_lib.make_selection_boxes(48, 18)
 signs_lib.register_sign("street_signs:sign_detour_right_m4_10", {
 	description = "M4-10: Detour sign (to right)",
 	selection_box = cbox,
-	mesh = "street_signs_generic_sign_48x18.obj",
+	mesh = "street_signs_generic_sign_48x18_wall.obj",
 	tiles = {
 		"street_signs_detour_right_m4_10.png",
 		"street_signs_sign_edge.png",
@@ -82,7 +82,7 @@ signs_lib.register_sign("street_signs:sign_detour_right_m4_10", {
 signs_lib.register_sign("street_signs:sign_detour_left_m4_10", {
 	description = "M4-10: Detour sign (to left)",
 	selection_box = cbox,
-	mesh = "street_signs_generic_sign_48x18.obj",
+	mesh = "street_signs_generic_sign_48x18_wall.obj",
 	tiles = {
 		"street_signs_detour_left_m4_10.png",
 		"street_signs_sign_edge.png",

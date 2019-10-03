@@ -2,13 +2,10 @@
 local S = signs_lib.gettext
 local cbox = signs_lib.make_selection_boxes(36, 36)
 
-local sgroups = table.copy(signs_lib.standard_steel_groups)
-sgroups.not_in_creative_inventory = 1
-
 signs_lib.register_sign("street_signs:sign_warning_3_line", {
 	description = "W3-4: Generic US diamond \"warning\" sign (3-line, yellow)",
 	selection_box = cbox,
-	mesh = "street_signs_warning_36x36.obj",
+	mesh = "street_signs_warning_36x36_wall.obj",
 	tiles = {
 		"street_signs_warning.png",
 		"street_signs_sign_edge.png",
@@ -25,7 +22,7 @@ signs_lib.register_sign("street_signs:sign_warning_3_line", {
 	y_offset = 19,
 	chars_per_line = 15,
 	entity_info = {
-		mesh = "street_signs_warning_36x36_entity.obj",
+		mesh = "street_signs_warning_36x36_entity_wall.obj",
 		yaw = signs_lib.wallmounted_yaw
 	},
 	drop = "street_signs:sign_warning_3_line",
@@ -38,7 +35,7 @@ signs_lib.register_sign("street_signs:sign_warning_3_line", {
 signs_lib.register_sign("street_signs:sign_warning_4_line", {
 	description = "W23-2: Generic US diamond \"warning\" sign (4-line, yellow)",
 	selection_box = cbox,
-	mesh = "street_signs_warning_36x36.obj",
+	mesh = "street_signs_warning_36x36_wall.obj",
 	tiles = {
 		"street_signs_warning.png",
 		"street_signs_sign_edge.png",
@@ -55,7 +52,7 @@ signs_lib.register_sign("street_signs:sign_warning_4_line", {
 	y_offset = 25,
 	chars_per_line = 15,
 	entity_info = {
-		mesh = "street_signs_warning_36x36_entity.obj",
+		mesh = "street_signs_warning_36x36_entity_wall.obj",
 		yaw = signs_lib.wallmounted_yaw
 	},
 	drop = "street_signs:sign_warning_4_line",
@@ -67,7 +64,7 @@ signs_lib.register_sign("street_signs:sign_warning_4_line", {
 signs_lib.register_sign("street_signs:sign_warning_orange_3_line", {
 	description = "W3-4: Generic US diamond \"warning\" sign (3-line, orange)",
 	selection_box = cbox,
-	mesh = "street_signs_warning_36x36.obj",
+	mesh = "street_signs_warning_36x36_wall.obj",
 	tiles = {
 		"street_signs_warning_orange.png",
 		"street_signs_sign_edge.png",
@@ -84,7 +81,7 @@ signs_lib.register_sign("street_signs:sign_warning_orange_3_line", {
 	y_offset = 19,
 	chars_per_line = 15,
 	entity_info = {
-		mesh = "street_signs_warning_36x36_entity.obj",
+		mesh = "street_signs_warning_36x36_entity_wall.obj",
 		yaw = signs_lib.wallmounted_yaw
 	},
 	drop = "street_signs:sign_warning_orange_3_line",
@@ -96,7 +93,7 @@ signs_lib.register_sign("street_signs:sign_warning_orange_3_line", {
 signs_lib.register_sign("street_signs:sign_warning_orange_4_line", {
 	description = "W23-2: Generic US diamond \"warning\" sign (4-line, orange)",
 	selection_box = cbox,
-	mesh = "street_signs_warning_36x36.obj",
+	mesh = "street_signs_warning_36x36_wall.obj",
 	tiles = {
 		"street_signs_warning_orange.png",
 		"street_signs_sign_edge.png",
@@ -113,7 +110,7 @@ signs_lib.register_sign("street_signs:sign_warning_orange_4_line", {
 	y_offset = 25,
 	chars_per_line = 15,
 	entity_info = {
-		mesh = "street_signs_warning_36x36_entity.obj",
+		mesh = "street_signs_warning_36x36_entity_wall.obj",
 		yaw = signs_lib.wallmounted_yaw
 	},
 	drop = "street_signs:sign_warning_orange_4_line",
@@ -144,7 +141,7 @@ for _, s in ipairs(street_signs.big_sign_sizes) do
 			description = "Generic highway sign ("..nlines.."-line, "..size..", "..color..")",
 			inventory_image = "street_signs_generic_highway_"..size.."_"..color.."_inv.png",
 			selection_box = cbox,
-			mesh = "street_signs_generic_highway_"..size..".obj",
+			mesh = "street_signs_generic_highway_"..size.."_wall.obj",
 			tiles = {
 				"street_signs_generic_highway_"..size.."_"..color..".png",
 				"street_signs_generic_highway_edges.png"
@@ -161,7 +158,7 @@ for _, s in ipairs(street_signs.big_sign_sizes) do
 			x_offset = xoffs,
 			y_offset = yoffs,
 			entity_info = {
-				mesh = "street_signs_generic_highway_"..size.."_entity.obj",
+				mesh = "street_signs_generic_highway_"..size.."_entity_wall.obj",
 				yaw = signs_lib.wallmounted_yaw
 			},
 			allow_widefont = true,

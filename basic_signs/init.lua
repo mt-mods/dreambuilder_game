@@ -9,65 +9,11 @@ dofile(basic_signs.path .. "/crafting.lua")
 local S, NS = dofile(basic_signs.path .. "/intllib.lua")
 basic_signs.gettext = S
 
-function basic_signs.check_for_floor(pointed_thing)
-	if pointed_thing.above.x == pointed_thing.under.x
-		  and pointed_thing.above.z == pointed_thing.under.z
-		  and pointed_thing.above.y > pointed_thing.under.y then
-		return true
-	end
-end
-
-function basic_signs.determine_sign_type(pos, placer, itemstack, pointed_thing)
-
-	local playername = placer:get_player_name()
-	local pt_name = minetest.get_node(pointed_thing.under).name
-	local node = minetest.get_node(pos)  -- since we're in after-place, this will be the wall sign itself
-
-	if minetest.is_protected(pointed_thing.under, playername) then
-		minetest.record_protection_violation(pointed_thing.under, playername)
-		return itemstack
-	end
-
-	local newparam2 = minetest.dir_to_facedir(placer:get_look_dir())
-
-	if minetest.registered_nodes[pt_name] and
-	   minetest.registered_nodes[pt_name].on_rightclick and
-	   not placer:get_player_control().sneak then
-		return minetest.registered_nodes[pt_name].on_rightclick(pos, node, placer, itemstack, pointed_thing)
-	elseif signs_lib.check_for_pole(pos, pointed_thing) then
-		minetest.swap_node(pos, {name = "default:sign_wall_wood_onpole",       param2 = node.param2})
-	elseif signs_lib.check_for_horizontal_pole(pos, pointed_thing) then
-		minetest.swap_node(pos, {name = "default:sign_wall_wood_onpole_horiz", param2 = node.param2})
-	elseif signs_lib.check_for_ceiling(pointed_thing) then
-		minetest.swap_node(pos, {name = "default:sign_wall_wood_hanging",      param2 = newparam2})
-	elseif basic_signs.check_for_floor(pointed_thing) then
-		minetest.swap_node(pos, {name = "basic_signs:yard_sign",               param2 = newparam2})
-	end
-	signs_lib.update_sign(pos)
-
-	if not creative.is_enabled_for(playername) then
-		itemstack:take_item()
-	end
-	return itemstack
-end
-
-local def
-
-local wgroups = table.copy(signs_lib.standard_wood_groups)
-wgroups.not_in_creative_inventory = 1
-
-local sgroups = table.copy(signs_lib.standard_steel_groups)
-sgroups.not_in_creative_inventory = 1
-
-minetest.override_item("default:sign_wall_wood", {
-	after_place_node = basic_signs.determine_sign_type
-})
-
 signs_lib.register_sign("basic_signs:sign_wall_locked", {
 	description = S("Locked Sign"),
 	tiles = {
 		"basic_signs_sign_wall_locked.png",
-		"signs_lib_sign_wall_steel_edges.png",
+		"signs_lib_sign_wall_steel_edges.png"
 	},
 	inventory_image = "basic_signs_sign_wall_locked_inv.png",
 	locked = true,
@@ -75,18 +21,22 @@ signs_lib.register_sign("basic_signs:sign_wall_locked", {
 	allow_hanging = true,
 	allow_widefont = true,
 	allow_onpole = true,
-	allow_onpole_horizontal = true
+	allow_onpole_horizontal = true,
+	allow_yard = true,
 })
 
 signs_lib.register_sign("basic_signs:sign_wall_glass", {
 	description = S("Glass Sign"),
+	yard_mesh = "signs_lib_standard_sign_yard_two_sticks.obj",
 	tiles = {
 		{ name = "basic_signs_sign_wall_glass.png", backface_culling = true},
 		"basic_signs_sign_wall_glass_edges.png",
+		"basic_signs_pole_mount_glass.png",
+		nil,
+		"default_steel_block.png" -- the sticks on back of the yard sign model
 	},
 	inventory_image = "basic_signs_sign_wall_glass_inv.png",
 	default_color = "c",
-	locked = true,
 	entity_info = "standard",
 	sounds = default.node_sound_glass_defaults(),
 	groups = {cracky = 3, oddly_breakable_by_hand = 3},
@@ -94,18 +44,22 @@ signs_lib.register_sign("basic_signs:sign_wall_glass", {
 	allow_widefont = true,
 	allow_onpole = true,
 	allow_onpole_horizontal = true,
+	allow_yard = true,
 	use_texture_alpha = true,
 })
 
 signs_lib.register_sign("basic_signs:sign_wall_obsidian_glass", {
 	description = S("Obsidian Glass Sign"),
+	yard_mesh = "signs_lib_standard_sign_yard_two_sticks.obj",
 	tiles = {
 		{ name = "basic_signs_sign_wall_obsidian_glass.png", backface_culling = true},
 		"basic_signs_sign_wall_obsidian_glass_edges.png",
+		"basic_signs_pole_mount_obsidian_glass.png",
+		nil,
+		"default_steel_block.png" -- the sticks on back of the yard sign model
 	},
 	inventory_image = "basic_signs_sign_wall_obsidian_glass_inv.png",
 	default_color = "c",
-	locked = true,
 	entity_info = "standard",
 	sounds = default.node_sound_glass_defaults(),
 	groups = {cracky = 3},
@@ -113,11 +67,34 @@ signs_lib.register_sign("basic_signs:sign_wall_obsidian_glass", {
 	allow_widefont = true,
 	allow_onpole = true,
 	allow_onpole_horizontal = true,
+	allow_yard = true,
 	use_texture_alpha = true,
 })
 
 minetest.register_alias("locked_sign:sign_wall_locked", "basic_signs:sign_wall_locked")
 
+signs_lib.register_sign("basic_signs:sign_wall_plastic", {
+	description = S("Plastic Sign"),
+	yard_mesh = "signs_lib_standard_sign_yard_two_sticks.obj",
+	tiles = {
+		"basic_signs_sign_wall_plastic.png",
+		"basic_signs_sign_wall_plastic_edges.png",
+		"basic_signs_pole_mount_plastic.png",
+		nil,
+		"default_steel_block.png" -- the sticks on back of the yard sign model
+	},
+	inventory_image = "basic_signs_sign_wall_plastic_inv.png",
+	default_color = "0",
+	entity_info = "standard",
+	sounds = default.node_sound_leaves_defaults(),
+	groups = {snappy = 3, flammable = 2},
+	allow_hanging = true,
+	allow_widefont = true,
+	allow_onpole = true,
+	allow_onpole_horizontal = true,
+	allow_yard = true,
+	use_texture_alpha = true,
+})
 
 -- array : color, translated color, default text color
 
@@ -139,48 +116,33 @@ for i, color in ipairs(sign_colors) do
 		description = S("Sign (@1, steel)", color[2]),
 		paramtype2 = "facedir",
 		selection_box = cbox,
-		mesh = "signs_lib_standard_wall_sign_facedir.obj",
+		mesh = "signs_lib_standard_facedir_sign_wall.obj",
 		tiles = {
 			"basic_signs_steel_"..color[1]..".png",
 			"signs_lib_sign_wall_steel_edges.png",
+			nil,
+			nil,
+			"default_steel_block.png"
 		},
 		inventory_image = "basic_signs_steel_"..color[1].."_inv.png",
 		groups = signs_lib.standard_steel_groups,
 		sounds = signs_lib.standard_steel_sign_sounds,
 		default_color = color[3],
 		entity_info = {
-			mesh = "signs_lib_standard_wall_sign_entity.obj",
+			mesh = "signs_lib_standard_sign_entity_wall.obj",
 			yaw = signs_lib.standard_yaw
 		},
 		allow_hanging = true,
 		allow_widefont = true,
 		allow_onpole = true,
-		allow_onpole_horizontal = true
+		allow_onpole_horizontal = true,
+		allow_yard = true,
 	})
+
+	minetest.register_alias("basic_signs:sign_wall_steel_"..color[1].."_onpole", "basic_signs:sign_steel_"..color[1].."_onpole")
+	minetest.register_alias("basic_signs:sign_wall_steel_"..color[1].."_onpole_horiz", "basic_signs:sign_steel_"..color[1].."_onpole_horiz")
+	minetest.register_alias("basic_signs:sign_wall_steel_"..color[1].."_hanging", "basic_signs:sign_steel_"..color[1].."_hanging")
 
 	table.insert(signs_lib.lbm_restore_nodes, "signs:sign_wall_"..color[1])
 	minetest.register_alias("signs:sign_wall_"..color[1], "basic_signs:sign_wall_steel_"..color[1])
 end
-
-signs_lib.register_sign("basic_signs:yard_sign", {
-	description = "Wooden yard sign",
-	paramtype2 = "facedir",
-	selection_box = signs_lib.make_selection_boxes(35, 34.5, false, 0, -1.25, -19.69, true),
-	mesh = "basic_signs_yard_sign.obj",
-	tiles = {
-		"signs_lib_sign_wall_wooden.png",
-		"signs_lib_sign_wall_wooden_edges.png",
-		"default_wood.png"
-	},
-	inventory_image = "default_sign_wood.png",
-	entity_info = {
-		mesh = "basic_signs_yard_sign_entity.obj",
-		yaw = signs_lib.standard_yaw
-	},
-	groups = wgroups,
-	drop = "default:sign_wall_wood",
-	allow_widefont = true
-})
-
-table.insert(signs_lib.lbm_restore_nodes, "signs:sign_yard")
-minetest.register_alias("signs:sign_yard", "basic_signs:yard_sign")

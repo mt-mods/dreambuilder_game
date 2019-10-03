@@ -173,3 +173,11 @@ minetest.register_craft( {
 	},
 })
 
+minetest.register_craft( {
+	output = "basic_signs:sign_wall_plastic 3",
+	recipe = {
+			{ "basic_materials:plastic_sheet", "basic_materials:plastic_sheet", "basic_materials:plastic_sheet" },
+			{ "basic_materials:plastic_sheet", "basic_materials:plastic_sheet", "basic_materials:plastic_sheet" },
+			{ "",                              "default:steel_ingot",           "" }
+	},
+})

@@ -104,7 +104,7 @@ cbox = signs_lib.make_selection_boxes(24, 24)
 signs_lib.register_sign("street_signs:sign_service_hospital", {
 	description = "D9-2: General service: hospital",
 	selection_box = cbox,
-	mesh = "street_signs_generic_sign_24x24.obj",
+	mesh = "street_signs_generic_sign_24x24_wall.obj",
 	tiles = { "street_signs_service_hospital.png",
 		"street_signs_sign_edge.png",
 	},
@@ -118,7 +118,7 @@ signs_lib.register_sign("street_signs:sign_service_hospital", {
 signs_lib.register_sign("street_signs:sign_service_handicapped", {
 	description = "D9-6: General service: handicapped",
 	selection_box = cbox,
-	mesh = "street_signs_generic_sign_24x24.obj",
+	mesh = "street_signs_generic_sign_24x24_wall.obj",
 	tiles = { "street_signs_service_handicapped.png",
 		"street_signs_sign_edge.png",
 	},
@@ -132,7 +132,7 @@ signs_lib.register_sign("street_signs:sign_service_handicapped", {
 signs_lib.register_sign("street_signs:sign_service_fuel", {
 	description = "D9-7: General service: fuel/gas",
 	selection_box = cbox,
-	mesh = "street_signs_generic_sign_24x24.obj",
+	mesh = "street_signs_generic_sign_24x24_wall.obj",
 	tiles = { "street_signs_service_fuel.png",
 		"street_signs_sign_edge.png",
 	},
@@ -146,7 +146,7 @@ signs_lib.register_sign("street_signs:sign_service_fuel", {
 signs_lib.register_sign("street_signs:sign_service_food", {
 	description = "D9-8: General service: food",
 	selection_box = cbox,
-	mesh = "street_signs_generic_sign_24x24.obj",
+	mesh = "street_signs_generic_sign_24x24_wall.obj",
 	tiles = { "street_signs_service_food.png",
 		"street_signs_sign_edge.png",
 	},
@@ -160,7 +160,7 @@ signs_lib.register_sign("street_signs:sign_service_food", {
 signs_lib.register_sign("street_signs:sign_service_lodging", {
 	description = "D9-9: General service: lodging",
 	selection_box = cbox,
-	mesh = "street_signs_generic_sign_24x24.obj",
+	mesh = "street_signs_generic_sign_24x24_wall.obj",
 	tiles = { "street_signs_service_lodging.png",
 		"street_signs_sign_edge.png",
 	},
@@ -174,7 +174,7 @@ signs_lib.register_sign("street_signs:sign_service_lodging", {
 signs_lib.register_sign("street_signs:sign_service_ev_charging", {
 	description = "D9-11b: General service: EV charging",
 	selection_box = cbox,
-	mesh = "street_signs_generic_sign_24x24.obj",
+	mesh = "street_signs_generic_sign_24x24_wall.obj",
 	tiles = { "street_signs_service_ev_charging.png",
 		"street_signs_sign_edge.png",
 	},
