@@ -139,10 +139,16 @@ for i, color in ipairs(sign_colors) do
 		allow_yard = true,
 	})
 
-	minetest.register_alias("basic_signs:sign_wall_steel_"..color[1].."_onpole", "basic_signs:sign_steel_"..color[1].."_onpole")
+	minetest.register_alias("basic_signs:sign_wall_steel_"..color[1].."_onpole",       "basic_signs:sign_steel_"..color[1].."_onpole")
 	minetest.register_alias("basic_signs:sign_wall_steel_"..color[1].."_onpole_horiz", "basic_signs:sign_steel_"..color[1].."_onpole_horiz")
-	minetest.register_alias("basic_signs:sign_wall_steel_"..color[1].."_hanging", "basic_signs:sign_steel_"..color[1].."_hanging")
+	minetest.register_alias("basic_signs:sign_wall_steel_"..color[1].."_hanging",      "basic_signs:sign_steel_"..color[1].."_hanging")
+	minetest.register_alias("basic_signs:sign_wall_steel_"..color[1].."_yard",         "basic_signs:sign_steel_"..color[1].."_yard")
 
 	table.insert(signs_lib.lbm_restore_nodes, "signs:sign_wall_"..color[1])
-	minetest.register_alias("signs:sign_wall_"..color[1], "basic_signs:sign_wall_steel_"..color[1])
+	minetest.register_alias("signs:sign_wall_"..color[1],                  "basic_signs:sign_wall_steel_"..color[1])
+
+	minetest.register_alias("signs:sign_"..color[1].."_onpole",       "basic_signs:sign_steel_"..color[1].."_onpole")
+	minetest.register_alias("signs:sign_"..color[1].."_onpole_horiz", "basic_signs:sign_steel_"..color[1].."_onpole_horiz")
+	minetest.register_alias("signs:sign_"..color[1].."_hanging",      "basic_signs:sign_steel_"..color[1].."_hanging")
+	minetest.register_alias("signs:sign_"..color[1].."_yard",         "basic_signs:sign_steel_"..color[1].."_yard")
 end
