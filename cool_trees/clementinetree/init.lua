@@ -40,7 +40,7 @@ local function grow_new_clementinetree_tree(pos)
 		minetest.get_node_timer(pos):start(math.random(240, 600))
 		return
 	end
-
+	minetest.remove_node(pos)
 	minetest.place_schematic({x = pos.x-2, y = pos.y, z = pos.z-2}, modpath.."/schematics/clementinetree.mts", "0", nil, false)
 end
 

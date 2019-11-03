@@ -107,7 +107,7 @@ local function grow_new_bambootree_tree(pos)
 		minetest.get_node_timer(pos):start(math.random(240, 600))
 		return
 	end
-
+	minetest.remove_node(pos)
 	minetest.place_schematic({x = pos.x - 1, y = pos.y - 1, z = pos.z - 1},
 		bamboo.bambootree, "0", nil, false)
 end

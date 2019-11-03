@@ -16,7 +16,7 @@ local function grow_new_jacaranda_tree(pos)
 		minetest.get_node_timer(pos):start(math.random(240, 600))
 		return
 	end
-
+	minetest.remove_node(pos)
 	minetest.place_schematic({x = pos.x-3, y = pos.y, z = pos.z-3}, modpath.."/schematics/jacaranda.mts", "0", nil, false)
 end
 

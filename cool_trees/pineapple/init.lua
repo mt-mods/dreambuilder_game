@@ -17,7 +17,7 @@ local function grow_new_pineapple_tree(pos)
 		minetest.get_node_timer(pos):start(math.random(240, 600))
 		return
 	end
-
+	minetest.remove_node(pos)
 	minetest.place_schematic({x = pos.x, y = pos.y, z = pos.z}, modpath.."/schematics/pineapple.mts", "0", nil, false)
 end
 

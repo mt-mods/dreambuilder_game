@@ -137,6 +137,7 @@ local function grow_new_palm_tree(pos)
 		minetest.get_node_timer(pos):start(math.random(240, 600))
 		return
 	end
+	minetest.remove_node(pos)
 	minetest.place_schematic({x = pos.x - 4, y = pos.y - 1, z = pos.z - 4},
 		palm.palmtree, "0", nil, false)
 end
