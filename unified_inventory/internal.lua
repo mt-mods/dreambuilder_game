@@ -1,4 +1,4 @@
-local S = unified_inventory.gettext
+local S = minetest.get_translator("unified_inventory")
 local F = minetest.formspec_escape
 
 -- This pair of encoding functions is used where variable text must go in
@@ -254,7 +254,7 @@ function unified_inventory.get_formspec(player, page)
 			end
 		end
 		formspec[n] = "label[8.2,"..ui_peruser.form_header_y..";"..F(S("Page")) .. ": "
-			.. S("%s of %s"):format(page,pagemax).."]"
+			.. S("@1 of @2",page,pagemax).."]"
 	end
 	n= n+1
 

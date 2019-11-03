@@ -3,9 +3,6 @@
 local modpath = minetest.get_modpath(minetest.get_current_modname())
 local worldpath = minetest.get_worldpath()
 
--- Intllib
-local S, NS = dofile(modpath .. "/intllib.lua")
-
 -- Data tables definitions
 unified_inventory = {
 	activefilter = {},
@@ -32,9 +29,6 @@ unified_inventory = {
 
 	-- Default inventory page
 	default = "craft",
-
-	-- intllib
-	gettext = S,
 
 	-- "Lite" mode
 	lite_mode = minetest.settings:get_bool("unified_inventory_lite"),
@@ -71,6 +65,7 @@ dofile(modpath.."/group.lua")
 dofile(modpath.."/api.lua")
 dofile(modpath.."/internal.lua")
 dofile(modpath.."/callbacks.lua")
+dofile(modpath.."/match_craft.lua")
 dofile(modpath.."/register.lua")
 
 if minetest.settings:get_bool("unified_inventory_bags") ~= false then

@@ -40,6 +40,12 @@ end
 if read_setting("castle_masonry_desertstonebrick", true) then
 	table.insert(castle_masonry.materials, {name="desertstonebrick", desc=S("Desert Stone Brick"), tile="default_desert_stone_brick.png", craft_material="default:desert_stonebrick"})
 end
+if read_setting("castle_masonry_desertsandstonebrick", true) then
+	table.insert(castle_masonry.materials, {name="desertsandstonebrick", desc=S("Desert Sandstone Brick"), tile="default_desert_sandstone_brick.png", craft_material="default:desert_sandstone_brick"})
+end
+if read_setting("castle_masonry_silversandstonebrick", true) then
+	table.insert(castle_masonry.materials, {name="silversandstonebrick", desc=S("Silver Sandstone Brick"), tile="default_silver_sandstone_brick.png", craft_material="default:silver_sandstone_brick"})
+end
 if read_setting("castle_masonry_stone", true) then
 	table.insert(castle_masonry.materials, {name="stone", desc=S("Stone"), tile="default_stone.png", craft_material="default:stone"})
 end
@@ -48,6 +54,12 @@ if read_setting("castle_masonry_sandstone", true) then
 end
 if read_setting("castle_masonry_desertstone", true) then
 	table.insert(castle_masonry.materials, {name="desertstone", desc=S("Desert Stone"), tile="default_desert_stone.png", craft_material="default:desert_stone"})
+end
+if read_setting("castle_masonry_desertsandstone", true) then
+	table.insert(castle_masonry.materials, {name="desertsandstone", desc=S("Desert Sandstone"), tile="default_desert_sandstone.png", craft_material="default:desert_sandstone"})
+end
+if read_setting("castle_masonry_silversandstone", true) then
+	table.insert(castle_masonry.materials, {name="silversandstone", desc=S("Silver Sandstone"), tile="default_silver_sandstone.png", craft_material="default:silver_sandstone"})
 end
 if read_setting("castle_masonry_wood", false) then
 	table.insert(castle_masonry.materials, {name="wood", desc=S("Wood"), tile="default_wood.png", craft_material="group:wood", composition_material="default:wood"})

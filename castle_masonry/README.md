@@ -25,6 +25,10 @@ Mod settings can allow for the basic castle masonry forms to be made for the fol
 * Desert stone brick
 * Sandstone
 * Sandstone brick
+* Desert Sandstone
+* Desert Sandstone brick
+* Silver Sandstone
+* Silver Sandstone brick
 * Stone
 * Stone brick
 * Castle wall

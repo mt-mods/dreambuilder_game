@@ -5,9 +5,13 @@ castle_masonry_cobble (Cobble) bool true
 castle_masonry_stonebrick (Stone Brick) bool true
 castle_masonry_sandstonebrick (Sandstone Brick) bool true
 castle_masonry_desertstonebrick (Desert Stone Brick) bool true
+castle_masonry_desertsandstonebrick (Desert Sandstone Brick) bool true
+castle_masonry_silversandstonebrick (Silver Sandstone Brick) bool true
 castle_masonry_stone (Stone) bool true
 castle_masonry_sandstone (Sandstone) bool true
 castle_masonry_desertstone (Desert Stone) bool true
+castle_masonry_desertsandstone (Desert Sandstone) bool true
+castle_masonry_silversandstone (Silver Sandstone) bool true
 castle_masonry_wood (Wood) bool false
 castle_masonry_ice (Ice) bool false
 castle_masonry_snow (Snow) bool false
