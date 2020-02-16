@@ -99,9 +99,6 @@ minetest.register_node("jacaranda:trunk", {
 	paramtype2 = "facedir",
 	is_ground_content = false,
 	on_place = minetest.rotate_node,
-	on_rightclick = function(pos, node, player, itemstack, pointed_thing)
-		--minetest.item_place_node(itemstack, player, pointed_thing, nil)
-	end
 })
 
 -- jacaranda wood

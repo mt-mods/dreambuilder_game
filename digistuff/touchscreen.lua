@@ -253,7 +253,7 @@ digistuff.ts_on_digiline_receive = function (pos, node, channel, msg)
 		data = digistuff.process_command(meta,data,msg)
 	else
 		for _,i in ipairs(msg) do
-			if i.command then
+			if type(i) == "table" and i.command then
 				data = digistuff.process_command(meta,data,i) or data
 			end
 		end

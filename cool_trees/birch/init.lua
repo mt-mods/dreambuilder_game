@@ -161,9 +161,6 @@ minetest.register_node("birch:trunk", {
 	paramtype2 = "facedir",
 	on_place = minetest.rotate_node,
 	is_ground_content = false,
-	--on_rightclick = function(pos, node, player, itemstack, pointed_thing)
-		--minetest.item_place_node(itemstack, player, pointed_thing, nil)
-	--end
 })
 
 -- birch wood

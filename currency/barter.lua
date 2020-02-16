@@ -5,6 +5,7 @@ local MP = minetest.get_modpath(minetest.get_current_modname())
 local S, NS = dofile(MP.."/intllib.lua")
 
 barter.chest = {}
+barter.chest.expire_after = tonumber(minetest.settings:get('barter.chest.expireafter')) or 15 * 60
 barter.chest.formspec = {
 	main = "size[8,9]"..
 		"list[current_name;pl1;0,0;3,4;]"..
@@ -81,6 +82,8 @@ barter.chest.cancel = function(meta)
 	meta:set_string("pl2","")
 	meta:set_int("pl1step",0)
 	meta:set_int("pl2step",0)
+	meta:set_int("clean",1)
+	meta:set_int("timer",0)
 end
 
 barter.chest.exchange = function(meta)
@@ -90,10 +93,20 @@ barter.chest.exchange = function(meta)
 	meta:set_string("pl2","")
 	meta:set_int("pl1step",0)
 	meta:set_int("pl2step",0)
+	meta:set_int("clean",1)
+	meta:set_int("timer",0)
+end
+
+barter.chest.start_timer = function(pos, meta)
+	meta:set_int("clean",0)
+	meta:set_int("timer",0)
+	local node_timer = minetest.get_node_timer(pos)
+	if node_timer:is_started() then return end
+	node_timer:start(22)
 end
 
 minetest.register_node("currency:barter", {
-		drawtype = "nodebox",
+	drawtype = "nodebox",
 	description = S("Barter Table"),
 	paramtype = "light",
 	paramtype2 = "facedir",
@@ -118,13 +131,16 @@ minetest.register_node("currency:barter", {
 		meta:set_string("infotext", S("Barter Table"))
 		meta:set_string("pl1","")
 		meta:set_string("pl2","")
+		meta:set_int("clean",1)
+		meta:set_int("timer",0)
 		barter.chest.update_formspec(meta)
 		local inv = meta:get_inventory()
-		inv:set_size("pl1", 3*4)
-		inv:set_size("pl2", 3*4)
+		inv:set_size("pl1", 12) -- 3*4
+		inv:set_size("pl2", 12) -- 3*4
 	end,
 	on_receive_fields = function(pos, formname, fields, sender)
 		local meta = minetest.get_meta(pos)
+		barter.chest.start_timer(pos, meta)
 		pl_receive_fields = function(n)
 			if fields[n.."_start"] and meta:get_string(n) == "" then
 				meta:set_string(n,sender:get_player_name())
@@ -152,18 +168,39 @@ minetest.register_node("currency:barter", {
 	end,
 	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
 		local meta = minetest.get_meta(pos)
+		barter.chest.start_timer(pos, meta)
 		if not barter.chest.check_privilege(from_list,player:get_player_name(),meta) then return 0 end
 		if not barter.chest.check_privilege(to_list,player:get_player_name(),meta) then return 0 end
 		return count
 	end,
 	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
 		local meta = minetest.get_meta(pos)
+		barter.chest.start_timer(pos, meta)
 		if not barter.chest.check_privilege(listname,player:get_player_name(),meta) then return 0 end
 		return stack:get_count()
 	end,
 	allow_metadata_inventory_take = function(pos, listname, index, stack, player)
 		local meta = minetest.get_meta(pos)
+		barter.chest.start_timer(pos, meta)
 		if not barter.chest.check_privilege(listname,player:get_player_name(),meta) then return 0 end
 		return stack:get_count()
 	end,
+	on_timer = function(pos, dtime)
+		local meta = minetest.get_meta(pos)
+		if 1 == meta:get_int("clean") then return false end
+
+		local timer = meta:get_int("timer")
+		timer = timer + dtime
+		if timer > barter.chest.expire_after then
+			-- attempt to return items to owners
+			barter.chest.cancel(meta)
+			-- also clear out items of offline users
+			local inv = meta:get_inventory()
+			inv:set_list("pl1", {})
+			inv:set_list("pl2", {})
+			return false
+		end
+		meta:set_int("timer",timer)
+		return true
+	end
 })

@@ -7,7 +7,20 @@ dofile(MP.."/murder_holes.lua")
 dofile(MP.."/stone_wall.lua")
 dofile(MP.."/paving.lua")
 
-local S, NS = dofile(MP.."/intllib.lua")
+
+-- Used for localization, choose either built-in or intllib.
+
+local S, NS = nil
+
+if (minetest.get_modpath("intllib") == nil) then
+	S = minetest.get_translator("castle_masonry")
+
+else
+	-- internationalization boilerplate
+	S, NS = dofile(MP.."/intllib.lua")
+
+end
+
 
 local read_setting = function(name, default)
 	local setting = minetest.settings:get_bool(name)
@@ -82,7 +95,7 @@ castle_masonry.get_material_properties = function(material)
 		burn_time = minetest.get_craft_result({method="fuel", width=1, items={ItemStack(material.composition_material)}}).time
 	else
 		composition_def = minetest.registered_nodes[material.craft_material]
-		burn_time = minetest.get_craft_result({method="fuel", width=1, items={ItemStack(material.craft_materia)}}).time
+		burn_time = minetest.get_craft_result({method="fuel", width=1, items={ItemStack(material.craft_material)}}).time
 	end
 
 	local tiles = material.tile

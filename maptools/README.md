@@ -21,9 +21,7 @@ git clone https://github.com/minetest-mods/maptools.git
 
 You can also
 [download a ZIP archive](https://github.com/minetest-mods/maptools/archive/master.zip)
-of Map Tools. If you do so, you will need to extract the archive then rename
-the resulting folder from `maptools-master` to `maptools` – this is
-**absolutely** required, as the mod won't work otherwise.
+of Map Tools.
 
 ### Enable the mod
 
@@ -63,13 +61,13 @@ on that line.
 
 ## Version compatibility
 
-Map Tools is currently primarily tested with Minetest 5.0.1.
+Map Tools is currently primarily tested with Minetest 5.1.0.
 It may or may not work with newer or older versions. Issues arising in older
 versions than 5.0.0 will generally not be fixed.
 
 ## License
 
-Copyright © 2012-2019 Hugo Locurcio and contributors
+Copyright © 2012-2020 Hugo Locurcio and contributors
 
 - Map Tools code is licensed under the zlib license, see
   [`LICENSE.md`](LICENSE.md) for details.

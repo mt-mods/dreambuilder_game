@@ -1,4 +1,4 @@
-castle_shields.register_shield = function(name, desc, background_color, foreground_color, mask)
+castle_shields.register_shield = function(name, desc, background_color, foreground_color, mask, disable_recipe)
 
 	local tile_side = "castle_shield_"..background_color..".png"
 	local tile_front = "castle_shield_"..background_color..".png^(castle_shield_"..foreground_color..".png^[mask:castle_shield_mask_"..mask..".png)"
@@ -28,6 +28,11 @@ castle_shields.register_shield = function(name, desc, background_color, foregrou
 		},
 	})
 	
+	if disable_recipe then
+		-- recipe disabled by caller
+		return
+	end
+
 	minetest.register_craft({
 		output = minetest.get_current_modname()..":"..name,
 		recipe = {
