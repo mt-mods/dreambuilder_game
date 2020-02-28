@@ -1,5 +1,4 @@
-local modpath = minetest.get_modpath(minetest.get_current_modname())
-local S, NS = dofile(modpath.."/intllib.lua")
+local S = ropes.S
 
 if ropes.extending_ladder_enabled then
 

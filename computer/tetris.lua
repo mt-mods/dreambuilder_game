@@ -1,4 +1,3 @@
-
 local S = homedecor.gettext
 
 local shapes = {
@@ -220,10 +219,10 @@ local function step(pos, fields)
 	if fields then
 		if fields.new then
 			new_game(pos)
-		else
+		elseif t then
 			key(fields)
 		end
-	else
+	elseif t then
 		run = tick()
 	end
 

@@ -2,7 +2,6 @@
 bonemeal = {}
 
 local path = minetest.get_modpath("bonemeal")
-local table_insert = table.insert
 local min, max, random = math.min, math.max, math.random
 
 
@@ -91,7 +90,9 @@ local deco = {
 }
 
 
------ local functions
+--
+-- local functions
+--
 
 
 -- particles
@@ -261,11 +262,7 @@ local function check_soil(pos, nodename, strength)
 	local pos2, nod, def
 
 	-- loop through soil
-	for _,n in pairs(dirt) do
-
-		pos2 = n
-
-		pos2.y = pos2.y + 1
+	for _, n in pairs(dirt) do
 
 		if random(5) == 5 then
 			if decor and #decor > 0 then
@@ -281,9 +278,22 @@ local function check_soil(pos, nodename, strength)
 			end
 		end
 
+		pos2 = n
+
+		pos2.y = pos2.y + 1
+
 		if nod and nod ~= "" then
+
+			-- get crop param2 value
 			def = minetest.registered_nodes[nod]
-			def = def and def.place_param2 or 0
+			def = def and def.place_param2
+
+			-- if param2 not preset then get from existing node
+			if not def then
+				local node = minetest.get_node_or_nil(pos2)
+				def = node and node.param2 or 0
+			end
+
 			minetest.set_node(pos2, {name = nod, param2 = def})
 		end
 
@@ -302,7 +312,7 @@ end
 function bonemeal:add_sapling(list)
 
 	for n = 1, #list do
-		table_insert(saplings, list[n])
+		saplings[#saplings + 1] = list[n]
 	end
 end
 
@@ -313,7 +323,7 @@ end
 function bonemeal:add_crop(list)
 
 	for n = 1, #list do
-		table_insert(crops, list[n])
+		crops[#crops + 1] = list[n]
 	end
 end
 
@@ -333,11 +343,11 @@ function bonemeal:add_deco(list)
 			if list[l][1] == deco[n][1] then
 
 				-- adding grass types
-				for _,extra in pairs(list[l][2]) do
+				for _, extra in pairs(list[l][2]) do
 
 					if extra ~= "" then
 
-						for _,entry in pairs(deco[n][2]) do
+						for _, entry in pairs(deco[n][2]) do
 
 							if extra == entry then
 								extra = false
@@ -347,16 +357,16 @@ function bonemeal:add_deco(list)
 					end
 
 					if extra then
-						table_insert(deco[n][2], extra)
+						deco[n][2][#deco[n][2] + 1] = extra
 					end
 				end
 
 				-- adding decoration types
-				for _,extra in ipairs(list[l][3]) do
+				for _, extra in ipairs(list[l][3]) do
 
 					if extra ~= "" then
 
-						for __,entry in pairs(deco[n][3]) do
+						for __, entry in pairs(deco[n][3]) do
 
 							if extra == entry then
 								extra = false
@@ -366,7 +376,7 @@ function bonemeal:add_deco(list)
 					end
 
 					if extra then
-						table_insert(deco[n][3], extra)
+						deco[n][3][#deco[n][3] + 1] = extra
 					end
 				end
 
@@ -376,7 +386,7 @@ function bonemeal:add_deco(list)
 		end
 
 		if list[l] then
-			table_insert(deco, list[l])
+			deco[#deco + 1] = list[l]
 		end
 	end
 end
@@ -400,7 +410,7 @@ function bonemeal:set_deco(list)
 		end
 
 		if list[l] then
-			table_insert(deco, list[l])
+			deco[#deco + 1] = list[l]
 		end
 	end
 end
@@ -461,7 +471,9 @@ function bonemeal:on_use(pos, strength, node)
 end
 
 
------ items
+--
+-- items
+--
 
 
 -- mulch (strength 1)
@@ -568,7 +580,10 @@ minetest.register_craftitem("bonemeal:gelatin_powder", {
 })
 
 
---- crafting recipes
+--
+-- crafting recipes
+--
+
 
 -- gelatin powder
 minetest.register_craft({
@@ -636,7 +651,7 @@ minetest.override_item("default:dirt", {
 				items = {"default:dirt"}
 			}
 		}
-	},
+	}
 })
 
 

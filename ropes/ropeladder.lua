@@ -2,9 +2,7 @@ if ropes.ropeLadderLength == 0 and not ropes.create_all_definitions then
 	return
 end
 
--- internationalization boilerplate
-local MP = minetest.get_modpath(minetest.get_current_modname())
-local S, NS = dofile(MP.."/intllib.lua")
+local S = ropes.S
 
 if ropes.ropeLadderLength > 0 then
 	minetest.register_craft({

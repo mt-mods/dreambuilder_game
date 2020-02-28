@@ -4,9 +4,7 @@ if not minetest.get_modpath("doc") then
 	return
 end
 
--- internationalization boilerplate
-local MP = minetest.get_modpath(minetest.get_current_modname())
-local S, NS = dofile(MP.."/intllib.lua")
+local S = ropes.S
 
 ropes.doc.ropesegment_longdesc = S("Rope segments are bundles of fibre twisted into robust cables.")
 ropes.doc.ropesegment_usage = S("This craft item is useful for creating rope ladders, or for spooling on wooden spindles to hang and climb upon.")
@@ -14,7 +12,7 @@ ropes.doc.ropesegment_usage = S("This craft item is useful for creating rope lad
 ropes.doc.ropeladder_longdesc = S("A hanging rope ladder that automatically extends downward.")
 ropes.doc.ropeladder_usage = S("After a rope ladder is placed on a vertical wall it will begin extending downward until it reaches its maximum length (@1 meters). If the rope ladder is removed all of the ladder below the point of removal will disappear. A rope ladder can be severed partway down using an axe or similar tool, and the ladder below the point where it is cut will collapse. No rope is actually lost in the process, though, and if the uppermost section of the ladder is removed and replaced the ladder will re-extend to the same maximum length as before.", ropes.ropeLadderLength)
 
-local rope_length_doc = S("Rope boxes have a certain amount of rope contained within them specified in the name of the node, and have a limit to how much rope they can support that depends on the material they're made of. The different lengths can be crafted by combining and splitting up rope boxes in the crafting grid. For example, you can craft a @1m rope box by putting a @2m rope box and a rope segment in the crafting grid, or a @3m rope box and two rope segments in the crafting grid. Two rope segments can be recovered by putting the @1m rope box in the crafting grid by itself.", ropes.ropeLength*3, ropes.ropeLength*2, ropes.ropeLength) .. "\n"
+local rope_length_doc = S("Rope boxes have a certain amount of rope contained within them specified in the name of the node, and have a limit to how much rope they can support that depends on the material they're made of. The different lengths can be crafted by combining and splitting up rope boxes in the crafting grid. For example, you can craft a @1m rope box by putting a @2m rope box and a rope segment in the crafting grid, or a @3m rope box and two rope segments in the crafting grid. Two rope segments can be recovered by putting the @4m rope box in the crafting grid by itself.", ropes.ropeLength*3, ropes.ropeLength*2, ropes.ropeLength, ropes.ropeLength*3) .. "\n"
 
 if ropes.woodRopeBoxMaxMultiple == 1 then
 	rope_length_doc = rope_length_doc .. "\n" .. S("Wood") .. " " .. S("rope boxes can hold @1m of rope.", ropes.ropeLength)

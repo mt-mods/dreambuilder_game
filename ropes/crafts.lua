@@ -1,6 +1,4 @@
--- internationalization boilerplate
-local MP = minetest.get_modpath(minetest.get_current_modname())
-local S, NS = dofile(MP.."/intllib.lua")
+local S = ropes.S
 
 if minetest.get_modpath("farming") then
 -- this doesn't work reliably due to side effects of https://github.com/minetest/minetest/issues/5518

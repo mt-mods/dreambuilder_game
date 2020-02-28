@@ -3,8 +3,9 @@ ropes = {
 }
 
 -- internationalization boilerplate
-local MP = minetest.get_modpath(minetest.get_current_modname())
-local S, NS = dofile(MP.."/intllib.lua")
+local modname = minetest.get_current_modname()
+local MP = minetest.get_modpath(modname)
+ropes.S = minetest.get_translator(modname)
 
 ropes.ropeLength = tonumber(minetest.settings:get("ropes_rope_length")) or 50
 ropes.woodRopeBoxMaxMultiple = tonumber(minetest.settings:get("ropes_wood_rope_box_max_multiple")) or 2
