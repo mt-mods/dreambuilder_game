@@ -1,0 +1,21 @@
+# textdomain: castle_storage
+
+
+### crate.lua ###
+
+@1 moves stuff in crate at @2=@1 mette delle cose nella cassa alle coordinate @2
+@1 moves stuff to crate at @2=@1 prende delle cose dalla cassa alle coordinate @2
+Crate=Cassa
+
+### crate.lua ###
+### ironbound_chest.lua ###
+
+@1 takes stuff from locked chest at @2=@1 prende delle cose dal baule chiuso a chiave alle coordinate @2
+
+### ironbound_chest.lua ###
+
+@1 moves stuff in locked chest at @2=@1 sposta delle cose nel baule chiuso a chiave alle coordinate @2
+@1 moves stuff to locked chest at @2=@1 mette delle cose nel baule chiuso a chiave alle coordinate @2
+@1 tried to access a locked chest belonging to @2 at @3=@1 ha tentato di aprire un baule chiuso a chiave di @2 alle coordinate @3
+Ironbound Chest=Baule rinforzato col ferro
+Ironbound Chest (owned by @1)=Baule rinforzato col ferro (di @1)

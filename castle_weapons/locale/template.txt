@@ -1,0 +1,12 @@
+# textdomain: castle_weapons
+
+
+### battleaxe.lua ###
+
+# textdomain:castle_weapons
+Battleaxe=
+
+### crossbow.lua ###
+
+Bolt=
+Crossbow=

@@ -1,5 +1,9 @@
 # Unified Inventory
 
+[![](https://github.com/minetest-mods/unified_inventory/workflows/Check%20&%20Release/badge.svg)](https://github.com/minetest-mods/unified_inventory/actions)
+
+![Screenshot](screenshot.png)
+
 Unified Inventory replaces the default survival and creative inventory.
 
 
@@ -13,15 +17,14 @@ Unified Inventory replaces the default survival and creative inventory.
  * Home function to teleport
  * Trash slot
  * Lite mode: reduces the item browser width
+    * `minetest.conf` setting `unified_inventory_lite = true`
  * Mod API for modders: see [mod_api.txt](doc/mod_api.txt)
  * Setting-determinated features: see [settingtypes.txt](settingtypes.txt)
 
 
 ## Requirements
 
- * Minetest 5.0.0+ since commit 4403b69
- * Minetest 0.4.16+ prior commit 4403b69
-
+ * Minetest 5.0.0+
 
 # Licenses
 

@@ -108,11 +108,14 @@ minetest.register_craft( {
 	recipe = {"dye:black", "dye:black", "dye:white"}
 })
 
+-- only add light grey recipe if unifieddye mod isnt present (conflict)
+if not minetest.get_modpath("unifieddyes") then
 minetest.register_craft( {
 	type = "shapeless",
 	output = "dye:grey 3",
 	recipe = {"dye:black", "dye:white", "dye:white"}
 })
+end
 
 minetest.register_craft( {
 	type = "shapeless",

@@ -1,9 +1,5 @@
 local players_income = {}
 
--- internationalization boilerplate
-local MP = minetest.get_modpath(minetest.get_current_modname())
-local S, NS = dofile(MP.."/intllib.lua")
-
 local income_enabled = minetest.settings:get_bool("currency.income_enabled", true)
 local income_item = minetest.settings:get("currency.income_item") or "currency:minegeld_10"
 local income_count = tonumber(minetest.settings:get("currency.income_count")) or 1
@@ -18,7 +14,7 @@ if income_enabled then
 			for _, player in ipairs(minetest.get_connected_players()) do
 				local name = player:get_player_name()
 				players_income[name] = income_count
-				minetest.log("info", "[Currency] "..S("basic income for @1", name))
+				minetest.log("info", "[Currency] basic income for "..name)
 			end
 		end
 	end)
@@ -32,7 +28,7 @@ if income_enabled then
 			local inv = player:get_inventory()
 			inv:add_item("main", {name=income_item, count=income_count})
 			players_income[name] = nil
-			minetest.log("info", "[Currency] "..S("added basic income for @1 to inventory", name))
+			minetest.log("info", "[Currency] added basic income for "..name.." to inventory")
 		end
 	end
 

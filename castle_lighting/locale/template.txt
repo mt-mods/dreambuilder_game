@@ -1,0 +1,18 @@
+# textdomain: castle_lighting
+
+
+### brasier.lua ###
+
+@1 Brasier=
+A brasier for producing copious amounts of light and heat.=
+Floor Brasier=
+Stonebrick=
+
+To ignite the brasier place a flammable fuel in its inventory slot. A lump of coal will burn for about half an hour.=
+
+
+### init.lua ###
+
+Chandelier=
+Chandelier Chain=
+Light Block=

@@ -216,7 +216,7 @@ digistuff.process_command = function (meta, data, msg)
 		if not msg.choices or type(msg.choices) ~= "table" or #msg.choices < 1 then
 			return
 		end
-		local field = {type="dropdown",X=msg.X,Y=msg.Y,W=msg.W,H=msg.H,name=msg.name,selected_id=msg.selected_id,choices=msg.choices}
+		local field = {type="dropdown",X=msg.X,Y=msg.Y,W=msg.W,H=msg.H,name=minetest.formspec_escape(msg.name),selected_id=msg.selected_id,choices=msg.choices}
 		table.insert(data,field)
 	elseif msg.command == "addtextlist" then
 		for _,i in pairs({"X","Y","W","H","selected_id"}) do
@@ -233,7 +233,7 @@ digistuff.process_command = function (meta, data, msg)
 		if not msg.transparent or type(msg.transparent) ~= "boolean" then
 			msg.transparent = false
 		end
-		local field = {type="textlist",X=msg.X,Y=msg.Y,W=msg.W,H=msg.H,name=msg.name,selected_id=msg.selected_id,listelements=msg.listelements,transparent=msg.transparent}
+		local field = {type="textlist",X=msg.X,Y=msg.Y,W=msg.W,H=msg.H,name=minetest.formspec_escape(msg.name),selected_id=msg.selected_id,listelements=msg.listelements,transparent=msg.transparent}
 		table.insert(data,field)
 	elseif msg.command == "lock" then
 		meta:set_int("locked",1)

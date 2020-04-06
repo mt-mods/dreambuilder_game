@@ -1,8 +1,6 @@
 if not minetest.get_modpath("fire") then return end
 
--- internationalization boilerplate
-local MP = minetest.get_modpath(minetest.get_current_modname())
-local S, NS = dofile(MP.."/intllib.lua")
+local S = minetest.get_translator(minetest.get_current_modname())
 
 local brasier_longdesc = S("A brasier for producing copious amounts of light and heat.")
 local brasier_usagehelp = S("To ignite the brasier place a flammable fuel in its inventory slot. A lump of coal will burn for about half an hour.")

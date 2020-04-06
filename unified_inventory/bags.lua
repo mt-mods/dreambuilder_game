@@ -1,4 +1,4 @@
---[[ 
+--[[
 Bags for Minetest
 
 Copyright (c) 2012 cornernote, Brett O'Donnell <cornernote@gmail.com>
@@ -166,7 +166,6 @@ local function load_bags_metadata(player, bags_inv)
 end
 
 minetest.register_on_joinplayer(function(player)
-	local player_inv = player:get_inventory()
 	local player_name = player:get_player_name()
 	local bags_inv = minetest.create_detached_inventory(player_name .. "_bags",{
 		on_put = function(inv, listname, index, stack, player)
@@ -250,7 +249,7 @@ if minetest.get_modpath("farming") ~= nil then
 	minetest.register_craft({
 		output = "unified_inventory:bag_small",
 		recipe = {
-			{"",           "farming:cotton", ""},
+			{"",           "farming:string", ""},
 			{"group:wool", "group:wool",     "group:wool"},
 			{"group:wool", "group:wool",     "group:wool"},
 		},
@@ -260,8 +259,8 @@ if minetest.get_modpath("farming") ~= nil then
 		output = "unified_inventory:bag_medium",
 		recipe = {
 			{"",               "",                            ""},
-			{"farming:cotton", "unified_inventory:bag_small", "farming:cotton"},
-			{"farming:cotton", "unified_inventory:bag_small", "farming:cotton"},
+			{"farming:string", "unified_inventory:bag_small", "farming:string"},
+			{"farming:string", "unified_inventory:bag_small", "farming:string"},
 		},
 	})
 
@@ -269,8 +268,8 @@ if minetest.get_modpath("farming") ~= nil then
 		output = "unified_inventory:bag_large",
 		recipe = {
 			{"",               "",                             ""},
-			{"farming:cotton", "unified_inventory:bag_medium", "farming:cotton"},
-			{"farming:cotton", "unified_inventory:bag_medium", "farming:cotton"},
+			{"farming:string", "unified_inventory:bag_medium", "farming:string"},
+			{"farming:string", "unified_inventory:bag_medium", "farming:string"},
 	    },
 	})
 end

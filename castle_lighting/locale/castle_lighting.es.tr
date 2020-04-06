@@ -1,0 +1,18 @@
+# textdomain: castle_lighting
+
+
+### brasier.lua ###
+
+@1 Brasier=Brasero de @1
+A brasier for producing copious amounts of light and heat.=Un brasero para producir grandes cantidades de luz y calor.
+Floor Brasier=Brasero con Patas
+Stonebrick=Ladrillo de piedra
+
+To ignite the brasier place a flammable fuel in its inventory slot. A lump of coal will burn for about half an hour.=Para encender el brasero coloque un combustible inflamable en su ranura de inventario. Un trozo de carbón arderá durante media hora.
+
+
+### init.lua ###
+
+Chandelier=Candelero
+Chandelier Chain=Colgante de Candelero
+Light Block=Bloque de luz

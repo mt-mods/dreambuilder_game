@@ -1,0 +1,12 @@
+# textdomain: castle_weapons
+
+
+### battleaxe.lua ###
+
+# textdomain:castle_weapons
+Battleaxe=Ascia da guerra
+
+### crossbow.lua ###
+
+Bolt=Quadrello
+Crossbow=Balestra

@@ -1,0 +1,11 @@
+# textdomain: castle_farming
+
+
+### hides.lua ###
+
+Hides=
+
+### straw.lua ###
+
+Bound Straw=
+Training Dummy=

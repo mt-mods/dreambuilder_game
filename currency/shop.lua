@@ -1,6 +1,4 @@
--- internationalization boilerplate
-local MP = minetest.get_modpath(minetest.get_current_modname())
-local S, NS = dofile(MP.."/intllib.lua")
+local S = minetest.get_translator("currency")
 
 default.shop = {}
 default.shop.current_shop = {}
@@ -27,10 +25,10 @@ default.shop.formspec = {
 		"list["..list_name..";customers_gave;0,0.5;3,2;]"..
 		"label[0,2.5;" .. S("Your stock:") .. "]"..
 		"list["..list_name..";stock;0,3;3,2;]"..
-		"label[5,0;" .. S("You want:") .. "]"..
-		"list["..list_name..";owner_wants;5,0.5;3,2;]"..
-		"label[5,2.5;" .. S("In exchange, you give:") .. "]"..
-		"list["..list_name..";owner_gives;5,3;3,2;]"..
+		"label[4,0;" .. S("You want:") .. "]"..
+		"list["..list_name..";owner_wants;4,0.5;3,2;]"..
+		"label[4,2.5;" .. S("In exchange, you give:") .. "]"..
+		"list["..list_name..";owner_gives;4,3;3,2;]"..
 		"label[0,5;" .. S("Owner, Use (E)+Place (right mouse button) for customer interface") .. "]"..
 		"list[current_player;main;0,5.5;8,4;]"
 		return formspec
@@ -102,7 +100,7 @@ minetest.register_node("currency:shop", {
 		local owner = placer:get_player_name()
 		local meta = minetest.get_meta(pos)
 		meta:set_string("infotext", S("Exchange shop (owned by @1)", owner))
-		meta:set_string("owner",owner)
+		meta:set_string("owner", owner)
 		--[[meta:set_string("pl1","")
 		meta:set_string("pl2","")]]
 		local inv = meta:get_inventory()
@@ -166,7 +164,7 @@ minetest.register_on_player_receive_fields(function(sender, formname, fields)
 		local pos = default.shop.current_shop[name]
 		local meta = minetest.get_meta(pos)
 		if meta:get_string("owner") == name then
-			minetest.chat_send_player(name,S("This is your own shop, you can't exchange to yourself!"))
+			minetest.chat_send_player(name, S("This is your own shop, you can't exchange to yourself!"))
 		else
 			local minv = meta:get_inventory()
 			local pinv = sender:get_inventory()
@@ -203,12 +201,12 @@ minetest.register_on_player_receive_fields(function(sender, formname, fields)
 					minv:remove_item("stock",item)
 					pinv:add_item("customer_gets",item)
 				end
-				minetest.chat_send_player(name,S("Exchanged!"))
+				minetest.chat_send_player(name, S("Exchanged!"))
 			else
 				if owners_fault then
-					minetest.chat_send_player(name,S("Exchange can not be done, contact the shop owner."))
+					minetest.chat_send_player(name, S("Exchange can not be done, contact the shop owner."))
 				else
-					minetest.chat_send_player(name,S("Exchange can not be done, check if you put all items!"))
+					minetest.chat_send_player(name, S("Exchange can not be done, check if you put all items!"))
 				end
 			end
 		end

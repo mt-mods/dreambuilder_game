@@ -5,9 +5,7 @@ minetest.register_alias_force("cottages:straw_bale", "castle_farming:bound_straw
 minetest.register_alias_force("darkage:straw_bale",  "castle_farming:bound_straw")
 minetest.register_alias_force("castle:bound_straw",  "castle_farming:bound_straw")
 
--- internationalization boilerplate
-local MP = minetest.get_modpath(minetest.get_current_modname())
-local S, NS = dofile(MP.."/intllib.lua")
+local S = minetest.get_translator(minetest.get_current_modname())
 
 minetest.register_node("castle_farming:bound_straw", {
 	description = S("Bound Straw"),

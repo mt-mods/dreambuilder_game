@@ -13,6 +13,7 @@ local components = {
 	"detector",
 	"piston",
 	"timer",
+	"cardreader",
 }
 
 if minetest.get_modpath("mesecons_luacontroller") then table.insert(components,"ioexpander") end

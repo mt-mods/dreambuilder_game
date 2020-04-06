@@ -1,0 +1,16 @@
+# textdomain: crafting_bench
+
+
+### init.lua ###
+
+A workbench that does work for you. Set a crafting recipe and provide raw materials and items will magically craft themselves once every @1 seconds.=Un établi qui travaille pour vous. Définissez une recette de fabrication et fournissez les matériaux, et le résultat se fabriquera par magie toutes les @1 secondes.
+
+Craft Output=Produits finis
+Recipe to Use=Recette à utiliser
+Source Material=Matériaux à utiliser
+
+The inventory on the left is for raw materials, the inventory on the right holds finished products. The crafting grid in the center defines what recipe this workbench will make use of; place raw materials into it in the crafting pattern corresponding to what you want to build.=L’inventaire de gauche est pour les matériaux à utiliser, l’inventaire de droite contient les produits finis. La grille de fabrication au centre définit la recette que l’établi utilisera ; placez des matériaux dans la grille en suivant le pattern qui correspond à ce que vous voulez fabriquer.
+
+This workbench is compatible with hoppers. Hoppers will insert into the raw material inventory and remove items from the finished goods inventory.=Cet établi est compatible avec les entonnoirs. Les entonoirs peuvent insérer des matériaux à utiliser et retirer les produits finis depuis les bons inventaires.
+
+Workbench=Établi
