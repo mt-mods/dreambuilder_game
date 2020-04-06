@@ -1,2 +1,0 @@
-areas
-basic_materials
