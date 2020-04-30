@@ -1,11 +1,24 @@
 #!/bin/bash
 
-upstream_mods_path="/home/vanessa/Minetest-related/mods"
-modpack_path=$upstream_mods_path"/my_mods/dreambuilder_modpack"
-
 # This script manages all of the various individual changes
 # for dreambuilder, e.g. updating mods, copying file components,
 # making changes to the code, etc.
+
+local_copy=true
+upstream_mods_path="/home/vanessa/Minetest-related/mods"
+
+if [ ! -d "$upstream_mods_path" ] ; then
+	if [ ! -z $1 ] ; then
+		upstream_mods_path=$1
+		local_copy=false
+	else
+		echo "Script does not appear to be running on Vanessa's PC, so you must supply a mods path."
+		exit 1
+	fi
+fi
+
+modpack_path=$upstream_mods_path"/my_mods/dreambuilder_modpack"
+mp_upstream_path=$upstream_mods_path"/my_mods/dreambuilder_mp_upstream_files"
 
 rm -rf $modpack_path/*
 touch $modpack_path/modpack.txt
@@ -159,27 +172,18 @@ player_VanessaE.png
 player_Zeg9.png"
 
 while read -r FILE; do
-cp /home/vanessa/Minetest-related/player_skins/$FILE \
+cp $upstream_mods_path"/../player_skins/"$FILE \
     $modpack_path/player_textures/textures
 done <<< "$LIST"
 
-cp -a /home/vanessa/Minetest-related/mods/my_mods/dreambuilder_mp_upstream_files/readme.md $modpack_path
-
-cp /home/vanessa/Minetest-related/Scripts/customize-dreambuilder.sh $modpack_path"/dreambuilder_mp_extras/"
-cp /home/vanessa/Minetest-related/Scripts/update-dreambuilder-online-files.sh $modpack_path"/dreambuilder_mp_extras"
-
-echo "Copying Dreambuilder to mods directory..."
-
-rsync -a -v --delete $modpack_path /home/vanessa/.minetest/mods/
+cp -a $mp_upstream_path"/readme.md" $modpack_path
 
 echo -e "\nCustomization completed.  Here's what will be included in the modpack:\n"
 
 ls $modpack_path
 
-echo -e "\nUploading to the server..."
+if $local_copy ; then
+	echo -e "\nCopying Dreambuilder to mods directory...\n"
 
-rsync -L --delete --progress -a -v -z -e "ssh" \
---exclude=".git*" \
---chown=minetest:minetest \
-/home/vanessa/Minetest-related/mods/my_mods/dreambuilder_modpack \
-minetest@daconcepts.com:/home/minetest/mods/my_mods
+	rsync -a -v --delete $modpack_path /home/vanessa/.minetest/mods/
+fi

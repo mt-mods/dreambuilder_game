@@ -14,7 +14,7 @@ rsync -a --exclude=".git/" \
 		/home/vanessa/Minetest-related/mods/my_mods/dreambuilder_modpack \
 		/home/vanessa/.minetest/mods/
 
-echo -e "\nUpdate git repo..."
+echo -e "\nUpdate git repos..."
 echo -e "=================================================================\n"
 
 cd /home/vanessa/Minetest-related/mods/my_mods/dreambuilder_modpack
