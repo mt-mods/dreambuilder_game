@@ -79,6 +79,7 @@ deezls_mods/extra_stairsplus \
 blox \
 bobblocks \
 campfire \
+item_drop \
 notify_hud_provider"
 
 MODPACKS_LIST="$(ls -d worldedit/*/) \
