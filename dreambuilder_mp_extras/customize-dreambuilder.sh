@@ -4,13 +4,11 @@
 # for dreambuilder, e.g. updating mods, copying file components,
 # making changes to the code, etc.
 
-local_copy=true
 upstream_mods_path="/home/vanessa/Minetest-related/mods"
 
 if [ ! -d "$upstream_mods_path" ] ; then
 	if [ ! -z $1 ] ; then
 		upstream_mods_path=$1
-		local_copy=false
 	else
 		echo "Script does not appear to be running on Vanessa's PC, so you must supply a mods path."
 		exit 1
@@ -18,7 +16,6 @@ if [ ! -d "$upstream_mods_path" ] ; then
 fi
 
 modpack_path=$upstream_mods_path"/my_mods/dreambuilder_modpack"
-mp_upstream_path=$upstream_mods_path"/my_mods/dreambuilder_mp_upstream_files"
 
 rm -rf $modpack_path/*
 touch $modpack_path/modpack.txt
@@ -28,8 +25,7 @@ echo -e "\nBring all mods up-to-date from "$upstream_mods_path
 cd $upstream_mods_path
 
 # No trailing slashes on these items' paths!
-MODS_LIST="ShadowNinjas_mods/bedrock \
-my_mods/biome_lib \
+LINK_MODS_LIST="my_mods/biome_lib \
 my_mods/coloredwood \
 my_mods/currency \
 my_mods/gloopblocks \
@@ -43,13 +39,11 @@ my_mods/signs_lib \
 my_mods/basic_signs \
 my_mods/street_signs \
 my_mods/unifieddyes \
-my_mods/dreambuilder_mp_extras \
 my_mods/simple_streetlights \
 my_mods/basic_materials \
 my_mods/dreambuilder_hotbar \
 Calinous_mods/bedrock \
 Calinous_mods/maptools \
-Calinous_mods/moreblocks \
 Calinous_mods/moreores \
 Sokomines_mods/cottages \
 Sokomines_mods/locks \
@@ -70,9 +64,6 @@ cheapies_mods/arrowboards \
 cheapies_mods/digidisplay \
 Jeijas_mods/digilines \
 Jeijas_mods/jumping \
-CWzs_mods/player_textures \
-CWzs_mods/replacer \
-nekogloops_mods/glooptest \
 TenPlus1s_mods/farming \
 TenPlus1s_mods/bees \
 TenPlus1s_mods/bakedclay \
@@ -84,34 +75,49 @@ DonBatmans_mods/mymillwork \
 quartz \
 stained_glass \
 titanium \
-unifiedbricks \
 display_blocks \
 gardening \
 caverealms_lite \
 deezls_mods/extra_stairsplus \
 blox \
-bobblocks \
 campfire \
 item_drop \
 notify_hud_provider"
 
-MODPACKS_LIST="$(ls -d worldedit/*/) \
-$(ls -d my_mods/homedecor_modpack/*/) \
-$(ls -d RBAs_mods/technic/*/) \
+COPY_MODS_LIST="my_mods/dreambuilder_mp_extras \
+nekogloops_mods/glooptest \
+Calinous_mods/moreblocks \
+CWzs_mods/replacer \
+CWzs_mods/player_textures \
+bobblocks \
+unifiedbricks"
+
+LINK_MODPACKS_LIST="$(ls -d my_mods/homedecor_modpack/*/) \
 $(ls -d my_mods/plantlife_modpack/*/) \
 $(ls -d Zeg9s_mods/ufos/*/) \
 $(ls -d Jeijas_mods/mesecons/*/) \
-$(ls -d Philipbenrs_mods/castle-modpack/*/) \
 $(ls -d cheapies_mods/roads/*/) \
 $(ls -d cool_trees/*/)"
 
+COPY_MODPACKS_LIST="$(ls -d RBAs_mods/technic/*/) \
+$(ls -d Philipbenrs_mods/castle-modpack/*/) \
+$(ls -d worldedit/*/)"
 
-for i in $MODS_LIST; do
-	rsync -a $i $modpack_path --exclude .git*
+
+for i in $LINK_MODS_LIST; do
+	ln -s $upstream_mods_path"/"$i $modpack_path
 done
 
-for i in $(echo $MODPACKS_LIST |sed "s:/ : :g; s:/$::"); do
-	rsync -a $i $modpack_path --exclude .git*
+for i in $(echo $LINK_MODPACKS_LIST |sed "s:/ : :g; s:/$::"); do
+	ln -s $upstream_mods_path"/"$i $modpack_path
+done
+
+for i in $COPY_MODS_LIST; do
+	rsync -a $upstream_mods_path"/"$i $modpack_path --exclude .git*
+done
+
+for i in $(echo $COPY_MODPACKS_LIST |sed "s:/ : :g; s:/$::"); do
+	rsync -a $upstream_mods_path"/"$i $modpack_path --exclude .git*
 done
 
 # above, all the stuff of the form $(ls -d foo/*/) are modpacks
@@ -176,14 +182,8 @@ cp $upstream_mods_path"/../player_skins/"$FILE \
     $modpack_path/player_textures/textures
 done <<< "$LIST"
 
-cp -a $mp_upstream_path"/readme.md" $modpack_path
+ln -s $upstream_mods_path"/my_mods/dreambuilder_mp_extras/readme.md" $modpack_path
 
 echo -e "\nCustomization completed.  Here's what will be included in the modpack:\n"
 
 ls $modpack_path
-
-if $local_copy ; then
-	echo -e "\nCopying Dreambuilder to mods directory...\n"
-
-	rsync -a -v --delete $modpack_path /home/vanessa/.minetest/mods/
-fi

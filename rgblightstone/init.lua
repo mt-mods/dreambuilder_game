@@ -157,6 +157,10 @@ for i=0,14,1 do
 		paramtype2 = "color",
 		light_source = i,
 		drop = "rgblightstone:rgblightstone_0",
+		_digistuff_channelcopier_fieldname = "channel",
+		_digistuff_channelcopier_onset = function(pos)
+			minetest.get_meta(pos):set_string("infotext","")
+		end,
 		on_construct = function(pos)
 			local meta = minetest.get_meta(pos)
 			meta:set_string("formspec", "size[8,5;]field[1,1;6,2;channel;Channel;${channel}]field[1,2;2,2;addrx;X Address;${addrx}]field[5,2;2,2;addry;Y Address;${addry}]button_exit[2.25,3;3,1;submit;Save]button_exit[2.25,4;3,1;autofill;Auto-Fill From Node Above]label[3,2;Leave address blank\nfor individual mode]")
@@ -194,6 +198,10 @@ for i=0,14,1 do
 		description = i == 0 and "True-Color RGB Lightstone" or "True-Color RGB Lightstone (lit state - you hacker you!)",
 		light_source = i,
 		drop = "rgblightstone:rgblightstone_truecolor_0",
+		_digistuff_channelcopier_fieldname = "channel",
+		_digistuff_channelcopier_onset = function(pos)
+			minetest.get_meta(pos):set_string("infotext","")
+		end,
 		on_construct = function(pos)
 			local meta = minetest.get_meta(pos)
 			meta:set_string("formspec", "size[8,5;]field[1,1;6,2;channel;Channel;${channel}]field[1,2;2,2;addrx;X Address;${addrx}]field[5,2;2,2;addry;Y Address;${addry}]button_exit[2.25,3;3,1;submit;Save]button_exit[2.25,4;3,1;autofill;Auto-Fill From Node Above]label[3,2;Leave address blank\nfor individual mode]")

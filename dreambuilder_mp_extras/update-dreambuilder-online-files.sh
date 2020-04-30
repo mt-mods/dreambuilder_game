@@ -17,12 +17,19 @@ rsync -a --exclude=".git/" \
 echo -e "\nUpdate git repos..."
 echo -e "=================================================================\n"
 
-cd /home/vanessa/Minetest-related/mods/my_mods/dreambuilder_modpack
+rm -rf /run/shm/dreambuilder_modpack
+rsync -aL /home/vanessa/Minetest-related/mods/my_mods/dreambuilder_modpack /run/shm/
+
+cd /run/shm/dreambuilder_modpack
 git add .
 git commit -a
 git push
 git tag $timestamp
 git push --tags
+cd ~
+
+rsync -aL --delete /run/shm/dreambuilder_modpack/.git /home/vanessa/Minetest-related/mods/my_mods/dreambuilder_modpack
+rm -rf /run/shm/dreambuilder_modpack
 
 echo -e "\nRecreate secondary game archive ..."
 echo -e "=================================================================\n"
