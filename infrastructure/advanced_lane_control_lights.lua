@@ -25,6 +25,7 @@ for i = 1, 6 do
 			local meta = minetest.get_meta(pos)
 			meta:set_string("formspec", "field[channel;Channel;${channel}]")
 		end,
+		_digistuff_channelcopier_fieldname = "channel",
 		groups = {cracky = 3, not_in_creative_inventory = (i == 1 and 0 or 1)},
 		light_source = TRAFFIC_LIGHTS_LIGHT_RANGE,
 		drop = "infrastructure:lane_control_lights_1",

@@ -336,6 +336,7 @@ minetest.register_node("infrastructure:boom_barrier_bottom", {
 			{-1/8, -1/2, -1/8, 1/8, 0, 1/8}
 		}
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 
 	after_dig_node = function(pos)
 		pos.y = pos.y + 1

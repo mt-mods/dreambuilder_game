@@ -14,6 +14,7 @@ minetest.register_node("digistuff:piezo", {
 			digistuff.sounds_playing[pos_hash] = nil
 		end
 	end,
+	_digistuff_channelcopier_fieldname = "channel",
 	tiles = {
 		"digistuff_piezo_top.png",
 		"digistuff_piezo_sides.png",

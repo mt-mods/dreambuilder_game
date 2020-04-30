@@ -21,6 +21,7 @@ minetest.register_node("digistuff:nic", {
 		type = "fixed",
 		fixed = { -8/16, -8/16, -8/16, 8/16, -5/16, 8/16 },
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	node_box = {
 		--From Luacontroller
 		type = "fixed",

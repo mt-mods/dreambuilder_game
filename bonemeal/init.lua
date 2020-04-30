@@ -460,8 +460,8 @@ function bonemeal:on_use(pos, strength, node)
 	end
 
 	-- check for tree growth if pointing at sapling
---	if minetest.get_item_group(node.name, "sapling") > 0
-	if random(5 - strength) == 1 then
+	if minetest.get_item_group(node.name, "sapling") > 0
+	and random(5 - strength) == 1 then
 		check_sapling(pos, node.name)
 		return
 	end

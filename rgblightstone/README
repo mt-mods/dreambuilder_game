@@ -4,21 +4,17 @@ License:
 ---Code: WTFPL
 ---Textures: "white" image by VanessaE (WTFPL), "palette" image is from here: https://commons.wikimedia.org/wiki/File:256colour.png
 
-Depends: mesecons_lightstone, digilines
-(neither is in depends.txt since the order doesn't matter)
+Depends: digilines
+(should load without it but won't be real useful)
 
 Instructions:
-
-* Grab one from the creative inventory, or craft one:
-	nothing		green lightstone	nothing
-	red lightstone	luacontroller		blue lightstone
-	nothing		digiline		nothing
 
 * Place the thing
 * Right-click and set a channel
 * Send a digilines message to it on that channel with the color you want (choices listed below)
 
-Colors available: Any 6-digit hex color, such as "FF0000", "#c0ffee", "123456"... (will be set to the nearest color available)
+Colors available for 256-color version: Any 6-digit hex color, such as "FF0000", "#c0ffee", "123456"... (will be set to the nearest color available)
+Colors available for true-color version: Any 6-digit hex color, all values are supported
 
 Group addressing mode:
 
@@ -36,8 +32,8 @@ blue    yellow
 
 send this:
 
-{{"red","green"},
-{"blue","yellow"}}
+{{"FF0000","00FF00"},
+{"0000FF","FFFF00"}}
 
 Note that if you are using group addressing mode, if there is an already-configured RGB lightstone node directly above the one you are setting up,
 punching the one you are setting up (or right-clicking and selecting the Auto-Fill option) will attempt to auto-fill it (incrementing the Y address) from the one above.

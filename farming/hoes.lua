@@ -321,7 +321,7 @@ end
 
 -- hoe bomb item
 minetest.register_craftitem("farming:hoe_bomb", {
-	description = S("Hoe Bomb (use or throw on grassy areas to hoe land"),
+	description = S("Hoe Bomb (use or throw on grassy areas to hoe land)"),
 	inventory_image = "farming_hoe_bomb.png",
 	groups = {flammable = 2, not_in_creative_inventory = 1},
 	on_use = function(itemstack, user, pointed_thing)
@@ -350,7 +350,7 @@ farming.add_to_scythe_not_drops = function(item)
 end
 
 minetest.register_tool("farming:scythe_mithril", {
-	description = S("Mithril Scythe (Use to harvest and replant crops)"),
+	description = S("Mithril Scythe (Right-click to harvest and replant crops)"),
 	inventory_image = "farming_scythe_mithril.png",
 	sound = {breaks = "default_tool_breaks"},
 

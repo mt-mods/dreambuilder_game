@@ -123,6 +123,11 @@ minetest.register_node("digistuff:panel", {
 		"digistuff_panel_back.png",
 		"digistuff_panel_front.png"
 		},
+	_digistuff_channelcopier_fieldname = "channel",
+	_digistuff_channelcopier_onset = function(pos)
+		local helpmsg = "Channel has been set. Waiting for data..."
+		digistuff.update_panel_formspec(pos,helpmsg)
+	end,
 	paramtype = "light",
 	paramtype2 = "facedir",
 	node_box = {

@@ -29,6 +29,7 @@ minetest.register_node("digistuff:timer", {
 			{-3/16, -6/16, -3/16, 3/16, -5/16, 3/16}, -- IC
 		}
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	paramtype = "light",
 	sunlight_propagates = true,
 	on_receive_fields = function(pos, formname, fields, sender)

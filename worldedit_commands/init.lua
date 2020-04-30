@@ -216,7 +216,10 @@ worldedit.register_command("about", {
 	params = "",
 	description = "Get information about the WorldEdit mod",
 	func = function(name)
-		worldedit.player_notify(name, "WorldEdit " .. worldedit.version_string .. " is available on this server. Type //help to get a list of commands, or get more information at https://github.com/Uberi/Minetest-WorldEdit")
+		worldedit.player_notify(name, "WorldEdit " .. worldedit.version_string..
+			" is available on this server. Type //help to get a list of "..
+			"commands, or get more information at "..
+			"https://github.com/Uberi/Minetest-WorldEdit")
 	end,
 })
 
@@ -333,8 +336,7 @@ worldedit.register_command("reset", {
 	func = function(name)
 		worldedit.pos1[name] = nil
 		worldedit.pos2[name] = nil
-		worldedit.mark_pos1(name)
-		worldedit.mark_pos2(name)
+		worldedit.marker_update(name)
 		worldedit.set_pos[name] = nil
 		--make sure the user does not try to confirm an operation after resetting pos:
 		reset_pending(name)
@@ -347,8 +349,7 @@ worldedit.register_command("mark", {
 	description = "Show markers at the region positions",
 	privs = {worldedit=true},
 	func = function(name)
-		worldedit.mark_pos1(name)
-		worldedit.mark_pos2(name)
+		worldedit.marker_update(name)
 		worldedit.player_notify(name, "region marked")
 	end,
 })
@@ -361,8 +362,7 @@ worldedit.register_command("unmark", {
 		local pos1, pos2 = worldedit.pos1[name], worldedit.pos2[name]
 		worldedit.pos1[name] = nil
 		worldedit.pos2[name] = nil
-		worldedit.mark_pos1(name)
-		worldedit.mark_pos2(name)
+		worldedit.marker_update(name)
 		worldedit.pos1[name] = pos1
 		worldedit.pos2[name] = pos2
 		worldedit.player_notify(name, "region unmarked")
@@ -431,7 +431,7 @@ worldedit.register_command("p", {
 })
 
 worldedit.register_command("fixedpos", {
-	params = "set1/set2 x y z",
+	params = "set1/set2 <x> <y> <z>",
 	description = "Set a WorldEdit region position to the position at (<x>, <y>, <z>)",
 	privs = {worldedit=true},
 	parse = function(param)
@@ -540,7 +540,7 @@ worldedit.register_command("param2", {
 	parse = function(param)
 		local param2 = tonumber(param)
 		if not param2 then
-			return false, "Invalid or missing param2 argument"
+			return false
 		elseif param2 < 0 or param2 > 255 then
 			return false, "Param2 is out of range (must be between 0 and 255 inclusive!)"
 		end
@@ -554,7 +554,7 @@ worldedit.register_command("param2", {
 })
 
 worldedit.register_command("mix", {
-	params = "<node1> [<weighting1>] [<node2> [<weighting2>]] ...",
+	params = "<node1> [count1] <node2> [count2] ...",
 	description = "Fill the current WorldEdit region with a random mix of <node1>, ...",
 	privs = {worldedit=true},
 	require_pos = 2,
@@ -774,7 +774,7 @@ end
 
 worldedit.register_command("hollowcylinder", {
 	params = "x/y/z/? <length> <radius1> [radius2] <node>",
-	description = "Add hollow cylinder at WorldEdit position 1 along the x/y/z/? axis with length <length>, base radius <radius1> (and top radius [radius2]), composed of <node>",
+	description = "Add hollow cylinder at WorldEdit position 1 along the given axis with length <length>, base radius <radius1> (and top radius [radius2]), composed of <node>",
 	privs = {worldedit=true},
 	require_pos = 1,
 	parse = check_cylinder,
@@ -795,7 +795,7 @@ worldedit.register_command("hollowcylinder", {
 
 worldedit.register_command("cylinder", {
 	params = "x/y/z/? <length> <radius1> [radius2] <node>",
-	description = "Add cylinder at WorldEdit position 1 along the x/y/z/? axis with length <length>, base radius <radius1> (and top radius [radius2]), composed of <node>",
+	description = "Add cylinder at WorldEdit position 1 along the given axis with length <length>, base radius <radius1> (and top radius [radius2]), composed of <node>",
 	privs = {worldedit=true},
 	require_pos = 1,
 	parse = check_cylinder,
@@ -828,7 +828,7 @@ end
      
 worldedit.register_command("hollowpyramid", {
 	params = "x/y/z/? <height> <node>",
-	description = "Add hollow pyramid centered at WorldEdit position 1 along the x/y/z/? axis with height <height>, composed of <node>",
+	description = "Add hollow pyramid centered at WorldEdit position 1 along the given axis with height <height>, composed of <node>",
 	privs = {worldedit=true},
 	require_pos = 1,
 	parse = check_pyramid,
@@ -848,7 +848,7 @@ worldedit.register_command("hollowpyramid", {
 
 worldedit.register_command("pyramid", {
 	params = "x/y/z/? <height> <node>",
-	description = "Add pyramid centered at WorldEdit position 1 along the x/y/z/? axis with height <height>, composed of <node>",
+	description = "Add pyramid centered at WorldEdit position 1 along the given axis with height <height>, composed of <node>",
 	privs = {worldedit=true},
 	require_pos = 1,
 	parse = check_pyramid,
@@ -893,7 +893,7 @@ worldedit.register_command("spiral", {
 
 worldedit.register_command("copy", {
 	params = "x/y/z/? <amount>",
-	description = "Copy the current WorldEdit region along the x/y/z/? axis by <amount> nodes",
+	description = "Copy the current WorldEdit region along the given axis by <amount> nodes",
 	privs = {worldedit=true},
 	require_pos = 2,
 	parse = function(param)
@@ -920,7 +920,7 @@ worldedit.register_command("copy", {
 
 worldedit.register_command("move", {
 	params = "x/y/z/? <amount>",
-	description = "Move the current WorldEdit region along the x/y/z/? axis by <amount> nodes",
+	description = "Move the current WorldEdit region along the given axis by <amount> nodes",
 	privs = {worldedit=true},
 	require_pos = 2,
 	parse = function(param)
@@ -945,15 +945,14 @@ worldedit.register_command("move", {
 
 		pos1[axis] = pos1[axis] + amount
 		pos2[axis] = pos2[axis] + amount
-		worldedit.mark_pos1(name)
-		worldedit.mark_pos2(name)
+		worldedit.marker_update(name)
 		worldedit.player_notify(name, count .. " nodes moved")
 	end,
 })
 
 worldedit.register_command("stack", {
 	params = "x/y/z/? <count>",
-	description = "Stack the current WorldEdit region along the x/y/z/? axis <count> times",
+	description = "Stack the current WorldEdit region along the given axis <count> times",
 	privs = {worldedit=true},
 	require_pos = 2,
 	parse = function(param)
@@ -1037,8 +1036,7 @@ worldedit.register_command("stretch", {
 		--reset markers to scaled positions
 		worldedit.pos1[name] = pos1
 		worldedit.pos2[name] = pos2
-		worldedit.mark_pos1(name)
-		worldedit.mark_pos2(name)
+		worldedit.marker_update(name)
 
 		worldedit.player_notify(name, count .. " nodes stretched")
 	end,
@@ -1046,7 +1044,7 @@ worldedit.register_command("stretch", {
 
 worldedit.register_command("transpose", {
 	params = "x/y/z/? x/y/z/?",
-	description = "Transpose the current WorldEdit region along the x/y/z/? and x/y/z/? axes",
+	description = "Transpose the current WorldEdit region along the given axes",
 	privs = {worldedit=true},
 	require_pos = 2,
 	parse = function(param)
@@ -1068,8 +1066,7 @@ worldedit.register_command("transpose", {
 		--reset markers to transposed positions
 		worldedit.pos1[name] = pos1
 		worldedit.pos2[name] = pos2
-		worldedit.mark_pos1(name)
-		worldedit.mark_pos2(name)
+		worldedit.marker_update(name)
 
 		worldedit.player_notify(name, count .. " nodes transposed")
 	end,
@@ -1077,7 +1074,7 @@ worldedit.register_command("transpose", {
 
 worldedit.register_command("flip", {
 	params = "x/y/z/?",
-	description = "Flip the current WorldEdit region along the x/y/z/? axis",
+	description = "Flip the current WorldEdit region along the given axis",
 	privs = {worldedit=true},
 	require_pos = 2,
 	parse = function(param)
@@ -1095,8 +1092,8 @@ worldedit.register_command("flip", {
 })
 
 worldedit.register_command("rotate", {
-	params = "<axis> <angle>",
-	description = "Rotate the current WorldEdit region around the axis <axis> by angle <angle> (90 degree increment)",
+	params = "x/y/z/? <angle>",
+	description = "Rotate the current WorldEdit region around the given axis by angle <angle> (90 degree increment)",
 	privs = {worldedit=true},
 	require_pos = 2,
 	parse = function(param)
@@ -1119,8 +1116,7 @@ worldedit.register_command("rotate", {
 		--reset markers to rotated positions
 		worldedit.pos1[name] = pos1
 		worldedit.pos2[name] = pos2
-		worldedit.mark_pos1(name)
-		worldedit.mark_pos2(name)
+		worldedit.marker_update(name)
 
 		worldedit.player_notify(name, count .. " nodes rotated")
 	end,
@@ -1184,6 +1180,85 @@ worldedit.register_command("drain", {
 		end
 		end
 		worldedit.player_notify(name, count .. " nodes updated")
+	end,
+})
+
+local clearcut_cache
+
+local function clearcut(pos1, pos2)
+	-- decide which nodes we consider plants
+	if clearcut_cache == nil then
+		clearcut_cache = {}
+		for name, def in pairs(minetest.registered_nodes) do
+			local groups = def.groups or {}
+			if (
+				-- the groups say so
+				groups.flower or groups.grass or groups.flora or groups.plant or
+				groups.leaves or groups.tree or groups.leafdecay or groups.sapling or
+				-- drawtype heuristic
+				(def.is_ground_content and def.buildable_to and
+					(def.sunlight_propagates or not def.walkable)
+					and def.drawtype == "plantlike") or
+				-- if it's flammable, it probably needs to go too
+				(def.is_ground_content and not def.walkable and groups.flammable)
+			) then
+				clearcut_cache[name] = true
+			end
+		end
+	end
+	local plants = clearcut_cache
+
+	local count = 0
+	local prev, any
+
+	for x = pos1.x, pos2.x do
+	for z = pos1.z, pos2.z do
+		prev = false
+		any = false
+		-- first pass: remove floating nodes that would be left over
+		for y = pos1.y, pos2.y do
+			local n = minetest.get_node({x=x, y=y, z=z}).name
+			if plants[n] then
+				prev = true
+				any = true
+			elseif prev then
+				local def = minetest.registered_nodes[n] or {}
+				local groups = def.groups or {}
+				if groups.attached_node or (def.buildable_to and groups.falling_node) then
+					minetest.remove_node({x=x, y=y, z=z})
+					count = count + 1
+				else
+					prev = false
+				end
+			end
+		end
+
+		-- second pass: remove plants, top-to-bottom to avoid item drops
+		if any then
+			for y = pos2.y, pos1.y, -1 do
+				local n = minetest.get_node({x=x, y=y, z=z}).name
+				if plants[n] then
+					minetest.remove_node({x=x, y=y, z=z})
+					count = count + 1
+				end
+			end
+		end
+	end
+	end
+
+	return count
+end
+
+worldedit.register_command("clearcut", {
+	params = "",
+	description = "Remove any plant, tree or foilage-like nodes in the selected region",
+	privs = {worldedit=true},
+	require_pos = 2,
+	nodes_needed = check_region,
+	func = function(name)
+		local pos1, pos2 = worldedit.sort_pos(worldedit.pos1[name], worldedit.pos2[name])
+		local count = clearcut(pos1, pos2)
+		worldedit.player_notify(name, count .. " nodes removed")
 	end,
 })
 
@@ -1346,9 +1421,8 @@ worldedit.register_command("allocate", {
 		end
 
 		worldedit.pos1[name] = nodepos1
-		worldedit.mark_pos1(name)
 		worldedit.pos2[name] = nodepos2
-		worldedit.mark_pos2(name)
+		worldedit.marker_update(name)
 
 		worldedit.player_notify(name, count .. " nodes allocated")
 	end,

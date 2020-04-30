@@ -71,7 +71,7 @@ local function updateDisplay(pos)
 	end
 	entity:set_properties({textures={etex}})
 	entity:set_yaw((fdir.x ~= 0) and math.pi/2 or 0)
-	entity:setpos(vector.add(pos,vector.multiply(fdir,0.39)))
+	entity:set_pos(vector.add(pos,vector.multiply(fdir,0.39)))
 end
 
 minetest.register_entity("digidisplay:text",{
@@ -97,6 +97,7 @@ for _,i in pairs({"tiny","small","medium","large","huge"}) do
 			type = "fixed",
 			fixed = {-0.5,-0.5,0.4,0.5,0.5,0.5},
 		},
+		_digistuff_channelcopier_fieldname = "channel",
 		on_construct = function(pos)
 			local meta = minetest.get_meta(pos)
 			meta:set_string("formspec","field[channel;Channel;${channel}]")

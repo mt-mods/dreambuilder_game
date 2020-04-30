@@ -1,5 +1,5 @@
 if not minetest.get_modpath("mesecons_noteblock") then
-	minetest.log("error","mesecons_noteblock is not installed - digilines noteblock will not be available!")
+	minetest.log("warning","mesecons_noteblock is not installed - digilines noteblock will not be available!")
 	return
 end
 
@@ -21,6 +21,7 @@ minetest.register_node("digistuff:noteblock", {
 	tiles = {
 		"mesecons_noteblock.png"
 		},
+	_digistuff_channelcopier_fieldname = "channel",
 	on_receive_fields = function(pos, formname, fields, sender)
 		local name = sender:get_player_name()
 		if minetest.is_protected(pos,name) and not minetest.check_player_privs(name,{protection_bypass=true}) then
@@ -51,12 +52,23 @@ minetest.register_node("digistuff:noteblock", {
 						if sound then minetest.sound_play(sound,{pos=pos}) end
 					elseif type(msg) == "table" then
 						if type(msg.sound) ~= "string" then return end
+						for _,i in ipairs({"pitch","speed","volume","gain",}) do
+							if type(msg[i]) == "string" then
+								msg[i] = tonumber(msg[i])
+							end
+						end
 						local sound = validnbsounds[msg.sound]
+						if not msg.volume then msg.volume = msg.gain end
 						local volume = 1
 						if type(msg.volume) == "number" then
 							volume = math.max(0,math.min(1,msg.volume))
 						end
-						if sound then minetest.sound_play({name=sound,gain=volume},{pos=pos}) end
+						if not msg.pitch then msg.pitch = msg.speed end
+						local pitch = 1
+						if type(msg.pitch) == "number" then
+							pitch = math.max(0.05,math.min(10,msg.pitch))
+						end
+						if sound then minetest.sound_play({name = sound,gain = volume,},{pos = pos,pitch = pitch,},true) end
 					end
 				end
 		},

@@ -13,6 +13,7 @@ for i=0,14,1 do
 					{-0.25,0.4,-0.25,0.25,0.5,0.25},
 				}
 		},
+		_digistuff_channelcopier_fieldname = "channel",
 		groups = i > 0 and {cracky = 1, not_in_creative_inventory = 1} or {cracky = 1},
 		is_ground_content = false,
 		light_source = i,

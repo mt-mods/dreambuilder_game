@@ -11,6 +11,7 @@ minetest.register_node("digistuff:camera", {
 	{
 		receptor = {}
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	groups = {cracky=2},
 	paramtype = "light",
 	paramtype2 = "facedir",

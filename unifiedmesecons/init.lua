@@ -277,35 +277,6 @@ minetest.override_item("mesecons_extrawires:crossover_on",{
 	},
 })
 
-minetest.register_lbm({
-	name = "unifiedmesecons:convert",
-	label = "Convert insulated mesecons to use param2 coloring",
-	nodenames = {
-		"mesecons_insulated:insulated_off",
-		"mesecons_insulated:insulated_on",
-		"mesecons_extrawires:corner_off",
-		"mesecons_extrawires:corner_on",
-		"mesecons_extrawires:tjunction_off",
-		"mesecons_extrawires:tjunction_on",
-	},
-	action = function(pos,node)
-		local name = node.name
-		if string.find(name,"insulated") then
-			name = "mesecons_insulated:insulated_blue_"
-		elseif string.find(name,"corner") then
-			name = "mesecons_extrawires:insulated_corner_blue_"
-		elseif string.find(name,"tjunction") then
-			name = "mesecons_extrawires:insulated_tjunction_blue_"
-		end
-		if string.sub(node.name,-3,-1) == "_on" then
-			node.name = name.."on"
-		else
-			node.name = name.."off"
-		end
-		node.param2 = (node.param2 % 32) + 128
-		minetest.swap_node(pos,node)
-	end,
-})
 
 minetest.register_craft({
 	output = "mesecons_extrawires:insulated_corner_white_off 3",

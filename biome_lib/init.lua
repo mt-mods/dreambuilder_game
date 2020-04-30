@@ -85,7 +85,7 @@ biome_lib.perlin_humidity = PerlinNoise(humidity_seeddiff, humidity_octaves, hum
 -- Local functions
 
 local function get_biome_data(pos, perlin_fertile)
-	local fertility = perlin_fertile:get2d({x=pos.x, y=pos.z})
+	local fertility = perlin_fertile:get_2d({x=pos.x, y=pos.z})
 
 	if type(minetest.get_biome_data) == "function" then
 		local data = minetest.get_biome_data(pos)

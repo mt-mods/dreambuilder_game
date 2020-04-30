@@ -29,9 +29,10 @@ local valid_sounds = {
 	crash = "mesecons_noteblock_crash",
 	litecrash = "mesecons_noteblock_litecrash",
 	fire = "fire_large",
-	explosion = "tnt_explode",
 	digistuff_piezo_short = "digistuff_piezo_short_single",
-	digistuff_piezo_long = "digistuff_piezo_long_single"
+	digistuff_piezo_long = "digistuff_piezo_long_single",
+	digistuff_piston_extend = "digistuff_piston_extend",
+	digistuff_piston_retract = "digistuff_piston_retract",
 }
 
 local mod_sounds = {
@@ -54,19 +55,28 @@ local mod_sounds = {
 	fake_fire = {
 		fake_fire_extinguish = "fire_extinguish"
 	},
-	homedecor = {
+	homedecor_doors_and_gates = {
 		homedecor_book_close = "homedecor_book_close",
-		homedecor_doorbell = "homedecor_doorbell",
 		homedecor_door_close = "homedecor_door_close",
 		homedecor_door_open = "homedecor_door_open",
-		homedecor_faucet = "homedecor_faucet",
-		homedecor_gate = "homedecor_gate_open_close",
+		homedecor_gate = "homedecor_gate_open_close",		
+	},
+	homedecor_bathroom = {
 		homedecor_shower = "homedecor_shower",
-		homedecor_telephone = "homedecor_telephone_ringing",
 		homedecor_toilet = "homedecor_toilet_flush",
-		homedecor_trash = "homedecor_trash_all",
+	},
+	homedecor_common = {
+		homedecor_faucet = "homedecor_faucet",
+	},
+	homedecor_electrical = {
+		homedecor_doorbell = "homedecor_doorbell",
+	},
+	homedecor_gastronomy = {
 		homedecor_insert_coin = "insert_coin",
-		homedecor_toaster = "toaster"
+		homedecor_toaster = "toaster",
+	},
+	homedecor_trash_cans = {
+		homedecor_trash = "homedecor_trash_all",
 	},
 	infrastructure = {
 		infrastructure_emergency_phone = "infrastructure_emergency_phone"

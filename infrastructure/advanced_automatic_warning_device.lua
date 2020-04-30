@@ -2,10 +2,38 @@
 
 infrastructure.sound_handles = {}
 
+local soundnames = {
+	"gstype2",
+	"safetrantype1",
+	"safetrantype3",
+	"wch",
+	"nl",
+	"uk",
+	"de",
+}
+
+local soundfriendlynames = {
+	["gstype2"] = "US - GS \"Type 2\"",
+	["safetrantype1"] = "US - Safetran \"Type 1\"",
+	["safetrantype3"] = "US - Safetran \"Type 3\"",
+	["wch"] = "US - WCH",
+	["nl"] = "Netherlands",
+	["uk"] = "UK",
+	["de"] = "Germany",
+}
+
 function infrastructure.play_bell(pos)
 	local pos_hash = minetest.hash_node_position(pos)
 	if not infrastructure.sound_handles[pos_hash] then
-		infrastructure.sound_handles[pos_hash] = minetest.sound_play("infrastructure_ebell",
+		local meta = minetest.get_meta(pos)
+		local soundname = "infrastructure_ebell_"
+		local selectedsound = meta:get_string("selectedsound")
+		if selectedsound and string.len(selectedsound) > 0 then
+			soundname = soundname..selectedsound
+		else
+			soundname = soundname.."gstype2"
+		end
+		infrastructure.sound_handles[pos_hash] = minetest.sound_play(soundname,
 				{pos = pos, gain = AUTOMATIC_WARNING_DEVICE_VOLUME, loop = true, max_hear_distance = 30,})
 	end
 end
@@ -73,6 +101,96 @@ function infrastructure.activate_lights(pos)
 		infrastructure.lights_disabled(pos, node)
 	end
 end
+
+local function ebell_updateformspec(pos)
+	local meta = minetest.get_meta(pos)
+	local fs = "size[5,3]"
+	fs = fs.."field[0.3,0.3;5,1;channel;Channel;${channel}]"
+	fs = fs.."label[0,0.7;Model (changes will be applied on next start)]"
+	fs = fs.."dropdown[0,1.1;5;sound;"
+	for _,model in ipairs(soundnames) do
+		fs = fs..minetest.formspec_escape(soundfriendlynames[model])..","
+	end
+	fs = string.sub(fs,1,-2)
+	local idx = 1
+	local selected = meta:get_string("selectedsound")
+	for k,v in ipairs(soundnames) do
+		if selected == v then idx = k end
+	end
+	fs = fs..";"..idx.."]"
+	fs = fs.."button_exit[1,2.1;2,1;save;OK]"
+	meta:set_string("formspec",fs)
+end
+
+minetest.register_node("infrastructure:ebell",{
+	description = "Railroad Crossing Electronic Bell",
+	tiles = {
+		"streets_pole.png",
+		"streets_pole.png",
+		"infrastructure_ebell_sides.png",
+		"infrastructure_ebell_sides.png",
+		"infrastructure_ebell_sides.png",
+		"infrastructure_ebell_sides.png",
+		},
+	paramtype = "light",
+	drawtype = "nodebox",
+	node_box = {
+		type = "fixed",
+		fixed = {
+			{-0.2,-0.5,-0.2,0.2,-0.35,0.2,},
+			{-0.12,-0.35,-0.12,0.12,0.2,0.12,},
+		},
+	},
+	_digistuff_channelcopier_fieldname = "channel",
+	groups = {cracky = 3,},
+	on_destruct = infrastructure.stop_bell,
+	after_place_node = ebell_updateformspec,
+	on_receive_fields = function(pos,formname,fields,sender)
+		if not fields.save then return end
+		local name = sender:get_player_name()
+		if minetest.is_protected(pos,name) and not minetest.check_player_privs(name,{protection_bypass=true}) then
+			minetest.record_protection_violation(pos,name)
+			return
+		end
+		local meta = minetest.get_meta(pos)
+		if fields.channel then
+			meta:set_string("channel",fields.channel)
+		end
+		if fields.sound then
+			for _,sound in ipairs(soundnames) do
+				if fields.sound == soundfriendlynames[sound] then
+					meta:set_string("selectedsound",sound)
+					ebell_updateformspec(pos)
+				end
+			end
+		end
+	end,
+	digiline = {
+		wire = {
+			rules = {
+				{x =  1,y =  0,z =  0},
+				{x = -1,y =  0,z =  0},
+				{x =  0,y =  0,z =  1},
+				{x =  0,y =  0,z = -1},
+				{x =  0,y = -1,z =  0},
+			},
+		},
+		receptor = {},
+		effector = {
+			action = function(pos,node,channel,msg)
+				local setchan = minetest.get_meta(pos):get_string("channel")
+				if setchan ~= channel then
+					return
+				end
+				if msg == "bell_on" or msg == "on" then
+					infrastructure.play_bell(pos)
+				elseif msg == "bell_off" or msg == "off" then
+					infrastructure.stop_bell(pos)
+				end
+			end
+		}
+	}
+})
 
 minetest.register_node("infrastructure:automatic_warning_device_top", {
 	tiles = {
@@ -364,6 +482,7 @@ minetest.register_node("infrastructure:automatic_warning_device_bottom", {
 			{-1/16, 0, -1/16, 1/16, 3, 1/16}
 		}
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 
 	on_construct = function(pos)
 		local node = minetest.get_node(pos)

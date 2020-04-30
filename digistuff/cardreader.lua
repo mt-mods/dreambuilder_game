@@ -58,6 +58,7 @@ minetest.register_node("digistuff:card_reader",{
 		local meta = minetest.get_meta(pos)
 		if fields.channel then meta:set_string("channel",fields.channel) end
 	end,
+	_digistuff_channelcopier_fieldname = "channel",
 	paramtype = "light",
 	paramtype2 = "facedir",
 	tiles = {

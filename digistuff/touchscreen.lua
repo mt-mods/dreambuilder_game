@@ -2,6 +2,9 @@ digistuff.update_ts_formspec = function (pos)
 	local meta = minetest.get_meta(pos)
 	local fs = "size[10,8]"..
 		"background[0,0;0,0;digistuff_ts_bg.png;true]"
+	if meta:get_int("realcoordinates") > 0 then
+		fs = fs.."real_coordinates[true]"
+	end
 	if meta:get_int("init") == 0 then
 		fs = fs.."field[3.75,3;3,1;channel;Channel;]"..
 		"button_exit[4,3.75;2,1;save;Save]"
@@ -80,6 +83,8 @@ end
 digistuff.process_command = function (meta, data, msg)
 	if msg.command == "clear" then
 		data = {}
+	elseif msg.command == "realcoordinates" then
+		meta:set_int("realcoordinates",msg.enabled and 1 or 0)
 	elseif msg.command == "addimage" then
 		for _,i in pairs({"X","Y","W","H"}) do
 			if not msg[i] or type(msg[i]) ~= "number" then
@@ -285,6 +290,11 @@ minetest.register_node("digistuff:touchscreen", {
 			{ -0.5, -0.5, 0.4, 0.5, 0.5, 0.5 }
 		}
     	},
+    	_digistuff_channelcopier_fieldname = "channel",
+	_digistuff_channelcopier_onset = function(pos)
+		minetest.get_meta(pos):set_int("init",1)
+		digistuff.update_ts_formspec(pos)
+	end,
 	on_receive_fields = digistuff.ts_on_receive_fields,
 	digiline = 
 	{

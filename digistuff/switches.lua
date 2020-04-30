@@ -95,6 +95,7 @@ minetest.register_node("digistuff:button", {
 			rules = digistuff.button_get_rules,
 		},
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	groups = {dig_immediate = 2,digiline_receiver = 1,},
 	description = "Digilines Button",
 	on_construct = function(pos)
@@ -160,6 +161,7 @@ minetest.register_node("digistuff:button_off", {
 			action = digistuff.button_handle_digilines,
 		},
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	groups = {dig_immediate = 2,not_in_creative_inventory = 1,digiline_receiver = 1,},
 	drop = "digistuff:button",
 	after_destruct = digistuff.remove_receiver,
@@ -204,6 +206,7 @@ minetest.register_node("digistuff:button_off_pushed", {
 			action = digistuff.button_handle_digilines,
 		},
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	on_timer = digistuff.button_turnoff,
 	groups = {dig_immediate = 2,not_in_creative_inventory = 1,digiline_receiver = 1,},
 	drop = "digistuff:button",
@@ -240,6 +243,7 @@ minetest.register_node("digistuff:button_on", {
 		{ -4/16, -2/16, 4/16, 4/16, 2/16, 6/16 }	-- the button itself
 	}
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	digiline =
 	{
 		receptor = {},
@@ -279,6 +283,7 @@ minetest.register_node("digistuff:button_on_pushed", {
 		type = "fixed",
 		fixed = { -6/16, -6/16, 5/16, 6/16, 6/16, 8/16 }
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	node_box = {
 	type = "fixed",
 	fixed = {
@@ -338,6 +343,7 @@ minetest.register_node("digistuff:wall_knob", {
 			{-0.4,-0.4,0,0.4,0.4,0.5},
 		},
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	groups = {dig_immediate = 2,digiline_receiver = 1,},
 	description = "Digilines Wall Knob",
 	on_construct = function(pos)
@@ -397,6 +403,7 @@ minetest.register_node("digistuff:wall_knob_configured", {
 			{-0.4,-0.4,0,0.4,0.4,0.5},
 		},
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	groups = {dig_immediate = 2,digiline_receiver = 1,not_in_creative_inventory = 1,},
 	description = "Digilines Wall Knob (configured state - you hacker you!)",
 	drop = "digistuff:wall_knob",

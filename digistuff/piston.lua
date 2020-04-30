@@ -66,6 +66,7 @@ minetest.register_node("digistuff:piston", {
 		local meta = minetest.get_meta(pos)
 		if fields.channel then meta:set_string("channel",fields.channel) end
 	end,
+	_digistuff_channelcopier_fieldname = "channel",
 	digiline = {
 		wire = {
 			rules = {
@@ -124,6 +125,7 @@ minetest.register_node("digistuff:piston_ext", {
 				{-0.5,-0.5,-1.5,0.5,0.5,0.5},
 			}
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	on_rotate = function() return false end,
 	on_receive_fields = function(pos, formname, fields, sender)
 		local name = sender:get_player_name()

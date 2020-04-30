@@ -3,7 +3,7 @@ local maxslots = (string.sub(mtver.string, 1, 4) ~= "0.4.") and 32 or 23
 
 local function validate_size(s)
 	local size = s and tonumber(s) or 16
-	if (size == 8 or size == 16 or size == 23 or size == 24 or size == 32)
+	if (size == 8 or size == 10 or size == 16 or size == 23 or size == 24 or size == 32)
 	  and size <= maxslots then
 		return size
 	else
@@ -11,7 +11,7 @@ local function validate_size(s)
 	end
 end
 
-local hotbar_size_default = validate_size(minetest.setting_get("hotbar_size"))
+local hotbar_size_default = validate_size(minetest.settings:get("hotbar_size"))
 
 local player_hotbar_settings = {}
 

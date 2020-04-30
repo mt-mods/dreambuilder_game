@@ -391,6 +391,7 @@ minetest.register_node(":streets:beacon_hybrid_off",{
 		type = "fixed",
 		fixed = streets.hbBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_hb_off.png"},
 	digiline = {
 		receptor = {},
@@ -425,6 +426,7 @@ minetest.register_node(":streets:beacon_hybrid_yellow",{
 		type = "fixed",
 		fixed = streets.hbBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_hb_yellow.png"},
 	digiline = {
 		receptor = {},
@@ -459,6 +461,7 @@ minetest.register_node(":streets:beacon_hybrid_red",{
 		type = "fixed",
 		fixed = streets.hbBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_hb_red.png"},
 	digiline = {
 		receptor = {},
@@ -493,6 +496,7 @@ minetest.register_node(":streets:beacon_hybrid_flashyellow",{
 		type = "fixed",
 		fixed = streets.hbBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png",{
 		name="streets_hb_flashyellow.png",
 		animation={type="vertical_frames", aspect_w=64, aspect_h=64, length=1.2},
@@ -530,6 +534,7 @@ minetest.register_node(":streets:beacon_hybrid_flashred",{
 		type = "fixed",
 		fixed = streets.hbBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png",{
 		name="streets_hb_flashred.png",
 		animation={type="vertical_frames", aspect_w=64, aspect_h=64, length=1.2},
@@ -568,6 +573,7 @@ minetest.register_node(":streets:beacon_off",{
 		type = "fixed",
 		fixed = streets.bBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_off.png"},
 	digiline = {
 		receptor = {},
@@ -602,6 +608,7 @@ minetest.register_node(":streets:beacon_red",{
 		type = "fixed",
 		fixed = streets.bBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_b_red.png"},
 	digiline = {
 		receptor = {},
@@ -636,6 +643,7 @@ minetest.register_node(":streets:beacon_yellow",{
 		type = "fixed",
 		fixed = streets.bBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_yellow.png"},
 	digiline = {
 		receptor = {},
@@ -670,6 +678,7 @@ minetest.register_node(":streets:beacon_flashred",{
 		type = "fixed",
 		fixed = streets.bBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png",{
 		name="streets_b_flashred.png",
 		animation={type="vertical_frames", aspect_w=64, aspect_h=64, length=1.2},
@@ -707,6 +716,7 @@ minetest.register_node(":streets:beacon_flashyellow",{
 		type = "fixed",
 		fixed = streets.bBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png",{
 		name="streets_tl_warn.png",
 		animation={type="vertical_frames", aspect_w=64, aspect_h=64, length=1.2},
@@ -745,6 +755,7 @@ minetest.register_node(":streets:trafficlight_top_extender_left_off",{
 		type = "fixed",
 		fixed = streets.tleBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_left_off.png"},
 	digiline = {
 		receptor = {},
@@ -780,6 +791,7 @@ minetest.register_node(":streets:trafficlight_top_extender_left_yellow",{
 		type = "fixed",
 		fixed = streets.tleBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tle_left_yellow.png"},
 	digiline = {
 		receptor = {},
@@ -815,6 +827,7 @@ minetest.register_node(":streets:trafficlight_top_extender_left_flashyellow",{
 		type = "fixed",
 		fixed = streets.tleBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png",{
 		name="streets_tl_left_warn.png",
 		animation={type="vertical_frames", aspect_w=64, aspect_h=64, length=1.2},
@@ -853,6 +866,7 @@ minetest.register_node(":streets:trafficlight_top_extender_left_flashyellow_alt"
 		type = "fixed",
 		fixed = streets.tleBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png",{
 		name="streets_tl_left_warn_alt.png",
 		animation={type="vertical_frames", aspect_w=64, aspect_h=64, length=1.2},
@@ -891,6 +905,7 @@ minetest.register_node(":streets:trafficlight_top_extender_left_flashgreen",{
 		type = "fixed",
 		fixed = streets.tleBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png",{
 		name="streets_tle_left_flashgreen.png",
 		animation={type="vertical_frames", aspect_w=64, aspect_h=64, length=1.2},
@@ -929,6 +944,7 @@ minetest.register_node(":streets:trafficlight_top_extender_left_green",{
 		type = "fixed",
 		fixed = streets.tleBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tle_left_green.png"},
 	digiline = {
 		receptor = {},
@@ -964,6 +980,7 @@ minetest.register_node(":streets:trafficlight_top_extender_right_off",{
 		type = "fixed",
 		fixed = streets.tleBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_right_off.png"},
 	digiline = {
 		receptor = {},
@@ -999,6 +1016,7 @@ minetest.register_node(":streets:trafficlight_top_extender_right_yellow",{
 		type = "fixed",
 		fixed = streets.tleBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tle_right_yellow.png"},
 	digiline = {
 		receptor = {},
@@ -1034,6 +1052,7 @@ minetest.register_node(":streets:trafficlight_top_extender_right_flashyellow",{
 		type = "fixed",
 		fixed = streets.tleBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png",{
 		name="streets_tl_right_warn.png",
 		animation={type="vertical_frames", aspect_w=64, aspect_h=64, length=1.2},
@@ -1072,6 +1091,7 @@ minetest.register_node(":streets:trafficlight_top_extender_right_flashyellow_alt
 		type = "fixed",
 		fixed = streets.tleBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png",{
 		name="streets_tl_right_warn_alt.png",
 		animation={type="vertical_frames", aspect_w=64, aspect_h=64, length=1.2},
@@ -1110,6 +1130,7 @@ minetest.register_node(":streets:trafficlight_top_extender_right_flashgreen",{
 		type = "fixed",
 		fixed = streets.tleBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png",{
 		name="streets_tle_right_flashgreen.png",
 		animation={type="vertical_frames", aspect_w=64, aspect_h=64, length=1.2},
@@ -1148,6 +1169,7 @@ minetest.register_node(":streets:trafficlight_top_extender_right_green",{
 		type = "fixed",
 		fixed = streets.tleBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tle_right_green.png"},
 	digiline = {
 		receptor = {},
@@ -1185,6 +1207,7 @@ minetest.register_node(":streets:pedlight_top_off",{
 		type = "fixed",
 		fixed = streets.plBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_pl_off.png"},
 	digiline = {
 		receptor = {},
@@ -1219,6 +1242,7 @@ minetest.register_node(":streets:pedlight_top_dontwalk",{
 		type = "fixed",
 		fixed = streets.plBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	light_source = 6,
 	digiline = {
 		receptor = {},
@@ -1243,6 +1267,7 @@ minetest.register_node(":streets:pedlight_top_walk",{
 		type = "fixed",
 		fixed = streets.plBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	light_source = 6,
 	digiline = {
 		receptor = {},
@@ -1270,6 +1295,7 @@ minetest.register_node(":streets:pedlight_top_flashingdontwalk",{
 		type = "fixed",
 		fixed = streets.plBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	light_source = 6,
 	digiline = {
 		receptor = {},
@@ -1297,6 +1323,7 @@ minetest.register_node(":streets:pedlight_top_flashingwalk",{
 		type = "fixed",
 		fixed = streets.plBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	light_source = 6,
 	digiline = {
 		receptor = {},
@@ -1371,6 +1398,7 @@ for _,i in pairs({"","_left","_right"}) do
 			type = "fixed",
 			fixed = streets.tlBox
 		},
+		_digistuff_channelcopier_fieldname = "channel",
 		tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl"..i.."_off.png"},
 		digiline = {
 			receptor = {},
@@ -1405,6 +1433,7 @@ for _,i in pairs({"","_left","_right"}) do
 			type = "fixed",
 			fixed = streets.tlBox
 		},
+		_digistuff_channelcopier_fieldname = "channel",
 		light_source = 6,
 		digiline = {
 			receptor = {},
@@ -1429,6 +1458,7 @@ for _,i in pairs({"","_left","_right"}) do
 			type = "fixed",
 			fixed = streets.tlBox
 		},
+		_digistuff_channelcopier_fieldname = "channel",
 		light_source = 6,
 		digiline = {
 			receptor = {},
@@ -1453,6 +1483,7 @@ for _,i in pairs({"","_left","_right"}) do
 			type = "fixed",
 			fixed = streets.tlBox
 		},
+		_digistuff_channelcopier_fieldname = "channel",
 		light_source = 6,
 		digiline = {
 			receptor = {},
@@ -1477,6 +1508,7 @@ for _,i in pairs({"","_left","_right"}) do
 			type = "fixed",
 			fixed = streets.tlBox
 		},
+		_digistuff_channelcopier_fieldname = "channel",
 		light_source = 6,
 		digiline = {
 			receptor = {},
@@ -1504,6 +1536,7 @@ for _,i in pairs({"","_left","_right"}) do
 			type = "fixed",
 			fixed = streets.tlBox
 		},
+		_digistuff_channelcopier_fieldname = "channel",
 		light_source = 6,
 		digiline = {
 			receptor = {},
@@ -1531,6 +1564,7 @@ for _,i in pairs({"","_left","_right"}) do
 			type = "fixed",
 			fixed = streets.tlBox
 		},
+		_digistuff_channelcopier_fieldname = "channel",
 		light_source = 6,
 		digiline = {
 			receptor = {},
@@ -1558,6 +1592,7 @@ for _,i in pairs({"","_left","_right"}) do
 			type = "fixed",
 			fixed = streets.tlBox
 		},
+		_digistuff_channelcopier_fieldname = "channel",
 		light_source = 6,
 		digiline = {
 			receptor = {},
@@ -1585,6 +1620,7 @@ for _,i in pairs({"","_left","_right"}) do
 			type = "fixed",
 			fixed = streets.tlBox
 		},
+		_digistuff_channelcopier_fieldname = "channel",
 		light_source = 6,
 		digiline = {
 			receptor = {},
@@ -1612,6 +1648,7 @@ for _,i in pairs({"","_left","_right"}) do
 			type = "fixed",
 			fixed = streets.tlBox
 		},
+		_digistuff_channelcopier_fieldname = "channel",
 		light_source = 6,
 		digiline = {
 			receptor = {},
@@ -1638,6 +1675,7 @@ minetest.register_node(":streets:trafficlight_rrfb_off",{
 		type = "fixed",
 		fixed = streets.rrfbBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 	tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_rrfb_off.png"},
 	digiline = {
 		receptor = {},
@@ -1672,6 +1710,7 @@ minetest.register_node(":streets:trafficlight_rrfb_on",{
 		type = "fixed",
 		fixed = streets.rrfbBox
 	},
+	_digistuff_channelcopier_fieldname = "channel",
 		tiles = {"streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png","streets_tl_bg.png",{
 			name="streets_rrfb_on.png",
 			animation={type="vertical_frames", aspect_w=64, aspect_h=64, length=0.75},
