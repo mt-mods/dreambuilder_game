@@ -141,3 +141,20 @@ if minetest.get_modpath("caverealms") then
 		{"caverealms:mushroom_sapling", add_shroom, "soil"}
 	})
 end
+
+
+if minetest.get_modpath("dye") then
+
+	local bonemeal_dyes = {
+			bonemeal = "white", fertiliser = "green", mulch = "brown"}
+
+	for mat, dye in pairs(bonemeal_dyes) do
+
+		minetest.register_craft({
+			output = "dye:" .. dye .. " 4",
+			recipe = {
+				{"bonemeal:" .. mat}
+			},
+		})
+	end
+end

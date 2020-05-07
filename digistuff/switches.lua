@@ -105,7 +105,6 @@ minetest.register_node("digistuff:button", {
 	after_place_node = digistuff.place_receiver,
 	after_destruct = digistuff.remove_receiver,
 	on_receive_fields = function(pos, formname, fields, sender)
-		print(dump(fields))
 		local meta = minetest.get_meta(pos)
 		if fields.submit then
 			if fields.channel ~= "" then

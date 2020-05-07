@@ -45,14 +45,6 @@ tar -jcf /home/vanessa/Digital-Audio-Concepts-Website/vanessa/hobbies/minetest/D
 	dreambuilder_modpack
 rm	/home/vanessa/Minetest-related/mods/my_mods/dreambuilder_modpack/build-date.txt
 
-echo -e "\nSync the local mod cache to the web server ..."
-echo -e "================================================\n"
-
-rsync -L --exclude=\*.git \
-	--delete --progress -a -v -z -O --checksum -e "ssh" \
-	/home/vanessa/Minetest-related/mods/ \
-	minetest@daconcepts.com:/home/minetest/www/my-main-mod-archive
-
 /home/vanessa/Scripts/sync-website.sh
 
 echo -e "\nDone.  Build timestamp: $timestamp \n"

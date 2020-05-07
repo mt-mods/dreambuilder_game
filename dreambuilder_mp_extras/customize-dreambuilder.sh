@@ -81,8 +81,7 @@ caverealms_lite \
 deezls_mods/extra_stairsplus \
 blox \
 campfire \
-item_drop \
-notify_hud_provider"
+item_drop"
 
 COPY_MODS_LIST="my_mods/dreambuilder_mp_extras \
 nekogloops_mods/glooptest \

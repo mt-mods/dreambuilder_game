@@ -569,7 +569,8 @@ minetest.register_craftitem("bonemeal:fertiliser", {
 -- bone
 minetest.register_craftitem("bonemeal:bone", {
 	description = S("Bone"),
-	inventory_image = "bonemeal_bone.png"
+	inventory_image = "bonemeal_bone.png",
+	groups = {bone = 1}
 })
 
 -- gelatin powder
@@ -589,7 +590,7 @@ minetest.register_craftitem("bonemeal:gelatin_powder", {
 minetest.register_craft({
 	output = "bonemeal:gelatin_powder 4",
 	recipe = {
-		{"bonemeal:bone", "bonemeal:bone", "bonemeal:bone"},
+		{"group:bone", "group:bone", "group:bone"},
 		{"bucket:bucket_water", "bucket:bucket_water", "bucket:bucket_water"},
 		{"bucket:bucket_water", "default:torch", "bucket:bucket_water"},
 	},
@@ -602,7 +603,7 @@ minetest.register_craft({
 minetest.register_craft({
 	type = "shapeless",
 	output = "bonemeal:bonemeal 2",
-	recipe = {"bonemeal:bone"}
+	recipe = {"group:bone"}
 })
 
 -- bonemeal (from player bones)

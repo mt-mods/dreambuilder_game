@@ -96,8 +96,19 @@ function farming.hoe_on_use(itemstack, user, pointed_thing, uses)
 		return
 	end
 
+	-- check if (wet) soil defined
+	local ndef = minetest.registered_nodes[under.name]
+	if ndef.soil == nil or ndef.soil.wet == nil or ndef.soil.dry == nil then
+		return
+	end
+
+	if minetest.is_protected(pt.under, user:get_player_name()) then
+		minetest.record_protection_violation(pt.under, user:get_player_name())
+		return
+	end
+
 	-- turn the node into soil, wear out item and play sound
-	minetest.set_node(pt.under, {name = "farming:soil"})
+	minetest.set_node(pt.under, {name = ndef.soil.dry})
 
 	minetest.sound_play("default_dig_crumbly", {pos = pt.under, gain = 0.5})
 
