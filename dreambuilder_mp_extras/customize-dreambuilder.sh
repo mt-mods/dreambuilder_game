@@ -62,6 +62,7 @@ cheapies_mods/rgblightstone \
 cheapies_mods/solidcolor \
 cheapies_mods/arrowboards \
 cheapies_mods/digidisplay \
+cheapies_mods/display_blocks_redo \
 Jeijas_mods/digilines \
 Jeijas_mods/jumping \
 TenPlus1s_mods/farming \
@@ -75,7 +76,6 @@ DonBatmans_mods/mymillwork \
 quartz \
 stained_glass \
 titanium \
-display_blocks \
 gardening \
 caverealms_lite \
 deezls_mods/extra_stairsplus \

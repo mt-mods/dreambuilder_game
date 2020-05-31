@@ -1,23 +1,41 @@
 local players_income = {}
 
 local income_enabled = minetest.settings:get_bool("currency.income_enabled", true)
+local creative_income_enabled = minetest.settings:get_bool("currency.creative_income_enabled", true)
 local income_item = minetest.settings:get("currency.income_item") or "currency:minegeld_10"
 local income_count = tonumber(minetest.settings:get("currency.income_count")) or 1
 local income_period = tonumber(minetest.settings:get("currency.income_period")) or 720
 
 if income_enabled then
 	local timer = 0
-	minetest.register_globalstep(function(dtime)
-		timer = timer + dtime;
-		if timer >= income_period then
-			timer = 0
-			for _, player in ipairs(minetest.get_connected_players()) do
-				local name = player:get_player_name()
-				players_income[name] = income_count
-				minetest.log("info", "[Currency] basic income for "..name)
+	if creative_income_enabled then
+		minetest.register_globalstep(function(dtime)
+			timer = timer + dtime;
+			if timer >= income_period then
+				timer = 0
+				for _, player in ipairs(minetest.get_connected_players()) do
+					local name = player:get_player_name()
+					players_income[name] = income_count
+					minetest.log("info", "[Currency] basic income for "..name)
+				end
 			end
-		end
-	end)
+		end)
+	else
+		minetest.register_globalstep(function(dtime)
+			timer = timer + dtime;
+			if timer >= income_period then
+				timer = 0
+				for _, player in ipairs(minetest.get_connected_players()) do
+					local name = player:get_player_name()
+					local privs = minetest.get_player_privs(name)
+					if not (privs.creative or privs.give) then
+						players_income[name] = income_count
+						minetest.log("info", "[Currency] basic income for "..name)
+					end
+				end
+			end
+		end)
+	end
 
 	local function earn_income(player)
 		if not player or player.is_fake_player then return end

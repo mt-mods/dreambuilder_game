@@ -67,7 +67,11 @@ barter.chest.give_inventory = function(inv,list,playername)
 	player = minetest.get_player_by_name(playername)
 	if player then
 		for k,v in ipairs(inv:get_list(list)) do
-			player:get_inventory():add_item("main",v)
+			if player:get_inventory():room_for_item("main",v) then
+				player:get_inventory():add_item("main",v)
+			else
+				minetest.add_item(player:get_pos(),v)
+			end
 			inv:remove_item(list,v)
 		end
 	end

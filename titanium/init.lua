@@ -105,10 +105,10 @@ minetest.register_tool("titanium:sword", {
 		full_punch_interval = 1.0,
 		max_drop_level=1,
 		groupcaps={
-			fleshy={times={[1]=2.00, [2]=0.60, [3]=0.20}, uses=100, maxlevel=2},
-			snappy={times={[2]=0.60, [3]=0.20}, uses=100, maxlevel=1},
-			choppy={times={[3]=0.70}, uses=100, maxlevel=0}
-		}
+			snappy={times={[2]=0.60, [3]=0.20}, uses=1000, maxlevel=1},
+			choppy={times={[3]=0.70}, uses=1000, maxlevel=0}
+		},
+		damage_groups = {fleshy=6},
 	}
 })
 
