@@ -9,8 +9,7 @@ if minetest.get_modpath("hopper") and hopper ~= nil and hopper.add_container ~= 
 end
 
 
-local crafting_rate = minetest.settings:get("crafting_bench_crafting_rate")
-if crafting_rate == nil then crafting_rate = 5 end
+local crafting_rate = tonumber(minetest.settings:get("crafting_bench_crafting_rate")) or 5
 
 
 minetest.register_node("crafting_bench:workbench",{

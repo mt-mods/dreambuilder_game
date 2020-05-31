@@ -16,8 +16,10 @@ if [ ! -d "$upstream_mods_path" ] ; then
 fi
 
 modpack_path=$upstream_mods_path"/my_mods/dreambuilder_modpack"
+gitrefs_path=$upstream_mods_path"/my_mods/dreambuilder_git_refs"
 
-rm -rf $modpack_path/*
+rm -rf $modpack_path
+mkdir $modpack_path
 touch $modpack_path/modpack.txt
 
 echo -e "\nBring all mods up-to-date from "$upstream_mods_path
@@ -62,6 +64,7 @@ cheapies_mods/rgblightstone \
 cheapies_mods/solidcolor \
 cheapies_mods/arrowboards \
 cheapies_mods/digidisplay \
+cheapies_mods/display_blocks_redo \
 Jeijas_mods/digilines \
 Jeijas_mods/jumping \
 TenPlus1s_mods/farming \
@@ -75,7 +78,6 @@ DonBatmans_mods/mymillwork \
 quartz \
 stained_glass \
 titanium \
-display_blocks \
 gardening \
 caverealms_lite \
 deezls_mods/extra_stairsplus \
@@ -183,6 +185,8 @@ done <<< "$LIST"
 
 ln -s $upstream_mods_path"/my_mods/dreambuilder_mp_extras/readme.md" $modpack_path
 
+cp -a $gitrefs_path/.git* $modpack_path
+
 echo -e "\nCustomization completed.  Here's what will be included in the modpack:\n"
 
-ls $modpack_path
+ls -a $modpack_path

@@ -1,6 +1,9 @@
 # Is income enabled?
 currency.income_enabled (Is currency income enabled?) bool true
 
+# Is income enabled for creative players?
+currency.creative_income_enabled (Is income enabled for creative players?) bool true
+
 # Item that is given as income by the currency mod
 currency.income_item (Currency income item) string currency:minegeld_10
 

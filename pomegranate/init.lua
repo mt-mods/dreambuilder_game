@@ -162,7 +162,7 @@ minetest.register_node("pomegranate:leaves", {
 
 minetest.register_craftitem("pomegranate:section", {
 	description = S("Pomegranate Section"),
-	inventory_image = "pomegranate_section.png",	
+	inventory_image = "pomegranate_section.png",
 	on_use = minetest.item_eat(3),
 	groups = {flammable = 2, food = 2},
 })
@@ -221,7 +221,7 @@ if minetest.get_modpath("stairs") ~= nil then
 	)
 end
 
-if minetest.get_modpath("bonemeal") ~= nil then	
+if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
 		{"pomegranate:sapling", grow_new_pomegranate_tree, "soil"},
 	})
