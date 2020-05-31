@@ -10,7 +10,7 @@ timestamp=`date +%Y%m%d-%H%M`
 echo -e "\nCopy the Dreambuilder to /home/vanessa/.minetest/mods..."
 echo -e "=================================================================\n"
 
-rsync -a --exclude=".git/" \
+rsync -a --exclude=".git/*" \
 		/home/vanessa/Minetest-related/mods/my_mods/dreambuilder_modpack \
 		/home/vanessa/.minetest/mods/
 
