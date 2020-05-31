@@ -75,9 +75,9 @@ TenPlus1s_mods/bonemeal \
 tumeninodes-mods/facade \
 Zeg9s_mods/steel \
 DonBatmans_mods/mymillwork \
+HybridDogs_mods/titanium \
 quartz \
 stained_glass \
-titanium \
 gardening \
 caverealms_lite \
 deezls_mods/extra_stairsplus \
