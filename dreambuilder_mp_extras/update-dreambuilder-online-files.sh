@@ -39,6 +39,9 @@ git tag $timestamp
 git push --tags
 cd ~
 
+rsync /run/shm/dreambuilder_modpack/.git* \
+	/home/vanessa/Minetest-related/mods/my_mods/dreambuilder_git_refs
+
 echo -e "\nRecreate secondary game archive ..."
 echo -e "=================================================================\n"
 
