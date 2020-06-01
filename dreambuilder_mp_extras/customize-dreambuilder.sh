@@ -15,12 +15,12 @@ if [ ! -d "$upstream_mods_path" ] ; then
 	fi
 fi
 
+workdir="/run/shm/dreambuilder_modpack"
 modpack_path=$upstream_mods_path"/my_mods/dreambuilder_modpack"
-gitrefs_path=$upstream_mods_path"/my_mods/dreambuilder_git_refs"
 
-rm -rf $modpack_path
-mkdir $modpack_path
-touch $modpack_path/modpack.txt
+rm -rf $modpack_path/* $workdir*
+mkdir $workdir
+touch $workdir/modpack.txt
 
 echo -e "\nBring all mods up-to-date from "$upstream_mods_path
 
@@ -76,6 +76,7 @@ tumeninodes-mods/facade \
 Zeg9s_mods/steel \
 DonBatmans_mods/mymillwork \
 HybridDogs_mods/titanium \
+HybridDogs_mods/function_delayer \
 quartz \
 stained_glass \
 gardening \
@@ -106,19 +107,19 @@ $(ls -d worldedit/*/)"
 
 
 for i in $LINK_MODS_LIST; do
-	ln -s $upstream_mods_path"/"$i $modpack_path
+	ln -s $upstream_mods_path"/"$i $workdir
 done
 
 for i in $(echo $LINK_MODPACKS_LIST |sed "s:/ : :g; s:/$::"); do
-	ln -s $upstream_mods_path"/"$i $modpack_path
+	ln -s $upstream_mods_path"/"$i $workdir
 done
 
 for i in $COPY_MODS_LIST; do
-	rsync -a $upstream_mods_path"/"$i $modpack_path --exclude .git*
+	rsync -a $upstream_mods_path"/"$i $workdir --exclude .git*
 done
 
 for i in $(echo $COPY_MODPACKS_LIST |sed "s:/ : :g; s:/$::"); do
-	rsync -a $upstream_mods_path"/"$i $modpack_path --exclude .git*
+	rsync -a $upstream_mods_path"/"$i $workdir --exclude .git*
 done
 
 # above, all the stuff of the form $(ls -d foo/*/) are modpacks
@@ -128,38 +129,38 @@ echo -e "\nConfigure Dreambuilder and its mods..."
 
 # Disable some components
 
-rm -f  $modpack_path/dreambuilder_mp_extras/models/character.b3d
+rm -f  $workdir/dreambuilder_mp_extras/models/character.b3d
 
-rm -rf $modpack_path/orbs_of_time
+rm -rf $workdir/orbs_of_time
 
-rm -f  $modpack_path/bobblocks/trap.lua
-touch  $modpack_path/bobblocks/trap.lua
+rm -f  $workdir/bobblocks/trap.lua
+touch  $workdir/bobblocks/trap.lua
 
-rm -f  $modpack_path/replacer/inspect.lua
-touch  $modpack_path/replacer/inspect.lua
+rm -f  $workdir/replacer/inspect.lua
+touch  $workdir/replacer/inspect.lua
 
-rm -rf $modpack_path/wrench
+rm -rf $workdir/wrench
 
 sed -i "s/bucket//" \
-    $modpack_path/unifiedbricks/depends.txt
+    $workdir/unifiedbricks/depends.txt
 
 sed -i "s/mesecons =/foo =/" \
-    $modpack_path/bobblocks/blocks.lua
+    $workdir/bobblocks/blocks.lua
 
 sed -i "s/LOAD_OTHERGEN_MODULE = true/LOAD_OTHERGEN_MODULE = false/" \
-    $modpack_path/glooptest/module.cfg
+    $workdir/glooptest/module.cfg
 
 sed -i 's/"stairsplus_in_creative_inventory", true)/"stairsplus_in_creative_inventory", false)/' \
-    $modpack_path/moreblocks/config.lua
+    $workdir/moreblocks/config.lua
 
 echo "moreblocks.stairsplus_in_creative_inventory (Display Stairs+ nodes in creative inventory) bool false" \
-    > $modpack_path/moreblocks/settingtypes.txt
+    > $workdir/moreblocks/settingtypes.txt
 
-rm -rf $modpack_path/worldedit_brush
+rm -rf $workdir/worldedit_brush
 
 # Add in all of the regular player skins for the player_textures mod
 
-rm -f $modpack_path/player_textures/textures/*
+rm -f $workdir/player_textures/textures/*
 
 LIST="player_Calinou.png
 player_cheapie.png
@@ -180,12 +181,21 @@ player_Zeg9.png"
 
 while read -r FILE; do
 cp $upstream_mods_path"/../player_skins/"$FILE \
-    $modpack_path/player_textures/textures
+    $workdir/player_textures/textures
 done <<< "$LIST"
 
-ln -s $upstream_mods_path"/my_mods/dreambuilder_mp_extras/readme.md" $modpack_path
+ln -s $upstream_mods_path"/my_mods/dreambuilder_mp_extras/readme.md" $workdir
 
-cp -a $gitrefs_path/.git* $modpack_path
+rsync -aL \
+	--exclude=".git*" \
+	$workdir"/" \
+	$workdir"_no_git"
+
+rsync -aL \
+	$workdir"_no_git/" \
+	$modpack_path
+
+rm -rf $workdir*
 
 echo -e "\nCustomization completed.  Here's what will be included in the modpack:\n"
 
