@@ -83,7 +83,7 @@ gardening \
 caverealms_lite \
 deezls_mods/extra_stairsplus \
 blox \
-campfire \
+new_campfire \
 item_drop"
 
 COPY_MODS_LIST="my_mods/dreambuilder_mp_extras \
