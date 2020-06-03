@@ -96,7 +96,7 @@ local utf8_len_2=string.find("▒X", "X")-1
 
 local function indicator(maxVal, curVal)
 	local percent_val = math.floor(curVal / maxVal * 100)
-	local v = math.ceil(percent_val / 10)
+	local v = math.min(math.ceil(percent_val / 10), 10)
 
 	return "\n"
 	       ..string.sub("▓▓▓▓▓▓▓▓▓▓", 1, v*utf8_len_1)
@@ -181,6 +181,29 @@ local function cooking(pos, itemstack)
 				return itemstack
 			end
 		end
+	end
+end
+
+local function add_stick(pos, itemstack)
+	local meta = minetest.get_meta(pos)
+	local name = itemstack:get_name()
+	if itemstack:get_definition().groups.stick == 1 then
+		local it_val = meta:get_int("it_val") + (new_campfire_ttl);
+		meta:set_int('it_val', it_val);
+		effect(
+			pos,
+			"default_stick.png",
+			{x=0, y=-1, z=0},
+			{x=0, y=0, z=0},
+			1,
+			6
+		)
+		infotext_edit(meta)
+		if not minetest.setting_getbool("creative_mode") then
+			itemstack:take_item()
+			return itemstack
+		end
+		return true
 	end
 end
 
@@ -308,9 +331,12 @@ minetest.register_node('new_campfire:campfire_active', {
 	selection_box = sbox,
 	on_rightclick = function(pos, node, player, itemstack, pointed_thing)
 		local name = itemstack:get_name()
-		if name == "new_campfire:grille" then
-			itemstack:take_item()
-			minetest.swap_node(pos, {name = "new_campfire:campfire_active_with_grille"})
+		local a=add_stick(pos, itemstack)
+		if not a then
+			if name == "new_campfire:grille" then
+				itemstack:take_item()
+				minetest.swap_node(pos, {name = "new_campfire:campfire_active_with_grille"})
+			end
 		end
 	end,
 
@@ -416,26 +442,11 @@ minetest.register_node('new_campfire:campfire_active_with_grille', {
 	sounds = default.node_sound_stone_defaults(),
 	selection_box = grille_sbox,
 	node_box = grille_cbox,
-	on_rightclick = function(pos, node, player, itemstack, pointed_thing)
-		local meta = minetest.get_meta(pos)
 
-		if itemstack:get_definition().groups.stick == 1 then
-			local it_val = meta:get_int("it_val") + (new_campfire_ttl);
-			meta:set_int('it_val', it_val);
-			effect(
-				{x = pos.x, y = pos.y+0.4, z = pos.z},
-				"default_stick.png",
-				{x=0, y=-1, z=0},
-				{x=0, y=0, z=0},
-				1,
-				6
-			)
-			infotext_edit(meta)
-			if not minetest.setting_getbool("creative_mode") then
-				itemstack:take_item()
-				return itemstack
-			end
-		else
+	on_rightclick = function(pos, node, player, itemstack, pointed_thing)
+		local name = itemstack:get_name()
+		local a=add_stick(pos, itemstack)
+		if not a then
 			cooking(pos, itemstack)
 		end
 	end,
