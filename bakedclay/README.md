@@ -18,3 +18,6 @@ Changelog:
 - 0.1 - Initial Release
 
 Lucky Blocks: 9
+
+
+Note: Under settings you will find 'colored_clay_compatibility' switch that when enabled will register aliases for the older colored clay mod and it's stairplus stairs.

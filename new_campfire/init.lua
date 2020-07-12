@@ -1,3 +1,6 @@
+-- Translation support
+local S = minetest.get_translator("new_campfire")
+
 -- VARIABLES
 
 new_campfire = {}
@@ -8,10 +11,6 @@ new_campfire.flames_ttl = 30    -- Time in seconds until a fire burns down into 
 new_campfire.embers_ttl = 60    -- seconds until embers burn out completely leaving ash and an empty fireplace.
 new_campfire.flare_up = 2       -- seconds from adding a stick to embers before it flares into a fire again
 new_campfire.stick_time = new_campfire.flames_ttl/2;   -- How long does the stick increase. In sec.
-
--- Load support for intllib.
-	local MP = minetest.get_modpath(minetest.get_current_modname())
-	local S, NS = dofile(MP.."/intllib.lua")
 
 -- FUNCTIONS
 local function fire_particles_on(pos) -- 3 layers of fire

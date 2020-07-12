@@ -56,6 +56,3 @@ stairs:slab_cobble      default:stick     stairs:slab_cobble
 
 - Bitbucket:
 - <https://bitbucket.org/g00g01/new_campfire>
-
-- Intllib:
-- https://github.com/minetest-mods/intllib

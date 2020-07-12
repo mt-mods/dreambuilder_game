@@ -1,0 +1,16 @@
+# textdomain: new_campfire
+
+
+### init.lua ###
+
+Active campfire=
+Active campfire with grille=
+Ash=
+Campfire=
+Campfire with grille=
+Cooking=
+Fireplace=
+Fireplace with embers=
+Fireplace with embers and grille=
+Fireplace with grille=
+Metal Grille=

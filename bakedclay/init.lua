@@ -300,4 +300,43 @@ lucky_block:add_blocks({
 })
 end
 
+
+-- colored clay compatibility
+if minetest.settings:get_bool("colored_clay_compatibility") == true then
+
+local cc = {
+	{"black", "black"},
+	{"blue", "blue"},
+	{"bright", "natural"},
+	{"brown", "brown"},
+	{"cyan", "cyan"},
+	{"dark_green", "dark_green"},
+	{"dark_grey", "dark_grey"},
+	{"green", "green"},
+	{"grey", "grey"},
+	{"hardened", "natural"},
+	{"magenta", "magenta"},
+	{"orange", "orange"},
+	{"pink", "pink"},
+	{"red", "red"},
+	{"violet", "violet"},
+	{"white", "white"},
+	{"yellow", "yellow"}
+}
+
+for n = 1, #cc do
+
+	local nod1 = "colored_clay:" .. cc[n][1]
+	local nod2 = "bakedclay:" .. cc[n][2]
+
+	minetest.register_alias(nod1, nod2)
+
+	if stairsplus_mod then
+		stairsplus:register_alias_all("colored_clay", cc[n][1], "bakedclay", cc[n][2])
+	end
+end
+
+end
+
+
 print ("[MOD] Baked Clay loaded")

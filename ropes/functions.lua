@@ -51,7 +51,9 @@ ropes.destroy_rope = function(pos, nodes)
 	local finished = false
 	local ids_to_destroy = {}
 	for _, node in pairs(nodes) do
-		ids_to_destroy[minetest.get_content_id(node)] = true
+		if minetest.registered_nodes[node] then
+			ids_to_destroy[minetest.get_content_id(node)] = true
+		end
 	end
 	
 	while not finished do

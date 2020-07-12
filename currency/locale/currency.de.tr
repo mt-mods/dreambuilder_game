@@ -15,7 +15,7 @@ Exchange=Tausch
 ### craftitems.lua ###
 
 @1 Minegeld Note=@1 Minegeld Banknote
-@1 Minegeld cent coin=
+@1 Minegeld cent coin=@1 Cent MünzeM
 Bundle of random Minegeld notes=Bündel von verschiedenen Minegeld Banknoten
 
 ### safe.lua ###
