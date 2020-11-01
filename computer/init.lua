@@ -1,5 +1,4 @@
 computer = {}
-screwdriver = screwdriver or {}
 
 computer.register = function (name, def)
 	if (name:sub(1, 1) == ":") then name = name:sub(2) end

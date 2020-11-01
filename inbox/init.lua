@@ -1,8 +1,6 @@
-
-local S = homedecor.gettext
+local S = minetest.get_translator("inbox")
 
 local inbox = {}
-local screwdriver = rawget(_G, "screwdriver") or {}
 
 minetest.register_craft({
 	output ="inbox:empty",
@@ -34,7 +32,7 @@ minetest.register_node("inbox:empty", {
 	paramtype2 = "facedir",
 	groups = {choppy=2,oddly_breakable_by_hand=2},
 	sounds = default.node_sound_wood_defaults(),
-	on_rotate = screwdriver.rotate_simple,
+	on_rotate = minetest.get_modpath("screwdriver") and screwdriver.rotate_simple or nil,
 	after_place_node = function(pos, placer, itemstack)
 		local meta = minetest.get_meta(pos)
 		local owner = placer:get_player_name()
@@ -97,7 +95,7 @@ minetest.register_node("inbox:empty", {
 		local owner = meta:get_string("owner")
 		if player:get_player_name() == owner or
 				minetest.check_player_privs(player, "protection_bypass") and
-				clicker:get_player_control().aux1 then
+				player:get_player_control().aux1 then
 			return stack:get_count()
 		end
 		return 0

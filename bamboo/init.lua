@@ -5,8 +5,6 @@
 -- Thanks to VanessaE, Tenplus1, paramat and all others who
 -- contribute to this mod
 
-local modname = "bamboo"
-
 -- internationalization boilerplate
 local S = minetest.get_translator(minetest.get_current_modname())
 
@@ -177,7 +175,6 @@ minetest.register_node("bamboo:wood", {
 minetest.register_node("bamboo:leaves", {
 	description = S("Bamboo Leaves"),
 	drawtype = "allfaces_optional",
-	visual_scale = 1.2,
 	tiles = {"bamboo_leaves.png"},
 	inventory_image = "bamboo_leaves.png",
 	wield_image = "bamboo_leaves.png",
@@ -252,7 +249,7 @@ end
 
 --Stairs
 
-if minetest.get_modpath("stairs") ~= nil then	
+if minetest.get_modpath("stairs") ~= nil then
 	stairs.register_stair_and_slab(
 		"bamboo_trunk",
 		"bamboo:trunk",

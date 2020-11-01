@@ -34,7 +34,7 @@ if mg_name ~= "v6" and mg_name ~= "singlenode" then
 			offset = 0.005,
 			scale = 0.002,
 			spread = {x = 250, y = 250, z = 250},
-			seed = 2,
+			seed = 1007,
 			octaves = 3,
 			persist = 0.66
 		},
@@ -45,6 +45,7 @@ if mg_name ~= "v6" and mg_name ~= "singlenode" then
 		schematic = modpath.."/schematics/ebony.mts",
 		flags = "place_center_x, place_center_z, force_placement",
 		rotation = "random",
+		place_offset_y = -1,
 	})
 end
 
@@ -55,7 +56,6 @@ end
 minetest.register_node("ebony:sapling", {
 	description = S("Ebony Tree Sapling"),
 	drawtype = "plantlike",
-	visual_scale = 1.0,
 	tiles = {"ebony_sapling.png"},
 	inventory_image = "ebony_sapling.png",
 	wield_image = "ebony_sapling.png",
@@ -118,7 +118,6 @@ minetest.register_node("ebony:wood", {
 minetest.register_node("ebony:leaves", {
 	description = S("Ebony Leaves"),
 	drawtype = "allfaces_optional",
-	visual_scale = 1.2,
 	tiles = {"ebony_leaves.png"},
 	inventory_image = "ebony_leaves.png",
 	wield_image = "ebony_leaves.png",

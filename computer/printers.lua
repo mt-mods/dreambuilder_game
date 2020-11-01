@@ -1,6 +1,6 @@
 -- Printers of some kind or another
 
-local S = homedecor.gettext
+local S = minetest.get_translator("computer")
 
 minetest.register_node("computer:printer", {
 	description = S("Printer-Scanner Combo"),

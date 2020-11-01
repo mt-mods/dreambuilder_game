@@ -1,5 +1,5 @@
 # textdomain: currency
-# Hamlet, 2020
+# Saturn, 2020-10-23
 
 
 ### barter.lua ###
@@ -15,9 +15,9 @@ Exchange=Scambia
 
 ### craftitems.lua ###
 
-@1 Minegeld Note=@ biglietto Minegeld
-@1 Minegeld cent coin=@ moneta di centesimo Minegeld
-Bundle of random Minegeld notes=Pacchetto di biglietti Minegeld casuali
+@1 Minegeld Note=Banconota da @1 Minegeld
+@1 Minegeld cent coin=Moneta da @1 centesimo/i Minegeld
+Bundle of random Minegeld notes=Pacchetto di banconote Minegeld casuali
 
 ### safe.lua ###
 
@@ -37,7 +37,7 @@ In exchange, you give:=In cambio, tu dai:
 Owner gives:=Il proprietario dà:
 Owner wants:=Il proprietario vuole:
 
-Owner, Use (E)+Place (right mouse button) for customer interface=Proprietario, usa (E)+Posiziona (pulsante destro del mouse) per l'interfaccia cliente
+Owner, Use (E)+Place (right mouse button) for customer interface=Proprietario, usa (E)+Posiziona (click destro) per l'UI cliente
 
 Shop=Negozio
 This is your own shop, you can't exchange to yourself!=Questo è il tuo negozio, non puoi fare scambi con te stesso!

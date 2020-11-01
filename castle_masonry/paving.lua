@@ -37,13 +37,14 @@ minetest.register_craft({
 
 
 if minetest.get_modpath("moreblocks") then
-	stairsplus:register_all("castle", "pavement_brick", "castle_masonry:pavement_brick", {
+	stairsplus:register_all("castle_masonry", "pavement_brick", "castle_masonry:pavement_brick", {
 		description = S("Pavement Brick"),
 		tiles = {"castle_pavement_brick.png"},
 		groups = {cracky=2, not_in_creative_inventory=1},
 		sounds = default.node_sound_stone_defaults(),
 		sunlight_propagates = true,
 	})
+	stairsplus:register_alias_all("castle", "pavement_brick", "castle_masonry", "pavement_brick")
 elseif minetest.get_modpath("stairs") then
 	stairs.register_stair_and_slab("pavement_brick", "castle_masonry:pavement_brick",
 		{cracky=2},

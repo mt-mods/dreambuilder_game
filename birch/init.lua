@@ -1,4 +1,3 @@
-
 --
 -- Birch Tree
 --
@@ -90,21 +89,22 @@ end
 
 minetest.register_decoration({
 	deco_type = "schematic",
-	place_on = {"default:dirt_with_grass"},
+	place_on = {"rainf:meadow"},
 	sidelen = 16,
 	noise_params = {
-		offset = 0.008,
+		offset = 0.01,
 		scale = 0.001,
 		spread = {x = 255, y = 255, z = 255},
-		seed = 2,
+		seed = 32,
 		octaves = 3,
 		persist = 0.67
 	},
-	biomes = {"grassland"},
-	y_min = 10,
+	biomes = {"rainf"},
+	y_min = 1,
 	y_max = 80,
 	schematic = birch.birchtree,
 	flags = "place_center_x, place_center_z",
+	place_offset_y = 1,
 })
 
 --
@@ -114,7 +114,6 @@ minetest.register_decoration({
 minetest.register_node("birch:sapling", {
 	description = S("Birch Sapling"),
 	drawtype = "plantlike",
-	visual_scale = 1.0,
 	tiles = {"birch_sapling.png"},
 	inventory_image = "birch_sapling.png",
 	wield_image = "birch_sapling.png",
@@ -176,7 +175,6 @@ minetest.register_node("birch:wood", {
 minetest.register_node("birch:leaves", {
 	description = S("Birch Leaves"),
 	drawtype = "allfaces_optional",
-	visual_scale = 1.2,
 	tiles = {"birch_leaves.png"},
 	inventory_image = "birch_leaves.png",
 	wield_image = "birch_leaves.png",
@@ -237,7 +235,7 @@ default.register_leafdecay({
 
 --Stairs
 
-if minetest.get_modpath("stairs") ~= nil then	
+if minetest.get_modpath("stairs") ~= nil then
 	stairs.register_stair_and_slab(
 		"birch_trunk",
 		"birch:trunk",
@@ -249,7 +247,7 @@ if minetest.get_modpath("stairs") ~= nil then
 	)
 end
 
-if minetest.get_modpath("bonemeal") ~= nil then	
+if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
 		{"birch:sapling", grow_new_birch_tree, "soil"},
 	})

@@ -1,4 +1,5 @@
-barter = {}
+currency.barter = {}
+barter = currency.barter -- Kept as a global variable for compatibility
 
 local S = minetest.get_translator("currency")
 
@@ -120,14 +121,14 @@ minetest.register_node("currency:barter", {
 		type = "fixed",
 		fixed = {
 			{-0.500000,0.312500,-0.500000,0.500000,0.500000,0.500000},
-			{-0.437500,-0.500000,-0.437500,-0.250000,0.500000,-0.250000}, 
+			{-0.437500,-0.500000,-0.437500,-0.250000,0.500000,-0.250000},
 			{-0.437500,-0.500000,0.250000,-0.250000,0.500000,0.437500},
 			{0.250000,-0.500000,-0.437500,0.437500,0.500000,-0.250000},
-			{0.250000,-0.500000,0.250000,0.437500,0.500000,0.447500}, 
+			{0.250000,-0.500000,0.250000,0.437500,0.500000,0.447500},
 		},
 	},
 	groups = {choppy=2,oddly_breakable_by_hand=2},
-	sounds = default.node_sound_wood_defaults(),
+	sounds = currency.node_sound_wood_defaults(),
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		meta:set_string("infotext", S("Barter Table"))

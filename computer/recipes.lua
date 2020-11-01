@@ -134,8 +134,8 @@ minetest.register_craft({
 minetest.register_craft({
 	output = "computer:tetris_arcade",
 	recipe = {
-		{ "basic_materials:plastic_sheet", "basic_materials:energy_crystal", "basic_materials:plastic_sheet", },
+		{ "basic_materials:plastic_sheet", "basic_materials:energy_crystal_simple", "basic_materials:plastic_sheet", },
 		{ "dye:black", "default:glass", "dye:black" },
-		{ "basic_materials:plastic_sheet", "basic_materials:energy_crystal", "basic_materials:plastic_sheet" }
+		{ "basic_materials:plastic_sheet", "basic_materials:energy_crystal_simple", "basic_materials:plastic_sheet" }
 	}
 })

@@ -360,7 +360,7 @@ local on_digiline_receive_string = function(pos, node, channel, msg)
 				led_marquee.set_timer(pos, 0)
 				return
 			elseif string.sub(msg, 1, 12) == "scroll_speed" then
-				local timeout = tonumber(string.sub(msg, 13))
+				local timeout = tonumber(string.sub(msg, 13)) or 0
 				led_marquee.set_timer(pos, math.max(timeout, led_marquee.message_minimum_time))
 			elseif string.sub(msg, 1, 11) == "scroll_step" then
 				local skip = tonumber(string.sub(msg, 12))

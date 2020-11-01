@@ -34,7 +34,7 @@ if mg_name ~= "v6" and mg_name ~= "singlenode" then
 			offset = 0.0005,
 			scale = 0.00004,
 			spread = {x = 250, y = 250, z = 250},
-			seed = 2,
+			seed = 299,
 			octaves = 3,
 			persist = 0.66
 		},
@@ -56,7 +56,6 @@ end
 minetest.register_node("pineapple:pineapple", {
 	description = S("Pineapple"),
 	drawtype = "plantlike_rooted",
-	visual_scale = 1.0,
 	tiles = {"pineapple_pineapple.png"},
 	special_tiles = {
 	nil,
@@ -65,7 +64,7 @@ minetest.register_node("pineapple:pineapple", {
 	"pineapple_pineapple_leaves.png",
 	"pineapple_pineapple_leaves.png",
 	"pineapple_pineapple_leaves.png"
-	},	
+	},
 	inventory_image = "pineapple_pineapple_inv.png",
 	wield_image = "pineapple_pineapple_inv.png",
 	paramtype = "light",
@@ -81,7 +80,6 @@ minetest.register_node("pineapple:pineapple", {
 minetest.register_node("pineapple:sapling", {
 	description = S("Pineapple Sapling"),
 	drawtype = "plantlike",
-	visual_scale = 1.0,
 	tiles = {"pineapple_pineapple_leaves.png"},
 	inventory_image = "pineapple_pineapple_leaves.png",
 	wield_image = "pineapple_pineapple_leaves.png",
@@ -127,7 +125,7 @@ minetest.register_lbm({
 	end
 })
 
-if minetest.get_modpath("bonemeal") ~= nil then	
+if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
 		{"pineapple:sapling", grow_new_pineapple_tree, "soil"},
 	})

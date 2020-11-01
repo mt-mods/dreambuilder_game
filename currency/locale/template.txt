@@ -33,6 +33,7 @@ Exchange can not be done, contact the shop owner.=
 Exchange shop (owned by @1)=
 Exchanged!=
 In exchange, you give:=
+out of stock=
 Owner gives:=
 Owner wants:=
 

@@ -2,6 +2,13 @@ local modpath = minetest.get_modpath("currency")
 
 minetest.log("info", "Currency mod loading...")
 
+currency = {}
+if minetest.global_exists("default") then
+	currency.node_sound_wood_defaults = default.node_sound_wood_defaults
+else
+	currency.node_sound_wood_defaults = function() end
+end
+
 dofile(modpath.."/craftitems.lua")
 minetest.log("info", "[Currency] Craft_items Loaded!")
 dofile(modpath.."/shop.lua")

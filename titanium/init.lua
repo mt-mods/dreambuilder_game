@@ -6,10 +6,8 @@
 ---blocks
 ---
 
-local enable_walking_light = minetest.setting_getbool("titanium_walking_light")
-if enable_walking_light ~= false then
-	enable_walking_light = true
-end
+local enable_walking_light = minetest.settings:get_bool(
+	"titanium_walking_light", true)
 
 minetest.register_node( "titanium:titanium_in_ground", {
 	description = "Titanium Ore",
@@ -278,7 +276,7 @@ if enable_walking_light then
 		local player_name = player:get_player_name()
 		players[#players+1] = player_name
 		last_wielded[player_name] = player:get_wielded_item():get_name()
-		local pos = vector.round(player:getpos())
+		local pos = vector.round(player:get_pos())
 		pos.y = pos.y+1
 		if not check_for_googles(player)
 		and minetest.get_node(pos).name == "titanium:light" then
@@ -294,7 +292,7 @@ if enable_walking_light then
 				table.remove(players, i)
 				last_wielded[player_name] = nil
 				player_positions[player_name] = nil
-				local pos = vector.round(player:getpos())
+				local pos = vector.round(player:get_pos())
 				pos.y = pos.y+1
 				if minetest.get_node(pos).name == "titanium:light" then
 					minetest.remove_node(pos)
@@ -305,10 +303,10 @@ if enable_walking_light then
 	end)
 
 	local function do_step()
-		for i,player_name in ipairs(players) do
+		for _,player_name in ipairs(players) do
 			local player = minetest.get_player_by_name(player_name)
 			if check_for_googles(player) then
-				local pos = vector.round(player:getpos())
+				local pos = vector.round(player:get_pos())
 				pos.y = pos.y+1
 				local new_pos = not vector.equals(pos, player_positions[player_name])
 				if last_wielded[player_name] ~= "titanium:sam_titanium"
@@ -328,7 +326,7 @@ if enable_walking_light then
 
 				last_wielded[player_name] = wielded_item;
 			elseif last_wielded[player_name] == "titanium:sam_titanium" then
-				local pos = vector.round(player:getpos())
+				local pos = vector.round(player:get_pos())
 				pos.y = pos.y+1
 				if minetest.get_node(pos).name == "titanium:light" then
 					minetest.remove_node(pos)

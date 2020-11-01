@@ -138,6 +138,20 @@ local function get_sign_dir(node, def)
 	return {}
 end
 
+--[[
+In the functions below:
+
+ pos: the (real) position of the placed sign
+ node: the sign node itself
+ def: its definition
+
+ ppos: the position of the pointed node (pipe/tube)
+ pnode: the node itself
+ pdef: its definition
+
+--]]
+
+
 -- pipes
 
 function pipeworks.check_for_vert_pipe(pos, node, def, ppos, pnode, pdef)

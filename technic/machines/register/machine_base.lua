@@ -38,7 +38,7 @@ function technic.register_base_machine(data)
 	local machine_desc = data.machine_desc
 	local tier = data.tier
 	local ltier = string.lower(tier)
-	
+
 	data.modname = data.modname or minetest.get_current_modname()
 
 	local groups = {cracky = 2, technic_machine = 1, ["technic_"..ltier] = 1}
@@ -209,9 +209,10 @@ function technic.register_base_machine(data)
 		after_place_node = data.tube and pipeworks.after_place,
 		after_dig_node = technic.machine_after_dig_node,
 		on_receive_fields = function(pos, formname, fields, sender)
-			local node = minetest.get_node(pos)
+			if fields.quit then return end
 			if not pipeworks.may_configure(pos, sender) then return end
 			fs_helpers.on_receive_fields(pos, fields)
+			local node = minetest.get_node(pos)
 			local meta = minetest.get_meta(pos)
 			local form_buttons = ""
 			if not string.find(node.name, ":lv_") then
@@ -253,9 +254,10 @@ function technic.register_base_machine(data)
 		technic_run = run,
 		technic_disabled_machine_name = data.modname..":"..ltier.."_"..machine_name,
 		on_receive_fields = function(pos, formname, fields, sender)
-			local node = minetest.get_node(pos)
+			if fields.quit then return end
 			if not pipeworks.may_configure(pos, sender) then return end
 			fs_helpers.on_receive_fields(pos, fields)
+			local node = minetest.get_node(pos)
 			local meta = minetest.get_meta(pos)
 			local form_buttons = ""
 			if not string.find(node.name, ":lv_") then

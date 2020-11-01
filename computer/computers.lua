@@ -1,9 +1,8 @@
-
-local S = homedecor.gettext
+local S = minetest.get_translator("computer")
 
 -- Amiga 500 lookalike
 computer.register("computer:shefriendSOO", {
-	description = "SheFriendSOO",
+	description = S("SheFriendSOO"),
 	tiles_off = { front=true },
 	node_box = computer.pixelnodebox(32, {
 		-- X   Y   Z   W   H   L
@@ -17,7 +16,7 @@ computer.register("computer:shefriendSOO", {
 minetest.register_node("computer:vanio", {
 	drawtype = "mesh",
 	mesh = "computer_laptop.obj",
-	description = "Pony Vanio",
+	description = S("Pony Vanio"),
 	inventory_image = "computer_laptop_inv.png",
 	tiles = {"computer_laptop.png"},
 	paramtype = "light",
@@ -58,7 +57,7 @@ minetest.register_node("computer:vanio_off", {
 
 -- Sony PlayStation lookalike
 computer.register("computer:slaystation", {
-	description = "Pony SlayStation",
+	description = S("Pony SlayStation"),
 	inventory_image = "computer_ps1_inv.png",
 	tiles_off = { top=true },
 	node_box = computer.pixelnodebox(32, {
@@ -75,7 +74,7 @@ computer.register("computer:slaystation", {
 
 -- Sony PlayStation 2 lookalike
 computer.register("computer:slaystation2", {
-	description = "Pony SlayStation 2",
+	description = S("Pony SlayStation 2"),
 	inventory_image = "computer_ps2_inv.png",
 	tiles_off = { front=true },
 	node_box = computer.pixelnodebox(32, {
@@ -93,7 +92,7 @@ computer.register("computer:slaystation2", {
 
 -- Sinclair ZX Spectrum lookalike
 computer.register("computer:specter", {
-	description = "SX Specter",
+	description = S("SX Specter"),
 	inventory_image = "computer_specter_inv.png",
 	tiles_off = { },
 	node_box = computer.pixelnodebox(32, {
@@ -105,7 +104,7 @@ computer.register("computer:specter", {
 
 -- Nintendo Wii lookalike
 computer.register("computer:wee", {
-	description = "Nientiendo Wee",
+	description = S("Nientiendo Wee"),
 	inventory_image = "computer_wii_inv.png",
 	tiles_off = { front=true },
 	node_box = computer.pixelnodebox(32, {
@@ -117,7 +116,7 @@ computer.register("computer:wee", {
 
 -- Apple iPad lookalike
 minetest.register_node("computer:piepad", {
-	description = "Snapple Piepad",
+	description = S("Snapple Piepad"),
 	drawtype = "signlike",
 	tiles = {"computer_piepad_inv.png"},
 	inventory_image = "computer_piepad_inv.png",
@@ -133,7 +132,7 @@ minetest.register_node("computer:piepad", {
 
 -- Commodore 64 lookalike
 computer.register("computer:admiral64", {
-	description = "Admiral64",
+	description = S("Admiral64"),
 	inventory_image = "computer_ad64_inv.png",
 	tiles_off = { },
 	node_box = computer.pixelnodebox(32, {
@@ -144,7 +143,7 @@ computer.register("computer:admiral64", {
 
 -- Commodore 128 lookalike
 computer.register("computer:admiral128", {
-	description = "Admiral128",
+	description = S("Admiral128"),
 	inventory_image = "computer_ad128_inv.png",
 	tiles_off = { },
 	node_box = computer.pixelnodebox(32, {
@@ -155,7 +154,7 @@ computer.register("computer:admiral128", {
 
 -- XBox lookalike
 computer.register("computer:hueg_box", {
-	description = "HUEG Box",
+	description = S("HUEG Box"),
 	tiles_off = { },
 	node_box = computer.pixelnodebox(16, {
 		-- X   Y   Z   W   H   L
@@ -217,8 +216,17 @@ minetest.register_alias("computer:monitor_desktop", "computer:monitor")
 minetest.register_node("computer:router", {
 	description = S("WIFI Router"),
 	inventory_image = "computer_router_inv.png",
-	tiles = {"computer_router_t.png","computer_router_bt.png","computer_router_l.png","computer_router_r.png","computer_router_b.png",
-			{name="computer_router_f_animated.png", animation={type="vertical_frames", aspect_w=32, aspect_h=32, length=1.0}},}, --"computer_router_f.png"},
+	tiles = {
+		"computer_router_t.png",
+		"computer_router_bt.png",
+		"computer_router_l.png",
+		"computer_router_r.png",
+		"computer_router_b.png",
+		{
+			name = "computer_router_f_animated.png",
+			animation = {type="vertical_frames", aspect_w=32, aspect_h=32, length=1.0}
+		},
+	}, --"computer_router_f.png"},
 	paramtype = "light",
 	paramtype2 = "facedir",
 	walkable = false,

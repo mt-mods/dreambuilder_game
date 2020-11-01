@@ -1,6 +1,6 @@
 local S = minetest.get_translator("currency")
 
-function default.get_safe_formspec(pos)
+function currency.get_safe_formspec(pos)
 	local spos = pos.x .. "," .. pos.y .. "," ..pos.z
 	local formspec =
 		"size[8,9]"..
@@ -9,6 +9,10 @@ function default.get_safe_formspec(pos)
 		"listring[nodemeta:".. spos .. ";main]"..
 		"listring[current_player;main]"
 	return formspec
+end
+
+if minetest.global_exists("default") then
+	default.get_safe_formspec = currency.get_safe_formspec
 end
 
 local function has_safe_privilege(meta, player)
@@ -100,7 +104,7 @@ minetest.register_node("currency:safe", {
 			minetest.show_formspec(
 				clicker:get_player_name(),
 				"currency:safe",
-				default.get_safe_formspec(pos)
+				currency.get_safe_formspec(pos)
 			)
 		end
 	end,

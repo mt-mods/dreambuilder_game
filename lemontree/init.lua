@@ -5,6 +5,7 @@
 local modname = "lemontree"
 local modpath = minetest.get_modpath(modname)
 local mg_name = minetest.get_mapgen_setting("mg_name")
+local fruit_grow_time = 1200
 
 -- internationalization boilerplate
 local S = minetest.get_translator(minetest.get_current_modname())
@@ -31,6 +32,22 @@ minetest.register_node("lemontree:lemon", {
 
 	after_place_node = function(pos, placer, itemstack)
 		minetest.set_node(pos, {name = "lemontree:lemon", param2 = 1})
+	end,
+
+	on_dig = function(pos, node, digger)
+		if digger:is_player() then
+			local inv = digger:get_inventory()
+			if inv:room_for_item("main", "lemontree:lemon") then
+				inv:add_item("main", "lemontree:lemon")
+			end
+		end
+		minetest.remove_node(pos)
+		pos.y = pos.y + 1
+		local node_above = minetest.get_node_or_nil(pos)
+		if node_above and node_above.param2 == 0 and node_above.name == "lemontree:leaves" then
+			local timer = minetest.get_node_timer(pos)
+			timer:start(fruit_grow_time)
+		end
 	end,
 })
 
@@ -59,7 +76,7 @@ if mg_name ~= "v6" and mg_name ~= "singlenode" then
 			offset = 0.0005,
 			scale = 0.00005,
 			spread = {x = 250, y = 250, z = 250},
-			seed = 2,
+			seed = 5690,
 			octaves = 3,
 			persist = 0.66
 		},
@@ -79,7 +96,6 @@ end
 minetest.register_node("lemontree:sapling", {
 	description = S("Lemon Tree Sapling"),
 	drawtype = "plantlike",
-	visual_scale = 1.0,
 	tiles = {"lemontree_sapling.png"},
 	inventory_image = "lemontree_sapling.png",
 	wield_image = "lemontree_sapling.png",
@@ -141,7 +157,6 @@ minetest.register_node("lemontree:wood", {
 minetest.register_node("lemontree:leaves", {
 	description = S("Lemon Tree Leaves"),
 	drawtype = "allfaces_optional",
-	visual_scale = 1.2,
 	tiles = {"lemontree_leaves.png"},
 	inventory_image = "lemontree_leaves.png",
 	wield_image = "lemontree_leaves.png",
@@ -158,6 +173,17 @@ minetest.register_node("lemontree:leaves", {
 	},
 	sounds = default.node_sound_leaves_defaults(),
 	after_place_node = default.after_place_leaves,
+
+	on_timer = function(pos)
+		pos.y = pos.y - 1
+		local node = minetest.get_node_or_nil(pos)
+		if node and node.name == "air" then
+			minetest.set_node(pos, {name = "lemontree:lemon"})
+			return false
+		else
+			return true
+		end
+    end
 })
 
 --
@@ -201,7 +227,7 @@ default.register_leafdecay({
 
 --Stairs
 
-if minetest.get_modpath("stairs") ~= nil then	
+if minetest.get_modpath("stairs") ~= nil then
 	stairs.register_stair_and_slab(
 		"lemontree_trunk",
 		"lemontree:trunk",
@@ -213,7 +239,7 @@ if minetest.get_modpath("stairs") ~= nil then
 	)
 end
 
-if minetest.get_modpath("bonemeal") ~= nil then	
+if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
 		{"lemontree:sapling", grow_new_lemontree_tree, "soil"},
 	})

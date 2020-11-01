@@ -46,8 +46,8 @@ local myglow = LIGHT_MAX-3
 
 minetest.register_node("stained_glass:stained_glass", {
 	description = "Stained Glass",
-	drawtype = "glasslike",
-	tiles = { "stained_glass.png" },
+	drawtype = "glasslike_framed_optional",
+	tiles = { "stained_glass.png", "stained_glass_detail.png" },
 	paramtype = "light",
 	paramtype2 = "color",
 	palette = "unifieddyes_palette_extended.png",
@@ -72,8 +72,8 @@ minetest.override_item("moreblocks:super_glow_glass", {
 
 minetest.register_node("stained_glass:stained_trap_glass", {
 	description = "Stained Trap-glass",
-	drawtype = "glasslike",
-	tiles = { "stained_glass.png" },
+	drawtype = "glasslike_framed_optional",
+	tiles = { "stained_glass.png", "stained_glass_detail.png" },
 	paramtype = "light",
 	paramtype2 = "color",
 	palette = "unifieddyes_palette_extended.png",

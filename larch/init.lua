@@ -33,7 +33,7 @@ if mg_name ~= "v6" and mg_name ~= "singlenode" then
 			offset = 0.0005,
 			scale = 0.0005,
 			spread = {x = 250, y = 250, z = 250},
-			seed = 2,
+			seed = 542,
 			octaves = 3,
 			persist = 0.66
 		},
@@ -54,7 +54,6 @@ end
 minetest.register_node("larch:sapling", {
 	description = S("Larch Tree Sapling"),
 	drawtype = "plantlike",
-	visual_scale = 1.0,
 	tiles = {"larch_sapling.png"},
 	inventory_image = "larch_sapling.png",
 	wield_image = "larch_sapling.png",
@@ -117,7 +116,6 @@ minetest.register_node("larch:wood", {
 minetest.register_node("larch:leaves", {
 	description = S("Larch Leaves"),
 	drawtype = "allfaces_optional",
-	visual_scale = 1.2,
 	tiles = {"larch_leaves.png"},
 	inventory_image = "larch_leaves.png",
 	wield_image = "larch_leaves.png",
@@ -199,7 +197,7 @@ default.register_leafdecay({
 
 --Stairs
 
-if minetest.get_modpath("stairs") ~= nil then	
+if minetest.get_modpath("stairs") ~= nil then
 	stairs.register_stair_and_slab(
 		"larch_trunk",
 		"larch:trunk",
@@ -211,7 +209,7 @@ if minetest.get_modpath("stairs") ~= nil then
 	)
 end
 
-if minetest.get_modpath("bonemeal") ~= nil then	
+if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
 		{"larch:sapling", grow_new_larch_tree, "soil"},
 	})

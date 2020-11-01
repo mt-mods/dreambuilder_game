@@ -34,7 +34,7 @@ if mg_name ~= "v6" and mg_name ~= "singlenode" then
 			offset = 0.0005,
 			scale = 0.0002,
 			spread = {x = 250, y = 250, z = 250},
-			seed = 2,
+			seed = 23,
 			octaves = 3,
 			persist = 0.66
 		},
@@ -55,7 +55,6 @@ end
 minetest.register_node("willow:sapling", {
 	description = S("Willow Tree Sapling"),
 	drawtype = "plantlike",
-	visual_scale = 1.0,
 	tiles = {"willow_sapling.png"},
 	inventory_image = "willow_sapling.png",
 	wield_image = "willow_sapling.png",
@@ -118,7 +117,6 @@ minetest.register_node("willow:wood", {
 minetest.register_node("willow:leaves", {
 	description = S("Willow Leaves"),
 	drawtype = "allfaces_optional",
-	visual_scale = 1.2,
 	tiles = {"willow_leaves.png"},
 	inventory_image = "willow_leaves.png",
 	wield_image = "willow_leaves.png",

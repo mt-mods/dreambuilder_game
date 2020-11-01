@@ -5,7 +5,9 @@
 
 -- Intllib support
 local S
-if minetest.global_exists("intllib") then
+if minetest.get_translator then
+	S = minetest.get_translator("bees")
+elseif minetest.global_exists("intllib") then
 	S = intllib.Getter()
 else
 	S = function(s) return s end

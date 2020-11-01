@@ -33,7 +33,7 @@ if mg_name ~= "v6" and mg_name ~= "singlenode" then
 			offset = 0.0005,
 			scale = 0.00005,
 			spread = {x = 250, y = 250, z = 250},
-			seed = 2,
+			seed = 663,
 			octaves = 3,
 			persist = 0.66
 		},
@@ -53,7 +53,6 @@ end
 minetest.register_node("jacaranda:sapling", {
 	description = S("Jacaranda Tree Sapling"),
 	drawtype = "plantlike",
-	visual_scale = 1.0,
 	tiles = {"jacaranda_sapling.png"},
 	inventory_image = "jacaranda_sapling.png",
 	wield_image = "jacaranda_sapling.png",
@@ -116,7 +115,6 @@ minetest.register_node("jacaranda:wood", {
 minetest.register_node("jacaranda:blossom_leaves", {
 	description = S("Jacaranda Blossom Leaves"),
 	drawtype = "allfaces_optional",
-	visual_scale = 1.2,
 	tiles = {"jacaranda_blossom_leaves.png"},
 	inventory_image = "jacaranda_blossom_leaves.png",
 	wield_image = "jacaranda_blossom_leaves.png",
@@ -178,7 +176,7 @@ default.register_leafdecay({
 
 --Stairs
 
-if minetest.get_modpath("stairs") ~= nil then	
+if minetest.get_modpath("stairs") ~= nil then
 	stairs.register_stair_and_slab(
 		"jacaranda_trunk",
 		"jacaranda:trunk",
@@ -190,7 +188,7 @@ if minetest.get_modpath("stairs") ~= nil then
 	)
 end
 
-if minetest.get_modpath("bonemeal") ~= nil then	
+if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
 		{"jacaranda:sapling", grow_new_jacaranda_tree, "soil"},
 	})

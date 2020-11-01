@@ -1,4 +1,4 @@
-local S = homedecor.gettext
+local S = minetest.get_translator("computer")
 
 local shapes = {
    {  { x = {0, 1, 0, 1}, y = {0, 0, 1, 1} } },
@@ -250,7 +250,7 @@ minetest.register_node("computer:tetris_arcade", {
 	paramtype = "light",
 	paramtype2 = "facedir",
 	groups = {snappy=3},
-	on_rotate = screwdriver.rotate_simple,
+	on_rotate = minetest.get_modpath("screwdriver") and screwdriver.rotate_simple or nil,
 	selection_box = {
 		type = "fixed",
 		fixed = {-0.5, -0.5, -0.5, 0.5, 1.5, 0.5}

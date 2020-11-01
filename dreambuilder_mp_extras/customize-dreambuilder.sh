@@ -72,6 +72,7 @@ TenPlus1s_mods/bees \
 TenPlus1s_mods/bakedclay \
 TenPlus1s_mods/cblocks \
 TenPlus1s_mods/bonemeal \
+TenPlus1s_mods/ambience \
 tumeninodes-mods/facade \
 Zeg9s_mods/steel \
 DonBatmans_mods/mymillwork \

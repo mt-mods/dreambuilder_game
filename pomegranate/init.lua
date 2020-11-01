@@ -57,7 +57,7 @@ if mg_name ~= "v6" and mg_name ~= "singlenode" then
 			offset = 0.0005,
 			scale = 0.00004,
 			spread = {x = 250, y = 250, z = 250},
-			seed = 2,
+			seed = 978,
 			octaves = 3,
 			persist = 0.66
 		},
@@ -77,7 +77,6 @@ end
 minetest.register_node("pomegranate:sapling", {
 	description = S("Pomegranate Tree Sapling"),
 	drawtype = "plantlike",
-	visual_scale = 1.0,
 	tiles = {"pomegranate_sapling.png"},
 	inventory_image = "pomegranate_sapling.png",
 	wield_image = "pomegranate_sapling.png",
@@ -137,7 +136,6 @@ minetest.register_node("pomegranate:wood", {
 minetest.register_node("pomegranate:leaves", {
 	description = S("Pomegranate Tree Leaves"),
 	drawtype = "allfaces_optional",
-	visual_scale = 1.2,
 	tiles = {"pomegranate_leaves.png"},
 	inventory_image = "pomegranate_leaves.png",
 	wield_image = "pomegranate_leaves.png",

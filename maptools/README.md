@@ -1,4 +1,4 @@
-# Map Tools
+# Map Tools [![](https://github.com/minetest-mods/maptools/workflows/build/badge.svg)](https://github.com/minetest-mods/maptools/actions)
 
 Map Tools for [Minetest](https://www.minetest.net/), a free and open source infinite
 world block sandbox game.
@@ -6,7 +6,7 @@ world block sandbox game.
 ## Resources
 
 - [Forum topic](https://forum.minetest.net/viewtopic.php?f=11&t=1882)
-- [List of nodes and items available](NODES_ITEMS.md)
+- [List of nodes and items available](docs/NODES_ITEMS.md)
 
 ## Installation
 
