@@ -86,26 +86,27 @@ end
 -- Decoration
 --
 
-
-minetest.register_decoration({
-	deco_type = "schematic",
-	place_on = {"rainf:meadow"},
-	sidelen = 16,
-	noise_params = {
-		offset = 0.01,
-		scale = 0.001,
-		spread = {x = 255, y = 255, z = 255},
-		seed = 32,
-		octaves = 3,
-		persist = 0.67
-	},
-	biomes = {"rainf"},
-	y_min = 1,
-	y_max = 80,
-	schematic = birch.birchtree,
-	flags = "place_center_x, place_center_z",
-	place_offset_y = 1,
-})
+if minetest.get_modpath("rainf") then
+	minetest.register_decoration({
+		deco_type = "schematic",
+		place_on = {"rainf:meadow"},
+		sidelen = 16,
+		noise_params = {
+			offset = 0.01,
+			scale = 0.001,
+			spread = {x = 255, y = 255, z = 255},
+			seed = 32,
+			octaves = 3,
+			persist = 0.67
+		},
+		biomes = {"rainf"},
+		y_min = 1,
+		y_max = 80,
+		schematic = birch.birchtree,
+		flags = "place_center_x, place_center_z",
+		place_offset_y = 1,
+	})
+end
 
 --
 -- Nodes
