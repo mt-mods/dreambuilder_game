@@ -50,20 +50,33 @@ end
 -- Decoration
 --
 
-if mg_name ~= "v6" and mg_name ~= "singlenode" and minetest.get_modpath("rainf") then
+if mg_name ~= "v6" and mg_name ~= "singlenode" then
+
+	if minetest.get_modpath("rainf") then
+		place_on = "rainf:meadow"
+		biomes = "rainf"
+		offset = 0.0008
+		scale = 0.00004
+	else
+		place_on = "default:dirt_with_grass"
+		biomes = "grassland"
+		offset = 0.0008
+		scale = 0.00004
+	end
+
 	minetest.register_decoration({
 		deco_type = "schematic",
-		place_on = {"rainf:meadow"},
+		place_on = {place_on},
 		sidelen = 16,
 		noise_params = {
-			offset = 0.0008,
-			scale = 0.00004,
+			offset = offset,
+			scale = scale,
 			spread = {x = 250, y = 250, z = 250},
 			seed = 6431,
 			octaves = 3,
 			persist = 0.66
 		},
-		biomes = {"rainf"},
+		biomes = {biomes},
 		y_min = 1,
 		y_max = 80,
 		schematic = modpath.."/schematics/oak.mts",
@@ -214,5 +227,19 @@ end
 if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
 		{"oak:sapling", grow_new_oak_tree, "soil"},
+	})
+end
+
+if minetest.get_modpath("doors") ~= nil then
+	doors.register("door_oak_wood", {
+			tiles = {{ name = "oak_door_wood.png", backface_culling = true }},
+			description = S("Oak Wood Door"),
+			inventory_image = "oak_item_wood.png",
+			groups = {node = 1, choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
+			recipe = {
+				{"oak:wood", "oak:wood"},
+				{"oak:wood", "oak:wood"},
+				{"oak:wood", "oak:wood"},
+			}
 	})
 end

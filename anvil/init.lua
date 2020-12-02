@@ -18,12 +18,39 @@ local hammer_repairable = minetest.settings:get_bool("anvil_hammer_is_repairable
 anvil.make_unrepairable = function(item_name)
 	local item_def = minetest.registered_items[item_name]
 	if item_def then
-		item_def.groups.not_repaired_by_anvil = 1
-		minetest.override_item(item_name, {groups = item_def.groups})
+		-- Drop table reference. Copy other values over.
+		local groups = { not_repaired_by_anvil = 1 }
+		for k, v in pairs(item_def.groups) do groups[k] = v end
+		minetest.override_item(item_name, {groups = groups})
 	end
 end
-anvil.make_unrepairable("technic:water_can")
-anvil.make_unrepairable("technic:lava_can")
+
+if minetest.get_modpath("technic") then
+	-- make rechargeable technic tools unrepairable
+	anvil.make_unrepairable("technic:water_can")
+	anvil.make_unrepairable("technic:lava_can")
+	anvil.make_unrepairable("technic:flashlight")
+	anvil.make_unrepairable("technic:battery")
+	anvil.make_unrepairable("technic:vacuum")
+	anvil.make_unrepairable("technic:prospector")
+	anvil.make_unrepairable("technic:sonic_screwdriver")
+	anvil.make_unrepairable("technic:chainsaw")
+	anvil.make_unrepairable("technic:laser_mk1")
+	anvil.make_unrepairable("technic:laser_mk2")
+	anvil.make_unrepairable("technic:laser_mk3")
+	anvil.make_unrepairable("technic:mining_drill")
+	anvil.make_unrepairable("technic:mining_drill_mk2")
+	anvil.make_unrepairable("technic:mining_drill_mk2_1")
+	anvil.make_unrepairable("technic:mining_drill_mk2_2")
+	anvil.make_unrepairable("technic:mining_drill_mk2_3")
+	anvil.make_unrepairable("technic:mining_drill_mk2_4")
+	anvil.make_unrepairable("technic:mining_drill_mk3")
+	anvil.make_unrepairable("technic:mining_drill_mk3_1")
+	anvil.make_unrepairable("technic:mining_drill_mk3_2")
+	anvil.make_unrepairable("technic:mining_drill_mk3_3")
+	anvil.make_unrepairable("technic:mining_drill_mk3_4")
+	anvil.make_unrepairable("technic:mining_drill_mk3_5")
+end
 
 local S = minetest.get_translator(minetest.get_current_modname())
 
@@ -280,10 +307,7 @@ minetest.register_node("anvil:anvil", {
 		local input = inv:get_stack('input',1)
 
 		-- only tools can be repaired
-		if( not( input )
-			or input:is_empty()
-			or input:get_name() == "technic:water_can"
-			or input:get_name() == "technic:lava_can" ) then
+		if not input or input:is_empty() then
 			return
 		end
 
@@ -317,7 +341,7 @@ minetest.register_node("anvil:anvil", {
 			})
 		end
 		minetest.after(2, function()
-		if( puncher ) then
+		if( puncher ) and ( hud2 ) and ( hud3 ) then
 			puncher:hud_remove(hud2)
 			puncher:hud_remove(hud3)
 			end

@@ -214,3 +214,20 @@ if minetest.get_modpath("bonemeal") ~= nil then
 		{"larch:sapling", grow_new_larch_tree, "soil"},
 	})
 end
+
+--Door
+
+if minetest.get_modpath("doors") ~= nil then
+	doors.register("door_larch_wood", {
+			tiles = {{ name = "larch_door_wood.png", backface_culling = true }},
+			description = S("Larch Wood Door"),
+			inventory_image = "larch_item_wood.png",
+			groups = {node = 1, choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
+			recipe = {
+				{"larch:wood", "larch:wood"},
+				{"larch:wood", "larch:wood"},
+				{"larch:wood", "larch:wood"},
+			}
+	})
+end
+

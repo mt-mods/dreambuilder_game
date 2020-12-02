@@ -25,7 +25,7 @@ end
 -- Decoration
 --
 
-if mg_name ~= "v6" and mg_name ~= "singlenode" and minetest.get_modpath("rainf") then
+if mg_name ~= "v6" and mg_name ~= "singlenode" then
 	minetest.register_decoration({
 		deco_type = "schematic",
 		place_on = {"default:dirt_with_rainforest_litter"},

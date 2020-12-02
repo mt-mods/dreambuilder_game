@@ -24,20 +24,38 @@ end
 -- Decoration
 --
 
-if mg_name ~= "v6" and mg_name ~= "singlenode" and minetest.get_modpath("rainf") then
+if mg_name ~= "v6" and mg_name ~= "singlenode" then
+
+	local place_on
+	local biomes
+	local offset
+	local scale
+
+	if minetest.get_modpath("rainf") then
+		place_on = "rainf:meadow"
+		biomes = "rainf"
+		offset = 0.0008
+		scale = 0.00005
+	else
+		place_on = "default:dirt_with_grass"
+		biomes = "grassland"
+		offset = 0.00008
+		scale = 0.00005
+	end
+
 	minetest.register_decoration({
 		deco_type = "schematic",
-		place_on = {"rainf:meadow"},
+		place_on = {place_on},
 		sidelen = 16,
 		noise_params = {
-			offset = 0.0008,
-			scale = 0.00005,
+			offset = offset,
+			scale = scale,
 			spread = {x = 250, y = 250, z = 250},
 			seed = 789,
 			octaves = 3,
 			persist = 0.66
 		},
-		biomes = {"rainf"},
+		biomes = {biomes},
 		y_min = 1,
 		y_max = 32,
 		schematic = modpath.."/schematics/hollytree.mts",
