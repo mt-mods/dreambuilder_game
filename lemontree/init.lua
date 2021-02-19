@@ -158,8 +158,6 @@ minetest.register_node("lemontree:leaves", {
 	description = S("Lemon Tree Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"lemontree_leaves.png"},
-	inventory_image = "lemontree_leaves.png",
-	wield_image = "lemontree_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,

@@ -42,7 +42,7 @@ minetest.register_globalstep(function(dtime)
 		return
 	end
 	tube_item_count = {}
-	for id, entity in pairs(luaentity.entities) do
+	for _, entity in pairs(luaentity.entities) do
 		if entity.name == "pipeworks:tubed_item" then
 			local h = minetest.hash_node_position(vector.round(entity._pos))
 			tube_item_count[h] = (tube_item_count[h] or 0) + 1
@@ -194,6 +194,7 @@ minetest.register_entity("pipeworks:tubed_item", {
 
 	from_data = function(self, itemstring)
 		local stack = ItemStack(itemstring)
+		--[[
 		local itemtable = stack:to_table()
 		local itemname = nil
 		if itemtable then
@@ -205,6 +206,7 @@ minetest.register_entity("pipeworks:tubed_item", {
 			item_texture = minetest.registered_items[itemname].inventory_image
 			item_type = minetest.registered_items[itemname].type
 		end
+		--]]
 		self.object:set_properties({
 			is_visible = true,
 			textures = {stack:get_name()}
@@ -391,7 +393,7 @@ if minetest.get_modpath("mesecons_mvps") then
 		for _, n in ipairs(moved_nodes) do
 			moved[minetest.hash_node_position(n.oldpos)] = vector.subtract(n.pos, n.oldpos)
 		end
-		for id, entity in pairs(luaentity.entities) do
+		for _, entity in pairs(luaentity.entities) do
 			if entity.name == "pipeworks:tubed_item" then
 				local pos = entity:get_pos()
 				local rpos = vector.round(pos)

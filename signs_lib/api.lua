@@ -2,6 +2,8 @@
 
 local S = signs_lib.gettext
 
+local function get_sign_formspec() end
+
 signs_lib.lbm_restore_nodes = {}
 signs_lib.old_fenceposts = {}
 signs_lib.old_fenceposts_replacement_signs = {}
@@ -153,6 +155,7 @@ signs_lib.flip_walldir = {
 
 -- Initialize character texture cache
 local ctexcache = {}
+local ctexcache_wide = {}
 
 -- entity handling
 
@@ -249,7 +252,10 @@ function signs_lib.set_obj_text(pos, text)
 	local text_ansi = Utf8ToAnsi(text)
 	local n = minetest.registered_nodes[minetest.get_node(pos).name]
 	signs_lib.delete_objects(pos)
-	signs_lib.spawn_entity(pos, signs_lib.make_sign_texture(split(text_ansi), pos) )
+	-- only create sign entity for actual text
+	if text_ansi and text_ansi ~= "" then
+		signs_lib.spawn_entity(pos, signs_lib.make_sign_texture(split(text_ansi), pos) )
+	end
 end
 
 -- rotation
@@ -328,8 +334,10 @@ end
 local TP = signs_lib.path .. "/textures"
 -- Font file formatter
 local CHAR_FILE = "%s_%02x.png"
+local CHAR_FILE_WIDE = "%s_%s.png"
 -- Fonts path
 local CHAR_PATH = TP .. "/" .. CHAR_FILE
+local CHAR_PATH_WIDE = TP .. "/" .. CHAR_FILE_WIDE
 
 -- Lots of overkill here. KISS advocates, go away, shoo! ;) -- kaeza
 
@@ -345,10 +353,10 @@ local function file_exists(name, return_handle, mode)
 		if (return_handle) then
 			return f
 		end
-		io.close(f) 
-		return true 
-	else 
-		return false 
+		io.close(f)
+		return true
+	else
+		return false
 	end
 end
 
@@ -389,6 +397,7 @@ end
 local function build_char_db(font_size)
 
 	local cw = {}
+	local cw_wide = {}
 
 	-- To calculate average char width.
 	local total_width = 0
@@ -404,20 +413,32 @@ local function build_char_db(font_size)
 		end
 	end
 
+	for i = 1, #signs_lib.wide_character_codes do
+		local ch = signs_lib.wide_character_codes[i]
+		local w, h = signs_lib.read_image_size(CHAR_PATH_WIDE:format("signs_lib_font_"..font_size.."px", ch))
+		if w and h then
+			cw_wide[ch] = w
+			total_width = total_width + w
+			char_count = char_count + 1
+		end
+	end
+
 	local cbw, cbh = signs_lib.read_image_size(TP.."/signs_lib_color_"..font_size.."px_n.png")
 	assert(cbw and cbh, "error reading bg dimensions")
-	return cw, cbw, cbh, (total_width / char_count)
+	return cw, cbw, cbh, (total_width / char_count), cw_wide
 end
 
 signs_lib.charwidth15,
 signs_lib.colorbgw15,
 signs_lib.lineheight15,
-signs_lib.avgwidth15 = build_char_db(15)
+signs_lib.avgwidth15,
+signs_lib.charwidth_wide15 = build_char_db(15)
 
 signs_lib.charwidth31,
 signs_lib.colorbgw31,
 signs_lib.lineheight31,
-signs_lib.avgwidth31 = build_char_db(31)
+signs_lib.avgwidth31,
+signs_lib.charwidth_wide31 = build_char_db(31)
 
 local sign_groups = {choppy=2, dig_immediate=2}
 local fences_with_sign = { }
@@ -453,7 +474,22 @@ local function char_tex(font_name, ch)
 	end
 end
 
-local function make_line_texture(line, lineno, pos, line_width, line_height, cwidth_tab, font_size, colorbgw)
+local function char_tex_wide(font_name, ch)
+	if ctexcache_wide[font_name..ch] then
+		return ctexcache_wide[font_name..ch], true
+	else
+		local exists, tex = file_exists(CHAR_PATH_WIDE:format(font_name, ch))
+		if exists then
+			tex = CHAR_FILE_WIDE:format(font_name, ch)
+		else
+			tex = CHAR_FILE:format(font_name, 0x5f)
+		end
+		ctexcache_wide[font_name..ch] = tex
+		return tex, exists
+	end
+end
+
+local function make_line_texture(line, lineno, pos, line_width, line_height, cwidth_tab, font_size, colorbgw, cwidth_tab_wide)
 	local width = 0
 	local maxw = 0
 	local font_name = "signs_lib_font_"..font_size.."px"
@@ -490,6 +526,27 @@ local function make_line_texture(line, lineno, pos, line_width, line_height, cwi
 		local word_l = #word
 		local i = 1
 		while i <= word_l  do
+			local wide_c
+			if "&#x" == word:sub(i, i + 2) then
+				local j = i + 3
+				local collected = ""
+				while j <= word_l do
+					local c = word:sub(j, j)
+					if c == ";" then
+						wide_c = collected
+						break
+					elseif c < "0" then
+						break
+					elseif "f" < c then
+						break
+					elseif ("9" < c) and (c < "a") then
+						break
+					else
+						collected = collected .. c
+						j = j + 1
+					end
+				end
+			end
 			local c = word:sub(i, i)
 			if c == "#" then
 				local cc = tonumber(word:sub(i+1, i+1), 16)
@@ -497,6 +554,25 @@ local function make_line_texture(line, lineno, pos, line_width, line_height, cwi
 					i = i + 1
 					cur_color = cc
 				end
+			elseif wide_c then
+				local w = cwidth_tab_wide[wide_c]
+				if w then
+					width = width + w + 1
+					if width >= (line_width - cwidth_tab[" "]) then
+						width = 0
+					else
+						maxw = math_max(width, maxw)
+					end
+					if #chars < MAX_INPUT_CHARS then
+						table.insert(chars, {
+							off = ch_offs,
+							tex = char_tex_wide(font_name, wide_c),
+							col = ("%X"):format(cur_color),
+						})
+					end
+					ch_offs = ch_offs + w
+				end
+				i = i + #wide_c + 3
 			else
 				local w = cwidth_tab[c]
 				if w then
@@ -552,7 +628,7 @@ local function make_line_texture(line, lineno, pos, line_width, line_height, cwi
 			table.insert(texture, (":%d,%d=%s"):format(xpos + ch.off, ypos, ch.tex))
 		end
 		table.insert(
-			texture, 
+			texture,
 			(":%d,%d="):format(xpos + word.w, ypos) .. char_tex(font_name, " ")
 		)
 		xpos = xpos + word.w + cwidth_tab[" "]
@@ -576,6 +652,7 @@ function signs_lib.make_sign_texture(lines, pos)
 	local line_width
 	local line_height
 	local char_width
+	local char_width_wide
 	local colorbgw
 	local widemult = 1
 
@@ -588,12 +665,14 @@ function signs_lib.make_sign_texture(lines, pos)
 		line_width = math.floor(signs_lib.avgwidth31 * def.chars_per_line) * (def.horiz_scaling * widemult)
 		line_height = signs_lib.lineheight31
 		char_width = signs_lib.charwidth31
+		char_width_wide = signs_lib.charwidth_wide31
 		colorbgw = signs_lib.colorbgw31
 	else
 		font_size = 15
 		line_width = math.floor(signs_lib.avgwidth15 * def.chars_per_line) * (def.horiz_scaling * widemult)
 		line_height = signs_lib.lineheight15
 		char_width = signs_lib.charwidth15
+		char_width_wide = signs_lib.charwidth_wide15
 		colorbgw = signs_lib.colorbgw15
 	end
 
@@ -602,7 +681,7 @@ function signs_lib.make_sign_texture(lines, pos)
 	local lineno = 0
 	for i = 1, #lines do
 		if lineno >= def.number_of_lines then break end
-		local linetex, ln = make_line_texture(lines[i], lineno, pos, line_width, line_height, char_width, font_size, colorbgw)
+		local linetex, ln = make_line_texture(lines[i], lineno, pos, line_width, line_height, char_width, font_size, colorbgw, char_width_wide)
 		table.insert(texture, linetex)
 		lineno = ln + 1
 	end
@@ -619,31 +698,12 @@ function signs_lib.split_lines_and_words(text)
 	return lines
 end
 
-function signs_lib.construct_sign(pos)
-	local form = "size[6,4]"..
-		"textarea[0,-0.3;6.5,3;text;;${text}]"..
-		"background[-0.5,-0.5;7,5;signs_lib_sign_bg.jpg]"
-	local node = minetest.get_node(pos)
-	local def = minetest.registered_items[node.name]
-	local meta = minetest.get_meta(pos)
+function signs_lib.rightclick_sign(pos, node, player, itemstack, pointed_thing)
 
-	if def.allow_widefont then
-		local state = "off"
-		if meta:get_int("widefont") == 1 then state = "on" end
-		form = form.."label[1,3.4;Use wide font]"..
-			"image_button[1.1,3.7;1,0.6;signs_lib_switch_"..
-			state..".png;"..
-			state..";;;false;signs_lib_switch_interm.png]"..
-			"button_exit[3,3.4;2,1;ok;"..S("Write").."]"
-	else
-		form = form.."button_exit[2,3.4;2,1;ok;"..S("Write").."]"
-	end
+	if not signs_lib.can_modify(pos, player) then return end
 
-	meta:set_string("formspec", form)
-	local i = meta:get_string("infotext")
-	if i == "" then -- it wasn't even set, so set it.
-		meta:set_string("infotext", "")
-	end
+	player:get_meta():set_string("signslib:pos", minetest.pos_to_string(pos))
+	minetest.show_formspec(player:get_player_name(), "signs_lib:sign", get_sign_formspec(pos, node.name))
 end
 
 function signs_lib.destruct_sign(pos)
@@ -663,6 +723,11 @@ end
 function signs_lib.update_sign(pos, fields)
 	local meta = minetest.get_meta(pos)
 
+	-- legacy udpate
+	if meta:get_string("formspec") ~= "" then
+		meta:set_string("formspec", "")
+	end
+
 	local text = fields and fields.text or meta:get_string("text")
 	text = trim_input(text)
 
@@ -675,54 +740,19 @@ function signs_lib.update_sign(pos, fields)
 	signs_lib.set_obj_text(pos, text)
 end
 
-function signs_lib.receive_fields(pos, formname, fields, sender)
-
-	if not fields or not signs_lib.can_modify(pos, sender) then return end
-
-	if fields.text and fields.ok then
-		minetest.log("action", S("@1 wrote \"@2\" to sign at @3",
-			(sender:get_player_name() or ""),
-			fields.text:gsub('\\', '\\\\'):gsub("\n", "\\n"),
-			minetest.pos_to_string(pos)
-		))
-		signs_lib.update_sign(pos, fields)
-	elseif fields.on or fields.off then
-		local node = minetest.get_node(pos)
-		local meta = minetest.get_meta(pos)
-		local change
-
-		if fields.on and meta:get_int("widefont") == 1 then
-			meta:set_int("widefont", 0)
-			change = true
-		elseif fields.off and meta:get_int("widefont") == 0 then
-			meta:set_int("widefont", 1)
-			change = true
-		end
-		if change then
-			minetest.log("action", S("@1 flipped the wide-font switch to \"@2\" at @3",
-				(sender:get_player_name() or ""),
-				(fields.on and "off" or "on"),
-				minetest.pos_to_string(pos)
-			))
-			signs_lib.construct_sign(pos)
-			signs_lib.update_sign(pos, fields)
-		end
-	end
-end
-
 function signs_lib.can_modify(pos, player)
 	local meta = minetest.get_meta(pos)
 	local owner = meta:get_string("owner")
 	local playername = player:get_player_name()
 
-	if minetest.is_protected(pos, playername) then 
+	if minetest.is_protected(pos, playername) then
 		minetest.record_protection_violation(pos, playername)
 		return false
 	end
 
 	if owner == ""
 	  or playername == owner
-	  or (minetest.check_player_privs(playername, {sign_editor=true}))
+	  or (minetest.check_player_privs(playername, {signslib_edit=true}))
 	  or (playername == minetest.settings:get("name")) then
 		return true
 	end
@@ -887,10 +917,8 @@ function signs_lib.register_sign(name, raw_def)
 	def.after_place_node = raw_def.after_place_node or signs_lib.after_place_node
 
 	if raw_def.entity_info then
-		def.on_rightclick       = raw_def.on_rightclick       or signs_lib.construct_sign
-		def.on_construct        = raw_def.on_construct        or signs_lib.construct_sign
+		def.on_rightclick       = raw_def.on_rightclick       or signs_lib.rightclick_sign
 		def.on_destruct         = raw_def.on_destruct         or signs_lib.destruct_sign
-		def.on_receive_fields   = raw_def.on_receive_fields   or signs_lib.receive_fields
 		def.on_punch            = raw_def.on_punch            or signs_lib.update_sign
 		def.number_of_lines     = raw_def.number_of_lines     or signs_lib.standard_lines
 		def.horiz_scaling       = raw_def.horiz_scaling       or signs_lib.standard_hscale
@@ -1184,3 +1212,75 @@ minetest.register_chatcommand("regen_signs", {
 		minetest.chat_send_player(player_name, "Finished.")
 	end
 })
+
+minetest.register_privilege("signslib_edit", {})
+
+
+
+--
+-- local functions
+--
+
+function get_sign_formspec(pos, nodename)
+
+	local meta = minetest.get_meta(pos)
+	local txt = meta:get_string("text")
+
+	local formspec = {
+		"size[6,4]",
+		"textarea[0,-0.3;6.5,3;text;;" .. minetest.formspec_escape(txt) .. "]",
+		"background[-0.5,-0.5;7,5;signs_lib_sign_bg.jpg]",
+		"button_exit[2,3.4;2,1;ok;" .. S("Write") .. "]"
+	}
+
+	if minetest.registered_nodes[nodename].allow_widefont then
+		local state = "off"
+		if meta:get_int("widefont") == 1 then state = "on" end
+		formspec[5] = "label[0.5,3.4;Use wide font]"
+		formspec[6] = "image_button[0.6,3.7;1,0.6;signs_lib_switch_" .. state .. ".png;"
+				.. state .. ";;;false;signs_lib_switch_interm.png]"
+	end
+
+	return table.concat(formspec, "")
+end
+
+
+minetest.register_on_player_receive_fields(function(player, formname, fields)
+
+	if formname ~= "signs_lib:sign" then return end
+
+	local pos_string = player:get_meta():get_string("signslib:pos")
+	local pos = minetest.string_to_pos(pos_string)
+	local playername = player:get_player_name()
+
+	if fields.text and fields.ok then
+		minetest.log("action", S("@1 wrote \"@2\" to sign at @3",
+			(playername or ""),
+			fields.text:gsub('\\', '\\\\'):gsub("\n", "\\n"),
+			pos_string
+		))
+		signs_lib.update_sign(pos, fields)
+	elseif fields.on or fields.off then
+		local node = minetest.get_node(pos)
+		local meta = minetest.get_meta(pos)
+		local change
+
+		if fields.on and meta:get_int("widefont") == 1 then
+			meta:set_int("widefont", 0)
+			change = true
+		elseif fields.off and meta:get_int("widefont") == 0 then
+			meta:set_int("widefont", 1)
+			change = true
+		end
+
+		if change then
+			minetest.log("action", S("@1 flipped the wide-font switch to \"@2\" at @3",
+				(playername or ""),
+				(fields.on and "off" or "on"),
+				minetest.pos_to_string(pos)
+			))
+			signs_lib.update_sign(pos, fields)
+			minetest.show_formspec(playername, "signs_lib:sign", get_sign_formspec(pos, node.name))
+		end
+	end
+end)

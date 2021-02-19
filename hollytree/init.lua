@@ -135,8 +135,6 @@ minetest.register_node("hollytree:leaves", {
 	description = S("Holly Tree Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"hollytree_leaves.png"},
-	inventory_image = "hollytree_leaves.png",
-	wield_image = "hollytree_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,

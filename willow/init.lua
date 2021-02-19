@@ -118,8 +118,6 @@ minetest.register_node("willow:leaves", {
 	description = S("Willow Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"willow_leaves.png"},
-	inventory_image = "willow_leaves.png",
-	wield_image = "willow_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,

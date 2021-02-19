@@ -33,7 +33,48 @@ minetest.register_node("farming:salt", {
 	selection_box = {
 		type = "fixed",
 		fixed = {-0.25, -0.5, -0.25, 0.25, 0.3, 0.25}
-	}
+	},
+	-- special function to make salt crystals form inside water
+	dropped_step = function(self, pos, dtime)
+
+		self.ctimer = (self.ctimer or 0) + dtime
+		if self.ctimer < 15.0 then return end
+		self.ctimer = 0
+
+		local needed
+
+		if self.node_inside
+		and self.node_inside.name == "default:water_source" then
+			needed = 8
+
+		elseif self.node_inside
+		and self.node_inside.name == "default:river_water_source" then
+			needed = 9
+		end
+
+		if not needed then return end
+
+		local objs = core.get_objects_inside_radius(pos, 0.5)
+
+		if not objs or #objs ~= 1 then return end
+
+		local salt, ent = nil, nil
+
+		for k, obj in pairs(objs) do
+
+			ent = obj:get_luaentity()
+
+			if ent and ent.name == "__builtin:item"
+			and ent.itemstring == "farming:salt " .. needed then
+
+				obj:remove()
+
+				core.add_item(pos, "farming:salt_crystal")
+
+				return false -- return with no further action
+			end
+		end
+	end
 })
 
 minetest.register_craft({
@@ -42,6 +83,40 @@ minetest.register_craft({
 	output = "farming:salt",
 	recipe = "bucket:bucket_water",
 	replacements = {{"bucket:bucket_water", "bucket:bucket_empty"}}
+})
+
+--= Salt Crystal
+
+minetest.register_node("farming:salt_crystal", {
+	description = ("Salt crystal"),
+	inventory_image = "farming_salt_crystal.png",
+	wield_image = "farming_salt_crystal.png",
+	drawtype = "plantlike",
+	visual_scale = 0.8,
+	paramtype = "light",
+	light_source = 1,
+	tiles = {"farming_salt_crystal.png"},
+	groups = { dig_immediate = 3, attached_node = 1},
+	sounds = default.node_sound_defaults(),
+	selection_box = {
+		type = "fixed",
+		fixed = {-0.25, -0.5, -0.25, 0.25, 0.3, 0.25}
+	},
+})
+minetest.register_craft({
+	type = "shapeless",
+	output = "farming:salt 9",
+	recipe = {"farming:salt_crystal", "farming:mortar_pestle"},
+	replacements = {{"farming:mortar_pestle", "farming:mortar_pestle"}}
+})
+
+minetest.register_craft({
+	output = "farming:salt_crystal",
+	recipe = {
+		{"farming:salt", "farming:salt", "farming:salt"},
+		{"farming:salt", "farming:salt", "farming:salt"},
+		{"farming:salt", "farming:salt", "farming:salt"}
+	}
 })
 
 --= Rose Water
@@ -181,44 +256,18 @@ minetest.register_craftitem("farming:porridge", {
 	on_use = minetest.item_eat(6, "farming:bowl")
 })
 
-minetest.after(0, function()
-
-	local fluid = "group:water_bucket"
-	local fluid_return = {
-		{"group:water_bucket", "bucket:bucket_empty"},
-		{"group:water_bucket_wooden", "bucket:bucket_empty"}
+minetest.register_craft({
+	type = "shapeless",
+	output = "farming:porridge",
+	recipe = {
+		"group:food_oats", "group:food_oats", "group:food_oats",
+		"group:food_oats", "group:food_bowl", "group:food_milk_glass"
+	},
+	replacements = {
+		{"mobs:glass_milk", "vessels:drinking_glass"},
+		{"farming:soy_milk", "vessels:drinking_glass"}
 	}
-
-	if minetest.get_modpath("mobs") and mobs and mobs.mod == "redo" then
-		fluid = "group:food_milk"
-		fluid_return = {
-			{"mobs:bucket_milk", "bucket:bucket_empty"}
-		}
-	else
-		minetest.register_craft({
-			type = "shapeless",
-			output = "farming:porridge",
-			recipe = {
-				"group:food_oats", "group:food_oats", "group:food_oats",
-				"group:food_oats", "group:food_bowl", "group:water_bucket_wooden"
-			},
-			replacements = fluid_return
-		})
-	end
-
-	minetest.register_craft({
-		type = "shapeless",
-		output = "farming:porridge",
-		recipe = {
-			"group:food_oats", "group:food_oats", "group:food_oats",
-			"group:food_oats", "group:food_bowl", fluid
-		},
-		replacements = fluid_return
-	})
-
-	if minetest.get_modpath("bucket_wooden") then
-	end
-end)
+})
 
 --= Jaffa Cake
 
@@ -373,3 +422,57 @@ minetest.register_craft({
 	replacements = {{"group:food_skillet", "farming:skillet"}}
 })
 end
+
+-- Burger
+
+minetest.register_craftitem("farming:burger", {
+	description = S("Burger"),
+	inventory_image = "farming_burger.png",
+	on_use = minetest.item_eat(16),
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "farming:burger",
+	recipe = {
+		"farming:bread", "group:food_meat", "group:food_cheese",
+		"group:food_tomato", "group:food_cucumber", "group:food_onion",
+		"group:food_lettuce"
+	}
+})
+
+-- Salad
+
+minetest.register_craftitem("farming:salad", {
+	description = S("Salad"),
+	inventory_image = "farming_salad.png",
+	on_use = minetest.item_eat(8, "farming:bowl")
+})
+
+minetest.register_craft({
+	output = "farming:salad",
+	type = "shapeless",
+	recipe = {
+		"group:food_bowl", "group:food_tomato", "group:food_cucumber",
+		"group:food_lettuce", "group:food_oil"
+	},
+})
+
+-- Triple Berry Smoothie
+
+minetest.register_craftitem("farming:smoothie_berry", {
+	description = S("Triple Berry Smoothie"),
+	inventory_image = "farming_berry_smoothie.png",
+	on_use = minetest.item_eat(6, "vessels:drinking_glass"),
+	groups = {vessel = 1, drink = 1}
+})
+
+minetest.register_craft({
+	output = "farming:smoothie_berry",
+	type = "shapeless",
+	recipe = {
+		"group:food_raspberries", "group:food_blackberries",
+		"group:food_strawberry", "group:food_banana",
+		"vessels:drinking_glass"
+	}
+})

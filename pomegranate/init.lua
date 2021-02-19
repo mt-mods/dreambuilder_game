@@ -137,8 +137,6 @@ minetest.register_node("pomegranate:leaves", {
 	description = S("Pomegranate Tree Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"pomegranate_leaves.png"},
-	inventory_image = "pomegranate_leaves.png",
-	wield_image = "pomegranate_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,

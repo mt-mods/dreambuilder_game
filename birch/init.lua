@@ -192,8 +192,6 @@ minetest.register_node("birch:leaves", {
 	description = S("Birch Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"birch_leaves.png"},
-	inventory_image = "birch_leaves.png",
-	wield_image = "birch_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,

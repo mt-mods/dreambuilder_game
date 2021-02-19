@@ -146,7 +146,8 @@ minetest.register_node("bamboo:trunk", {
 	wield_image = "bamboo.png",
 	paramtype = "light",
 	sunlight_propagates = true,
-	walkable = true,
+	walkable = false,
+	climbable = true,
 	selection_box = {
 		type = "fixed",
 		fixed = {-0.3, -0.5, -0.3, 0.3, 0.5, 0.3}
@@ -176,10 +177,9 @@ minetest.register_node("bamboo:leaves", {
 	description = S("Bamboo Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"bamboo_leaves.png"},
-	inventory_image = "bamboo_leaves.png",
-	wield_image = "bamboo_leaves.png",
 	paramtype = "light",
-	walkable = true,
+	walkable = false,
+	climbable = true,
 	waving = 1,
 	groups = {snappy = 3, leafdecay = 3, leaves = 1, flammable = 2},
 	drop = {

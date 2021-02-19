@@ -116,8 +116,6 @@ minetest.register_node("jacaranda:blossom_leaves", {
 	description = S("Jacaranda Blossom Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"jacaranda_blossom_leaves.png"},
-	inventory_image = "jacaranda_blossom_leaves.png",
-	wield_image = "jacaranda_blossom_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,

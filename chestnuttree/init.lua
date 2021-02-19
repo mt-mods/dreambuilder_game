@@ -174,8 +174,6 @@ minetest.register_node("chestnuttree:leaves", {
 	description = S("Chestnut Tree Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"chestnuttree_leaves.png"},
-	inventory_image = "chestnuttree_leaves.png",
-	wield_image = "chestnuttree_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,

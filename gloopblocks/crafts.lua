@@ -299,6 +299,21 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
+	type = "shapeless",
+	output = "default:cobble 8",
+	recipe = {
+		"gloopblocks:pumice",
+		"gloopblocks:pumice",
+		"gloopblocks:pumice",
+		"gloopblocks:pumice",
+		"gloopblocks:basalt",
+		"gloopblocks:basalt",
+		"gloopblocks:basalt",
+		"gloopblocks:basalt"
+	}
+})
+
+minetest.register_craft({
 	output = "gloopblocks:fence_steel 1",
 	recipe = {
 		{"xpanes:bar", "xpanes:bar", "xpanes:bar"},

@@ -13,3 +13,10 @@ nyancat?
 usesdirt?
 worldedit?
 signs_lib?
+bakedclay?
+farming?
+wool?
+bushes_classic?
+dryplants?
+bedrock?
+cottages?

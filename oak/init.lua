@@ -39,7 +39,7 @@ minetest.register_node("oak:acorn", {
 local function grow_new_oak_tree(pos)
 	if not default.can_grow(pos) then
 		-- try a bit later again
-		minetest.get_node_timer(pos):start(math.random(1, 1))
+		minetest.get_node_timer(pos):start(math.random(240, 600))
 		return
 	end
 	minetest.remove_node(pos)
@@ -109,7 +109,7 @@ minetest.register_node("oak:sapling", {
 	sounds = default.node_sound_leaves_defaults(),
 
 	on_construct = function(pos)
-		minetest.get_node_timer(pos):start(math.random(1,1))
+		minetest.get_node_timer(pos):start(math.random(2400,4800))
 	end,
 
 	on_place = function(itemstack, placer, pointed_thing)
@@ -153,8 +153,6 @@ minetest.register_node("oak:leaves", {
 	description = S("Oak Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"oak_leaves.png"},
-	inventory_image = "oak_leaves.png",
-	wield_image = "oak_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,
@@ -200,7 +198,7 @@ minetest.register_lbm({
 	name = "oak:convert_oak_saplings_to_node_timer",
 	nodenames = {"oak:sapling"},
 	action = function(pos)
-		minetest.get_node_timer(pos):start(math.random(1, 1))
+		minetest.get_node_timer(pos):start(math.random(1200, 2400))
 	end
 })
 

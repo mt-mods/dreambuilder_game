@@ -14,7 +14,9 @@ else
 end
 
 
+--
 -- FUNCTIONS
+--
 
 local floor = math.floor
 local random = math.random
@@ -55,15 +57,17 @@ local polinate_flower = function(pos, flower)
 	}
 	local floor_pos = {x = spawn_pos.x, y = spawn_pos.y - 1, z = spawn_pos.z}
 	local spawn = minetest.get_node(spawn_pos).name
-	local floor = minetest.get_node(floor_pos).name
+	local floorn = minetest.get_node(floor_pos).name
 
-	if floor == "group:soil" and spawn == "air" then
+	if floorn == "group:soil" and spawn == "air" then
 		minetest.set_node(spawn_pos, {name = flower})
 	end
 end
 
 
+--
 -- NODES
+--
 
 minetest.register_node("bees:extractor", {
 	description = S("Honey Extractor"),
@@ -77,11 +81,11 @@ minetest.register_node("bees:extractor", {
 		tubedevice_receiver = 1
 	},
 
-	on_construct = function(pos, node)
+	on_construct = function(pos)
 
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
-		local pos = pos.x .. "," .. pos.y .. "," .. pos.z
+		pos = pos.x .. "," .. pos.y .. "," .. pos.z
 
 		inv:set_size("frames_filled", 1)
 		inv:set_size("frames_emptied", 1)
@@ -90,22 +94,23 @@ minetest.register_node("bees:extractor", {
 		inv:set_size("wax", 1)
 
 		meta:set_string("formspec", "size[8,9]"
-			--input
+			-- input
 			.. "list[nodemeta:"..pos..";frames_filled;2,1;1,1;]"
 			.. "list[nodemeta:"..pos..";bottles_empty;2,3;1,1;]"
-			--output
+			-- output
 			.. "list[nodemeta:"..pos..";frames_emptied;5,0.5;1,1;]"
 			.. "list[nodemeta:"..pos..";wax;5,2;1,1;]"
 			.. "list[nodemeta:"..pos..";bottles_full;5,3.5;1,1;]"
-			--player inventory
+			-- player inventory
 			.. "list[current_player;main;0,5;8,4;]"
 		)
 	end,
 
-	on_timer = function(pos, node)
+	on_timer = function(pos)
 
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
+		local timer = minetest.get_node_timer(pos)
 
 		if not inv:contains_item("frames_filled", "bees:frame_full")
 		or not inv:contains_item("bottles_empty", "vessels:glass_bottle") then
@@ -116,48 +121,38 @@ minetest.register_node("bees:extractor", {
 		and inv:room_for_item("wax", "bees:wax")
 		and inv:room_for_item("bottles_full", "bees:bottle_honey") then
 
-			--add to output
+			-- add to output
 			inv:add_item("frames_emptied", "bees:frame_empty")
 			inv:add_item("wax", "bees:wax")
 			inv:add_item("bottles_full", "bees:bottle_honey")
 
-			--remove from input
+			-- remove from input
 			inv:remove_item("bottles_empty", "vessels:glass_bottle")
 			inv:remove_item("frames_filled", "bees:frame_full")
 
-			local p = {
-				x = pos.x + random() - 0.5,
-				y = pos.y + random() - 0.5,
-				z = pos.z + random() - 0.5
-			}
-
-			--wax flying all over the place
+			-- wax flying all over the place
 			minetest.add_particle({
 				pos = {x = pos.x, y = pos.y, z = pos.z},
-				vel = {
+				velocity = {
 					x = random(-1, 1),
 					y = random(4),
 					z = random(-1, 1)
 				},
-				acc = {x = 0, y = -6, z = 0},
+				acceleration = {x = 0, y = -6, z = 0},
 				expirationtime = 2,
 				size = random(1, 3),
 				collisiondetection = false,
 				texture = "bees_wax_particle.png",
 			})
 
-			local timer = minetest.get_node_timer(pos)
-
 			timer:start(5)
 		else
-			local timer = minetest.get_node_timer(pos)
-
-			timer:start(5) -- Try again in 5 seconds (was 1)
+			timer:start(5) -- try again in 5 seconds (was 1)
 		end
 	end,
 
 	tube = {
-		insert_object = function(pos, node, stack, direction)
+		insert_object = function(pos, _, stack)
 
 			local meta = minetest.get_meta(pos)
 			local inv = meta:get_inventory()
@@ -183,18 +178,18 @@ minetest.register_node("bees:extractor", {
 			return stack
 		end,
 
-		can_insert = function(pos,node,stack,direction)
+		can_insert = function(pos, _, stack)
 
 			local meta = minetest.get_meta(pos)
 			local inv = meta:get_inventory()
 
 			if stack:get_name() == "bees:frame_full" then
 
-				return inv:room_for_item("frames_filled",stack)
+				return inv:room_for_item("frames_filled", stack)
 
 			elseif stack:get_name() == "vessels:glass_bottle" then
 
-				return inv:room_for_item("bottles_empty",stack)
+				return inv:room_for_item("bottles_empty", stack)
 			end
 
 			return false
@@ -205,7 +200,7 @@ minetest.register_node("bees:extractor", {
 		connect_sides = {left = 1, right = 1, back = 1, front = 1, bottom = 1, top = 1}
 	},
 
-	on_metadata_inventory_put = function(pos, listname, index, stack, player)
+	on_metadata_inventory_put = function(pos, listname, _, stack)
 
 		local timer = minetest.get_node_timer(pos)
 		local meta = minetest.get_meta(pos)
@@ -217,7 +212,7 @@ minetest.register_node("bees:extractor", {
 		end
 	end,
 
-	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+	allow_metadata_inventory_put = function(_, listname, _, stack)
 
 		if (listname == "bottles_empty" and stack:get_name() == "vessels:glass_bottle")
 		or (listname == "frames_filled" and stack:get_name() == "bees:frame_full") then
@@ -227,11 +222,11 @@ minetest.register_node("bees:extractor", {
 		end
 	end,
 
-	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+	allow_metadata_inventory_move = function()
 		return 0
 	end,
 
-	allow_metadata_inventory_take = function(pos, listname, index, stack, player)
+	allow_metadata_inventory_take = function(pos, _, _, stack, player)
 
 		if player and minetest.is_protected(pos, player:get_player_name()) then
 			return 0
@@ -247,14 +242,12 @@ minetest.register_node("bees:bees", {
 	drawtype = "plantlike",
 	paramtype = "light",
 	groups = {not_in_creative_inventory = 1},
-	tiles = {
-		{
-			name = "bees_strip.png",
-			animation = {
-				type = "vertical_frames", aspect_w = 16, aspect_h = 16, length = 2.0
-			}
+	tiles = {{
+		name = "bees_strip.png",
+		animation = {
+			type = "vertical_frames", aspect_w = 16, aspect_h = 16, length = 2.0
 		}
-	},
+	}},
 	damage_per_second = 1,
 	walkable = false,
 	buildable_to = true,
@@ -265,8 +258,7 @@ minetest.register_node("bees:bees", {
 		}
 	},
 
-	on_punch = function(pos, node, puncher)
-
+	on_punch = function(_, _, puncher)
 		puncher:set_hp(puncher:get_hp() - 2)
 	end,
 })
@@ -274,7 +266,7 @@ minetest.register_node("bees:bees", {
 
 minetest.register_node("bees:hive_wild", {
 	description = S("Wild Bee Hive"),
-	tiles = { --Neuromancer"s base texture
+	tiles = { -- Neuromancer's base texture
 		"bees_hive_wild.png", "bees_hive_wild.png", "bees_hive_wild.png",
 		"bees_hive_wild.png", "bees_hive_wild_bottom.png"
 	},
@@ -284,17 +276,17 @@ minetest.register_node("bees:hive_wild", {
 	drop = {
 		max_items = 6,
 		items = {
-			{ items = {"bees:honey_comb"}, rarity = 5}
+			{items = {"bees:honey_comb"}, rarity = 5}
 		}
 	},
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 3, attached_node = 1},
-	node_box = { --VanessaE's wild hive nodebox contribution
+	node_box = { -- VanessaE's wild hive nodebox contribution
 		type = "fixed",
 		fixed = {
-			{-0.250000,-0.500000,-0.250000,0.250000,0.375000,0.250000}, --NodeBox 2
-			{-0.312500,-0.375000,-0.312500,0.312500,0.250000,0.312500}, --NodeBox 4
-			{-0.375000,-0.250000,-0.375000,0.375000,0.125000,0.375000}, --NodeBox 5
-			{-0.062500,-0.500000,-0.062500,0.062500,0.500000,0.062500}, --NodeBox 6
+			{-0.25,   -0.5,   -0.25,   0.25,   0.375, 0.25},
+			{-0.3125, -0.375, -0.3125, 0.3125, 0.25,  0.3125},
+			{-0.375,  -0.25,  -0.375,  0.375,  0.125, 0.375},
+			{-0.0625, -0.5,   -0.0625, 0.0625, 0.5,   0.0625},
 		}
 	},
 
@@ -328,7 +320,7 @@ minetest.register_node("bees:hive_wild", {
 
 		local stacks = inv:get_list("combs")
 
-		for k, v in pairs(stacks) do
+		for k, _ in pairs(stacks) do
 
 			if inv:get_stack("combs", k):is_empty() then
 
@@ -339,7 +331,7 @@ minetest.register_node("bees:hive_wild", {
 				return
 			end
 		end
-		--what to do if all combs are filled
+		-- what to do if all combs are filled
 	end,
 
 	on_construct = function(pos)
@@ -363,7 +355,7 @@ minetest.register_node("bees:hive_wild", {
 		end
 	end,
 
-	on_punch = function(pos, node, puncher)
+	on_punch = function(pos, _, puncher)
 
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
@@ -374,7 +366,7 @@ minetest.register_node("bees:hive_wild", {
 		end
 	end,
 
-	on_metadata_inventory_take = function(pos, listname, index, stack, taker)
+	on_metadata_inventory_take = function(pos, listname, _, _, taker)
 
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
@@ -388,7 +380,7 @@ minetest.register_node("bees:hive_wild", {
 		end
 	end,
 
-	on_metadata_inventory_put = function(pos, listname, index, stack, taker)
+	on_metadata_inventory_put = function(pos)
 
 		local timer = minetest.get_node_timer(pos)
 
@@ -397,9 +389,9 @@ minetest.register_node("bees:hive_wild", {
 		end
 	end,
 
-	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+	allow_metadata_inventory_put = function(_, listname, _, stack)
 
-		 --restart the colony by adding a queen
+		-- restart the colony by adding a queen
 		if listname == "queen" and stack:get_name() == "bees:queen" then
 			return 1
 		else
@@ -407,7 +399,7 @@ minetest.register_node("bees:hive_wild", {
 		end
 	end,
 
-	on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+	on_rightclick = function(pos, _, clicker, itemstack)
 
 		minetest.show_formspec(clicker:get_player_name(),
 			"bees:hive_artificial",
@@ -426,7 +418,7 @@ minetest.register_node("bees:hive_wild", {
 		end
 	end,
 
-	can_dig = function(pos,player)
+	can_dig = function(pos)
 
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
@@ -438,10 +430,9 @@ minetest.register_node("bees:hive_wild", {
 		end
 	end,
 
-	after_dig_node = function(pos, oldnode, oldmetadata, user)
+	after_dig_node = function(_, _, _, user)
 
 		local wielded
-
 		if user:get_wielded_item() ~= nil then
 			wielded = user:get_wielded_item()
 		else
@@ -488,7 +479,6 @@ minetest.register_node("bees:hive_artificial", {
 
 	on_construct = function(pos)
 
-		local timer = minetest.get_node_timer(pos)
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
 
@@ -500,13 +490,15 @@ minetest.register_node("bees:hive_artificial", {
 		meta:set_string("infotext", S("Requires Queen bee to function"))
 	end,
 
-	on_rightclick = function(pos, node, clicker, itemstack)
+	on_rightclick = function(pos, _, clicker)
 
-		if minetest.is_protected(pos, clicker:get_player_name()) then
+		local player_name = clicker:get_player_name()
+
+		if minetest.is_protected(pos, player_name) then
 			return
 		end
 
-		minetest.show_formspec(clicker:get_player_name(),
+		minetest.show_formspec(player_name,
 			"bees:hive_artificial",
 			hive_artificial(pos)
 		)
@@ -523,7 +515,7 @@ minetest.register_node("bees:hive_artificial", {
 		end
 	end,
 
-	on_timer = function(pos,elapsed)
+	on_timer = function(pos)
 
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
@@ -555,7 +547,7 @@ minetest.register_node("bees:hive_artificial", {
 
 					local stacks = inv:get_list("frames")
 
-					for k, v in pairs(stacks) do
+					for k, _ in pairs(stacks) do
 
 						if inv:get_stack("frames", k):get_name() == "bees:frame_empty" then
 
@@ -578,7 +570,7 @@ minetest.register_node("bees:hive_artificial", {
 		end
 	end,
 
-	on_metadata_inventory_take = function(pos, listname, index, stack, player)
+	on_metadata_inventory_take = function(pos, listname)
 
 		if listname == "queen" then
 
@@ -591,7 +583,7 @@ minetest.register_node("bees:hive_artificial", {
 		end
 	end,
 
-	allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+	allow_metadata_inventory_move = function(pos, from_list, _, to_list, to_index)
 
 		local inv = minetest.get_meta(pos):get_inventory()
 
@@ -607,7 +599,7 @@ minetest.register_node("bees:hive_artificial", {
 		end
 	end,
 
-	on_metadata_inventory_put = function(pos, listname, index, stack, player)
+	on_metadata_inventory_put = function(pos, listname, _, stack)
 
 		local meta = minetest.get_meta(pos)
 		local inv = meta:get_inventory()
@@ -627,7 +619,7 @@ minetest.register_node("bees:hive_artificial", {
 		end
 	end,
 
-	allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+	allow_metadata_inventory_put = function(pos, listname, index, stack)
 
 		if not minetest.get_meta(pos):get_inventory():get_stack(listname, index):is_empty() then return 0 end
 
@@ -648,7 +640,10 @@ minetest.register_node("bees:hive_artificial", {
 	end,
 })
 
--- ABMS
+
+--
+-- ABMs
+--
 
 minetest.register_abm({
 	nodenames = {"bees:hive_artificial", "bees:hive_wild", "bees:hive_industrial"},
@@ -660,12 +655,12 @@ minetest.register_abm({
 		-- Bee particle
 		minetest.add_particle({
 			pos = {x = pos.x, y = pos.y, z = pos.z},
-			vel = {
+			velocity = {
 				x = (random() - 0.5) * 5,
 				y = (random() - 0.5) * 5,
 				z = (random() - 0.5) * 5
 			},
-			acc = {
+			acceleration = {
 				x = random() - 0.5,
 				y = random() - 0.5,
 				z = random() - 0.5
@@ -692,14 +687,14 @@ minetest.register_abm({
 })
 
 
--- spawn abm. This should be changed to a more realistic type of spawning
+-- spawn ABM. This should be changed to a more realistic type of spawning
 minetest.register_abm({
 	nodenames = {"group:leaves"},
 	neighbors = {"air"},
-	interval = 800,--1600,
-	chance = 10,--20,
+	interval = 800,
+	chance = 10,
 
-	action = function(pos, node)
+	action = function(pos)
 
 		if floor(pos.x / 40) ~= pos.x / 40
 		or floor(pos.z / 40) ~= pos.z / 40
@@ -725,7 +720,7 @@ minetest.register_abm({
 	interval = 30,
 	chance = 4,
 
-	action = function(pos, node, _, _)
+	action = function(pos)
 
 		local p = {
 			x = pos.x + random(-5, 5),
@@ -746,13 +741,15 @@ minetest.register_abm({
 	interval = 30,
 	chance = 5,
 
-	action = function(pos, node, _, _)
+	action = function(pos)
 		minetest.remove_node(pos)
 	end,
 })
 
 
+--
 -- ITEMS
+--
 
 minetest.register_craftitem("bees:frame_empty", {
 	description = S("Empty hive frame"),
@@ -794,7 +791,9 @@ minetest.register_craftitem("bees:queen", {
 })
 
 
+--
 -- CRAFTS
+--
 
 minetest.register_craft({
 	output = "bees:extractor",
@@ -852,7 +851,9 @@ if minetest.get_modpath("bushes_classic") then
 end
 
 
+--
 -- TOOLS
+--
 
 minetest.register_tool("bees:smoker", {
 	description = S("smoker"),
@@ -863,7 +864,7 @@ minetest.register_tool("bees:smoker", {
 		damage_groups = {fleshy = 2},
 	},
 
-	on_use = function(itemstack, user, pointed_thing)
+	on_use = function(itemstack, _, pointed_thing)
 
 		if pointed_thing.type ~= "node" then
 			return
@@ -879,8 +880,8 @@ minetest.register_tool("bees:smoker", {
 					y = pos.y,
 					z = pos.z + random() - 0.5
 				},
-				vel = {x = 0, y = 0.5 + random(), z = 0},
-				acc = {x = 0, y = 0, z = 0},
+				velocity = {x = 0, y = 0.5 + random(), z = 0},
+				acceleration = {x = 0, y = 0, z = 0},
 				expirationtime = 2 + random(2.5),
 				size = random(3),
 				collisiondetection = false,
@@ -909,7 +910,10 @@ minetest.register_tool("bees:grafting_tool", {
 })
 
 
--- COMPATIBILTY --remove after all has been updated
+--
+-- COMPATIBILTY
+-- remove after all has been updated
+--
 
 -- ALIASES
 minetest.register_alias("bees:honey_extractor", "bees:extractor")
@@ -952,7 +956,9 @@ minetest.register_lbm({
 })
 
 
+--
 -- PIPEWORKS
+--
 
 if minetest.get_modpath("pipeworks") then
 
@@ -967,7 +973,7 @@ if minetest.get_modpath("pipeworks") then
 		sounds = default.node_sound_wood_defaults(),
 
 		tube = {
-			insert_object = function(pos, node, stack, direction)
+			insert_object = function(pos, _, stack)
 
 				local meta = minetest.get_meta(pos)
 				local inv = meta:get_inventory()
@@ -996,7 +1002,7 @@ if minetest.get_modpath("pipeworks") then
 				return stack
 			end,
 
-			can_insert = function(pos,node,stack,direction)
+			can_insert = function(pos, _, stack)
 
 				local meta = minetest.get_meta(pos)
 				local inv = meta:get_inventory()
@@ -1016,7 +1022,7 @@ if minetest.get_modpath("pipeworks") then
 				return false
 			end,
 
-			can_remove = function(pos,node,stack,direction)
+			can_remove = function(_, _, stack)
 
 				if stack:get_name() == "bees:frame_full" then
 					return 1
@@ -1032,7 +1038,6 @@ if minetest.get_modpath("pipeworks") then
 
 		on_construct = function(pos)
 
-			local timer = minetest.get_node_timer(pos)
 			local meta = minetest.get_meta(pos)
 			local inv = meta:get_inventory()
 
@@ -1044,13 +1049,15 @@ if minetest.get_modpath("pipeworks") then
 			meta:set_string("infotext", S("Requires Queen bee to function"))
 		end,
 
-		on_rightclick = function(pos, node, clicker, itemstack)
+		on_rightclick = function(pos, _, clicker)
 
-			if minetest.is_protected(pos, clicker:get_player_name()) then
+			local player_name = clicker:get_player_name()
+
+			if minetest.is_protected(pos, player_name) then
 				return
 			end
 
-			minetest.show_formspec(clicker:get_player_name(),
+			minetest.show_formspec(player_name,
 				"bees:hive_artificial",
 				hive_artificial(pos)
 			)
@@ -1067,7 +1074,7 @@ if minetest.get_modpath("pipeworks") then
 			end
 		end,
 
-		on_timer = function(pos,elapsed)
+		on_timer = function(pos)
 
 			local meta = minetest.get_meta(pos)
 			local inv = meta:get_inventory()
@@ -1097,7 +1104,7 @@ if minetest.get_modpath("pipeworks") then
 
 						local stacks = inv:get_list("frames")
 
-						for k, v in pairs(stacks) do
+						for k, _ in pairs(stacks) do
 
 							if inv:get_stack("frames", k):get_name() == "bees:frame_empty" then
 
@@ -1120,7 +1127,7 @@ if minetest.get_modpath("pipeworks") then
 			end
 		end,
 
-		on_metadata_inventory_take = function(pos, listname, index, stack, player)
+		on_metadata_inventory_take = function(pos, listname)
 
 			if listname == "queen" then
 
@@ -1133,7 +1140,7 @@ if minetest.get_modpath("pipeworks") then
 			end
 		end,
 
-		allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+		allow_metadata_inventory_move = function(pos, from_list, _, to_list, to_index)
 
 			local inv = minetest.get_meta(pos):get_inventory()
 
@@ -1149,7 +1156,7 @@ if minetest.get_modpath("pipeworks") then
 			end
 		end,
 
-		on_metadata_inventory_put = function(pos, listname, index, stack, player)
+		on_metadata_inventory_put = function(pos, listname, _, stack)
 
 			local meta = minetest.get_meta(pos)
 			local inv = meta:get_inventory()
@@ -1169,7 +1176,7 @@ if minetest.get_modpath("pipeworks") then
 			end
 		end,
 
-		allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+		allow_metadata_inventory_put = function(pos, listname, index, stack)
 
 			if not minetest.get_meta(pos):get_inventory():get_stack(listname, index):is_empty() then
 				return 0
@@ -1203,17 +1210,18 @@ if minetest.get_modpath("pipeworks") then
 end
 
 
+--
 -- LUCKY BLOCKS
+--
 
 if minetest.get_modpath("lucky_block") then
 
 	local add_bees = function(pos, player)
 
 		local objs = minetest.get_objects_inside_radius(pos, 15)
-		local violet = minetest.get_color_escape_sequence("#ff00ff")
 
 		minetest.chat_send_player(player:get_player_name(),
-			violet .. S("Bees! Bees for all!"))
+			minetest.colorize("violet", S("Bees! Bees for all!")))
 
 		for n = 1, #objs do
 

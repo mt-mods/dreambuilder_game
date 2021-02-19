@@ -119,8 +119,6 @@ minetest.register_node("mahogany:leaves", {
 	description = S("Mahogany Leaves"),
 	drawtype = "allfaces_optional",
 	tiles = {"mahogany_leaves.png"},
-	inventory_image = "mahogany_leaves.png",
-	wield_image = "mahogany_leaves.png",
 	paramtype = "light",
 	walkable = true,
 	waving = 1,
@@ -147,6 +145,7 @@ minetest.register_node("mahogany:creeper", {
 	paramtype = "light",
 	paramtype2 = "facedir",
 	tiles = {"mahogany_creeper.png"},
+	use_texture_alpha = true,
 	inventory_image = "mahogany_creeper.png",
 	wield_image = "mahogany_creeper.png",
 	node_box = {
@@ -166,6 +165,7 @@ minetest.register_node("mahogany:flower_creeper", {
 	paramtype = "light",
 	paramtype2 = "facedir",
 	tiles = {"mahogany_flower_creeper.png"},
+	use_texture_alpha = true,
 	inventory_image = "mahogany_flower_creeper.png",
 	wield_image = "mahogany_flower_creeper.png",
 	node_box = {
@@ -185,6 +185,7 @@ minetest.register_node("mahogany:hanging_creeper", {
 	paramtype = "light",
 	paramtype2 = "facedir",
 	tiles = {"mahogany_hanging_creeper.png"},
+	use_texture_alpha = true,
 	inventory_image = "mahogany_hanging_creeper.png",
 	wield_image = "mahogany_hanging_creeper.png",
 	node_box = {
