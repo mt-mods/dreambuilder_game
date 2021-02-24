@@ -378,8 +378,8 @@ paramat (CC BY-SA 3.0):
   acacia_bush.mts
   acacia_tree.mts
   acacia_tree_from_sapling.mts
-  apple_tree.mts
-  apple_tree_from_sapling.mts
+  default_tree.mts
+  default_tree_from_sapling.mts
   aspen_tree.mts
   aspen_tree_from_sapling.mts
   bush.mts
@@ -398,7 +398,7 @@ paramat (CC BY-SA 3.0):
 
 Shara RedCat (CC BY-SA 3.0):
   acacia_log.mts
-  apple_log.mts
+  default_log.mts
   aspen_log.mts
   jungle_log.mts
   pine_log.mts

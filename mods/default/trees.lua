@@ -124,7 +124,7 @@ local function add_trunk_and_leaves(data, a, pos, tree_cid, leaves_cid,
 	local x, y, z = pos.x, pos.y, pos.z
 	local c_air = minetest.get_content_id("air")
 	local c_ignore = minetest.get_content_id("ignore")
-	local c_apple = minetest.get_content_id("default:apple")
+	local c_apple = minetest.get_content_id("default:leaves")
 
 	-- Trunk
 	data[a:index(x, y, z)] = tree_cid -- Force-place lowest trunk node to replace sapling
@@ -393,7 +393,7 @@ end
 
 function default.grow_new_apple_tree(pos)
 	local path = minetest.get_modpath("default") ..
-		"/schematics/apple_tree_from_sapling.mts"
+		"/schematics/default_tree_from_sapling.mts"
 	minetest.place_schematic({x = pos.x - 3, y = pos.y - 1, z = pos.z - 3},
 		path, "random", nil, false)
 end

@@ -60,10 +60,32 @@ mv $workdir"/mods/dreambuilder_extras/dreambuilder_screenshot.png"    $workdir"/
 mv $workdir"/mods/dreambuilder_extras/dreambuilder_menu_icon.png"     $workdir"/menu/icon.png"
 mv $workdir"/mods/dreambuilder_extras/dreambuilder_menu_overlay.png"  $workdir"/menu/background.png"
 
+# Convert fake "apple" trees back into just normal default trees,
+# and don't let them spawn with apples.  Ever.
+
+mv $workdir"/mods/dreambuilder_extras/default_tree.mts"               $workdir"/mods/default/schematics/"
+mv $workdir"/mods/dreambuilder_extras/default_tree_from_sapling.mts"  $workdir"/mods/default/schematics/"
+
+mv $workdir"/mods/default/schematics/apple_log.mts" \
+   $workdir"/mods/default/schematics/default_log.mts"
+
+rm $workdir"/mods/default/schematics/apple_tree.mts"
+rm $workdir"/mods/default/schematics/apple_tree_from_sapling.mts"
+
+sed -i "s:/schematics/apple_tree_from_sapling.mts:/schematics/default_tree_from_sapling.mts:g" $workdir"/mods/default/trees.lua"
+sed -i "s:/schematics/apple_tree.mts:/schematics/default_tree.mts:" $workdir"/mods/default/mapgen.lua"
+sed -i "s:/schematics/apple_log.mts:/schematics/default_log.mts:" $workdir"/mods/default/mapgen.lua"
+
+sed -i 's/local c_apple = minetest.get_content_id("default:apple")/local c_apple = minetest.get_content_id("default:leaves")/' $workdir"/mods/default/trees.lua"
+
 sed -i 's/Apple Wood Planks/Wood Planks/g' $workdir"/mods/default/nodes.lua"
 sed -i 's/Apple Tree Leaves/Leaves/'       $workdir"/mods/default/nodes.lua"
 sed -i 's/Apple Tree Sapling/Sapling/'     $workdir"/mods/default/nodes.lua"
 sed -i 's/Apple Tree/Tree/'                $workdir"/mods/default/nodes.lua"
+
+sed -i "s/apple_tree.mts/default_tree.mts/"                           $workdir"/mods/default/README.txt"
+sed -i "s/apple_log.mts/default_log.mts/"                             $workdir"/mods/default/README.txt"
+sed -i "s/apple_tree_from_sapling.mts/default_tree_from_sapling.mts/" $workdir"/mods/default/README.txt"
 
 echo -e "\nBring all mods up-to-date from "$upstream_mods_path
 

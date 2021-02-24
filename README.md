@@ -17,7 +17,7 @@ This game is in use on my Creative server and on my Survival server, which also 
 * The default lavacooling code has been supplanted by better, safer code from my Gloopblocks mod. That mod also provides stone/cobble --> mossy stone/cobble transformation in the presence of water.
 * An extensive selection of administration tools for single-player and server use are included, such as areas, maptools, worldedit, xban, and more.
 * A few textures here and there are different.
-* The mapgen won't spawn apples on default trees, nor will they appear on a sapling-grown default tree. Only the *real* apple trees supplied by the Moretrees mod will bear apples (both at mapgen time and sapling-grown).  Or at least that's how it's supposed to work. :stuck_out_tongue:  While on that subject, apples now use a 3d model instead of the plantlike version.
+* The mapgen won't spawn apples on default trees, nor will they appear on a sapling-grown default tree. Only the *real* apple trees supplied by the Moretrees mod will bear apples (both at mapgen time and sapling-grown).  While on that subject, apples now use a 3d model instead of the plantlike version.
 
 ##  
 
