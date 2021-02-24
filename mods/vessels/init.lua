@@ -8,7 +8,10 @@ local S = minetest.get_translator("vessels")
 
 
 local vessels_shelf_formspec =
-	"size[8,7;]" ..
+	"size[8,7]" .. 
+	"bgcolor[#F0F0F0FF;false]" .. 
+	"image[-0.39,-0.4;10.7,9.1;vessels_inv_bg.png]" .. 
+	"listcolors[#00000000;#00000000;#00000000;#A0A0A0;#FFF]" ..
 	"list[context;vessels;0,0.3;8,2;]" ..
 	"list[current_player;main;0,2.85;8,1;]" ..
 	"list[current_player;main;0,4.08;8,3;8]" ..

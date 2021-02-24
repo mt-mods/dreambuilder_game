@@ -11,7 +11,9 @@ local tube_entry = "^pipeworks_tube_connection_stony.png"
 
 local function active_formspec(fuel_percent, item_percent, pos, meta)
 	local formspec =
-		"size[8,8.5]"..
+		"size[8,8.5]".. 
+		"image[-0.39,-0.4;10.7,10.9;default_furnace_inv_bg.png]" .. 
+		"listcolors[#00000000;#00000000;#00000000;#A0A0A0;#FFF]" ..
 		default.gui_bg..
 		default.gui_bg_img..
 		default.gui_slots..
@@ -44,7 +46,9 @@ local function active_formspec(fuel_percent, item_percent, pos, meta)
 end
 
 local function inactive_formspec(pos, meta)
-	local formspec = "size[8,8.5]"..
+	local formspec = "size[8,8.5]".. 
+		"image[-0.39,-0.4;10.7,10.9;default_furnace_inv_bg.png]" .. 
+		"listcolors[#00000000;#00000000;#00000000;#A0A0A0;#FFF]" ..
 	default.gui_bg..
 	default.gui_bg_img..
 	default.gui_slots..

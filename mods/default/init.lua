@@ -17,7 +17,14 @@ minetest.register_on_joinplayer(function(player)
 	-- Set formspec prepend
 	local formspec = [[
 			bgcolor[#080808BB;true]
-			listcolors[#00000069;#5A5A5A;#141318;#30434C;#FFF] ]]
+			listcolors[#FFFFFF30;#B0B0B0;#606060;#A0A0A0;#FFF] 
+			style_type[button;bgcolor=#B0B0B0FF] 
+			style_type[button_exit;bgcolor=#B0B0B0FF] 
+			style_type[image_button;bgcolor=#B0B0B0FF] 
+			style_type[image_button_exit;bgcolor=#B0B0B0FF] 
+			style_type[item_image_button;bgcolor=#B0B0B0FF] 
+			style_type[scrollbar;bgimg=#808080FF;fgimg=#606060FF;border=true] 
+	      ]]
 	local name = player:get_player_name()
 	local info = minetest.get_player_information(name)
 	if info.formspec_version > 1 then

@@ -50,15 +50,15 @@ rm $workdir"/README.md" \
    $workdir"/menu/icon.png" \
    $workdir"/menu/header.png"
 
-mv $workdir"/mods/dreambuilder_extras/README.md"                      $workdir
-mv $workdir"/mods/dreambuilder_extras/default_README.txt"             $workdir"/mods/default/README.txt"
-mv $workdir"/mods/dreambuilder_extras/game.conf"                      $workdir
-mv $workdir"/mods/dreambuilder_extras/minetest.conf"                  $workdir
-mv $workdir"/mods/dreambuilder_extras/minetest.conf.example"          $workdir
-mv $workdir"/mods/dreambuilder_extras/settingtypes.txt"               $workdir
-mv $workdir"/mods/dreambuilder_extras/dreambuilder_screenshot.png"    $workdir"/screenshot.png"
-mv $workdir"/mods/dreambuilder_extras/dreambuilder_menu_icon.png"     $workdir"/menu/icon.png"
-mv $workdir"/mods/dreambuilder_extras/dreambuilder_menu_overlay.png"  $workdir"/menu/background.png"
+mv $workdir"/mods/dreambuilder_extras/README.md"                        $workdir
+mv $workdir"/mods/dreambuilder_extras/default_README.txt"               $workdir"/mods/default/README.txt"
+mv $workdir"/mods/dreambuilder_extras/game.conf"                        $workdir
+mv $workdir"/mods/dreambuilder_extras/minetest.conf"                    $workdir
+mv $workdir"/mods/dreambuilder_extras/minetest.conf.example"            $workdir
+mv $workdir"/mods/dreambuilder_extras/settingtypes.txt"                 $workdir
+mv $workdir"/mods/dreambuilder_extras/dreambuilder_screenshot.png"      $workdir"/screenshot.png"
+mv $workdir"/mods/dreambuilder_extras/dreambuilder_menu_icon.png"       $workdir"/menu/icon.png"
+mv $workdir"/mods/dreambuilder_extras/dreambuilder_menu_overlay.png"    $workdir"/menu/background.png"
 
 # Convert fake "apple" trees back into just normal default trees,
 # and don't let them spawn with apples.  Ever.
@@ -101,7 +101,6 @@ my_mods/moretrees \
 my_mods/misc_overrides \
 my_mods/nixie_tubes \
 my_mods/led_marquee \
-my_mods/pipeworks \
 my_mods/signs_lib \
 my_mods/basic_signs \
 my_mods/street_signs \
@@ -118,7 +117,6 @@ Sokomines_mods/travelnet \
 Sokomines_mods/windmill \
 RBAs_mods/datastorage \
 RBAs_mods/framedglass \
-RBAs_mods/unified_inventory \
 Mossmanikins_mods/memorandum \
 cheapies_mods/plasticbox \
 cheapies_mods/prefab_redo \
@@ -158,19 +156,20 @@ Calinous_mods/moreblocks \
 CWzs_mods/replacer \
 CWzs_mods/player_textures \
 bobblocks \
-unifiedbricks"
+unifiedbricks \
+my_mods/pipeworks \
+RBAs_mods/unified_inventory"
 
 LINK_MODPACKS_LIST="$(ls -d my_mods/homedecor_modpack/*/) \
 $(ls -d my_mods/plantlife_modpack/*/) \
 $(ls -d Zeg9s_mods/ufos/*/) \
-$(ls -d Jeijas_mods/mesecons/*/) \
 $(ls -d cheapies_mods/roads/*/) \
 $(ls -d cool_trees/*/)"
 
 COPY_MODPACKS_LIST="$(ls -d RBAs_mods/technic/*/) \
 $(ls -d Philipbenrs_mods/castle-modpack/*/) \
-$(ls -d worldedit/*/)"
-
+$(ls -d worldedit/*/) \
+$(ls -d Jeijas_mods/mesecons/*/)"
 
 for i in $LINK_MODS_LIST; do
 	ln -s $upstream_mods_path"/"$i $workdir/mods
@@ -218,6 +217,61 @@ sed -i "s/LOAD_OTHERGEN_MODULE = true/LOAD_OTHERGEN_MODULE = false/" \
 
 rm -rf $workdir/mods/worldedit_brush
 
+# Create the standard in-game lightly-shaded theme, and expand on it
+
+rm $workdir"/mods/default/textures/gui_formbg.png"
+
+inv_slot_colors="\"listcolors\[#00000000;#00000000;#00000000;#A0A0A0;#FFF\]\" .."
+          form_bgcolor="#F0F0F0FF"
+             btn_color="#B0B0B0FF"
+     editor_text_color="#000000FF"
+       editor_bg_color="#F0F0F0FF"
+       scrollbar_color="#808080FF"
+scrollbar_handle_color="#606060FF"
+
+sed -i 's/"field\[.*\]"/ \
+\t\t\t"formspec_version[4]".. \
+\t\t\t"size[8,4]".. \
+\t\t\t"button_exit[3,2.5;2,0.5;proceed;Proceed]".. \
+\t\t\t"field[1.75,1.5;4.5,0.5;channel;Channel;$\{channel\}]" \
+\t\t/' \
+       $workdir"/mods/technic/machines/switching_station.lua"
+
+sed -i "s/listcolors\[.*\]/listcolors[#FFFFFF30;#B0B0B0;#606060;#A0A0A0;#FFF] \
+\n\t\t\tstyle_type[button;bgcolor="$btn_color"] \
+\n\t\t\tstyle_type[button_exit;bgcolor="$btn_color"] \
+\n\t\t\tstyle_type[image_button;bgcolor="$btn_color"] \
+\n\t\t\tstyle_type[image_button_exit;bgcolor="$btn_color"] \
+\n\t\t\tstyle_type[item_image_button;bgcolor="$btn_color"] \
+\n\t\t\tstyle_type[scrollbar;bgimg="$scrollbar_color";fgimg="$scrollbar_handle_color";border=true] \
+\n\t      ]]/" \
+       $workdir"/mods/default/init.lua"
+
+sed -i 's/"style_type\[.*\]"/"style_type[label,textarea;font=mono]" \
+\t\t.."style_type[textarea;textcolor='"$editor_text_color"';border=false]" \
+\t\t.."bgcolor['"$form_bgcolor"';false]"/' \
+       $workdir"/mods/mesecons_luacontroller/init.lua"
+
+sed -i 's/local n = 4/formspec[4]="style_type[image_button;bgimg=standard_image_button.png;bgimg_hovered=standard_image_button_brighter.png]" \
+\tlocal n = 5/' \
+    $workdir"/mods/unified_inventory/internal.lua"
+
+sed -i 's/"size\[8,9\]" \.\./"size[8,9]" .. \
+\t\t"image[-0.39,-0.4;10.7,11.4;default_chest_inv_bg.png]" .. \
+\t\t'"$inv_slot_colors"'/' \
+    $workdir"/mods/pipeworks/compat-chests.lua"
+
+sed -i 's/"size\[8,8.5\]"\.\./"size[8,8.5]".. \
+\t\t"image[-0.39,-0.4;10.7,10.9;default_furnace_inv_bg.png]" .. \
+\t\t'"$inv_slot_colors"'/' \
+    $workdir"/mods/pipeworks/compat-furnaces.lua"
+
+sed -i 's/"size\[8,7;\]" ../"size[8,7]" .. \
+\t"bgcolor['"$form_bgcolor"';false]" .. \
+\t"image[-0.39,-0.4;10.7,9.1;vessels_inv_bg.png]" .. \
+\t'"$inv_slot_colors"'/' \
+    $workdir"/mods/vessels/init.lua"
+
 # Add in all of the regular player skins for the player_textures mod
 
 rm -f $workdir/mods/player_textures/textures/*
@@ -244,6 +298,8 @@ rsync -aL \
 
 rm -rf $workdir*
 
-echo -e "\nCustomization completed.  Here's what will be included in the game:\n"
 
-ls -a $game_path $game_path/mods
+echo -e "\nCustomization completed.\n"
+
+#echo -e "Here's what will be included in the game:\n"
+#ls -a $game_path $game_path/mods

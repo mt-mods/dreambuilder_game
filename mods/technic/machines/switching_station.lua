@@ -44,7 +44,12 @@ minetest.register_node("technic:switching_station",{
 		meta:set_string("infotext", S("Switching Station"))
 		meta:set_string("active", 1)
 		meta:set_string("channel", "switching_station"..minetest.pos_to_string(pos))
-		meta:set_string("formspec", "field[channel;Channel;${channel}]")
+		meta:set_string("formspec",  
+			"formspec_version[4]".. 
+			"size[8,4]".. 
+			"button_exit[3,2.5;2,0.5;proceed;Proceed]".. 
+			"field[1.75,1.5;4.5,0.5;channel;Channel;${channel}]" 
+		)
 		local poshash = minetest.hash_node_position(pos)
 		technic.redundant_warn.poshash = nil
 	end,

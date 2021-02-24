@@ -67,7 +67,8 @@ function unified_inventory.get_formspec(player, page)
 		pagedef.formspec_prepend and "" or "no_prepend[]",
 		"background[-0.19,-0.25;14.4,10.75;ui_form_bg.png]" -- Background
 	}
-	local n = 4
+	formspec[4]="style_type[image_button;bgimg=standard_image_button.png;bgimg_hovered=standard_image_button_brighter.png]" 
+	local n = 5
 
 	if draw_lite_mode then
 		formspec[1] = "size[11,7.7]"
