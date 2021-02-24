@@ -1,0 +1,8 @@
+How to use the card reader:
+After setting a channel, swiping a card (punch the reader with the card to swipe) will send a message in the following format:
+	{event = "read",data = "The data that was on the card"}
+To write a card, send a command in the following format:
+	{command = "write",data = "The data to put on the card",description = "A description of what the card is for"}
+After sending the write command, swipe the card to be written and the reader will send back the following message:
+	{event = "write"}
+Both blank and previously written cards can be written to. If the card was not blank, it will be overwritten.

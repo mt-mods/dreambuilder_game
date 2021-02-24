@@ -1,0 +1,2 @@
+How to use the NIC:
+Send a digilines signal with the URL you want to download. The HTTPRequestResult table will be sent back on the same channel.

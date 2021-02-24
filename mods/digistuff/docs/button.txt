@@ -1,0 +1,6 @@
+How to use digilines buttons:
+Connect to a digiline (or digimese), right-click, and set a channel and message.
+When the button is pressed (right-click), it will send that message on that channel, over digilines.
+If the "Protected" checkbox is checked, only players allowed to interact in the area can push the button.
+If the "Manual Light Control" checkbox is checked, the light will not illuminate automatically when the button is pushed - use the "light_on" and "light_off" commands to control it.
+Note that the settings cannot be changed after setting - you must dig and re-place the button to do so.

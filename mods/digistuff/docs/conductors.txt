@@ -1,0 +1,12 @@
+How to use digimese:
+It conducts digilines signals (like digilines) in all directions (like mese). That's about it, really.
+
+
+How to use vertical/insulated digilines:
+These work exactly like the mesecons equivalents, that is:
+Vertical digilines will automatically connect to other vertical digilines directly above or below them, and form "plates" on each end of the stack. Signals can only be conducted into or out of the stack at these "plates".
+Insulated digilines conduct like regular digilines, but only into/out of the ends of the "wire" or at locations where an intermediate connection has been placed.
+
+How to use the junction box:
+These are just plain digilines conductors (like digimese) but can skip over one node to another junction box or certain other nodes.
+As in, [digiline][junction box][dirt][junction box][digiline] will work to transmit signals "through" the dirt.

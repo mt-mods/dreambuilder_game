@@ -1,0 +1,3 @@
+How to use the I/O expander:
+After setting a channel, send a table (same format as a Luacontroller's "port" table) to set the output states.
+A table in this same format will be sent back whenever an input changes or you manually poll it by sending a "GET" message.

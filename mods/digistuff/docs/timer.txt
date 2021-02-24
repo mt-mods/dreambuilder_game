@@ -1,0 +1,2 @@
+How to use the timer:
+Send a number representing a time in seconds, from 0.5 to 3600. When the time expires, the timer will send "done" back on the same channel. If the loop feature is enabled (use the commands "loop_on" and "loop_off" to set this) the timer will automatically be set for the same time again each time it expires.

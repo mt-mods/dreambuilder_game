@@ -1,0 +1,3 @@
+How to use the camera:
+Set the channel, distance, and radius. The camera will search for a node "distance" meters away and up to 10m down.
+Every second while a player is within "radius" meters of that point, a table listing the players in range will be sent via digilines on the chosen channel.

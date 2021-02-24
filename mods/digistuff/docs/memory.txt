@@ -1,0 +1,7 @@
+How to use the RAM and EEPROM chips:
+First, set a channel.
+Messages should consist of a table, with "command" set to either "read" or "write". "address" should be set to the number (0-31) of the 512-character block to read or write, and if writing then "data" should contain the data to write.
+Example (to write - reading is similar, but with no data):
+	{command = "write",address = 7,data = "9a91a9e451b94dc262972557ab0d406f"}
+	
+The RAM and EEPROM chips behave identically, except that the RAM chip loses its contents when dug whereas the EEPROM does not.

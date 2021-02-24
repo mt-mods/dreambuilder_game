@@ -1,0 +1,8 @@
+How to use the game controller:
+After setting a channel, right-click the controller to start/stop using it.
+While using a controller, it will send a table with the control inputs, pitch, yaw, look vector, and name of the player using the controller each time one of these values changes, up to 5 times per second.
+When a player leaves a controller, the string "player_left" is sent.
+In addition to right-clicking the controller in use to stop using it, the following will also cause a player to stop using the controller:
+* The controller is moved or removed
+* The player leaves the game
+* The controller receives the string "release" on its digilines channel

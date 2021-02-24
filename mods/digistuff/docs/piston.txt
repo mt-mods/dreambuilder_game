@@ -1,0 +1,7 @@
+How to use the digilines pistons:
+The following commands are accepted as strings: "extend" (extend the piston), "retract" (retract the piston), and "retract_sticky" (retract the piston, pulling one node like a sticky piston)
+You can also send a command as a table. If so, the fields that can be used in the table are as follows:
+* action: "extend" or "retract"
+* max: The maximum number of nodes to push/pull, cannot be set higher than 16. Set to 0 (or omit) when retracting to perform a non-sticky retraction.
+* allsticky: Pull a whole stack of nodes (like movestone), not just one.
+* sound: The sound to make. "mesecons" for the mesecons piston sounds, "digilines" for the digilines piston sounds (default), or "none" for no sounds at all.

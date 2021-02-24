@@ -1,0 +1,5 @@
+How to use the wall knob:
+Connect to a digiline, right-click, and set the channel and the minimum and maximum values.
+Left-click to decrease the current setting or right-click to increase it. If the "protected" checkbox was checked, then only players allowed to interact in the area can do this.
+Each time the setting is changed, the new setting is sent on the selected channel.
+Note that the settings cannot be changed after setting - you must dig and re-place the knob to do so.

@@ -1,0 +1,16 @@
+How to use the digilines movestone:
+Commands for this node are in the form of a table, with the field "command" set to the desired action, and other fields providing parameters.
+The commands are as follows:
+* "getstate": Returns a table containing the following elements: "targetpos" (table representing the target position), "pos" (table representing the current position), and "moveaxis" (the current axis being moved along, nil if not moving)
+* "absmove": Moves to the absolute position specified by "x" "y" and "z". No axis can move more than 50m as a result of one command. If movements along more than one axis are needed, they are processed in alphabetical order (X,Y,Z).
+* "relmove": Same as absmove, but relative to the current position (for example, y=1 moves up 1m, not *to* Y=1)
+The available parameters for absmove and relmove are:
+* x: Target X position (for absmove) or target change in X position (for relmove)
+* y: Same, but for Y
+* z: Same, but for Z
+* sticky: Whether to pull nodes along behind the movestone
+* allsticky: Whether to pull a full stack of nodes like normal movestone (true) or just one like a sticky piston (false)
+* maxstack: The maximum number of nodes to push/pull, with the movestone itself counting as 1. Cannot be set higher than 50.
+* sound: "mesecons" to have the mesecons movestone sound play or "none" for no sound at all
+If any of x/y/z are omitted, then they default to the current position (for absmove) or 0 (for relmove).
+If any of maxstack/sticky/allsticky/sound are omitted, they default to the values last used.

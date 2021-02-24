@@ -1,1 +1,0 @@
-moreblocks.stairsplus_in_creative_inventory (Display Stairs+ nodes in creative inventory) bool false

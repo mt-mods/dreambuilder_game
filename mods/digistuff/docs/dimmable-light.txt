@@ -1,0 +1,2 @@
+How to use the dimmable lights:
+After setting the channel, send a number from 0 to 14 to set the light level.
