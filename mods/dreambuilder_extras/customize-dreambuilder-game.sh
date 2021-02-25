@@ -237,6 +237,14 @@ sed -i 's/"field\[.*\]"/ \
 \t\t/' \
        $workdir"/mods/technic/machines/switching_station.lua"
 
+sed -i 's/"field\[.*")/ \
+\t\t\t\t\t\t"formspec_version[4]".. \
+\t\t\t\t\t\t"size[8,4]".. \
+\t\t\t\t\t\t"button_exit[3,2.5;2,0.5;proceed;Proceed]".. \
+\t\t\t\t\t\t"field[1.75,1.5;4.5,0.5;channel;Digiline Channel;"..meta:get_string("channel").."]" \
+\t\t\t\t\t)/' \
+       $workdir"/mods/technic/machines/register/battery_box.lua"
+
 sed -i "s/listcolors\[.*\]/listcolors[#FFFFFF30;#B0B0B0;#606060;#A0A0A0;#FFF] \
 \n\t\t\tstyle_type[button;bgcolor="$btn_color"] \
 \n\t\t\tstyle_type[button_exit;bgcolor="$btn_color"] \

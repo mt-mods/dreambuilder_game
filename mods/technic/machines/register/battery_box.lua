@@ -337,7 +337,12 @@ function technic.register_battery_box(data)
 				if fields.edit_channel then
 					minetest.show_formspec(sender:get_player_name(),
 						"technic:battery_box_edit_channel"..minetest.pos_to_string(pos),
-						"field[channel;Digiline Channel;"..meta:get_string("channel").."]")
+						 
+						"formspec_version[4]".. 
+						"size[8,4]".. 
+						"button_exit[3,2.5;2,0.5;proceed;Proceed]".. 
+						"field[1.75,1.5;4.5,0.5;channel;Digiline Channel;"..meta:get_string("channel").."]" 
+					)
 				elseif fields["fs_helpers_cycling:0:split_src_stacks"]
 				  or   fields["fs_helpers_cycling:0:split_dst_stacks"]
 				  or   fields["fs_helpers_cycling:1:split_src_stacks"]
