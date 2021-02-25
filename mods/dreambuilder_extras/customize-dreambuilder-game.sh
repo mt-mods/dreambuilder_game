@@ -260,10 +260,6 @@ sed -i 's/"style_type\[.*\]"/"style_type[label,textarea;font=mono]" \
 \t\t.."bgcolor['"$form_bgcolor"';false]"/' \
        $workdir"/mods/mesecons_luacontroller/init.lua"
 
-sed -i 's/local n = 4/formspec[4]="style_type[image_button;bgcolor='"$btn_color"']" \
-\tlocal n = 5/' \
-    $workdir"/mods/unified_inventory/internal.lua"
-
 sed -i 's/"size\[8,9\]" \.\./"size[8,9]" .. \
 \t\t"image[-0.39,-0.4;10.7,11.4;default_chest_inv_bg.png]" .. \
 \t\t'"$inv_slot_colors"'/' \
@@ -279,6 +275,21 @@ sed -i 's/"size\[8,7;\]" ../"size[8,7]" .. \
 \t"image[-0.39,-0.4;10.7,9.1;vessels_inv_bg.png]" .. \
 \t'"$inv_slot_colors"'/' \
     $workdir"/mods/vessels/init.lua"
+
+rm $workdir"/mods/unified_inventory/textures/ui_bags_header.png" \
+   $workdir"/mods/unified_inventory/textures/ui_bags_inv"* \
+   $workdir"/mods/unified_inventory/textures/ui_bags_trash.png" \
+   $workdir"/mods/unified_inventory/textures/ui_crafting_form.png" \
+   $workdir"/mods/unified_inventory/textures/ui_form_bg.png" \
+   $workdir"/mods/unified_inventory/textures/ui_main_inventory.png" \
+   $workdir"/mods/unified_inventory/textures/ui_single_slot.png"
+
+mv $workdir"/mods/dreambuilder_extras/ui_"*".png" $workdir"/mods/unified_inventory/textures/"
+
+sed -i 's/local n = 4/formspec[4]="style_type[image_button;bgcolor='"$btn_color"']" \
+\tlocal n = 5/' \
+    $workdir"/mods/unified_inventory/internal.lua"
+
 
 # Add in all of the regular player skins for the player_textures mod
 
