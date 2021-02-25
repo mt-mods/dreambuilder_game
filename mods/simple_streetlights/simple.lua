@@ -41,7 +41,10 @@ if enable_digilines then
 	function ilights.digiline_on_use(itemstack, user, pointed_thing)
 		if user and user:get_player_control().sneak then
 			local name = user:get_player_name()
-			local form = "field[channel;Set a channel for future streetlights;]"
+			local form ="formspec_version[4]"..
+					"size[8,4]"..
+					"button_exit[3,2.5;2,0.5;proceed;Proceed]"..
+					"field[1.75,1.5;4.5,0.5;channel;Channel for future streetlights;]"
 			minetest.show_formspec(name, "simple_streetlights:set_channel", form)
 		end
 	end

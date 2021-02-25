@@ -141,7 +141,10 @@ if minetest.get_modpath("digilines") then
 			local name = puncher:get_player_name()
 			player_last_clicked[name] = pos
 			local meta = minetest.get_meta(pos)
-			local form = "field[channel;Channel;]"
+			local form = "formspec_version[4]"..
+					"size[8,4]"..
+					"button_exit[3,2.5;2,0.5;proceed;Proceed]"..
+					"field[1.75,1.5;4.5,0.5;channel;Channel;]"
 			minetest.show_formspec(name, "ilights:set_channel", form)
 		end
 	end

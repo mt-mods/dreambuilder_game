@@ -103,7 +103,12 @@ local char_to_color = {
 -- the following functions based on the so-named ones in Jeija's digilines mod
 
 local reset_meta = function(pos)
-	minetest.get_meta(pos):set_string("formspec", "field[channel;Channel;${channel}]")
+	minetest.get_meta(pos):set_string("formspec",
+			"formspec_version[4]"..
+			"size[8,4]"..
+			"button_exit[3,2.5;2,0.5;proceed;Proceed]"..
+			"field[1.75,1.5;4.5,0.5;channel;Channel;${channel}]"
+	)
 end
 
 local on_digiline_receive_std = function(pos, node, channel, msg)
