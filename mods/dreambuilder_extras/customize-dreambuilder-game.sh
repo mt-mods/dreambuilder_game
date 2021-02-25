@@ -248,9 +248,9 @@ sed -i 's/"field\[.*")/ \
 sed -i "s/listcolors\[.*\]/listcolors[#FFFFFF30;#B0B0B0;#606060;#A0A0A0;#FFF] \
 \n\t\t\tstyle_type[button;bgcolor="$btn_color"] \
 \n\t\t\tstyle_type[button_exit;bgcolor="$btn_color"] \
-\n\t\t\tstyle_type[image_button;bgcolor="$btn_color"] \
-\n\t\t\tstyle_type[image_button_exit;bgcolor="$btn_color"] \
-\n\t\t\tstyle_type[item_image_button;bgcolor="$btn_color"] \
+\n\t\t\tstyle_type[image_button;bgcolor="$btn_color";border=false] \
+\n\t\t\tstyle_type[image_button_exit;bgcolor="$btn_color";border=false] \
+\n\t\t\tstyle_type[item_image_button;bgcolor="$btn_color";border=false] \
 \n\t\t\tstyle_type[scrollbar;bgimg="$scrollbar_color";fgimg="$scrollbar_handle_color";border=true] \
 \n\t      ]]/" \
        $workdir"/mods/default/init.lua"
@@ -260,7 +260,7 @@ sed -i 's/"style_type\[.*\]"/"style_type[label,textarea;font=mono]" \
 \t\t.."bgcolor['"$form_bgcolor"';false]"/' \
        $workdir"/mods/mesecons_luacontroller/init.lua"
 
-sed -i 's/local n = 4/formspec[4]="style_type[image_button;bgimg=standard_image_button.png;bgimg_hovered=standard_image_button_brighter.png]" \
+sed -i 's/local n = 4/formspec[4]="style_type[image_button;bgcolor='"$btn_color"']" \
 \tlocal n = 5/' \
     $workdir"/mods/unified_inventory/internal.lua"
 

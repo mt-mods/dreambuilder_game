@@ -65,14 +65,14 @@ function unified_inventory.get_formspec(player, page)
 	local formspec = {
 		"size[14,10]",
 		pagedef.formspec_prepend and "" or "no_prepend[]",
-		"background[-0.19,-0.25;14.4,10.75;ui_form_bg.png]" -- Background
+		unified_inventory.standard_background -- Background
 	}
-	formspec[4]="style_type[image_button;bgimg=standard_image_button.png;bgimg_hovered=standard_image_button_brighter.png]" 
+	formspec[4]="style_type[image_button;bgcolor=#B0B0B0FF]" 
 	local n = 5
 
 	if draw_lite_mode then
 		formspec[1] = "size[11,7.7]"
-		formspec[3] = "background[-0.19,-0.2;11.4,8.4;ui_form_bg.png]"
+		formspec[3] = unified_inventory.standard_background
 	end
 
 	if unified_inventory.is_creative(player_name)
@@ -131,7 +131,7 @@ function unified_inventory.get_formspec(player, page)
 	if fsdata.draw_inventory ~= false then
 		-- Player inventory
 		formspec[n] = "listcolors[#00000000;#00000000]"
-		formspec[n+1] = "list[current_player;main;0,"..(ui_peruser.formspec_y + 3.5)..";8,4;]"
+		formspec[n+1] = string.gsub(unified_inventory.standard_inv, "YYY", ui_peruser.formspec_y + 3.5)
 		n = n+2
 	end
 

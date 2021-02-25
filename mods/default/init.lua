@@ -20,9 +20,9 @@ minetest.register_on_joinplayer(function(player)
 			listcolors[#FFFFFF30;#B0B0B0;#606060;#A0A0A0;#FFF] 
 			style_type[button;bgcolor=#B0B0B0FF] 
 			style_type[button_exit;bgcolor=#B0B0B0FF] 
-			style_type[image_button;bgcolor=#B0B0B0FF] 
-			style_type[image_button_exit;bgcolor=#B0B0B0FF] 
-			style_type[item_image_button;bgcolor=#B0B0B0FF] 
+			style_type[image_button;bgcolor=#B0B0B0FF;border=false] 
+			style_type[image_button_exit;bgcolor=#B0B0B0FF;border=false] 
+			style_type[item_image_button;bgcolor=#B0B0B0FF;border=false] 
 			style_type[scrollbar;bgimg=#808080FF;fgimg=#606060FF;border=true] 
 	      ]]
 	local name = player:get_player_name()
