@@ -246,6 +246,7 @@ sed -i 's/"field\[.*")/ \
        $workdir"/mods/technic/machines/register/battery_box.lua"
 
 sed -i "s/listcolors\[.*\]/listcolors[#FFFFFF30;#B0B0B0;#606060;#A0A0A0;#FFF] \
+\n\t\t\tbgcolor["$form_bgcolor";false] \
 \n\t\t\tstyle_type[button;bgcolor="$btn_color"] \
 \n\t\t\tstyle_type[button_exit;bgcolor="$btn_color"] \
 \n\t\t\tstyle_type[image_button;bgcolor="$btn_color";border=false] \
