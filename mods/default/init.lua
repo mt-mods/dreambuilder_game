@@ -16,9 +16,8 @@ default.get_translator = S
 minetest.register_on_joinplayer(function(player)
 	-- Set formspec prepend
 	local formspec = [[
-			bgcolor[#080808BB;true]
+			
 			listcolors[#FFFFFF30;#B0B0B0;#606060;#A0A0A0;#FFF] 
-			bgcolor[#F0F0F0FF;false] 
 			style_type[button;bgcolor=#B0B0B0FF] 
 			style_type[button_exit;bgcolor=#B0B0B0FF] 
 			style_type[image_button;bgcolor=#B0B0B0FF;border=false] 

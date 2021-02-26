@@ -245,8 +245,16 @@ sed -i 's/"field\[.*")/ \
 \t\t\t\t\t)/' \
        $workdir"/mods/technic/machines/register/battery_box.lua"
 
+sed -i 's/INSERT_BGCOLOR/default.gui_bg = "bgcolor['"$form_bgcolor"';false]"/' \
+        $workdir"/mods/dreambuilder_extras/init.lua"
+
+sed -i "s/bgcolor\[.*\]//" \
+        $workdir"/mods/default/init.lua"
+
+sed -i "s/bgcolor\[.*\]//" \
+        $workdir"/mods/beds/init.lua"
+
 sed -i "s/listcolors\[.*\]/listcolors[#FFFFFF30;#B0B0B0;#606060;#A0A0A0;#FFF] \
-\n\t\t\tbgcolor["$form_bgcolor";false] \
 \n\t\t\tstyle_type[button;bgcolor="$btn_color"] \
 \n\t\t\tstyle_type[button_exit;bgcolor="$btn_color"] \
 \n\t\t\tstyle_type[image_button;bgcolor="$btn_color";border=false] \
@@ -257,8 +265,7 @@ sed -i "s/listcolors\[.*\]/listcolors[#FFFFFF30;#B0B0B0;#606060;#A0A0A0;#FFF] \
        $workdir"/mods/default/init.lua"
 
 sed -i 's/"style_type\[.*\]"/"style_type[label,textarea;font=mono]" \
-\t\t.."style_type[textarea;textcolor='"$editor_text_color"';border=false]" \
-\t\t.."bgcolor['"$form_bgcolor"';false]"/' \
+\t\t.."style_type[textarea;textcolor='"$editor_text_color"';border=false]"/' \
        $workdir"/mods/mesecons_luacontroller/init.lua"
 
 sed -i 's/"size\[8,9\]" \.\./"size[8,9]" .. \
@@ -272,7 +279,6 @@ sed -i 's/"size\[8,8.5\]"\.\./"size[8,8.5]".. \
     $workdir"/mods/pipeworks/compat-furnaces.lua"
 
 sed -i 's/"size\[8,7;\]" ../"size[8,7]" .. \
-\t"bgcolor['"$form_bgcolor"';false]" .. \
 \t"image[-0.39,-0.4;10.7,9.1;vessels_inv_bg.png]" .. \
 \t'"$inv_slot_colors"'/' \
     $workdir"/mods/vessels/init.lua"

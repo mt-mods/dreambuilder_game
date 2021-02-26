@@ -3,7 +3,7 @@
 --
 -- by Vanessa Dannenberg
 
-default.gui_bg = "bgcolor[#08080899;false]"
+default.gui_bg = "bgcolor[#F0F0F0FF;false]"
 
 default.gui_survival_form = "size[8,8.5]"..
 			default.gui_bg..
