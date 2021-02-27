@@ -169,10 +169,7 @@ Each of the base mods in this game retains the standard license that its author 
 
 # Open Source Software
 This game is open source, or at least as much so as I have control over. Since it started from the standard minetest_game distribution, you'll want to look at that. You can find it at its usual Github repository, here:
-[url]https://github.com/minetest/minetest_game[/url]
-
-An online copy of the archive of mods the game is built from can be found here (with full git histories, including my changes and any files that went missing from the completed game, where applicable):
-[url]http://minetest.daconcepts.com/my-main-mod-archive/[/url]
+https://github.com/minetest/minetest_game
 
 # Notes:
 For best results, I recommend adding the following to your minetest.conf (perhaps to a secondary copy of that file that you only use when playing worlds with this game):
