@@ -6,6 +6,7 @@ echo -e "=================================================================\n"
 /home/vanessa/Minetest-related/Scripts/customize-dreambuilder-game.sh
 
 timestamp=`date +%Y%m%d-%H%M`
+echo $timestamp > /home/vanessa/Minetest-related/mods/my_mods/dreambuilder_game/build-date
 
 echo -e "\nUpdate git repos..."
 echo -e "=================================================================\n"
