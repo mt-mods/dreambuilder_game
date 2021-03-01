@@ -137,7 +137,8 @@ caverealms_lite \
 deezls_mods/extra_stairsplus \
 blox \
 new_campfire \
-item_drop"
+item_drop \
+Zeg9s_mods/ufos/ufos"
 
 COPY_MODS_LIST="
 nekogloops_mods/glooptest \
@@ -151,14 +152,13 @@ RBAs_mods/unified_inventory"
 
 LINK_MODPACKS_LIST="$(ls -d my_mods/homedecor_modpack/*/) \
 $(ls -d my_mods/plantlife_modpack/*/) \
-$(ls -d Zeg9s_mods/ufos/*/) \
-$(ls -d cheapies_mods/roads/*/) \
-$(ls -d cool_trees/*/)"
+$(ls -d cheapies_mods/roads_modpack/*/) \
+$(ls -d cool_trees_modpack/*/)"
 
-COPY_MODPACKS_LIST="$(ls -d RBAs_mods/technic/*/) \
+COPY_MODPACKS_LIST="$(ls -d RBAs_mods/technic_modpack/*/) \
 $(ls -d Philipbenrs_mods/castle-modpack/*/) \
-$(ls -d worldedit/*/) \
-$(ls -d Jeijas_mods/mesecons/*/)"
+$(ls -d worldedit_modpack/*/) \
+$(ls -d Jeijas_mods/mesecons_modpack/*/)"
 
 for i in $LINK_MODS_LIST; do
 	ln -s $upstream_mods_path"/"$i $workdir/mods
