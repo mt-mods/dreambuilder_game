@@ -8,17 +8,6 @@ upstream_mods_path="/home/vanessa/Minetest-related/mods"
 minetest_game_path="/home/vanessa/Minetest-related/games/minetest_game/"
 game_path=$upstream_mods_path"/my_mods/dreambuilder_game"
 
-if [ ! -d "$upstream_mods_path" ] ; then
-	if [ ! -z $2 ] ; then
-		upstream_mods_path=$1
-		minetest_game_path=$2
-	else
-		echo "Script does not appear to be running on Vanessa's PC, so you must supply mod and game paths."
-		echo -e "\nUsage:  customize-dreambuilder-game.sh <mods path> <minetest_game path>"
-		exit 1
-	fi
-fi
-
 workdir="/run/shm/dreambuilder_game"
 
 echo -e "\nSetting up..."
