@@ -268,6 +268,41 @@ local function runcommand(pos,meta,command)
 			end
 		end
 		meta:set_string("buffer"..bufnum,minetest.serialize(buffer))
+	elseif command.command == "drawline" then
+		if type(command.buffer) ~= "number" or type(command.x1) ~= "number" or type(command.y1) ~= "number" or type(command.x2) ~= "number" or type(command.y2) ~= "number" then return end
+		local bufnum = math.floor(command.buffer)
+		if bufnum < 0 or bufnum > 7 then return end
+		local x1 = math.min(64,math.floor(command.x1))
+		local y1 = math.min(64,math.floor(command.y1))
+		local x2 = math.min(64,math.floor(command.x2))
+		local y2 = math.min(64,math.floor(command.y2))
+		if x1 < 1 or y1 < 1 or x2 < 1 or y2 < 1 then return end
+		local buffer = meta:get_string("buffer"..bufnum)
+		if string.len(buffer) == 0 then return end
+		buffer = minetest.deserialize(buffer)
+		if type(buffer) ~= "table" then return end
+		x2 = math.min(x2,buffer.xsize)
+		y2 = math.min(y2,buffer.ysize)
+		local color = command.color
+		if type(color) ~= "string" or string.len(color) > 7 or string.len(color) < 6 then color = "000000" end
+		if string.sub(color,1,1) == "#" then color = string.sub(color,2,7) end
+		if not tonumber(color,16) then color = "000000" end
+		local p1 = vector.new(x1,y1,0)
+		local p2 = vector.new(x2,y2,0)
+		local length = vector.distance(p1,p2)
+		local dir = vector.direction(p1,p2)
+		if length > 0 then
+			for i=0,length,0.3 do
+				local point = vector.add(p1,vector.multiply(dir,i))
+				point = vector.floor(point)
+				if command.antialias then
+					buffer[point.y][point.x] = blend(buffer[point.y][point.x],color,"average")
+				else
+					buffer[point.y][point.x] = color
+				end
+			end
+		end
+		meta:set_string("buffer"..bufnum,minetest.serialize(buffer))
 	elseif command.command == "drawpoint" then
 		if type(command.buffer) ~= "number" or type(command.x) ~= "number" or type(command.y) ~= "number" then return end
 		local bufnum = math.floor(command.buffer)

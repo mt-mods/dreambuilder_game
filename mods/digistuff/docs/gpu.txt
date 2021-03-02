@@ -23,7 +23,7 @@ Parameters:
 buffer [integer 0-7]: The slot number to create the new buffer in. If the slot is already occupied, the existing contents will be erased.
 xsize [integer 1-64]: The width of the new buffer in pixels.
 ysize [integer 1-64]: The height of the new buffer in pixels.
-color [hex color, default "000000"]: A color to fill the new buffer with.
+fill [hex color, default "000000"]: A color to fill the new buffer with.
 
 Command: send
 -------------
@@ -133,3 +133,17 @@ x [integer 1-64]: The X position of the left side of the text.
 y [integer 1-64]: The Y position of the right side of the text.
 color [hex color, default "ff6600"]: The color of the text.
 text: The text string to draw.
+
+Command: drawline
+-----------------
+
+Draws a line on a buffer.
+
+Parameters:
+buffer [integer 0-7]: The buffer to draw the line on.
+x1 [integer 1-64]: The X position of the start of the line.
+x2 [integer 1-64]: The X position of the end of the line.
+y1 [integer 1-64]: The Y position of the start of the line.
+y2 [integer 1-64]: The Y position of the end of the line.
+color [hex color, default "000000"]: The nominal color of the line (may not be the color of every pixel, see the "antialias" setting)
+antialias [boolean, default false]: Whether to apply a (very) crude smoothing algorithm to the line to reduce jagged edges at the expense of making the line slightly blurry.

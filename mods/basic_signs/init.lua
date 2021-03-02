@@ -23,6 +23,7 @@ signs_lib.register_sign("basic_signs:sign_wall_locked", {
 	allow_onpole = true,
 	allow_onpole_horizontal = true,
 	allow_yard = true,
+	use_texture_alpha = "clip",
 })
 
 signs_lib.register_sign("basic_signs:sign_wall_glass", {
@@ -45,7 +46,7 @@ signs_lib.register_sign("basic_signs:sign_wall_glass", {
 	allow_onpole = true,
 	allow_onpole_horizontal = true,
 	allow_yard = true,
-	use_texture_alpha = true,
+	use_texture_alpha = "blend",
 })
 
 signs_lib.register_sign("basic_signs:sign_wall_obsidian_glass", {
@@ -68,7 +69,7 @@ signs_lib.register_sign("basic_signs:sign_wall_obsidian_glass", {
 	allow_onpole = true,
 	allow_onpole_horizontal = true,
 	allow_yard = true,
-	use_texture_alpha = true,
+	use_texture_alpha = "blend",
 })
 
 minetest.register_alias("locked_sign:sign_wall_locked", "basic_signs:sign_wall_locked")
@@ -93,7 +94,7 @@ signs_lib.register_sign("basic_signs:sign_wall_plastic", {
 	allow_onpole = true,
 	allow_onpole_horizontal = true,
 	allow_yard = true,
-	use_texture_alpha = true,
+	use_texture_alpha = "clip",
 })
 
 -- array : color, translated color, default text color
@@ -137,6 +138,7 @@ for i, color in ipairs(sign_colors) do
 		allow_onpole = true,
 		allow_onpole_horizontal = true,
 		allow_yard = true,
+		use_texture_alpha = "clip",
 	})
 
 	minetest.register_alias("basic_signs:sign_wall_steel_"..color[1].."_onpole",       "basic_signs:sign_steel_"..color[1].."_onpole")
