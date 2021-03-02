@@ -36,10 +36,10 @@ local cbox = {
 }
 
 minetest.register_node("computer:3dprinter_bedflinger", {
-	description = S('3D Printer ("bedflinger")'),
+	description = S('3D Printer ("bedflinger" design)'),
 	inventory_image = "computer_3dprinter_bedflinger_inv.png",
 	tiles = {
-		{ name = "computer_3dprinter_bedflinger.png", color = 0xffffffff },
+		{ name = "computer_3dprinter.png", color = 0xffffffff },
 		"computer_3dprinter_filament.png"
 	},
 	paramtype = "light",
@@ -59,3 +59,32 @@ minetest.register_node("computer:3dprinter_bedflinger", {
 	on_rotate = unifieddyes.fix_after_screwdriver_nsew,
 })
 
+-- COreXY style printer (Hypercube or similar)
+
+cbox = {
+	type = "fixed",
+	fixed = {-0.4375, -0.5, -0.5, 0.4375, 0.5, 0.375 }
+}
+
+minetest.register_node("computer:3dprinter_corexy", {
+	description = S('3D Printer (CoreXY design)'),
+	tiles = {
+		{ name = "computer_3dprinter.png", color = 0xffffffff },
+		"computer_3dprinter_filament.png"
+	},
+	paramtype = "light",
+	walkable = true,
+	groups = {snappy=3, ud_param2_colorable = 1},
+	sound = default.node_sound_wood_defaults(),
+	drawtype = "mesh",
+	mesh = "computer_3dprinter_corexy.obj",
+	paramtype2 = "colorwallmounted",
+	palette = "unifieddyes_palette_colorwallmounted.png",
+	selection_box = cbox,
+	collision_box = cbox,
+	after_place_node = function(pos, placer, itemstack, pointed_thing)
+		unifieddyes.fix_rotation_nsew(pos, placer, itemstack, pointed_thing)
+	end,
+	on_dig = unifieddyes.on_dig,
+	on_rotate = unifieddyes.fix_after_screwdriver_nsew,
+})
