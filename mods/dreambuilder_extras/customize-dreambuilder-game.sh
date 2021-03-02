@@ -151,6 +151,7 @@ my_mods/pipeworks \
 RBAs_mods/unified_inventory"
 
 LINK_MODPACKS_LIST="$(ls -d my_mods/homedecor_modpack/*/) \
+$(ls -d my_mods/home_workshop_modpack/*/) \
 $(ls -d my_mods/plantlife_modpack/*/) \
 $(ls -d cheapies_mods/roads_modpack/*/) \
 $(ls -d cool_trees_modpack/*/)"
