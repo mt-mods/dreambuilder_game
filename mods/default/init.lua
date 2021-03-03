@@ -15,16 +15,20 @@ default.get_translator = S
 -- GUI related stuff
 minetest.register_on_joinplayer(function(player)
 	-- Set formspec prepend
-	local formspec = [[
-			
-			listcolors[#FFFFFF30;#B0B0B0;#606060;#A0A0A0;#FFF] 
-			style_type[button;bgcolor=#B0B0B0FF] 
-			style_type[button_exit;bgcolor=#B0B0B0FF] 
-			style_type[image_button;bgcolor=#B0B0B0FF;border=false] 
-			style_type[image_button_exit;bgcolor=#B0B0B0FF;border=false] 
-			style_type[item_image_button;bgcolor=#B0B0B0FF;border=false] 
-			style_type[scrollbar;bgimg=#808080FF;fgimg=#606060FF;border=true] 
-	      ]]
+		local formspec = 
+			"listcolors["..dreambuilder.listcolor_slot_bg_normal..
+			";"..dreambuilder.listcolor_slot_bg_hover..
+			";"..dreambuilder.listcolor_slot_border..
+			";"..dreambuilder.tooltip_bgcolor..
+			";"..dreambuilder.tooltip_fontcolor.."]"..
+			"style_type[button;bgcolor="..dreambuilder.form_bgcolor.."]"..
+			"style_type[button_exit;bgcolor="..dreambuilder.form_bgcolor.."]"..
+			"style_type[image_button;bgcolor="..dreambuilder.form_bgcolor..
+				";border="..dreambuilder.image_button_borders.."]"..
+			"style_type[image_button_exit;bgcolor="..dreambuilder.form_bgcolor..
+				";border="..dreambuilder.image_button_borders.."]"..
+			"style_type[item_image_button;bgcolor="..dreambuilder.form_bgcolor..
+				";border="..dreambuilder.image_button_borders.."]"
 	local name = player:get_player_name()
 	local info = minetest.get_player_information(name)
 	if info.formspec_version > 1 then
@@ -47,7 +51,10 @@ function default.get_hotbar_bg(x,y)
 	return out
 end
 
+default.gui_bg = "bgcolor["..dreambuilder.form_bgcolor..";"..dreambuilder.window_darken.."]"
+
 default.gui_survival_form = "size[8,8.5]"..
+			default.gui_bg..
 			"list[current_player;main;0,4.25;8,1;]"..
 			"list[current_player;main;0,5.5;8,3;8]"..
 			"list[current_player;craft;1.75,0.5;3,3;]"..

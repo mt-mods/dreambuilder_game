@@ -67,7 +67,7 @@ function unified_inventory.get_formspec(player, page)
 		pagedef.formspec_prepend and "" or "no_prepend[]",
 		unified_inventory.standard_background -- Background
 	}
-	formspec[4]="style_type[image_button;bgcolor=#B0B0B0FF]" 
+	formspec[4]="style_type[image_button;bgcolor="..dreambuilder.form_bgcolor.."]"
 	local n = 5
 
 	if draw_lite_mode then

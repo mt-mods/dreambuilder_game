@@ -665,7 +665,7 @@ local function reset_formspec(meta, code, errmsg)
 	errmsg = minetest.formspec_escape(tostring(errmsg or ""))
 	meta:set_string("formspec", "size[12,10]"
 		.."style_type[label,textarea;font=mono]" 
-		.."style_type[textarea;textcolor=#000000FF;border=false]"
+		.."style_type[textarea;textcolor="..dreambuilder.form_bgcolor..";border="..dreambuilder.editor_border.."]"
 		.."background[-0.2,-0.25;12.4,10.75;jeija_luac_background.png]"
 		.."label[0.1,8.3;"..errmsg.."]"
 		.."textarea[0.2,0.2;12.2,9.5;code;;"..code.."]"

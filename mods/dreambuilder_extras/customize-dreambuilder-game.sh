@@ -14,6 +14,7 @@ echo -e "\nSetting up..."
 
 rm -rf $game_path/* $workdir*
 mkdir $workdir
+rm -f /tmp/herefile*
 
 echo -e "\nAdding minetest_game as the base..."
 
@@ -42,7 +43,6 @@ rm $workdir"/README.md" \
 mv $workdir"/mods/dreambuilder_extras/README.md"                        $workdir
 mv $workdir"/mods/dreambuilder_extras/default_README.txt"               $workdir"/mods/default/README.txt"
 mv $workdir"/mods/dreambuilder_extras/game.conf"                        $workdir
-mv $workdir"/mods/dreambuilder_extras/minetest.conf"                    $workdir
 mv $workdir"/mods/dreambuilder_extras/minetest.conf.example"            $workdir
 mv $workdir"/mods/dreambuilder_extras/settingtypes.txt"                 $workdir
 mv $workdir"/mods/dreambuilder_extras/dreambuilder_screenshot.png"      $workdir"/screenshot.png"
@@ -207,17 +207,76 @@ sed -i "s/LOAD_OTHERGEN_MODULE = true/LOAD_OTHERGEN_MODULE = false/" \
 
 rm -rf $workdir/mods/worldedit_brush
 
-# Create the standard in-game lightly-shaded theme, and expand on it
+# Create the standard in-game lightly-shaded theme, expand on it, make it user-configurable
 
-rm $workdir"/mods/default/textures/gui_formbg.png"
+cat > /tmp/listcolors << 'EOF'
+			"listcolors["..dreambuilder.listcolor_slot_bg_normal..
+			";"..dreambuilder.listcolor_slot_bg_hover..
+			";"..dreambuilder.listcolor_slot_border..
+			";"..dreambuilder.tooltip_bgcolor..
+			";"..dreambuilder.tooltip_fontcolor.."]"..
+EOF
 
-inv_slot_colors="\"listcolors\[#00000000;#00000000;#00000000;#A0A0A0;#FFF\]\" .."
-          form_bgcolor="#F0F0F0FF"
-             btn_color="#B0B0B0FF"
-     editor_text_color="#000000FF"
-       editor_bg_color="#F0F0F0FF"
-       scrollbar_color="#808080FF"
-scrollbar_handle_color="#606060FF"
+cat > /tmp/herefileA << 'EOF'
+			"style_type[button;bgcolor="..dreambuilder.form_bgcolor.."]"..
+			"style_type[button_exit;bgcolor="..dreambuilder.form_bgcolor.."]"..
+			"style_type[image_button;bgcolor="..dreambuilder.form_bgcolor..
+				";border="..dreambuilder.image_button_borders.."]"..
+			"style_type[image_button_exit;bgcolor="..dreambuilder.form_bgcolor..
+				";border="..dreambuilder.image_button_borders.."]"..
+			"style_type[item_image_button;bgcolor="..dreambuilder.form_bgcolor..
+				";border="..dreambuilder.image_button_borders.."]"
+EOF
+
+mv $workdir"/mods/dreambuilder_extras/minetest.conf" $workdir
+
+sed -i "s/bgcolor\[.*\]//" \
+        $workdir"/mods/beds/init.lua"
+
+sed -i '/local formspec = \[\[/ , /\]\]/ {d}' \
+        $workdir"/mods/default/init.lua"
+
+sed -i '/Set formspec prepend/ {
+	a \\t\tlocal formspec = 
+	r /tmp/listcolors
+	r /tmp/herefileA
+	}' $workdir"/mods/default/init.lua"
+
+sed -i '/default.gui_survival_form/ {
+	i default.gui_bg = "bgcolor["..dreambuilder.form_bgcolor..";"..dreambuilder.window_darken.."]"\n
+	a \\t\t\tdefault.gui_bg..
+	}' $workdir"/mods/default/init.lua"
+
+
+echo "depends = dreambuilder_gui_theming" >> $workdir"/mods/default/mod.conf"
+
+
+sed -i 's/"style_type\[.*\]"/"style_type[label,textarea;font=mono]" \
+\t\t.."style_type[textarea;textcolor="..dreambuilder.form_bgcolor..";border="..dreambuilder.editor_border.."]"/' \
+       $workdir"/mods/mesecons_luacontroller/init.lua"
+
+sed -i "0,/depends =/s//depends = dreambuilder_gui_theming, /" $workdir"/mods/mesecons/mod.conf"
+
+sed -i 's/"size\[8,9\]" \.\./"size[8,9]" .. \
+\t\t"image[-0.39,-0.4;10.7,11.4;default_chest_inv_bg.png]".. \
+\t\t"listcolors[#00000000;#00000000;#00000000;"..dreambuilder.tooltip_bgcolor..";"..dreambuilder.tooltip_fontcolor.."]"../' \
+    $workdir"/mods/pipeworks/compat-chests.lua"
+
+sed -i 's/"size\[8,8.5\]"\.\./"size[8,8.5]".. \
+\t\t"image[-0.39,-0.4;10.7,10.9;default_furnace_inv_bg.png]".. \
+\t\t"listcolors[#00000000;#00000000;#00000000;"..dreambuilder.tooltip_bgcolor..";"..dreambuilder.tooltip_fontcolor.."]"../' \
+    $workdir"/mods/pipeworks/compat-furnaces.lua"
+
+sed -i "0, /depends = /s//depends = dreambuilder_gui_theming, /" $workdir"/mods/pipeworks/mod.conf"
+
+
+sed -i 's/"size\[8,7;\]" ../"size[8,7]" .. \
+\t"image[-0.39,-0.4;10.7,9.1;vessels_inv_bg.png]".. \
+\t"listcolors[#00000000;#00000000;#00000000;"..dreambuilder.tooltip_bgcolor..";"..dreambuilder.tooltip_fontcolor.."]"../' \
+    $workdir"/mods/vessels/init.lua"
+
+sed -i "0, /depends = /s//depends = dreambuilder_gui_theming, /" $workdir"/mods/vessels/mod.conf"
+
 
 sed -i 's/"field\[.*\]"/ \
 \t\t\t"formspec_version[4]".. \
@@ -235,58 +294,32 @@ sed -i 's/"field\[.*")/ \
 \t\t\t\t\t)/' \
        $workdir"/mods/technic/machines/register/battery_box.lua"
 
-sed -i 's/INSERT_BGCOLOR/default.gui_bg = "bgcolor['"$form_bgcolor"';false]"/' \
-        $workdir"/mods/dreambuilder_extras/init.lua"
 
-sed -i "s/bgcolor\[.*\]//" \
-        $workdir"/mods/default/init.lua"
+sed -i '/local n = 4/ {
+	i \\tformspec[4]="style_type[image_button;bgcolor="..dreambuilder.form_bgcolor.."]"
+	i \\tlocal n = 5
+	d
+}' $workdir"/mods/unified_inventory/internal.lua"
 
-sed -i "s/bgcolor\[.*\]//" \
-        $workdir"/mods/beds/init.lua"
+sed -i "0, /depends = /s//depends = dreambuilder_gui_theming, /" $workdir"/mods/unified_inventory/mod.conf"
 
-sed -i "s/listcolors\[.*\]/listcolors[#FFFFFF30;#B0B0B0;#606060;#A0A0A0;#FFF] \
-\n\t\t\tstyle_type[button;bgcolor="$btn_color"] \
-\n\t\t\tstyle_type[button_exit;bgcolor="$btn_color"] \
-\n\t\t\tstyle_type[image_button;bgcolor="$btn_color";border=false] \
-\n\t\t\tstyle_type[image_button_exit;bgcolor="$btn_color";border=false] \
-\n\t\t\tstyle_type[item_image_button;bgcolor="$btn_color";border=false] \
-\n\t\t\tstyle_type[scrollbar;bgimg="$scrollbar_color";fgimg="$scrollbar_handle_color";border=true] \
-\n\t      ]]/" \
-       $workdir"/mods/default/init.lua"
+mv $workdir"/mods/dreambuilder_extras/dreambuilder_gui_theming" \
+	$workdir"/mods/"
 
-sed -i 's/"style_type\[.*\]"/"style_type[label,textarea;font=mono]" \
-\t\t.."style_type[textarea;textcolor='"$editor_text_color"';border=false]"/' \
-       $workdir"/mods/mesecons_luacontroller/init.lua"
+rm	$workdir"/mods/default/textures/gui_formbg.png" \
+	$workdir"/mods/mesecons/textures/jeija_close_window.png" \
+	$workdir"/mods/mesecons_luacontroller/textures/jeija_luac_background.png" \
+	$workdir"/mods/mesecons_luacontroller/textures/jeija_luac_runbutton.png" \
+	$workdir"/mods/unified_inventory/textures/ui_bags_header.png" \
+	$workdir"/mods/unified_inventory/textures/ui_bags_inv"* \
+	$workdir"/mods/unified_inventory/textures/ui_bags_trash.png" \
+	$workdir"/mods/unified_inventory/textures/ui_crafting_form.png" \
+	$workdir"/mods/unified_inventory/textures/ui_form_bg.png" \
+	$workdir"/mods/unified_inventory/textures/ui_main_inventory.png" \
+	$workdir"/mods/unified_inventory/textures/ui_single_slot.png" \
+	$workdir"/mods/vessels/textures/vessels_shelf_slot.png"
 
-sed -i 's/"size\[8,9\]" \.\./"size[8,9]" .. \
-\t\t"image[-0.39,-0.4;10.7,11.4;default_chest_inv_bg.png]" .. \
-\t\t'"$inv_slot_colors"'/' \
-    $workdir"/mods/pipeworks/compat-chests.lua"
-
-sed -i 's/"size\[8,8.5\]"\.\./"size[8,8.5]".. \
-\t\t"image[-0.39,-0.4;10.7,10.9;default_furnace_inv_bg.png]" .. \
-\t\t'"$inv_slot_colors"'/' \
-    $workdir"/mods/pipeworks/compat-furnaces.lua"
-
-sed -i 's/"size\[8,7;\]" ../"size[8,7]" .. \
-\t"image[-0.39,-0.4;10.7,9.1;vessels_inv_bg.png]" .. \
-\t'"$inv_slot_colors"'/' \
-    $workdir"/mods/vessels/init.lua"
-
-rm $workdir"/mods/unified_inventory/textures/ui_bags_header.png" \
-   $workdir"/mods/unified_inventory/textures/ui_bags_inv"* \
-   $workdir"/mods/unified_inventory/textures/ui_bags_trash.png" \
-   $workdir"/mods/unified_inventory/textures/ui_crafting_form.png" \
-   $workdir"/mods/unified_inventory/textures/ui_form_bg.png" \
-   $workdir"/mods/unified_inventory/textures/ui_main_inventory.png" \
-   $workdir"/mods/unified_inventory/textures/ui_single_slot.png"
-
-mv $workdir"/mods/dreambuilder_extras/ui_"*".png" $workdir"/mods/unified_inventory/textures/"
-
-sed -i 's/local n = 4/formspec[4]="style_type[image_button;bgcolor='"$btn_color"']" \
-\tlocal n = 5/' \
-    $workdir"/mods/unified_inventory/internal.lua"
-
+rm /tmp/herefile*
 
 # Add in all of the regular player skins for the player_textures mod
 
