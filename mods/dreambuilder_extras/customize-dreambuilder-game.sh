@@ -228,7 +228,9 @@ cat > /tmp/herefileA << 'EOF'
 				";border="..dreambuilder_theme.image_button_borders.."]"
 EOF
 
-# ;highlight=#00000000
+echo '		"listcolors[#00000000;#00000000;#00000000;"..
+			dreambuilder_theme.tooltip_bgcolor..";"..
+			dreambuilder_theme.tooltip_fontcolor.."]"..' > /tmp/LISTCOLORS_HIDE_SLOTS
 
 mv $workdir"/mods/dreambuilder_extras/minetest.conf" $workdir
 
@@ -259,23 +261,23 @@ sed -i 's/"style_type\[.*\]"/"style_type[label,textarea;font=mono]" \
 
 sed -i "0,/depends =/s//depends = dreambuilder_gui_theming, /" $workdir"/mods/mesecons/mod.conf"
 
-sed -i 's/"size\[8,9\]" \.\./"size[8,9]" .. \
-\t\t"image[-0.39,-0.4;10.7,11.4;default_chest_inv_bg.png]".. \
-\t\t"listcolors[#00000000;#00000000;#00000000;"..dreambuilder_theme.tooltip_bgcolor..";"..dreambuilder_theme.tooltip_fontcolor.."]"../' \
-    $workdir"/mods/pipeworks/compat-chests.lua"
+sed -i '/size\[8,9\]/ {
+	a \\t\t"image[-0.39,-0.4;10.7,11.4;default_chest_inv_bg.png]"..
+	r /tmp/LISTCOLORS_HIDE_SLOTS
+	}' $workdir"/mods/pipeworks/compat-chests.lua"
 
-sed -i 's/"size\[8,8.5\]"\.\./"size[8,8.5]".. \
-\t\t"image[-0.39,-0.4;10.7,10.9;default_furnace_inv_bg.png]".. \
-\t\t"listcolors[#00000000;#00000000;#00000000;"..dreambuilder_theme.tooltip_bgcolor..";"..dreambuilder_theme.tooltip_fontcolor.."]"../' \
-    $workdir"/mods/pipeworks/compat-furnaces.lua"
+sed -i '/size\[8,8.5\]/ {
+	a \\t\t"image[-0.39,-0.4;10.7,10.9;default_furnace_inv_bg.png]"..
+	r /tmp/LISTCOLORS_HIDE_SLOTS
+	}' $workdir"/mods/pipeworks/compat-furnaces.lua"
 
 sed -i "0, /depends = /s//depends = dreambuilder_gui_theming, /" $workdir"/mods/pipeworks/mod.conf"
 
 
-sed -i 's/"size\[8,7;\]" ../"size[8,7]" .. \
-\t"image[-0.39,-0.4;10.7,9.1;vessels_inv_bg.png]".. \
-\t"listcolors[#00000000;#00000000;#00000000;"..dreambuilder_theme.tooltip_bgcolor..";"..dreambuilder_theme.tooltip_fontcolor.."]"../' \
-    $workdir"/mods/vessels/init.lua"
+sed -i '/size\[8,7;\]/ {
+	a \\t"image[-0.39,-0.4;10.7,9.1;vessels_inv_bg.png]"..
+	r /tmp/LISTCOLORS_HIDE_SLOTS
+    }' $workdir"/mods/vessels/init.lua"
 
 sed -i "0, /depends = /s//depends = dreambuilder_gui_theming, /" $workdir"/mods/vessels/mod.conf"
 
@@ -321,11 +323,11 @@ rm	$workdir"/mods/default/textures/gui_formbg.png" \
 	$workdir"/mods/unified_inventory/textures/ui_single_slot.png" \
 	$workdir"/mods/vessels/textures/vessels_shelf_slot.png"
 
-rm /tmp/herefile*
+rm /tmp/herefile* /tmp/LISTCOLORS_HIDE_SLOTS
 
 # Add in all of the regular player skins for the player_textures mod
 
-rm -f $workdir/mods/player_textures/textures/*
+rm -f $workdir/mods/player_textures/textures/* 
 
 LIST="player_Calinou.png
 player_cheapie.png
