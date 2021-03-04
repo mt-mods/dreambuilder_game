@@ -13,7 +13,7 @@ local function active_formspec(fuel_percent, item_percent, pos, meta)
 	local formspec =
 		"size[8,8.5]"..
 		"image[-0.39,-0.4;10.7,10.9;default_furnace_inv_bg.png]"..
-		"listcolors[#00000000;#00000000;#00000000;"..
+		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
 			dreambuilder_theme.tooltip_bgcolor..";"..
 			dreambuilder_theme.tooltip_fontcolor.."]"..
 		default.gui_bg..
@@ -50,7 +50,7 @@ end
 local function inactive_formspec(pos, meta)
 	local formspec = "size[8,8.5]"..
 		"image[-0.39,-0.4;10.7,10.9;default_furnace_inv_bg.png]"..
-		"listcolors[#00000000;#00000000;#00000000;"..
+		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
 			dreambuilder_theme.tooltip_bgcolor..";"..
 			dreambuilder_theme.tooltip_fontcolor.."]"..
 	default.gui_bg..

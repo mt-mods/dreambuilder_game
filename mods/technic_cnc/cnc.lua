@@ -100,7 +100,7 @@ local twosize_products = {
 
 local cnc_formspec =
 	"size[9,11;]"..
-		"listcolors[#00000000;#00000000;#00000000;"..
+		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
 			dreambuilder_theme.tooltip_bgcolor..";"..
 			dreambuilder_theme.tooltip_fontcolor.."]"..
 		"image[-0.1,6.92;10.03,4.65;technic_standard_inv.png]"..

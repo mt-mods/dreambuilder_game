@@ -228,7 +228,7 @@ cat > /tmp/herefileA << 'EOF'
 				";border="..dreambuilder_theme.image_button_borders.."]"
 EOF
 
-echo '		"listcolors[#00000000;#00000000;#00000000;"..
+echo '		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
 			dreambuilder_theme.tooltip_bgcolor..";"..
 			dreambuilder_theme.tooltip_fontcolor.."]"..' > /tmp/LISTCOLORS_HIDE_SLOTS
 
@@ -371,9 +371,16 @@ sed -i '/size\[9,11;\]/ {
 
 sed -i "0, /depends = /s//depends = dreambuilder_gui_theming, /" $workdir"/mods/technic/mod.conf"
 
+sed -i 's/"listcolors\[#00000000;#00000000\]"/""/' $workdir"/mods/unified_inventory/internal.lua"
+sed -i 's/"listcolors\[#00000000;#00000000\]"/""/' $workdir"/mods/unified_inventory/bags.lua"
+sed -i 's/"listcolors\[#00000000;#00000000\]"/""/' $workdir"/mods/unified_inventory/register.lua"
+
 sed -i '/local n = 4/ {
 	i \\tformspec[4]="style_type[image_button;bgcolor="..dreambuilder_theme.form_bgcolor.."]"
-	i \\tlocal n = 5
+	i \\tformspec[5]=
+	r /tmp/LISTCOLORS_HIDE_SLOTS
+	a \\t\t\t""
+	a \\tlocal n = 6
 	d
 }' $workdir"/mods/unified_inventory/internal.lua"
 

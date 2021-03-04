@@ -68,7 +68,12 @@ function unified_inventory.get_formspec(player, page)
 		unified_inventory.standard_background -- Background
 	}
 	formspec[4]="style_type[image_button;bgcolor="..dreambuilder_theme.form_bgcolor.."]"
-	local n = 5
+	formspec[5]=
+		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
+			dreambuilder_theme.tooltip_bgcolor..";"..
+			dreambuilder_theme.tooltip_fontcolor.."]"..
+			""
+	local n = 6
 
 	if draw_lite_mode then
 		formspec[1] = "size[11,7.7]"
@@ -130,7 +135,7 @@ function unified_inventory.get_formspec(player, page)
 
 	if fsdata.draw_inventory ~= false then
 		-- Player inventory
-		formspec[n] = "listcolors[#00000000;#00000000]"
+		formspec[n] = ""
 		formspec[n+1] = string.gsub(unified_inventory.standard_inv, "YYY", ui_peruser.formspec_y + 3.5)
 		n = n+2
 	end

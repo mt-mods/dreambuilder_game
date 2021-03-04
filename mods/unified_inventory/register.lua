@@ -173,7 +173,7 @@ unified_inventory.register_page("craft", {
 		local formspec = "background[2,"..formspecy..";6,3;ui_crafting_form.png]"
 		formspec = formspec..string.gsub(unified_inventory.standard_inv_bg, "YYY", (formspecy + 3.4))
 		formspec = formspec.."label[0,"..formheadery..";" ..F(S("Crafting")).."]"
-		formspec = formspec.."listcolors[#00000000;#00000000]"
+		formspec = formspec..""
 		formspec = formspec.."list[current_player;craftpreview;6,"..formspecy..";1,1;]"
 		formspec = formspec.."list[current_player;craft;2,"..formspecy..";3,3;]"
 		if unified_inventory.trash_enabled or unified_inventory.is_creative(player_name) or minetest.get_player_privs(player_name).give then
@@ -270,7 +270,7 @@ unified_inventory.register_page("craftguide", {
 		local fs = {
 			string.gsub(unified_inventory.standard_inv_bg, "YYY", (formspecy + 3.4)),
 			"label[0,"..formheadery..";" .. F(S("Crafting Guide")) .. "]",
-			"listcolors[#00000000;#00000000]"
+			""
 		}
 		local item_name = unified_inventory.current_item[player_name]
 		if not item_name then

@@ -56,7 +56,7 @@ local function set_injector_formspec(meta)
 	local is_stack = meta:get_string("mode") == "whole stacks"
 	meta:set_string("formspec",
 		"size[8,9;]"..
-		"listcolors[#00000000;#00000000;#00000000;"..
+		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
 			dreambuilder_theme.tooltip_bgcolor..";"..
 			dreambuilder_theme.tooltip_fontcolor.."]"..
 		"image[-0.1,4.93;10.03,4.65;technic_standard_inv.png]"..

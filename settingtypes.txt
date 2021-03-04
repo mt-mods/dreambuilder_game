@@ -98,9 +98,9 @@ dreambuilder_theme_editor_bg_color (Dreambuilder theme, textarea background colo
 # this color will be used for the slots.
 dreambuilder_theme_listcolor_slot_bg_normal (Dreambuilder theme, inventory slot main color) string #FFFFFF30
 
-# On forms that have inventory slots but which don't use background image,
-# this color will be used when hovering the mouse over an inventory slot.
-dreambuilder_theme_listcolor_slot_bg_hover (Dreambuilder theme, inventory slot mouseover color) string #B0B0B0
+# On forms that have inventory slots, this color will be used when hovering
+#the mouse over a slot.
+dreambuilder_theme_listcolor_slot_bg_hover (Dreambuilder theme, inventory slot mouseover color) string #E0E0E0
 
 # On forms that have inventory slots but which don't use background image,
 # this color will be used for the slots' borders.
