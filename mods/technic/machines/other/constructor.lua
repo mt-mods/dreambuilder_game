@@ -146,11 +146,16 @@ local function make_constructor(mark, length)
 		on_construct = function(pos)
 			local meta = minetest.get_meta(pos)
 			local formspec = "size[8,9;]"..
+		"listcolors[#00000000;#00000000;#00000000;"..
+			dreambuilder_theme.tooltip_bgcolor..";"..
+			dreambuilder_theme.tooltip_fontcolor.."]"..
+				"image[-0.1,4.93;10.03,4.65;technic_standard_inv.png]"..
 				"label[0,0;"..S("Constructor Mk%d"):format(mark).."]"..
 				"list[current_player;main;0,5;8,4;]"
 			for i = 1, length do
 				formspec = formspec
 					.."label[5,"..(i - 1)..";"..S("Slot %d"):format(i).."]"
+					.."image[5.89,"..(i*0.998-1.07)..";1.254,1.163;technic_single_slot.png]"
 					.."list[current_name;slot"..i
 						..";6,"..(i - 1)..";1,1;]"
 			end

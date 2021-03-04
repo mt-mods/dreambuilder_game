@@ -51,6 +51,11 @@ function technic.register_base_machine(data)
 
 	local formspec =
 		"size[8,9;]"..
+		"listcolors[#00000000;#00000000;#00000000;"..
+			dreambuilder_theme.tooltip_bgcolor..";"..
+			dreambuilder_theme.tooltip_fontcolor.."]"..
+		"image[-0.1,4.93;10.03,4.65;technic_standard_inv.png]"..
+		"image[2.9,0.93;5.016,2.326;technic_base_machine_upper_bg.png]"..
 		"list[current_name;src;"..(4-input_size)..",1;"..input_size..",1;]"..
 		"list[current_name;dst;5,1;2,2;]"..
 		"list[current_player;main;0,5;8,4;]"..
@@ -61,6 +66,7 @@ function technic.register_base_machine(data)
 		"listring[current_player;main]"
 	if data.upgrade then
 		formspec = formspec..
+			"image[0.91,2.93;2.508,1.163;technic_base_machine_upgrade_slots_bg.png]"..
 			"list[current_name;upgrade1;1,3;1,1;]"..
 			"list[current_name;upgrade2;2,3;1,1;]"..
 			"label[1,4;"..S("Upgrade Slots").."]"..

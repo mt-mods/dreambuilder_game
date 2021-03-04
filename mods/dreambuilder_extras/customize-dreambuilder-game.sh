@@ -281,7 +281,6 @@ sed -i '/size\[8,7;\]/ {
 
 sed -i "0, /depends = /s//depends = dreambuilder_gui_theming, /" $workdir"/mods/vessels/mod.conf"
 
-
 sed -i 's/"field\[.*\]"/ \
 \t\t\t"formspec_version[4]".. \
 \t\t\t"size[8,4]".. \
@@ -289,6 +288,21 @@ sed -i 's/"field\[.*\]"/ \
 \t\t\t"field[1.75,1.5;4.5,0.5;channel;Channel;$\{channel\}]" \
 \t\t/' \
        $workdir"/mods/technic/machines/switching_station.lua"
+
+# the inv and slots images below are exactly 192x192 and 512x256 pixels
+# and meant to cover inv areas of 3x3 and 8x4 inv slots
+# but with an 8x9 formspec size, it takes a declared size of [10.03, 4.65]
+# to make the 8x4 grid image fit right
+# [10.03, 4.65] / [8, 4] = [1.254, 1.163]
+#
+# so a 3x3 inv grid should be about 3.762x3.488 real size
+
+sed -i '/size\[8,9\]/ {
+	r /tmp/LISTCOLORS_HIDE_SLOTS
+	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_standard_inv.png]"..
+	a \\t\t"image[2.9,0.93;3.762,3.488;technic_battery_box_upper_slots.png]"..
+	}' $workdir"/mods/technic/machines/register/battery_box.lua"
+
 
 sed -i 's/"field\[.*")/ \
 \t\t\t\t\t\t"formspec_version[4]".. \
@@ -298,6 +312,64 @@ sed -i 's/"field\[.*")/ \
 \t\t\t\t\t)/' \
        $workdir"/mods/technic/machines/register/battery_box.lua"
 
+sed -i '/size\[8,9;\]/ {
+	r /tmp/LISTCOLORS_HIDE_SLOTS
+	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_standard_inv.png]"..
+	a \\t\t"image[2.9,0.93;5.016,2.326;technic_base_machine_upper_bg.png]"..
+	}' $workdir"/mods/technic/machines/register/machine_base.lua"
+
+sed -i '/formspec = formspec/ {
+	a \\t\t\t"image[0.91,2.93;2.508,1.163;technic_base_machine_upgrade_slots_bg.png]"..
+	}' $workdir"/mods/technic/machines/register/machine_base.lua"
+
+sed -i '/size\[8,9;\]/ {
+	r /tmp/LISTCOLORS_HIDE_SLOTS
+	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_standard_inv.png]"..
+	a \\t\t"image[2.9,0.93;1.254,1.163;technic_single_slot.png]"..
+	}' $workdir"/mods/technic/machines/register/generator.lua"
+
+# this alloy furnace change will match in two places, on purpose.
+sed -i '/size\[8,9\]/ {
+	r /tmp/LISTCOLORS_HIDE_SLOTS
+	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_standard_inv.png]"..
+	a \\t\t"image[1.9,0.93;6.27,3.49;technic_coal_alloy_furnace_upper_slots.png]"..
+	}' $workdir"/mods/technic/machines/other/coal_alloy_furnace.lua"
+
+sed -i '/size\[8,9;\]/ {
+	r /tmp/LISTCOLORS_HIDE_SLOTS
+	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_standard_inv.png]"..
+	a \\t\t"image[-0.1,1.92;10.03,2.375;technic_injector_upper_slots.png]"..
+	}' $workdir"/mods/technic/machines/other/injector.lua"
+
+sed -i '/size\[8,9;\]/ {
+	r /tmp/LISTCOLORS_HIDE_SLOTS
+	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_standard_inv.png]"..
+	a \\t\t"image[2.9,0.93;1.254,1.163;technic_single_slot.png]"..
+	a \\t\t"image[0.91,2.93;2.508,1.163;technic_base_machine_upgrade_slots_bg.png]"..
+	}' $workdir"/mods/technic/machines/MV/tool_workshop.lua"
+
+sed -i '/size\[8,9\]/ {
+	r /tmp/LISTCOLORS_HIDE_SLOTS
+	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_standard_inv.png]"..
+	a \\t\t"image[1.9,0.93;3.76,2.325;technic_reactor_upper_slots.png]"..
+	}' $workdir"/mods/technic/machines/HV/nuclear_reactor.lua"
+
+sed -i '/size\[8,9;\]/ {
+	r /tmp/LISTCOLORS_HIDE_SLOTS
+	a \\t\t\t\t"image[-0.1,4.93;10.03,4.65;technic_standard_inv.png]"..
+	}' $workdir"/mods/technic/machines/other/constructor.lua"
+
+sed -i '/list\[current_name/ {
+	i \\t\t\t\t\t.."image[5.89,"..(i*0.998-1.07)..";1.254,1.163;technic_single_slot.png]"
+	}' $workdir"/mods/technic/machines/other/constructor.lua"
+
+sed -i '/size\[9,11;\]/ {
+	r /tmp/LISTCOLORS_HIDE_SLOTS
+	a \\t\t"image[-0.1,6.92;10.03,4.65;technic_standard_inv.png]"..
+	a \\t\t"image[-0.1,5.42;11.28,1.163;technic_cnc_upper_slots.png]"..
+	}' $workdir"/mods/technic_cnc/cnc.lua"
+
+sed -i "0, /depends = /s//depends = dreambuilder_gui_theming, /" $workdir"/mods/technic/mod.conf"
 
 sed -i '/local n = 4/ {
 	i \\tformspec[4]="style_type[image_button;bgcolor="..dreambuilder_theme.form_bgcolor.."]"

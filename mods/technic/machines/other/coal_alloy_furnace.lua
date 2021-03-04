@@ -15,6 +15,11 @@ minetest.register_craft({
 local machine_name = S("Fuel-Fired Alloy Furnace")
 local formspec =
 	"size[8,9]"..
+		"listcolors[#00000000;#00000000;#00000000;"..
+			dreambuilder_theme.tooltip_bgcolor..";"..
+			dreambuilder_theme.tooltip_fontcolor.."]"..
+		"image[-0.1,4.93;10.03,4.65;technic_standard_inv.png]"..
+		"image[1.9,0.93;6.27,3.49;technic_coal_alloy_furnace_upper_slots.png]"..
 	"label[0,0;"..machine_name.."]"..
 	"image[2,2;1,1;default_furnace_fire_bg.png]"..
 	"list[current_name;fuel;2,3;1,1;]"..
@@ -124,6 +129,11 @@ minetest.register_abm({
 			technic.swap_node(pos, "technic:coal_alloy_furnace_active")
 			meta:set_string("formspec",
 					"size[8,9]"..
+		"listcolors[#00000000;#00000000;#00000000;"..
+			dreambuilder_theme.tooltip_bgcolor..";"..
+			dreambuilder_theme.tooltip_fontcolor.."]"..
+		"image[-0.1,4.93;10.03,4.65;technic_standard_inv.png]"..
+		"image[1.9,0.93;6.27,3.49;technic_coal_alloy_furnace_upper_slots.png]"..
 					"label[0,0;"..machine_name.."]"..
 					"image[2,2;1,1;default_furnace_fire_bg.png^[lowpart:"..
 					(100 - percent)..":default_furnace_fire_fg.png]"..

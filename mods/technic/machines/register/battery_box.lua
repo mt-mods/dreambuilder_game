@@ -162,6 +162,11 @@ function technic.register_battery_box(data)
 
 	local formspec =
 		"size[8,9]"..
+		"listcolors[#00000000;#00000000;#00000000;"..
+			dreambuilder_theme.tooltip_bgcolor..";"..
+			dreambuilder_theme.tooltip_fontcolor.."]"..
+		"image[-0.1,4.93;10.03,4.65;technic_standard_inv.png]"..
+		"image[2.9,0.93;3.762,3.488;technic_battery_box_upper_slots.png]"..
 		"image[1,1;1,2;technic_power_meter_bg.png]"..
 		"list[context;src;3,1;1,1;]"..
 		"image[4,1;1,1;technic_battery_reload.png]"..
