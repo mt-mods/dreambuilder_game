@@ -16,19 +16,19 @@ default.get_translator = S
 minetest.register_on_joinplayer(function(player)
 	-- Set formspec prepend
 		local formspec = 
-			"listcolors["..dreambuilder.listcolor_slot_bg_normal..
-			";"..dreambuilder.listcolor_slot_bg_hover..
-			";"..dreambuilder.listcolor_slot_border..
-			";"..dreambuilder.tooltip_bgcolor..
-			";"..dreambuilder.tooltip_fontcolor.."]"..
-			"style_type[button;bgcolor="..dreambuilder.form_bgcolor.."]"..
-			"style_type[button_exit;bgcolor="..dreambuilder.form_bgcolor.."]"..
-			"style_type[image_button;bgcolor="..dreambuilder.form_bgcolor..
-				";border="..dreambuilder.image_button_borders.."]"..
-			"style_type[image_button_exit;bgcolor="..dreambuilder.form_bgcolor..
-				";border="..dreambuilder.image_button_borders.."]"..
-			"style_type[item_image_button;bgcolor="..dreambuilder.form_bgcolor..
-				";border="..dreambuilder.image_button_borders.."]"
+			"listcolors["..dreambuilder_theme.listcolor_slot_bg_normal..
+			";"..dreambuilder_theme.listcolor_slot_bg_hover..
+			";"..dreambuilder_theme.listcolor_slot_border..
+			";"..dreambuilder_theme.tooltip_bgcolor..
+			";"..dreambuilder_theme.tooltip_fontcolor.."]"..
+			"style_type[button;bgcolor="..dreambuilder_theme.form_bgcolor.."]"..
+			"style_type[button_exit;bgcolor="..dreambuilder_theme.form_bgcolor.."]"..
+			"style_type[image_button;bgcolor="..dreambuilder_theme.form_bgcolor..
+				";border="..dreambuilder_theme.image_button_borders.."]"..
+			"style_type[image_button_exit;bgcolor="..dreambuilder_theme.form_bgcolor..
+				";border="..dreambuilder_theme.image_button_borders.."]"..
+			"style_type[item_image_button;bgcolor="..dreambuilder_theme.form_bgcolor..
+				";border="..dreambuilder_theme.image_button_borders.."]"
 	local name = player:get_player_name()
 	local info = minetest.get_player_information(name)
 	if info.formspec_version > 1 then
@@ -51,7 +51,7 @@ function default.get_hotbar_bg(x,y)
 	return out
 end
 
-default.gui_bg = "bgcolor["..dreambuilder.form_bgcolor..";"..dreambuilder.window_darken.."]"
+default.gui_bg = "bgcolor["..dreambuilder_theme.form_bgcolor..";"..dreambuilder_theme.window_darken.."]"
 
 default.gui_survival_form = "size[8,8.5]"..
 			default.gui_bg..

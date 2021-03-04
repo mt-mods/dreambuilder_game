@@ -210,22 +210,22 @@ rm -rf $workdir/mods/worldedit_brush
 # Create the standard in-game lightly-shaded theme, expand on it, make it user-configurable
 
 cat > /tmp/listcolors << 'EOF'
-			"listcolors["..dreambuilder.listcolor_slot_bg_normal..
-			";"..dreambuilder.listcolor_slot_bg_hover..
-			";"..dreambuilder.listcolor_slot_border..
-			";"..dreambuilder.tooltip_bgcolor..
-			";"..dreambuilder.tooltip_fontcolor.."]"..
+			"listcolors["..dreambuilder_theme.listcolor_slot_bg_normal..
+			";"..dreambuilder_theme.listcolor_slot_bg_hover..
+			";"..dreambuilder_theme.listcolor_slot_border..
+			";"..dreambuilder_theme.tooltip_bgcolor..
+			";"..dreambuilder_theme.tooltip_fontcolor.."]"..
 EOF
 
 cat > /tmp/herefileA << 'EOF'
-			"style_type[button;bgcolor="..dreambuilder.form_bgcolor.."]"..
-			"style_type[button_exit;bgcolor="..dreambuilder.form_bgcolor.."]"..
-			"style_type[image_button;bgcolor="..dreambuilder.form_bgcolor..
-				";border="..dreambuilder.image_button_borders.."]"..
-			"style_type[image_button_exit;bgcolor="..dreambuilder.form_bgcolor..
-				";border="..dreambuilder.image_button_borders.."]"..
-			"style_type[item_image_button;bgcolor="..dreambuilder.form_bgcolor..
-				";border="..dreambuilder.image_button_borders.."]"
+			"style_type[button;bgcolor="..dreambuilder_theme.form_bgcolor.."]"..
+			"style_type[button_exit;bgcolor="..dreambuilder_theme.form_bgcolor.."]"..
+			"style_type[image_button;bgcolor="..dreambuilder_theme.form_bgcolor..
+				";border="..dreambuilder_theme.image_button_borders.."]"..
+			"style_type[image_button_exit;bgcolor="..dreambuilder_theme.form_bgcolor..
+				";border="..dreambuilder_theme.image_button_borders.."]"..
+			"style_type[item_image_button;bgcolor="..dreambuilder_theme.form_bgcolor..
+				";border="..dreambuilder_theme.image_button_borders.."]"
 EOF
 
 mv $workdir"/mods/dreambuilder_extras/minetest.conf" $workdir
@@ -243,7 +243,7 @@ sed -i '/Set formspec prepend/ {
 	}' $workdir"/mods/default/init.lua"
 
 sed -i '/default.gui_survival_form/ {
-	i default.gui_bg = "bgcolor["..dreambuilder.form_bgcolor..";"..dreambuilder.window_darken.."]"\n
+	i default.gui_bg = "bgcolor["..dreambuilder_theme.form_bgcolor..";"..dreambuilder_theme.window_darken.."]"\n
 	a \\t\t\tdefault.gui_bg..
 	}' $workdir"/mods/default/init.lua"
 
@@ -252,19 +252,19 @@ echo "depends = dreambuilder_gui_theming" >> $workdir"/mods/default/mod.conf"
 
 
 sed -i 's/"style_type\[.*\]"/"style_type[label,textarea;font=mono]" \
-\t\t.."style_type[textarea;textcolor="..dreambuilder.form_bgcolor..";border="..dreambuilder.editor_border.."]"/' \
+\t\t.."style_type[textarea;textcolor="..dreambuilder_theme.form_bgcolor..";border="..dreambuilder_theme.editor_border.."]"/' \
        $workdir"/mods/mesecons_luacontroller/init.lua"
 
 sed -i "0,/depends =/s//depends = dreambuilder_gui_theming, /" $workdir"/mods/mesecons/mod.conf"
 
 sed -i 's/"size\[8,9\]" \.\./"size[8,9]" .. \
 \t\t"image[-0.39,-0.4;10.7,11.4;default_chest_inv_bg.png]".. \
-\t\t"listcolors[#00000000;#00000000;#00000000;"..dreambuilder.tooltip_bgcolor..";"..dreambuilder.tooltip_fontcolor.."]"../' \
+\t\t"listcolors[#00000000;#00000000;#00000000;"..dreambuilder_theme.tooltip_bgcolor..";"..dreambuilder_theme.tooltip_fontcolor.."]"../' \
     $workdir"/mods/pipeworks/compat-chests.lua"
 
 sed -i 's/"size\[8,8.5\]"\.\./"size[8,8.5]".. \
 \t\t"image[-0.39,-0.4;10.7,10.9;default_furnace_inv_bg.png]".. \
-\t\t"listcolors[#00000000;#00000000;#00000000;"..dreambuilder.tooltip_bgcolor..";"..dreambuilder.tooltip_fontcolor.."]"../' \
+\t\t"listcolors[#00000000;#00000000;#00000000;"..dreambuilder_theme.tooltip_bgcolor..";"..dreambuilder_theme.tooltip_fontcolor.."]"../' \
     $workdir"/mods/pipeworks/compat-furnaces.lua"
 
 sed -i "0, /depends = /s//depends = dreambuilder_gui_theming, /" $workdir"/mods/pipeworks/mod.conf"
@@ -272,7 +272,7 @@ sed -i "0, /depends = /s//depends = dreambuilder_gui_theming, /" $workdir"/mods/
 
 sed -i 's/"size\[8,7;\]" ../"size[8,7]" .. \
 \t"image[-0.39,-0.4;10.7,9.1;vessels_inv_bg.png]".. \
-\t"listcolors[#00000000;#00000000;#00000000;"..dreambuilder.tooltip_bgcolor..";"..dreambuilder.tooltip_fontcolor.."]"../' \
+\t"listcolors[#00000000;#00000000;#00000000;"..dreambuilder_theme.tooltip_bgcolor..";"..dreambuilder_theme.tooltip_fontcolor.."]"../' \
     $workdir"/mods/vessels/init.lua"
 
 sed -i "0, /depends = /s//depends = dreambuilder_gui_theming, /" $workdir"/mods/vessels/mod.conf"
@@ -296,7 +296,7 @@ sed -i 's/"field\[.*")/ \
 
 
 sed -i '/local n = 4/ {
-	i \\tformspec[4]="style_type[image_button;bgcolor="..dreambuilder.form_bgcolor.."]"
+	i \\tformspec[4]="style_type[image_button;bgcolor="..dreambuilder_theme.form_bgcolor.."]"
 	i \\tlocal n = 5
 	d
 }' $workdir"/mods/unified_inventory/internal.lua"
