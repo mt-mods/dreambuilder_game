@@ -211,14 +211,14 @@ rm -rf $workdir/mods/worldedit_brush
 
 cat > /tmp/listcolors << 'EOF'
 			"listcolors["..dreambuilder_theme.listcolor_slot_bg_normal..
-			";"..dreambuilder_theme.listcolor_slot_bg_hover..
-			";"..dreambuilder_theme.listcolor_slot_border..
-			";"..dreambuilder_theme.tooltip_bgcolor..
-			";"..dreambuilder_theme.tooltip_fontcolor.."]"..
+				";"..dreambuilder_theme.listcolor_slot_bg_hover..
+				";"..dreambuilder_theme.listcolor_slot_border..
+				";"..dreambuilder_theme.tooltip_bgcolor..
+				";"..dreambuilder_theme.tooltip_fontcolor.."]"..
 EOF
 
 cat > /tmp/herefileA << 'EOF'
-			"style_type[button;bgcolor="..dreambuilder_theme.form_bgcolor.."]"..
+			"style_type[button;bgcolor="..dreambuilder_theme.btn_color.."]"..
 			"style_type[button_exit;bgcolor="..dreambuilder_theme.form_bgcolor.."]"..
 			"style_type[image_button;bgcolor="..dreambuilder_theme.form_bgcolor..
 				";border="..dreambuilder_theme.image_button_borders.."]"..
@@ -227,6 +227,8 @@ cat > /tmp/herefileA << 'EOF'
 			"style_type[item_image_button;bgcolor="..dreambuilder_theme.form_bgcolor..
 				";border="..dreambuilder_theme.image_button_borders.."]"
 EOF
+
+# ;highlight=#00000000
 
 mv $workdir"/mods/dreambuilder_extras/minetest.conf" $workdir
 
@@ -247,12 +249,12 @@ sed -i '/default.gui_survival_form/ {
 	a \\t\t\tdefault.gui_bg..
 	}' $workdir"/mods/default/init.lua"
 
+sed -i '/tableoptions/d' $workdir"/mods/default/craftitems.lua"
 
 echo "depends = dreambuilder_gui_theming" >> $workdir"/mods/default/mod.conf"
 
-
 sed -i 's/"style_type\[.*\]"/"style_type[label,textarea;font=mono]" \
-\t\t.."style_type[textarea;textcolor="..dreambuilder_theme.form_bgcolor..";border="..dreambuilder_theme.editor_border.."]"/' \
+\t\t.."style_type[textarea;textcolor="..dreambuilder_theme.editor_text_color..";border="..dreambuilder_theme.editor_border.."]"/' \
        $workdir"/mods/mesecons_luacontroller/init.lua"
 
 sed -i "0,/depends =/s//depends = dreambuilder_gui_theming, /" $workdir"/mods/mesecons/mod.conf"

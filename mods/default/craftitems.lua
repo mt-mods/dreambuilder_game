@@ -51,7 +51,6 @@ local function book_on_use(itemstack, user)
 		formspec = "size[8,8]" ..
 			"label[0.5,0.5;" .. esc(S("by @1", owner)) .. "]" ..
 			"tablecolumns[color;text]" ..
-			"tableoptions[background=#00000000;highlight=#00000000;border=false]" ..
 			"table[0.4,0;7,0.5;title;#FFFF00," .. esc(title) .. "]" ..
 			"textarea[0.5,1.5;7.5,7;;" ..
 				minetest.formspec_escape(string ~= "" and string or text) .. ";]" ..

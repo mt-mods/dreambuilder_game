@@ -17,11 +17,11 @@ minetest.register_on_joinplayer(function(player)
 	-- Set formspec prepend
 		local formspec = 
 			"listcolors["..dreambuilder_theme.listcolor_slot_bg_normal..
-			";"..dreambuilder_theme.listcolor_slot_bg_hover..
-			";"..dreambuilder_theme.listcolor_slot_border..
-			";"..dreambuilder_theme.tooltip_bgcolor..
-			";"..dreambuilder_theme.tooltip_fontcolor.."]"..
-			"style_type[button;bgcolor="..dreambuilder_theme.form_bgcolor.."]"..
+				";"..dreambuilder_theme.listcolor_slot_bg_hover..
+				";"..dreambuilder_theme.listcolor_slot_border..
+				";"..dreambuilder_theme.tooltip_bgcolor..
+				";"..dreambuilder_theme.tooltip_fontcolor.."]"..
+			"style_type[button;bgcolor="..dreambuilder_theme.btn_color.."]"..
 			"style_type[button_exit;bgcolor="..dreambuilder_theme.form_bgcolor.."]"..
 			"style_type[image_button;bgcolor="..dreambuilder_theme.form_bgcolor..
 				";border="..dreambuilder_theme.image_button_borders.."]"..
