@@ -82,7 +82,7 @@ function unified_inventory.get_formspec(player, page)
 
 	if unified_inventory.is_creative(player_name)
 	and page == "craft" then
-		formspec[n] = "background[0,"..(ui_peruser.formspec_y + 2)..";1,1;ui_single_slot.png]"
+		formspec[n] = "background[0,"..(ui_peruser.formspec_y + 2)..";1,1;default_single_slot.png]"
 		n = n+1
 	end
 

@@ -100,7 +100,6 @@ Calinous_mods/bedrock \
 Calinous_mods/maptools \
 Calinous_mods/moreores \
 Sokomines_mods/cottages \
-Sokomines_mods/locks \
 Sokomines_mods/travelnet \
 Sokomines_mods/windmill \
 RBAs_mods/datastorage \
@@ -136,10 +135,10 @@ caverealms_lite \
 deezls_mods/extra_stairsplus \
 blox \
 new_campfire \
-item_drop \
-Zeg9s_mods/ufos/ufos"
+item_drop"
 
 COPY_MODS_LIST="
+Sokomines_mods/locks \
 nekogloops_mods/glooptest \
 Calinous_mods/moreblocks \
 CWzs_mods/replacer \
@@ -147,7 +146,8 @@ CWzs_mods/player_textures \
 bobblocks \
 unifiedbricks \
 my_mods/pipeworks \
-RBAs_mods/unified_inventory"
+RBAs_mods/unified_inventory \
+Zeg9s_mods/ufos/ufos"
 
 LINK_MODPACKS_LIST="$(ls -d my_mods/home_workshop_modpack/*/) \
 $(ls -d my_mods/plantlife_modpack/*/) \
@@ -277,11 +277,10 @@ sed -i "0, /depends = /s//depends = dreambuilder_gui_theming, /" $workdir"/mods/
 
 
 sed -i '/size\[8,7;\]/ {
+	r /tmp/LISTCOLORS_HIDE_SLOTS
 	a \\t\t"image[-0.1,2.75;10.03,4.95;default_standard_inventory_bg.png]"..
 	a \\t\t"image[-0.1,0.23;10.03,2.37;vessels_upper_slots_bg.png]"..
     }' $workdir"/mods/vessels/init.lua"
-
-#	r /tmp/LISTCOLORS_HIDE_SLOTS
 
 sed -i "0, /depends = /s//depends = dreambuilder_gui_theming, /" $workdir"/mods/vessels/mod.conf"
 
@@ -329,7 +328,7 @@ sed -i '/formspec = formspec/ {
 sed -i '/size\[8,9;\]/ {
 	r /tmp/LISTCOLORS_HIDE_SLOTS
 	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
-	a \\t\t"image[2.9,0.93;1.254,1.163;technic_single_slot.png]"..
+	a \\t\t"image[2.9,0.93;1.254,1.163;default_single_slot.png]"..
 	}' $workdir"/mods/technic/machines/register/generator.lua"
 
 # this alloy furnace change will match in two places, on purpose.
@@ -348,7 +347,7 @@ sed -i '/size\[8,9;\]/ {
 sed -i '/size\[8,9;\]/ {
 	r /tmp/LISTCOLORS_HIDE_SLOTS
 	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
-	a \\t\t"image[2.9,0.93;1.254,1.163;technic_single_slot.png]"..
+	a \\t\t"image[2.9,0.93;1.254,1.163;default_single_slot.png]"..
 	a \\t\t"image[0.91,2.93;2.508,1.163;technic_base_machine_upgrade_slots_bg.png]"..
 	}' $workdir"/mods/technic/machines/MV/tool_workshop.lua"
 
@@ -364,7 +363,7 @@ sed -i '/size\[8,9;\]/ {
 	}' $workdir"/mods/technic/machines/other/constructor.lua"
 
 sed -i '/list\[current_name/ {
-	i \\t\t\t\t\t.."image[5.89,"..(i*0.998-1.07)..";1.254,1.163;technic_single_slot.png]"
+	i \\t\t\t\t\t.."image[5.89,"..(i*0.998-1.07)..";1.254,1.163;default_single_slot.png]"
 	}' $workdir"/mods/technic/machines/other/constructor.lua"
 
 sed -i '/size\[9,11;\]/ {
@@ -388,6 +387,9 @@ sed -i '/local n = 4/ {
 	d
 }' $workdir"/mods/unified_inventory/internal.lua"
 
+sed -i "s/ui_single_slot.png/default_single_slot.png/" $workdir"/mods/unified_inventory/internal.lua"
+sed -i "s/ui_single_slot.png/default_single_slot.png/" $workdir"/mods/unified_inventory/register.lua"
+
 sed -i '/1.175;ui_bags_header.png/ {
 	a \\t\t\t"style_type[button;bgcolor="..dreambuilder_theme.btn_color.."]",
 	}' $workdir"/mods/unified_inventory/bags.lua"
@@ -406,6 +408,26 @@ sed -i '/image\[2.75,1.5;1,1;/ {
 	a \\t\t"image[2.65,0.37;1.254,3.59;default_furnace_upper_middle_slots_bg.png]"..
 	a \\t\t"image[4.64,0.83;2.52,2.44;default_furnace_upper_right_slots_bg_"..w.."x"..h..".png]"..
 	}' $workdir"/mods/homedecor_common/furnaces.lua"
+
+sed -i '/size\[8,10\]/ {
+	r /tmp/LISTCOLORS_HIDE_SLOTS
+	a \\t\t"image[-0.12,5.73;10.03,4.95;default_standard_inventory_bg.png]"..
+	a \\t\t"image[-0.12,0.85;10.03,4.79;default_chest_upper_slots_bg.png]"..
+	}' $workdir"/mods/locks/shared_locked_chest.lua"
+
+# This one will match in two places, deliberately.
+sed -i '/size\[8,9\]/ {
+	r /tmp/LISTCOLORS_HIDE_SLOTS
+	a \\t\t"image[-0.1,4.90;10.03,4.65;default_standard_inventory_old_bg.png]"..
+	a \\t\t"image[1.88,0.37;1.254,3.59;default_furnace_upper_middle_slots_bg.png]"..
+	a \\t\t"image[4.9,0.87;2.5,2.46;default_furnace_upper_right_slots_bg_2x2.png]"..
+	}' $workdir"/mods/locks/shared_locked_furnace.lua"
+
+sed -i '/size\[8,5.5\]/ {
+	r /tmp/LISTCOLORS_HIDE_SLOTS	a \\t\t"image[-0.1,1.42;10.03,4.65;default_standard_inventory_old_bg.png]"..
+	a \\t\t"image[3.4,-0.1;1.254,1.163;default_single_slot.png]"..
+	}' $workdir"/mods/ufos/furnace.lua"
+
 
 mv $workdir"/mods/dreambuilder_extras/dreambuilder_gui_theming" \
 	$workdir"/mods/"

@@ -4,6 +4,7 @@ ufos.fuel_time = 10
 
 ufos.furnace_inactive_formspec =
 	"size[8,5.5]"..
+		"image[3.4,-0.1;1.254,1.163;default_single_slot.png]"..
 	"list[current_name;fuel;3.5,0;1,1;]"..
 	"list[current_player;main;0,1.5;8,4;]"..
 	"label[4.5,0;Fuel needed: "..ufos.fuel.."]"..

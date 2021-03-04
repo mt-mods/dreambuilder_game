@@ -50,6 +50,11 @@ minetest.register_node("locks:shared_locked_chest", {
                 -- prepare the lock of the chest
                 locks:lock_init( pos, 
                                 "size[8,10]"..
+		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
+			dreambuilder_theme.tooltip_bgcolor..";"..
+			dreambuilder_theme.tooltip_fontcolor.."]"..
+		"image[-0.12,5.73;10.03,4.95;default_standard_inventory_bg.png]"..
+		"image[-0.12,0.85;10.03,4.79;default_chest_upper_slots_bg.png]"..
 ----                                "field[0.5,0.2;8,1.0;locks_sent_lock_command;Locked chest. Type password, command or /help for help:;]"..
 ----                                "button_exit[3,0.8;2,1.0;locks_sent_input;Proceed]"..
 --                                "list[current_name;main;0,0;8,4;]"..

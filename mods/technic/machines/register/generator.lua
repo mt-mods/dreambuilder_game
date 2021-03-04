@@ -40,7 +40,7 @@ function technic.register_generator(data)
 			dreambuilder_theme.tooltip_bgcolor..";"..
 			dreambuilder_theme.tooltip_fontcolor.."]"..
 		"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
-		"image[2.9,0.93;1.254,1.163;technic_single_slot.png]"..
+		"image[2.9,0.93;1.254,1.163;default_single_slot.png]"..
 		"label[0,0;"..S("Fuel-Fired %s Generator"):format(tier).."]"..
 		"list[current_name;src;3,1;1,1;]"..
 		"image[4,1;1,1;default_furnace_fire_bg.png]"..

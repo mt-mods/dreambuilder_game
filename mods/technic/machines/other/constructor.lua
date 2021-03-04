@@ -155,7 +155,7 @@ local function make_constructor(mark, length)
 			for i = 1, length do
 				formspec = formspec
 					.."label[5,"..(i - 1)..";"..S("Slot %d"):format(i).."]"
-					.."image[5.89,"..(i*0.998-1.07)..";1.254,1.163;technic_single_slot.png]"
+					.."image[5.89,"..(i*0.998-1.07)..";1.254,1.163;default_single_slot.png]"
 					.."list[current_name;slot"..i
 						..";6,"..(i - 1)..";1,1;]"
 			end
