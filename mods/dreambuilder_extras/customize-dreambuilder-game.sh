@@ -30,15 +30,15 @@ rm -rf $workdir/mods/bones \
 
 cp -a $upstream_mods_path"/my_mods/dreambuilder_extras" $workdir/mods
 
-rm $workdir"/README.md" \
-   $workdir"/mods/default/README.txt" \
-   $workdir"/game.conf" \
-   $workdir"/minetest.conf" \
-   $workdir"/minetest.conf.example" \
-   $workdir"/settingtypes.txt" \
-   $workdir"/screenshot.png" \
-   $workdir"/menu/icon.png" \
-   $workdir"/menu/header.png"
+rm	$workdir"/README.md" \
+	$workdir"/mods/default/README.txt" \
+	$workdir"/game.conf" \
+	$workdir"/minetest.conf" \
+	$workdir"/minetest.conf.example" \
+	$workdir"/settingtypes.txt" \
+	$workdir"/screenshot.png" \
+	$workdir"/menu/icon.png" \
+	$workdir"/menu/header.png"
 
 mv $workdir"/mods/dreambuilder_extras/README.md"                        $workdir
 mv $workdir"/mods/dreambuilder_extras/default_README.txt"               $workdir"/mods/default/README.txt"
@@ -404,7 +404,8 @@ rm	$workdir"/mods/default/textures/gui_formbg.png" \
 	$workdir"/mods/unified_inventory/textures/ui_form_bg.png" \
 	$workdir"/mods/unified_inventory/textures/ui_main_inventory.png" \
 	$workdir"/mods/unified_inventory/textures/ui_single_slot.png" \
-	$workdir"/mods/vessels/textures/vessels_shelf_slot.png"
+	$workdir"/mods/vessels/textures/vessels_shelf_slot.png" \
+	$workdir"/mods/default/textures/gui_hotbar_selected.png"
 
 rm /tmp/herefile* /tmp/LISTCOLORS_HIDE_SLOTS
 
