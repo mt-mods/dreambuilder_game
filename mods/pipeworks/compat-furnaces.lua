@@ -12,7 +12,9 @@ local tube_entry = "^pipeworks_tube_connection_stony.png"
 local function active_formspec(fuel_percent, item_percent, pos, meta)
 	local formspec =
 		"size[8,8.5]"..
-		"image[-0.39,-0.4;10.7,10.9;default_furnace_inv_bg.png]"..
+		"image[-0.1,4.15;10.03,4.95;default_standard_inventory_bg.png]"..
+		"image[2.65,0.37;1.254,3.59;default_furnace_upper_middle_slots_bg.png]"..
+		"image[4.64,0.83;2.52,2.44;default_furnace_upper_right_slots_bg_2x2.png]"..
 		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
 			dreambuilder_theme.tooltip_bgcolor..";"..
 			dreambuilder_theme.tooltip_fontcolor.."]"..
@@ -49,7 +51,9 @@ end
 
 local function inactive_formspec(pos, meta)
 	local formspec = "size[8,8.5]"..
-		"image[-0.39,-0.4;10.7,10.9;default_furnace_inv_bg.png]"..
+		"image[-0.1,4.15;10.03,4.95;default_standard_inventory_bg.png]"..
+		"image[2.65,0.37;1.254,3.59;default_furnace_upper_middle_slots_bg.png]"..
+		"image[4.64,0.83;2.52,2.44;default_furnace_upper_right_slots_bg_2x2.png]"..
 		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
 			dreambuilder_theme.tooltip_bgcolor..";"..
 			dreambuilder_theme.tooltip_fontcolor.."]"..

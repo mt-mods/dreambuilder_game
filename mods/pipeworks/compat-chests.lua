@@ -15,7 +15,8 @@ local function get_chest_formspec(pos)
 	local spos = pos.x .. "," .. pos.y .. "," .. pos.z
 	local formspec =
 		"size[8,9]" ..
-		"image[-0.39,-0.4;10.7,11.4;default_chest_inv_bg.png]"..
+		"image[-0.12,4.73;10.03,4.95;default_standard_inventory_bg.png]"..
+		"image[-0.12,0.15;10.03,4.79;default_chest_upper_slots_bg.png]"..
 		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
 			dreambuilder_theme.tooltip_bgcolor..";"..
 			dreambuilder_theme.tooltip_fontcolor.."]"..

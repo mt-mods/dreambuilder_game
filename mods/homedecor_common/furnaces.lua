@@ -26,11 +26,18 @@ local function make_formspec(furnacedef, percent)
 	local h = math.ceil(furnacedef.output_slots / furnacedef.output_width)
 
 	return "size["..math.max(8, 6 + w)..",9]"..
-		"image[2,2;1,1;"..fire.."]"..
-		"list[current_name;fuel;2,3;1,1;]"..
-		"list[current_name;src;2,1;1,1;]"..
-		"list[current_name;dst;5,1;"..w..","..h..";]"..
-		"list[current_player;main;0,5;8,4;]"..
+		"image[2.75,1.5;1,1;"..fire.."]"..
+		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
+			dreambuilder_theme.tooltip_bgcolor..";"..
+			dreambuilder_theme.tooltip_fontcolor.."]"..
+		"image[-0.1,4.15;10.03,4.95;default_standard_inventory_bg.png]"..
+		"image[2.65,0.37;1.254,3.59;default_furnace_upper_middle_slots_bg.png]"..
+		"image[4.64,0.83;2.52,2.44;default_furnace_upper_right_slots_bg_"..w.."x"..h..".png]"..
+		"list[current_name;fuel;2.75,2.5;1,1;]"..
+		"list[current_name;src;2.75,0.5;1,1;]"..
+		"list[current_name;dst;4.75,0.96;"..w..","..h..";]"..
+		"list[current_player;main;0,4.25;8,1;]"..
+		"list[current_player;main;0,5.5;8,3;8]"..
 		"listring[current_name;dst]"..
 		"listring[current_player;main]"..
 		"listring[current_name;src]"..

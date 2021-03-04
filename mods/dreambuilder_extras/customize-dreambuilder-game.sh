@@ -149,13 +149,13 @@ unifiedbricks \
 my_mods/pipeworks \
 RBAs_mods/unified_inventory"
 
-LINK_MODPACKS_LIST="$(ls -d my_mods/homedecor_modpack/*/) \
-$(ls -d my_mods/home_workshop_modpack/*/) \
+LINK_MODPACKS_LIST="$(ls -d my_mods/home_workshop_modpack/*/) \
 $(ls -d my_mods/plantlife_modpack/*/) \
 $(ls -d cheapies_mods/roads_modpack/*/) \
 $(ls -d cool_trees_modpack/*/)"
 
-COPY_MODPACKS_LIST="$(ls -d RBAs_mods/technic_modpack/*/) \
+COPY_MODPACKS_LIST="$(ls -d my_mods/homedecor_modpack/*/) \
+$(ls -d RBAs_mods/technic_modpack/*/) \
 $(ls -d Philipbenrs_mods/castle-modpack/*/) \
 $(ls -d worldedit_modpack/*/) \
 $(ls -d Jeijas_mods/mesecons_modpack/*/)"
@@ -261,12 +261,15 @@ sed -i 's/"style_type\[.*\]"/"style_type[label,textarea;font=mono]" \
 sed -i "0,/depends =/s//depends = dreambuilder_gui_theming, /" $workdir"/mods/mesecons/mod.conf"
 
 sed -i '/size\[8,9\]/ {
-	a \\t\t"image[-0.39,-0.4;10.7,11.4;default_chest_inv_bg.png]"..
+	a \\t\t"image[-0.12,4.73;10.03,4.95;default_standard_inventory_bg.png]"..
+	a \\t\t"image[-0.12,0.15;10.03,4.79;default_chest_upper_slots_bg.png]"..
 	r /tmp/LISTCOLORS_HIDE_SLOTS
 	}' $workdir"/mods/pipeworks/compat-chests.lua"
 
 sed -i '/size\[8,8.5\]/ {
-	a \\t\t"image[-0.39,-0.4;10.7,10.9;default_furnace_inv_bg.png]"..
+	a \\t\t"image[-0.1,4.15;10.03,4.95;default_standard_inventory_bg.png]"..
+	a \\t\t"image[2.65,0.37;1.254,3.59;default_furnace_upper_middle_slots_bg.png]"..
+	a \\t\t"image[4.64,0.83;2.52,2.44;default_furnace_upper_right_slots_bg_2x2.png]"..
 	r /tmp/LISTCOLORS_HIDE_SLOTS
 	}' $workdir"/mods/pipeworks/compat-furnaces.lua"
 
@@ -274,9 +277,11 @@ sed -i "0, /depends = /s//depends = dreambuilder_gui_theming, /" $workdir"/mods/
 
 
 sed -i '/size\[8,7;\]/ {
-	a \\t"image[-0.39,-0.4;10.7,9.1;vessels_inv_bg.png]"..
-	r /tmp/LISTCOLORS_HIDE_SLOTS
+	a \\t\t"image[-0.1,2.75;10.03,4.95;default_standard_inventory_bg.png]"..
+	a \\t\t"image[-0.1,0.23;10.03,2.37;vessels_upper_slots_bg.png]"..
     }' $workdir"/mods/vessels/init.lua"
+
+#	r /tmp/LISTCOLORS_HIDE_SLOTS
 
 sed -i "0, /depends = /s//depends = dreambuilder_gui_theming, /" $workdir"/mods/vessels/mod.conf"
 
@@ -394,6 +399,13 @@ sed -i '/"label\[0,0;"/ {
 }' $workdir"/mods/technic_chests/register.lua"
 
 sed -i "0, /depends = /s//depends = dreambuilder_gui_theming, /" $workdir"/mods/technic_chests/mod.conf"
+
+sed -i '/image\[2.75,1.5;1,1;/ {
+	r /tmp/LISTCOLORS_HIDE_SLOTS
+	a \\t\t"image[-0.1,4.15;10.03,4.95;default_standard_inventory_bg.png]"..
+	a \\t\t"image[2.65,0.37;1.254,3.59;default_furnace_upper_middle_slots_bg.png]"..
+	a \\t\t"image[4.64,0.83;2.52,2.44;default_furnace_upper_right_slots_bg_"..w.."x"..h..".png]"..
+	}' $workdir"/mods/homedecor_common/furnaces.lua"
 
 mv $workdir"/mods/dreambuilder_extras/dreambuilder_gui_theming" \
 	$workdir"/mods/"
