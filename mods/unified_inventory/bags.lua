@@ -15,6 +15,7 @@ unified_inventory.register_page("bags", {
 		return { formspec = table.concat({
 			string.gsub(unified_inventory.standard_inv_bg, "YYY", "4.4"),
 			bags_inv_bg_prefix.."1.175;ui_bags_header.png]",
+			"style_type[button;bgcolor="..dreambuilder_theme.btn_color.."]",
 			"label[0,0;" .. F(S("Bags")) .. "]",
 			"button[0,2.2;2,0.5;bag1;" .. F(S("Bag @1", 1)) .. "]",
 			"button[2,2.2;2,0.5;bag2;" .. F(S("Bag @1", 2)) .. "]",

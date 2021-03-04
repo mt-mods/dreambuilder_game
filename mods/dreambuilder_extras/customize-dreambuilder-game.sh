@@ -219,12 +219,12 @@ EOF
 
 cat > /tmp/herefileA << 'EOF'
 			"style_type[button;bgcolor="..dreambuilder_theme.btn_color.."]"..
-			"style_type[button_exit;bgcolor="..dreambuilder_theme.form_bgcolor.."]"..
-			"style_type[image_button;bgcolor="..dreambuilder_theme.form_bgcolor..
+			"style_type[button_exit;bgcolor="..dreambuilder_theme.btn_color.."]"..
+			"style_type[image_button;bgcolor="..dreambuilder_theme.btn_color..
 				";border="..dreambuilder_theme.image_button_borders.."]"..
-			"style_type[image_button_exit;bgcolor="..dreambuilder_theme.form_bgcolor..
+			"style_type[image_button_exit;bgcolor="..dreambuilder_theme.btn_color..
 				";border="..dreambuilder_theme.image_button_borders.."]"..
-			"style_type[item_image_button;bgcolor="..dreambuilder_theme.form_bgcolor..
+			"style_type[item_image_button;bgcolor="..dreambuilder_theme.btn_color..
 				";border="..dreambuilder_theme.image_button_borders.."]"
 EOF
 
@@ -376,13 +376,17 @@ sed -i 's/"listcolors\[#00000000;#00000000\]"/""/' $workdir"/mods/unified_invent
 sed -i 's/"listcolors\[#00000000;#00000000\]"/""/' $workdir"/mods/unified_inventory/register.lua"
 
 sed -i '/local n = 4/ {
-	i \\tformspec[4]="style_type[image_button;bgcolor="..dreambuilder_theme.form_bgcolor.."]"
+	i \\tformspec[4]="style_type[image_button;bgcolor="..dreambuilder_theme.btn_color.."]"
 	i \\tformspec[5]=
 	r /tmp/LISTCOLORS_HIDE_SLOTS
 	a \\t\t\t""
 	a \\tlocal n = 6
 	d
 }' $workdir"/mods/unified_inventory/internal.lua"
+
+sed -i '/1.175;ui_bags_header.png/ {
+	a \\t\t\t"style_type[button;bgcolor="..dreambuilder_theme.btn_color.."]",
+	}' $workdir"/mods/unified_inventory/bags.lua"
 
 sed -i "0, /depends = /s//depends = dreambuilder_gui_theming, /" $workdir"/mods/unified_inventory/mod.conf"
 

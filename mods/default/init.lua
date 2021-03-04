@@ -22,12 +22,12 @@ minetest.register_on_joinplayer(function(player)
 				";"..dreambuilder_theme.tooltip_bgcolor..
 				";"..dreambuilder_theme.tooltip_fontcolor.."]"..
 			"style_type[button;bgcolor="..dreambuilder_theme.btn_color.."]"..
-			"style_type[button_exit;bgcolor="..dreambuilder_theme.form_bgcolor.."]"..
-			"style_type[image_button;bgcolor="..dreambuilder_theme.form_bgcolor..
+			"style_type[button_exit;bgcolor="..dreambuilder_theme.btn_color.."]"..
+			"style_type[image_button;bgcolor="..dreambuilder_theme.btn_color..
 				";border="..dreambuilder_theme.image_button_borders.."]"..
-			"style_type[image_button_exit;bgcolor="..dreambuilder_theme.form_bgcolor..
+			"style_type[image_button_exit;bgcolor="..dreambuilder_theme.btn_color..
 				";border="..dreambuilder_theme.image_button_borders.."]"..
-			"style_type[item_image_button;bgcolor="..dreambuilder_theme.form_bgcolor..
+			"style_type[item_image_button;bgcolor="..dreambuilder_theme.btn_color..
 				";border="..dreambuilder_theme.image_button_borders.."]"
 	local name = player:get_player_name()
 	local info = minetest.get_player_information(name)

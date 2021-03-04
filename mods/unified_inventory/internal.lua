@@ -67,7 +67,7 @@ function unified_inventory.get_formspec(player, page)
 		pagedef.formspec_prepend and "" or "no_prepend[]",
 		unified_inventory.standard_background -- Background
 	}
-	formspec[4]="style_type[image_button;bgcolor="..dreambuilder_theme.form_bgcolor.."]"
+	formspec[4]="style_type[image_button;bgcolor="..dreambuilder_theme.btn_color.."]"
 	formspec[5]=
 		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
 			dreambuilder_theme.tooltip_bgcolor..";"..
