@@ -87,7 +87,6 @@ my_mods/currency \
 my_mods/gloopblocks \
 my_mods/ilights \
 my_mods/moretrees \
-my_mods/misc_overrides \
 my_mods/nixie_tubes \
 my_mods/led_marquee \
 my_mods/signs_lib \
@@ -390,6 +389,8 @@ sed -i '/1.175;ui_bags_header.png/ {
 
 sed -i "0, /depends = /s//depends = dreambuilder_gui_theming, /" $workdir"/mods/unified_inventory/mod.conf"
 
+sed -i "0, /depends = /s//depends = dreambuilder_gui_theming, /" $workdir"/mods/technic_chests/mod.conf"
+
 mv $workdir"/mods/dreambuilder_extras/dreambuilder_gui_theming" \
 	$workdir"/mods/"
 
@@ -405,7 +406,8 @@ rm	$workdir"/mods/default/textures/gui_formbg.png" \
 	$workdir"/mods/unified_inventory/textures/ui_main_inventory.png" \
 	$workdir"/mods/unified_inventory/textures/ui_single_slot.png" \
 	$workdir"/mods/vessels/textures/vessels_shelf_slot.png" \
-	$workdir"/mods/default/textures/gui_hotbar_selected.png"
+	$workdir"/mods/default/textures/gui_hotbar_selected.png" \
+	$workdir"/mods/technic_chests/textures/technic_chest_form_bg.png"
 
 rm /tmp/herefile* /tmp/LISTCOLORS_HIDE_SLOTS
 

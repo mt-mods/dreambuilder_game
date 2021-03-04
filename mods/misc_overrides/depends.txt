@@ -1,7 +1,0 @@
-default
-farming
-biome_lib
-youngtrees
-ferns
-dryplants
-technic_chests
