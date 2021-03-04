@@ -59,7 +59,7 @@ local function set_injector_formspec(meta)
 		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
 			dreambuilder_theme.tooltip_bgcolor..";"..
 			dreambuilder_theme.tooltip_fontcolor.."]"..
-		"image[-0.1,4.93;10.03,4.65;technic_standard_inv.png]"..
+		"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
 		"image[-0.1,1.92;10.03,2.375;technic_injector_upper_slots.png]"..
 		"item_image[0,0;1,1;technic:injector]"..
 		"label[1,0;"..S("Self-Contained Injector").."]"..

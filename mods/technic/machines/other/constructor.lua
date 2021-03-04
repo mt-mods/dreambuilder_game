@@ -149,7 +149,7 @@ local function make_constructor(mark, length)
 		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
 			dreambuilder_theme.tooltip_bgcolor..";"..
 			dreambuilder_theme.tooltip_fontcolor.."]"..
-				"image[-0.1,4.93;10.03,4.65;technic_standard_inv.png]"..
+				"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
 				"label[0,0;"..S("Constructor Mk%d"):format(mark).."]"..
 				"list[current_player;main;0,5;8,4;]"
 			for i = 1, length do

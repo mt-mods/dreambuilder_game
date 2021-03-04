@@ -298,7 +298,7 @@ sed -i 's/"field\[.*\]"/ \
 
 sed -i '/size\[8,9\]/ {
 	r /tmp/LISTCOLORS_HIDE_SLOTS
-	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_standard_inv.png]"..
+	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
 	a \\t\t"image[2.9,0.93;3.762,3.488;technic_battery_box_upper_slots.png]"..
 	}' $workdir"/mods/technic/machines/register/battery_box.lua"
 
@@ -313,7 +313,7 @@ sed -i 's/"field\[.*")/ \
 
 sed -i '/size\[8,9;\]/ {
 	r /tmp/LISTCOLORS_HIDE_SLOTS
-	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_standard_inv.png]"..
+	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
 	a \\t\t"image[2.9,0.93;5.016,2.326;technic_base_machine_upper_bg.png]"..
 	}' $workdir"/mods/technic/machines/register/machine_base.lua"
 
@@ -323,39 +323,39 @@ sed -i '/formspec = formspec/ {
 
 sed -i '/size\[8,9;\]/ {
 	r /tmp/LISTCOLORS_HIDE_SLOTS
-	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_standard_inv.png]"..
+	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
 	a \\t\t"image[2.9,0.93;1.254,1.163;technic_single_slot.png]"..
 	}' $workdir"/mods/technic/machines/register/generator.lua"
 
 # this alloy furnace change will match in two places, on purpose.
 sed -i '/size\[8,9\]/ {
 	r /tmp/LISTCOLORS_HIDE_SLOTS
-	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_standard_inv.png]"..
+	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
 	a \\t\t"image[1.9,0.93;6.27,3.49;technic_coal_alloy_furnace_upper_slots.png]"..
 	}' $workdir"/mods/technic/machines/other/coal_alloy_furnace.lua"
 
 sed -i '/size\[8,9;\]/ {
 	r /tmp/LISTCOLORS_HIDE_SLOTS
-	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_standard_inv.png]"..
+	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
 	a \\t\t"image[-0.1,1.92;10.03,2.375;technic_injector_upper_slots.png]"..
 	}' $workdir"/mods/technic/machines/other/injector.lua"
 
 sed -i '/size\[8,9;\]/ {
 	r /tmp/LISTCOLORS_HIDE_SLOTS
-	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_standard_inv.png]"..
+	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
 	a \\t\t"image[2.9,0.93;1.254,1.163;technic_single_slot.png]"..
 	a \\t\t"image[0.91,2.93;2.508,1.163;technic_base_machine_upgrade_slots_bg.png]"..
 	}' $workdir"/mods/technic/machines/MV/tool_workshop.lua"
 
 sed -i '/size\[8,9\]/ {
 	r /tmp/LISTCOLORS_HIDE_SLOTS
-	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_standard_inv.png]"..
+	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
 	a \\t\t"image[1.9,0.93;3.76,2.325;technic_reactor_upper_slots.png]"..
 	}' $workdir"/mods/technic/machines/HV/nuclear_reactor.lua"
 
 sed -i '/size\[8,9;\]/ {
 	r /tmp/LISTCOLORS_HIDE_SLOTS
-	a \\t\t\t\t"image[-0.1,4.93;10.03,4.65;technic_standard_inv.png]"..
+	a \\t\t\t\t"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
 	}' $workdir"/mods/technic/machines/other/constructor.lua"
 
 sed -i '/list\[current_name/ {
@@ -364,7 +364,7 @@ sed -i '/list\[current_name/ {
 
 sed -i '/size\[9,11;\]/ {
 	r /tmp/LISTCOLORS_HIDE_SLOTS
-	a \\t\t"image[-0.1,6.92;10.03,4.65;technic_standard_inv.png]"..
+	a \\t\t"image[-0.1,6.92;10.03,4.65;technic_main_inventory.png]"..
 	a \\t\t"image[-0.1,5.42;11.28,1.163;technic_cnc_upper_slots.png]"..
 	}' $workdir"/mods/technic_cnc/cnc.lua"
 
@@ -389,6 +389,10 @@ sed -i '/1.175;ui_bags_header.png/ {
 
 sed -i "0, /depends = /s//depends = dreambuilder_gui_theming, /" $workdir"/mods/unified_inventory/mod.conf"
 
+sed -i '/"label\[0,0;"/ {
+	r /tmp/LISTCOLORS_HIDE_SLOTS
+}' $workdir"/mods/technic_chests/register.lua"
+
 sed -i "0, /depends = /s//depends = dreambuilder_gui_theming, /" $workdir"/mods/technic_chests/mod.conf"
 
 mv $workdir"/mods/dreambuilder_extras/dreambuilder_gui_theming" \
@@ -407,7 +411,8 @@ rm	$workdir"/mods/default/textures/gui_formbg.png" \
 	$workdir"/mods/unified_inventory/textures/ui_single_slot.png" \
 	$workdir"/mods/vessels/textures/vessels_shelf_slot.png" \
 	$workdir"/mods/default/textures/gui_hotbar_selected.png" \
-	$workdir"/mods/technic_chests/textures/technic_chest_form_bg.png"
+	$workdir"/mods/technic_chests/textures/technic_chest_form_bg.png" \
+	$workdir"/mods/technic_chests/textures/"*"inventory.png"
 
 rm /tmp/herefile* /tmp/LISTCOLORS_HIDE_SLOTS
 

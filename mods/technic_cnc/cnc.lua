@@ -103,7 +103,7 @@ local cnc_formspec =
 		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
 			dreambuilder_theme.tooltip_bgcolor..";"..
 			dreambuilder_theme.tooltip_fontcolor.."]"..
-		"image[-0.1,6.92;10.03,4.65;technic_standard_inv.png]"..
+		"image[-0.1,6.92;10.03,4.65;technic_main_inventory.png]"..
 		"image[-0.1,5.42;11.28,1.163;technic_cnc_upper_slots.png]"..
 	"label[1,0;"..S("Choose Milling Program:").."]"..
 	"image_button[1,0.5;1,1;technic_cnc_slope.png;slope; ]"..

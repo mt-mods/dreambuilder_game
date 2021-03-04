@@ -18,7 +18,7 @@ local formspec =
 		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
 			dreambuilder_theme.tooltip_bgcolor..";"..
 			dreambuilder_theme.tooltip_fontcolor.."]"..
-		"image[-0.1,4.93;10.03,4.65;technic_standard_inv.png]"..
+		"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
 		"image[1.9,0.93;6.27,3.49;technic_coal_alloy_furnace_upper_slots.png]"..
 	"label[0,0;"..machine_name.."]"..
 	"image[2,2;1,1;default_furnace_fire_bg.png]"..
@@ -132,7 +132,7 @@ minetest.register_abm({
 		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
 			dreambuilder_theme.tooltip_bgcolor..";"..
 			dreambuilder_theme.tooltip_fontcolor.."]"..
-		"image[-0.1,4.93;10.03,4.65;technic_standard_inv.png]"..
+		"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
 		"image[1.9,0.93;6.27,3.49;technic_coal_alloy_furnace_upper_slots.png]"..
 					"label[0,0;"..machine_name.."]"..
 					"image[2,2;1,1;default_furnace_fire_bg.png^[lowpart:"..

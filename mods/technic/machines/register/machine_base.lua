@@ -54,7 +54,7 @@ function technic.register_base_machine(data)
 		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
 			dreambuilder_theme.tooltip_bgcolor..";"..
 			dreambuilder_theme.tooltip_fontcolor.."]"..
-		"image[-0.1,4.93;10.03,4.65;technic_standard_inv.png]"..
+		"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
 		"image[2.9,0.93;5.016,2.326;technic_base_machine_upper_bg.png]"..
 		"list[current_name;src;"..(4-input_size)..",1;"..input_size..",1;]"..
 		"list[current_name;dst;5,1;2,2;]"..
