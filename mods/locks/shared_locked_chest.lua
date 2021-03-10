@@ -50,11 +50,10 @@ minetest.register_node("locks:shared_locked_chest", {
                 -- prepare the lock of the chest
                 locks:lock_init( pos, 
                                 "size[8,10]"..
-		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
-			dreambuilder_theme.tooltip_bgcolor..";"..
-			dreambuilder_theme.tooltip_fontcolor.."]"..
-		"image[-0.12,5.73;10.03,4.95;default_standard_inventory_bg.png]"..
-		"image[-0.12,0.85;10.03,4.79;default_chest_upper_slots_bg.png]"..
+		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000]"..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 0.95, 8, 4, false)..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 5.82, 8, 1, true)..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 7.03, 8, 3, false)..
 ----                                "field[0.5,0.2;8,1.0;locks_sent_lock_command;Locked chest. Type password, command or /help for help:;]"..
 ----                                "button_exit[3,0.8;2,1.0;locks_sent_input;Proceed]"..
 --                                "list[current_name;main;0,0;8,4;]"..
@@ -71,7 +70,7 @@ minetest.register_node("locks:shared_locked_chest", {
 				"list[current_player;main;0,7.08;8,3;8]" ..
 				"listring[current_name;main]" ..
 				"listring[current_player;main]" ..
-				default.get_hotbar_bg(0,5.85) );
+				"" );
 
                 local inv = meta:get_inventory()
                 inv:set_size("main", 8*4)

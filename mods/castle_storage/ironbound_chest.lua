@@ -6,9 +6,10 @@ local get_ironbound_chest_formspec = function(pos)
 	local spos = pos.x .. "," .. pos.y .. "," ..pos.z
 	local formspec =
 		"size[8,9]"..
-		default.gui_bg ..
-		default.gui_bg_img ..
-		default.gui_slots ..
+		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000]"..
+		dreambuilder_theme.make_inv_img_grid_v1(0, -0.05, 8, 4, false)..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 4.95,  8, 1, true)..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 5.95,  8, 3, false)..
 		"list[nodemeta:".. spos .. ";main;,0;8,4;]"..
 		"list[current_player;main;,5;8,4;]"..
 		"listring[]"

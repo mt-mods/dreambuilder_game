@@ -9,17 +9,16 @@ local S = minetest.get_translator("vessels")
 
 local vessels_shelf_formspec =
 	"size[8,7;]" ..
-		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
-			dreambuilder_theme.tooltip_bgcolor..";"..
-			dreambuilder_theme.tooltip_fontcolor.."]"..
-		"image[-0.1,2.75;10.03,4.95;default_standard_inventory_bg.png]"..
-		"image[-0.1,0.23;10.03,2.37;vessels_upper_slots_bg.png]"..
+	"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000]"..
+	dreambuilder_theme.make_inv_img_grid_v1(0, 0.25, 8, 2, false)..
+	dreambuilder_theme.make_inv_img_grid_v1(0, 2.8,  8, 1, true)..
+	dreambuilder_theme.make_inv_img_grid_v1(0, 4.05, 8, 3, false)..
 	"list[context;vessels;0,0.3;8,2;]" ..
 	"list[current_player;main;0,2.85;8,1;]" ..
 	"list[current_player;main;0,4.08;8,3;8]" ..
 	"listring[context;vessels]" ..
 	"listring[current_player;main]" ..
-	default.get_hotbar_bg(0, 2.85)
+	""
 
 local function update_vessels_shelf(pos)
 	local meta = minetest.get_meta(pos)
@@ -37,7 +36,7 @@ local function update_vessels_shelf(pos)
 		end
 		if not invlist or invlist[i]:is_empty() then
 			formspec = formspec ..
-				"image[" .. vx .. "," .. vy .. ";1,1;vessels_shelf_slot.png]"
+				"image[" .. vx .. "," .. vy .. ";1,1;"..dreambuilder_theme.name.."_vessels_shelf_slot.png]"
 		else
 			local stack = invlist[i]
 			if not stack:is_empty() then

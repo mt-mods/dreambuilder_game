@@ -27,12 +27,12 @@ local function make_formspec(furnacedef, percent)
 
 	return "size["..math.max(8, 6 + w)..",9]"..
 		"image[2.75,1.5;1,1;"..fire.."]"..
-		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
-			dreambuilder_theme.tooltip_bgcolor..";"..
-			dreambuilder_theme.tooltip_fontcolor.."]"..
-		"image[-0.1,4.15;10.03,4.95;default_standard_inventory_bg.png]"..
-		"image[2.65,0.37;1.254,3.59;default_furnace_upper_middle_slots_bg.png]"..
-		"image[4.64,0.83;2.52,2.44;default_furnace_upper_right_slots_bg_"..w.."x"..h..".png]"..
+		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000]"..
+		dreambuilder_theme.single_slot_v1(2.75, 0.45, false)..
+		dreambuilder_theme.single_slot_v1(2.75, 2.45, false)..
+		dreambuilder_theme.make_inv_img_grid_v1(4.75, 0.92, w, h, false)..
+		dreambuilder_theme.make_inv_img_grid_v1(0,    4.22, 8, 1, true)..
+		dreambuilder_theme.make_inv_img_grid_v1(0,    5.45, 8, 3, false)..
 		"list[current_name;fuel;2.75,2.5;1,1;]"..
 		"list[current_name;src;2.75,0.5;1,1;]"..
 		"list[current_name;dst;4.75,0.96;"..w..","..h..";]"..

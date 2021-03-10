@@ -12,12 +12,12 @@ local tube_entry = "^pipeworks_tube_connection_stony.png"
 local function active_formspec(fuel_percent, item_percent, pos, meta)
 	local formspec =
 		"size[8,8.5]"..
-		"image[-0.1,4.15;10.03,4.95;default_standard_inventory_bg.png]"..
-		"image[2.65,0.37;1.254,3.59;default_furnace_upper_middle_slots_bg.png]"..
-		"image[4.64,0.83;2.52,2.44;default_furnace_upper_right_slots_bg_2x2.png]"..
-		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
-			dreambuilder_theme.tooltip_bgcolor..";"..
-			dreambuilder_theme.tooltip_fontcolor.."]"..
+		dreambuilder_theme.single_slot_v1(2.75, 0.45, false)..
+		dreambuilder_theme.single_slot_v1(2.75, 2.45, false)..
+		dreambuilder_theme.make_inv_img_grid_v1(4.75, 0.92, 2, 2, false)..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 4.22,  8, 1, true)..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 5.45, 8, 3, false)..
+		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000]"..
 		default.gui_bg..
 		default.gui_bg_img..
 		default.gui_slots..
@@ -36,7 +36,6 @@ local function active_formspec(fuel_percent, item_percent, pos, meta)
 		"listring[current_player;main]"..
 		"listring[current_name;fuel]"..
 		"listring[current_player;main]"..
-		default.get_hotbar_bg(0, 4.25) ..
 			fs_helpers.cycling_button(
 				meta,
 				"image_button[0,3.5;1,0.6",
@@ -51,12 +50,12 @@ end
 
 local function inactive_formspec(pos, meta)
 	local formspec = "size[8,8.5]"..
-		"image[-0.1,4.15;10.03,4.95;default_standard_inventory_bg.png]"..
-		"image[2.65,0.37;1.254,3.59;default_furnace_upper_middle_slots_bg.png]"..
-		"image[4.64,0.83;2.52,2.44;default_furnace_upper_right_slots_bg_2x2.png]"..
-		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
-			dreambuilder_theme.tooltip_bgcolor..";"..
-			dreambuilder_theme.tooltip_fontcolor.."]"..
+		dreambuilder_theme.single_slot_v1(2.75, 0.45, false)..
+		dreambuilder_theme.single_slot_v1(2.75, 2.45, false)..
+		dreambuilder_theme.make_inv_img_grid_v1(4.75, 0.92, 2, 2, false)..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 4.22,  8, 1, true)..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 5.45, 8, 3, false)..
+		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000]"..
 	default.gui_bg..
 	default.gui_bg_img..
 	default.gui_slots..
@@ -73,7 +72,6 @@ local function inactive_formspec(pos, meta)
 	"listring[current_player;main]"..
 	"listring[current_name;fuel]"..
 	"listring[current_player;main]"..
-	default.get_hotbar_bg(0, 4.25) ..
 		fs_helpers.cycling_button(
 			meta,
 			"image_button[0,3.5;1,0.6",

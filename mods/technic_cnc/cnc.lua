@@ -100,11 +100,11 @@ local twosize_products = {
 
 local cnc_formspec =
 	"size[9,11;]"..
-		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
-			dreambuilder_theme.tooltip_bgcolor..";"..
-			dreambuilder_theme.tooltip_fontcolor.."]"..
-		"image[-0.1,6.92;10.03,4.65;technic_main_inventory.png]"..
-		"image[-0.1,5.42;11.28,1.163;technic_cnc_upper_slots.png]"..
+		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000]"..
+		dreambuilder_theme.single_slot_v1(0.5, 5.45, false)..
+		dreambuilder_theme.make_inv_img_grid_v1(5, 5.45, 4, 1, false)..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 6.95,  8, 1, true)..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 7.95,  8, 3, false)..
 	"label[1,0;"..S("Choose Milling Program:").."]"..
 	"image_button[1,0.5;1,1;technic_cnc_slope.png;slope; ]"..
 	"image_button[2,0.5;1,1;technic_cnc_slope_edge.png;slope_edge; ]"..

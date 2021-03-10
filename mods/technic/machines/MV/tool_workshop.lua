@@ -20,12 +20,11 @@ local workshop_demand = {5000, 3500, 2000}
 
 local workshop_formspec =
 	"size[8,9;]"..
-		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
-			dreambuilder_theme.tooltip_bgcolor..";"..
-			dreambuilder_theme.tooltip_fontcolor.."]"..
-		"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
-		"image[2.9,0.93;1.254,1.163;default_single_slot.png]"..
-		"image[0.91,2.93;2.508,1.163;technic_base_machine_upgrade_slots_bg.png]"..
+		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000]"..
+	dreambuilder_theme.make_inv_img_grid_v1(1, 2.95, 2, 1, false)..
+	dreambuilder_theme.make_inv_img_grid_v1(0, 4.97, 8, 1, true)..
+	dreambuilder_theme.make_inv_img_grid_v1(0, 5.97, 8, 3, false)..
+	dreambuilder_theme.single_slot_v1(3, 0.95, false)..
 	"list[current_name;src;3,1;1,1;]"..
 	"label[0,0;"..S("%s Tool Workshop"):format("MV").."]"..
 	"list[current_name;upgrade1;1,3;1,1;]"..

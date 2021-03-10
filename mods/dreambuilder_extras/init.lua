@@ -6,6 +6,8 @@
 
 -- by Vanessa Dannenberg
 
+dreambuilder = {}
+
 default.cool_lava = function (pos, node) end
 
 minetest.register_abm({

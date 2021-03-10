@@ -15,11 +15,12 @@ minetest.register_craft({
 local machine_name = S("Fuel-Fired Alloy Furnace")
 local formspec =
 	"size[8,9]"..
-		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
-			dreambuilder_theme.tooltip_bgcolor..";"..
-			dreambuilder_theme.tooltip_fontcolor.."]"..
-		"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
-		"image[1.9,0.93;6.27,3.49;technic_coal_alloy_furnace_upper_slots.png]"..
+		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000]"..
+		dreambuilder_theme.make_inv_img_grid_v1(2, 0.95, 2, 1, false)..
+		dreambuilder_theme.single_slot_v1(2, 2.95, false)..
+		dreambuilder_theme.make_inv_img_grid_v1(5, 0.95, 2, 2, false)..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 4.97, 8, 1, true)..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 5.97, 8, 3, false)..
 	"label[0,0;"..machine_name.."]"..
 	"image[2,2;1,1;default_furnace_fire_bg.png]"..
 	"list[current_name;fuel;2,3;1,1;]"..
@@ -129,11 +130,12 @@ minetest.register_abm({
 			technic.swap_node(pos, "technic:coal_alloy_furnace_active")
 			meta:set_string("formspec",
 					"size[8,9]"..
-		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
-			dreambuilder_theme.tooltip_bgcolor..";"..
-			dreambuilder_theme.tooltip_fontcolor.."]"..
-		"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
-		"image[1.9,0.93;6.27,3.49;technic_coal_alloy_furnace_upper_slots.png]"..
+		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000]"..
+		dreambuilder_theme.make_inv_img_grid_v1(2, 0.95, 2, 1, false)..
+		dreambuilder_theme.single_slot_v1(2, 2.95, false)..
+		dreambuilder_theme.make_inv_img_grid_v1(5, 0.95, 2, 2, false)..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 4.97, 8, 1, true)..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 5.97, 8, 3, false)..
 					"label[0,0;"..machine_name.."]"..
 					"image[2,2;1,1;default_furnace_fire_bg.png^[lowpart:"..
 					(100 - percent)..":default_furnace_fire_fg.png]"..

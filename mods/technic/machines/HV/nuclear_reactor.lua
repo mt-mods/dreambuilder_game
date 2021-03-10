@@ -32,11 +32,10 @@ minetest.register_craft({
 
 local function make_reactor_formspec(meta)
 	local f = "size[8,9]"..
-		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
-			dreambuilder_theme.tooltip_bgcolor..";"..
-			dreambuilder_theme.tooltip_fontcolor.."]"..
-		"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
-		"image[1.9,0.93;3.76,2.325;technic_reactor_upper_slots.png]"..
+		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000]"..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 4.97, 8, 1, true)..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 5.97, 8, 3, false)..
+		dreambuilder_theme.make_inv_img_grid_v1(2, 0.95, 3, 2, false)..
 	"label[0,0;"..S("Nuclear Reactor Rod Compartment").."]"..
 	"list[current_name;src;2,1;3,2;]"..
 	"list[current_player;main;0,5;8,4;]"..

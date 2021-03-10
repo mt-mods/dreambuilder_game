@@ -225,14 +225,13 @@ function technic.chests:definition(name, data)
 	local front = {"technic_"..lname.."_chest_front.png"}
 	data.base_formspec = "size["..data.ovwidth..","..data.ovheight.."]"..
 			"label[0,0;"..S("%s Chest"):format(name).."]"..
-		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
-			dreambuilder_theme.tooltip_bgcolor..";"..
-			dreambuilder_theme.tooltip_fontcolor.."]"..
+		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000]"..
 			"list[context;main;"..data.hileft..",1;"..data.width..","..data.height..";]"..
 			"list[current_player;main;"..data.loleft..","..data.lotop..";8,4;]"..
-			"background[-0.19,-0.25;"..(data.ovwidth+0.4)..","..(data.ovheight+0.75)..";technic_chest_form_bg.png]"..
-			"background["..data.hileft..",1;"..data.width..","..data.height..";technic_"..lname.."_chest_inventory.png]"..
-			"background["..data.loleft..","..data.lotop..";8,4;technic_main_inventory.png]"..
+			"background[0,0;1,1;"..dreambuilder_theme.name.."_technic_chest_form_bg.png;true]"..
+			dreambuilder_theme.make_inv_img_grid_v1(data.hileft, 0.95, data.width, data.height, false)..
+			dreambuilder_theme.make_inv_img_grid_v1(data.loleft, data.lotop-0.05, 8, 1, true)..
+			dreambuilder_theme.make_inv_img_grid_v1(data.loleft, data.lotop+0.95, 8, 3, false)..
 			"listring[]"
 
 	if data.sort then

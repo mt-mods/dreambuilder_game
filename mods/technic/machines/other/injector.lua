@@ -56,11 +56,10 @@ local function set_injector_formspec(meta)
 	local is_stack = meta:get_string("mode") == "whole stacks"
 	meta:set_string("formspec",
 		"size[8,9;]"..
-		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
-			dreambuilder_theme.tooltip_bgcolor..";"..
-			dreambuilder_theme.tooltip_fontcolor.."]"..
-		"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
-		"image[-0.1,1.92;10.03,2.375;technic_injector_upper_slots.png]"..
+		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000]"..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 1.95, 8, 2, false)..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 4.97, 8, 1, true)..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 5.97, 8, 3, false)..
 		"item_image[0,0;1,1;technic:injector]"..
 		"label[1,0;"..S("Self-Contained Injector").."]"..
 		(is_stack and

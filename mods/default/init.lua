@@ -16,25 +16,25 @@ default.get_translator = S
 minetest.register_on_joinplayer(function(player)
 	-- Set formspec prepend
 		local formspec = 
-			"listcolors["..dreambuilder_theme.listcolor_slot_bg_normal..
-				";"..dreambuilder_theme.listcolor_slot_bg_hover..
-				";"..dreambuilder_theme.listcolor_slot_border..
-				";"..dreambuilder_theme.tooltip_bgcolor..
-				";"..dreambuilder_theme.tooltip_fontcolor.."]"..
-			"style_type[button;bgcolor="..dreambuilder_theme.btn_color.."]"..
-			"style_type[button_exit;bgcolor="..dreambuilder_theme.btn_color.."]"..
-			"style_type[image_button;bgcolor="..dreambuilder_theme.btn_color..
-				";border="..dreambuilder_theme.image_button_borders.."]"..
-			"style_type[image_button_exit;bgcolor="..dreambuilder_theme.btn_color..
-				";border="..dreambuilder_theme.image_button_borders.."]"..
-			"style_type[item_image_button;bgcolor="..dreambuilder_theme.btn_color..
-				";border="..dreambuilder_theme.image_button_borders.."]"
+		"listcolors["..dreambuilder_theme.listcolor_slot_bg_normal..
+			";"..dreambuilder_theme.listcolor_slot_bg_hover..
+			";"..dreambuilder_theme.listcolor_slot_border..
+			";"..dreambuilder_theme.tooltip_bgcolor..
+			";"..dreambuilder_theme.tooltip_fontcolor.."]"..
+		"style_type[button;bgcolor="..dreambuilder_theme.btn_color.."]"..
+		"style_type[button_exit;bgcolor="..dreambuilder_theme.btn_color.."]"..
+		"style_type[image_button;bgcolor="..dreambuilder_theme.btn_color..
+			";border="..dreambuilder_theme.image_button_borders.."]"..
+		"style_type[image_button_exit;bgcolor="..dreambuilder_theme.btn_color..
+			";border="..dreambuilder_theme.image_button_borders.."]"..
+		"style_type[item_image_button;bgcolor="..dreambuilder_theme.btn_color..
+			";border="..dreambuilder_theme.image_button_borders.."]"
 	local name = player:get_player_name()
 	local info = minetest.get_player_information(name)
 	if info.formspec_version > 1 then
-		formspec = formspec .. "background9[5,5;1,1;gui_formbg.png;true;10]"
+		formspec = formspec .. "background9[5,5;1,1;"..dreambuilder_theme.name.."_gui_formbg.png;true;10]"
 	else
-		formspec = formspec .. "background[5,5;1,1;gui_formbg.png;true]"
+		formspec = formspec .. "background[5,5;1,1;"..dreambuilder_theme.name.."_gui_formbg.png;true]"
 	end
 	player:set_formspec_prepend(formspec)
 

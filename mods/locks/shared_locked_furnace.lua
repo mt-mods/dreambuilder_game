@@ -87,12 +87,12 @@ end
 function locks.get_furnace_active_formspec(pos, percent)
 	local formspec =
 		"size[8,9]"..
-		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
-			dreambuilder_theme.tooltip_bgcolor..";"..
-			dreambuilder_theme.tooltip_fontcolor.."]"..
-		"image[-0.1,4.90;10.03,4.65;default_standard_inventory_old_bg.png]"..
-		"image[1.88,0.37;1.254,3.59;default_furnace_upper_middle_slots_bg.png]"..
-		"image[4.9,0.87;2.5,2.46;default_furnace_upper_right_slots_bg_2x2.png]"..
+		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000]"..
+		dreambuilder_theme.single_slot_v1(2, 0.45, false)..
+		dreambuilder_theme.single_slot_v1(2, 2.45, false)..
+		dreambuilder_theme.make_inv_img_grid_v1(5, 0.95, 2, 2, false)..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 4.95, 8, 1, true)..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 5.95, 8, 3, false)..
 		"image[2,1.5;1,1;default_furnace_fire_bg.png^[lowpart:"..
 		(100-percent)..":default_furnace_fire_fg.png]"..
 		"list[current_name;fuel;2,2.5;1,1;]"..
@@ -108,12 +108,12 @@ end
 
 locks.furnace_inactive_formspec =
 	"size[8,9]"..
-		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
-			dreambuilder_theme.tooltip_bgcolor..";"..
-			dreambuilder_theme.tooltip_fontcolor.."]"..
-		"image[-0.1,4.90;10.03,4.65;default_standard_inventory_old_bg.png]"..
-		"image[1.88,0.37;1.254,3.59;default_furnace_upper_middle_slots_bg.png]"..
-		"image[4.9,0.87;2.5,2.46;default_furnace_upper_right_slots_bg_2x2.png]"..
+		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000]"..
+		dreambuilder_theme.single_slot_v1(2, 0.45, false)..
+		dreambuilder_theme.single_slot_v1(2, 2.45, false)..
+		dreambuilder_theme.make_inv_img_grid_v1(5, 0.95, 2, 2, false)..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 4.95, 8, 1, true)..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 5.95, 8, 3, false)..
 	"image[2,1.5;1,1;default_furnace_fire_bg.png]"..
 	"list[current_name;fuel;2,2.5;1,1;]"..
 	"list[current_name;src;2,0.5;1,1;]"..

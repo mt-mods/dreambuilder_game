@@ -51,11 +51,11 @@ function technic.register_base_machine(data)
 
 	local formspec =
 		"size[8,9;]"..
-		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
-			dreambuilder_theme.tooltip_bgcolor..";"..
-			dreambuilder_theme.tooltip_fontcolor.."]"..
-		"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
-		"image[2.9,0.93;5.016,2.326;technic_base_machine_upper_bg.png]"..
+		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000]"..
+		dreambuilder_theme.single_slot_v1(3, 0.95, false)..
+		dreambuilder_theme.make_inv_img_grid_v1(5, 0.95, 2, 2, false)..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 4.97, 8, 1, true)..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 5.97, 8, 3, false)..
 		"list[current_name;src;"..(4-input_size)..",1;"..input_size..",1;]"..
 		"list[current_name;dst;5,1;2,2;]"..
 		"list[current_player;main;0,5;8,4;]"..
@@ -66,7 +66,7 @@ function technic.register_base_machine(data)
 		"listring[current_player;main]"
 	if data.upgrade then
 		formspec = formspec..
-			"image[0.91,2.93;2.508,1.163;technic_base_machine_upgrade_slots_bg.png]"..
+		dreambuilder_theme.make_inv_img_grid_v1(1, 2.95, 2, 1, false)..
 			"list[current_name;upgrade1;1,3;1,1;]"..
 			"list[current_name;upgrade2;2,3;1,1;]"..
 			"label[1,4;"..S("Upgrade Slots").."]"..

@@ -162,11 +162,12 @@ function technic.register_battery_box(data)
 
 	local formspec =
 		"size[8,9]"..
-		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
-			dreambuilder_theme.tooltip_bgcolor..";"..
-			dreambuilder_theme.tooltip_fontcolor.."]"..
-		"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
-		"image[2.9,0.93;3.762,3.488;technic_battery_box_upper_slots.png]"..
+		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000]"..
+		dreambuilder_theme.single_slot_v1(3, 0.95, false)..
+		dreambuilder_theme.single_slot_v1(5, 0.95, false)..
+		dreambuilder_theme.make_inv_img_grid_v1(3.5, 2.95, 2, 1, false)..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 4.97, 8, 1, true)..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 5.97, 8, 3, false)..
 		"image[1,1;1,2;technic_power_meter_bg.png]"..
 		"list[context;src;3,1;1,1;]"..
 		"image[4,1;1,1;technic_battery_reload.png]"..

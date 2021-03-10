@@ -146,16 +146,15 @@ local function make_constructor(mark, length)
 		on_construct = function(pos)
 			local meta = minetest.get_meta(pos)
 			local formspec = "size[8,9;]"..
-		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
-			dreambuilder_theme.tooltip_bgcolor..";"..
-			dreambuilder_theme.tooltip_fontcolor.."]"..
-				"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
+		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000]"..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 4.97, 8, 1, true)..
+		dreambuilder_theme.make_inv_img_grid_v1(0, 5.97, 8, 3, false)..
 				"label[0,0;"..S("Constructor Mk%d"):format(mark).."]"..
 				"list[current_player;main;0,5;8,4;]"
 			for i = 1, length do
 				formspec = formspec
 					.."label[5,"..(i - 1)..";"..S("Slot %d"):format(i).."]"
-					.."image[5.89,"..(i*0.998-1.07)..";1.254,1.163;default_single_slot.png]"
+					..dreambuilder_theme.single_slot_v1(6, i-1.05, false)
 					.."list[current_name;slot"..i
 						..";6,"..(i - 1)..";1,1;]"
 			end

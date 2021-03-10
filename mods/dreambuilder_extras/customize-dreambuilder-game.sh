@@ -81,7 +81,9 @@ echo -e "\nBring all mods up-to-date from "$upstream_mods_path
 cd $upstream_mods_path
 
 # No trailing slashes on these items' paths!
-LINK_MODS_LIST="my_mods/biome_lib \
+
+LINK_MODS_LIST="
+my_mods/biome_lib \
 my_mods/coloredwood \
 my_mods/currency \
 my_mods/gloopblocks \
@@ -149,12 +151,14 @@ my_mods/pipeworks \
 RBAs_mods/unified_inventory \
 Zeg9s_mods/ufos/ufos"
 
-LINK_MODPACKS_LIST="$(ls -d my_mods/home_workshop_modpack/*/) \
+LINK_MODPACKS_LIST="
+$(ls -d my_mods/home_workshop_modpack/*/) \
 $(ls -d my_mods/plantlife_modpack/*/) \
 $(ls -d cheapies_mods/roads_modpack/*/) \
 $(ls -d cool_trees_modpack/*/)"
 
-COPY_MODPACKS_LIST="$(ls -d my_mods/homedecor_modpack/*/) \
+COPY_MODPACKS_LIST="
+$(ls -d my_mods/homedecor_modpack/*/) \
 $(ls -d RBAs_mods/technic_modpack/*/) \
 $(ls -d Philipbenrs_mods/castle-modpack/*/) \
 $(ls -d worldedit_modpack/*/) \
@@ -164,12 +168,12 @@ for i in $LINK_MODS_LIST; do
 	ln -s $upstream_mods_path"/"$i $workdir/mods
 done
 
-for i in $(echo $LINK_MODPACKS_LIST |sed "s:/ : :g; s:/$::"); do
-	ln -s $upstream_mods_path"/"$i $workdir/mods
-done
-
 for i in $COPY_MODS_LIST; do
 	rsync -a $upstream_mods_path"/"$i $workdir/mods --exclude .git*
+done
+
+for i in $(echo $LINK_MODPACKS_LIST |sed "s:/ : :g; s:/$::"); do
+	ln -s $upstream_mods_path"/"$i $workdir/mods
 done
 
 for i in $(echo $COPY_MODPACKS_LIST |sed "s:/ : :g; s:/$::"); do
@@ -208,41 +212,42 @@ rm -rf $workdir/mods/worldedit_brush
 
 # Create the standard in-game lightly-shaded theme, expand on it, make it user-configurable
 
-cat > /tmp/listcolors << 'EOF'
-			"listcolors["..dreambuilder_theme.listcolor_slot_bg_normal..
-				";"..dreambuilder_theme.listcolor_slot_bg_hover..
-				";"..dreambuilder_theme.listcolor_slot_border..
-				";"..dreambuilder_theme.tooltip_bgcolor..
-				";"..dreambuilder_theme.tooltip_fontcolor.."]"..
-EOF
-
-cat > /tmp/herefileA << 'EOF'
-			"style_type[button;bgcolor="..dreambuilder_theme.btn_color.."]"..
-			"style_type[button_exit;bgcolor="..dreambuilder_theme.btn_color.."]"..
-			"style_type[image_button;bgcolor="..dreambuilder_theme.btn_color..
-				";border="..dreambuilder_theme.image_button_borders.."]"..
-			"style_type[image_button_exit;bgcolor="..dreambuilder_theme.btn_color..
-				";border="..dreambuilder_theme.image_button_borders.."]"..
-			"style_type[item_image_button;bgcolor="..dreambuilder_theme.btn_color..
-				";border="..dreambuilder_theme.image_button_borders.."]"
-EOF
-
-echo '		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000;"..
-			dreambuilder_theme.tooltip_bgcolor..";"..
-			dreambuilder_theme.tooltip_fontcolor.."]"..' > /tmp/LISTCOLORS_HIDE_SLOTS
+LISTCOLORS_HIDE_SLOTS='"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000]"..'
 
 mv $workdir"/mods/dreambuilder_extras/minetest.conf" $workdir
 
+##########
+sed -i 's/"gui_hotbar_selected.png"/dreambuilder_theme.name.."_gui_hotbar_selected.png"/' \
+	$workdir"/mods/dreambuilder_hotbar/init.lua"
+
+sed -i 's/"gui_hb_bg_"/dreambuilder_theme.name.."_gui_hb_bg_"/' \
+	$workdir"/mods/dreambuilder_hotbar/init.lua"
+
+##########
+
 sed -i "s/bgcolor\[.*\]//" \
         $workdir"/mods/beds/init.lua"
+
+##########
 
 sed -i '/local formspec = \[\[/ , /\]\]/ {d}' \
         $workdir"/mods/default/init.lua"
 
 sed -i '/Set formspec prepend/ {
 	a \\t\tlocal formspec = 
-	r /tmp/listcolors
-	r /tmp/herefileA
+	a \\t\t"listcolors["..dreambuilder_theme.listcolor_slot_bg_normal..
+	a \\t\t\t";"..dreambuilder_theme.listcolor_slot_bg_hover..
+	a \\t\t\t";"..dreambuilder_theme.listcolor_slot_border..
+	a \\t\t\t";"..dreambuilder_theme.tooltip_bgcolor..
+	a \\t\t\t";"..dreambuilder_theme.tooltip_fontcolor.."]"..
+	a \\t\t"style_type[button;bgcolor="..dreambuilder_theme.btn_color.."]"..
+	a \\t\t"style_type[button_exit;bgcolor="..dreambuilder_theme.btn_color.."]"..
+	a \\t\t"style_type[image_button;bgcolor="..dreambuilder_theme.btn_color..
+	a \\t\t\t";border="..dreambuilder_theme.image_button_borders.."]"..
+	a \\t\t"style_type[image_button_exit;bgcolor="..dreambuilder_theme.btn_color..
+	a \\t\t\t";border="..dreambuilder_theme.image_button_borders.."]"..
+	a \\t\t"style_type[item_image_button;bgcolor="..dreambuilder_theme.btn_color..
+	a \\t\t\t";border="..dreambuilder_theme.image_button_borders.."]"
 	}' $workdir"/mods/default/init.lua"
 
 sed -i '/default.gui_survival_form/ {
@@ -250,39 +255,74 @@ sed -i '/default.gui_survival_form/ {
 	a \\t\t\tdefault.gui_bg..
 	}' $workdir"/mods/default/init.lua"
 
+sed -i 's/gui_formbg.png/"..dreambuilder_theme.name.."_gui_formbg.png/' \
+	$workdir"/mods/default/init.lua"
+
 sed -i '/tableoptions/d' $workdir"/mods/default/craftitems.lua"
 
-echo "depends = dreambuilder_gui_theming" >> $workdir"/mods/default/mod.conf"
+echo "depends = dreambuilder_theme_settings" >> $workdir"/mods/default/mod.conf"
+
+##########
 
 sed -i 's/"style_type\[.*\]"/"style_type[label,textarea;font=mono]" \
 \t\t.."style_type[textarea;textcolor="..dreambuilder_theme.editor_text_color..";border="..dreambuilder_theme.editor_border.."]"/' \
-       $workdir"/mods/mesecons_luacontroller/init.lua"
+	$workdir"/mods/mesecons_luacontroller/init.lua"
 
-sed -i "0,/depends =/s//depends = dreambuilder_gui_theming, /" $workdir"/mods/mesecons/mod.conf"
+sed -i 's/jeija_luac_background.png/"..dreambuilder_theme.name.."_jeija_luac_background.png/' \
+	$workdir"/mods/mesecons_luacontroller/init.lua"
 
-sed -i '/size\[8,9\]/ {
-	a \\t\t"image[-0.12,4.73;10.03,4.95;default_standard_inventory_bg.png]"..
-	a \\t\t"image[-0.12,0.15;10.03,4.79;default_chest_upper_slots_bg.png]"..
-	r /tmp/LISTCOLORS_HIDE_SLOTS
-	}' $workdir"/mods/pipeworks/compat-chests.lua"
+sed -i 's/jeija_luac_runbutton.png/"..dreambuilder_theme.name.."_jeija_luac_runbutton.png/' \
+	$workdir"/mods/mesecons_luacontroller/init.lua"
 
-sed -i '/size\[8,8.5\]/ {
-	a \\t\t"image[-0.1,4.15;10.03,4.95;default_standard_inventory_bg.png]"..
-	a \\t\t"image[2.65,0.37;1.254,3.59;default_furnace_upper_middle_slots_bg.png]"..
-	a \\t\t"image[4.64,0.83;2.52,2.44;default_furnace_upper_right_slots_bg_2x2.png]"..
-	r /tmp/LISTCOLORS_HIDE_SLOTS
-	}' $workdir"/mods/pipeworks/compat-furnaces.lua"
+sed -i 's/jeija_close_window.png/"..dreambuilder_theme.name.."_jeija_close_window.png/' \
+	$workdir"/mods/mesecons_luacontroller/init.lua"
 
-sed -i "0, /depends = /s//depends = dreambuilder_gui_theming, /" $workdir"/mods/pipeworks/mod.conf"
+sed -i "0,/depends =/s//depends = dreambuilder_theme_settings, /" $workdir"/mods/mesecons/mod.conf"
 
+##########
 
-sed -i '/size\[8,7;\]/ {
-	r /tmp/LISTCOLORS_HIDE_SLOTS
-	a \\t\t"image[-0.1,2.75;10.03,4.95;default_standard_inventory_bg.png]"..
-	a \\t\t"image[-0.1,0.23;10.03,2.37;vessels_upper_slots_bg.png]"..
-    }' $workdir"/mods/vessels/init.lua"
+sed -i "/size\[8,9\]/ {
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 0.26, 8, 4, false)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 4.82, 8, 1, true)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 6.03, 8, 3, false)..
+	a \\\t\t$LISTCOLORS_HIDE_SLOTS
+	}" $workdir"/mods/pipeworks/compat-chests.lua"
 
-sed -i "0, /depends = /s//depends = dreambuilder_gui_theming, /" $workdir"/mods/vessels/mod.conf"
+sed -i 's/default.get_hotbar_bg(0,4.85)/""/' \
+	$workdir"/mods/pipeworks/compat-chests.lua"
+
+sed -i "/size\[8,8.5\]/ {
+	a \\\t\tdreambuilder_theme.single_slot_v1(2.75, 0.45, false)..
+	a \\\t\tdreambuilder_theme.single_slot_v1(2.75, 2.45, false)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(4.75, 0.92, 2, 2, false)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 4.22,  8, 1, true)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 5.45, 8, 3, false)..
+	a \\\t\t$LISTCOLORS_HIDE_SLOTS
+	}" $workdir"/mods/pipeworks/compat-furnaces.lua"
+
+sed -i '/default.get_hotbar_bg(0, 4.25) ../ {d}' \
+	$workdir"/mods/pipeworks/compat-furnaces.lua"
+
+sed -i "0, /depends = /s//depends = dreambuilder_theme_settings, /" $workdir"/mods/pipeworks/mod.conf"
+
+##########
+
+sed -i "/size\[8,7;\]/ {
+	a \\\t$LISTCOLORS_HIDE_SLOTS
+	a \\\tdreambuilder_theme.make_inv_img_grid_v1(0, 0.25, 8, 2, false)..
+	a \\\tdreambuilder_theme.make_inv_img_grid_v1(0, 2.8,  8, 1, true)..
+	a \\\tdreambuilder_theme.make_inv_img_grid_v1(0, 4.05, 8, 3, false)..
+    }" $workdir"/mods/vessels/init.lua"
+
+sed -i 's/vessels_shelf_slot.png/"..dreambuilder_theme.name.."_vessels_shelf_slot.png/' \
+	$workdir"/mods/vessels/init.lua"
+
+sed -i 's/default.get_hotbar_bg(0, 2.85)/""/' \
+	$workdir"/mods/vessels/init.lua"
+
+sed -i "0, /depends = /s//depends = dreambuilder_theme_settings, /" $workdir"/mods/vessels/mod.conf"
+
+##########
 
 sed -i 's/"field\[.*\]"/ \
 \t\t\t"formspec_version[4]".. \
@@ -292,19 +332,14 @@ sed -i 's/"field\[.*\]"/ \
 \t\t/' \
        $workdir"/mods/technic/machines/switching_station.lua"
 
-# the inv and slots images below are exactly 192x192 and 512x256 pixels
-# and meant to cover inv areas of 3x3 and 8x4 inv slots
-# but with an 8x9 formspec size, it takes a declared size of [10.03, 4.65]
-# to make the 8x4 grid image fit right
-# [10.03, 4.65] / [8, 4] = [1.254, 1.163]
-#
-# so a 3x3 inv grid should be about 3.762x3.488 real size
-
-sed -i '/size\[8,9\]/ {
-	r /tmp/LISTCOLORS_HIDE_SLOTS
-	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
-	a \\t\t"image[2.9,0.93;3.762,3.488;technic_battery_box_upper_slots.png]"..
-	}' $workdir"/mods/technic/machines/register/battery_box.lua"
+sed -i "/size\[8,9\]/ {
+	a \\\t\t$LISTCOLORS_HIDE_SLOTS
+	a \\\t\tdreambuilder_theme.single_slot_v1(3, 0.95, false)..
+	a \\\t\tdreambuilder_theme.single_slot_v1(5, 0.95, false)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(3.5, 2.95, 2, 1, false)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 4.97, 8, 1, true)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 5.97, 8, 3, false)..
+	}" $workdir"/mods/technic/machines/register/battery_box.lua"
 
 
 sed -i 's/"field\[.*")/ \
@@ -315,140 +350,210 @@ sed -i 's/"field\[.*")/ \
 \t\t\t\t\t)/' \
        $workdir"/mods/technic/machines/register/battery_box.lua"
 
-sed -i '/size\[8,9;\]/ {
-	r /tmp/LISTCOLORS_HIDE_SLOTS
-	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
-	a \\t\t"image[2.9,0.93;5.016,2.326;technic_base_machine_upper_bg.png]"..
-	}' $workdir"/mods/technic/machines/register/machine_base.lua"
+sed -i "/size\[8,9;\]/ {
+	a \\\t\t$LISTCOLORS_HIDE_SLOTS
+	a \\\t\tdreambuilder_theme.single_slot_v1(3, 0.95, false)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(5, 0.95, 2, 2, false)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 4.97, 8, 1, true)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 5.97, 8, 3, false)..
+	}" $workdir"/mods/technic/machines/register/machine_base.lua"
 
-sed -i '/formspec = formspec/ {
-	a \\t\t\t"image[0.91,2.93;2.508,1.163;technic_base_machine_upgrade_slots_bg.png]"..
-	}' $workdir"/mods/technic/machines/register/machine_base.lua"
+sed -i "/formspec = formspec/ {
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(1, 2.95, 2, 1, false)..
+	}" $workdir"/mods/technic/machines/register/machine_base.lua"
 
-sed -i '/size\[8,9;\]/ {
-	r /tmp/LISTCOLORS_HIDE_SLOTS
-	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
-	a \\t\t"image[2.9,0.93;1.254,1.163;default_single_slot.png]"..
-	}' $workdir"/mods/technic/machines/register/generator.lua"
+sed -i "/size\[8,9;\]/ {
+	a \\\t\t$LISTCOLORS_HIDE_SLOTS
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 4.97, 8, 1, true)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 5.97, 8, 3, false)..
+	a \\\t\tdreambuilder_theme.single_slot_v1(3, 0.95, false)..
+	}" $workdir"/mods/technic/machines/register/generator.lua"
 
 # this alloy furnace change will match in two places, on purpose.
-sed -i '/size\[8,9\]/ {
-	r /tmp/LISTCOLORS_HIDE_SLOTS
-	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
-	a \\t\t"image[1.9,0.93;6.27,3.49;technic_coal_alloy_furnace_upper_slots.png]"..
-	}' $workdir"/mods/technic/machines/other/coal_alloy_furnace.lua"
+sed -i "/size\[8,9\]/ {
+	a \\\t\t$LISTCOLORS_HIDE_SLOTS
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(2, 0.95, 2, 1, false)..
+	a \\\t\tdreambuilder_theme.single_slot_v1(2, 2.95, false)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(5, 0.95, 2, 2, false)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 4.97, 8, 1, true)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 5.97, 8, 3, false)..
+	}" $workdir"/mods/technic/machines/other/coal_alloy_furnace.lua"
 
-sed -i '/size\[8,9;\]/ {
-	r /tmp/LISTCOLORS_HIDE_SLOTS
-	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
-	a \\t\t"image[-0.1,1.92;10.03,2.375;technic_injector_upper_slots.png]"..
-	}' $workdir"/mods/technic/machines/other/injector.lua"
+sed -i "/size\[8,9;\]/ {
+	a \\\t\t$LISTCOLORS_HIDE_SLOTS
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 1.95, 8, 2, false)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 4.97, 8, 1, true)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 5.97, 8, 3, false)..
+	}" $workdir"/mods/technic/machines/other/injector.lua"
 
-sed -i '/size\[8,9;\]/ {
-	r /tmp/LISTCOLORS_HIDE_SLOTS
-	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
-	a \\t\t"image[2.9,0.93;1.254,1.163;default_single_slot.png]"..
-	a \\t\t"image[0.91,2.93;2.508,1.163;technic_base_machine_upgrade_slots_bg.png]"..
-	}' $workdir"/mods/technic/machines/MV/tool_workshop.lua"
+sed -i "/size\[8,9;\]/ {
+	a \\\t\t$LISTCOLORS_HIDE_SLOTS
+	a \\\tdreambuilder_theme.make_inv_img_grid_v1(1, 2.95, 2, 1, false)..
+	a \\\tdreambuilder_theme.make_inv_img_grid_v1(0, 4.97, 8, 1, true)..
+	a \\\tdreambuilder_theme.make_inv_img_grid_v1(0, 5.97, 8, 3, false)..
+	a \\\tdreambuilder_theme.single_slot_v1(3, 0.95, false)..
+	}" $workdir"/mods/technic/machines/MV/tool_workshop.lua"
 
-sed -i '/size\[8,9\]/ {
-	r /tmp/LISTCOLORS_HIDE_SLOTS
-	a \\t\t"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
-	a \\t\t"image[1.9,0.93;3.76,2.325;technic_reactor_upper_slots.png]"..
-	}' $workdir"/mods/technic/machines/HV/nuclear_reactor.lua"
+sed -i "/size\[8,9\]/ {
+	a \\\t\t$LISTCOLORS_HIDE_SLOTS
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 4.97, 8, 1, true)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 5.97, 8, 3, false)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(2, 0.95, 3, 2, false)..
+	}" $workdir"/mods/technic/machines/HV/nuclear_reactor.lua"
 
-sed -i '/size\[8,9;\]/ {
-	r /tmp/LISTCOLORS_HIDE_SLOTS
-	a \\t\t\t\t"image[-0.1,4.93;10.03,4.65;technic_main_inventory.png]"..
-	}' $workdir"/mods/technic/machines/other/constructor.lua"
+sed -i "/size\[8,9;\]/ {
+	a \\\t\t$LISTCOLORS_HIDE_SLOTS
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 4.97, 8, 1, true)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 5.97, 8, 3, false)..
+	}" $workdir"/mods/technic/machines/other/constructor.lua"
 
-sed -i '/list\[current_name/ {
-	i \\t\t\t\t\t.."image[5.89,"..(i*0.998-1.07)..";1.254,1.163;default_single_slot.png]"
-	}' $workdir"/mods/technic/machines/other/constructor.lua"
+sed -i "/list\[current_name/ {
+	i \\\t\t\t\t\t..dreambuilder_theme.single_slot_v1(6, i-1.05, false)
+	}" $workdir"/mods/technic/machines/other/constructor.lua"
 
-sed -i '/size\[9,11;\]/ {
-	r /tmp/LISTCOLORS_HIDE_SLOTS
-	a \\t\t"image[-0.1,6.92;10.03,4.65;technic_main_inventory.png]"..
-	a \\t\t"image[-0.1,5.42;11.28,1.163;technic_cnc_upper_slots.png]"..
-	}' $workdir"/mods/technic_cnc/cnc.lua"
+sed -i "/size\[9,11;\]/ {
+	a \\\t\t$LISTCOLORS_HIDE_SLOTS
+	a \\\t\tdreambuilder_theme.single_slot_v1(0.5, 5.45, false)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(5, 5.45, 4, 1, false)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 6.95,  8, 1, true)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 7.95,  8, 3, false)..
+	}" $workdir"/mods/technic_cnc/cnc.lua"
 
-sed -i "0, /depends = /s//depends = dreambuilder_gui_theming, /" $workdir"/mods/technic/mod.conf"
+sed -i "0, /depends = /s//depends = dreambuilder_theme_settings, /" $workdir"/mods/technic/mod.conf"
+
+##########
+
+sed -i "/\"label\[0,0;\"/ {
+	a \\\t\t$LISTCOLORS_HIDE_SLOTS
+}" $workdir"/mods/technic_chests/register.lua"
+
+sed -i '/"background\["..data.hileft/ {d}' \
+	$workdir"/mods/technic_chests/register.lua"
+
+sed -i '/"background\["..data.loleft/ {
+	a \\t\t\tdreambuilder_theme.make_inv_img_grid_v1(data.hileft, 0.95, data.width, data.height, false)..
+	a \\t\t\tdreambuilder_theme.make_inv_img_grid_v1(data.loleft, data.lotop-0.05, 8, 1, true)..
+	a \\t\t\tdreambuilder_theme.make_inv_img_grid_v1(data.loleft, data.lotop+0.95, 8, 3, false)..
+	d
+	}' $workdir"/mods/technic_chests/register.lua"
+
+sed -i '/"background\[-0.19,-0.25;"/ {
+	a \\t\t\t"background[0,0;1,1;"..dreambuilder_theme.name.."_technic_chest_form_bg.png;true]"..
+	d
+	}'	$workdir"/mods/technic_chests/register.lua"
+
+#sed -i 's/technic_chest_form_bg.png/"..dreambuilder_theme.name.."_technic_chest_form_bg.png;true/' \
+#	$workdir"/mods/technic_chests/register.lua"
+
+sed -i "0, /depends = /s//depends = dreambuilder_theme_settings, /" $workdir"/mods/technic_chests/mod.conf"
+
+##########
+
+sed -i "/image\[2.75,1.5;1,1;/ {
+	a \\\t\t$LISTCOLORS_HIDE_SLOTS
+	a \\\t\tdreambuilder_theme.single_slot_v1(2.75, 0.45, false)..
+	a \\\t\tdreambuilder_theme.single_slot_v1(2.75, 2.45, false)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(4.75, 0.92, w, h, false)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0,    4.22, 8, 1, true)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0,    5.45, 8, 3, false)..
+	}" $workdir"/mods/homedecor_common/furnaces.lua"
+
+sed -i "0, /depends = /s//depends = dreambuilder_theme_settings, /" $workdir"/mods/homedecor_common/mod.conf"
+
+##########
+
+sed -i "/size\[8,10\]/ {
+	a \\\t\t$LISTCOLORS_HIDE_SLOTS
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 0.95, 8, 4, false)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 5.82, 8, 1, true)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 7.03, 8, 3, false)..
+	}" $workdir"/mods/locks/shared_locked_chest.lua"
+
+sed -i 's/default.get_hotbar_bg(0,5.85)/""/' \
+	$workdir"/mods/locks/shared_locked_chest.lua"
+
+# This one will match in two places, deliberately.
+sed -i "/size\[8,9\]/ {
+	a \\\t\t$LISTCOLORS_HIDE_SLOTS
+	a \\\t\tdreambuilder_theme.single_slot_v1(2, 0.45, false)..
+	a \\\t\tdreambuilder_theme.single_slot_v1(2, 2.45, false)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(5, 0.95, 2, 2, false)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 4.95, 8, 1, true)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 5.95, 8, 3, false)..
+	}" $workdir"/mods/locks/shared_locked_furnace.lua"
+
+echo "dreambuilder_theme_settings" >> $workdir"/mods/locks/depends.txt"
+
+##########
+
+sed -i '/default.gui_bgimg/ {d}' $workdir"/mods/castle_storage/ironbound_chest.lua"
+sed -i '/default.gui_bg/ {d}' $workdir"/mods/castle_storage/ironbound_chest.lua"
+
+sed -i "/default.gui_slots/ {
+	a \\\t\t$LISTCOLORS_HIDE_SLOTS
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, -0.05, 8, 4, false)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 4.95,  8, 1, true)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 5.95,  8, 3, false)..
+	d
+}" $workdir"/mods/castle_storage/ironbound_chest.lua"
+
+sed -i '/default.gui_bgimg/ {d}' $workdir"/mods/castle_storage/crate.lua"
+sed -i '/default.gui_bg/ {d}' $workdir"/mods/castle_storage/crate.lua"
+
+sed -i "/default.gui_slots/ {
+	a \\\t\t$LISTCOLORS_HIDE_SLOTS
+	a \\\t\t\t\tdreambuilder_theme.make_inv_img_grid_v1(0, -0.05, 8, 4, false)..
+	a \\\t\t\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 4.95,  8, 1, true)..
+	a \\\t\t\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 5.95,  8, 3, false)..
+	d
+}" $workdir"/mods/castle_storage/crate.lua"
+
+##########
+
+sed -i "/size\[8,5.5\]/ {
+	a \\\t\t$LISTCOLORS_HIDE_SLOTS
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 1.42,  8, 1, true)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 2.58, 8, 3, false)..
+	a \\\t\tdreambuilder_theme.single_slot_v1(3.4, 0, false)..
+	}" $workdir"/mods/ufos/furnace.lua"
+
+echo "dreambuilder_theme_settings" >> $workdir"/mods/ufos/mod.conf"
+
+##########
 
 sed -i 's/"listcolors\[#00000000;#00000000\]"/""/' $workdir"/mods/unified_inventory/internal.lua"
 sed -i 's/"listcolors\[#00000000;#00000000\]"/""/' $workdir"/mods/unified_inventory/bags.lua"
 sed -i 's/"listcolors\[#00000000;#00000000\]"/""/' $workdir"/mods/unified_inventory/register.lua"
 
-sed -i '/local n = 4/ {
-	i \\tformspec[4]="style_type[image_button;bgcolor="..dreambuilder_theme.btn_color.."]"
-	i \\tformspec[5]=
-	r /tmp/LISTCOLORS_HIDE_SLOTS
-	a \\t\t\t""
-	a \\tlocal n = 6
-	d
-}' $workdir"/mods/unified_inventory/internal.lua"
+sed -i "/formspec\[n\] = fsdata.formspec/ {
+	a \\\tformspec[n+1]=\"style_type[image_button;bgcolor=\"..dreambuilder_theme.btn_color..\"]\"
+	a \\\tformspec[n+2]=
+	a \\\t\t$LISTCOLORS_HIDE_SLOTS
+	a \\\t\t\t\"\"
+	a \\\tn = n + 2
+}" $workdir"/mods/unified_inventory/internal.lua"
 
-sed -i "s/ui_single_slot.png/default_single_slot.png/" $workdir"/mods/unified_inventory/internal.lua"
-sed -i "s/ui_single_slot.png/default_single_slot.png/" $workdir"/mods/unified_inventory/register.lua"
-
-sed -i '/1.175;ui_bags_header.png/ {
+sed -i '/ui.single_slot(8.425, 1.5)/ {
 	a \\t\t\t"style_type[button;bgcolor="..dreambuilder_theme.btn_color.."]",
 	}' $workdir"/mods/unified_inventory/bags.lua"
 
-sed -i "0, /depends = /s//depends = dreambuilder_gui_theming, /" $workdir"/mods/unified_inventory/mod.conf"
+sed -i 's/ui_formbg_9_sliced.png/"..dreambuilder_theme.name.."_ui_formbg_9_sliced.png/' \
+	$workdir"/mods/unified_inventory/init.lua"
 
-sed -i '/"label\[0,0;"/ {
-	r /tmp/LISTCOLORS_HIDE_SLOTS
-}' $workdir"/mods/technic_chests/register.lua"
+sed -i 's/ui_single_slot/"..dreambuilder_theme.name.."_ui_single_slot/' \
+	$workdir"/mods/unified_inventory/api.lua"
 
-sed -i "0, /depends = /s//depends = dreambuilder_gui_theming, /" $workdir"/mods/technic_chests/mod.conf"
+sed -i 's/ui_trash_slot_icon.png/"..dreambuilder_theme.name.."_ui_trash_slot_icon.png/' \
+	$workdir"/mods/unified_inventory/api.lua"
 
-sed -i '/image\[2.75,1.5;1,1;/ {
-	r /tmp/LISTCOLORS_HIDE_SLOTS
-	a \\t\t"image[-0.1,4.15;10.03,4.95;default_standard_inventory_bg.png]"..
-	a \\t\t"image[2.65,0.37;1.254,3.59;default_furnace_upper_middle_slots_bg.png]"..
-	a \\t\t"image[4.64,0.83;2.52,2.44;default_furnace_upper_right_slots_bg_"..w.."x"..h..".png]"..
-	}' $workdir"/mods/homedecor_common/furnaces.lua"
+sed -i "0, /depends = /s//depends = dreambuilder_theme_settings, /" $workdir"/mods/unified_inventory/mod.conf"
 
-sed -i '/size\[8,10\]/ {
-	r /tmp/LISTCOLORS_HIDE_SLOTS
-	a \\t\t"image[-0.12,5.73;10.03,4.95;default_standard_inventory_bg.png]"..
-	a \\t\t"image[-0.12,0.85;10.03,4.79;default_chest_upper_slots_bg.png]"..
-	}' $workdir"/mods/locks/shared_locked_chest.lua"
+##########
 
-# This one will match in two places, deliberately.
-sed -i '/size\[8,9\]/ {
-	r /tmp/LISTCOLORS_HIDE_SLOTS
-	a \\t\t"image[-0.1,4.90;10.03,4.65;default_standard_inventory_old_bg.png]"..
-	a \\t\t"image[1.88,0.37;1.254,3.59;default_furnace_upper_middle_slots_bg.png]"..
-	a \\t\t"image[4.9,0.87;2.5,2.46;default_furnace_upper_right_slots_bg_2x2.png]"..
-	}' $workdir"/mods/locks/shared_locked_furnace.lua"
-
-sed -i '/size\[8,5.5\]/ {
-	r /tmp/LISTCOLORS_HIDE_SLOTS	a \\t\t"image[-0.1,1.42;10.03,4.65;default_standard_inventory_old_bg.png]"..
-	a \\t\t"image[3.4,-0.1;1.254,1.163;default_single_slot.png]"..
-	}' $workdir"/mods/ufos/furnace.lua"
-
-
-mv $workdir"/mods/dreambuilder_extras/dreambuilder_gui_theming" \
+mv	$workdir"/mods/dreambuilder_extras/dreambuilder_theme_settings" \
+	$workdir"/mods/dreambuilder_extras/dreambuilder_theme_functions" \
+	$workdir"/mods/dreambuilder_extras/dreambuilder_theme_light" \
 	$workdir"/mods/"
-
-rm	$workdir"/mods/default/textures/gui_formbg.png" \
-	$workdir"/mods/mesecons/textures/jeija_close_window.png" \
-	$workdir"/mods/mesecons_luacontroller/textures/jeija_luac_background.png" \
-	$workdir"/mods/mesecons_luacontroller/textures/jeija_luac_runbutton.png" \
-	$workdir"/mods/unified_inventory/textures/ui_bags_header.png" \
-	$workdir"/mods/unified_inventory/textures/ui_bags_inv"* \
-	$workdir"/mods/unified_inventory/textures/ui_bags_trash.png" \
-	$workdir"/mods/unified_inventory/textures/ui_crafting_form.png" \
-	$workdir"/mods/unified_inventory/textures/ui_form_bg.png" \
-	$workdir"/mods/unified_inventory/textures/ui_main_inventory.png" \
-	$workdir"/mods/unified_inventory/textures/ui_single_slot.png" \
-	$workdir"/mods/vessels/textures/vessels_shelf_slot.png" \
-	$workdir"/mods/default/textures/gui_hotbar_selected.png" \
-	$workdir"/mods/technic_chests/textures/technic_chest_form_bg.png" \
-	$workdir"/mods/technic_chests/textures/"*"inventory.png"
-
-rm /tmp/herefile* /tmp/LISTCOLORS_HIDE_SLOTS
 
 # Add in all of the regular player skins for the player_textures mod
 
