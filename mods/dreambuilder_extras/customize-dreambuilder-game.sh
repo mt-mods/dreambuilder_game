@@ -97,7 +97,6 @@ my_mods/street_signs \
 my_mods/unifieddyes \
 my_mods/simple_streetlights \
 my_mods/basic_materials \
-my_mods/dreambuilder_hotbar \
 Calinous_mods/bedrock \
 Calinous_mods/maptools \
 Calinous_mods/moreores \
@@ -148,6 +147,7 @@ CWzs_mods/player_textures \
 bobblocks \
 unifiedbricks \
 my_mods/pipeworks \
+my_mods/dreambuilder_hotbar \
 RBAs_mods/unified_inventory \
 Zeg9s_mods/ufos/ufos"
 
@@ -217,55 +217,29 @@ LISTCOLORS_HIDE_SLOTS='"listcolors[#00000000;"..dreambuilder_theme.listcolor_slo
 mv $workdir"/mods/dreambuilder_extras/minetest.conf" $workdir
 
 ##########
-sed -i 's/"gui_hotbar_selected.png"/dreambuilder_theme.name.."_gui_hotbar_selected.png"/' \
-	$workdir"/mods/dreambuilder_hotbar/init.lua"
-
-sed -i 's/"gui_hb_bg_"/dreambuilder_theme.name.."_gui_hb_bg_"/' \
-	$workdir"/mods/dreambuilder_hotbar/init.lua"
-
-##########
 
 sed -i "s/bgcolor\[.*\]//" \
         $workdir"/mods/beds/init.lua"
 
 ##########
 
-sed -i '/local formspec = \[\[/ , /\]\]/ {d}' \
-        $workdir"/mods/default/init.lua"
-
-sed -i '/Set formspec prepend/ {
-	a \\t\tlocal formspec = 
-	a \\t\t"listcolors["..dreambuilder_theme.listcolor_slot_bg_normal..
-	a \\t\t\t";"..dreambuilder_theme.listcolor_slot_bg_hover..
-	a \\t\t\t";"..dreambuilder_theme.listcolor_slot_border..
-	a \\t\t\t";"..dreambuilder_theme.tooltip_bgcolor..
-	a \\t\t\t";"..dreambuilder_theme.tooltip_fontcolor.."]"..
-	a \\t\t"style_type[button;bgcolor="..dreambuilder_theme.btn_color.."]"..
-	a \\t\t"style_type[button_exit;bgcolor="..dreambuilder_theme.btn_color.."]"..
-	a \\t\t"style_type[image_button;bgcolor="..dreambuilder_theme.btn_color..
-	a \\t\t\t";border="..dreambuilder_theme.image_button_borders.."]"..
-	a \\t\t"style_type[image_button_exit;bgcolor="..dreambuilder_theme.btn_color..
-	a \\t\t\t";border="..dreambuilder_theme.image_button_borders.."]"..
-	a \\t\t"style_type[item_image_button;bgcolor="..dreambuilder_theme.btn_color..
-	a \\t\t\t";border="..dreambuilder_theme.image_button_borders.."]"
-	}' $workdir"/mods/default/init.lua"
-
-sed -i '/default.gui_survival_form/ {
-	i default.gui_bg = "bgcolor["..dreambuilder_theme.form_bgcolor..";"..dreambuilder_theme.window_darken.."]"\n
-	a \\t\t\tdefault.gui_bg..
-	}' $workdir"/mods/default/init.lua"
-
 sed -i 's/gui_formbg.png/"..dreambuilder_theme.name.."_gui_formbg.png/' \
 	$workdir"/mods/default/init.lua"
 
 sed -i '/tableoptions/d' $workdir"/mods/default/craftitems.lua"
+
+sed -i '/-- GUI related stuff/,/end)/{//!d;d}' \
+	$workdir"/mods/default/init.lua"
+
+sed -i '/default.gui_bg/,/default.get_hotbar_bg/{//!d;d}' \
+	$workdir"/mods/default/init.lua"
 
 echo "depends = dreambuilder_theme_settings" >> $workdir"/mods/default/mod.conf"
 
 ##########
 
 sed -i 's/"style_type\[.*\]"/"style_type[label,textarea;font=mono]" \
-\t\t.."style_type[textarea;textcolor="..dreambuilder_theme.editor_text_color..";border="..dreambuilder_theme.editor_border.."]"/' \
+\t\t.."style_type[textarea;textcolor="..dreambuilder_theme.editor_text_color..";border=false]"/' \
 	$workdir"/mods/mesecons_luacontroller/init.lua"
 
 sed -i 's/jeija_luac_background.png/"..dreambuilder_theme.name.."_jeija_luac_background.png/' \
@@ -533,6 +507,11 @@ sed -i "/formspec\[n\] = fsdata.formspec/ {
 	a \\\tn = n + 2
 }" $workdir"/mods/unified_inventory/internal.lua"
 
+sed -i '/pagedef.formspec_prepend/ {
+	a \\t\t"no_prepend[]"..default.gui_bg,
+	d
+	}' $workdir"/mods/unified_inventory/internal.lua"
+
 sed -i '/ui.single_slot(8.425, 1.5)/ {
 	a \\t\t\t"style_type[button;bgcolor="..dreambuilder_theme.btn_color.."]",
 	}' $workdir"/mods/unified_inventory/bags.lua"
@@ -551,9 +530,9 @@ sed -i "0, /depends = /s//depends = dreambuilder_theme_settings, /" $workdir"/mo
 ##########
 
 mv	$workdir"/mods/dreambuilder_extras/dreambuilder_theme_settings" \
-	$workdir"/mods/dreambuilder_extras/dreambuilder_theme_functions" \
-	$workdir"/mods/dreambuilder_extras/dreambuilder_theme_light" \
 	$workdir"/mods/"
+
+rsync -a $upstream_mods_path"/my_mods/dreambuilder_themes/dreambuilder_theme_light" $workdir/mods
 
 # Add in all of the regular player skins for the player_textures mod
 

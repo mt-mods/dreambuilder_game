@@ -43,7 +43,7 @@ function ui.get_formspec(player, page)
 
 	local formspec = {
 		"formspec_version[4]size[17.75,12.25]",
-		pagedef.formspec_prepend and "" or "no_prepend[]",
+		"no_prepend[]"..default.gui_bg,
 		ui.standard_background -- Background
 	}
 	local n = 4

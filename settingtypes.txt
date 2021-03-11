@@ -78,50 +78,7 @@ enable_weather (Enable weather) bool true
 
 # Theme settings:
 
-# Formspecs will use this color for the background if for some reason the 
-# standard background image either doesn't show on a particular form, or if a 
-#form uses one with transparent parts.
-dreambuilder_theme_form_bgcolor (Dreambuilder theme, fallback form background color) string `#F0F0F0FF
-
-# Plain text buttons will be this color
-dreambuilder_theme_btn_color (Dreambuilder theme, text button color) string #B0B0B0FF
-
-# Mods that use an editable "textarea" widget will have this for the font 
-# color on top of whatever text drop shadow Minetest is configured to show.
-dreambuilder_theme_editor_text_color (Dreambuilder theme, textarea font color) string #000000FF
-
-# Mods that use an editable "textarea" widget but lack a background image will
-# use this for the background color.
-dreambuilder_theme_editor_bg_color (Dreambuilder theme, textarea background color) string #F0F0F0FF
-
-# On forms that have inventory slots but which don't use background image, 
-# this color will be used for the slots.
-dreambuilder_theme_listcolor_slot_bg_normal (Dreambuilder theme, inventory slot main color) string #FFFFFF30
-
-# On forms that have inventory slots, this color will be used when hovering
-#the mouse over a slot.
-dreambuilder_theme_listcolor_slot_bg_hover (Dreambuilder theme, inventory slot mouseover color) string #E0E0E0
-
-# On forms that have inventory slots but which don't use background image,
-# this color will be used for the slots' borders.
-dreambuilder_theme_listcolor_slot_border (Dreambuilder theme, inventory slot border color) string #606060
-
-# Where possible, tooltips will use this background color.
-dreambuilder_theme_tooltip_bgcolor (Dreambuilder theme, tooltip background color) string #A0A0A0
-
-# Where possible, tooltips' font will use this color, on top of whatever drop
-# shadow is configured for Minetest in general.
-dreambuilder_theme_tooltip_fontcolor (Dreambuilder theme, tooltip font color) string #FFF
-
-# If this is set to true, all forms/GUI will darken the rest of the window
-# when they are shown.
-dreambuilder_theme_window_darken (Dreambuilder theme, formspecs darken the whole window) bool false
-
-# If this is set to true, editable textarea widgets will be given a dark
-# border.
-dreambuilder_theme_editor_border (Dreambuilder theme, textarea border) bool false
-
-# If this is set to true, standard image buttons will have a dark, hardcoded
-# gradient background.  If false, buttons will have a relatively flat
-# background color instead.
-dreambuilder_theme_image_button_borders (Dreambuilder theme, use dark image button background) bool false
+# This sets which theme to use out of those that are installed.  Name
+# will usually be in the form of "dbtheme_something".  Dreambuilder will look
+# for and apply textures and settings based on it.
+dreambuilder_theme.name (Dreambuilder theme, name) string dbtheme_light

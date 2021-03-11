@@ -1,5 +1,6 @@
 local mtver = minetest.get_version()
 local maxslots = (string.sub(mtver.string, 1, 4) ~= "0.4.") and 32 or 23
+local themename = dreambuilder_theme and dreambuilder_theme.name.."_" or ""
 
 local function validate_size(s)
 	local size = s and tonumber(s) or 16
@@ -44,8 +45,8 @@ minetest.register_on_joinplayer(function(player)
 	local hotbar_size = validate_size(get_hotbar_setting(player:get_player_name()))
 	player:hud_set_hotbar_itemcount(hotbar_size)
 	minetest.after(0.5,function(hotbar_size)
-		player:hud_set_hotbar_selected_image(dreambuilder_theme.name.."_gui_hotbar_selected.png")
-		player:hud_set_hotbar_image(dreambuilder_theme.name.."_gui_hb_bg_"..hotbar_size..".png")
+		player:hud_set_hotbar_selected_image(themename.."gui_hotbar_selected.png")
+		player:hud_set_hotbar_image(themename.."gui_hb_bg_"..hotbar_size..".png")
 	end,hotbar_size)
 end)
 
@@ -58,7 +59,7 @@ minetest.register_chatcommand("hotbar", {
 		local player = minetest.get_player_by_name(name)
 		player:hud_set_hotbar_itemcount(hotbar_size)
 		minetest.chat_send_player(name, "[_] Hotbar size set to " ..hotbar_size.. ".")
-		player:hud_set_hotbar_image(dreambuilder_theme.name.."_gui_hb_bg_"..hotbar_size..".png")
+		player:hud_set_hotbar_image(themename.."_gui_hb_bg_"..hotbar_size..".png")
 		save_hotbar_settings()
 	end,
 })
