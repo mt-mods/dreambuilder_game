@@ -141,6 +141,7 @@ end
 local MODPATH = minetest.get_modpath("home_workshop_misc")
 dofile(MODPATH.."/crafts.lua")
 
+minetest.register_alias("homedecor:tool_cabinet",        "home_workshop_misc:tool_cabinet")
 minetest.register_alias("homedecor:tool_cabinet_bottom", "home_workshop_misc:tool_cabinet")
 minetest.register_alias("homedecor:tool_cabinet_top",    "air")
 

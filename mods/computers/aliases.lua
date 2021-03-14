@@ -8,6 +8,7 @@ minetest.register_alias("computer:slaystation2_off",     "computers:slaystation2
 minetest.register_alias("computer:specter",              "computers:specter")
 minetest.register_alias("computer:specter_off",          "computers:specter_off")
 minetest.register_alias("computer:wee",                  "computers:wee")
+minetest.register_alias("computer:wee_off",              "computers:wee_off")
 minetest.register_alias("computer:piepad",               "computers:piepad")
 minetest.register_alias("computer:admiral64",            "computers:admiral64")
 minetest.register_alias("computer:admiral64_off",        "computers:admiral64_off")
