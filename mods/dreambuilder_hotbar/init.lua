@@ -59,7 +59,7 @@ minetest.register_chatcommand("hotbar", {
 		local player = minetest.get_player_by_name(name)
 		player:hud_set_hotbar_itemcount(hotbar_size)
 		minetest.chat_send_player(name, "[_] Hotbar size set to " ..hotbar_size.. ".")
-		player:hud_set_hotbar_image(themename.."_gui_hb_bg_"..hotbar_size..".png")
+		player:hud_set_hotbar_image(themename.."gui_hb_bg_"..hotbar_size..".png")
 		save_hotbar_settings()
 	end,
 })
