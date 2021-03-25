@@ -269,8 +269,8 @@ sed -i "/size\[8,8.5\]/ {
 	a \\\t\tdreambuilder_theme.single_slot_v1(2.75, 0.45, false)..
 	a \\\t\tdreambuilder_theme.single_slot_v1(2.75, 2.45, false)..
 	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(4.75, 0.92, 2, 2, false)..
-	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 4.22,  8, 1, true)..
-	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 5.45, 8, 3, false)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0,    4.22, 8, 1, true)..
+	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0,    5.45, 8, 3, false)..
 	a \\\t\t$LISTCOLORS_HIDE_SLOTS
 	}" $workdir"/mods/pipeworks/compat-furnaces.lua"
 
@@ -284,8 +284,8 @@ sed -i "0, /depends = /s//depends = dreambuilder_theme_settings, /" $workdir"/mo
 sed -i "/size\[8,7;\]/ {
 	a \\\t$LISTCOLORS_HIDE_SLOTS
 	a \\\tdreambuilder_theme.make_inv_img_grid_v1(0, 0.25, 8, 2, false)..
-	a \\\tdreambuilder_theme.make_inv_img_grid_v1(0, 2.8,  8, 1, true)..
-	a \\\tdreambuilder_theme.make_inv_img_grid_v1(0, 4.05, 8, 3, false)..
+	a \\\tdreambuilder_theme.make_inv_img_grid_v1(0, 2.82, 8, 1, true)..
+	a \\\tdreambuilder_theme.make_inv_img_grid_v1(0, 4.03, 8, 3, false)..
     }" $workdir"/mods/vessels/init.lua"
 
 sed -i 's/vessels_shelf_slot.png/"..dreambuilder_theme.name.."_vessels_shelf_slot.png/' \

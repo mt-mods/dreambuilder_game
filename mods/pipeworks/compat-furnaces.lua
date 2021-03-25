@@ -15,8 +15,8 @@ local function active_formspec(fuel_percent, item_percent, pos, meta)
 		dreambuilder_theme.single_slot_v1(2.75, 0.45, false)..
 		dreambuilder_theme.single_slot_v1(2.75, 2.45, false)..
 		dreambuilder_theme.make_inv_img_grid_v1(4.75, 0.92, 2, 2, false)..
-		dreambuilder_theme.make_inv_img_grid_v1(0, 4.22,  8, 1, true)..
-		dreambuilder_theme.make_inv_img_grid_v1(0, 5.45, 8, 3, false)..
+		dreambuilder_theme.make_inv_img_grid_v1(0,    4.22, 8, 1, true)..
+		dreambuilder_theme.make_inv_img_grid_v1(0,    5.45, 8, 3, false)..
 		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000]"..
 		default.gui_bg..
 		default.gui_bg_img..
@@ -53,8 +53,8 @@ local function inactive_formspec(pos, meta)
 		dreambuilder_theme.single_slot_v1(2.75, 0.45, false)..
 		dreambuilder_theme.single_slot_v1(2.75, 2.45, false)..
 		dreambuilder_theme.make_inv_img_grid_v1(4.75, 0.92, 2, 2, false)..
-		dreambuilder_theme.make_inv_img_grid_v1(0, 4.22,  8, 1, true)..
-		dreambuilder_theme.make_inv_img_grid_v1(0, 5.45, 8, 3, false)..
+		dreambuilder_theme.make_inv_img_grid_v1(0,    4.22, 8, 1, true)..
+		dreambuilder_theme.make_inv_img_grid_v1(0,    5.45, 8, 3, false)..
 		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000]"..
 	default.gui_bg..
 	default.gui_bg_img..

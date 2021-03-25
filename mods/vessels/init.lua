@@ -11,8 +11,8 @@ local vessels_shelf_formspec =
 	"size[8,7;]" ..
 	"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000]"..
 	dreambuilder_theme.make_inv_img_grid_v1(0, 0.25, 8, 2, false)..
-	dreambuilder_theme.make_inv_img_grid_v1(0, 2.8,  8, 1, true)..
-	dreambuilder_theme.make_inv_img_grid_v1(0, 4.05, 8, 3, false)..
+	dreambuilder_theme.make_inv_img_grid_v1(0, 2.82, 8, 1, true)..
+	dreambuilder_theme.make_inv_img_grid_v1(0, 4.03, 8, 3, false)..
 	"list[context;vessels;0,0.3;8,2;]" ..
 	"list[current_player;main;0,2.85;8,1;]" ..
 	"list[current_player;main;0,4.08;8,3;8]" ..
