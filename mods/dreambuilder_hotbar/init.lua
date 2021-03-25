@@ -1,65 +1,56 @@
-local mtver = minetest.get_version()
-local maxslots = (string.sub(mtver.string, 1, 4) ~= "0.4.") and 32 or 23
 local themename = dreambuilder_theme and dreambuilder_theme.name.."_" or ""
+
+local player_hotbar_settings = {}
+local f = io.open(minetest.get_worldpath()..DIR_DELIM.."hotbar_settings","r")
+if f then
+	player_hotbar_settings = minetest.deserialize(f:read("*all"))
+	f:close()
+end
 
 local function validate_size(s)
 	local size = s and tonumber(s) or 16
-	if (size == 8 or size == 10 or size == 16 or size == 23 or size == 24 or size == 32)
-	  and size <= maxslots then
-		return size
-	else
-		return 16
-	end
+	return math.max(1, math.min(size, 32))
 end
 
 local hotbar_size_default = validate_size(minetest.settings:get("hotbar_size"))
 
-local player_hotbar_settings = {}
+local base_img = themename.."gui_hb_bg_1.png"
+local imgref_len = string.len(base_img) + 8 -- accounts for the stuff in the string.format() below.
 
-local function load_hotbar_settings()
-	local f = io.open(minetest.get_worldpath()..DIR_DELIM.."hotbar_settings","r")
-	if not f then return end
-	local d = f:read("*all")
-	f:close()
-	player_hotbar_settings = minetest.deserialize(d)
+local img = {}
+for i = 0, 31 do
+	img[i+1] = string.format(":%04i,0=%s", i*64, base_img)
 end
+local hb_img = table.concat(img)
 
-local function save_hotbar_settings()
-	local f = io.open(minetest.get_worldpath()..DIR_DELIM.."hotbar_settings","w")
-	if not f then
-		minetest.log("error","Failed to save hotbar settings")
-		return
-	end
-	local d = minetest.serialize(player_hotbar_settings)
-	f:write(d)
-	f:close()
+local function set_hotbar_size(player, s)
+	local hotbar_size = validate_size(s)
+	player:hud_set_hotbar_itemcount(hotbar_size)
+	player:hud_set_hotbar_selected_image(themename.."gui_hotbar_selected.png")
+	player:hud_set_hotbar_image("[combine:"..(hotbar_size*64).."x64"..string.sub(hb_img, 1, hotbar_size*imgref_len))
+	return hotbar_size
 end
-
-local function get_hotbar_setting(name)
-	return tonumber(player_hotbar_settings[name]) or hotbar_size_default
-end
-
-load_hotbar_settings()
 
 minetest.register_on_joinplayer(function(player)
-	local hotbar_size = validate_size(get_hotbar_setting(player:get_player_name()))
-	player:hud_set_hotbar_itemcount(hotbar_size)
 	minetest.after(0.5,function(hotbar_size)
-		player:hud_set_hotbar_selected_image(themename.."gui_hotbar_selected.png")
-		player:hud_set_hotbar_image(themename.."gui_hb_bg_"..hotbar_size..".png")
-	end,hotbar_size)
+		set_hotbar_size(player, tonumber(player_hotbar_settings[player:get_player_name()]) or hotbar_size_default)
+	end, hotbar_size)
 end)
 
 minetest.register_chatcommand("hotbar", {
 	params = "[size]",
-	description = "Sets the size of your hotbar",
+	description = "Sets the size of your hotbar, from 1 to 32 slots, default 16",
 	func = function(name, slots)
-		local hotbar_size = validate_size(tonumber(slots))
-		player_hotbar_settings[name] = hotbar_size
-		local player = minetest.get_player_by_name(name)
-		player:hud_set_hotbar_itemcount(hotbar_size)
-		minetest.chat_send_player(name, "[_] Hotbar size set to " ..hotbar_size.. ".")
-		player:hud_set_hotbar_image(themename.."gui_hb_bg_"..hotbar_size..".png")
-		save_hotbar_settings()
+		local size = set_hotbar_size(minetest.get_player_by_name(name), slots)
+		player_hotbar_settings[name] = size
+		minetest.chat_send_player(name, "[_] Hotbar size set to " ..size.. ".")
+
+		local f = io.open(minetest.get_worldpath()..DIR_DELIM.."hotbar_settings","w")
+		if not f then
+			minetest.log("error","Failed to save hotbar settings")
+		else
+			f:write(minetest.serialize(player_hotbar_settings))
+			f:close()
+		end
 	end,
 })
