@@ -9,7 +9,7 @@ end
 
 local function validate_size(s)
 	local size = s and tonumber(s) or 16
-	return math.max(1, math.min(size, 32))
+	return math.floor(0.5 + math.max(1, math.min(size, 32)))
 end
 
 local hotbar_size_default = validate_size(minetest.settings:get("hotbar_size"))
