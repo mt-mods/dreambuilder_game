@@ -95,7 +95,6 @@ function dreambuilder_theme.set_formspec_prepend(player, theme)
 	end
 	player:set_formspec_prepend(formspec)
 
-	print(dump(formspec))
 	-- Set hotbar textures
 	player:hud_set_hotbar_image("gui_hotbar.png")
 	player:hud_set_hotbar_selected_image("gui_hotbar_selected.png")
