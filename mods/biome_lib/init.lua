@@ -408,25 +408,8 @@ function biome_lib:generate_block_with_air_checking()
 	local blockhash =	minetest.hash_node_position(minp)
 
 	if not biome_lib.surface_nodes_aircheck.blockhash then
-
-		if type(minetest.find_nodes_in_area_under_air) == "function" then -- use newer API call
-			biome_lib.surface_nodes_aircheck.blockhash =
-				minetest.find_nodes_in_area_under_air(minp, maxp, biome_lib.surfaceslist_aircheck)
-		else
-			local search_area = minetest.find_nodes_in_area(minp, maxp, biome_lib.surfaceslist_aircheck)
-
-			-- search the generated block for air-bounded surfaces the slow way.
-
-			biome_lib.surface_nodes_aircheck.blockhash = {}
-
-			for i = 1, #search_area do
-			local pos = search_area[i]
-				local p_top = { x=pos.x, y=pos.y+1, z=pos.z }
-				if minetest.get_node(p_top).name == "air" then
-					biome_lib.surface_nodes_aircheck.blockhash[#biome_lib.surface_nodes_aircheck.blockhash + 1] = pos
-				end
-			end
-		end
+		biome_lib.surface_nodes_aircheck.blockhash =
+			minetest.find_nodes_in_area_under_air(minp, maxp, biome_lib.surfaceslist_aircheck)
 		biome_lib.actioncount_aircheck.blockhash = 1
 
 	else
