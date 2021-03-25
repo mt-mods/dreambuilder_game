@@ -485,13 +485,13 @@ sed -i "/default.gui_slots/ {
 ##########
 
 sed -i "/size\[8,5.5\]/ {
-	a \\\t\t$LISTCOLORS_HIDE_SLOTS
-	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 1.42,  8, 1, true)..
-	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 2.58, 8, 3, false)..
-	a \\\t\tdreambuilder_theme.single_slot_v1(3.4, 0, false)..
+	a \\\t$LISTCOLORS_HIDE_SLOTS
+	a \\\tdreambuilder_theme.make_inv_img_grid_v1(0, 1.46, 8, 1, true)..
+	a \\\tdreambuilder_theme.make_inv_img_grid_v1(0, 2.46, 8, 3, false)..
+	a \\\tdreambuilder_theme.single_slot_v1(3.5, -0.03, false)..
 	}" $workdir"/mods/ufos/furnace.lua"
 
-echo "dreambuilder_theme_settings" >> $workdir"/mods/ufos/mod.conf"
+echo "dreambuilder_theme_settings" >> $workdir"/mods/ufos/depends.txt"
 
 ##########
 

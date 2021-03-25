@@ -4,10 +4,10 @@ ufos.fuel_time = 10
 
 ufos.furnace_inactive_formspec =
 	"size[8,5.5]"..
-		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000]"..
-		dreambuilder_theme.make_inv_img_grid_v1(0, 1.42,  8, 1, true)..
-		dreambuilder_theme.make_inv_img_grid_v1(0, 2.58, 8, 3, false)..
-		dreambuilder_theme.single_slot_v1(3.4, 0, false)..
+	"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000]"..
+	dreambuilder_theme.make_inv_img_grid_v1(0, 1.46, 8, 1, true)..
+	dreambuilder_theme.make_inv_img_grid_v1(0, 2.46, 8, 3, false)..
+	dreambuilder_theme.single_slot_v1(3.5, -0.03, false)..
 	"list[current_name;fuel;3.5,0;1,1;]"..
 	"list[current_player;main;0,1.5;8,4;]"..
 	"label[4.5,0;Fuel needed: "..ufos.fuel.."]"..
