@@ -27,6 +27,7 @@ end
 
 if mg_name ~= "v6" and mg_name ~= "singlenode" then
 	minetest.register_decoration({
+		name = "willow:willow_tree",
 		deco_type = "schematic",
 		place_on = {"default:dirt"},
 		sidelen = 16,

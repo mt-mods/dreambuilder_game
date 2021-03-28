@@ -16,6 +16,19 @@ minetest.register_craft({
 	recipe = "default:papyrus"
 })
 
+--= Sugar caramel
+
+minetest.register_craftitem("farming:caramel", {
+	description = S("Caramel"),
+	inventory_image = "farming_caramel.png",
+})
+
+minetest.register_craft({
+	type = "cooking",
+	cooktime = 6,
+	output = "farming:caramel",
+	recipe = "group:food_sugar",
+})
 
 --= Salt
 
@@ -180,7 +193,7 @@ minetest.register_craft({
 	recipe = {
 		{"group:food_gelatin", "group:food_sugar", "group:food_gelatin"},
 		{"group:food_sugar", "group:food_rose_water", "group:food_sugar"},
-		{"group:food_cornstarch", "group:food_sugar", "dye:pink"}
+		{"group:food_sugar", "dye:pink", "group:food_sugar"}
 	},
 	replacements = {
 		{"group:food_cornstarch", "farming:bowl"},
@@ -470,5 +483,159 @@ minetest.register_craft({
 		"group:food_raspberries", "group:food_blackberries",
 		"group:food_strawberry", "group:food_banana",
 		"vessels:drinking_glass"
+	}
+})
+
+-- Patatas a la importancia
+
+minetest.register_craftitem("farming:spanish_potatoes", {
+	description = S("Spanish Potatoes"),
+	inventory_image = "farming_spanish_potatoes.png",
+	on_use = minetest.item_eat(8, "farming:bowl"),
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "farming:spanish_potatoes",
+	recipe = {
+		"farming:potato", "group:food_parsley", "farming:potato",
+		"group:food_egg", "group:food_flour", "farming:onion",
+		"farming:garlic_clove", "group:food_bowl", "group:food_skillet"
+	},
+	replacements = {{"group:food_skillet", "farming:skillet"}}
+})
+
+-- Potato omelet
+
+minetest.register_craftitem("farming:potato_omelet", {
+	description = S("Potato omelet"),
+	inventory_image = "farming_potato_omelet.png",
+	on_use = minetest.item_eat(6, "farming:bowl"),
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "farming:potato_omelet",
+	recipe = {
+		"group:food_egg", "farming:potato", "group:food_onion",
+		"group:food_skillet", "group:food_bowl"},
+	replacements = {{"group:food_skillet", "farming:skillet"}}
+})
+
+-- Paella
+
+minetest.register_craftitem("farming:paella", {
+	description = S("Paella"),
+	inventory_image = "farming_paella.png",
+	on_use = minetest.item_eat(8, "farming:bowl")
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "farming:paella",
+	recipe = {
+		"group:food_rice", "dye:orange", "farming:pepper_red",
+		"group:food_peas", "group:food_chicken", "group:food_bowl", "group:food_skillet"
+	},
+	replacements = {{"group:food_skillet", "farming:skillet"}}
+})
+
+-- Flan
+
+minetest.register_craftitem("farming:flan", {
+	description = S("Vanilla Flan"),
+	inventory_image = "farming_vanilla_flan.png",
+	on_use = minetest.item_eat(6)
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "farming:flan",
+	recipe = {
+		"group:food_sugar", "group:food_milk", "farming:caramel",
+		"group:food_egg", "group:food_egg", "farming:vanilla_extract"
+	},
+	replacements = {
+		{"cucina_vegana:soy_milk", "vessels:drinking_glass"},
+		{"group:food_milk", "bucket:bucket_empty"},
+		{"farming:vanilla_extract", "vessels:glass_bottle"}
+	}
+})
+
+-- Vegan Cheese
+
+minetest.register_craftitem("farming:cheese_vegan", {
+	description = S("Vegan Cheese"),
+	inventory_image = "farming_cheese_vegan.png",
+	on_use = minetest.item_eat(2),
+	groups = {food_cheese = 1, flammable = 2},
+})
+
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "farming:cheese_vegan",
+	recipe = {
+		"farming:soy_milk", "farming:soy_milk", "farming:soy_milk",
+		"group:food_salt", "group:food_peppercorn", "farming:bottle_ethanol",
+		"group:food_gelatin", "group:food_pot"
+	},
+	replacements = {
+		{"farming:soy_milk", "vessels:drinking_glass 3"},
+		{"farming:pot", "farming:pot"},
+		{"farming:bottle_ethanol", "vessels:glass_bottle"}
+	}
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "farming:cheese_vegan",
+	recipe = {
+		"farming:soy_milk", "farming:soy_milk", "farming:soy_milk",
+		"group:food_salt", "group:food_peppercorn", "group:food_lemon",
+		"group:food_gelatin", "group:food_pot"
+	},
+	replacements = {
+		{"farming:soy_milk", "vessels:drinking_glass 3"},
+		{"farming:pot", "farming:pot"},
+	}
+})
+
+-- Onigiri
+
+minetest.register_craftitem("farming:onigiri", {
+	description = S("Onirigi"),
+	inventory_image = "farming_onigiri.png",
+	on_use = minetest.item_eat(2),
+	groups = {flammable = 2},
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "farming:onigiri",
+	recipe = {
+		"group:food_rice", "group:food_rice", "group:food_seaweed", "group:food_salt"
+	}
+})
+
+-- Gyoza
+
+minetest.register_craftitem("farming:gyoza", {
+	description = S("Gyoza"),
+	inventory_image = "farming_gyoza.png",
+	on_use = minetest.item_eat(4),
+	groups = {flammable = 2},
+})
+
+minetest.register_craft({
+	type = "shapeless",
+	output = "farming:gyoza 4",
+	recipe = {
+		"group:food_cabbage", "group:food_garlic_clove", "group:food_onion",
+		"group:food_meat_raw", "group:food_salt", "group:food_skillet",
+		"group:food_flour"
+	},
+	replacements = {
+		{"group:food_skillet", "farming:skillet"}
 	}
 })

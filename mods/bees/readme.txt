@@ -14,6 +14,7 @@ FEATURES
 - Make wild hive abm less intensive (thanks VanessaE)
 - Added 9x Lucky Blocks
 - Smokers have 200 uses before breaking
+- Hives are spread out 20 blocks apart, 3 high and only spawn when no other hives around
 
 2.2.2
 - Pipeworks compatibility (Industrial beehive)

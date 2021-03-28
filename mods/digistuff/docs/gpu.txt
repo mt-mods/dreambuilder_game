@@ -147,3 +147,26 @@ y1 [integer 1-64]: The Y position of the start of the line.
 y2 [integer 1-64]: The Y position of the end of the line.
 color [hex color, default "000000"]: The nominal color of the line (may not be the color of every pixel, see the "antialias" setting)
 antialias [boolean, default false]: Whether to apply a (very) crude smoothing algorithm to the line to reduce jagged edges at the expense of making the line slightly blurry.
+
+Command: sendpacked
+-------------------
+
+Converts the image in a buffer into a string representation that can be loaded again later with the "loadpacked" command.
+The result uses 4 bytes per pixel and consists entirely of printable characters (A-Z, a-z, 0-9, +, and /).
+
+Parameters:
+buffer [integer 0-7]: The buffer to convert.
+channel [string]: The digilines channel to send the packed image on.
+
+Command: loadpacked
+-------------------
+
+Load a string representation of an image (created by the "sendpacked" command) back into a buffer.
+
+Parameters:
+buffer [integer 0-7]: The buffer to load the image into.
+x [integer 1-64]: The X position of the left side of the image.
+y [integer 1-64]: The Y position of the top of the image.
+xsize [integer 1-64]: The width of the image. Must be the same as the original image or the image will be severely distorted.
+ysize [integer 1-64]: The height of the image. Should be the same as the original image.
+data [string]: The packed image to load.

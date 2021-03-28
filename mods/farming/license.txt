@@ -155,6 +155,12 @@ Created by Felfa (CC0)
   farming_burger.png
   farming_soy*.png
   farming_vanilla*.png
+  farming_artichoke*.png
+  farming_parsley*.png
+  farming_paella.png
+  farming_potato_omelette.png
+  farming_spanish_potatoes.png
+  farming_vanilla_flan.png
 
 Created by gorlock (CC0)
   farming_salt_crystal.png

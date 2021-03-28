@@ -22,6 +22,7 @@ end
 --
 
 minetest.register_decoration({
+	name = "palm:palm_tree",
 	deco_type = "schematic",
 	place_on = {"default:sand"},
 		sidelen = 16,

@@ -115,6 +115,7 @@ end
 --
 
 minetest.register_decoration({
+	name = "bamboo:bamboo_tree",
 	deco_type = "schematic",
 	place_on = {"default:dirt_with_grass"},
 	sidelen = 16,

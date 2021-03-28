@@ -388,7 +388,7 @@ local on_digiline_receive_string = function(pos, node, channel, msg)
 			end
 		else
 			local asc = string.byte(msg)
-			if asc > 29 and asc < 256 then
+			if asc > 30 and asc < 256 then
 				minetest.swap_node(pos, { name = "led_marquee:char_"..asc, param2 = fdir + (last_color*8)})
 				meta:set_string("last_msg", tostring(msg))
 				meta:set_int("index", 1)

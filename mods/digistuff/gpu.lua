@@ -1,19 +1,68 @@
 local font = dofile(minetest.get_modpath("digistuff")..DIR_DELIM.."gpu-font.lua")
 
-local function explodebits(input)
+local function explodebits(input,count)
 	local output = {}
-	for i=0,7,1 do
+	if not count then count = 8 end
+	for i=0,count-1,1 do
 		output[i] = input%(2^(i+1)) >= 2^i
 	end
 	return output
 end
 
-local function implodebits(input)
+local function implodebits(input,count)
 	local output = 0
-	for i=0,7,1 do
+	if not count then count = 8 end
+	for i=0,count-1,1 do
 		output = output + (input[i] and 2^i or 0)
 	end
 	return output
+end
+
+local packtable = {}
+local unpacktable = {}
+for i=0,25,1 do
+	packtable[i] = string.char(i+65)
+	packtable[i+26] = string.char(i+97)
+	unpacktable[string.char(i+65)] = i
+	unpacktable[string.char(i+97)] = i+26
+end
+for i=0,9,1 do
+	packtable[i+52] = tostring(i)
+	unpacktable[tostring(i)] = i+52
+end
+packtable[62] = "+"
+packtable[63] = "/"
+unpacktable["+"] = 62
+unpacktable["/"] = 63
+
+local function packpixel(pixel)
+	pixel = tonumber(pixel,16)
+	if not pixel then return "AAAA" end
+	local bits = explodebits(pixel,24)
+	local block1 = {}
+	local block2 = {}
+	local block3 = {}
+	local block4 = {}
+	for i=0,5,1 do
+		block1[i] = bits[i]
+		block2[i] = bits[i+6]
+		block3[i] = bits[i+12]
+		block4[i] = bits[i+18]
+	end
+	local char1 = packtable[implodebits(block1,6)] or "A"
+	local char2 = packtable[implodebits(block2,6)] or "A"
+	local char3 = packtable[implodebits(block3,6)] or "A"
+	local char4 = packtable[implodebits(block4,6)] or "A"
+	return char1..char2..char3..char4
+end
+
+local function unpackpixel(pack)
+	local block1 = unpacktable[pack:sub(1,1)] or 0
+	local block2 = unpacktable[pack:sub(2,2)] or 0
+	local block3 = unpacktable[pack:sub(3,3)] or 0
+	local block4 = unpacktable[pack:sub(4,4)] or 0
+	local out = block1+(2^6*block2)+(2^12*block3)+(2^18*block4)
+	return string.format("%06X",out)
 end
 
 local function rgbtohsv(r,g,b)
@@ -416,6 +465,49 @@ local function runcommand(pos,meta,command)
 			end
 		end
 		meta:set_string("buffer"..bufnum,minetest.serialize(buffer))
+	elseif command.command == "sendpacked" then
+		if type(command.buffer) ~= "number" or type(command.channel) ~= "string" then return end
+		local bufnum = math.floor(command.buffer)
+		if bufnum < 0 or bufnum > 7 then return end
+		local buffer = meta:get_string("buffer"..bufnum)
+		if string.len(buffer) == 0 then return end
+		buffer = minetest.deserialize(buffer)
+		if type(buffer) == "table" then
+			local packeddata = ""
+			for y=1,buffer.ysize,1 do
+				for x=1,buffer.xsize,1 do
+					packeddata = packeddata..packpixel(buffer[y][x])
+				end
+			end
+			digiline:receptor_send(pos,digiline.rules.default,command.channel,packeddata)
+		end
+	elseif command.command == "loadpacked" then
+		if type(command.buffer) ~= "number" or type(command.data) ~= "string" then return end
+		if type(command.x) ~= "number" or type(command.y) ~= "number" or type(command.xsize) ~= "number" or type(command.ysize) ~= "number" then return end
+		command.x = math.floor(command.x)
+		command.y = math.floor(command.y)
+		command.xsize = math.floor(command.xsize)
+		command.ysize = math.floor(command.ysize)
+		if command.x < 1 or command.y < 1 or command.xsize < 1 or command.ysize < 1 then return end
+		local bufnum = math.floor(command.buffer)
+		if bufnum < 0 or bufnum > 7 then return end
+		local buffer = meta:get_string("buffer"..bufnum)
+		if string.len(buffer) == 0 then return end
+		buffer = minetest.deserialize(buffer)
+		if type(buffer) == "table" then
+			if command.x + command.xsize - 1 > buffer.xsize then return end
+			if command.y + command.ysize - 1 > buffer.ysize then return end
+			for y=0,command.ysize-1,1 do
+				local dsty = command.y+y
+				for x=0,command.xsize-1,1 do
+					local dstx = command.x+x
+					local packidx = (y*command.xsize+x)*4+1
+					local packeddata = string.sub(command.data,packidx,packidx+3)
+					buffer[dsty][dstx] = unpackpixel(packeddata)
+				end
+			end
+			meta:set_string("buffer"..bufnum,minetest.serialize(buffer))
+		end
 	end
 end
 

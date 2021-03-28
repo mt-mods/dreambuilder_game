@@ -25,6 +25,7 @@ end
 --
 
 if mg_name ~= "v6" and mg_name ~= "singlenode" then
+	name = "baldcypress:baldcypress_tree",
 	minetest.register_decoration({
 		deco_type = "schematic",
 		place_on = {"default:sand"},

@@ -86,6 +86,7 @@ if mg_name ~= "v6" and mg_name ~= "singlenode" then
 	end
 
 	minetest.register_decoration({
+		name = "chestnuttree:chestnut_tree",
 		deco_type = "schematic",
 		place_on = {place_on},
 		sidelen = 16,

@@ -104,6 +104,7 @@ else
 end
 
 minetest.register_decoration({
+	name = "birch:birch_tree",
 	deco_type = "schematic",
 	place_on = {place_on},
 	sidelen = 16,

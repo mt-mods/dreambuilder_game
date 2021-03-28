@@ -412,7 +412,10 @@ minetest.register_node("bees:hive_wild", {
 		if meta:get_int("agressive") == 1
 		and inv:contains_item("queen", "bees:queen") then
 
-			clicker:set_hp(clicker:get_hp() - 4)
+			-- damage inside timer to stop death duplication glitch
+			minetest.after(0.1, function()
+				clicker:set_hp(clicker:get_hp() - 4)
+			end, clicker)
 		else
 			meta:set_int("agressive", 1)
 		end
@@ -509,7 +512,10 @@ minetest.register_node("bees:hive_artificial", {
 		if meta:get_int("agressive") == 1
 		and inv:contains_item("queen", "bees:queen") then
 
-			clicker:set_hp(clicker:get_hp() - 4)
+			-- damage inside timer to stop death duplication glitch
+			minetest.after(0.1, function()
+				clicker:set_hp(clicker:get_hp() - 4)
+			end, clicker)
 		else
 			meta:set_int("agressive", 1)
 		end
@@ -691,16 +697,23 @@ minetest.register_abm({
 minetest.register_abm({
 	nodenames = {"group:leaves"},
 	neighbors = {"air"},
-	interval = 800,
-	chance = 10,
+	interval = 300,
+	chance = 4,
 
 	action = function(pos)
 
-		if floor(pos.x / 40) ~= pos.x / 40
-		or floor(pos.z / 40) ~= pos.z / 40
-		or floor(pos.y /  5) ~= pos.y / 5 then return end
+		if floor(pos.x / 20) ~= pos.x / 20
+		or floor(pos.z / 20) ~= pos.z / 20
+		or floor(pos.y /  3) ~= pos.y / 3 then return end
 
 		local p = {x = pos.x, y = pos.y - 1, z = pos.z}
+
+		-- skip if nearby hive found
+		if minetest.find_node_near(p, 25, {"bees:hive_artificial", "bees:hive_wild",
+				"bees:hive_industrial"}) then
+			return
+		end
+
 		local nod = minetest.get_node_or_nil(p)
 		local def = nod and minetest.registered_nodes[nod.name]
 

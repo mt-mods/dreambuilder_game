@@ -50,6 +50,7 @@ end
 
 if mg_name ~= "v6" and mg_name ~= "singlenode" then
 	minetest.register_decoration({
+	name = "pomegranate:pomegranate_tree",
 		deco_type = "schematic",
 		place_on = {"default:dry_dirt"},
 		sidelen = 16,
