@@ -130,6 +130,22 @@ minetest.register_node("gloopblocks:scaffolding", {
 	sounds = default.node_sound_wood_defaults(),
 })
 
+minetest.register_node("gloopblocks:concrete_sidewalk", {
+	description = S("Concrete sidewalk"),
+	tiles = {
+		"basic_materials_concrete_block.png",
+		"basic_materials_concrete_block.png^gloopblocks_concrete_sidewalk_overlay.png",
+		"gloopblocks_packed_dirt.png"
+	},
+	drawtype = "mesh",
+	mesh = "gloopblocks_sidewalk.obj",
+	paramtype2 = "facedir",
+	on_rotate = screwdriver.rotate_simple,
+	groups = {cracky=2},
+	sounds = default.node_sound_stone_defaults(),
+})
+
+
 minetest.register_alias("moreblocks:oerkkiblock", "gloopblocks:oerkki_block")
 minetest.register_alias("gloopblocks:obsidian", "default:obsidian")
 

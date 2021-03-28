@@ -334,3 +334,34 @@ if minetest.get_modpath("technic") then
 		}
 	})
 end
+
+minetest.register_craft({
+	output = "gloopblocks:concrete_sidewalk",
+	type = "shapeless",
+	recipe = {
+		"streets:slab_concrete_2",
+		"default:dirt",
+	}
+})
+
+minetest.register_craft({
+	output = "gloopblocks:concrete_sidewalk 2",
+	type = "shapeless",
+	recipe = {
+		"streets:slab_concrete_quarter",
+		"default:dirt",
+		"default:dirt"
+	}
+})
+
+minetest.register_craft({
+	output = "gloopblocks:concrete_sidewalk 4",
+	type = "shapeless",
+	recipe = {
+		"streets:slab_concrete",
+		"default:dirt",
+		"default:dirt",
+		"default:dirt",
+		"default:dirt"
+	}
+})
