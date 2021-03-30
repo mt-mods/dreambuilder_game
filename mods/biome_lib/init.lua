@@ -1,4 +1,4 @@
--- Biome library mod by Vanessa Ezekowitz
+-- Biome library mod by VanessaE
 --
 -- I got the temperature map idea from "hmmmm", values used for it came from
 -- Splizard's snow mod.
