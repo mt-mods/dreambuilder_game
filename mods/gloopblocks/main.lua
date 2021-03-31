@@ -131,11 +131,6 @@ minetest.register_node("gloopblocks:scaffolding", {
 	sounds = default.node_sound_wood_defaults(),
 })
 
-local cbox = {
-	type = "fixed",
-	fixed = { -0.5, -0.5, -0.5, 0.5, 0.5625, 0.5 }
-}
-
 minetest.register_node("gloopblocks:concrete_sidewalk", {
 	description = S("Concrete sidewalk"),
 	tiles = {
@@ -146,8 +141,14 @@ minetest.register_node("gloopblocks:concrete_sidewalk", {
 	drawtype = "mesh",
 	mesh = "gloopblocks_sidewalk.obj",
 	paramtype2 = "facedir",
-	selection_box = cbox,
-	collision_box = cbox,
+	selection_box = {
+		type = "fixed",
+		fixed = { -0.5, -0.5, -0.5, 0.5, 0.5, 0.5 }
+	},
+	collision_box = {
+		type = "fixed",
+		fixed = { -0.5, -0.5, -0.5, 0.5, 0.5625, 0.5 }
+	},
 	on_rotate = screwdriver.rotate_simple,
 	groups = {cracky=2},
 	sounds = default.node_sound_stone_defaults(),
