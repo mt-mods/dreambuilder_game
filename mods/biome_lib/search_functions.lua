@@ -56,11 +56,11 @@ end
 -- split into individual mapblocks to reduce lag
 
 minetest.register_on_generated(function(minp, maxp, blockseed)
-	for x = 0, 5 do
+	for x = 0, 4 do
 		local minx = minp.x + x*16
-		for y = 0, 5 do
+		for y = 0, 4 do
 			local miny = minp.y + y*16
-			for z = 0, 5 do
+			for z = 0, 4 do
 				local minz = minp.z + z*16
 
 				local bmin = {x=minx, y=miny, z=minz}

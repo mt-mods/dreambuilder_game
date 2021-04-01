@@ -12,7 +12,7 @@ Both mapgen-based spawning and ABM-based spawning is supported. Growing code is 
 
 It is primarily intended for mapgen v6, but it should work fine when used with mapgen v7.
 
-**Dependencies**: default from minetest_game
+**Dependencies:** nothing, but if you don't use `minetest_game`, you'll need to supply some settings (see API.txt).
 
 **Recommends**: [Plantlife Modpack](https://github.com/minetest-mods/plantlife_modpack), 
 [More Trees](https://github.com/minetest-mods/moretrees)

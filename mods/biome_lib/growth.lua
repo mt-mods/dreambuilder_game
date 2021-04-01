@@ -20,8 +20,8 @@ function biome_lib:grow_plants(opts)
 	local options = opts
 
 	options.height_limit = options.height_limit or 5
-	options.ground_nodes = options.ground_nodes or { "default:dirt_with_grass" }
-	options.grow_nodes = options.grow_nodes or { "default:dirt_with_grass" }
+	options.ground_nodes = options.ground_nodes or biome_lib.default_ground_nodes
+	options.grow_nodes = options.grow_nodes or biome_lib.default_grow_nodes
 	options.seed_diff = options.seed_diff or 0
 
 	local n
@@ -55,7 +55,7 @@ function biome_lib:grow_plants(opts)
 			if options.need_wall and options.verticals_list then
 				walldir = biome_lib:find_adjacent_wall(p_top, options.verticals_list, options.choose_random_wall)
 			end
-			if (n_top.name == "air" or n_top.name == "default:snow")
+			if biome_lib.default_grow_through_nodes[n_top.name]
 			  and (not options.need_wall or (options.need_wall and walldir)) then
 				if options.grow_vertically and walldir then
 					if biome_lib:search_downward(pos, options.height_limit, options.ground_nodes) then

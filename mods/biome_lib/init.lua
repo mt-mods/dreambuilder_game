@@ -9,8 +9,6 @@
 biome_lib = {}
 biome_lib.air = {name = "air"}
 
-plantslib = setmetatable({}, { __index=function(t,k) print("Use of deprecated function:", k) return biome_lib[k] end })
-
 biome_lib.blocklist_aircheck = {}
 biome_lib.blocklist_no_aircheck = {}
 
@@ -32,6 +30,41 @@ biome_lib.total_no_aircheck_calls = 0
 
 biome_lib.queue_run_ratio = tonumber(minetest.settings:get("biome_lib_queue_run_ratio")) or 100
 
+local function tableize(s)
+	return string.split(string.trim(string.gsub(s, " ", "")))
+end
+
+local c1 minetest.settings:get("biome_lib_default_grow_through_nodes")
+biome_lib.default_grow_through_nodes = {["air"] = true}
+if c1 then
+	for _, i in ipairs(tableize(c1)) do
+		biome_lib.default_grow_through_nodes[i] = true
+	end
+else
+	biome_lib.default_grow_through_nodes["default:snow"] = true
+end
+
+local c2 minetest.settings:get("biome_lib_default_water_nodes")
+biome_lib.default_water_nodes = {}
+if c2 then
+	for _, i in ipairs(tableize(c2)) do
+		biome_lib.default_water_nodes[i] = true
+	end
+else
+	biome_lib.default_water_nodes["default:water_source"] = true
+	biome_lib.default_water_nodes["default:water_flowing"] = true
+	biome_lib.default_water_nodes["default:river_water_source"] = true
+	biome_lib.default_water_nodes["default:river_water_flowing"] = true
+end
+
+local c3 = minetest.settings:get("biome_lib_default_wet_surfaces")
+local c4 = minetest.settings:get("biome_lib_default_ground_nodes")
+local c5 = minetest.settings:get("biome_lib_default_grow_nodes")
+
+biome_lib.default_wet_surfaces = c3 and tableize(c3) or {"default:dirt", "default:dirt_with_grass", "default:sand"}
+biome_lib.default_ground_nodes = c4 and tableize(c4) or {"default:dirt_with_grass"}
+biome_lib.default_grow_nodes =   c5 and tableize(c5) or {"default:dirt_with_grass"}
+
 -- Boilerplate to support localized strings if intllib mod is installed.
 local S
 if minetest.global_exists("intllib") then
@@ -45,12 +78,12 @@ else
 end
 biome_lib.intllib = S
 
-local DEBUG = false --... except if you want to spam the console with debugging info :-)
+local DEBUG = minetest.settings:get_bool("biome_lib_debug", false)
 
 function biome_lib:dbg(msg)
 	if DEBUG then
-		print("[Plantlife] "..msg)
-		minetest.log("verbose", "[Plantlife] "..msg)
+		print("[Biome Lib] "..msg)
+		minetest.log("verbose", "[Biome Lib] "..msg)
 	end
 end
 
@@ -296,6 +329,7 @@ local function populate_single_surface(biome, pos, perlin_fertile_area, checkair
 end
 
 function biome_lib:populate_surfaces(biome, nodes_or_function_or_model, snodes, checkair)
+	local items_added = 0
 
 	biome_lib:set_defaults(biome)
 
@@ -316,10 +350,10 @@ function biome_lib:populate_surfaces(biome, nodes_or_function_or_model, snodes, 
 	local num_in_biome_nodes = #in_biome_nodes
 
 	if num_in_biome_nodes == 0 then
-		return
+		return 0
 	end
 
-	for i = 1, math.min(biome.max_count, num_in_biome_nodes) do
+	for i = 1, math.min(biome.max_count/25, num_in_biome_nodes) do
 		local tries = 0
 		local spawned = false
 		while tries < 2 and not spawned do
@@ -388,7 +422,9 @@ function biome_lib:populate_surfaces(biome, nodes_or_function_or_model, snodes, 
 				tries = tries + 1
 			end
 		end
+		if spawned then items_added = items_added + 1 end
 	end
+	return items_added
 end
 
 -- Primary mapgen spawner, for mods that can work with air checking enabled on
@@ -411,14 +447,21 @@ function biome_lib:generate_block_with_air_checking()
 		biome_lib.surface_nodes_aircheck.blockhash =
 			minetest.find_nodes_in_area_under_air(minp, maxp, biome_lib.surfaceslist_aircheck)
 		biome_lib.actioncount_aircheck.blockhash = 1
+		if #biome_lib.surface_nodes_aircheck.blockhash > 0 then
+			biome_lib:dbg("Mapblock at "..minetest.pos_to_string(minp).." added, with "..#biome_lib.surface_nodes_aircheck.blockhash.." surface nodes detected.")
+		end
 
 	else
 		if biome_lib.actionslist_aircheck[biome_lib.actioncount_aircheck.blockhash] then
 			-- [1] is biome, [2] is node/function/model
-			biome_lib:populate_surfaces(
+			local added = biome_lib:populate_surfaces(
 				biome_lib.actionslist_aircheck[biome_lib.actioncount_aircheck.blockhash][1],
 				biome_lib.actionslist_aircheck[biome_lib.actioncount_aircheck.blockhash][2],
 				biome_lib.surface_nodes_aircheck.blockhash, true)
+			if added > 0 then
+				biome_lib:dbg("Ran biome_lib:populate_surfaces for block at "..minetest.pos_to_string(minp)..
+					".  Entry #"..biome_lib.actioncount_aircheck.blockhash.." added "..added.." items.")
+			end
 			biome_lib.actioncount_aircheck.blockhash = biome_lib.actioncount_aircheck.blockhash + 1
 		else
 			table.remove(biome_lib.blocklist_aircheck, 1)
@@ -617,11 +660,11 @@ function biome_lib:spawn_on_surfaces(sd,sp,sr,sc,ss,sa)
 
 			local currentsurface = minetest.get_node(pos).name
 
-			if currentsurface == "default:water_source" and
+			if biome_lib.default_water_nodes[currentsurface] and
 					#minetest.find_nodes_in_area(
 						{x=pos.x, y=pos.y-biome.depth_max-1, z=pos.z},
 						vector.new(pos),
-						{"default:dirt", "default:dirt_with_grass", "default:sand"}
+						biome_lib.default_wet_surfaces
 					) == 0 then
 				return -- On water but no ground nearby
 			end
@@ -682,11 +725,8 @@ function biome_lib:replace_object(pos, replacement, grow_function, walldir, seed
 	end
 end
 
-
 dofile(biome_lib.modpath .. "/search_functions.lua")
 assert(loadfile(biome_lib.modpath .. "/growth.lua"))(time_scale)
-
-
 
 -- Check for infinite stacks
 
@@ -705,10 +745,29 @@ function biome_lib:get_nodedef_field(nodename, fieldname)
 	return minetest.registered_nodes[nodename][fieldname]
 end
 
+if DEBUG then
+	biome_lib.last_count_air = 0
+	biome_lib.last_count_no_air = 0
+
+	function biome_lib.show_pending_block_counts()
+		if biome_lib.last_count_air ~= #biome_lib.blocklist_aircheck
+			or biome_lib.last_count_no_air ~= #biome_lib.blocklist_no_aircheck then
+			biome_lib:dbg(string.format("Pending block counts,  air: %-7i no-air: %i",
+				#biome_lib.blocklist_aircheck, #biome_lib.blocklist_no_aircheck))
+
+			biome_lib.last_count_air = #biome_lib.blocklist_aircheck
+			biome_lib.last_count_no_air = #biome_lib.blocklist_no_aircheck
+		end
+		minetest.after(1, biome_lib.show_pending_block_counts)
+	end
+
+	biome_lib.show_pending_block_counts()
+
+	minetest.after(0, function()
+		print("Registered a total of "..(#biome_lib.surfaceslist_aircheck)+(#biome_lib.surfaceslist_no_aircheck).." surface types to be evaluated, spread")
+		print("across "..#biome_lib.actionslist_aircheck.." actions with air-checking and "..#biome_lib.actionslist_no_aircheck.." actions without.")
+	end)
+
+end
+
 print("[Biome Lib] Loaded")
-
-minetest.after(0, function()
-	print("[Biome Lib] Registered a total of "..(#biome_lib.surfaceslist_aircheck)+(#biome_lib.surfaceslist_no_aircheck).." surface types to be evaluated, spread")
-	print("[Biome Lib] across "..#biome_lib.actionslist_aircheck.." actions with air-checking and "..#biome_lib.actionslist_no_aircheck.." actions without.")
-end)
-
