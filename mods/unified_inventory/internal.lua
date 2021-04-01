@@ -40,29 +40,24 @@ function ui.get_formspec(player, page)
 	if not pagedef then
 		return "" -- Invalid page name
 	end
-
+	
 	local formspec = {
-		"formspec_version[4]size[17.75,12.25]",
+		"formspec_version[4]",
+		"size["..ui_peruser.formw..","..ui_peruser.formh.."]",
 		"no_prepend[]"..default.gui_bg,
-		ui.standard_background -- Background
+		ui.standard_background
 	}
-	local n = 4
 
-	if draw_lite_mode then
-		formspec[1] = "formspec_version[4]size[14,9.75]"
-		formspec[3] = ui.standard_background
-	end
+	local n = 5
 
 	local perplayer_formspec = ui.get_per_player_formspec(player_name)
 	local fsdata = pagedef.get_formspec(player, perplayer_formspec)
 
 	formspec[n] = fsdata.formspec
 	formspec[n+1]="style_type[image_button;bgcolor="..dreambuilder_theme.btn_color.."]"
-	formspec[n+2]=
-		"listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000]"..
-			""
-	n = n + 2
-	n = n+1
+	formspec[n+2]="listcolors[#00000000;"..dreambuilder_theme.listcolor_slot_bg_hover..";#00000000]"
+	n = n + 3
+	
 
 	local button_row = 0
 	local button_col = 0

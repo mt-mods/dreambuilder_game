@@ -501,11 +501,11 @@ sed -i 's/"listcolors\[#00000000;#00000000\]"/""/' $workdir"/mods/unified_invent
 
 sed -i "/formspec\[n\] = fsdata.formspec/ {
 	a \\\tformspec[n+1]=\"style_type[image_button;bgcolor=\"..dreambuilder_theme.btn_color..\"]\"
-	a \\\tformspec[n+2]=
-	a \\\t\t$LISTCOLORS_HIDE_SLOTS
-	a \\\t\t\t\"\"
-	a \\\tn = n + 2
+	a \\\tformspec[n+2]=${LISTCOLORS_HIDE_SLOTS%..}
+	a \\\tn = n + 3
 }" $workdir"/mods/unified_inventory/internal.lua"
+
+sed -i '0,/n = n+1/s///' $workdir"/mods/unified_inventory/internal.lua"
 
 sed -i '/pagedef.formspec_prepend/ {
 	a \\t\t"no_prepend[]"..default.gui_bg,

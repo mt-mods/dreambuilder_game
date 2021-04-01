@@ -200,17 +200,17 @@ minetest.register_globalstep(function(dtime)
 
 		ok = true -- everything starts off ok
 
-		-- stop current sound if another set active or gain changed
+		-- are we playing something already?
 		if playing[player_name]
 		and playing[player_name].handler then
 
+			-- stop current sound if another set active or gain changed
 			if playing[player_name].set ~= set_name
-			or (playing[player_name].set == set_name
-			and playing[player_name].gain ~= MORE_GAIN) then
+			or playing[player_name].gain ~= MORE_GAIN then
 
---print ("-- change stop", set_name, playing[player_name].old_handler)
+--print ("-- change stop", set_name, playing[player_name].handler)
 
-				minetest.sound_stop(playing[player_name].old_handler)
+				minetest.sound_stop(playing[player_name].handler)
 
 				playing[player_name].set = nil
 				playing[player_name].handler = nil
@@ -220,10 +220,8 @@ minetest.register_globalstep(function(dtime)
 			end
 		end
 
-		-- set random chance and reset seed
+		-- set random chance
 		chance = random(1, 1000)
-
-		math.randomseed(tod + chance)
 
 		-- if chance is lower than set frequency then select set
 		if ok and set_name and chance < sound_sets[set_name].frequency then
@@ -249,8 +247,7 @@ minetest.register_globalstep(function(dtime)
 
 				-- set what player is currently listening to
 				playing[player_name] = {
-					set = set_name, gain = MORE_GAIN,
-					handler = handler, old_handler = handler
+					set = set_name, gain = MORE_GAIN, handler = handler
 				}
 
 				-- set timer to stop sound
@@ -261,17 +258,15 @@ minetest.register_globalstep(function(dtime)
 					-- make sure we are stopping same sound we started
 					if playing[player_name]
 					and playing[player_name].handler
-					and playing[player_name].old_handler == handler then
+					and playing[player_name].handler == handler then
 
 --print("-- timed stop", set_name, handler)
 
-						--minetest.sound_stop(playing[player_name].handler)
 						minetest.sound_stop(handler)
 
 						-- reset player variables and backup handler
 						playing[player_name] = {
-							set = nil, gain = nil,
-							handler = nil, old_handler = nil
+							set = nil, gain = nil, handler = nil
 						}
 					end
 				end)
