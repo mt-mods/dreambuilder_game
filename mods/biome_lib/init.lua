@@ -353,7 +353,7 @@ function biome_lib:populate_surfaces(biome, nodes_or_function_or_model, snodes, 
 		return 0
 	end
 
-	for i = 1, math.min(biome.max_count/25, num_in_biome_nodes) do
+	for i = 1, math.min(math.ceil(biome.max_count/25), num_in_biome_nodes) do
 		local tries = 0
 		local spawned = false
 		while tries < 2 and not spawned do
