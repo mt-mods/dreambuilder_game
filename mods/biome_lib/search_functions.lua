@@ -66,6 +66,7 @@ minetest.register_on_generated(function(minp, maxp, blockseed)
 				local bmin = {x=minx, y=miny, z=minz}
 				local bmax = {x=minx + 15, y=miny + 15, z=minz + 15}
 				biome_lib.block_log[#biome_lib.block_log + 1] = { bmin, bmax, true }
+				biome_lib.block_log[#biome_lib.block_log + 1] = { bmin, bmax, false }
 			end
 		end
 	end
