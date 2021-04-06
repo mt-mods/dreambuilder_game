@@ -34,7 +34,7 @@ local function tableize(s)
 	return string.split(string.trim(string.gsub(s, " ", "")))
 end
 
-local c1 minetest.settings:get("biome_lib_default_grow_through_nodes")
+local c1 = minetest.settings:get("biome_lib_default_grow_through_nodes")
 biome_lib.default_grow_through_nodes = {["air"] = true}
 if c1 then
 	for _, i in ipairs(tableize(c1)) do
@@ -44,7 +44,7 @@ else
 	biome_lib.default_grow_through_nodes["default:snow"] = true
 end
 
-local c2 minetest.settings:get("biome_lib_default_water_nodes")
+local c2 = minetest.settings:get("biome_lib_default_water_nodes")
 biome_lib.default_water_nodes = {}
 if c2 then
 	for _, i in ipairs(tableize(c2)) do

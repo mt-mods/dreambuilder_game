@@ -31,7 +31,6 @@ end
 function pipeworks.check_and_wear_hammer(player)
 	local itemstack = player:get_wielded_item()
 	local wieldname = itemstack:get_name()
-	local playername = player:get_player_name()
 	if allowed_hammers[wieldname] then
 		itemstack:add_wear(1000)
 		player:set_wielded_item(itemstack)
@@ -193,6 +192,7 @@ if pipeworks.enable_one_way_tube then
 		check_for_pole = pipeworks.check_for_vert_tube,
 		check_for_horiz_pole = pipeworks.check_for_horiz_tube
 	})
+	pipeworks.ui_cat_tube_list[#pipeworks.ui_cat_tube_list+1] = "pipeworks:one_way_tube"
 	minetest.register_craft({
 		output = "pipeworks:one_way_tube 2",
 		recipe = {
