@@ -486,7 +486,7 @@ function biome_lib.generate_block(shutting_down)
 		if not confirm_block_surroundings(minp)
 		  and not shutting_down
 		  and (blocklog[1][4] + biome_lib.block_timeout) > now then -- if any neighbors appear not to be loaded and the block hasn't expired yet, defer it
-
+			blocklog[1][4] = now -- reset the timer, give this block more time to "cook"
 			if biome_lib.run_block_recheck_list then
 				biome_lib.block_log[#biome_lib.block_log + 1] = table.copy(biome_lib.block_recheck_list[1])
 				table.remove(biome_lib.block_recheck_list, 1)
