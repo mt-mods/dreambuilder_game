@@ -4,12 +4,28 @@
 -- Splizard's snow mod.
 --
 
+biome_lib = {}
+
+-- Boilerplate to support localized strings if intllib mod is installed.
+local S
+if minetest.global_exists("intllib") then
+	if intllib.make_gettext_pair then
+		S = intllib.make_gettext_pair()
+	else
+		S = intllib.Getter()
+	end
+else
+	S = function(s) return s end
+end
+biome_lib.intllib = S
+
 -- Various settings - most of these probably won't need to be changed
 
-biome_lib = {}
 biome_lib.air = {name = "air"}
 
 biome_lib.block_log = {}
+biome_lib.block_recheck_list = {}
+biome_lib.run_block_recheck_list = false
 
 biome_lib.actionslist_aircheck = {}
 biome_lib.actionslist_no_aircheck = {}
@@ -54,28 +70,16 @@ biome_lib.default_wet_surfaces = c3 and tableize(c3) or {"default:dirt", "defaul
 biome_lib.default_ground_nodes = c4 and tableize(c4) or {"default:dirt_with_grass"}
 biome_lib.default_grow_nodes =   c5 and tableize(c5) or {"default:dirt_with_grass"}
 
--- Boilerplate to support localized strings if intllib mod is installed.
-local S
-if minetest.global_exists("intllib") then
-	if intllib.make_gettext_pair then
-		S = intllib.make_gettext_pair()
-	else
-		S = intllib.Getter()
-	end
-else
-	S = function(s) return s end
-end
-biome_lib.intllib = S
+biome_lib.debug_log_level = tonumber(minetest.settings:get("biome_lib_debug_log_level")) or 0
 
-local DEBUG_LEVEL = tonumber(minetest.settings:get("biome_lib_debug")) or 0
+local rr = tonumber(minetest.settings:get("biome_lib_queue_run_ratio")) or -100
+biome_lib.queue_run_ratio = 100 - rr
+biome_lib.entries_per_step = math.max(-rr, 1)
 
-function biome_lib.dbg(msg, level)
-	local l = tonumber(level) or 0
-	if DEBUG_LEVEL >= l then
-		print("[Biome Lib] "..msg)
-		minetest.log("verbose", "[Biome Lib] "..msg)
-	end
-end
+-- timer runs in microseconds, but I want the user to supply a time in seconds
+biome_lib.block_timeout = (tonumber(minetest.settings:get("biome_lib_block_timeout")) or 300) * 1000000
+
+local time_speed = tonumber(minetest.settings:get("time_speed"))
 
 biome_lib.plantlife_seed_diff = 329	-- needs to be global so other mods can see it
 
@@ -94,7 +98,6 @@ local humidity_persistence = 0.5
 local humidity_scale = 250
 
 local time_scale = 1
-local time_speed = tonumber(minetest.settings:get("time_speed"))
 
 if time_speed and time_speed > 0 then
 	time_scale = 72 / time_speed
@@ -106,6 +109,14 @@ biome_lib.perlin_temperature = PerlinNoise(temperature_seeddiff, temperature_oct
 biome_lib.perlin_humidity = PerlinNoise(humidity_seeddiff, humidity_octaves, humidity_persistence, humidity_scale)
 
 -- Local functions
+
+function biome_lib.dbg(msg, level)
+	local l = tonumber(level) or 0
+	if biome_lib.debug_log_level >= l then
+		print("[Biome Lib] "..msg)
+		minetest.log("verbose", "[Biome Lib] "..msg)
+	end
+end
 
 local function get_biome_data(pos, perlin_fertile)
 	local fertility = perlin_fertile:get_2d({x=pos.x, y=pos.z})
@@ -440,9 +451,6 @@ local function confirm_block_surroundings(p)
 	return true
 end
 
-biome_lib.block_recheck_list = {}
-biome_lib.run_block_recheck_list = false
-
 function biome_lib.generate_block(shutting_down)
 
 	if shutting_down then
@@ -472,10 +480,12 @@ function biome_lib.generate_block(shutting_down)
 	local pos_hash = 	minetest.hash_node_position(minp)
 
 	if not biome_lib.pos_hash then -- we need to read the maplock and get the surfaces list
+		local now = minetest.get_us_time()
 		biome_lib.pos_hash = {}
 		minetest.load_area(minp)
 		if not confirm_block_surroundings(minp)
-		  and not shutting_down then -- if any neighbors appear not to be loaded, skip this block for now
+		  and not shutting_down
+		  and (blocklog[1][4] + biome_lib.block_timeout) > now then -- if any neighbors appear not to be loaded and the block hasn't expired yet, defer it
 
 			if biome_lib.run_block_recheck_list then
 				biome_lib.block_log[#biome_lib.block_log + 1] = table.copy(biome_lib.block_recheck_list[1])
@@ -536,11 +546,6 @@ function biome_lib.generate_block(shutting_down)
 end
 
 -- "Play" them back, populating them with new stuff in the process
-
-local rr = tonumber(minetest.settings:get("biome_lib_queue_run_ratio")) or -100
-
-biome_lib.queue_run_ratio = 100 - rr
-biome_lib.entries_per_step = math.max(-rr, 1)
 
 minetest.register_globalstep(function(dtime)
 	if not biome_lib.block_log[1] then return end -- the block log is empty
@@ -763,7 +768,7 @@ function biome_lib:get_nodedef_field(nodename, fieldname)
 	return minetest.registered_nodes[nodename][fieldname]
 end
 
-if DEBUG_LEVEL >= 3 then
+if biome_lib.debug_log_level >= 3 then
 	biome_lib.last_count = 0
 
 	function biome_lib.show_pending_block_count()

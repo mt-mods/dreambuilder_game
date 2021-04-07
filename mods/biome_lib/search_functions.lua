@@ -56,6 +56,7 @@ end
 -- split into individual mapblocks to reduce lag
 
 minetest.register_on_generated(function(minp, maxp, blockseed)
+	local timestamp = minetest.get_us_time()
 	for x = 0, 4 do
 		local minx = minp.x + x*16
 		for y = 0, 4 do
@@ -65,8 +66,8 @@ minetest.register_on_generated(function(minp, maxp, blockseed)
 
 				local bmin = {x=minx, y=miny, z=minz}
 				local bmax = {x=minx + 15, y=miny + 15, z=minz + 15}
-				biome_lib.block_log[#biome_lib.block_log + 1] = { bmin, bmax, true }
-				biome_lib.block_log[#biome_lib.block_log + 1] = { bmin, bmax, false }
+				biome_lib.block_log[#biome_lib.block_log + 1] = { bmin, bmax, true, timestamp }
+				biome_lib.block_log[#biome_lib.block_log + 1] = { bmin, bmax, false, timestamp }
 			end
 		end
 	end
