@@ -67,10 +67,11 @@ else
 end
 biome_lib.intllib = S
 
-local DEBUG = minetest.settings:get_bool("biome_lib_debug", false)
+local DEBUG_LEVEL = tonumber(minetest.settings:get("biome_lib_debug")) or 0
 
-function biome_lib:dbg(msg)
-	if DEBUG then
+function biome_lib.dbg(msg, level)
+	local l = tonumber(level) or 0
+	if DEBUG_LEVEL >= l then
 		print("[Biome Lib] "..msg)
 		minetest.log("verbose", "[Biome Lib] "..msg)
 	end
@@ -176,17 +177,17 @@ function biome_lib:register_generate_plant(biomedef, nodes_or_function_or_model)
 	if type(nodes_or_function_or_model) == "string"
 	  and string.find(nodes_or_function_or_model, ":")
 	  and not minetest.registered_nodes[nodes_or_function_or_model] then
-		biome_lib:dbg("Warning: Ignored registration for undefined spawn node: "..dump(nodes_or_function_or_model))
+		biome_lib.dbg("Warning: Ignored registration for undefined spawn node: "..dump(nodes_or_function_or_model), 2)
 		return
 	end
 
 	if type(nodes_or_function_or_model) == "string"
 	  and not string.find(nodes_or_function_or_model, ":") then
-		biome_lib:dbg("Warning: Registered function call using deprecated string method: "..dump(nodes_or_function_or_model))
+		biome_lib.dbg("Warning: Registered function call using deprecated string method: "..dump(nodes_or_function_or_model), 2)
 	end
 
 	if biomedef.check_air == false then 
-		biome_lib:dbg("Register no-air-check mapgen hook: "..dump(nodes_or_function_or_model))
+		biome_lib.dbg("Register no-air-check mapgen hook: "..dump(nodes_or_function_or_model), 3)
 		biome_lib.actionslist_no_aircheck[#biome_lib.actionslist_no_aircheck + 1] = { biomedef, nodes_or_function_or_model }
 		local s = biomedef.surface
 		if type(s) == "string" then
@@ -195,7 +196,7 @@ function biome_lib:register_generate_plant(biomedef, nodes_or_function_or_model)
 					biome_lib.surfaceslist_no_aircheck[#biome_lib.surfaceslist_no_aircheck + 1] = s
 				end
 			else
-				biome_lib:dbg("Warning: Ignored no-air-check registration for undefined surface node: "..dump(s))
+				biome_lib.dbg("Warning: Ignored no-air-check registration for undefined surface node: "..dump(s), 2)
 			end
 		else
 			for i = 1, #biomedef.surface do
@@ -205,12 +206,12 @@ function biome_lib:register_generate_plant(biomedef, nodes_or_function_or_model)
 						biome_lib.surfaceslist_no_aircheck[#biome_lib.surfaceslist_no_aircheck + 1] = s
 					end
 				else
-					biome_lib:dbg("Warning: Ignored no-air-check registration for undefined surface node: "..dump(s))
+					biome_lib.dbg("Warning: Ignored no-air-check registration for undefined surface node: "..dump(s), 2)
 				end
 			end
 		end
 	else
-		biome_lib:dbg("Register with-air-checking mapgen hook: "..dump(nodes_or_function_or_model))
+		biome_lib.dbg("Register with-air-checking mapgen hook: "..dump(nodes_or_function_or_model), 3)
 		biome_lib.actionslist_aircheck[#biome_lib.actionslist_aircheck + 1] = { biomedef, nodes_or_function_or_model }
 		local s = biomedef.surface
 		if type(s) == "string" then
@@ -219,7 +220,7 @@ function biome_lib:register_generate_plant(biomedef, nodes_or_function_or_model)
 					biome_lib.surfaceslist_aircheck[#biome_lib.surfaceslist_aircheck + 1] = s
 				end
 			else
-				biome_lib:dbg("Warning: Ignored with-air-checking registration for undefined surface node: "..dump(s))
+				biome_lib.dbg("Warning: Ignored with-air-checking registration for undefined surface node: "..dump(s), 2)
 			end
 		else
 			for i = 1, #biomedef.surface do
@@ -229,7 +230,7 @@ function biome_lib:register_generate_plant(biomedef, nodes_or_function_or_model)
 						biome_lib.surfaceslist_aircheck[#biome_lib.surfaceslist_aircheck + 1] = s
 					end
 				else
-					biome_lib:dbg("Warning: Ignored with-air-checking registration for undefined surface node: "..dump(s))
+					biome_lib.dbg("Warning: Ignored with-air-checking registration for undefined surface node: "..dump(s), 2)
 				end
 			end
 		end
@@ -381,7 +382,7 @@ function biome_lib.populate_surfaces(biome, nodes_or_function_or_model, snodes, 
 				if objtype == "table" then
 					if nodes_or_function_or_model.axiom then
 						biome_lib:generate_tree(p_top, nodes_or_function_or_model)
-						biome_lib:dbg("An L-tree was spawned at "..minetest.pos_to_string(p_top))
+						biome_lib.dbg("An L-tree was spawned at "..minetest.pos_to_string(p_top), 4)
 						spawned = true
 					else
 						local fdir = nil
@@ -390,7 +391,7 @@ function biome_lib.populate_surfaces(biome, nodes_or_function_or_model, snodes, 
 						end
 						local n=nodes_or_function_or_model[math.random(#nodes_or_function_or_model)]
 						minetest.swap_node(p_top, { name = n, param2 = fdir })
-						biome_lib:dbg("Node \""..n.."\" was randomly picked from a list and placed at "..minetest.pos_to_string(p_top))
+						biome_lib.dbg("Node \""..n.."\" was randomly picked from a list and placed at "..minetest.pos_to_string(p_top), 4)
 						spawned = true
 					end
 				elseif objtype == "string" and
@@ -400,18 +401,18 @@ function biome_lib.populate_surfaces(biome, nodes_or_function_or_model, snodes, 
 						fdir = math.random(biome.random_facedir[1], biome.random_facedir[2])
 					end
 					minetest.swap_node(p_top, { name = nodes_or_function_or_model, param2 = fdir })
-					biome_lib:dbg("Node \""..nodes_or_function_or_model.."\" was placed at "..minetest.pos_to_string(p_top))
+					biome_lib.dbg("Node \""..nodes_or_function_or_model.."\" was placed at "..minetest.pos_to_string(p_top), 4)
 					spawned = true
 				elseif objtype == "function" then
 					nodes_or_function_or_model(pos)
-					biome_lib:dbg("A function was run on surface node at "..minetest.pos_to_string(pos))
+					biome_lib.dbg("A function was run on surface node at "..minetest.pos_to_string(pos), 4)
 					spawned = true
 				elseif objtype == "string" and pcall(loadstring(("return %s(...)"):
 					format(nodes_or_function_or_model)),pos) then
 					spawned = true
-					biome_lib:dbg("An obsolete string-specified function was run on surface node at "..minetest.pos_to_string(p_top))
+					biome_lib.dbg("An obsolete string-specified function was run on surface node at "..minetest.pos_to_string(p_top), 4)
 				else
-					biome_lib:dbg("Warning: Ignored invalid definition for object "..dump(nodes_or_function_or_model).." that was pointed at {"..dump(pos).."}")
+					biome_lib.dbg("Warning: Ignored invalid definition for object "..dump(nodes_or_function_or_model).." that was pointed at {"..dump(pos).."}", 2)
 				end
 			else
 				tries = tries + 1
@@ -472,6 +473,7 @@ function biome_lib.generate_block(shutting_down)
 
 	if not biome_lib.pos_hash then -- we need to read the maplock and get the surfaces list
 		biome_lib.pos_hash = {}
+		minetest.load_area(minp)
 		if not confirm_block_surroundings(minp)
 		  and not shutting_down then -- if any neighbors appear not to be loaded, skip this block for now
 
@@ -483,8 +485,8 @@ function biome_lib.generate_block(shutting_down)
 				table.remove(biome_lib.block_log, 1)
 			end
 			biome_lib.pos_hash = nil
-				biome_lib:dbg("Mapblock at "..minetest.pos_to_string(minp)..
-					" had a neighbor not fully emerged, skipped it for now.")
+				biome_lib.dbg("Mapblock at "..minetest.pos_to_string(minp)..
+					" had a neighbor not fully emerged, skipped it for now.", 4)
 			return
 		else
 			biome_lib.pos_hash.surface_node_list = airflag
@@ -492,16 +494,16 @@ function biome_lib.generate_block(shutting_down)
 				or minetest.find_nodes_in_area(minp, maxp, biome_lib.surfaceslist_no_aircheck)
 			biome_lib.pos_hash.action_index = 1
 			if #biome_lib.pos_hash.surface_node_list > 0 then
-				biome_lib:dbg("Mapblock at "..minetest.pos_to_string(minp)..
+				biome_lib.dbg("Mapblock at "..minetest.pos_to_string(minp)..
 					" has "..#biome_lib.pos_hash.surface_node_list..
-					" surface nodes to work on (airflag="..dump(airflag)..")")
+					" surface nodes to work on (airflag="..dump(airflag)..")", 4)
 			end
 		end
 	elseif not (airflag and biome_lib.actionslist_aircheck[biome_lib.pos_hash.action_index])
 	  and not (not airflag and biome_lib.actionslist_no_aircheck[biome_lib.pos_hash.action_index]) then
 		-- the block is finished, remove it
 		if #biome_lib.pos_hash.surface_node_list > 0 then
-			biome_lib:dbg("Deleted mapblock "..minetest.pos_to_string(minp).." from the block log")
+			biome_lib.dbg("Deleted mapblock "..minetest.pos_to_string(minp).." from the block log", 4)
 		end
 		table.remove(blocklog, 1)
 		biome_lib.pos_hash = nil
@@ -526,9 +528,9 @@ function biome_lib.generate_block(shutting_down)
 			end
 		end
 		if added > 0 then
-			biome_lib:dbg("biome_lib.populate_surfaces ran on mapblock at "..
+			biome_lib.dbg("biome_lib.populate_surfaces ran on mapblock at "..
 				minetest.pos_to_string(minp)..".  Entry #"..
-				(biome_lib.pos_hash.action_index-1).." added "..added.." items.")
+				(biome_lib.pos_hash.action_index-1).." added "..added.." items.", 4)
 		end
 	end
 end
@@ -557,8 +559,8 @@ minetest.register_on_shutdown(function()
 		return
 	end
 
-	print("[biome_lib] Stand by, playing out the rest of the mapblock log")
-	print("(there are "..(#biome_lib.block_log + #biome_lib.block_recheck_list).." entries)...")
+	biome_lib.dbg("[biome_lib] Stand by, playing out the rest of the mapblock log", 0)
+	biome_lib.dbg("(there are "..(#biome_lib.block_log + #biome_lib.block_recheck_list).." entries)...", 0)
 	while #biome_lib.block_log > 0 do
 		biome_lib.generate_block(true)
 	end
@@ -761,24 +763,28 @@ function biome_lib:get_nodedef_field(nodename, fieldname)
 	return minetest.registered_nodes[nodename][fieldname]
 end
 
-if DEBUG then
+if DEBUG_LEVEL >= 3 then
 	biome_lib.last_count = 0
 
 	function biome_lib.show_pending_block_count()
 		if biome_lib.last_count ~= #biome_lib.block_log then
-			biome_lib:dbg("Pending block count: "..(#biome_lib.block_log + #biome_lib.block_recheck_list))
+			biome_lib.dbg("Pending block count: "..(#biome_lib.block_log + #biome_lib.block_recheck_list), 3)
 			biome_lib.last_count = #biome_lib.block_log
+			biome_lib.queue_idle_flag = false
+		elseif not biome_lib.queue_idle_flag then
+			biome_lib.dbg("Mapblock queue only contains blocks that can't yet be processed.",  3)
+			biome_lib.dbg("Idling the queue until new mapblocks show up.",  3)
+			biome_lib.queue_idle_flag = true
 		end
 		minetest.after(1, biome_lib.show_pending_block_count)
 	end
 
 	biome_lib.show_pending_block_count()
-
-	minetest.after(0, function()
-		print("Registered a total of "..(#biome_lib.surfaceslist_aircheck)+(#biome_lib.surfaceslist_no_aircheck).." surface types to be evaluated, spread")
-		print("across "..#biome_lib.actionslist_aircheck.." actions with air-checking and "..#biome_lib.actionslist_no_aircheck.." actions without.")
-	end)
-
 end
 
-print("[Biome Lib] Loaded")
+minetest.after(0, function()
+	biome_lib.dbg("Registered a total of "..(#biome_lib.surfaceslist_aircheck)+(#biome_lib.surfaceslist_no_aircheck).." surface types to be evaluated, spread", 0)
+	biome_lib.dbg("across "..#biome_lib.actionslist_aircheck.." actions with air-checking and "..#biome_lib.actionslist_no_aircheck.." actions without.", 0)
+end)
+
+biome_lib.dbg("[Biome Lib] Loaded", 0)

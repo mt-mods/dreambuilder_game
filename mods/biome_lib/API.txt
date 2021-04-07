@@ -446,11 +446,21 @@ question is already loaded, or false if not.
 
 
 =====
-dbg(string)
+dbg(string, level)
 
 This is a simple debug output function which takes one string parameter.  It
 just checks if DEBUG is true and outputs the phrase "[Plantlife] " followed by
 the supplied string, via the print() function, if so.
+
+'level' is a number that, if supplied, dictates the lowest 'biome_lib_debug'
+can be set to in minetest.conf for this message to be displayed.  Both the
+default log level and the default message level are 0, thus always showing the
+supplied message.
+
+Although it's not set in stone, a good practice is to use a level of 0 (or
+just omit the value) for anything that generally important enough that it
+ought always be shown, 1 for errors, 2 for warnings, 3 for info, 4 for verbose
+spammy stuff.
 
 =====
 biome_lib:generate_tree(pos, treemodel)
