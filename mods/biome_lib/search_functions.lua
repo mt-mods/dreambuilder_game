@@ -70,10 +70,5 @@ minetest.register_on_generated(function(minp, maxp, blockseed)
 			end
 		end
 	end
-	if #biome_lib.block_recheck_list > 0 then
-		for i = 1, #biome_lib.block_recheck_list do
-			biome_lib.block_log[#biome_lib.block_log + 1] = table.copy(biome_lib.block_recheck_list[i])
-		end
-	end
-	biome_lib.block_recheck_list = {}
+	biome_lib.run_block_recheck_list = true
 end)

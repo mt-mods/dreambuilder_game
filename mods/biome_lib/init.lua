@@ -440,23 +440,51 @@ local function confirm_block_surroundings(p)
 end
 
 biome_lib.block_recheck_list = {}
+biome_lib.run_block_recheck_list = false
 
 function biome_lib.generate_block(shutting_down)
-	if not biome_lib.block_log[1] then return end -- the block log is empty
 
-	local minp =		biome_lib.block_log[1][1]
-	local maxp =		biome_lib.block_log[1][2]
-	local airflag = 	biome_lib.block_log[1][3]
+	if shutting_down then
+		if #biome_lib.block_recheck_list > 0 then
+			for i = 1, #biome_lib.block_recheck_list do
+				biome_lib.block_log[#biome_lib.block_log + 1] = biome_lib.block_recheck_list[i]
+			end
+			biome_lib.block_recheck_list = {}
+		end
+		biome_lib.run_block_recheck_list = false
+	else
+		if biome_lib.run_block_recheck_list
+		  and not biome_lib.block_recheck_list[1] then
+				biome_lib.run_block_recheck_list = false
+		end
+	end
+
+	local blocklog = biome_lib.run_block_recheck_list
+	  and biome_lib.block_recheck_list
+	  or biome_lib.block_log
+
+	if not blocklog[1] then return end
+
+	local minp =		blocklog[1][1]
+	local maxp =		blocklog[1][2]
+	local airflag = 	blocklog[1][3]
 	local pos_hash = 	minetest.hash_node_position(minp)
 
 	if not biome_lib.pos_hash then -- we need to read the maplock and get the surfaces list
 		biome_lib.pos_hash = {}
-		if not confirm_block_surroundings(minp) and not shutting_down then -- if any neighbors appear not to be loaded, move this block to the end of the queue
-			biome_lib.block_recheck_list[#biome_lib.block_recheck_list + 1] = table.copy(biome_lib.block_log[1])
-			table.remove(biome_lib.block_log, 1)
+		if not confirm_block_surroundings(minp)
+		  and not shutting_down then -- if any neighbors appear not to be loaded, skip this block for now
+
+			if biome_lib.run_block_recheck_list then
+				biome_lib.block_log[#biome_lib.block_log + 1] = table.copy(biome_lib.block_recheck_list[1])
+				table.remove(biome_lib.block_recheck_list, 1)
+			else
+				biome_lib.block_recheck_list[#biome_lib.block_recheck_list + 1] = table.copy(biome_lib.block_log[1])
+				table.remove(biome_lib.block_log, 1)
+			end
 			biome_lib.pos_hash = nil
 				biome_lib:dbg("Mapblock at "..minetest.pos_to_string(minp)..
-					" had a neighbor not fully emerged, moved it to the \"check-later\" list.")
+					" had a neighbor not fully emerged, skipped it for now.")
 			return
 		else
 			biome_lib.pos_hash.surface_node_list = airflag
@@ -475,7 +503,7 @@ function biome_lib.generate_block(shutting_down)
 		if #biome_lib.pos_hash.surface_node_list > 0 then
 			biome_lib:dbg("Deleted mapblock "..minetest.pos_to_string(minp).." from the block log")
 		end
-		table.remove(biome_lib.block_log, 1)
+		table.remove(blocklog, 1)
 		biome_lib.pos_hash = nil
 	else
 		-- below, [1] is biome, [2] is the thing to be added
