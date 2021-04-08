@@ -80,7 +80,7 @@ biome_lib.entries_per_step = math.max(-rr, 1)
 -- that manages the queue wakeup call has to be in seconds, and works best if
 -- it takes a little longer than the block timeout interval.
 
-local t = tonumber(minetest.settings:get("biome_lib_block_timeout")) or 300)
+local t = tonumber(minetest.settings:get("biome_lib_block_timeout")) or 300
 
 biome_lib.block_timeout = t * 1000000
 biome_lib.block_queue_wakeup_time = t * 1.1
