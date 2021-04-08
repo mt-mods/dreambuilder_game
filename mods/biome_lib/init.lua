@@ -76,12 +76,18 @@ local rr = tonumber(minetest.settings:get("biome_lib_queue_run_ratio")) or -100
 biome_lib.queue_run_ratio = 100 - rr
 biome_lib.entries_per_step = math.max(-rr, 1)
 
--- timer runs in microseconds, but I want the user to supply a time in seconds
-biome_lib.block_timeout = (tonumber(minetest.settings:get("biome_lib_block_timeout")) or 300) * 1000000
+-- the timer that manages the block timeout is in microseconds, but the timer
+-- that manages the queue wakeup call has to be in seconds, and works best if
+-- it takes a little longer than the block timeout interval.
+
+local t = tonumber(minetest.settings:get("biome_lib_block_timeout")) or 300)
+
+biome_lib.block_timeout = t * 1000000
+biome_lib.block_queue_wakeup_time = t * 1.1
 
 local time_speed = tonumber(minetest.settings:get("time_speed"))
 
-biome_lib.plantlife_seed_diff = 329	-- needs to be global so other mods can see it
+biome_lib.plantlife_seed_diff = 329 -- needs to be global so other mods can see it
 
 local perlin_octaves = 3
 local perlin_persistence = 0.6
@@ -556,6 +562,25 @@ minetest.register_globalstep(function(dtime)
 	end
 end)
 
+-- Periodically wake-up the queue to give old blocks a chance to time-out
+-- if the player isn't currently exploring (i.e. they're just playing in one area)
+
+function biome_lib.wake_up_queue()
+	if #biome_lib.block_recheck_list > 0
+	  and #biome_lib.block_log == 0 then
+		-- we move the second element and not the first because we can't be
+		-- sure if the recheck list's first item is the one currently acted upon
+		-- (else it'd be the first item in the main block log)
+		biome_lib.block_log = table.copy(biome_lib.block_recheck_list)
+		biome_lib.block_recheck_list = {}
+		biome_lib.queue_idle_flag = false
+		biome_lib.dbg("Woke-up the map queue to give old blocks a chance to time-out.", 3)
+	end
+	minetest.after(biome_lib.block_queue_wakeup_time, biome_lib.wake_up_queue)
+end
+
+biome_lib.wake_up_queue()
+
 -- Play out the entire log all at once on shutdown
 -- to prevent unpopulated map areas
 
@@ -773,12 +798,18 @@ if biome_lib.debug_log_level >= 3 then
 
 	function biome_lib.show_pending_block_count()
 		if biome_lib.last_count ~= #biome_lib.block_log then
-			biome_lib.dbg("Pending block count: "..(#biome_lib.block_log + #biome_lib.block_recheck_list), 3)
+			biome_lib.dbg(string.format("Pending block counts - ready to process: %-8icurrently deferred: %i",
+				#biome_lib.block_log, #biome_lib.block_recheck_list), 3)
 			biome_lib.last_count = #biome_lib.block_log
 			biome_lib.queue_idle_flag = false
 		elseif not biome_lib.queue_idle_flag then
-			biome_lib.dbg("Mapblock queue only contains blocks that can't yet be processed.",  3)
-			biome_lib.dbg("Idling the queue until new mapblocks show up.",  3)
+			if #biome_lib.block_recheck_list > 0 then
+				biome_lib.dbg("Mapblock queue only contains blocks that can't yet be processed.",  3)
+				biome_lib.dbg("Idling the queue until new blocks arrive or the next wake-up call occurs.",  3)
+			else
+				biome_lib.dbg("Mapblock queue has run dry.",  3)
+				biome_lib.dbg("Idling the queue until new blocks arrive.",  3)
+			end
 			biome_lib.queue_idle_flag = true
 		end
 		minetest.after(1, biome_lib.show_pending_block_count)
