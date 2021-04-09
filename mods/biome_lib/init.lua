@@ -78,12 +78,15 @@ biome_lib.entries_per_step = math.max(-rr, 1)
 
 -- the timer that manages the block timeout is in microseconds, but the timer
 -- that manages the queue wakeup call has to be in seconds, and works best if
--- it takes a little longer than the block timeout interval.
+-- it takes a fraction of the block timeout interval.
 
 local t = tonumber(minetest.settings:get("biome_lib_block_timeout")) or 300
 
 biome_lib.block_timeout = t * 1000000
-biome_lib.block_queue_wakeup_time = t * 1.1
+
+-- we don't want the wakeup function to trigger TOO often,
+-- in case the user's block timeout setting is really low
+biome_lib.block_queue_wakeup_time = math.min(t/2, math.max(20, t/10))
 
 local time_speed = tonumber(minetest.settings:get("time_speed"))
 
@@ -492,7 +495,7 @@ function biome_lib.generate_block(shutting_down)
 		if not confirm_block_surroundings(minp)
 		  and not shutting_down
 		  and (blocklog[1][4] + biome_lib.block_timeout) > now then -- if any neighbors appear not to be loaded and the block hasn't expired yet, defer it
-			blocklog[1][4] = now -- reset the timer, give this block more time to "cook"
+
 			if biome_lib.run_block_recheck_list then
 				biome_lib.block_log[#biome_lib.block_log + 1] = table.copy(biome_lib.block_recheck_list[1])
 				table.remove(biome_lib.block_recheck_list, 1)
@@ -566,14 +569,12 @@ end)
 -- if the player isn't currently exploring (i.e. they're just playing in one area)
 
 function biome_lib.wake_up_queue()
-	if #biome_lib.block_recheck_list > 0
+	if #biome_lib.block_recheck_list > 1
 	  and #biome_lib.block_log == 0 then
-		-- we move the second element and not the first because we can't be
-		-- sure if the recheck list's first item is the one currently acted upon
-		-- (else it'd be the first item in the main block log)
-		biome_lib.block_log = table.copy(biome_lib.block_recheck_list)
-		biome_lib.block_recheck_list = {}
-		biome_lib.queue_idle_flag = false
+		biome_lib.block_log[#biome_lib.block_log + 1] =
+			table.copy(biome_lib.block_recheck_list[#biome_lib.block_recheck_list])
+		biome_lib.block_recheck_list[#biome_lib.block_recheck_list] = nil
+		biome_lib.run_block_recheck_list = true
 		biome_lib.dbg("Woke-up the map queue to give old blocks a chance to time-out.", 3)
 	end
 	minetest.after(biome_lib.block_queue_wakeup_time, biome_lib.wake_up_queue)
@@ -584,23 +585,54 @@ biome_lib.wake_up_queue()
 -- Play out the entire log all at once on shutdown
 -- to prevent unpopulated map areas
 
+local function format_time(t)
+	if t > 59999999 then
+		return os.date("!%M minutes and %S seconds", math.ceil(t/1000000))
+	else
+		return os.date("!%S seconds", math.ceil(t/1000000))
+	end
+end
+
+function biome_lib.check_remaining_time()
+	if minetest.get_us_time() > (biome_lib.shutdown_last_timestamp + 10000000) then -- report progress every 10s
+		biome_lib.shutdown_last_timestamp = minetest.get_us_time()
+
+		local entries_remaining = #biome_lib.block_log + #biome_lib.block_recheck_list
+
+		local total_purged = biome_lib.starting_count - entries_remaining
+		local elapsed_time = biome_lib.shutdown_last_timestamp - biome_lib.shutdown_start_time
+		biome_lib.dbg(string.format("%i entries, approximately %s remaining.",
+			entries_remaining, format_time(elapsed_time/total_purged * entries_remaining)))
+	end
+end
+
 minetest.register_on_shutdown(function()
-	if #biome_lib.block_log + #biome_lib.block_recheck_list == 0 then
+	biome_lib.shutdown_start_time = minetest.get_us_time()
+	biome_lib.shutdown_last_timestamp = minetest.get_us_time()+1
+
+	biome_lib.starting_count = #biome_lib.block_log + #biome_lib.block_recheck_list
+
+	if biome_lib.starting_count == 0 then
 		return
 	end
 
-	biome_lib.dbg("[biome_lib] Stand by, playing out the rest of the mapblock log", 0)
-	biome_lib.dbg("(there are "..(#biome_lib.block_log + #biome_lib.block_recheck_list).." entries)...", 0)
+	biome_lib.dbg("Stand by, purging the mapblock log "..
+		"(there are "..(#biome_lib.block_log + #biome_lib.block_recheck_list).." entries) ...", 0)
+
 	while #biome_lib.block_log > 0 do
 		biome_lib.generate_block(true)
+		biome_lib.check_remaining_time()
 	end
 
 	if #biome_lib.block_recheck_list > 0 then
 		biome_lib.block_log = table.copy(biome_lib.block_recheck_list)
 		while #biome_lib.block_log > 0 do
 			biome_lib.generate_block(true)
+			biome_lib.check_remaining_time()
 		end
 	end
+	biome_lib.dbg("Log purge completed after "..
+		format_time(minetest.get_us_time() - biome_lib.shutdown_start_time)..".", 0)
 end)
 
 -- The spawning ABM
