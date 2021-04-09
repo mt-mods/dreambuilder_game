@@ -37,6 +37,17 @@ local function pine_grow(pos)
 end
 
 
+-- special function for cactus growth
+local function cactus_grow(pos)
+	default.grow_cactus(pos, minetest.get_node(pos))
+end
+
+-- special function for papyrus growth
+local function papyrus_grow(pos)
+	default.grow_papyrus(pos, minetest.get_node(pos))
+end
+
+
 -- default saplings
 local saplings = {
 	{"default:sapling", default.grow_new_apple_tree, "soil"},
@@ -49,7 +60,9 @@ local saplings = {
 	{"default:acacia_bush_sapling", default.grow_acacia_bush, "soil"},
 	{"default:large_cactus_seedling", default.grow_large_cactus, "sand"},
 	{"default:blueberry_bush_sapling", default.grow_blueberry_bush, "soil"},
-	{"default:pine_bush_sapling", default.grow_pine_bush, "soil"}
+	{"default:pine_bush_sapling", default.grow_pine_bush, "soil"},
+	{"default:cactus", cactus_grow, "sand"},
+	{"default:papyrus", papyrus_grow, "soil"},
 }
 
 -- helper tables ( "" denotes a blank item )
