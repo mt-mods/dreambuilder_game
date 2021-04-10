@@ -607,34 +607,7 @@ Although this project was intended to be used with minetest_game, it can be
 configured to work with something else instead.  All you need to do is provide
 the names of the nodes in your game you want biome_lib's internals to use.
 
-Put these settings in your game's minetest.conf (or your client's own config,
-if desired).  You'll need to set all of them.
+See settingtypes.txt for a list.  Any item listed there can be changed either
+by adding it to your minetest.conf, or by using the "all settings" menu in
+Minetest, whatever's appropriate for your particular setup.
 
-biome_lib_default_grow_through_nodes
-	Comma-separated list of things that a spawned node is allowed to grow
-	through.  Air is always added to whatever you specify.
-	Default:  air, default:snow
-
-biome_lib_default_water_nodes
-	Comma-separated list of nodes that should be treated as water for the sake
-	of looking for neighboring "wet" ground.
-	Default: default:water_source, default:water_flowing,
-		default:river_water_source, default:river_water_flowing
-
-biome_lib_default_wet_surfaces
-	Comma-separated list of nodes that should be considered "wet" if one of
-	the aforementioned water nodes is nearby.
-	Default: default:dirt, default:dirt_with_grass, default:sand
-
-biome_lib_default_grow_nodes
-	Comma-separated list of nodes that something must be sitting on to be
-	able to actively change from one thing to another (such as a sapling
-	growing into a tree), to be used for ALL growable nodes, if the calling
-	mod doesn't provide its own lists.
-	Default: "default:dirt_with_grass"
-
-biome_lib_default_ground_nodes
-	Comma-separated list of nodes to use as the "root" of something that can
-	gradually climb up a wall, to be used for ALL such nodes, if the calling
-	mod doesn't provide its own lists.
-	Default: "default:dirt_with_grass"
