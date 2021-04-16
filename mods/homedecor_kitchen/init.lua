@@ -283,7 +283,7 @@ for _, mat in ipairs(counter_materials) do
 	})
 
 	homedecor.kitchen_convert_nodes[#homedecor.kitchen_convert_nodes + 1] = "homedecor:kitchen_cabinet"..material
-	homedecor.kitchen_convert_nodes[#homedecor.kitchen_convert_nodes + 1] = "homedecor:kitchen_cabinet_locked"..material
+	homedecor.kitchen_convert_nodes[#homedecor.kitchen_convert_nodes + 1] = "homedecor:kitchen_cabinet"..material.."_locked"
 
 end
 

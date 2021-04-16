@@ -72,8 +72,8 @@ biome_lib.default_grow_nodes =   c5 and tableize(c5) or {"default:dirt_with_gras
 
 biome_lib.debug_log_level = tonumber(minetest.settings:get("biome_lib_debug_log_level")) or 0
 
-local rr = tonumber(minetest.settings:get("biome_lib_queue_run_ratio")) or -100
-biome_lib.queue_run_ratio = 100 - rr
+local rr = tonumber(minetest.settings:get("biome_lib_queue_ratio")) or -200
+biome_lib.queue_ratio = 100 - rr
 biome_lib.entries_per_step = math.max(-rr, 1)
 
 -- the timer that manages the block timeout is in microseconds, but the timer
@@ -559,7 +559,7 @@ end
 minetest.register_globalstep(function(dtime)
 	if not biome_lib.block_log[1] then return end -- the block log is empty
 
-	if math.random(100) > biome_lib.queue_run_ratio then return end
+	if math.random(100) > biome_lib.queue_ratio then return end
 	for s = 1, biome_lib.entries_per_step do
 		biome_lib.generate_block()
 	end

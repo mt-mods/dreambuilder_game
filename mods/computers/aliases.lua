@@ -3,6 +3,7 @@ minetest.register_alias("computer:shefriendSOO_off",     "computers:shefriendSOO
 minetest.register_alias("computer:vanio",                "computers:vanio")
 minetest.register_alias("computer:vanio_off",            "computers:vanio_off")
 minetest.register_alias("computer:slaystation",          "computers:slaystation")
+minetest.register_alias("computer:slaystation_off",      "computers:slaystation_off")
 minetest.register_alias("computer:slaystation2",         "computers:slaystation2")
 minetest.register_alias("computer:slaystation2_off",     "computers:slaystation2_off")
 minetest.register_alias("computer:specter",              "computers:specter")
