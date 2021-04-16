@@ -57,18 +57,26 @@ end
 
 minetest.register_on_generated(function(minp, maxp, blockseed)
 	local timestamp = minetest.get_us_time()
-	for x = 0, 4 do
-		local minx = minp.x + x*16
-		for y = 0, 4 do
-			local miny = minp.y + y*16
-			for z = 0, 4 do
-				local minz = minp.z + z*16
+	for y = 0, 4 do
+		local miny = minp.y + y*16
 
-				local bmin = {x=minx, y=miny, z=minz}
-				local bmax = {x=minx + 15, y=miny + 15, z=minz + 15}
-				biome_lib.block_log[#biome_lib.block_log + 1] = { bmin, bmax, true, timestamp }
-				biome_lib.block_log[#biome_lib.block_log + 1] = { bmin, bmax, false, timestamp }
+		if miny >= biome_lib.mapgen_elevation_limit.min
+		  and (miny + 15) <= biome_lib.mapgen_elevation_limit.max then
+
+			for x = 0, 4 do
+				local minx = minp.x + x*16
+
+				for z = 0, 4 do
+					local minz = minp.z + z*16
+
+					local bmin = {x=minx, y=miny, z=minz}
+					local bmax = {x=minx + 15, y=miny + 15, z=minz + 15}
+					biome_lib.block_log[#biome_lib.block_log + 1] = { bmin, bmax, true, timestamp }
+					biome_lib.block_log[#biome_lib.block_log + 1] = { bmin, bmax, false, timestamp }
+				end
 			end
+		else
+			biome_lib.dbg("Did not enqueue mapblocks at elevation "..miny.."m, they're out of range of any generate_plant() calls.", 4)
 		end
 	end
 	biome_lib.run_block_recheck_list = true

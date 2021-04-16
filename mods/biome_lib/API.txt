@@ -112,9 +112,9 @@ biome = {
 	depth_max = num,	-- If the object spawns on top of a water source, the
 						-- water must be at most this deep.  Defaults to 1.
 	min_elevation = num, -- Surface must be at this altitude or higher to
-						-- spawn at all.  Defaults to -31000...
-	max_elevation = num, -- ...but must be no higher than this altitude.
-						-- Defaults to +31000.
+						 -- spawn at all.  Defaults to -16 meters.
+	max_elevation = num, -- Surface must be no higher than this altitude.
+						 -- Defaults to +48.
 	near_nodes = {table}, -- List of nodes that must be somewhere in the
 						-- vicinity in order for the plant to spawn. Can also
 						-- be a string with a single node name.  If not
@@ -270,8 +270,8 @@ biome = {
 	depth = num,		-- How deep/thick of a layer the spawned-on node must
 						-- be.  Typically used for water.
 	min_elevation = num, -- Minimum elevation in meters/nodes.  Defaults to
-						-- -31000 (unlimited).
-	max_elevation = num, -- Max elevation.  Defaults to +31000 (unlimited).
+						-- -16 meters.
+	max_elevation = num, -- Max elevation.  Defaults to +48m.
 	near_nodes = {table}, -- what nodes must be in the general vicinity of the
 						-- object being spawned.
 	near_nodes_size = num, -- how wide of a search area to look for the nodes
