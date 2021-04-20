@@ -226,7 +226,10 @@ function unifieddyes.show_airbrush_form(player)
 
 	local last_right_click = unifieddyes.player_last_right_clicked[player_name]
 	if last_right_click then
-		if last_right_click.def and last_right_click.def.palette then
+		if not last_right_click.def then
+			last_right_click.def = {}
+			last_right_click.undef = true
+		elseif last_right_click.def.palette then
 			if last_right_click.def.palette == "unifieddyes_palette_colorwallmounted.png" then
 				nodepalette = "wallmounted"
 			elseif last_right_click.def.palette == "unifieddyes_palette_extended.png" then
@@ -240,7 +243,9 @@ function unifieddyes.show_airbrush_form(player)
 		end
 	end
 
-	if not last_right_click.def.groups
+	if last_right_click.undef then
+		t[#t+1] = "label[0.5,8.25;"..S("(Right-clicked an undefined node, showing all colors)").."]"
+	elseif not last_right_click.def.groups
 	  or not last_right_click.def.groups.ud_param2_colorable
 	  or not last_right_click.def.palette
 	  or not string.find(last_right_click.def.palette, "unifieddyes_palette_") then
