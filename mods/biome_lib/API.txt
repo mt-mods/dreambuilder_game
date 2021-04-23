@@ -1,30 +1,28 @@
 This document describes the Plantlife mod API.
 
-Last revision: 2015-02-16
+Last revision: 2021-04-20
 
 
 =========
 Functions
 =========
 
-There are three main functions defined by the main "biome_lib" mod:
+There are two main functions defined by this mod:
 
-spawn_on_surfaces()
-register_generate_plant()
-grow_plants()
+biome_lib.register_active_spawner()
+biome_lib.register_on_generate()
 
 There are also several internal, helper functions that can be called if so
 desired, but they are not really intended for use by other mods and may change
 at any time.  They are briefly described below these main functions, but see
 init.lua for details.
 
-Most functions in plants lib are declared locally to avoid namespace
-collisions with other mods.  They are accessible via the "biome_lib" method,
-e.g. biome_lib:spawn_on_surfaces() and so forth.
+Most functions in biome_lib are either declared locally or kept within its
+own namespace to avoid collisions/conflicts with other mods.
 
 =====
-spawn_on_surfaces(biome)
-spawn_on_surfaces(sdelay, splant, sradius, schance, ssurface, savoid)
+biome_lib.register_active_spawner(biome)
+biome_lib.register_active_spawner(sdelay, splant, sradius, schance, ssurface, savoid)
 
 This first function is an ABM-based spawner function originally created as
 part of Ironzorg's flowers mod.  It has since been largely extended and
@@ -220,7 +218,7 @@ checking is disabled.  Same holds true for the nneighbors bit above that.
 
 
 =====
-biome_lib:register_generate_plant(biome, nodes_or_function_or_treedef)
+biome_lib.register_on_generate(biome, nodes_or_function_or_treedef)
 
 To register an object to be spawned at mapgen time rather than via an ABM,
 call this function with two parameters:  a table with your object's biome
@@ -334,18 +332,17 @@ will be called in the form:
 
 	somefunction(pos)
 
-
 =====
-biome_lib:grow_plants(options)
+biome_lib.update_plant(options)
 
-The third function, grow_plants() is used to turn the spawned nodes above
-into something else over time.  This function has no return value, and accepts
-a biome definition table as the only parameter.  These are defined like so:
+This third function is used to turn the spawned nodes above into something
+else over time.  This function has no return value, and accepts a biome
+definition table as the only parameter.  These are defined like so:
 
 options = {
 	label = string,		-- set this to identify the ABM for Minetest's
 						-- profiler.  If not set, biome_lib will set it to 
-						-- "biome_lib grow_plants(): " appended with the node
+						-- "biome_lib.update_plant(): " appended with the node
 						-- in grow_plant (or the first item if it's a table)
 	grow_plant = "string" or {table}, -- Name(s) of the node(s) to be grown
 						-- into something else.  This value is passed to the
@@ -426,7 +423,7 @@ and grow_result is ignored.
 
 
 =====
-find_adjacent_wall(pos, verticals, randomflag)
+biome_lib.find_adjacent_wall(pos, verticals, randomflag)
 
 Of the few helper functions, this one expects a position parameter and a table
 with the list of nodes that should be considered as walls.  The code will
@@ -438,7 +435,7 @@ random wall it finds adjacent to the target position.  Defaults to false if
 not specified.
 
 =====
-is_node_loaded(pos)
+biome_lib.is_node_loaded(pos)
 
 This acts as a wrapper for the minetest.get_node_or_nil(node_pos)
 function and accepts a single position parameter.  Returns true if the node in
@@ -446,7 +443,7 @@ question is already loaded, or false if not.
 
 
 =====
-dbg(string, level)
+biome_lib.dbg(string, level)
 
 This is a simple debug output function which takes one string parameter.  It
 just checks if DEBUG is true and outputs the phrase "[Plantlife] " followed by
@@ -463,8 +460,8 @@ ought always be shown, 1 for errors, 2 for warnings, 3 for info, 4 for verbose
 spammy stuff.
 
 =====
-biome_lib:generate_tree(pos, treemodel)
-biome_lib:grow_tree(pos, treemodel)
+biome_lib.generate_ltree(pos, treemodel)
+biome_lib.grow_ltree(pos, treemodel)
 
 In the case of the growing code and the mapgen-based tree generator code, 
 generating a tree is done via the above two calls, which in turn immediately
@@ -472,13 +469,13 @@ call the usual spawn_tree() functions.  This rerouting exists as a way for
 other mods to hook into biome_lib's tree-growing functions in general,
 perhaps to execute something extra whenever a tree is spawned.
 
-biome_lib:generate_tree(pos, treemodel) is called any time a tree is spawned
+biome_lib.generate_ltree(pos, treemodel) is called any time a tree is spawned
 at map generation time.  'pos' is the position of the block on which the tree
 is to be placed.  'treemodel' is the standard L-Systems tree definition table
 expected by the spawn_tree() function.  Refer to the 'trunk' field in that
 table to derive the name of the tree being spawned.
 
-biome_lib:grow_tree(pos, treemodel) does the same sort of thing whenever a 
+biome_lib.grow_ltree(pos, treemodel) does the same sort of thing whenever a 
 tree is spawned within the abm-based growing code, for example when growing a
 sapling into a tree.
 
@@ -486,22 +483,6 @@ sapling into a tree.
 =====
 There are other, internal helper functions that are not meant for use by other
 mods.  Don't rely on them, as they are subject to change without notice.
-
-
-===============
-Global Settings
-===============
-
-Set this to true if you want the mod to spam your console with debug info :-)
-
-	plantlife_debug = false
-
-To slow down the playback of the queue (e.g. for really slow machines where
-the 0.2 second max limiter isn't enough), set:
-
-	biome_lib_queue_run_ratio = <some value 1 to 100>
-
-Default is 100 (basically percent of maximum runtime)
 
 ======================
 Fertile Ground Mapping
@@ -514,7 +495,6 @@ Perlin noise used.
 The first one is for a "fertile ground" layer, which I tend to refer to as the
 generic "stuff can potentially grow here" layer.  Its values are hard-coded:
 
-	biome_lib.plantlife_seed_diff = 329
 	perlin_octaves = 3
 	perlin_persistence = 0.6
 	perlin_scale = 100
@@ -611,3 +591,66 @@ See settingtypes.txt for a list.  Any item listed there can be changed either
 by adding it to your minetest.conf, or by using the "all settings" menu in
 Minetest, whatever's appropriate for your particular setup.
 
+==================
+Engine Decorations
+==================
+
+If a call to biome_lib.register_on_generate() contains items and biome
+definition settings that are suitable, biome_lib will pass that call on to the
+engine instead, to use its built-in decorations feature, since it'll be much
+faster than Lua.
+
+For this to work, first the item to be added must either be a node, or a
+table with a list of nodes that biome_lib would normally pick from randomly.
+That is to say, you cannot specify an L-tree or a function here, as the engine
+does not support that sort of thing (biome_lib will just switch to its normal
+handling if you do).
+
+Second, these biome definition items must not be present:
+
+* below_nodes
+* avoid_nodes
+* avoid_radius
+* neighbors
+* ncount
+* depth
+* near_nodes_size
+* near_nodes_vertical
+* temp_min
+* temp_max
+* verticals_list
+* delete_above
+* delete_above_surround
+
+The plantlife_limit definition item is ignored when checking if a particular
+call can be routed to the engine.
+
+The call given to the engine will use the remaining biome definition items in
+the following manner:
+
+deco_type =		"simple",
+flags =			"all_floors"
+decoration =	node or table with node list
+place_on =		surface
+y_min =			min_elevation
+y_max =			max_elevation
+spawn_by =		near_nodes
+num_spawn_by = 	near_nodes_count
+param2 = 		\_ set to the range specified by the biome definition's
+param2_max = 	/  random_facedir table, if present, otherwise omitted
+noise_params = {
+	octaves = biome_lib.fertile_perlin_octaves,
+	persist = biome_lib.fertile_perlin_persistence * (250/biome_lib.fertile_perlin_scale),
+	scale = ((100-biome.rarity)/100) * (math.min(biome.max_count, 6400)/6400),
+	seed = biome.seed_diff,
+	offset = 0,
+	spread = {x = 100, y = 100, z = 100},
+	lacunarity = 2,
+	flags = "absvalue"
+}
+
+If the biome definition's check_air setting is false, "force_placement" is
+added to the decoration's flags setting.
+
+If the biome def's spawn_replace_node is set to true, the decoration's
+place_offset_y is set to -1 (otherwise it is omitted).
