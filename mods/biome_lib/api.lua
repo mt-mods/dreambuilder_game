@@ -51,7 +51,7 @@ end
 function biome_lib.dbg(msg, level)
 	local l = tonumber(level) or 0
 	if biome_lib.debug_log_level >= l then
-		print(os.date("%F %H:%M:%S").." [Biome Lib]: "..msg)
+		print(os.date("%Y-%m-%d %H:%M:%S").." [Biome Lib]: "..msg)
 		minetest.log("verbose", "[Biome Lib]: "..msg)
 	end
 end
