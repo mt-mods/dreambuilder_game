@@ -570,7 +570,7 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-        output = "homedecor:kitchen_cabinet",
+        output = "homedecor:kitchen_cabinet_colorable",
         recipe = {
 		{"group:wood", "group:stick", "group:wood", },
 		{"group:wood", "group:stick", "group:wood", },
@@ -579,53 +579,53 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-        output = "homedecor:kitchen_cabinet_steel",
+        output = "homedecor:kitchen_cabinet_colorable_steel",
         recipe = {
 			{"default:steel_ingot", "default:steel_ingot", "default:steel_ingot"},
-			{"", "homedecor:kitchen_cabinet", ""},
+			{"", "homedecor:kitchen_cabinet_colorable", ""},
 	}
 })
 
 minetest.register_craft({
-        output = "homedecor:kitchen_cabinet_steel",
+        output = "homedecor:kitchen_cabinet_colorable_steel",
         recipe = {
 			{"moreblocks:slab_steelblock_1"},
-			{ "homedecor:kitchen_cabinet" },
+			{ "homedecor:kitchen_cabinet_colorable" },
 	}
 })
 
 minetest.register_craft({
-        output = "homedecor:kitchen_cabinet_marble",
+        output = "homedecor:kitchen_cabinet_colorable_marble",
         recipe = {
 			{"building_blocks:slab_marble"},
-			{"homedecor:kitchen_cabinet"},
+			{"homedecor:kitchen_cabinet_colorable"},
 	}
 })
 
 minetest.register_craft({
-        output = "homedecor:kitchen_cabinet_marble",
+        output = "homedecor:kitchen_cabinet_colorable_marble",
         recipe = {
 			{"technic:slab_marble_1"},
-			{"homedecor:kitchen_cabinet"},
+			{"homedecor:kitchen_cabinet_colorable"},
 	}
 })
 
 minetest.register_craft({
-        output = "homedecor:kitchen_cabinet_granite",
+        output = "homedecor:kitchen_cabinet_colorable_granite",
         recipe = {
 			{"technic:slab_granite_1"},
-			{"homedecor:kitchen_cabinet"},
+			{"homedecor:kitchen_cabinet_colorable"},
 	}
 })
 
 minetest.register_craft({
 	type = "shapeless",
-        output = "homedecor:kitchen_cabinet_half 2",
-        recipe = { "homedecor:kitchen_cabinet" }
+        output = "homedecor:kitchen_cabinet_colorable_half 2",
+        recipe = { "homedecor:kitchen_cabinet_colorable" }
 })
 
 minetest.register_craft({
-        output = "homedecor:kitchen_cabinet_with_sink",
+        output = "homedecor:kitchen_cabinet_colorable_with_sink",
         recipe = {
 		{"group:wood", "default:steel_ingot", "group:wood", },
 		{"group:wood", "default:steel_ingot", "group:wood", },

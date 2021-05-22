@@ -19,7 +19,7 @@ local colours = {
 	{"red",        "Red",        "#ff000070"},
 	{"violet",     "Violet",     "#2000c970"},
 	{"white",      "White",      "#abababc0"},
-	{"yellow",     "Yellow",     "#e3ff0070"},
+	{"yellow",     "Yellow",     "#e3ff0070"}
 }
 
 
@@ -48,7 +48,7 @@ local function cblocks_stairs(nodename, def)
 				description = def.description,
 				tiles = def.tiles,
 				groups = def.groups,
-				sounds = def.sounds,
+				sounds = def.sounds
 			})
 
 		elseif stairs_mod and stairs
@@ -77,20 +77,20 @@ end
 
 local function set_alias(col, name)
 
-minetest.register_alias("stairs:stair_" .. col .. "_" .. name,
-		"stairs:stair_" .. name .. "_" .. col)
+	minetest.register_alias("stairs:stair_" .. col .. "_" .. name,
+			"stairs:stair_" .. name .. "_" .. col)
 
-minetest.register_alias("stairs:slab_" .. col .. "_" .. name,
-		"stairs:slab_" .. name .. "_" .. col)
+	minetest.register_alias("stairs:slab_" .. col .. "_" .. name,
+			"stairs:slab_" .. name .. "_" .. col)
 
-minetest.register_alias("stairs:stair_inner_" .. col .. "_" .. name,
-		"stairs:stair_inner_" .. name .. "_" .. col)
+	minetest.register_alias("stairs:stair_inner_" .. col .. "_" .. name,
+			"stairs:stair_inner_" .. name .. "_" .. col)
 
-minetest.register_alias("stairs:stair_outer_" .. col .. "_" .. name,
-		"stairs:stair_outer_" .. name .. "_" .. col)
+	minetest.register_alias("stairs:stair_outer_" .. col .. "_" .. name,
+			"stairs:stair_outer_" .. name .. "_" .. col)
 
-minetest.register_alias("stairs:slope_" .. col .. "_" .. name,
-		"stairs:slope_" .. name .. "_" .. col)
+	minetest.register_alias("stairs:slope_" .. col .. "_" .. name,
+			"stairs:slope_" .. name .. "_" .. col)
 end
 
 
@@ -102,6 +102,7 @@ cblocks_stairs("cblocks:stonebrick_" .. colours[i][1], {
 	description = colours[i][2] .. " Stone Brick",
 	tiles = {"default_stone_brick.png^[colorize:" .. colours[i][3]},
 	paramtype = "light",
+	use_texture_alpha = "opaque",
 	is_ground_content = false,
 	groups = {cracky = 2, stone = 1},
 	sounds = default.node_sound_stone_defaults(),
@@ -110,7 +111,7 @@ cblocks_stairs("cblocks:stonebrick_" .. colours[i][1], {
 minetest.register_craft({
 	output = "cblocks:stonebrick_".. colours[i][1] .. " 2",
 	recipe = {
-		{"default:stonebrick","default:stonebrick", "dye:" .. colours[i][1]},
+		{"default:stonebrick","default:stonebrick", "dye:" .. colours[i][1]}
 	}
 })
 
@@ -125,10 +126,10 @@ if stairs_mod and stairs and stairs.mod and stairs.mod == "redo" then
 		drawtype = "glasslike",
 		paramtype = "light",
 		sunlight_propagates = true,
-		use_texture_alpha = true,
+		use_texture_alpha = "blend",
 		is_ground_content = false,
 		groups = {cracky = 3, oddly_breakable_by_hand = 3},
-		sounds = default.node_sound_glass_defaults(),
+		sounds = default.node_sound_glass_defaults()
 	})
 
 	set_alias(colours[i][1], "glass")
@@ -139,10 +140,10 @@ else
 		drawtype = "glasslike",
 		paramtype = "light",
 		sunlight_propagates = true,
-		use_texture_alpha = true,
+		use_texture_alpha = "blend",
 		is_ground_content = false,
 		groups = {cracky = 3, oddly_breakable_by_hand = 3},
-		sounds = default.node_sound_glass_defaults(),
+		sounds = default.node_sound_glass_defaults()
 	})
 end
 
@@ -166,9 +167,10 @@ cblocks_stairs("cblocks:wood_" .. col, {
 	description = colours[i][2] .. " Wooden Planks",
 	tiles = {"default_wood.png^[colorize:" .. colours[i][3]},
 	paramtype = "light",
+	use_texture_alpha = "opaque",
 	is_ground_content = false,
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 3, wood = 1},
-	sounds = default.node_sound_wood_defaults(),
+	sounds = default.node_sound_wood_defaults()
 })
 
 set_alias(colours[i][1], "wood")
@@ -176,7 +178,7 @@ set_alias(colours[i][1], "wood")
 minetest.register_craft({
 	output = "cblocks:wood_".. col .. " 2",
 	recipe = {
-		{"group:wood","group:wood", "dye:" .. colours[i][1]},
+		{"group:wood","group:wood", "dye:" .. colours[i][1]}
 	}
 })
 
@@ -189,7 +191,7 @@ lucky_block:add_blocks({
 	{"dro", {"cblocks:wood_"}, 10, true},
 	{"dro", {"cblocks:stonebrick_"}, 10, true},
 	{"dro", {"cblocks:glass_"}, 10, true},
-	{"exp"},
+	{"exp"}
 })
 end
 

@@ -177,8 +177,14 @@ load_home()
 function ui.set_home(player, pos)
 	local player_name = player:get_player_name()
 	ui.home_pos[player_name] = vector.round(pos)
+
 	-- save the home data from the table to the file
 	local output = io.open(ui.home_filename, "w")
+	if not output then
+		minetest.log("warning", "[unified_inventory] Failed to save file: "
+			.. ui.home_filename)
+		return
+	end
 	for k, v in pairs(ui.home_pos) do
 		output:write(v.x.." "..v.y.." "..v.z.." "..k.."\n")
 	end

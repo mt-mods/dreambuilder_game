@@ -7,6 +7,7 @@ minetest.override_item("default:water_flowing", { sounds = {} })
 minetest.override_item("default:river_water_source", { sounds = {} })
 minetest.override_item("default:river_water_flowing", { sounds = {} })
 
+
 -- settings
 local SOUNDVOLUME = 1.0
 local MUSICVOLUME = 1.0
@@ -18,8 +19,6 @@ local sound_sets = {} -- all the sounds and their settings
 local sound_set_order = {} -- needed because pairs loops randomly through tables
 local set_nodes = {} -- all the nodes needed for sets
 
-
--- global functions
 
 -- add set to list
 ambience.add_set = function(set_name, def)
@@ -73,10 +72,7 @@ end
 
 -- return set from list using name
 ambience.get_set = function(set_name)
-
-	if sound_sets[set_name] then
-		return sound_sets[set_name]
-	end
+	return sound_sets[set_name]
 end
 
 
@@ -100,11 +96,22 @@ ambience.del_set = function(set_name)
 end
 
 
+-- setup table when player joins
+minetest.register_on_joinplayer(function(player)
+	playing[player:get_player_name()] = {}
+end)
+
+-- remove table when player leaves
+minetest.register_on_leaveplayer(function(player)
+	playing[player:get_player_name()] = nil
+end)
+
+
 -- plays music and selects sound set
 local get_ambience = function(player, tod, name)
 
 	-- play server or local music if available
-	if play_music and playing[name] then
+	if play_music then
 
 		-- play at midnight
 		if tod >= 0.0 and tod <= 0.01 then
@@ -112,7 +119,7 @@ local get_ambience = function(player, tod, name)
 			if not playing[name].music then
 
 				playing[name].music = minetest.sound_play("ambience_music", {
-					to_player = player:get_player_name(),
+					to_player = name,
 					gain = MUSICVOLUME
 				})
 			end
@@ -123,19 +130,18 @@ local get_ambience = function(player, tod, name)
 		end
 	end
 
-
 	-- get foot and head level nodes at player position
 	local pos = player:get_pos() ; if not pos then return end
 
 	pos.y = pos.y + 1.4 -- head level
 
-	local nod_head = pplus and name and playerplus[name].nod_head or
-			minetest.get_node(pos).name
+	local nod_head = pplus and name and playerplus[name]
+			and playerplus[name].nod_head or minetest.get_node(pos).name
 
 	pos.y = pos.y - 1.2 -- foot level
 
-	local nod_feet = pplus and name and playerplus[name].nod_feet or
-			minetest.get_node(pos).name
+	local nod_feet = pplus and name and playerplus[name]
+			and playerplus[name].nod_feet or minetest.get_node(pos).name
 
 	pos.y = pos.y - 0.2 -- reset pos
 
@@ -168,6 +174,8 @@ local get_ambience = function(player, tod, name)
 			end
 		end
 	end
+
+	return nil, nil -- ADDED
 end
 
 
@@ -198,11 +206,10 @@ minetest.register_globalstep(function(dtime)
 
 --print(string.format("elapsed time: %.4f\n", os.clock() - t1))
 
-		ok = true -- everything starts off ok
+		ok = playing[player_name] -- everything starts off ok if player around
 
 		-- are we playing something already?
-		if playing[player_name]
-		and playing[player_name].handler then
+		if ok and playing[player_name].handler then
 
 			-- stop current sound if another set active or gain changed
 			if playing[player_name].set ~= set_name
@@ -213,8 +220,8 @@ minetest.register_globalstep(function(dtime)
 				minetest.sound_stop(playing[player_name].handler)
 
 				playing[player_name].set = nil
-				playing[player_name].handler = nil
 				playing[player_name].gain = nil
+				playing[player_name].handler = nil
 			else
 				ok = false -- sound set still playing, skip new sound
 			end
@@ -246,9 +253,9 @@ minetest.register_globalstep(function(dtime)
 --print("-- current handler", handler)
 
 				-- set what player is currently listening to
-				playing[player_name] = {
-					set = set_name, gain = MORE_GAIN, handler = handler
-				}
+				playing[player_name].set = set_name
+				playing[player_name].gain = MORE_GAIN
+				playing[player_name].handler = handler
 
 				-- set timer to stop sound
 				minetest.after(ambience.length, function()
@@ -264,10 +271,10 @@ minetest.register_globalstep(function(dtime)
 
 						minetest.sound_stop(handler)
 
-						-- reset player variables and backup handler
-						playing[player_name] = {
-							set = nil, gain = nil, handler = nil
-						}
+						-- reset player variables
+						playing[player_name].set = nil
+						playing[player_name].gain = nil
+						playing[player_name].handler = nil
 					end
 				end)
 			end
@@ -290,7 +297,7 @@ minetest.register_chatcommand("svol", {
 		if SOUNDVOLUME > 1.0 then SOUNDVOLUME = 1.0 end
 
 		return true, "Sound volume set to " .. SOUNDVOLUME
-	end,
+	end
 })
 
 
@@ -313,7 +320,7 @@ minetest.register_chatcommand("mvol", {
 		if MUSICVOLUME > 1.0 then MUSICVOLUME = 1.0 end
 
 		return true, "Music volume set to " .. MUSICVOLUME
-	end,
+	end
 })
 
 

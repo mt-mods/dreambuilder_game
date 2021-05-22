@@ -32,7 +32,7 @@ ambience.add_set("splash", {
 	frequency = 1000,
 
 	sounds = {
-		{name = "swim_splashing", length = 3},
+		{name = "swim_splashing", length = 3}
 	},
 
 	sound_check = function(def)

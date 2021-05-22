@@ -47,7 +47,7 @@ minetest.register_craft({
 	},
 	replacements = {
 		{"group:food_mortar_pestle", "farming:mortar_pestle"},
-		{"group:food_baking_tray", "farming:baking_tray"},
+		{"group:food_baking_tray", "farming:baking_tray"}
 	}
 })
 
@@ -72,9 +72,9 @@ minetest.register_node("farming:bottle_ethanol", {
 minetest.register_craft( {
 	output = "farming:bottle_ethanol",
 	recipe = {
-		{ "vessels:glass_bottle", "group:food_corn", "group:food_corn"},
-		{ "group:food_corn", "group:food_corn", "group:food_corn"},
-		{ "group:food_corn", "group:food_corn", "group:food_corn"}
+		{"group:food_corn", "group:food_corn", "group:food_corn"},
+		{"group:food_corn", "vessels:glass_bottle", "group:food_corn"},
+		{"group:food_corn", "group:food_corn", "group:food_corn"}
 	}
 })
 
@@ -82,7 +82,7 @@ minetest.register_craft({
 	type = "fuel",
 	recipe = "farming:bottle_ethanol",
 	burntime = 80,
-	replacements = {{ "farming:bottle_ethanol", "vessels:glass_bottle"}}
+	replacements = {{"farming:bottle_ethanol", "vessels:glass_bottle"}}
 })
 
 -- corn definition

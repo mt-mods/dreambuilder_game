@@ -63,6 +63,11 @@ Created by VanessaE (License: CC BY 3.0):
   farming_cotton_7.png
   farming_cotton_8.png
 
+Created by 7eventy7 (https://www.planetminecraft.com/member/7eventy7/)
+  farming_melon_top.png
+  farming_melon_side.png
+  farming_melon_bottom.png
+
 Created by Doc (License: CC BY 3.0):
   farming_cucumber.png
   farming_cucumber_1.png
@@ -164,3 +169,7 @@ Created by Felfa (CC0)
 
 Created by gorlock (CC0)
   farming_salt_crystal.png
+
+Created by sirrobzeroone (CC0)
+  farming_gyoza.png
+  farming_pineapple_ring.png

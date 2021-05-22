@@ -21,9 +21,8 @@ minetest.register_craftitem("farming:peas", {
 })
 
 minetest.register_craft({
-	type = "shapeless",
 	output = "farming:peas",
-	recipe = {"farming:pea_pod"}
+	recipe = {{"farming:pea_pod"}}
 })
 
 -- pea soup
@@ -35,9 +34,12 @@ minetest.register_craftitem("farming:pea_soup", {
 })
 
 minetest.register_craft({
-	type = "shapeless",
 	output = "farming:pea_soup",
-	recipe = {"group:food_peas", "group:food_peas", "group:food_bowl"}
+	recipe = {
+		{"group:food_peas"},
+		{"group:food_peas"},
+		{"group:food_bowl"}
+	}
 })
 
 local def = {

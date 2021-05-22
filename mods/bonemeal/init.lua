@@ -618,51 +618,51 @@ minetest.register_craft({
 
 -- bonemeal (from bone)
 minetest.register_craft({
-	type = "shapeless",
+--	type = "shapeless",
 	output = "bonemeal:bonemeal 2",
-	recipe = {"group:bone"}
+	recipe = {{"group:bone"}}
 })
 
 -- bonemeal (from player bones)
 minetest.register_craft({
-	type = "shapeless",
+--	type = "shapeless",
 	output = "bonemeal:bonemeal 4",
-	recipe = {"bones:bones"}
+	recipe = {{"bones:bones"}}
 })
 
 -- bonemeal (from coral skeleton)
 minetest.register_craft({
-	type = "shapeless",
+--	type = "shapeless",
 	output = "bonemeal:bonemeal 2",
-	recipe = {"default:coral_skeleton"}
+	recipe = {{"default:coral_skeleton"}}
 })
 
 -- mulch
 minetest.register_craft({
-	type = "shapeless",
+--	type = "shapeless",
 	output = "bonemeal:mulch 4",
 	recipe = {
-		"group:tree", "group:leaves", "group:leaves",
-		"group:leaves", "group:leaves", "group:leaves",
-		"group:leaves", "group:leaves", "group:leaves"
+		{"group:tree", "group:leaves", "group:leaves"},
+		{"group:leaves", "group:leaves", "group:leaves"},
+		{"group:leaves", "group:leaves", "group:leaves"}
 	}
 })
 
 minetest.register_craft({
-	type = "shapeless",
+--	type = "shapeless",
 	output = "bonemeal:mulch",
 	recipe = {
-		"group:seed", "group:seed", "group:seed",
-		"group:seed", "group:seed", "group:seed",
-		"group:seed", "group:seed", "group:seed"
+		{"group:seed", "group:seed", "group:seed"},
+		{"group:seed", "group:seed", "group:seed"},
+		{"group:seed", "group:seed", "group:seed"}
 	}
 })
 
 -- fertiliser
 minetest.register_craft({
-	type = "shapeless",
+--	type = "shapeless",
 	output = "bonemeal:fertiliser 2",
-	recipe = {"bonemeal:bonemeal", "bonemeal:mulch"}
+	recipe = {{"bonemeal:bonemeal", "bonemeal:mulch"}}
 })
 
 

@@ -25,9 +25,8 @@ minetest.register_craft({
 })
 
 minetest.register_craft({
-	type = "shapeless",
 	output = "farming:pumpkin_slice 4",
-	recipe = {"farming:pumpkin", "farming:cutting_board"},
+	recipe = {{"farming:cutting_board", "farming:pumpkin"}},
 	replacements = {{"farming:cutting_board", "farming:cutting_board"}}
 })
 
@@ -122,8 +121,9 @@ minetest.register_craftitem("farming:pumpkin_dough", {
 
 minetest.register_craft({
 	output = "farming:pumpkin_dough",
-	type = "shapeless",
-	recipe = {"group:food_flour", "group:food_pumpkin_slice", "group:food_pumpkin_slice"}
+	recipe = {
+		{"group:food_pumpkin_slice", "group:food_flour", "group:food_pumpkin_slice"}
+	}
 })
 
 minetest.register_craft({

@@ -81,9 +81,7 @@ minetest.register_craftitem("farming:beans", {
 -- beans can be used for green dye
 minetest.register_craft({
 	output = "dye:green",
-	recipe = {
-		{"farming:beans"}
-	}
+	recipe = {{"farming:beans"}}
 })
 
 -- beanpole

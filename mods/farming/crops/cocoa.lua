@@ -75,9 +75,7 @@ minetest.register_craftitem("farming:cocoa_beans", {
 
 minetest.register_craft( {
 	output = "dye:brown 2",
-	recipe = {
-		{ "farming:cocoa_beans" }
-	}
+	recipe = {{"farming:cocoa_beans"}}
 })
 
 -- chocolate cookie
@@ -128,9 +126,7 @@ minetest.register_craft({
 
 minetest.register_craft({
 	output = "farming:chocolate_dark 9",
-	recipe = {
-		{"farming:chocolate_block"}
-	}
+	recipe = {{"farming:chocolate_block"}}
 })
 
 -- cocoa definition

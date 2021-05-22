@@ -76,9 +76,7 @@ minetest.register_craftitem("farming:grapes", {
 -- grapes can be used for violet dye
 minetest.register_craft({
 	output = "dye:violet",
-	recipe = {
-		{"farming:grapes"}
-	}
+	recipe = {{"farming:grapes"}}
 })
 
 -- trellis
