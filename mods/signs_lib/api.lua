@@ -4,6 +4,8 @@ local S = signs_lib.gettext
 
 local function get_sign_formspec() end
 
+signs_lib.glow_item = "basic_materials:energy_crystal_simple"
+
 signs_lib.lbm_restore_nodes = {}
 signs_lib.old_fenceposts = {}
 signs_lib.old_fenceposts_replacement_signs = {}
@@ -180,7 +182,7 @@ function signs_lib.delete_objects(pos)
 	end
 end
 
-function signs_lib.spawn_entity(pos, texture)
+function signs_lib.spawn_entity(pos, texture, glow)
 	local node = minetest.get_node(pos)
 	local def = minetest.registered_items[node.name]
 	if not def or not def.entity_info then return end
@@ -229,6 +231,10 @@ function signs_lib.spawn_entity(pos, texture)
 		end
 	end
 
+	if glow ~= "" then
+		obj:set_properties( {glow = tonumber(glow * 5)} )
+	end
+
 	if yaw then
 		obj:set_rotation({x = pitch, y = yaw, z=0})
 
@@ -247,14 +253,15 @@ function signs_lib.spawn_entity(pos, texture)
 	end
 end
 
-function signs_lib.set_obj_text(pos, text)
+function signs_lib.set_obj_text(pos, text, glow)
 	local split = signs_lib.split_lines_and_words
 	local text_ansi = Utf8ToAnsi(text)
 	local n = minetest.registered_nodes[minetest.get_node(pos).name]
 	signs_lib.delete_objects(pos)
 	-- only create sign entity for actual text
 	if text_ansi and text_ansi ~= "" then
-		signs_lib.spawn_entity(pos, signs_lib.make_sign_texture(split(text_ansi), pos) )
+		signs_lib.spawn_entity(pos,
+				signs_lib.make_sign_texture(split(text_ansi), pos), glow)
 	end
 end
 
@@ -700,13 +707,19 @@ end
 
 function signs_lib.rightclick_sign(pos, node, player, itemstack, pointed_thing)
 
-	if not signs_lib.can_modify(pos, player) then return end
+	if not player or not signs_lib.can_modify(pos, player) then return end
 
 	player:get_meta():set_string("signslib:pos", minetest.pos_to_string(pos))
 	minetest.show_formspec(player:get_player_name(), "signs_lib:sign", get_sign_formspec(pos, node.name))
 end
 
 function signs_lib.destruct_sign(pos)
+	local meta = minetest.get_meta(pos)
+	local glow = meta:get_string("glow")
+	if glow ~= "" and not minetest.is_creative_enabled("") then
+		local num = tonumber(glow)
+		minetest.add_item(pos, ItemStack(signs_lib.glow_item .. " " .. num))
+	end
 	signs_lib.delete_objects(pos)
 end
 
@@ -718,6 +731,30 @@ local function make_infotext(text)
 		table.insert(lines2, (table.concat(line, " "):gsub("#[0-9a-fA-F]", ""):gsub("##", "#")))
 	end
 	return table.concat(lines2, "\n")
+end
+
+function signs_lib.glow(pos, node, puncher)
+	local name = puncher:get_player_name()
+	if minetest.is_protected(pos, name) then
+		return
+	end
+	local tool = puncher:get_wielded_item()
+	if tool:get_name() == signs_lib.glow_item then
+		local meta = minetest.get_meta(pos)
+		local glow = tonumber(meta:get_string("glow"))
+		if not glow then
+			glow = 1
+		elseif glow < 3 then
+			glow = glow + 1
+		else
+			return -- already at brightest level
+		end
+		if not minetest.is_creative_enabled(name) then
+			tool:take_item()
+			puncher:set_wielded_item(tool)
+		end
+		meta:set_string("glow", glow)
+	end
 end
 
 function signs_lib.update_sign(pos, fields)
@@ -737,7 +774,9 @@ function signs_lib.update_sign(pos, fields)
 
 	meta:set_string("text", text)
 	meta:set_string("infotext", ownstr..make_infotext(text).." ")
-	signs_lib.set_obj_text(pos, text)
+
+	local glow = meta:get_string("glow")
+	signs_lib.set_obj_text(pos, text, glow)
 end
 
 function signs_lib.can_modify(pos, player)
@@ -902,6 +941,23 @@ function signs_lib.register_fence_with_sign()
 	minetest.log("warning", "[signs_lib] ".."Attempt to call no longer used function signs_lib.register_fence_with_sign()")
 end
 
+local use_glow = function(pos, node, puncher, pointed_thing)
+	if puncher then -- if e.g. a machine tries to punch; only a real person should change the lighting
+		signs_lib.glow(pos, node, puncher)
+	end
+	return signs_lib.update_sign(pos)
+end
+
+local glow_drops = function(pos, oldnode, oldmetadata, digger)
+	if minetest.is_creative_enabled(digger:get_player_name()) then
+		return
+	end
+	local glow = oldmetadata and oldmetadata.fields and oldmetadata.fields.glow
+	if glow then
+		minetest.add_item(pos, ItemStack(signs_lib.glow_item .. " " .. glow))
+	end
+end
+
 function signs_lib.register_sign(name, raw_def)
 	local def = table.copy(raw_def)
 
@@ -917,9 +973,16 @@ function signs_lib.register_sign(name, raw_def)
 	def.after_place_node = raw_def.after_place_node or signs_lib.after_place_node
 
 	if raw_def.entity_info then
+
+		if def.allow_glow ~= false then
+			def.on_punch        = raw_def.on_punch            or use_glow
+			def.after_dig_node  = raw_def.after_dig_node      or glow_drops
+		else
+			def.on_punch        = raw_def.on_punch            or signs_lib.update_sign
+		end
+
 		def.on_rightclick       = raw_def.on_rightclick       or signs_lib.rightclick_sign
 		def.on_destruct         = raw_def.on_destruct         or signs_lib.destruct_sign
-		def.on_punch            = raw_def.on_punch            or signs_lib.update_sign
 		def.number_of_lines     = raw_def.number_of_lines     or signs_lib.standard_lines
 		def.horiz_scaling       = raw_def.horiz_scaling       or signs_lib.standard_hscale
 		def.vert_scaling        = raw_def.vert_scaling        or signs_lib.standard_vscale
