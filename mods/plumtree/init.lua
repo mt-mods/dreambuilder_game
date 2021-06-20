@@ -236,6 +236,25 @@ default.register_leafdecay({
 	radius = 3,
 })
 
+-- Fence
+if minetest.settings:get_bool("cool_fences", true) then
+	local fence = {
+		description = S("Plum Tree Wood Fence"),
+		texture =  "plumtree_wood.png",
+		material = "plumtree:wood",
+		groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
+		sounds = default.node_sound_wood_defaults(),
+	}
+	default.register_fence("plumtree:fence", table.copy(fence)) 
+	fence.description = S("Plum Tree Fence Rail")
+	default.register_fence_rail("plumtree:fence_rail", table.copy(fence))
+	
+	if minetest.get_modpath("doors") ~= nil then
+		fence.description = S("Plum Tree Fence Gate")
+		doors.register_fencegate("plumtree:gate", table.copy(fence))
+	end
+end
+
 --Stairs
 
 if minetest.get_modpath("stairs") ~= nil then
@@ -248,6 +267,16 @@ if minetest.get_modpath("stairs") ~= nil then
 		S("Plum Tree Slab"),
 		default.node_sound_wood_defaults()
 	)
+end
+
+-- stairsplus/moreblocks
+if minetest.get_modpath("moreblocks") then
+	stairsplus:register_all("plumtree", "wood", "plumtree:wood", {
+		description = "Plum Tree",
+		tiles = {"plumtree_wood.png"},
+		groups = {choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
+		sounds = default.node_sound_wood_defaults(),
+	})
 end
 
 --Support for bonemeal

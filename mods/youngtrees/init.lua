@@ -18,7 +18,7 @@ minetest.register_node("youngtrees:bamboo", {
 		{-0.058251,-0.500000,0.181227,0.066749,0.500000,0.342500}, --NodeBox 3
 		}
 	},
-	groups = {snappy=3,flammable=2,attached_node=1},
+	groups = {snappy=3,flammable=2},
 	sounds = default.node_sound_leaves_defaults(),
 	drop = 'trunks:twig_1'
 })

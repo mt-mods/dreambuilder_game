@@ -248,6 +248,31 @@ default.register_leafdecay({
 	radius = 3,
 })
 
+default.register_leafdecay({
+	trunks = {"cherrytree:trunk"},
+	leaves = {"cherrytree:blossom_leaves"},
+	radius = 3,
+})
+
+-- Fence
+if minetest.settings:get_bool("cool_fences", true) then
+	local fence = {
+		description = S("Cherry Tree Wood Fence"),
+		texture =  "cherrytree_wood.png",
+		material = "cherrytree:wood",
+		groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
+		sounds = default.node_sound_wood_defaults(),
+	}
+	default.register_fence("cherrytree:fence", table.copy(fence)) 
+	fence.description = S("Cherry Tree Fence Rail")
+	default.register_fence_rail("cherrytree:fence_rail", table.copy(fence))
+	
+	if minetest.get_modpath("doors") ~= nil then
+		fence.description = S("Cherry Tree Fence Gate")
+		doors.register_fencegate("cherrytree:gate", table.copy(fence))
+	end
+end
+
 --Stairs
 
 if minetest.get_modpath("stairs") ~= nil then
@@ -260,6 +285,16 @@ if minetest.get_modpath("stairs") ~= nil then
 		S("Cherry Tree Slab"),
 		default.node_sound_wood_defaults()
 	)
+end
+
+-- stairsplus/moreblocks
+if minetest.get_modpath("moreblocks") then
+	stairsplus:register_all("cherrytree", "wood", "cherrytree:wood", {
+		description = "Cherry Tree",
+		tiles = {"cherrytree_wood.png"},
+		groups = {choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
+		sounds = default.node_sound_wood_defaults(),
+	})
 end
 
 --Support for bonemeal
