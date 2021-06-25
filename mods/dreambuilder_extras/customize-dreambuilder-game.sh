@@ -143,7 +143,6 @@ Sokomines_mods/locks \
 nekogloops_mods/glooptest \
 Calinous_mods/moreblocks \
 CWzs_mods/replacer \
-CWzs_mods/player_textures \
 bobblocks \
 unifiedbricks \
 my_mods/pipeworks \
@@ -534,20 +533,8 @@ mv	$workdir"/mods/dreambuilder_extras/dreambuilder_theme_settings" \
 
 rsync -a $upstream_mods_path"/my_mods/dreambuilder_themes/dreambuilder_theme_light" $workdir/mods
 
-# Add in all of the regular player skins for the player_textures mod
-
-rm -f $workdir/mods/player_textures/textures/* 
-
-LIST="player_Calinou.png
-player_cheapie.png
-player_kaeza.png
-player_Sokomine.png
-player_VanessaE.png"
-
-while read -r FILE; do
-cp $upstream_mods_path"/../player_skins/"$FILE \
-    $workdir/mods/player_textures/textures
-done <<< "$LIST"
+# Finally, strip-out the individual mods' .git dirs
+# and copy the completed game to the target dir
 
 rsync -aL \
 	--exclude=".git*" \
@@ -563,5 +550,5 @@ rm -rf $workdir*
 
 echo -e "\nCustomization completed.\n"
 
-#echo -e "Here's what will be included in the game:\n"
-#ls -a $game_path $game_path/mods
+echo -e "Here's what will be included in the game:\n"
+ls -a $game_path $game_path/mods
