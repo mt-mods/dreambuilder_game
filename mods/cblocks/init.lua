@@ -106,6 +106,8 @@ cblocks_stairs("cblocks:stonebrick_" .. colours[i][1], {
 	is_ground_content = false,
 	groups = {cracky = 2, stone = 1},
 	sounds = default.node_sound_stone_defaults(),
+	paramtype2 = "facedir",
+	on_place = minetest.rotate_node,
 })
 
 minetest.register_craft({
@@ -170,7 +172,9 @@ cblocks_stairs("cblocks:wood_" .. col, {
 	use_texture_alpha = "opaque",
 	is_ground_content = false,
 	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 3, wood = 1},
-	sounds = default.node_sound_wood_defaults()
+	sounds = default.node_sound_wood_defaults(),
+	paramtype2 = "facedir",
+	on_place = minetest.rotate_node,
 })
 
 set_alias(colours[i][1], "wood")

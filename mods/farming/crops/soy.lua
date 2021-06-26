@@ -42,15 +42,26 @@ minetest.register_node("farming:soy_sauce", {
 	sounds = default.node_sound_glass_defaults()
 })
 
+-- river water availability check
+local bucket_water
+
+if minetest.get_mapgen_setting("mgname") == "valleys"
+or minetest.get_modpath("ethereal") then
+	bucket_water = "bucket:bucket_river_water"
+else
+	bucket_water = "bucket:bucket_water"
+end
+
+-- soy sauce recipe
 minetest.register_craft( {
 	output = "farming:soy_sauce",
 	recipe = {
 		{"group:food_soy", "group:food_salt", "group:food_soy"},
 		{"", "group:food_juicer", ""},
-		{"", "bucket:bucket_river_water", "vessels:glass_bottle"}
+		{"", bucket_water, "vessels:glass_bottle"}
 	},
 	replacements = {
-		{"bucket:bucket_river_water", "bucket:bucket_empty"},
+		{bucket_water, "bucket:bucket_empty"},
 		{"group:food_juicer", "farming:juicer"}
 	}
 })

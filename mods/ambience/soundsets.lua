@@ -25,7 +25,15 @@ ambience.add_set("underwater", {
 	end
 })
 
--- Splashing sound plays when player walks inside water nodes
+-- Splashing sound plays when player walks inside water nodes (if enabled)
+
+if minetest.settings:get_bool("ambience_water_move") ~= false then
+
+-- override default water sounds
+minetest.override_item("default:water_source", { sounds = {} })
+minetest.override_item("default:water_flowing", { sounds = {} })
+minetest.override_item("default:river_water_source", { sounds = {} })
+minetest.override_item("default:river_water_flowing", { sounds = {} })
 
 ambience.add_set("splash", {
 
@@ -49,7 +57,9 @@ ambience.add_set("splash", {
 	end
 })
 
--- check for env_sounds mod, if not found enable water flowing sounds
+end
+
+-- check for env_sounds mod, if not found enable water flowing and lava sounds
 if not minetest.get_modpath("env_sounds") then
 
 -- Water sound plays when near flowing water
@@ -98,6 +108,32 @@ ambience.add_set("river", {
 
 		elseif c > 5 then
 			return "river"
+		end
+	end
+})
+
+-- Lava sound plays when near lava
+
+ambience.add_set("lava", {
+
+	frequency = 1000,
+
+	sounds = {
+		{name = "lava", length = 7}
+	},
+
+	nodes = {"default:lava_source", "default:lava_flowing"},
+
+	sound_check = function(def)
+
+		local c = (def.totals["default:lava_source"] or 0)
+			+ (def.totals["default:lava_flowing"] or 0)
+
+		if c > 20 then
+			return "lava", 0.5
+
+		elseif c > 5 then
+			return "lava"
 		end
 	end
 })
@@ -169,32 +205,6 @@ ambience.add_set("largefire", {
 })
 
 end
-
--- Lava sound plays when near lava
-
-ambience.add_set("lava", {
-
-	frequency = 1000,
-
-	sounds = {
-		{name = "lava", length = 7}
-	},
-
-	nodes = {"default:lava_source", "default:lava_flowing"},
-
-	sound_check = function(def)
-
-		local c = (def.totals["default:lava_source"] or 0)
-			+ (def.totals["default:lava_flowing"] or 0)
-
-		if c > 20 then
-			return "lava", 0.5
-
-		elseif c > 5 then
-			return "lava"
-		end
-	end
-})
 
 -- Beach sounds play when below y-pos 6 and 150+ water source found
 

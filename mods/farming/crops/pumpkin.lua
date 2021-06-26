@@ -183,7 +183,7 @@ minetest.register_node("farming:pumpkin_8", {
 	description = S("Pumpkin"),
 	tiles = {
 		"farming_pumpkin_top.png",
-		"farming_pumpkin_top.png",
+		"farming_pumpkin_bottom.png",
 		"farming_pumpkin_side.png"
 	},
 	groups = {
@@ -191,7 +191,9 @@ minetest.register_node("farming:pumpkin_8", {
 		flammable = 2, plant = 1
 	},
 	drop = "farming:pumpkin_8",
-	sounds = default.node_sound_wood_defaults()
+	sounds = default.node_sound_wood_defaults(),
+	paramtype2 = "facedir",
+	on_place = minetest.rotate_node
 })
 
 minetest.register_alias("farming:pumpkin", "farming:pumpkin_8")

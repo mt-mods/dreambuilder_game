@@ -95,6 +95,8 @@ end)
 
 -- default biomes deco
 local deco = {
+	{"default:dry_dirt", dry_grass, {}},
+	{"default:dry_dirt_with_dry_grass", dry_grass, {}},
 	{"default:dirt_with_dry_grass", dry_grass, flowers},
 	{"default:sand", {}, {"default:dry_shrub", "", "", ""} },
 	{"default:desert_sand", {}, {"default:dry_shrub", "", "", ""} },
