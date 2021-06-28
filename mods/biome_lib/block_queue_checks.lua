@@ -31,10 +31,13 @@ biome_lib.wake_up_queue()
 -- to prevent unpopulated map areas
 
 local function format_time(t)
+	local d=os.date("*t", math.ceil(t/1000000))
+	local ss = (d.sec == 1) and "" or "s"
 	if t > 59999999 then
-		return os.date("!%M minutes and %S seconds", math.ceil(t/1000000))
+		local ms = (d.min == 1) and "" or "s"
+		return string.format("%d minute%s and %d second%s.", d.min, ms, d.sec, ss)
 	else
-		return os.date("!%S seconds", math.ceil(t/1000000))
+		return string.format("%d second%s.", d.sec, ss)
 	end
 end
 
