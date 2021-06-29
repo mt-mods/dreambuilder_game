@@ -3,6 +3,7 @@
 local modpath = minetest.get_modpath("simple_streetlights")
 
 streetlights = {}
+streetlights.schematics = {}
 streetlights.basic_materials = minetest.get_modpath("basic_materials")
 streetlights.concrete =      "basic_materials:concrete_block"
 streetlights.distributor =   "streets:digiline_distributor"

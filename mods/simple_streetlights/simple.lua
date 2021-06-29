@@ -33,7 +33,7 @@ local poles_tab = {
 --    material name,  mod name,           node name,                        optional base, optional height, top section
 	{ "wood",         "default",          "default:fence_wood" },
 	{ "junglewood",   "default",          "default:fence_junglewood" },
-	{ "brass",        "homedecor_fences", "homedecor:fence_brass", "basic_materials:brass_block", nil, {poletop="default:cobble", overhang="default:dirt"}  },
+	{ "brass",        "homedecor_fences", "homedecor:fence_brass"},
 	{ "wrought_iron", "homedecor_fences", "homedecor:fence_wrought_iron" },
 	{ "steel",        "gloopblocks",      "gloopblocks:fence_steel"}
 }
