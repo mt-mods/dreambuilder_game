@@ -64,6 +64,9 @@ function technic.register_base_machine(data)
 		"listring[current_player;main]"..
 		"listring[current_name;src]"..
 		"listring[current_player;main]"
+	if data.typename == "alloy" then
+		formspec = formspec .. dreambuilder_theme.single_slot_v1(2, 0.95, false)
+	end
 	if data.upgrade then
 		formspec = formspec..
 		dreambuilder_theme.make_inv_img_grid_v1(1, 2.95, 2, 1, false)..
@@ -101,6 +104,9 @@ function technic.register_base_machine(data)
 		end
 
 		local EU_upgrade, tube_upgrade = 0, 0
+	if data.typename == "alloy" then
+		formspec = formspec .. dreambuilder_theme.single_slot_v1(2, 0.95, false)
+	end
 		if data.upgrade then
 			EU_upgrade, tube_upgrade = technic.handle_machine_upgrades(meta)
 		end

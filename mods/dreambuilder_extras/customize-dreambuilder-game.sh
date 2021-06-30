@@ -335,6 +335,14 @@ sed -i "/formspec = formspec/ {
 	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(1, 2.95, 2, 1, false)..
 	}" $workdir"/mods/technic/machines/register/machine_base.lua"
 
+# this bit makes electric alloy furnaces look right
+sed -i "/if data\.upgrade then/ {
+	i \\\tif data.typename == \"alloy\" then
+	i \\\t\tformspec = formspec .. dreambuilder_theme.single_slot_v1(2, 0.95, false)
+	i \\\tend
+}" $workdir"/mods/technic/machines/register/machine_base.lua"
+
+
 sed -i "/size\[8,9;\]/ {
 	a \\\t\t$LISTCOLORS_HIDE_SLOTS
 	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(0, 4.97, 8, 1, true)..
@@ -342,7 +350,7 @@ sed -i "/size\[8,9;\]/ {
 	a \\\t\tdreambuilder_theme.single_slot_v1(3, 0.95, false)..
 	}" $workdir"/mods/technic/machines/register/generator.lua"
 
-# this alloy furnace change will match in two places, on purpose.
+# this coal alloy furnace change will match in two places, on purpose.
 sed -i "/size\[8,9\]/ {
 	a \\\t\t$LISTCOLORS_HIDE_SLOTS
 	a \\\t\tdreambuilder_theme.make_inv_img_grid_v1(2, 0.95, 2, 1, false)..
