@@ -22,7 +22,7 @@ local function place_cocoa(itemstack, placer, pointed_thing, plantname)
 	-- thanks to Krock for helping with this issue :)
 	local def = minetest.registered_nodes[under.name]
 	if placer and itemstack and def and def.on_rightclick then
-		return def.on_rightclick(pt.under, under, placer, itemstack)
+		return def.on_rightclick(pt.under, under, placer, itemstack, pt)
 	end
 
 	-- check if pointing at jungletree
@@ -135,25 +135,23 @@ local def = {
 	tiles = {"farming_cocoa_1.png"},
 	paramtype = "light",
 	walkable = false,
-	drop = {
-		items = {
-			{items = {"farming:cocoa_beans 1"}, rarity = 2},
-		}
-	},
 	selection_box = {
 		type = "fixed",
 		fixed = {-0.3, -0.5, -0.3, 0.3, 0.5, 0.3}
 	},
+	drop = {},
 	groups = {
 		snappy = 3, flammable = 2, plant = 1, growing = 1,
 		not_in_creative_inventory = 1, leafdecay = 1, leafdecay_drop = 1
 	},
 	sounds = default.node_sound_leaves_defaults(),
 	growth_check = function(pos, node_name)
+
 		if minetest.find_node_near(pos, 1, {"default:jungletree"}) then
-			return false
+			return false -- can grow
 		end
-		return true
+
+		return true -- cannot grow
 	end
 }
 

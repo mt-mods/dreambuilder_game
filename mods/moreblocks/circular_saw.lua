@@ -13,8 +13,7 @@ circular_saw = {}
 circular_saw.known_stairs = setmetatable({}, {
 	__newindex = function(k, v)
 		local modname = minetest.get_current_modname()
-		print(("WARNING: mod %s tried to add node %s to the circular saw"
-				.. " manually."):format(modname, v))
+		print(("WARNING: mod %s tried to add node %s to the circular saw manually."):format(modname, v))
 	end,
 })
 
@@ -131,7 +130,7 @@ function circular_saw:reset(pos)
 	local owned_by = meta:get_string("owner")
 
 	if owned_by and owned_by ~= "" then
-		owned_by = (" (%s)"):format(S("owned by @1", meta:get_string("owner")))
+		owned_by = (" ("..S("owned by @1", meta:get_string("owner"))..")")
 	else
 		owned_by = ""
 	end
@@ -178,7 +177,7 @@ function circular_saw:update_inventory(pos, amount)
 	local owned_by = meta:get_string("owner")
 
 	if owned_by and owned_by ~= "" then
-		owned_by = (" (%s)"):format(S("owned by @1", meta:get_string("owner")))
+		owned_by = (" ("..S("owned by @1", meta:get_string("owner"))..")")
 	else
 		owned_by = ""
 	end
@@ -337,6 +336,10 @@ function circular_saw.on_metadata_inventory_take(
 	local input_stack = inv:get_stack(listname,  index)
 	if not input_stack:is_empty() and input_stack:get_name()~=stack:get_name() then
 		local player_inv = player:get_inventory()
+
+		-- Prevent arbitrary item duplication.
+		inv:remove_item(listname, input_stack)
+
 		if player_inv:room_for_item("main", input_stack) then
 			player_inv:add_item("main", input_stack)
 		end
@@ -363,19 +366,26 @@ function circular_saw.on_metadata_inventory_take(
 	-- The recycle field plays no role here since it is processed immediately.
 end
 
+local has_default_mod = minetest.get_modpath("default")
+
 function circular_saw.on_construct(pos)
 	local meta = minetest.get_meta(pos)
-	local fancy_inv = default.gui_bg..default.gui_bg_img..default.gui_slots
+	local fancy_inv = ""
+	if has_default_mod then
+		-- prepend background and slot styles from default if available
+		fancy_inv = default.gui_bg..default.gui_bg_img..default.gui_slots
+	end
 	meta:set_string(
+		--FIXME Not work with @n in this part bug in minetest/minetest#7450.
 		"formspec", "size[11,10]"..fancy_inv..
-		"label[0,0;" ..F(S("Input\nmaterial")).. "]" ..
-		"list[current_name;input;1.5,0;1,1;]" ..
+		"label[0,0;" ..S("Input material").. "]" ..
+		"list[current_name;input;1.7,0;1,1;]" ..
 		"label[0,1;" ..F(S("Left-over")).. "]" ..
-		"list[current_name;micro;1.5,1;1,1;]" ..
-		"label[0,2;" ..F(S("Recycle\noutput")).. "]" ..
-		"list[current_name;recycle;1.5,2;1,1;]" ..
+		"list[current_name;micro;1.7,1;1,1;]" ..
+		"label[0,2;" ..F(S("Recycle output")).. "]" ..
+		"list[current_name;recycle;1.7,2;1,1;]" ..
 		"field[0.3,3.5;1,1;max_offered;" ..F(S("Max")).. ":;${max_offered}]" ..
-		"button[1,3.2;1,1;Set;" ..F(S("Set")).. "]" ..
+		"button[1,3.2;1.7,1;Set;" ..F(S("Set")).. "]" ..
 		"list[current_name;output;2.8,0;8,6;]" ..
 		"list[current_player;main;1.5,6.25;8,4;]" ..
 		"listring[current_name;output]" ..
@@ -437,7 +447,7 @@ minetest.register_node("moreblocks:circular_saw",  {
 	sunlight_propagates = true,
 	paramtype2 = "facedir",
 	groups = {choppy = 2,oddly_breakable_by_hand = 2},
-	sounds = default.node_sound_wood_defaults(),
+	sounds = moreblocks.node_sound_wood_defaults(),
 	on_construct = circular_saw.on_construct,
 	can_dig = circular_saw.can_dig,
 	-- Set the owner of this circular saw.

@@ -233,15 +233,6 @@ minetest.register_craft({
 	burntime = 7,
 })
 
-
-minetest.register_lbm({
-	name = "birch:convert_birch_saplings_to_node_timer",
-	nodenames = {"birch:sapling"},
-	action = function(pos)
-		minetest.get_node_timer(pos):start(math.random(1200, 2400))
-	end
-})
-
 default.register_leafdecay({
 	trunks = {"birch:trunk"},
 	leaves = {"birch:leaves"},
@@ -257,10 +248,10 @@ if minetest.settings:get_bool("cool_fences", true) then
 		groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		sounds = default.node_sound_wood_defaults(),
 	}
-	default.register_fence("birch:fence", table.copy(fence)) 
+	default.register_fence("birch:fence", table.copy(fence))
 	fence.description = S("Birch Fence Rail")
 	default.register_fence_rail("birch:fence_rail", table.copy(fence))
-	
+
 	if minetest.get_modpath("doors") ~= nil then
 		fence.description = S("Birch Fence Gate")
 		doors.register_fencegate("birch:gate", table.copy(fence))
@@ -313,3 +304,8 @@ if minetest.get_modpath("doors") ~= nil then
 	})
 end
 
+
+-- Support for flowerpot
+if minetest.global_exists("flowerpot") then
+	flowerpot.register_node("birch:sapling")
+end

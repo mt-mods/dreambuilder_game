@@ -166,6 +166,7 @@ Created by Felfa (CC0)
   farming_potato_omelette.png
   farming_spanish_potatoes.png
   farming_vanilla_flan.png
+  farming_sunflower*.png
 
 Created by gorlock (CC0)
   farming_salt_crystal.png
@@ -173,3 +174,9 @@ Created by gorlock (CC0)
 Created by sirrobzeroone (CC0)
   farming_gyoza.png
   farming_pineapple_ring.png
+
+Created by TechM8 (https://www.deviantart.com/techm8)
+  farming_popcorn.png
+
+Created by RZR0 (CC-BY-NC-SA)
+  farming_blueberry_pie.png

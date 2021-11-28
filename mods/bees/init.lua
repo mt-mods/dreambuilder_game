@@ -279,7 +279,8 @@ minetest.register_node("bees:hive_wild", {
 			{items = {"bees:honey_comb"}, rarity = 5}
 		}
 	},
-	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 3, attached_node = 1},
+	groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 3},
+			--, attached_node = 1},
 	node_box = { -- VanessaE's wild hive nodebox contribution
 		type = "fixed",
 		fixed = {

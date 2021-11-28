@@ -25,8 +25,8 @@ end
 --
 
 if mg_name ~= "v6" and mg_name ~= "singlenode" then
-	name = "baldcypress:baldcypress_tree",
 	minetest.register_decoration({
+		name = "baldcypress:baldcypress_tree",
 		deco_type = "schematic",
 		place_on = {"default:sand"},
 		sidelen = 16,
@@ -140,9 +140,9 @@ minetest.register_node("baldcypress:dry_branches", {
 	paramtype = "light",
 	paramtype2 = "facedir",
 	tiles = {"baldcypress_dry_branches.png"},
-	use_texture_alpha = true,
 	inventory_image = "baldcypress_dry_branches.png",
 	wield_image = "baldcypress_dry_branches.png",
+	use_texture_alpha = "clip",
 	node_box = {
 		type = "fixed",
 		fixed = {-0.5, -0.5, 0.49, 0.5, 0.5, 0.5}
@@ -160,9 +160,9 @@ minetest.register_node("baldcypress:liana", {
 	paramtype = "light",
 	paramtype2 = "facedir",
 	tiles = {"baldcypress_liana.png"},
-	use_texture_alpha = true,
 	inventory_image = "baldcypress_liana.png",
 	wield_image = "baldcypress_liana.png",
+	use_texture_alpha = "clip",
 	is_ground_content = false,
 	node_box = {
 		type = "fixed",
@@ -200,15 +200,6 @@ minetest.register_craft({
 	burntime = 7,
 })
 
-
-minetest.register_lbm({
-	name = "baldcypress:convert_baldcypress_saplings_to_node_timer",
-	nodenames = {"baldcypress:sapling"},
-	action = function(pos)
-		minetest.get_node_timer(pos):start(math.random(1200, 2400))
-	end
-})
-
 default.register_leafdecay({
 	trunks = {"baldcypress:trunk"},
 	leaves = {"baldcypress:leaves"},
@@ -224,10 +215,10 @@ if minetest.settings:get_bool("cool_fences", true) then
 		groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		sounds = default.node_sound_wood_defaults(),
 	}
-	default.register_fence("baldcypress:fence", table.copy(fence)) 
+	default.register_fence("baldcypress:fence", table.copy(fence))
 	fence.description = S("Bald Cypress Fence Rail")
 	default.register_fence_rail("baldcypress:fence_rail", table.copy(fence))
-	
+
 	if minetest.get_modpath("doors") ~= nil then
 		fence.description = S("Bald Cypress Fence Gate")
 		doors.register_fencegate("baldcypress:gate", table.copy(fence))
@@ -264,4 +255,9 @@ if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
 		{"baldcypress:sapling", grow_new_baldcypress_tree, "soil"},
 	})
+end
+
+-- Support for flowerpot
+if minetest.global_exists("flowerpot") then
+	flowerpot.register_node("baldcypress:sapling")
 end

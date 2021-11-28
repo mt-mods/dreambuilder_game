@@ -190,14 +190,6 @@ minetest.register_craft({
 	recipe = {{"pomegranate:pomegranate"}}
 })
 
-minetest.register_lbm({
-	name = "pomegranate:convert_pomegranate_saplings_to_node_timer",
-	nodenames = {"pomegranate:sapling"},
-	action = function(pos)
-		minetest.get_node_timer(pos):start(math.random(1200, 2400))
-	end
-})
-
 default.register_leafdecay({
 	trunks = {"pomegranate:trunk"},
 	leaves = {"pomegranate:leaves"},
@@ -213,10 +205,10 @@ if minetest.settings:get_bool("cool_fences", true) then
 		groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		sounds = default.node_sound_wood_defaults(),
 	}
-	default.register_fence("pomegranate:fence", table.copy(fence)) 
+	default.register_fence("pomegranate:fence", table.copy(fence))
 	fence.description = S("Pomegranate Tree Fence Rail")
 	default.register_fence_rail("pomegranate:fence_rail", table.copy(fence))
-	
+
 	if minetest.get_modpath("doors") ~= nil then
 		fence.description = S("Pomegranate Tree Fence Gate")
 		doors.register_fencegate("pomegranate:gate", table.copy(fence))
@@ -251,4 +243,9 @@ if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
 		{"pomegranate:sapling", grow_new_pomegranate_tree, "soil"},
 	})
+end
+
+-- Support for flowerpot
+if minetest.global_exists("flowerpot") then
+	flowerpot.register_node("pomegranate:sapling")
 end

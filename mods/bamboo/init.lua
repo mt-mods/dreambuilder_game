@@ -234,14 +234,6 @@ default.register_leafdecay({
 	radius = 3,
 })
 
-minetest.register_lbm({
-	name = "bamboo:convert_bambootree_sprouts_to_node_timer",
-	nodenames = {"bamboo:sprout"},
-	action = function(pos)
-		minetest.get_node_timer(pos):start(math.random(1200, 2400))
-	end
-})
-
 if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
 		{"bamboo:sprout", grow_new_bambootree_tree, "soil"},
@@ -257,10 +249,10 @@ if minetest.settings:get_bool("cool_fences", true) then
 		groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		sounds = default.node_sound_wood_defaults(),
 	}
-	default.register_fence("bamboo:fence", table.copy(fence)) 
+	default.register_fence("bamboo:fence", table.copy(fence))
 	fence.description = S("Bamboo Fence Rail")
 	default.register_fence_rail("bamboo:fence_rail", table.copy(fence))
-	
+
 	if minetest.get_modpath("doors") ~= nil then
 		fence.description = S("Bamboo Fence Gate")
 		doors.register_fencegate("bamboo:gate", table.copy(fence))
@@ -289,4 +281,9 @@ if minetest.get_modpath("moreblocks") then
 		groups = {choppy = 2, oddly_breakable_by_hand = 1, flammable = 3},
 		sounds = default.node_sound_wood_defaults(),
 	})
+end
+
+-- Support for flowerpot
+if minetest.global_exists("flowerpot") then
+	flowerpot.register_node("bamboo:sprout")
 end

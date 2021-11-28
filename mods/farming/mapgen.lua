@@ -54,6 +54,7 @@ register_plant("lettuce_5", 5, 30, nil, "", -1, farming.lettuce)
 register_plant("blackberry_4", 3, 10, nil, "", -1, farming.blackberry)
 register_plant("vanilla_7", 5, 35, nil, "", -1, farming.vanilla)
 register_plant("parsley_3", 10, 40, nil, "", -1, farming.parsley)
+register_plant("sunflower_8", 10, 40, nil, "", -1, farming.sunflower)
 register_plant("mint_4", 1, 75, {
 	"default:dirt_with_grass", "default:dirt_with_coniferous_litter"},
 	"group:water", 1, farming.mint)

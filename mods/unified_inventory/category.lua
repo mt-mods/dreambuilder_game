@@ -70,7 +70,7 @@ end
 local function ensure_category_exists(category_name)
 	if not unified_inventory.registered_categories[category_name] then
 		unified_inventory.registered_categories[category_name] = {
-			symbol = "default:stick",
+			symbol = "unknown_item.png",
 			label = category_name
 		}
 	end
@@ -81,16 +81,17 @@ end
 
 function unified_inventory.register_category(category_name, config)
 	ensure_category_exists(category_name)
-	if config and config.symbol then
+	config = config or {}
+	if config.symbol then
 		unified_inventory.set_category_symbol(category_name, config.symbol)
 	end
-	if config and config.label then
+	if config.label then
 		unified_inventory.set_category_label(category_name, config.label)
 	end
-	if config and config.index then
+	if config.index then
 		unified_inventory.set_category_index(category_name, config.index)
 	end
-	if config and config.items then
+	if config.items then
 		unified_inventory.add_category_items(category_name, config.items)
 	end
 	update_category_list()

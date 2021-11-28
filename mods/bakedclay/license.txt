@@ -19,3 +19,10 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+
+Textures by Amara2_MK (Creative Commons)
+https://www.curseforge.com/minecraft/texture-packs/glazed-terracotta-revamp
+  baked_clay_terracotta*.png
+
+Missing gray, light gray, black and green textures re-coloured by Firefox.

@@ -91,12 +91,16 @@ end
 
 -- setup table when player joins
 minetest.register_on_joinplayer(function(player)
-	playing[player:get_player_name()] = {music = -1}
+	if player then
+		playing[player:get_player_name()] = {music = -1}
+	end
 end)
 
 -- remove table when player leaves
 minetest.register_on_leaveplayer(function(player)
-	playing[player:get_player_name()] = nil
+	if player then
+		playing[player:get_player_name()] = nil
+	end
 end)
 
 
@@ -104,7 +108,8 @@ end)
 local get_ambience = function(player, tod, name)
 
 	-- play server or local music if music enabled and music not already playing
-	if play_music and MUSICVOLUME > 0 and playing[name].music < 0 then
+	if play_music and MUSICVOLUME > 0
+	and playing[name] and playing[name].music < 0 then
 
 		-- count backwards
 		playing[name].music = playing[name].music -1
@@ -133,13 +138,14 @@ local get_ambience = function(player, tod, name)
 	-- get foot and head level nodes at player position
 	local pos = player:get_pos() ; if not pos then return end
 	local prop = player:get_properties()
+	local eyeh = prop.eye_height or 1.47 -- eye level with fallback
 
-	pos.y = pos.y + prop.eye_height -- eye level
+	pos.y = pos.y + eyeh
 
 	local nod_head = pplus and name and playerplus[name]
 			and playerplus[name].nod_head or minetest.get_node(pos).name
 
-	pos.y = (pos.y - prop.eye_height) + 0.2 -- foot level
+	pos.y = (pos.y - eyeh) + 0.2 -- foot level
 
 	local nod_feet = pplus and name and playerplus[name]
 			and playerplus[name].nod_feet or minetest.get_node(pos).name
@@ -195,7 +201,7 @@ minetest.register_globalstep(function(dtime)
 	local tod = minetest.get_timeofday()
 
 	-- loop through players
-	for _, player in ipairs(minetest.get_connected_players()) do
+	for _, player in pairs(minetest.get_connected_players()) do
 
 		player_name = player:get_player_name()
 

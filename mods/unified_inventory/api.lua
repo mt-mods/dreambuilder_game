@@ -152,6 +152,10 @@ minetest.after(0.01, function()
 			end
 		end
 	end
+
+	for _, callback in ipairs(ui.initialized_callbacks) do
+		callback()
+	end
 end)
 
 
@@ -212,10 +216,15 @@ function ui.register_craft(options)
 	if options.type == "normal" and options.width == 0 then
 		options = { type = "shapeless", items = options.items, output = options.output, width = 0 }
 	end
-	if not ui.crafts_for.recipe[itemstack:get_name()] then
-		ui.crafts_for.recipe[itemstack:get_name()] = {}
+	local item_name = itemstack:get_name()
+	if not ui.crafts_for.recipe[item_name] then
+		ui.crafts_for.recipe[item_name] = {}
 	end
-	table.insert(ui.crafts_for.recipe[itemstack:get_name()],options)
+	table.insert(ui.crafts_for.recipe[item_name],options)
+
+	for _, callback in ipairs(ui.craft_registered_callbacks) do
+		callback(item_name, options)
+	end
 end
 
 
@@ -307,6 +316,32 @@ function ui.register_button(name, def)
 	end
 	def.name = name
 	table.insert(ui.buttons, def)
+end
+
+function ui.register_on_initialized(callback)
+	if type(callback) ~= "function" then
+		error(("Initialized callback must be a function, %s given."):format(type(callback)))
+	end
+	table.insert(ui.initialized_callbacks, callback)
+end
+
+function ui.register_on_craft_registered(callback)
+	if type(callback) ~= "function" then
+		error(("Craft registered callback must be a function, %s given."):format(type(callback)))
+	end
+	table.insert(ui.craft_registered_callbacks, callback)
+end
+
+function ui.get_recipe_list(output)
+	return ui.crafts_for.recipe[output]
+end
+
+function ui.get_registered_outputs()
+	local outputs = {}
+	for item_name, _ in pairs(ui.crafts_for.recipe) do
+		table.insert(outputs, item_name)
+	end
+	return outputs
 end
 
 function ui.is_creative(playername)

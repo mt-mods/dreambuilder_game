@@ -62,6 +62,7 @@ minetest.register_node("mahogany:sapling", {
 	paramtype = "light",
 	sunlight_propagates = true,
 	walkable = false,
+	use_texture_alpha = "clip",
 	on_timer = grow_new_mahogany_tree,
 	selection_box = {
 		type = "fixed",
@@ -145,9 +146,9 @@ minetest.register_node("mahogany:creeper", {
 	paramtype = "light",
 	paramtype2 = "facedir",
 	tiles = {"mahogany_creeper.png"},
-	use_texture_alpha = true,
 	inventory_image = "mahogany_creeper.png",
 	wield_image = "mahogany_creeper.png",
+	use_texture_alpha = "clip",
 	node_box = {
 		type = "fixed",
 		fixed = {-0.5, -0.5, 0.49, 0.5, 0.5, 0.5}
@@ -165,9 +166,9 @@ minetest.register_node("mahogany:flower_creeper", {
 	paramtype = "light",
 	paramtype2 = "facedir",
 	tiles = {"mahogany_flower_creeper.png"},
-	use_texture_alpha = true,
 	inventory_image = "mahogany_flower_creeper.png",
 	wield_image = "mahogany_flower_creeper.png",
+	use_texture_alpha = "clip",
 	node_box = {
 		type = "fixed",
 		fixed = {-0.5, -0.5, 0.49, 0.5, 0.5, 0.5}
@@ -185,9 +186,9 @@ minetest.register_node("mahogany:hanging_creeper", {
 	paramtype = "light",
 	paramtype2 = "facedir",
 	tiles = {"mahogany_hanging_creeper.png"},
-	use_texture_alpha = true,
 	inventory_image = "mahogany_hanging_creeper.png",
 	wield_image = "mahogany_hanging_creeper.png",
+	use_texture_alpha = "clip",
 	node_box = {
 		type = "fixed",
 		fixed = {-0.5, -0.5, 0.0, 0.5, 0.5, 0.0}
@@ -223,15 +224,6 @@ minetest.register_craft({
 	burntime = 7,
 })
 
-
-minetest.register_lbm({
-	name = "mahogany:convert_mahogany_saplings_to_node_timer",
-	nodenames = {"mahogany:sapling"},
-	action = function(pos)
-		minetest.get_node_timer(pos):start(math.random(1200, 2400))
-	end
-})
-
 default.register_leafdecay({
 	trunks = {"mahogany:trunk"},
 	leaves = {"mahogany:leaves"},
@@ -247,10 +239,10 @@ if minetest.settings:get_bool("cool_fences", true) then
 		groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		sounds = default.node_sound_wood_defaults(),
 	}
-	default.register_fence("mahogany:fence", table.copy(fence)) 
+	default.register_fence("mahogany:fence", table.copy(fence))
 	fence.description = S("Mahogany Fence Rail")
 	default.register_fence_rail("mahogany:fence_rail", table.copy(fence))
-	
+
 	if minetest.get_modpath("doors") ~= nil then
 		fence.description = S("Mahogany Fence Gate")
 		doors.register_fencegate("mahogany:gate", table.copy(fence))
@@ -287,4 +279,9 @@ if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
 		{"mahogany:sapling", grow_new_mahogany_tree, "soil"},
 	})
+end
+
+-- Support for flowerpot
+if minetest.global_exists("flowerpot") then
+	flowerpot.register_node("mahogany:sapling")
 end

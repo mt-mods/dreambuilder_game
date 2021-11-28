@@ -140,9 +140,9 @@ minetest.register_node("larch:moss", {
 	paramtype = "light",
 	paramtype2 = "facedir",
 	tiles = {"larch_moss.png"},
-	use_texture_alpha = true,
 	inventory_image = "larch_moss.png",
 	wield_image = "larch_moss.png",
+	use_texture_alpha = "clip",
 	node_box = {
 		type = "fixed",
 		fixed = {-0.5, -0.5, 0.49, 0.5, 0.5, 0.5}
@@ -180,15 +180,6 @@ minetest.register_craft({
 	burntime = 7,
 })
 
-
-minetest.register_lbm({
-	name = "larch:convert_larch_saplings_to_node_timer",
-	nodenames = {"larch:sapling"},
-	action = function(pos)
-		minetest.get_node_timer(pos):start(math.random(1200, 2400))
-	end
-})
-
 default.register_leafdecay({
 	trunks = {"larch:trunk"},
 	leaves = {"larch:leaves"},
@@ -204,10 +195,10 @@ if minetest.settings:get_bool("cool_fences", true) then
 		groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		sounds = default.node_sound_wood_defaults(),
 	}
-	default.register_fence("larch:fence", table.copy(fence)) 
+	default.register_fence("larch:fence", table.copy(fence))
 	fence.description = S("Larch Tree Fence Rail")
 	default.register_fence_rail("larch:fence_rail", table.copy(fence))
-	
+
 	if minetest.get_modpath("doors") ~= nil then
 		fence.description = S("Larch Tree Fence Gate")
 		doors.register_fencegate("larch:gate", table.copy(fence))
@@ -260,3 +251,8 @@ if minetest.get_modpath("doors") ~= nil then
 	})
 end
 
+
+-- Support for flowerpot
+if minetest.global_exists("flowerpot") then
+	flowerpot.register_node("larch:sapling")
+end

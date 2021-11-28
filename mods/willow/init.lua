@@ -159,15 +159,6 @@ minetest.register_craft({
 	burntime = 7,
 })
 
-
-minetest.register_lbm({
-	name = "willow:convert_willow_saplings_to_node_timer",
-	nodenames = {"willow:sapling"},
-	action = function(pos)
-		minetest.get_node_timer(pos):start(math.random(1200, 2400))
-	end
-})
-
 default.register_leafdecay({
 	trunks = {"willow:trunk"},
 	leaves = {"willow:leaves"},
@@ -183,10 +174,10 @@ if minetest.settings:get_bool("cool_fences", true) then
 		groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		sounds = default.node_sound_wood_defaults(),
 	}
-	default.register_fence("willow:fence", table.copy(fence)) 
+	default.register_fence("willow:fence", table.copy(fence))
 	fence.description = S("Willow Fence Rail")
 	default.register_fence_rail("willow:fence_rail", table.copy(fence))
-	
+
 	if minetest.get_modpath("doors") ~= nil then
 		fence.description = S("Willow Fence Gate")
 		doors.register_fencegate("willow:gate", table.copy(fence))
@@ -221,4 +212,9 @@ if minetest.get_modpath("bonemeal") ~= nil then
 	bonemeal:add_sapling({
 		{"willow:sapling", grow_new_willow_tree, "soil"},
 	})
+end
+
+-- Support for flowerpot
+if minetest.global_exists("flowerpot") then
+	flowerpot.register_node("willow:sapling")
 end

@@ -139,7 +139,7 @@ ambience.add_set("lava", {
 })
 
 else
-	print ("[Ambience] found env_sounds, flowing water sounds disabled.")
+	print ("[Ambience] found env_sounds, flowing water and lava sounds disabled.")
 end
 
 -- Only add fire sounds set if flame_sound is disabled or fire redo active
@@ -238,7 +238,7 @@ ambience.add_set("ice", {
 	frequency = 250,
 
 	sounds = {
-		{name = "icecrack", length = 23},
+		{name = "icecrack", length = 23, gain = 0.7},
 		{name = "desertwind", length = 8},
 		{name = "wind", length = 9}
 	},
@@ -280,7 +280,7 @@ ambience.add_set("desert", {
 	end
 })
 
--- Cave sounds play when below player position Y -25
+-- Cave sounds play when below player position Y -25 and water nearby
 
 ambience.add_set("cave", {
 
@@ -293,7 +293,9 @@ ambience.add_set("cave", {
 
 	sound_check = function(def)
 
-		if def.pos.y < -25 then
+		local c = (def.totals["default:water_source"] or 0)
+
+		if c > 0 and def.pos.y < -25 then
 			return "cave"
 		end
 	end

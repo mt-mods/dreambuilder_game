@@ -1,6 +1,44 @@
 
 local S = farming.intllib
 
+--= filter sea water into river water
+minetest.register_craft({
+	output = "bucket:bucket_river_water",
+	recipe = {
+		{"farming:hemp_fibre"},
+		{"farming:hemp_fibre"},
+		{"bucket:bucket_water"}
+	}
+})
+
+--= glass of water
+
+minetest.register_craftitem("farming:glass_water", {
+	description = S("Glass of Water"),
+	inventory_image = "farming_water_glass.png",
+	groups = {food_water_glass = 1, flammable = 3, vessel = 1}
+})
+
+minetest.register_craft({
+	output = "farming:glass_water 4",
+	recipe = {
+		{"vessels:drinking_glass", "vessels:drinking_glass"},
+		{"vessels:drinking_glass", "vessels:drinking_glass"},
+		{"bucket:bucket_river_water", ""}
+	},
+	replacements = {{"bucket:bucket_river_water", "bucket:bucket_empty"}}
+})
+
+minetest.register_craft({
+	output = "farming:glass_water 4",
+	recipe = {
+		{"vessels:drinking_glass", "vessels:drinking_glass"},
+		{"vessels:drinking_glass", "vessels:drinking_glass"},
+		{"bucket:bucket_water", "farming:hemp_fibre"}
+	},
+	replacements = {{"bucket:bucket_water", "bucket:bucket_empty"}}
+})
+
 --= Sugar
 
 minetest.register_craftitem("farming:sugar", {
@@ -647,10 +685,10 @@ minetest.register_craft({
 	recipe = {
 		{"group:food_rice", "group:food_sugar", "group:food_rice"},
 		{"", "group:food_mortar_pestle", ""},
-		{"", "bucket:bucket_river_water", ""}
+		{"", "farming:glass_water", ""}
 	},
 	replacements = {
 		{"group:food_mortar_pestle", "farming:mortar_pestle"},
-		{"bucket:bucket_river_water", "bucket:bucket_empty"}
+		{"farming:glass_water", "vessels:drinking_glass"}
 	}
 })

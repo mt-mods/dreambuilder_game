@@ -215,15 +215,6 @@ minetest.register_craft({
 	burntime = 7,
 })
 
-
-minetest.register_lbm({
-	name = "chestnuttree:convert_chestnuttree_saplings_to_node_timer",
-	nodenames = {"chestnuttree:sapling"},
-	action = function(pos)
-		minetest.get_node_timer(pos):start(math.random(1200, 2400))
-	end
-})
-
 default.register_leafdecay({
 	trunks = {"chestnuttree:trunk"},
 	leaves = {"chestnuttree:leaves"},
@@ -239,10 +230,10 @@ if minetest.settings:get_bool("cool_fences", true) then
 		groups = {choppy = 2, oddly_breakable_by_hand = 2, flammable = 2},
 		sounds = default.node_sound_wood_defaults(),
 	}
-	default.register_fence("chestnuttree:fence", table.copy(fence)) 
+	default.register_fence("chestnuttree:fence", table.copy(fence))
 	fence.description = S("Chestnut Tree Fence Rail")
 	default.register_fence_rail("chestnuttree:fence_rail", table.copy(fence))
-	
+
 	if minetest.get_modpath("doors") ~= nil then
 		fence.description = S("Chestnut Tree Fence Gate")
 		doors.register_fencegate("chestnuttree:gate", table.copy(fence))
@@ -293,4 +284,9 @@ if minetest.get_modpath("doors") ~= nil then
 				{"chestnuttree:wood", "chestnuttree:wood"},
 			}
 	})
+end
+
+-- Support for flowerpot
+if minetest.global_exists("flowerpot") then
+	flowerpot.register_node("chestnuttree:sapling")
 end
