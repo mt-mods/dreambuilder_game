@@ -1,8 +1,0 @@
-# textdomain: plasmascreen
-
-
-### init.lua ###
-
-Plasma Screen TV Stand=
-Plasma TV=
-Plasma TV (off)=

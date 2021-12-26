@@ -1,0 +1,18 @@
+[submodule "mods/homedecor_modpack"]
+	path = mods/homedecor_modpack
+	url = https://github.com/mt-mods/homedecor_modpack.git
+[submodule "mods/home_workshop_modpack"]
+	path = mods/home_workshop_modpack
+	url = https://github.com/mt-mods/home_workshop_modpack.git
+[submodule "mods/mesecons"]
+	path = mods/mesecons
+	url = https://github.com/minetest-mods/mesecons
+[submodule "mods/biome_lib"]
+	path = mods/biome_lib
+	url = https://github.com/mt-mods/biome_lib
+[submodule "mods/basic_materials"]
+	path = mods/basic_materials
+	url = https://github.com/mt-mods/basic_materials
+[submodule "mods/Minetest-WorldEdit"]
+	path = mods/Minetest-WorldEdit
+	url = https://github.com/Uberi/Minetest-WorldEdit
