@@ -16,3 +16,6 @@
 [submodule "mods/Minetest-WorldEdit"]
 	path = mods/Minetest-WorldEdit
 	url = https://github.com/Uberi/Minetest-WorldEdit
+[submodule "mods/ambience"]
+	path = mods/ambience
+	url = https://github.com/minetest-mirrors/ambience
