@@ -250,3 +250,6 @@
 [submodule "mods/plantlife_modpack"]
 	path = mods/plantlife_modpack
 	url = https://github.com/mt-mods/plantlife_modpack.git
+[submodule "mods/technic"]
+	path = mods/technic
+	url = https://github.com/mt-mods/technic.git
