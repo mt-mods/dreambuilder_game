@@ -142,3 +142,108 @@
 [submodule "mods/stained_glass"]
 	path = mods/stained_glass
 	url = https://github.com/minetest-mods/stained_glass
+[submodule "mods/steel"]
+	path = mods/steel
+	url = https://github.com/mt-mods/steel.git
+[submodule "mods/street_signs"]
+	path = mods/street_signs
+	url = https://github.com/mt-mods/street_signs.git
+[submodule "mods/travelnet"]
+	path = mods/travelnet
+	url = https://github.com/mt-mods/travelnet.git
+[submodule "mods/unified_inventory"]
+	path = mods/unified_inventory
+	url = https://github.com/minetest-mods/unified_inventory.git
+[submodule "mods/unifiedbricks"]
+	path = mods/unifiedbricks
+	url = https://github.com/minetest-mods/unifiedbricks.git
+[submodule "mods/unifieddyes"]
+	path = mods/unifieddyes
+	url = https://github.com/mt-mods/unifieddyes.git
+[submodule "mods/mtg/wool"]
+	path = mods/mtg/wool
+	url = https://github.com/minetest-game/wool
+[submodule "mods/mtg/creative"]
+	path = mods/mtg/creative
+	url = https://github.com/minetest-game/creative
+[submodule "mods/mtg/stairs"]
+	path = mods/mtg/stairs
+	url = https://github.com/minetest-game/stairs
+[submodule "mods/mtg/default"]
+	path = mods/mtg/default
+	url = https://github.com/minetest-game/default
+[submodule "mods/mtg/screwdriver"]
+	path = mods/mtg/screwdriver
+	url = https://github.com/minetest-game/screwdriver
+[submodule "mods/mtg/flowers"]
+	path = mods/mtg/flowers
+	url = https://github.com/minetest-game/flowers
+[submodule "mods/mtg/doors"]
+	path = mods/mtg/doors
+	url = https://github.com/minetest-game/doors
+[submodule "mods/mtg/xpanes"]
+	path = mods/mtg/xpanes
+	url = https://github.com/minetest-game/xpanes
+[submodule "mods/mtg/dye"]
+	path = mods/mtg/dye
+	url = https://github.com/minetest-game/dye
+[submodule "mods/mtg/beds"]
+	path = mods/mtg/beds
+	url = https://github.com/minetest-game/beds
+[submodule "mods/mtg/vessels"]
+	path = mods/mtg/vessels
+	url = https://github.com/minetest-game/vessels
+[submodule "mods/mtg/map"]
+	path = mods/mtg/map
+	url = https://github.com/minetest-game/map
+[submodule "mods/mtg/carts"]
+	path = mods/mtg/carts
+	url = https://github.com/minetest-game/carts
+[submodule "mods/mtg/fireflies"]
+	path = mods/mtg/fireflies
+	url = https://github.com/minetest-game/fireflies
+[submodule "mods/mtg/sethome"]
+	path = mods/mtg/sethome
+	url = https://github.com/minetest-game/sethome
+[submodule "mods/mtg/game_commands"]
+	path = mods/mtg/game_commands
+	url = https://github.com/minetest-game/game_commands
+[submodule "mods/mtg/butterflies"]
+	path = mods/mtg/butterflies
+	url = https://github.com/minetest-game/butterflies
+[submodule "mods/mtg/binoculars"]
+	path = mods/mtg/binoculars
+	url = https://github.com/minetest-game/binoculars
+[submodule "mods/mtg/bucket"]
+	path = mods/mtg/bucket
+	url = https://github.com/minetest-game/bucket
+[submodule "mods/mtg/boats"]
+	path = mods/mtg/boats
+	url = https://github.com/minetest-game/boats
+[submodule "mods/mtg/sfinv"]
+	path = mods/mtg/sfinv
+	url = https://github.com/minetest-game/sfinv
+[submodule "mods/mtg/walls"]
+	path = mods/mtg/walls
+	url = https://github.com/minetest-game/walls
+[submodule "mods/mtg/fire"]
+	path = mods/mtg/fire
+	url = https://github.com/minetest-game/fire
+[submodule "mods/mtg/weather"]
+	path = mods/mtg/weather
+	url = https://github.com/minetest-game/weather
+[submodule "mods/mtg/player_api"]
+	path = mods/mtg/player_api
+	url = https://github.com/minetest-game/player_api
+[submodule "mods/mtg/spawn"]
+	path = mods/mtg/spawn
+	url = https://github.com/minetest-game/spawn
+[submodule "mods/mtg/give_initial_stuff"]
+	path = mods/mtg/give_initial_stuff
+	url = https://github.com/minetest-game/give_initial_stuff
+[submodule "mods/mtg/env_sounds"]
+	path = mods/mtg/env_sounds
+	url = https://github.com/minetest-game/env_sounds
+[submodule "mods/mtg/dungeon_loot"]
+	path = mods/mtg/dungeon_loot
+	url = https://github.com/minetest-game/dungeon_loot
