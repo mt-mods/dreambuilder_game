@@ -19,3 +19,63 @@
 [submodule "mods/ambience"]
 	path = mods/ambience
 	url = https://github.com/minetest-mirrors/ambience
+[submodule "mods/anvil"]
+	path = mods/anvil
+	url = https://github.com/minetest-mods/anvil
+[submodule "mods/bakedclay"]
+	path = mods/bakedclay
+	url = https://github.com/minetest-mirrors/bakedclay.git
+[submodule "mods/basic_signs"]
+	path = mods/basic_signs
+	url = https://github.com/mt-mods/basic_signs.git
+[submodule "mods/bedrock"]
+	path = mods/bedrock
+	url = https://github.com/Calinou/bedrock
+[submodule "mods/bees"]
+	path = mods/bees
+	url = https://github.com/minetest-mirrors/bees
+[submodule "mods/blox"]
+	path = mods/blox
+	url = https://github.com/mt-mods/blox.git
+[submodule "mods/bobblocks"]
+	path = mods/bobblocks
+	url = https://github.com/minetest-mods/bobblocks
+[submodule "mods/bonemeal"]
+	path = mods/bonemeal
+	url = https://github.com/minetest-mirrors/bonemeal.git
+[submodule "mods/castle_farming"]
+	path = mods/castle_farming
+	url = https://github.com/minetest-mods/castle_farming
+[submodule "mods/castle_gates"]
+	path = mods/castle_gates
+	url = https://github.com/minetest-mods/castle_gates.git
+[submodule "mods/castle_lighting"]
+	path = mods/castle_lighting
+	url = https://github.com/minetest-mods/castle_lighting.git
+[submodule "mods/castle_masonry"]
+	path = mods/castle_masonry
+	url = https://github.com/minetest-mods/castle_masonry.git
+[submodule "mods/castle_shields"]
+	path = mods/castle_shields
+	url = https://github.com/minetest-mods/castle_shields
+[submodule "mods/castle_storage"]
+	path = mods/castle_storage
+	url = https://github.com/minetest-mods/castle_storage
+[submodule "mods/castle_tapestries"]
+	path = mods/castle_tapestries
+	url = https://github.com/minetest-mods/castle_tapestries
+[submodule "mods/castle_weapons"]
+	path = mods/castle_weapons
+	url = https://github.com/minetest-mods/castle_weapons.git
+[submodule "mods/caverealms_lite"]
+	path = mods/caverealms_lite
+	url = https://github.com/Ezhh/caverealms_lite
+[submodule "mods/coloredwood"]
+	path = mods/coloredwood
+	url = https://github.com/mt-mods/coloredwood.git
+[submodule "mods/cottages"]
+	path = mods/cottages
+	url = https://github.com/Sokomine/cottages.git
+[submodule "mods/currency"]
+	path = mods/currency
+	url = https://github.com/mt-mods/currency.git
