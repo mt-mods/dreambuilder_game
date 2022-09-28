@@ -271,3 +271,6 @@
 [submodule "mods/invsaw"]
 	path = mods/invsaw
 	url = https://cheapiesystems.com/git/invsaw
+[submodule "mods/cool_trees"]
+	path = mods/cool_trees
+	url = https://github.com/runsy/cool_trees/
