@@ -247,3 +247,6 @@
 [submodule "mods/mtg/dungeon_loot"]
 	path = mods/mtg/dungeon_loot
 	url = https://github.com/minetest-game/dungeon_loot
+[submodule "mods/plantlife_modpack"]
+	path = mods/plantlife_modpack
+	url = https://github.com/mt-mods/plantlife_modpack.git
