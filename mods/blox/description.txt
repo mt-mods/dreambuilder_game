@@ -1,1 +1,0 @@
-Adds lots of differently colored and textured blocks to Minetest.

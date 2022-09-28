@@ -1,1 +1,0 @@
-anvil_hammer_is_repairable (Hammer can be repaired on anvil) bool true

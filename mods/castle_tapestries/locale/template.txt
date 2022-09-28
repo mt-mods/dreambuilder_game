@@ -1,6 +1,0 @@
-# textdomain:castle_tapestries
-
-Tapestry Top=
-Tapestry=
-Tapestry (Long)=
-Tapestry (Very Long)=

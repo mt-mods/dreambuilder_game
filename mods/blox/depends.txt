@@ -1,4 +1,0 @@
-default
-unifieddyes
-moreblocks?
-coloredwood?

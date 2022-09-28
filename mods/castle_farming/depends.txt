@@ -1,5 +1,0 @@
-default
-farming
-wool
-bucket
-ropes?

@@ -1,5 +1,0 @@
-default
-fire?
-castle_masonry?
-hopper?
-doc?

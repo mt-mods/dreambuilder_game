@@ -1,8 +1,0 @@
-# textdomain: homedecor_electrical
-
-
-### init.lua ###
-
-Doorbell=Türklingel
-Light switch=Lichtschalter
-Power Outlet=Steckdose

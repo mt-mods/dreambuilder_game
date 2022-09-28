@@ -1,0 +1,276 @@
+[submodule "mods/homedecor_modpack"]
+	path = mods/homedecor_modpack
+	url = https://github.com/mt-mods/homedecor_modpack.git
+[submodule "mods/home_workshop_modpack"]
+	path = mods/home_workshop_modpack
+	url = https://github.com/mt-mods/home_workshop_modpack.git
+[submodule "mods/mesecons"]
+	path = mods/mesecons
+	url = https://github.com/minetest-mods/mesecons
+[submodule "mods/biome_lib"]
+	path = mods/biome_lib
+	url = https://github.com/mt-mods/biome_lib
+[submodule "mods/basic_materials"]
+	path = mods/basic_materials
+	url = https://github.com/mt-mods/basic_materials
+[submodule "mods/Minetest-WorldEdit"]
+	path = mods/Minetest-WorldEdit
+	url = https://github.com/Uberi/Minetest-WorldEdit
+[submodule "mods/ambience"]
+	path = mods/ambience
+	url = https://github.com/minetest-mirrors/ambience
+[submodule "mods/anvil"]
+	path = mods/anvil
+	url = https://github.com/minetest-mods/anvil
+[submodule "mods/bakedclay"]
+	path = mods/bakedclay
+	url = https://github.com/minetest-mirrors/bakedclay.git
+[submodule "mods/basic_signs"]
+	path = mods/basic_signs
+	url = https://github.com/mt-mods/basic_signs.git
+[submodule "mods/bedrock"]
+	path = mods/bedrock
+	url = https://github.com/Calinou/bedrock
+[submodule "mods/bees"]
+	path = mods/bees
+	url = https://github.com/minetest-mirrors/bees
+[submodule "mods/blox"]
+	path = mods/blox
+	url = https://github.com/mt-mods/blox.git
+[submodule "mods/bobblocks"]
+	path = mods/bobblocks
+	url = https://github.com/minetest-mods/bobblocks
+[submodule "mods/bonemeal"]
+	path = mods/bonemeal
+	url = https://github.com/minetest-mirrors/bonemeal.git
+[submodule "mods/castle_farming"]
+	path = mods/castle_farming
+	url = https://github.com/minetest-mods/castle_farming
+[submodule "mods/castle_gates"]
+	path = mods/castle_gates
+	url = https://github.com/minetest-mods/castle_gates.git
+[submodule "mods/castle_lighting"]
+	path = mods/castle_lighting
+	url = https://github.com/minetest-mods/castle_lighting.git
+[submodule "mods/castle_masonry"]
+	path = mods/castle_masonry
+	url = https://github.com/minetest-mods/castle_masonry.git
+[submodule "mods/castle_shields"]
+	path = mods/castle_shields
+	url = https://github.com/minetest-mods/castle_shields
+[submodule "mods/castle_storage"]
+	path = mods/castle_storage
+	url = https://github.com/minetest-mods/castle_storage
+[submodule "mods/castle_tapestries"]
+	path = mods/castle_tapestries
+	url = https://github.com/minetest-mods/castle_tapestries
+[submodule "mods/castle_weapons"]
+	path = mods/castle_weapons
+	url = https://github.com/minetest-mods/castle_weapons.git
+[submodule "mods/caverealms_lite"]
+	path = mods/caverealms_lite
+	url = https://github.com/Ezhh/caverealms_lite
+[submodule "mods/coloredwood"]
+	path = mods/coloredwood
+	url = https://github.com/mt-mods/coloredwood.git
+[submodule "mods/cottages"]
+	path = mods/cottages
+	url = https://github.com/Sokomine/cottages.git
+[submodule "mods/currency"]
+	path = mods/currency
+	url = https://github.com/mt-mods/currency.git
+[submodule "mods/digilines"]
+	path = mods/digilines
+	url = https://github.com/minetest-mods/digilines.git
+[submodule "mods/dreambuilder_hotbar"]
+	path = mods/dreambuilder_hotbar
+	url = https://github.com/mt-mods/dreambuilder_hotbar.git
+[submodule "mods/facade"]
+	path = mods/facade
+	url = https://github.com/TumeniNodes/facade.git
+[submodule "mods/farming"]
+	path = mods/farming
+	url = https://github.com/minetest-mirrors/farming.git
+[submodule "mods/gloopblocks"]
+	path = mods/gloopblocks
+	url = https://github.com/mt-mods/gloopblocks.git
+[submodule "mods/glooptest"]
+	path = mods/glooptest
+	url = https://github.com/minetest-mods/glooptest.git
+[submodule "mods/ilights"]
+	path = mods/ilights
+	url = https://github.com/mt-mods/ilights.git
+[submodule "mods/led_marquee"]
+	path = mods/led_marquee
+	url = https://github.com/mt-mods/led_marquee.git
+[submodule "mods/maptools"]
+	path = mods/maptools
+	url = https://github.com/minetest-mods/maptools.git
+[submodule "mods/moreblocks"]
+	path = mods/moreblocks
+	url = https://github.com/minetest-mods/moreblocks.git
+[submodule "mods/moreores"]
+	path = mods/moreores
+	url = https://github.com/minetest-mods/moreores.git
+[submodule "mods/moretrees"]
+	path = mods/moretrees
+	url = https://github.com/mt-mods/moretrees.git
+[submodule "mods/new_campfire"]
+	path = mods/new_campfire
+	url = https://github.com/mt-mods/new_campfire.git
+[submodule "mods/nixie_tubes"]
+	path = mods/nixie_tubes
+	url = https://github.com/mt-mods/nixie_tubes.git
+[submodule "mods/pipeworks"]
+	path = mods/pipeworks
+	url = https://github.com/mt-mods/pipeworks.git
+[submodule "mods/quartz"]
+	path = mods/quartz
+	url = https://github.com/minetest-mods/quartz.git
+[submodule "mods/replacer"]
+	path = mods/replacer
+	url = https://github.com/Sokomine/replacer.git
+[submodule "mods/ropes"]
+	path = mods/ropes
+	url = https://github.com/minetest-mods/ropes.git
+[submodule "mods/signs_lib"]
+	path = mods/signs_lib
+	url = https://github.com/mt-mods/signs_lib.git
+[submodule "mods/simple_streetlights"]
+	path = mods/simple_streetlights
+	url = https://github.com/mt-mods/simple_streetlights.git
+[submodule "mods/stained_glass"]
+	path = mods/stained_glass
+	url = https://github.com/minetest-mods/stained_glass
+[submodule "mods/steel"]
+	path = mods/steel
+	url = https://github.com/mt-mods/steel.git
+[submodule "mods/street_signs"]
+	path = mods/street_signs
+	url = https://github.com/mt-mods/street_signs.git
+[submodule "mods/travelnet"]
+	path = mods/travelnet
+	url = https://github.com/mt-mods/travelnet.git
+[submodule "mods/unified_inventory"]
+	path = mods/unified_inventory
+	url = https://github.com/minetest-mods/unified_inventory.git
+[submodule "mods/unifiedbricks"]
+	path = mods/unifiedbricks
+	url = https://github.com/minetest-mods/unifiedbricks.git
+[submodule "mods/unifieddyes"]
+	path = mods/unifieddyes
+	url = https://github.com/mt-mods/unifieddyes.git
+[submodule "mods/mtg/wool"]
+	path = mods/mtg/wool
+	url = https://github.com/minetest-game/wool
+[submodule "mods/mtg/creative"]
+	path = mods/mtg/creative
+	url = https://github.com/minetest-game/creative
+[submodule "mods/mtg/stairs"]
+	path = mods/mtg/stairs
+	url = https://github.com/minetest-game/stairs
+[submodule "mods/mtg/default"]
+	path = mods/mtg/default
+	url = https://github.com/minetest-game/default
+[submodule "mods/mtg/screwdriver"]
+	path = mods/mtg/screwdriver
+	url = https://github.com/minetest-game/screwdriver
+[submodule "mods/mtg/flowers"]
+	path = mods/mtg/flowers
+	url = https://github.com/minetest-game/flowers
+[submodule "mods/mtg/doors"]
+	path = mods/mtg/doors
+	url = https://github.com/minetest-game/doors
+[submodule "mods/mtg/xpanes"]
+	path = mods/mtg/xpanes
+	url = https://github.com/minetest-game/xpanes
+[submodule "mods/mtg/dye"]
+	path = mods/mtg/dye
+	url = https://github.com/minetest-game/dye
+[submodule "mods/mtg/beds"]
+	path = mods/mtg/beds
+	url = https://github.com/minetest-game/beds
+[submodule "mods/mtg/vessels"]
+	path = mods/mtg/vessels
+	url = https://github.com/minetest-game/vessels
+[submodule "mods/mtg/map"]
+	path = mods/mtg/map
+	url = https://github.com/minetest-game/map
+[submodule "mods/mtg/carts"]
+	path = mods/mtg/carts
+	url = https://github.com/minetest-game/carts
+[submodule "mods/mtg/fireflies"]
+	path = mods/mtg/fireflies
+	url = https://github.com/minetest-game/fireflies
+[submodule "mods/mtg/sethome"]
+	path = mods/mtg/sethome
+	url = https://github.com/minetest-game/sethome
+[submodule "mods/mtg/game_commands"]
+	path = mods/mtg/game_commands
+	url = https://github.com/minetest-game/game_commands
+[submodule "mods/mtg/butterflies"]
+	path = mods/mtg/butterflies
+	url = https://github.com/minetest-game/butterflies
+[submodule "mods/mtg/binoculars"]
+	path = mods/mtg/binoculars
+	url = https://github.com/minetest-game/binoculars
+[submodule "mods/mtg/bucket"]
+	path = mods/mtg/bucket
+	url = https://github.com/minetest-game/bucket
+[submodule "mods/mtg/boats"]
+	path = mods/mtg/boats
+	url = https://github.com/minetest-game/boats
+[submodule "mods/mtg/sfinv"]
+	path = mods/mtg/sfinv
+	url = https://github.com/minetest-game/sfinv
+[submodule "mods/mtg/walls"]
+	path = mods/mtg/walls
+	url = https://github.com/minetest-game/walls
+[submodule "mods/mtg/fire"]
+	path = mods/mtg/fire
+	url = https://github.com/minetest-game/fire
+[submodule "mods/mtg/weather"]
+	path = mods/mtg/weather
+	url = https://github.com/minetest-game/weather
+[submodule "mods/mtg/player_api"]
+	path = mods/mtg/player_api
+	url = https://github.com/minetest-game/player_api
+[submodule "mods/mtg/spawn"]
+	path = mods/mtg/spawn
+	url = https://github.com/minetest-game/spawn
+[submodule "mods/mtg/give_initial_stuff"]
+	path = mods/mtg/give_initial_stuff
+	url = https://github.com/minetest-game/give_initial_stuff
+[submodule "mods/mtg/env_sounds"]
+	path = mods/mtg/env_sounds
+	url = https://github.com/minetest-game/env_sounds
+[submodule "mods/mtg/dungeon_loot"]
+	path = mods/mtg/dungeon_loot
+	url = https://github.com/minetest-game/dungeon_loot
+[submodule "mods/plantlife_modpack"]
+	path = mods/plantlife_modpack
+	url = https://github.com/mt-mods/plantlife_modpack.git
+[submodule "mods/technic"]
+	path = mods/technic
+	url = https://github.com/mt-mods/technic.git
+[submodule "mods/mymillwork"]
+	path = mods/mymillwork
+	url = https://github.com/minetest-mods/mymillwork.git
+[submodule "mods/roads"]
+	path = mods/roads
+	url = https://cheapiesystems.com/git/roads
+[submodule "mods/arrowboards"]
+	path = mods/arrowboards
+	url = https://cheapiesystems.com/git/arrowboards
+[submodule "mods/digistuff"]
+	path = mods/digistuff
+	url = https://cheapiesystems.com/git/digistuff
+[submodule "mods/framedglass"]
+	path = mods/framedglass
+	url = https://github.com/minetest-mods/framedglass.git
+[submodule "mods/invsaw"]
+	path = mods/invsaw
+	url = https://cheapiesystems.com/git/invsaw
+[submodule "mods/cool_trees"]
+	path = mods/cool_trees
+	url = https://github.com/runsy/cool_trees/
