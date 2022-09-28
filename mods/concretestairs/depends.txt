@@ -1,5 +1,0 @@
-default
-streetsmod
-basic_materials
-stairs?
-moreblocks?

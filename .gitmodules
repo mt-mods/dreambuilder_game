@@ -253,3 +253,21 @@
 [submodule "mods/technic"]
 	path = mods/technic
 	url = https://github.com/mt-mods/technic.git
+[submodule "mods/mymillwork"]
+	path = mods/mymillwork
+	url = https://github.com/minetest-mods/mymillwork.git
+[submodule "mods/roads"]
+	path = mods/roads
+	url = https://cheapiesystems.com/git/roads
+[submodule "mods/arrowboards"]
+	path = mods/arrowboards
+	url = https://cheapiesystems.com/git/arrowboards
+[submodule "mods/digistuff"]
+	path = mods/digistuff
+	url = https://cheapiesystems.com/git/digistuff
+[submodule "mods/framedglass"]
+	path = mods/framedglass
+	url = https://github.com/minetest-mods/framedglass.git
+[submodule "mods/invsaw"]
+	path = mods/invsaw
+	url = https://cheapiesystems.com/git/invsaw

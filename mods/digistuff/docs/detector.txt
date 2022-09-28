@@ -1,3 +1,0 @@
-How to use the digilines player detector:
-Set a channel and radius (radius must be a number >0 and <10 - anything invalid will be ignored and "6" used instead).
-Every second while a player is within the radius, a table listing the players in range will be sent via digilines on the chosen channel.
