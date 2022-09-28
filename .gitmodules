@@ -79,3 +79,66 @@
 [submodule "mods/currency"]
 	path = mods/currency
 	url = https://github.com/mt-mods/currency.git
+[submodule "mods/digilines"]
+	path = mods/digilines
+	url = https://github.com/minetest-mods/digilines.git
+[submodule "mods/dreambuilder_hotbar"]
+	path = mods/dreambuilder_hotbar
+	url = https://github.com/mt-mods/dreambuilder_hotbar.git
+[submodule "mods/facade"]
+	path = mods/facade
+	url = https://github.com/TumeniNodes/facade.git
+[submodule "mods/farming"]
+	path = mods/farming
+	url = https://github.com/minetest-mirrors/farming.git
+[submodule "mods/gloopblocks"]
+	path = mods/gloopblocks
+	url = https://github.com/mt-mods/gloopblocks.git
+[submodule "mods/glooptest"]
+	path = mods/glooptest
+	url = https://github.com/minetest-mods/glooptest.git
+[submodule "mods/ilights"]
+	path = mods/ilights
+	url = https://github.com/mt-mods/ilights.git
+[submodule "mods/led_marquee"]
+	path = mods/led_marquee
+	url = https://github.com/mt-mods/led_marquee.git
+[submodule "mods/maptools"]
+	path = mods/maptools
+	url = https://github.com/minetest-mods/maptools.git
+[submodule "mods/moreblocks"]
+	path = mods/moreblocks
+	url = https://github.com/minetest-mods/moreblocks.git
+[submodule "mods/moreores"]
+	path = mods/moreores
+	url = https://github.com/minetest-mods/moreores.git
+[submodule "mods/moretrees"]
+	path = mods/moretrees
+	url = https://github.com/mt-mods/moretrees.git
+[submodule "mods/new_campfire"]
+	path = mods/new_campfire
+	url = https://github.com/mt-mods/new_campfire.git
+[submodule "mods/nixie_tubes"]
+	path = mods/nixie_tubes
+	url = https://github.com/mt-mods/nixie_tubes.git
+[submodule "mods/pipeworks"]
+	path = mods/pipeworks
+	url = https://github.com/mt-mods/pipeworks.git
+[submodule "mods/quartz"]
+	path = mods/quartz
+	url = https://github.com/minetest-mods/quartz.git
+[submodule "mods/replacer"]
+	path = mods/replacer
+	url = https://github.com/Sokomine/replacer.git
+[submodule "mods/ropes"]
+	path = mods/ropes
+	url = https://github.com/minetest-mods/ropes.git
+[submodule "mods/signs_lib"]
+	path = mods/signs_lib
+	url = https://github.com/mt-mods/signs_lib.git
+[submodule "mods/simple_streetlights"]
+	path = mods/simple_streetlights
+	url = https://github.com/mt-mods/simple_streetlights.git
+[submodule "mods/stained_glass"]
+	path = mods/stained_glass
+	url = https://github.com/minetest-mods/stained_glass
