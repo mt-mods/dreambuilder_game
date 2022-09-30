@@ -280,3 +280,6 @@
 [submodule "crafting_bench"]
 	path = crafting_bench
 	url = https://github.com/minetest-mods/crafting_bench.git
+[submodule "mods/mtt"]
+	path = mods/mtt
+	url = https://github.com/buckarooBanzay/mtt.git
