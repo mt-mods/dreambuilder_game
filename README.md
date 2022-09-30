@@ -1,3 +1,6 @@
+[![ContentDB](https://content.minetest.net/packages/VanessaE/dreambuilder_game/shields/downloads/)](https://content.minetest.net/packages/VanessaE/dreambuilder_game/)
+
+
 # Overview
 
 Dreambuilder is my attempt to give the player pretty much everything they'll ever want to build with, and all the tools they should ever need to actually get the job done.  Of course, needs change, but this game should be a pretty good start!
@@ -187,6 +190,13 @@ If you downloaded the zip, just extract it and rename the resultant directory to
 Move it to your Minetest games directory.  When you start Minetest, you'll notice a little red "house" icon at the bottom of the main menu.  Click that to select Dreambuilder, then create or select a world as you see fit.
 
 Depending on the conditions of the world, this game may take as much as 2 minutes to start, during which time you may see the hotbar and hand, but all-grey window content where the world should be.  Just wait it out, it will eventually start.
+
+## Development:
+
+After cloning this repository you need to initialize the submodules:
+```sh
+git submodule update --init --recursive
+```
 
 ## License:
 Each of the base mods in this game retains the standard licenses their original authors assigned, even if the license file is missing from the archive.  For all of my Dreambuilder-specific changes and their related assets, LGPL 3.0 for code, CC-by-SA 4.0 for media and such.
