@@ -174,7 +174,7 @@ A cave realm deep underground on one of my test worlds
 http://daconcepts.com/vanessa/hobbies/minetest/screenshots/Dreambuilder/caverealm.png
 
 ## Dependencies:
-This game requires Minetest 5.4.0 or later.
+This game requires Minetest 5.6.0 or later.
 
 ## Hardware requirements:
 This game defines a very large number of items and produces a well-detailed landscape, and so it requires a significant amount of resources.  At least a 2 GHz dual core CPU and 4 GB free RAM are required for good performance.  If you use my HDX texture pack, you'll need a LOT more RAM.
