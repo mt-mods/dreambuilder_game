@@ -277,9 +277,9 @@
 [submodule "mods/cblocks"]
 	path = mods/cblocks
 	url = https://github.com/minetest-mirrors/cblocks.git
-[submodule "crafting_bench"]
-	path = crafting_bench
-	url = https://github.com/minetest-mods/crafting_bench.git
 [submodule "mods/mtt"]
 	path = mods/mtt
 	url = https://github.com/buckarooBanzay/mtt.git
+[submodule "mods/crafting_bench"]
+	path = mods/crafting_bench
+	url = https://github.com/minetest-mods/crafting_bench.git
