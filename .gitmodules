@@ -258,19 +258,19 @@
 	url = https://github.com/minetest-mods/mymillwork.git
 [submodule "mods/roads"]
 	path = mods/roads
-	url = https://cheapiesystems.com/git/roads
+	url = https://github.com/minetest-mirrors/roads.git
 [submodule "mods/arrowboards"]
 	path = mods/arrowboards
-	url = https://cheapiesystems.com/git/arrowboards
+	url = https://github.com/minetest-mirrors/arrowboards.git
 [submodule "mods/digistuff"]
 	path = mods/digistuff
-	url = https://cheapiesystems.com/git/digistuff
+	url = https://github.com/minetest-mirrors/digistuff.git
 [submodule "mods/framedglass"]
 	path = mods/framedglass
 	url = https://github.com/minetest-mods/framedglass.git
 [submodule "mods/invsaw"]
 	path = mods/invsaw
-	url = https://cheapiesystems.com/git/invsaw
+	url = https://github.com/minetest-mirrors/invsaw.git
 [submodule "mods/cool_trees"]
 	path = mods/cool_trees
 	url = https://github.com/runsy/cool_trees/
