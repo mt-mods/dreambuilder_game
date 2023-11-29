@@ -124,6 +124,7 @@
 [submodule "mods/pipeworks"]
 	path = mods/pipeworks
 	url = https://github.com/mt-mods/pipeworks.git
+	branch = fix_fakeplayer
 [submodule "mods/quartz"]
 	path = mods/quartz
 	url = https://github.com/minetest-mods/quartz.git
