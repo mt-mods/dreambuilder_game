@@ -2,7 +2,7 @@ version: "3.6"
 
 services:
  sut:
-  image: ghcr.io/minetest-hosting/minetest-docker:${ENGINE_VERSION:-5.8.0}
+  image: lscr.io/linuxserver/minetest:${ENGINE_VERSION:-5.8.0}
   entrypoint: "minetestserver --config /minetest.conf"
   user: root
   volumes:
