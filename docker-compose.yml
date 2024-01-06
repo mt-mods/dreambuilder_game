@@ -3,7 +3,7 @@ version: "3.6"
 services:
  sut:
   image: lscr.io/linuxserver/minetest:${ENGINE_VERSION:-5.8.0}
-  entrypoint: "minetestserver --config /minetest.conf --gameid dreambuilder_game"
+  entrypoint: "minetestserver --config /minetest.conf"
   user: root
   volumes:
     - "./:/root/.minetest/games/dreambuilder_game/"
