@@ -1,8 +1,8 @@
 version: "3.6"
 
 services:
- sut:
-  image: registry.gitlab.com/minetest/minetest/server:${ENGINE_VERSION:-5.6.0}
+ testserver:
+  image: ${ENGINE_IMAGE:-ghcr.io/minetest-hosting/minetest-docker:5.8.0}
   entrypoint: "minetestserver --config /minetest.conf"
   user: root
   volumes:
@@ -10,8 +10,6 @@ services:
     - "./test/world.mt:/root/.minetest/worlds/world/world.mt"
     - "./test/minetest.conf:/minetest.conf"
     - "world:/root/.minetest/worlds/world"
-  ports:
-    - "30000:30000/udp"
 
 volumes:
   world: {}
