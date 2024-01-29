@@ -22,3 +22,5 @@ jobs:
         submodules: recursive
     - name: test
       run: docker-compose up --exit-code-from testserver
+      env:
+        ENGINE_IMAGE: ${{ matrix.ENGINE_IMAGE }}
