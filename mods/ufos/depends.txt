@@ -1,2 +1,0 @@
-default
-dreambuilder_theme_settings

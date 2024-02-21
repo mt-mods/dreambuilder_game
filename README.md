@@ -89,7 +89,7 @@ A complete list of mods is as follows:
 * Street signs (https://gitlab.com/VanessaE/street_signs)
 * Titanium (Aqua; HybridDog's fork; https://github.com/HybridDog/titanium)
 * Travelnet (Sokomine; https://github.com/Sokomine/travelnet)
-* Ufos (Zeg9; https://github.com/Zeg9/minetest-ufos/)
+* Ufos (Zeg9; https://github.com/mt-historical/ufos)
 * Unifiedbricks (wowiamdiamonds; https://github.com/minetest-mods/unifiedbricks)
 * Unifieddyes (https://gitlab.com/VanessaE/unifieddyes)
 * Unified inventory (RealBadAngel; https://github.com/minetest-mods/unified_inventory)
