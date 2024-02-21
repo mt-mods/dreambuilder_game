@@ -283,3 +283,6 @@
 [submodule "mods/crafting_bench"]
 	path = mods/crafting_bench
 	url = https://github.com/minetest-mods/crafting_bench.git
+[submodule "mods/ufos"]
+	path = mods/ufos
+	url = https://github.com/mt-historical/ufos
