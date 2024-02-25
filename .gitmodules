@@ -286,3 +286,6 @@
 [submodule "mods/ufos"]
 	path = mods/ufos
 	url = https://github.com/mt-historical/ufos
+[submodule "mods/xcompat"]
+	path = mods/xcompat
+	url = https://github.com/mt-mods/xcompat.git
