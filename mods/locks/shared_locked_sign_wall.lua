@@ -20,6 +20,7 @@ minetest.register_node("locks:shared_locked_sign_wall", {
                 --wall_side = <default>
         },
         groups = {choppy=2,dig_immediate=2},
+        is_ground_content = false,
         legacy_wallmounted = true,
 
 
