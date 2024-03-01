@@ -66,6 +66,7 @@ for i = 1, 2 do
         drawtype = "nodebox",
         drop = "locks:door",
         groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2},
+        is_ground_content = false,
         node_box = {
             type = "fixed",
             fixed = door_top
@@ -99,6 +100,7 @@ for i = 1, 2 do
         drawtype = "nodebox",
         drop = "locks:door",
         groups = {snappy=2,choppy=2,oddly_breakable_by_hand=2},
+        is_ground_content = false,
         node_box = {
             type = "fixed",
             fixed = door_bottom
@@ -141,6 +143,7 @@ minetest.register_node("locks:door", {
     wield_image = 'xdoors2_door.png',
     stack_max = 1,
     sunlight_propogates = true,
+    is_ground_content = false,
     on_place = function(itemstack, placer, pointed_thing)
         local above = pointed_thing.above
 	local above1 = {x = above.x, y = above.y + 1, z = above.z};
