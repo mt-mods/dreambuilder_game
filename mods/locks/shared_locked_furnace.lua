@@ -127,6 +127,7 @@ minetest.register_node("locks:shared_locked_furnace", {
 	description = "Shared locked furnace",
 	paramtype2 = "facedir",
 	groups = {cracky=2},
+	is_ground_content = false,
 	legacy_facedir_simple = true,
 
 	tiles      = locks.furnace_add.tiles_normal,
@@ -231,6 +232,7 @@ minetest.register_node("locks:shared_locked_furnace_active", {
 	light_source = 8,
 	drop = "locks:shared_locked_furnace",
 	groups = {cracky=2, not_in_creative_inventory=1},
+	is_ground_content = false,
 	legacy_facedir_simple = true,
 
 	tiles      = locks.furnace_add.tiles_active,
