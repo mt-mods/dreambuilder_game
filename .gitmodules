@@ -271,6 +271,9 @@
 [submodule "mods/invsaw"]
 	path = mods/invsaw
 	url = https://github.com/minetest-mirrors/invsaw.git
+[submodule "mods/cool_trees"]
+	path = mods/cool_trees
+	url = https://github.com/runsy/cool_trees/
 [submodule "mods/cblocks"]
 	path = mods/cblocks
 	url = https://github.com/minetest-mirrors/cblocks.git
