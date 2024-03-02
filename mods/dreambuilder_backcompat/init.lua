@@ -17,6 +17,8 @@ if not minetest.get_modpath("ebony") then
     minetest.register_alias("ebony:creeper_leaves","default:leaves")
     minetest.register_alias("ebony:liana","air")
     minetest.register_alias("ebony:persimmon","air")
+    minetest.register_alias("ebony:fence","default:fence_wood")
+    minetest.register_alias("ebony:fence_rail","default:fence_rail_wood")
 
     stairsplus:register_alias_all("ebony", "wood", "moretrees", "apple_tree_planks")
 end
