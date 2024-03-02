@@ -88,6 +88,7 @@ for _,i in pairs({"tiny","small","medium","large","huge"}) do
 		description = string.format("Digilines Display (%s font)",i),
 		tiles = {"digidisplay_bg.png",},
 		groups = {cracky=3,digidisplay_lbm=1},
+		is_ground_content = false,
 		paramtype = "light",
 		paramtype2 = "facedir",
 		on_rotate = screwdriver and screwdriver.rotate_simple,
