@@ -5,5 +5,5 @@ if not minetest.get_modpath("hollytree") then
     minetest.register_alias("hollytree:leaves","default:leaves")
     --minetest.register_alias(,)
 
-    stairsplus:register_stair_alias("hollytree", "wood", "moretrees", "apple_tree_planks")
+    stairsplus:register_alias_all("hollytree", "wood", "moretrees", "apple_tree_planks")
 end
