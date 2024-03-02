@@ -8,7 +8,7 @@ minetest.register_node("gardening:rosebush", {
 	paramtype = "light",
 	walkable = false,
 	buildable_to = true,
-	is_ground_content = true,
+	is_ground_content = false,
 	groups = {snappy=3,flammable=3,attached_node=1},
 --	sounds = default.node_sound_leaves_defaults(),
 	selection_box = {
@@ -38,7 +38,7 @@ minetest.register_node("gardening:geranium_shrub", {
 	paramtype = "light",
 	walkable = false,
 	buildable_to = true,
-	is_ground_content = true,
+	is_ground_content = false,
 	groups = {snappy=3,flammable=3,attached_node=1},
 --	sounds = default.node_sound_leaves_defaults(),
 	selection_box = {
@@ -68,7 +68,7 @@ minetest.register_node("gardening:violas", {
 	paramtype = "light",
 	walkable = false,
 	buildable_to = true,
-	is_ground_content = true,
+	is_ground_content = false,
 	groups = {snappy=3,flammable=3,attached_node=1},
 --	sounds = default.node_sound_leaves_defaults(),
 	selection_box = {
@@ -98,7 +98,7 @@ minetest.register_node('gardening:dandelions', {
 	paramtype = "light",
 	walkable = false,
 	buildable_to = true,
-	is_ground_content = true,
+	is_ground_content = false,
 	groups = {snappy=3,flammable=3,attached_node=1},
 --	sounds = default.node_sound_leaves_defaults(),
 	selection_box = {
@@ -128,7 +128,7 @@ minetest.register_node("gardening:tulip_shrub", {
 	paramtype = "light",
 	walkable = false,
 	buildable_to = true,
-	is_ground_content = true,
+	is_ground_content = false,
 	groups = {snappy=3,flammable=3,attached_node=1},
 --	sounds = default.node_sound_leaves_defaults(),
 	selection_box = {
@@ -151,7 +151,7 @@ minetest.register_craft({
 minetest.register_node("gardening:packed_dirt", {
 	description = "Packed Dirt",
 	tiles = {"gardening_packed_dirt.png"},
-	is_ground_content = true,
+	is_ground_content = false,
 	groups = {crumbly=3},
 --	sounds = default.node_sound_dirt_defaults(),
 })
