@@ -24,3 +24,44 @@ jobs:
       run: docker-compose up --exit-code-from testserver
       env:
         ENGINE_IMAGE: ${{ matrix.ENGINE_IMAGE }}
+
+    - name: Dependabot metadata
+      id: metadata
+      uses: dependabot/fetch-metadata@v1.6.0
+      with:
+        github-token: "${{ secrets.GITHUB_TOKEN }}"
+
+    - name: Enable auto-merge for Dependabot PRs
+      if: ${{
+        success() && (
+          contains(steps.metadata.outputs.dependency-names, 'pipeworks') ||
+          contains(steps.metadata.outputs.dependency-names, 'technic') ||
+          contains(steps.metadata.outputs.dependency-names, 'homedecor_modpack') ||
+          contains(steps.metadata.outputs.dependency-names, 'home_workshop_modpack') ||
+          contains(steps.metadata.outputs.dependency-names, 'biome_lib') ||
+          contains(steps.metadata.outputs.dependency-names, 'basic_materials') ||
+          contains(steps.metadata.outputs.dependency-names, 'basic_signs') ||
+          contains(steps.metadata.outputs.dependency-names, 'blox') ||
+          contains(steps.metadata.outputs.dependency-names, 'coloredwood') ||
+          contains(steps.metadata.outputs.dependency-names, 'currency') ||
+          contains(steps.metadata.outputs.dependency-names, 'dreambuilder_hotbar') ||
+          contains(steps.metadata.outputs.dependency-names, 'gloopblocks') ||
+          contains(steps.metadata.outputs.dependency-names, 'ilights') ||
+          contains(steps.metadata.outputs.dependency-names, 'led_marquee') ||
+          contains(steps.metadata.outputs.dependency-names, 'moretrees') ||
+          contains(steps.metadata.outputs.dependency-names, 'new_campfire') ||
+          contains(steps.metadata.outputs.dependency-names, 'nixie_tubes') ||
+          contains(steps.metadata.outputs.dependency-names, 'signs_lib') ||
+          contains(steps.metadata.outputs.dependency-names, 'simple_streetlights') ||
+          contains(steps.metadata.outputs.dependency-names, 'steel') ||
+          contains(steps.metadata.outputs.dependency-names, 'street_signs') ||
+          contains(steps.metadata.outputs.dependency-names, 'travelnet') ||
+          contains(steps.metadata.outputs.dependency-names, 'unifieddyes') ||
+          contains(steps.metadata.outputs.dependency-names, 'plantlife_modpack') ||
+          contains(steps.metadata.outputs.dependency-names, 'xcompat') ||
+          contains(steps.metadata.outputs.dependency-names, 'mods/mtg')
+        )}}
+      run: gh pr merge --auto --merge "$PR_URL"
+      env:
+        PR_URL: ${{github.event.pull_request.html_url}}
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
