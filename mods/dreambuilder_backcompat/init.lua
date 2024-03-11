@@ -68,4 +68,5 @@ end
 
 if not minetest.get_modpath("cherrytree") then
     minetest.register_alias("cherrytree:cherries", "air")
+    minetest.register_alias("cherrytree:blossom_leaves", "default:leaves")
 end
