@@ -1,13 +1,3 @@
-if not minetest.get_modpath("hollytree") then
-    minetest.register_alias("hollytree:sapling", "moretrees:apple_tree_sapling")
-    minetest.register_alias("hollytree:trunk","moretrees:apple_tree_trunk")
-    minetest.register_alias("hollytree:wood","moretrees:apple_tree_planks")
-    minetest.register_alias("hollytree:leaves","default:leaves")
-    --minetest.register_alias(,)
-
-    stairsplus:register_alias_all("hollytree", "wood", "moretrees", "apple_tree_planks")
-end
-
 if not minetest.get_modpath("ebony") then
     minetest.register_alias("ebony:sapling", "moretrees:apple_tree_sapling")
     minetest.register_alias("ebony:trunk","moretrees:apple_tree_trunk")
@@ -46,6 +36,10 @@ local treemodnames = {
     "chestnut",
     "clementine",
     "cherry",
+    "hollytree",
+    "ebony",
+    "pineapple",
+
 }
 
 for _,modname in pairs(treemodnames) do
@@ -62,6 +56,9 @@ for _,modname in pairs(treemodnames) do
         minetest.register_alias("doors:door_" .. modname .. "_wood_c", "doors:door_wood_c")
         minetest.register_alias("doors:door_" .. modname .. "_wood_d", "doors:door_wood_d")
 
+        minetest.register_alias(modname .. ":gate_open", "default:gate_wood_open")
+        minetest.register_alias(modname .. ":gate_closed", "default:gate_wood_closed")
+
         stairsplus:register_alias_all(modname, "wood", "moretrees", "apple_tree_planks")
     end
 end
@@ -69,4 +66,12 @@ end
 if not minetest.get_modpath("cherrytree") then
     minetest.register_alias("cherrytree:cherries", "air")
     minetest.register_alias("cherrytree:blossom_leaves", "default:leaves")
+end
+
+if not minetest.get_modpath("pineapple") then
+    minetest.register_alias("pineapple:pineapple", "air")
+end
+
+if not minetest.get_modpath("plumtree") then
+    minetest.register_alias("plumtree:plum", "air")
 end
