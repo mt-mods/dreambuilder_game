@@ -91,3 +91,10 @@ for _,itemstring in pairs(baditemstrings) do
         minetest.register_alias(itemstring, "air")
     end
 end
+
+if not minetest.get_modpath("palm") then
+    minetest.register_alias("doors:door_palm_a", "doors:door_wood_a")
+    minetest.register_alias("doors:door_palm_b", "doors:door_wood_b")
+    minetest.register_alias("doors:door_palm_c", "doors:door_wood_c")
+    minetest.register_alias("doors:door_palm_d", "doors:door_wood_d")
+end
