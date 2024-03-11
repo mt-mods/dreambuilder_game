@@ -43,7 +43,9 @@ local treemodnames = {
     "plumtree",
     "willow",
     "mahogany",
-    
+    "chestnut",
+    "clementine",
+    "cherry",
 }
 
 for _,modname in pairs(treemodnames) do
