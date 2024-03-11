@@ -1,18 +1,3 @@
-if not minetest.get_modpath("ebony") then
-    minetest.register_alias("ebony:sapling", "moretrees:apple_tree_sapling")
-    minetest.register_alias("ebony:trunk","moretrees:apple_tree_trunk")
-    minetest.register_alias("ebony:wood","moretrees:apple_tree_planks")
-    minetest.register_alias("ebony:leaves","default:leaves")
-    minetest.register_alias("ebony:creeper","moretrees:apple_tree_trunk")
-    minetest.register_alias("ebony:creeper_leaves","default:leaves")
-    minetest.register_alias("ebony:liana","air")
-    minetest.register_alias("ebony:persimmon","air")
-    minetest.register_alias("ebony:fence","default:fence_wood")
-    minetest.register_alias("ebony:fence_rail","default:fence_rail_wood")
-
-    stairsplus:register_alias_all("ebony", "wood", "moretrees", "apple_tree_planks")
-end
-
 local treemodnames = {
     "maple",
     "baldcypress",
@@ -39,7 +24,8 @@ local treemodnames = {
     "hollytree",
     "ebony",
     "pineapple",
-
+    "palm",
+    "ebony",
 }
 
 for _,modname in pairs(treemodnames) do
@@ -68,15 +54,40 @@ for _,modname in pairs(treemodnames) do
     end
 end
 
-if not minetest.get_modpath("cherrytree") then
-    minetest.register_alias("cherrytree:cherries", "air")
-    minetest.register_alias("cherrytree:blossom_leaves", "default:leaves")
-end
+local baditemstrings = {
+    'mahogany:flower_creeper',
+    'lemontree:lemon',
+    'mahogany:creeper',
+    'mahogany:hanging_creeper',
+    'doors:door_palm_d',
+    'palm:coconut',
+    'baldcypress:liana',
+    'larch:moss',
+    'cacaotree:pod',
+    'cacaotree:liana',
+    'cacaotree:flower_creeper',
+    'bamboo:sprout',
+    'clementinetree:clementine',
+    'oak:acorn',
+    'pomegranate:pomegranate',
+    'chestnuttree:bur',
+    'baldcypress:dry_branches',
+    'jacaranda:blossom_leaves',
+    'palm:candle',
+    "cherrytree:cherries",
+    "cherrytree:blossom_leaves",
+    "pineapple:pineapple",
+    "plumtree:plum",
+    "ebony:creeper",
+    "ebony:creeper_leaves",
+    "ebony:liana",
+    "ebony:persimmon",
+}
 
-if not minetest.get_modpath("pineapple") then
-    minetest.register_alias("pineapple:pineapple", "air")
-end
+for _,itemstring in pairs(baditemstrings) do
+    local itemstringsplit = itemstring:split(":")
 
-if not minetest.get_modpath("plumtree") then
-    minetest.register_alias("plumtree:plum", "air")
+    if not minetest.get_modpath(itemstringsplit[1]) then
+        minetest.register_alias(itemstring, "air")
+    end
 end
