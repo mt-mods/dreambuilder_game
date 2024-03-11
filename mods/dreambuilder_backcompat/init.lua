@@ -59,6 +59,11 @@ for _,modname in pairs(treemodnames) do
         minetest.register_alias(modname .. ":gate_open", "default:gate_wood_open")
         minetest.register_alias(modname .. ":gate_closed", "default:gate_wood_closed")
 
+        minetest.register_alias_force("stairs:stair_" .. modname .. "_trunk", "moretrees:stair_apple_tree_planks")
+		minetest.register_alias_force("stairs:stair_outer_" .. modname .. "_trunk", "moretrees:stair_apple_tree_planks_outer")
+		minetest.register_alias_force("stairs:stair_inner_" .. modname .. "_trunk", "moretrees:stair_apple_tree_planks_inner")
+		minetest.register_alias_force("stairs:slab_"  .. modname .. "_trunk", "moretrees:slab_apple_tree_planks")
+
         stairsplus:register_alias_all(modname, "wood", "moretrees", "apple_tree_planks")
     end
 end
