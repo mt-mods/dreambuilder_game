@@ -65,3 +65,7 @@ for _,modname in pairs(treemodnames) do
         stairsplus:register_alias_all(modname, "wood", "moretrees", "apple_tree_planks")
     end
 end
+
+if not minetest.get_modpath("cherrytree") then
+    minetest.register_alias("cherrytree:cherries", "air")
+end
