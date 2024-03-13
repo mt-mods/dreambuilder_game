@@ -258,13 +258,13 @@
 	url = https://github.com/minetest-mods/mymillwork.git
 [submodule "mods/roads"]
 	path = mods/roads
-	url = https://github.com/minetest-mirrors/roads.git
+	url = https://github.com/mt-mods/roads.git
 [submodule "mods/arrowboards"]
 	path = mods/arrowboards
-	url = https://github.com/minetest-mirrors/arrowboards.git
+	url = https://github.com/mt-mods/arrowboards.git
 [submodule "mods/digistuff"]
 	path = mods/digistuff
-	url = https://github.com/minetest-mirrors/digistuff.git
+	url = https://github.com/mt-mods/digistuff.git
 [submodule "mods/framedglass"]
 	path = mods/framedglass
 	url = https://github.com/minetest-mods/framedglass.git
