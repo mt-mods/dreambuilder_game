@@ -270,7 +270,7 @@
 	url = https://github.com/minetest-mods/framedglass.git
 [submodule "mods/invsaw"]
 	path = mods/invsaw
-	url = https://github.com/mt-mods/invsaw/
+	url = https://github.com/mt-mods/invsaw.git
 [submodule "mods/cblocks"]
 	path = mods/cblocks
 	url = https://github.com/minetest-mirrors/cblocks.git
