@@ -44,6 +44,7 @@ minetest.register_node("locks:shared_locked_chest", {
         groups     = locks.chest_add.groups,
 	tube       = locks.chest_add.tube,
         legacy_facedir_simple = true,
+        is_ground_content = false,
 
         on_construct = function(pos)
                 local meta = minetest.get_meta(pos)

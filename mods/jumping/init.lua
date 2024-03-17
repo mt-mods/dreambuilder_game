@@ -7,14 +7,14 @@ local trampolinebox = {
 		{ 0.4, -0.5, -0.5,  0.5, -0.2, -0.4},
 		{ 0.4, -0.5,  0.4,  0.5, -0.2,  0.5},
 		{-0.5, -0.5,  0.4, -0.4, -0.2,  0.5},
-		}
+	}
 }
 
 local cushionbox = {
 	type = "fixed",
 	fixed = {
 		{-0.5, -0.5, -0.5,  0.5, -0.3,  0.5},
-		}
+	}
 }
 
 local trampoline_punch = function(pos, node)
@@ -54,11 +54,12 @@ for i = 1, 6 do
 			"jumping_trampoline_sides.png^jumping_trampoline_sides_overlay"..i..".png"
 		},
 		groups = {
-				dig_immediate = 2,
-				bouncy = 20 + i * 20,
-				fall_damage_add_percent = -70,
-				not_in_creative_inventory = ( i > 1 and 1 or nil),
-			},
+			dig_immediate = 2,
+			bouncy = 20 + i * 20,
+			fall_damage_add_percent = -70,
+			not_in_creative_inventory = ( i > 1 and 1 or nil),
+		},
+		is_ground_content = false,
 	})
 end
 
@@ -74,6 +75,7 @@ minetest.register_node("jumping:cushion", {
 		"jumping_cushion_sides.png"
 	},
 	groups = {dig_immediate=2, disable_jump=1, fall_damage_add_percent=-100},
+	is_ground_content = false,
 })
 
 -- register recipes if the corresponding mods are present

@@ -24,6 +24,7 @@ windmill.register_windmill = function( nodename, descr, animation_png, animation
 		wall_side   = {-0.4, -sel_radius, -sel_radius, -0.2, sel_radius, sel_radius},
 	},
 	groups = {choppy=2,dig_immediate=3,attached_node=1},
+	is_ground_content = false,
 	legacy_wallmounted = true,
 
     })
@@ -50,6 +51,7 @@ windmill.register_windmill = function( nodename, descr, animation_png, animation
 		wall_side   = {-0.4, -sel_radius, -sel_radius, -0.2, sel_radius, sel_radius},
 	},
 	groups = {choppy=2,dig_immediate=3,attached_node=1},
+	is_ground_content = false,
 	legacy_wallmounted = true,
 
     })
@@ -104,6 +106,7 @@ minetest.register_node("windmill:axis", {
 	paramtype2 = "facedir",
 	sunlight_propagates = true,
 	groups = {choppy=2,dig_immediate=3},
+	is_ground_content = false,
 	node_box = {
 		type = "fixed",
 		fixed = {{-0.25, -0.5, -0.25, 0.25, 0.4, 0.25},
