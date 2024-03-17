@@ -292,3 +292,6 @@
 [submodule "mods/jumping"]
 	path = mods/jumping
 	url = https://github.com/minetest-mods/jumping.git
+[submodule "mods/locks"]
+	path = mods/locks
+	url = https://github.com/Sokomine/locks.git
