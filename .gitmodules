@@ -286,3 +286,9 @@
 [submodule "mods/xcompat"]
 	path = mods/xcompat
 	url = https://github.com/mt-mods/xcompat.git
+[submodule "mods/item_drop"]
+	path = mods/item_drop
+	url = https://github.com/minetest-mods/item_drop.git
+[submodule "mods/jumping"]
+	path = mods/jumping
+	url = https://github.com/minetest-mods/jumping.git
