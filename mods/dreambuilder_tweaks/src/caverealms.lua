@@ -1,21 +1,19 @@
 local cave_nodes = { -- Default stairs/slabs/panels/microblocks:
-        "caverealms:glow_crystal",
-        "caverealms:glow_emerald",
-        "caverealms:glow_mese",
-        "caverealms:glow_ore",
-        "caverealms:glow_emerald_ore",
-        "caverealms:glow_ruby",
-        "caverealms:glow_amethyst",
-        "caverealms:glow_ruby_ore",
-        "caverealms:salt_crystal",
-        "caverealms:stone_with_salt",
-        "caverealms:glow_obsidian",
-        "caverealms:glow_obsidian_glass",
-        
+    "caverealms:glow_crystal",
+    "caverealms:glow_emerald",
+    "caverealms:glow_mese",
+    "caverealms:glow_ore",
+    "caverealms:glow_emerald_ore",
+    "caverealms:glow_ruby",
+    "caverealms:glow_amethyst",
+    "caverealms:glow_ruby_ore",
+    "caverealms:salt_crystal",
+    "caverealms:stone_with_salt",
+    "caverealms:glow_obsidian",
+    "caverealms:glow_obsidian_glass",
 }
- 
-    
-    for _, name in pairs(cave_nodes) do
+
+for _, name in pairs(cave_nodes) do
 	local nodename = "caverealms:"..name
 	local a,b = string.find(name, ":")
 	if b then
