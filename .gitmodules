@@ -295,3 +295,6 @@
 [submodule "mods/locks"]
 	path = mods/locks
 	url = https://github.com/Sokomine/locks.git
+[submodule "mods/fakelib"]
+	path = mods/fakelib
+	url = https://github.com/OgelGames/fakelib
