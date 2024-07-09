@@ -25,6 +25,7 @@ minetest.register_node("prefab_redo:concrete_with_grass", {
 		"basic_materials_concrete_block.png^default_grass_side.png"
 	},
 	groups = {cracky = 1},
+	is_ground_content = false,
 })
 
 minetest.register_node("prefab_redo:concrete_wall", {
@@ -35,6 +36,7 @@ minetest.register_node("prefab_redo:concrete_wall", {
 	tiles = {"basic_materials_concrete_block.png"},
 	sunlight_propagates = true,
 	groups = {cracky = 1},
+	is_ground_content = false,
 	node_box = {
 		type = "connected",
 		fixed          = {{-0.3, -0.5, -0.3, 0.3, -0.4, 0.3}, {-0.1, -0.5, -0.1, 0.1, 0.5, 0.1}},
@@ -77,6 +79,7 @@ minetest.register_node("prefab_redo:concrete_wall_upper", {
 	tiles = {"basic_materials_concrete_block.png"},
 	sunlight_propagates = true,
 	groups = {cracky = 1,not_in_creative_inventory = 1},
+	is_ground_content = false,
 	drop = "prefab_redo:concrete_wall",
 	node_box = {
 		type = "connected",
@@ -113,6 +116,7 @@ minetest.register_node("prefab_redo:concrete_ladder", {
 		type = "wallmounted",
 	},
 	groups = {cracky = 2},
+	is_ground_content = false,
 	sounds = default.node_sound_stone_defaults(),
 })
 
@@ -137,6 +141,7 @@ minetest.register_node("prefab_redo:concrete_railing", {
 	tiles = {"basic_materials_concrete_block.png"},
 	sunlight_propagates = true,
 	groups = {cracky = 1},
+	is_ground_content = false,
 	node_box = {
 		type = "connected",
 		fixed          = {{0.0625,-0.5,0.0625,-0.0625,0.1875,-0.0625}},
@@ -169,6 +174,7 @@ minetest.register_node("prefab_redo:concrete_catwalk",{
 		},
 	},
 	groups = {cracky = 2},
+	is_ground_content = false,
 })
 
 minetest.register_node("prefab_redo:concrete_bench", {
@@ -185,6 +191,7 @@ minetest.register_node("prefab_redo:concrete_bench", {
 		},
 	},
 	groups = {cracky = 2},
+	is_ground_content = false,
 })
 
 minetest.register_craft({
