@@ -20,6 +20,6 @@ jobs:
         fetch-depth: 0
         submodules: recursive
     - name: test
-      run: docker-compose up --exit-code-from testserver
+      run: docker compose up --exit-code-from testserver
       env:
         ENGINE_IMAGE: ${{ matrix.ENGINE_IMAGE }}

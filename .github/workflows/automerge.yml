@@ -16,7 +16,7 @@ jobs:
           submodules: recursive
 
       - name: test with latest engine
-        run: docker-compose up --exit-code-from testserver
+        run: docker compose up --exit-code-from testserver
         env:
           ENGINE_IMAGE: "ghcr.io/minetest-hosting/minetest-docker:main"
 
