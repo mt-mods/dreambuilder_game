@@ -114,6 +114,7 @@ for _,def in ipairs(disptypes) do
 			groups = {
 				not_in_creative_inventory = 1,
 			},
+			is_ground_content = false,
 			paramtype = "light",
 			tiles = {
 				string.format("display_blocks_redo_%s_crystal.png",lname),
@@ -133,6 +134,7 @@ for _,def in ipairs(disptypes) do
 		groups = {
 			cracky = 3,
 		},
+		is_ground_content = false,
 		sounds = minetest.global_exists("default") and default.node_sound_glass_defaults(),
 		paramtype = "light",
 		light_source = def.light_source,
@@ -178,6 +180,7 @@ minetest.register_node("display_blocks_redo:natura_cube",{
 		cracky = 3,
 		oddly_breakable_by_hand = 3,
 	},
+	is_ground_content = false,
 	paramtype = "light",
 	drawtype = "glasslike",
 	sounds = minetest.global_exists("default") and default.node_sound_glass_defaults(),
@@ -194,6 +197,7 @@ minetest.register_node("display_blocks_redo:industria_cube",{
 		cracky = 3,
 		oddly_breakable_by_hand = 3,
 	},
+	is_ground_content = false,
 	paramtype = "light",
 	drawtype = "glasslike",
 	sounds = minetest.global_exists("default") and default.node_sound_glass_defaults(),
@@ -251,6 +255,7 @@ else
 		tiles = {
 			"display_blocks_redo_uranium_block.png",
 		},
+		is_ground_content = false,
 	})
 	
 	minetest.register_craftitem("display_blocks_redo:uranium_dust",{

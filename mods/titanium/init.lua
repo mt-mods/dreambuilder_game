@@ -21,6 +21,7 @@ minetest.register_node( "titanium:titanium_in_ground", {
 minetest.register_node( "titanium:block", {
 	description = "Titanium Block",
 	tiles  = { "titanium_block.png" },
+	is_ground_content = false,
 	groups = {cracky=1},
 	sounds = default.node_sound_stone_defaults(),
 })
@@ -31,6 +32,7 @@ minetest.register_node("titanium:glass", {
 	tiles  = {"titanium_glass.png", "titanium_glass_stripes.png"},
 	paramtype = "light",
 	sunlight_propagates = true,
+	is_ground_content = false,
 	groups = {snappy=1,cracky=2,oddly_breakable_by_hand=2},
 	sounds = default.node_sound_glass_defaults(),
 })
@@ -51,6 +53,7 @@ minetest.register_node( "titanium:titanium_plate", {
 	description = "Titanium Plate",
 	tiles  = {"titanium_plate.png"},
 	inventory_image = "titanium_plate.png",
+	is_ground_content = false,
 	groups = {cracky=1},
 	sounds = default.node_sound_stone_defaults(),
 })
@@ -58,6 +61,7 @@ minetest.register_node( "titanium:titanium_plate", {
 minetest.register_node( "titanium:titanium_tv_1", {
 	description = "Titanium TV",
 	tiles  = { "titanium_tv_1.png" },
+	is_ground_content = false,
 	groups = {snappy=1,bendy=2,cracky=1,melty=2,level=2},
 	drop = 'titanium:titanium_tv_1',
 	light_source = 8,
@@ -66,6 +70,7 @@ minetest.register_node( "titanium:titanium_tv_1", {
 minetest.register_node( "titanium:titanium_tv_2", {
 	description = "Titanium TV",
 	tiles  = { "titanium_tv_2.png" },
+	is_ground_content = false,
 	groups = {snappy=1,bendy=2,cracky=1,melty=2,level=2},
 	drop = 'titanium:titanium_tv_1',
 	light_source = 8,

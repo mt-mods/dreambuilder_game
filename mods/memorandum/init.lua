@@ -32,16 +32,17 @@ minetest.register_node("memorandum:letter_empty", {
 	walkable = false,
 	node_box = {type = "fixed", fixed = sheet},
 	groups = {snappy=3,dig_immediate=3,not_in_creative_inventory=1},
+	is_ground_content = false,
 	sounds = default.node_sound_leaves_defaults(),
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		meta:set_string(
-					"formspec", 
-					"size[10,7]"..
-					"field[1,1;8.5,1;text; Write a Letter;${text}]"..
-					"field[1,3;4.25,1;signed; Sign Letter (optional);${signed}]"..
-					"button_exit[0.75,5;4.25,1;text,signed;Done]"
-				)
+			"formspec", 
+			"size[10,7]"..
+			"field[1,1;8.5,1;text; Write a Letter;${text}]"..
+			"field[1,3;4.25,1;signed; Sign Letter (optional);${signed}]"..
+			"button_exit[0.75,5;4.25,1;text,signed;Done]"
+		)
 		meta:set_string("infotext", info..'"')
 	end,
 	on_receive_fields = function(pos, formname, fields, sender)
@@ -141,6 +142,7 @@ minetest.register_node("memorandum:letter_written", {
 	walkable = false,
 	node_box = {type = "fixed", fixed = sheet},
 	groups = {snappy=3,dig_immediate=3,not_in_creative_inventory=1},
+	is_ground_content = false,
 	sounds = default.node_sound_leaves_defaults(),
 	on_receive_fields = function(pos, formname, fields, sender)
 		local item = sender:get_wielded_item()
@@ -243,6 +245,7 @@ minetest.register_node("memorandum:message", {
 	},
 	stack_max = 1,
 	groups = {vessel=1,dig_immediate=3,attached_node=1,not_in_creative_inventory=1},
+	is_ground_content = false,
 	--sounds = default.node_sound_glass_defaults(),
 	on_use = function(itemstack, user, pointed_thing)
 		local pt = pointed_thing
