@@ -109,22 +109,22 @@ function rgblightstone.handle_digilines(pos,node,channel,msg,truecolor)
 end
 
 function rgblightstone.handle_fields(pos,formname,fields,sender)
-			local name = sender:get_player_name()
-			if minetest.is_protected(pos, name) and not minetest.check_player_privs(name, { protection_bypass = true }) then
-				minetest.record_protection_violation(pos, name)
-				return
-			end
-			local meta = minetest.get_meta(pos)
-			if fields.autofill then
-				rgblightstone.autofill(pos,sender)
-			else
-				if fields.channel then
-					meta:set_string("channel", fields.channel)
-					meta:set_string("infotext","")
-				end
-				if fields.addrx then meta:set_string("addrx",fields.addrx) end
-				if fields.addry then meta:set_string("addry",fields.addry) end
-			end
+	local name = sender:get_player_name()
+	if minetest.is_protected(pos, name) and not minetest.check_player_privs(name, { protection_bypass = true }) then
+		minetest.record_protection_violation(pos, name)
+		return
+	end
+	local meta = minetest.get_meta(pos)
+	if fields.autofill then
+		rgblightstone.autofill(pos,sender)
+	else
+		if fields.channel then
+			meta:set_string("channel", fields.channel)
+			meta:set_string("infotext","")
+		end
+		if fields.addrx then meta:set_string("addrx",fields.addrx) end
+		if fields.addry then meta:set_string("addry",fields.addry) end
+	end
 end
 
 function rgblightstone.update_entity(pos)
@@ -153,6 +153,7 @@ for i=0,14,1 do
 		tiles = {"rgblightstone_white.png"},
 		palette = "rgblightstone_palette.png",
 		groups = i == 0 and {cracky = 2,} or {cracky = 2,not_in_creative_inventory = 1,},
+		is_ground_content = false,
 		description = i == 0 and "256-Color RGB Lightstone" or "256-Color RGB Lightstone (lit state - you hacker you!)",
 		paramtype2 = "color",
 		light_source = i,
@@ -195,6 +196,7 @@ for i=0,14,1 do
 	minetest.register_node("rgblightstone:rgblightstone_truecolor_"..i, {
 		tiles = {"rgblightstone_white.png^[colorize:#000000:255"},
 		groups = i == 0 and {cracky = 2,} or {cracky = 2,not_in_creative_inventory = 1,},
+		is_ground_content = false,
 		description = i == 0 and "True-Color RGB Lightstone" or "True-Color RGB Lightstone (lit state - you hacker you!)",
 		light_source = i,
 		drop = "rgblightstone:rgblightstone_truecolor_0",
