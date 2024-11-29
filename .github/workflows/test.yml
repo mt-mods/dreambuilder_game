@@ -15,6 +15,7 @@ jobs:
           - ghcr.io/minetest-hosting/minetest-docker:5.8.0
           - ghcr.io/minetest/minetest:5.9.0
           - ghcr.io/minetest/minetest:5.9.1
+          - ghcr.io/minetest/minetest:5.10.0
 
     steps:
     - uses: actions/checkout@v4
