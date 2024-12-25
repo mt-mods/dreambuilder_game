@@ -1,0 +1,11 @@
+.github     export-ignore
+*.md     export-ignore
+*.blend     export-ignore
+*.blend1     export-ignore
+*.db     export-ignore
+*.html     export-ignore
+*.nbe     export-ignore
+*.sh     export-ignore
+*.svg     export-ignore
+*.xcf     export-ignore
+*.xml     export-ignore
