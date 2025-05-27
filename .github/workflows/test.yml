@@ -15,6 +15,8 @@ jobs:
           - ghcr.io/minetest/minetest:5.9.0
           - ghcr.io/minetest/minetest:5.9.1
           - ghcr.io/minetest/minetest:5.10.0
+          - ghcr.io/luanti-org/luanti:5.11.0
+          - ghcr.io/luanti-org/luanti:5.12.0
 
     steps:
     - uses: actions/checkout@v4
