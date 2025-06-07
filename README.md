@@ -1,4 +1,4 @@
-[![ContentDB](https://content.minetest.net/packages/VanessaE/dreambuilder_game/shields/downloads/)](https://content.minetest.net/packages/VanessaE/dreambuilder_game/)
+[![ContentDB](https://content.minetest.net/packages/mt-mods/dreambuilder_game/shields/downloads/)](https://content.minetest.net/packages/mt-mods/dreambuilder_game/)
 
 
 # Overview
