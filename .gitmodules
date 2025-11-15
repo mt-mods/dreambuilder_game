@@ -69,7 +69,7 @@
 	url = https://github.com/minetest-mods/castle_weapons.git
 [submodule "mods/caverealms_lite"]
 	path = mods/caverealms_lite
-	url = https://github.com/Ezhh/caverealms_lite
+	url = https://github.com/2424barrier/caverealms_lite.git
 [submodule "mods/coloredwood"]
 	path = mods/coloredwood
 	url = https://github.com/mt-mods/coloredwood.git
