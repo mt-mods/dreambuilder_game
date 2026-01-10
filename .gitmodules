@@ -301,3 +301,18 @@
 [submodule "mods/phyics_override_legacy_compat"]
 	path = mods/phyics_override_legacy_compat
 	url = https://github.com/mt-historical/phyics_override_legacy_compat.git
+[submodule "mods/digidisplay"]
+	path = mods/digidisplay
+	url = https://cheapiesystems.com/git/digidisplay.git
+[submodule "mods/plasticbox"]
+	path = mods/plasticbox
+	url = https://cheapiesystems.com/git/plasticbox.git
+[submodule "mods/rgblightstone"]
+	path = mods/rgblightstone
+	url = https://cheapiesystems.com/git/rgblightstone.git
+[submodule "mods/solidcolor"]
+	path = mods/solidcolor
+	url = https://cheapiesystems.com/git/solidcolor.git
+[submodule "mods/titanium"]
+	path = mods/titanium
+	url = https://github.com/HybridDog/titanium.git
