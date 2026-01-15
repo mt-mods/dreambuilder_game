@@ -1,3 +1,0 @@
-default
-doors
-basic_materials

@@ -319,3 +319,9 @@
 [submodule "mods/unifiedmesecons"]
 	path = mods/unifiedmesecons
 	url = https://cheapiesystems.com/git/unifiedmesecons.git
+[submodule "mods/windmill"]
+	path = mods/windmill
+	url = https://github.com/Sokomine/windmill.git
+[submodule "mods/prefab_redo"]
+	path = mods/prefab_redo
+	url = https://cheapiesystems.com/git/prefab_redo.git
