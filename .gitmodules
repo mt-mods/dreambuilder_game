@@ -331,9 +331,6 @@
 [submodule "mods/display_blocks_redo"]
 	path = mods/display_blocks_redo
 	url = https://cheapiesystems.com/git/display_blocks_redo.git
-[submodule "mods/memorandum"]
-	path = mods/memorandum
-	url = https://github.com/Mossmanikin/memorandum.git
 [submodule "mods/function_delayer"]
 	path = mods/function_delayer
 	url = https://github.com/HybridDog/function_delayer.git
