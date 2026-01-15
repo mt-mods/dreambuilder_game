@@ -316,3 +316,6 @@
 [submodule "mods/titanium"]
 	path = mods/titanium
 	url = https://github.com/HybridDog/titanium.git
+[submodule "mods/unifiedmesecons"]
+	path = mods/unifiedmesecons
+	url = https://cheapiesystems.com/git/unifiedmesecons.git
