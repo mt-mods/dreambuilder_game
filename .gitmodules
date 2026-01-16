@@ -316,3 +316,21 @@
 [submodule "mods/titanium"]
 	path = mods/titanium
 	url = https://github.com/HybridDog/titanium.git
+[submodule "mods/unifiedmesecons"]
+	path = mods/unifiedmesecons
+	url = https://cheapiesystems.com/git/unifiedmesecons.git
+[submodule "mods/windmill"]
+	path = mods/windmill
+	url = https://github.com/Sokomine/windmill.git
+[submodule "mods/prefab_redo"]
+	path = mods/prefab_redo
+	url = https://cheapiesystems.com/git/prefab_redo.git
+[submodule "mods/datastorage"]
+	path = mods/datastorage
+	url = https://github.com/minetest-technic/datastorage.git
+[submodule "mods/display_blocks_redo"]
+	path = mods/display_blocks_redo
+	url = https://cheapiesystems.com/git/display_blocks_redo.git
+[submodule "mods/function_delayer"]
+	path = mods/function_delayer
+	url = https://github.com/HybridDog/function_delayer.git
