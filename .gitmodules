@@ -334,3 +334,6 @@
 [submodule "mods/function_delayer"]
 	path = mods/function_delayer
 	url = https://github.com/HybridDog/function_delayer.git
+[submodule "mods/mtg/keys"]
+	path = mods/mtg/keys
+	url = https://github.com/minetest-game/keys.git
