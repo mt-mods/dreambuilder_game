@@ -29,38 +29,6 @@ This game is in use on [url=https://forum.minetest.net/viewtopic.php?f=10&t=4057
 A whole boatload of other mods have been added, which is where most of the content actually comes from. To be a little more specific, as of February 2021, this game has a total of 208 mods (counting all of the various components that themselves come as part of some modpack, such as mesecons or homedecor) and supplies over 3100 items in the inventory/craft guide (there are tens of thousands of unique items in total, counting everything that isn't displayed in the inventory)!
 
 
-Base game content imported from minetest_game:
-
-* beds
-* binoculars
-* boats
-* bucket
-* butterflies
-* carts
-* creative
-* default
-* doors
-* dungeon_loot
-* dye
-* env_sounds
-* fire
-* fireflies
-* flowers
-* game_commands
-* give_initial_stuff
-* map
-* player_api
-* screwdriver
-* sfinv
-* spawn
-* stairs
-* vessels
-* walls
-* weather
-* wool
-* xpanes
-
-
 ### Your Inventory Display
 
 This game, as previously mentioned, replaces the standard inventory with Unified Inventory, which almost defies description here.  Unified Inventory includes waypoints, a crafting guide, set/go home buttons, set day/set night buttons, a full creative inventory on the right if you're playing in that mode - and you only have to click/tap the item once to get the it, instead of multiple clicks/drag and drop, a trash slot, a clear all inventory button, a search feature for the inventory, and more.  Basically, you just need to use it a few times and you'll find yourself wondering how you ever got along with the standard inventory!
