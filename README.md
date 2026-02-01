@@ -101,7 +101,6 @@ Modpacks:
 
 
 * Castle-Modpack (philipbenr; minus the orbs; https://github.com/minetest-mods/castle)
-* Cool trees modpack (runsy; https://github.com/runsy/cool_trees/)
 * Homedecor modpack (https://gitlab.com/VanessaE/homedecor_modpack) 
 * Mesecons modpack (Jeija; https://github.com/minetest-mods/mesecons)
 * Plantlife modpack (https://gitlab.com/VanessaE/plantlife_modpack)
@@ -130,6 +129,7 @@ Base game content imported from minetest_game:
 * flowers
 * game_commands
 * give_initial_stuff
+* keys
 * map
 * player_api
 * screwdriver
