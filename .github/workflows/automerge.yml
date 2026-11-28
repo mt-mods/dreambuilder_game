@@ -33,7 +33,6 @@ jobs:
             contains(steps.metadata.outputs.dependency-names, 'technic') ||
             contains(steps.metadata.outputs.dependency-names, 'homedecor_modpack') ||
             contains(steps.metadata.outputs.dependency-names, 'home_workshop_modpack') ||
-            contains(steps.metadata.outputs.dependency-names, 'biome_lib') ||
             contains(steps.metadata.outputs.dependency-names, 'basic_materials') ||
             contains(steps.metadata.outputs.dependency-names, 'basic_signs') ||
             contains(steps.metadata.outputs.dependency-names, 'blox') ||

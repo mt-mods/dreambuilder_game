@@ -83,7 +83,6 @@ cd $upstream_mods_path
 # No trailing slashes on these items' paths!
 
 LINK_MODS_LIST="
-my_mods/biome_lib \
 my_mods/coloredwood \
 my_mods/currency \
 my_mods/gloopblocks \
